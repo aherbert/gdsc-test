@@ -841,12 +841,55 @@ public class TestSettings
 	 *            double array with expected values.
 	 * @param actuals
 	 *            double array with actual values
-	 * @param delta
-	 *            the maximum delta between <code>expecteds[i]</code> and
+	 * @param relativeError
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
 	public static void assertArrayEquals(String message, double[] expecteds, double[] actuals, double relativeError)
+	{
+		new DoubleRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
+	}
+
+	/**
+	 * Asserts that two double arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown with the given message.
+	 * <p>
+	 * This supports nested arrays, e.g. double[][].
+	 *
+	 * @param expecteds
+	 *            double array with expected values.
+	 * @param actuals
+	 *            double array with actual values
+	 * @param relativeError
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertDoubleArrayEquals(Object expecteds, Object actuals, double relativeError)
+	{
+		assertDoubleArrayEquals(null, expecteds, actuals, relativeError);
+	}
+
+	/**
+	 * Asserts that two double arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown with the given message.
+	 * <p>
+	 * This supports nested arrays, e.g. double[][].
+	 *
+	 * @param message
+	 *            the identifying message for the {@link AssertionError} (<code>null</code>
+	 *            okay)
+	 * @param expecteds
+	 *            double array with expected values.
+	 * @param actuals
+	 *            double array with actual values
+	 * @param relativeError
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertDoubleArrayEquals(String message, Object expecteds, Object actuals, double relativeError)
 	{
 		new DoubleRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
@@ -860,7 +903,9 @@ public class TestSettings
 	 * @param actuals
 	 *            float array with actual values
 	 * @param relativeError
-	 *            the relative error
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
 	 */
 	public static void assertArrayEquals(float[] expecteds, float[] actuals, double relativeError)
 	{
@@ -878,12 +923,55 @@ public class TestSettings
 	 *            float array with expected values.
 	 * @param actuals
 	 *            float array with actual values
-	 * @param delta
-	 *            the maximum delta between <code>expecteds[i]</code> and
+	 * @param relativeError
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
 	public static void assertArrayEquals(String message, float[] expecteds, float[] actuals, double relativeError)
+	{
+		new FloatRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
+	}
+
+	/**
+	 * Asserts that two float arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown with the given message.
+	 * <p>
+	 * This supports nested arrays, e.g. float[][].
+	 *
+	 * @param expecteds
+	 *            float array with expected values.
+	 * @param actuals
+	 *            float array with actual values
+	 * @param relativeError
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertFloatArrayEquals(Object expecteds, Object actuals, double relativeError)
+	{
+		assertFloatArrayEquals(null, expecteds, actuals, relativeError);
+	}
+
+	/**
+	 * Asserts that two float arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown with the given message.
+	 * <p>
+	 * This supports nested arrays, e.g. float[][].
+	 *
+	 * @param message
+	 *            the identifying message for the {@link AssertionError} (<code>null</code>
+	 *            okay)
+	 * @param expecteds
+	 *            float array with expected values.
+	 * @param actuals
+	 *            float array with actual values
+	 * @param relativeError
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertFloatArrayEquals(String message, Object expecteds, Object actuals, double relativeError)
 	{
 		new FloatRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}

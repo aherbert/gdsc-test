@@ -82,6 +82,38 @@ public class TestSettingsTest
 	}
 
 	@Test
+	public void canAssertEqualsObjectDoubleArraysUsingRelativeError()
+	{
+		double[] e = new double[] { 2 };
+		double[] o = new double[] { 2.1 };
+		TestSettings.assertDoubleArrayEquals((Object) e, (Object) o, 0.05);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsObjectDoubleArraysUsingRelativeError()
+	{
+		double[] e = new double[] { 2 };
+		double[] o = new double[] { 2.1 };
+		TestSettings.assertDoubleArrayEquals((Object) e, (Object) o, 0.01);
+	}
+
+	@Test
+	public void canAssertEqualsObjectDoubleDoubleArraysUsingRelativeError()
+	{
+		double[][] e = new double[][] { { 2 } };
+		double[][] o = new double[][] { { 2.1 } };
+		TestSettings.assertDoubleArrayEquals((Object) e, (Object) o, 0.05);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsObjectDoubleDoubleArraysUsingRelativeError()
+	{
+		double[][] e = new double[][] { { 2 } };
+		double[][] o = new double[][] { { 2.1 } };
+		TestSettings.assertDoubleArrayEquals((Object) e, (Object) o, 0.01);
+	}
+
+	@Test
 	public void canAssertEqualsFloatArraysUsingRelativeError()
 	{
 		float[] e = new float[] { (float) Math.PI };
@@ -126,6 +158,38 @@ public class TestSettingsTest
 		for (int i = 0; i < o.length; i++)
 			o[i] = Math.nextUp((float) (e[i] + e[i] * error));
 		TestSettings.assertArrayEquals(e, o, error);
+	}
+
+	@Test
+	public void canAssertEqualsObjectFloatArraysUsingRelativeError()
+	{
+		float[] e = new float[] { 2 };
+		float[] o = new float[] { 2.1f };
+		TestSettings.assertFloatArrayEquals((Object) e, (Object) o, 0.05);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsObjectFloatArraysUsingRelativeError()
+	{
+		float[] e = new float[] { 2 };
+		float[] o = new float[] { 2.1f };
+		TestSettings.assertFloatArrayEquals((Object) e, (Object) o, 0.01);
+	}
+
+	@Test
+	public void canAssertEqualsObjectFloatFloatArraysUsingRelativeError()
+	{
+		float[][] e = new float[][] { { 2 } };
+		float[][] o = new float[][] { { 2.1f } };
+		TestSettings.assertFloatArrayEquals((Object) e, (Object) o, 0.05);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsObjectFloatFloatArraysUsingRelativeError()
+	{
+		float[][] e = new float[][] { { 2 } };
+		float[][] o = new float[][] { { 2.1f } };
+		TestSettings.assertFloatArrayEquals((Object) e, (Object) o, 0.01);
 	}
 
 	@Test
