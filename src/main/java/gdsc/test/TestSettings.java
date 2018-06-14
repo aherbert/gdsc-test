@@ -751,6 +751,108 @@ public class TestSettings
 	}
 
 	/**
+	 * Asserts that two doubles are equal to within a positive relativeError.
+	 * If they are not, an {@link AssertionError} is thrown with the given
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertEquals(double expected, double actual, double relativeError)
+	{
+		assertEquals(null, expected, actual, relativeError);
+	}
+
+	/**
+	 * Asserts that two doubles are equal to within a positive relativeError.
+	 * If they are not, an {@link AssertionError} is thrown with the given
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 *
+	 * @param message
+	 *            the identifying message for the {@link AssertionError} (<code>null</code>
+	 *            okay)
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertEquals(String message, double expected, double actual, double relativeError)
+	{
+		final double difference = max(Math.abs(expected), Math.abs(actual)) * relativeError;
+		Assert.assertEquals(message, expected, actual, difference);
+	}
+
+	private static double max(double a, double b)
+	{
+		return (a >= b) ? a : b;
+	}
+
+	/**
+	 * Asserts that two floats are equal to within a positive relativeError.
+	 * If they are not, an {@link AssertionError} is thrown with the given
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertEquals(Float.NaN, Float.NaN, *)</code> passes
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertEquals(float expected, float actual, double relativeError)
+	{
+		assertEquals(null, expected, actual, relativeError);
+	}
+
+	/**
+	 * Asserts that two floats are equal to within a positive relativeError.
+	 * If they are not, an {@link AssertionError} is thrown with the given
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertEquals(Float.NaN, Float.NaN, *)</code> passes
+	 *
+	 * @param message
+	 *            the identifying message for the {@link AssertionError} (<code>null</code>
+	 *            okay)
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertEquals(String message, float expected, float actual, double relativeError)
+	{
+		final float difference = (float) (max(Math.abs(expected), Math.abs(actual)) * relativeError);
+		Assert.assertEquals(message, expected, actual, difference);
+	}
+
+	private static float max(float a, float b)
+	{
+		return (a >= b) ? a : b;
+	}
+
+	/**
 	 * A class for comparing double arrays using a relative threshold.
 	 * <p>
 	 * Based on org.junit.internal.InexactComparisonCriteria
@@ -767,18 +869,7 @@ public class TestSettings
 		@Override
 		protected void assertElementsEqual(Object expected, Object actual)
 		{
-			final double e = (Double) expected;
-			final double a = (Double) actual;
-
-			// Check the two numbers are within an absolute distance.
-			final double difference = max(Math.abs(e), Math.abs(a)) * delta;
-
-			Assert.assertEquals(e, a, difference);
-		}
-
-		private double max(double a, double b)
-		{
-			return (a >= b) ? a : b;
+			assertEquals(null, (Double) expected, (Double) actual, delta);
 		}
 	}
 
@@ -799,18 +890,7 @@ public class TestSettings
 		@Override
 		protected void assertElementsEqual(Object expected, Object actual)
 		{
-			final float e = (Float) expected;
-			final float a = (Float) actual;
-
-			// Check the two numbers are within an absolute distance.
-			final float difference = (float) (max(Math.abs(e), Math.abs(a)) * delta);
-
-			Assert.assertEquals(e, a, difference);
-		}
-
-		private double max(double a, double b)
-		{
-			return (a >= b) ? a : b;
+			assertEquals(null, (Float) expected, (Float) actual, delta);
 		}
 	}
 
