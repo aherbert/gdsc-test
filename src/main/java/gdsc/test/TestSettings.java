@@ -39,54 +39,20 @@ import org.junit.internal.ComparisonCriteria;
  */
 public class TestSettings
 {
+	//@formatter:off
 	/**
 	 * The Log Level. Lower levels result is less verbose output.
 	 */
 	public enum LogLevel
 	{
 		/** Silent. Use this level to output information even if logging is disabled. */
-		SILENT
-		{
-			@Override
-			public int getValue()
-			{
-				return 0;
-			}
-		},
-
-		/**
-		 * Warning logging.
-		 * For example this can be used to log speed test results that fail but are not critical.
-		 */
-		WARN
-		{
-			@Override
-			public int getValue()
-			{
-				return 1;
-			}
-		},
-
+		SILENT { @Override public int getValue() { return 0; }},
+		/** Warning logging. For example this can be used to log speed test results that fail but are not critical. */
+		WARN { @Override public int getValue() { return 1; }},
 		/** Information logging. */
-		INFO
-		{
-			@Override
-			public int getValue()
-			{
-				return 2;
-			}
-		},
-
+		INFO {@Override public int getValue() {	return 2; }},
 		/** Debug logging. */
-		DEBUG
-		{
-			@Override
-			public int getValue()
-			{
-				return 3;
-			}
-		};
-
+		DEBUG {	@Override public int getValue()	{ return 3; }};
 		/**
 		 * Gets the value
 		 *
@@ -101,44 +67,17 @@ public class TestSettings
 	public enum TestComplexity
 	{
 		/** No complexity */
-		NONE
-		{
-			@Override
-			public int getValue()
-			{
-				return 0;
-			}
-		},
-
+		NONE { @Override public int getValue() { return 0; }},
 		/** Low complexity */
-		LOW
-		{
-			@Override
-			public int getValue()
-			{
-				return 1;
-			}
-		},
-
-		/** Medium complexity */
-		MEDIUM
-		{
-			@Override
-			public int getValue()
-			{
-				return 2;
-			}
-		},
-
+		LOW { @Override	public int getValue() {	return 1; }},
+		/** Medium complexity */ 
+		MEDIUM { @Override	public int getValue() { return 2; }},
 		/** High complexity */
-		HIGH
-		{
-			@Override
-			public int getValue()
-			{
-				return 3;
-			}
-		};
+		HIGH { @Override public int getValue() { return 3; }},
+		/** Very high complexity */
+		VERY_HIGH {	@Override public int getValue()	{ return 4;	}},
+		/** Any. Used to run any test that checks complexity settings */
+		ANY { @Override public int getValue() { return Integer.MAX_VALUE; }};
 
 		/**
 		 * Gets the value
@@ -147,6 +86,7 @@ public class TestSettings
 		 */
 		public abstract int getValue();
 	}
+	//@formatter:on
 
 	/**
 	 * Provide messages dynamically for logging.
@@ -678,6 +618,30 @@ public class TestSettings
 	}
 
 	/**
+	 * Assume testing is logging at the warn level.
+	 */
+	public static void assumeWarn()
+	{
+		assume(LogLevel.WARN);
+	}
+
+	/**
+	 * Assume testing is logging at the info level.
+	 */
+	public static void assumeInfo()
+	{
+		assume(LogLevel.INFO);
+	}
+
+	/**
+	 * Assume testing is logging at the debug level.
+	 */
+	public static void assumeDebug()
+	{
+		assume(LogLevel.DEBUG);
+	}
+
+	/**
 	 * Assume testing is allowed at the given complexity.
 	 * <p>
 	 * Use this at the start of a test that has a long run time or is otherwise complex
@@ -713,6 +677,22 @@ public class TestSettings
 	public static void assumeHighComplexity()
 	{
 		assume(TestComplexity.HIGH);
+	}
+
+	/**
+	 * Assume testing is allowed at very high complexity.
+	 */
+	public static void assumeVeryHighComplexity()
+	{
+		assume(TestComplexity.VERY_HIGH);
+	}
+
+	/**
+	 * Assume testing is allowed at any complexity.
+	 */
+	public static void assumeAnyComplexity()
+	{
+		assume(TestComplexity.ANY);
 	}
 
 	/**
