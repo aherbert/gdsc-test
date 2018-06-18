@@ -76,8 +76,8 @@ public class TestSettings
 		HIGH { @Override public int getValue() { return 3; }},
 		/** Very high complexity */
 		VERY_HIGH {	@Override public int getValue()	{ return 4;	}},
-		/** Any. Used to run any test that checks complexity settings */
-		ANY { @Override public int getValue() { return Integer.MAX_VALUE; }};
+		/** Maximum. Used to run any test that checks complexity settings */
+		MAXIMUM { @Override public int getValue() { return Integer.MAX_VALUE; }};
 
 		/**
 		 * Gets the value
@@ -688,11 +688,11 @@ public class TestSettings
 	}
 
 	/**
-	 * Assume testing is allowed at any complexity.
+	 * Assume testing is allowed at maximum complexity.
 	 */
-	public static void assumeAnyComplexity()
+	public static void assumeMaximumComplexity()
 	{
-		assume(TestComplexity.ANY);
+		assume(TestComplexity.MAXIMUM);
 	}
 
 	/**
