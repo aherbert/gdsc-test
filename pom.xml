@@ -61,6 +61,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
 		<build.date>${maven.build.timestamp}</build.date>
 		<license.licenseName>gpl_v3</license.licenseName>
 		<license.copyrightOwners>Alex Herbert</license.copyrightOwners>
+    	<license.projectName>${project.description}</license.projectName>
 	</properties>
 
 	<build>

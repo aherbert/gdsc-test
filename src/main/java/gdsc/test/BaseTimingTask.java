@@ -1,6 +1,8 @@
 /*-
  * #%L
- * GDSC Test
+ * Genome Damage and Stability Centre Test Package
+ * 
+ * The GDSC Test package contains code for use with the JUnit test framework.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
