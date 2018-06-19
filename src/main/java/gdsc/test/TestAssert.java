@@ -356,7 +356,7 @@ public class TestAssert
 	}
 
 	/**
-	 * Assert that the condition is true. If they are not, an
+	 * Assert that the condition is true. If not an
 	 * {@link AssertionError} is thrown with the given formatted message.
 	 *
 	 * @param result
@@ -369,6 +369,24 @@ public class TestAssert
 	public static void assertTrue(boolean result, String format, Object... args)
 	{
 		if (result)
+			return;
+		Assert.fail(String.format(format, args));
+	}
+
+	/**
+	 * Assert that the condition is false. If not an
+	 * {@link AssertionError} is thrown with the given formatted message.
+	 *
+	 * @param result
+	 *            the result
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertFalse(boolean result, String format, Object... args)
+	{
+		if (!result)
 			return;
 		Assert.fail(String.format(format, args));
 	}
