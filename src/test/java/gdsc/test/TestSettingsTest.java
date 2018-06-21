@@ -23,6 +23,8 @@
  */
 package gdsc.test;
 
+import java.util.IllegalFormatConversionException;
+
 import org.junit.Test;
 
 import gdsc.test.TestSettings;
@@ -50,5 +52,13 @@ public class TestSettingsTest
 	{
 		Object[] args = new Object[] { 1, 2.3 };
 		TestSettings.log(LogLevel.WARN, "log Object[] = %d %f\n", args);
+	}
+	
+	@Test(expected=IllegalFormatConversionException.class)
+	public void cannotLogObjectArrayAndVarargs()
+	{
+		Object[] args = new Object[] { 1, 2.3 };
+		// Use silent to always run
+		TestSettings.log(LogLevel.SILENT, "log Object[] = %d %f %d\n", args, 3);
 	}
 }
