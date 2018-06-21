@@ -38,4 +38,17 @@ public class TestSettingsTest
 		TestSettings.warn("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity());
 		TestSettings.warn("TestSettings Seed = %d\n", TestSettings.getSeed());
 	}
+	
+	@Test
+	public void canLogVarArgs()
+	{
+		TestSettings.log(LogLevel.WARN, "log varargs = %d %f\n", 1, 2.3);
+	}
+	
+	@Test
+	public void canLogObjectArray()
+	{
+		Object[] args = new Object[] { 1, 2.3 };
+		TestSettings.log(LogLevel.WARN, "log Object[] = %d %f\n", args);
+	}
 }
