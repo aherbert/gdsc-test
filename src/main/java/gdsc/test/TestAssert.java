@@ -82,7 +82,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -175,7 +175,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -300,7 +300,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -374,7 +374,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -442,7 +442,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -516,7 +516,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -551,15 +551,27 @@ public class TestAssert
 	// No checks are made that the format or args are not null. 
 	////////////////////////////////////////////////////////////////////////////
 
-	private static void wrapAssertionError(String format, AssertionError ex, Object... args) throws AssertionError
+	/**
+	 * Wraps an assertion error with a new error that has a formatted message prepended to
+	 * the input error's message
+	 * 
+	 * @param error
+	 *            The error
+	 * @param format
+	 *            The format
+	 * @param args
+	 *            The arguments
+	 * @throws AssertionError
+	 */
+	public static void wrapAssertionError(AssertionError error, String format, Object... args) throws AssertionError
 	{
-		String msg = ex.getMessage();
+		String msg = error.getMessage();
 		if (msg.length() == 0)
-			throw new AssertionError(String.format(format, args), ex);
+			throw new AssertionError(String.format(format, args), error);
 		else
-			throw new AssertionError(String.format(format, args) + " " + msg, ex);
+			throw new AssertionError(String.format(format, args) + " " + msg, error);
 	}
-	
+
 	/**
 	 * Asserts that a condition is true. If it isn't it throws an
 	 * {@link AssertionError} with a formatted message.
@@ -579,7 +591,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -602,7 +614,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -642,7 +654,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -669,7 +681,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -694,7 +706,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -725,7 +737,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -756,7 +768,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -785,7 +797,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -812,7 +824,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -837,7 +849,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -862,7 +874,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -887,7 +899,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -912,7 +924,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -937,7 +949,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -967,7 +979,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -996,7 +1008,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -1021,7 +1033,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -1052,7 +1064,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -1083,7 +1095,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -1106,7 +1118,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -1129,7 +1141,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -1154,7 +1166,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -1180,7 +1192,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 
@@ -1225,7 +1237,7 @@ public class TestAssert
 		}
 		catch (AssertionError ex)
 		{
-			wrapAssertionError(format, ex, args);
+			wrapAssertionError(ex, format, args);
 		}
 	}
 }
