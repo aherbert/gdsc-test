@@ -25,6 +25,8 @@ package gdsc.test;
 
 import org.junit.Test;
 
+import org.junit.Assert;
+
 public class TestAssertTest
 {
 	@Test
@@ -36,17 +38,17 @@ public class TestAssertTest
 			double[] o = e.clone();
 			if (error == 0)
 			{
-				TestAssert.assertArrayEquals(e, o, 0);
+				TestAssert.assertArrayEqualsRelative(e, o, 0);
 				continue;
 			}
 
 			for (int i = 0; i < o.length; i++)
 				o[i] = Math.nextUp(e[i] - e[i] * error);
-			TestAssert.assertArrayEquals(e, o, error);
+			TestAssert.assertArrayEqualsRelative(e, o, error);
 
 			for (int i = 0; i < o.length; i++)
 				o[i] = Math.nextDown(e[i] + e[i] * error);
-			TestAssert.assertArrayEquals(e, o, error);
+			TestAssert.assertArrayEqualsRelative(e, o, error);
 		}
 	}
 
@@ -59,7 +61,7 @@ public class TestAssertTest
 
 		for (int i = 0; i < o.length; i++)
 			o[i] = Math.nextDown(e[i] - e[i] * error);
-		TestAssert.assertArrayEquals(e, o, error);
+		TestAssert.assertArrayEqualsRelative(e, o, error);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -71,7 +73,7 @@ public class TestAssertTest
 
 		for (int i = 0; i < o.length; i++)
 			o[i] = Math.nextUp(e[i] + e[i] * error);
-		TestAssert.assertArrayEquals(e, o, error);
+		TestAssert.assertArrayEqualsRelative(e, o, error);
 	}
 
 	@Test
@@ -79,7 +81,7 @@ public class TestAssertTest
 	{
 		double[] e = new double[] { 2 };
 		double[] o = new double[] { 2.1 };
-		TestAssert.assertDoubleArrayEquals((Object) e, (Object) o, 0.05);
+		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.05);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -87,7 +89,7 @@ public class TestAssertTest
 	{
 		double[] e = new double[] { 2 };
 		double[] o = new double[] { 2.1 };
-		TestAssert.assertDoubleArrayEquals((Object) e, (Object) o, 0.01);
+		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.01);
 	}
 
 	@Test
@@ -95,7 +97,7 @@ public class TestAssertTest
 	{
 		double[][] e = new double[][] { { 2 } };
 		double[][] o = new double[][] { { 2.1 } };
-		TestAssert.assertDoubleArrayEquals((Object) e, (Object) o, 0.05);
+		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.05);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -103,7 +105,7 @@ public class TestAssertTest
 	{
 		double[][] e = new double[][] { { 2 } };
 		double[][] o = new double[][] { { 2.1 } };
-		TestAssert.assertDoubleArrayEquals((Object) e, (Object) o, 0.01);
+		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.01);
 	}
 
 	@Test
@@ -115,17 +117,17 @@ public class TestAssertTest
 			float[] o = e.clone();
 			if (error == 0)
 			{
-				TestAssert.assertArrayEquals(e, o, 0);
+				TestAssert.assertArrayEqualsRelative(e, o, 0);
 				continue;
 			}
 
 			for (int i = 0; i < o.length; i++)
 				o[i] = (float) Math.nextUp(e[i] - e[i] * error);
-			TestAssert.assertArrayEquals(e, o, error);
+			TestAssert.assertArrayEqualsRelative(e, o, error);
 
 			for (int i = 0; i < o.length; i++)
 				o[i] = (float) Math.nextDown(e[i] + e[i] * error);
-			TestAssert.assertArrayEquals(e, o, error);
+			TestAssert.assertArrayEqualsRelative(e, o, error);
 		}
 	}
 
@@ -138,7 +140,7 @@ public class TestAssertTest
 
 		for (int i = 0; i < o.length; i++)
 			o[i] = Math.nextDown((float) (e[i] - e[i] * error));
-		TestAssert.assertArrayEquals(e, o, error);
+		TestAssert.assertArrayEqualsRelative(e, o, error);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -150,7 +152,7 @@ public class TestAssertTest
 
 		for (int i = 0; i < o.length; i++)
 			o[i] = Math.nextUp((float) (e[i] + e[i] * error));
-		TestAssert.assertArrayEquals(e, o, error);
+		TestAssert.assertArrayEqualsRelative(e, o, error);
 	}
 
 	@Test
@@ -158,7 +160,7 @@ public class TestAssertTest
 	{
 		float[] e = new float[] { 2 };
 		float[] o = new float[] { 2.1f };
-		TestAssert.assertFloatArrayEquals((Object) e, (Object) o, 0.05);
+		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.05);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -166,7 +168,7 @@ public class TestAssertTest
 	{
 		float[] e = new float[] { 2 };
 		float[] o = new float[] { 2.1f };
-		TestAssert.assertFloatArrayEquals((Object) e, (Object) o, 0.01);
+		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.01);
 	}
 
 	@Test
@@ -174,7 +176,7 @@ public class TestAssertTest
 	{
 		float[][] e = new float[][] { { 2 } };
 		float[][] o = new float[][] { { 2.1f } };
-		TestAssert.assertFloatArrayEquals((Object) e, (Object) o, 0.05);
+		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.05);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -182,6 +184,21 @@ public class TestAssertTest
 	{
 		float[][] e = new float[][] { { 2 } };
 		float[][] o = new float[][] { { 2.1f } };
-		TestAssert.assertFloatArrayEquals((Object) e, (Object) o, 0.01);
+		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.01);
+	}
+
+	@Test
+	public void canAssertWithFormattedMessage()
+	{
+		try
+		{
+			TestAssert.assertLongEquals(0, 1, "[%d] == %.2f", 2, 3.5);
+		}
+		catch (AssertionError e)
+		{
+			String msg = e.getMessage();
+			TestSettings.info(msg);
+			Assert.assertTrue("Unexpected message", msg.startsWith("[2] == 3.50"));
+		}
 	}
 }

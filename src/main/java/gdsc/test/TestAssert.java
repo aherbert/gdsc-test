@@ -23,6 +23,7 @@
  */
 package gdsc.test;
 
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.internal.ComparisonCriteria;
 
@@ -33,7 +34,7 @@ public class TestAssert
 {
 	/**
 	 * Asserts that two doubles are equal to within a positive relativeError.
-	 * If they are not, an {@link AssertionError} is thrown with the given
+	 * If they are not, an {@link AssertionError} is thrown with no
 	 * message. If the expected value is infinity then the relativeError value is
 	 * ignored. NaNs are considered equal:
 	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
@@ -47,9 +48,42 @@ public class TestAssert
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertEquals(double expected, double actual, double relativeError)
+	public static void assertEqualsRelative(double expected, double actual, double relativeError)
 	{
-		assertEquals(null, expected, actual, relativeError);
+		assertEqualsRelative(null, expected, actual, relativeError);
+	}
+
+	/**
+	 * Asserts that two doubles are equal to within a positive relativeError.
+	 * If they are not, an {@link AssertionError} is thrown with the formatted
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertEqualsRelative(double expected, double actual, double relativeError, String format,
+			Object... args)
+	{
+		try
+		{
+			assertEqualsRelative(null, expected, actual, relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
 	}
 
 	/**
@@ -71,7 +105,7 @@ public class TestAssert
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertEquals(String message, double expected, double actual, double relativeError)
+	public static void assertEqualsRelative(String message, double expected, double actual, double relativeError)
 	{
 		final double difference = max(Math.abs(expected), Math.abs(actual)) * relativeError;
 		Assert.assertEquals(message, expected, actual, difference);
@@ -93,7 +127,7 @@ public class TestAssert
 
 	/**
 	 * Asserts that two floats are equal to within a positive relativeError.
-	 * If they are not, an {@link AssertionError} is thrown with the given
+	 * If they are not, an {@link AssertionError} is thrown with no
 	 * message. If the expected value is infinity then the relativeError value is
 	 * ignored. NaNs are considered equal:
 	 * <code>assertEquals(Float.NaN, Float.NaN, *)</code> passes
@@ -107,9 +141,42 @@ public class TestAssert
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertEquals(float expected, float actual, double relativeError)
+	public static void assertEqualsRelative(float expected, float actual, double relativeError)
 	{
-		assertEquals(null, expected, actual, relativeError);
+		assertEqualsRelative(null, expected, actual, relativeError);
+	}
+
+	/**
+	 * Asserts that two floats are equal to within a positive relativeError.
+	 * If they are not, an {@link AssertionError} is thrown with the formatted
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertEqualsRelative(float expected, float actual, double relativeError, String format,
+			Object... args)
+	{
+		try
+		{
+			assertEqualsRelative(null, expected, actual, relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
 	}
 
 	/**
@@ -131,7 +198,7 @@ public class TestAssert
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertEquals(String message, float expected, float actual, double relativeError)
+	public static void assertEqualsRelative(String message, float expected, float actual, double relativeError)
 	{
 		final float difference = (float) (max(Math.abs(expected), Math.abs(actual)) * relativeError);
 		Assert.assertEquals(message, expected, actual, difference);
@@ -168,7 +235,7 @@ public class TestAssert
 		@Override
 		protected void assertElementsEqual(Object expected, Object actual)
 		{
-			assertEquals(null, (Double) expected, (Double) actual, delta);
+			assertEqualsRelative(null, (Double) expected, (Double) actual, delta);
 		}
 	}
 
@@ -189,13 +256,13 @@ public class TestAssert
 		@Override
 		protected void assertElementsEqual(Object expected, Object actual)
 		{
-			assertEquals(null, (Float) expected, (Float) actual, delta);
+			assertEqualsRelative(null, (Float) expected, (Float) actual, delta);
 		}
 	}
 
 	/**
 	 * Asserts that two double arrays are equal. If they are not, an
-	 * {@link AssertionError} is thrown with the given message.
+	 * {@link AssertionError} is thrown with no message.
 	 *
 	 * @param expecteds
 	 *            double array with expected values.
@@ -204,9 +271,37 @@ public class TestAssert
 	 * @param relativeError
 	 *            the relative error
 	 */
-	public static void assertArrayEquals(double[] expecteds, double[] actuals, double relativeError)
+	public static void assertArrayEqualsRelative(double[] expecteds, double[] actuals, double relativeError)
 	{
-		assertArrayEquals(null, expecteds, actuals, relativeError);
+		assertArrayEqualsRelative(null, expecteds, actuals, relativeError);
+	}
+
+	/**
+	 * Asserts that two double arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown with no message.
+	 *
+	 * @param expecteds
+	 *            double array with expected values.
+	 * @param actuals
+	 *            double array with actual values
+	 * @param relativeError
+	 *            the relative error
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEqualsRelative(double[] expecteds, double[] actuals, double relativeError,
+			String format, Object... args)
+	{
+		try
+		{
+			assertArrayEqualsRelative(null, expecteds, actuals, relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
 	}
 
 	/**
@@ -225,14 +320,15 @@ public class TestAssert
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertArrayEquals(String message, double[] expecteds, double[] actuals, double relativeError)
+	public static void assertArrayEqualsRelative(String message, double[] expecteds, double[] actuals,
+			double relativeError)
 	{
 		new DoubleRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
 
 	/**
 	 * Asserts that two double arrays are equal. If they are not, an
-	 * {@link AssertionError} is thrown with the given message.
+	 * {@link AssertionError} is thrown with no message.
 	 * <p>
 	 * This supports nested arrays, e.g. double[][].
 	 *
@@ -245,9 +341,41 @@ public class TestAssert
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertDoubleArrayEquals(Object expecteds, Object actuals, double relativeError)
+	public static void assertDoubleArrayEqualsRelative(Object expecteds, Object actuals, double relativeError)
 	{
-		assertDoubleArrayEquals(null, expecteds, actuals, relativeError);
+		assertDoubleArrayEqualsRelative(null, expecteds, actuals, relativeError);
+	}
+
+	/**
+	 * Asserts that two double arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown with no message.
+	 * <p>
+	 * This supports nested arrays, e.g. double[][].
+	 *
+	 * @param expecteds
+	 *            double array with expected values.
+	 * @param actuals
+	 *            double array with actual values
+	 * @param relativeError
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertDoubleArrayEqualsRelative(Object expecteds, Object actuals, double relativeError,
+			String format, Object... args)
+	{
+		try
+		{
+			assertDoubleArrayEqualsRelative(null, expecteds, actuals, relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
 	}
 
 	/**
@@ -268,27 +396,54 @@ public class TestAssert
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertDoubleArrayEquals(String message, Object expecteds, Object actuals, double relativeError)
+	public static void assertDoubleArrayEqualsRelative(String message, Object expecteds, Object actuals,
+			double relativeError)
 	{
 		new DoubleRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
 
 	/**
 	 * Asserts that two float arrays are equal. If they are not, an
-	 * {@link AssertionError} is thrown with the given message.
+	 * {@link AssertionError} is thrown with no message.
 	 *
 	 * @param expecteds
 	 *            float array with expected values.
 	 * @param actuals
 	 *            float array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
-	 *            <code>actuals[i]</code> for which both numbers are still
-	 *            considered equal.
+	 *            the relative error
 	 */
-	public static void assertArrayEquals(float[] expecteds, float[] actuals, double relativeError)
+	public static void assertArrayEqualsRelative(float[] expecteds, float[] actuals, double relativeError)
 	{
-		assertArrayEquals(null, expecteds, actuals, relativeError);
+		assertArrayEqualsRelative(null, expecteds, actuals, relativeError);
+	}
+
+	/**
+	 * Asserts that two float arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown with no message.
+	 *
+	 * @param expecteds
+	 *            float array with expected values.
+	 * @param actuals
+	 *            float array with actual values
+	 * @param relativeError
+	 *            the relative error
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEqualsRelative(float[] expecteds, float[] actuals, double relativeError,
+			String format, Object... args)
+	{
+		try
+		{
+			assertArrayEqualsRelative(null, expecteds, actuals, relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
 	}
 
 	/**
@@ -307,14 +462,15 @@ public class TestAssert
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertArrayEquals(String message, float[] expecteds, float[] actuals, double relativeError)
+	public static void assertArrayEqualsRelative(String message, float[] expecteds, float[] actuals,
+			double relativeError)
 	{
 		new FloatRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
 
 	/**
 	 * Asserts that two float arrays are equal. If they are not, an
-	 * {@link AssertionError} is thrown with the given message.
+	 * {@link AssertionError} is thrown with no message.
 	 * <p>
 	 * This supports nested arrays, e.g. float[][].
 	 *
@@ -327,9 +483,41 @@ public class TestAssert
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertFloatArrayEquals(Object expecteds, Object actuals, double relativeError)
+	public static void assertFloatArrayEqualsRelative(Object expecteds, Object actuals, double relativeError)
 	{
-		assertFloatArrayEquals(null, expecteds, actuals, relativeError);
+		assertFloatArrayEqualsRelative(null, expecteds, actuals, relativeError);
+	}
+
+	/**
+	 * Asserts that two float arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown with no message.
+	 * <p>
+	 * This supports nested arrays, e.g. float[][].
+	 *
+	 * @param expecteds
+	 *            float array with expected values.
+	 * @param actuals
+	 *            float array with actual values
+	 * @param relativeError
+	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertFloatArrayEqualsRelative(Object expecteds, Object actuals, double relativeError,
+			String format, Object... args)
+	{
+		try
+		{
+			assertFloatArrayEqualsRelative(null, expecteds, actuals, relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
 	}
 
 	/**
@@ -350,44 +538,694 @@ public class TestAssert
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
-	public static void assertFloatArrayEquals(String message, Object expecteds, Object actuals, double relativeError)
+	public static void assertFloatArrayEqualsRelative(String message, Object expecteds, Object actuals,
+			double relativeError)
 	{
 		new FloatRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
 
+	////////////////////////////////////////////////////////////////////////////
+	// Formatted methods. 
+	// These wrap the JUnit assert methods with an 
+	// assertion error containing a formatted message.
+	// No checks are made that the format or args are not null. 
+	////////////////////////////////////////////////////////////////////////////
+
+	private static void wrapAssertionError(String format, AssertionError ex, Object... args) throws AssertionError
+	{
+		String msg = ex.getMessage();
+		if (msg.length() == 0)
+			throw new AssertionError(String.format(format, args), ex);
+		else
+			throw new AssertionError(String.format(format, args) + " " + msg, ex);
+	}
+	
 	/**
-	 * Assert that the condition is true. If not an
-	 * {@link AssertionError} is thrown with the given formatted message.
+	 * Asserts that a condition is true. If it isn't it throws an
+	 * {@link AssertionError} with a formatted message.
 	 *
-	 * @param result
-	 *            the result
+	 * @param condition
+	 *            condition to be checked
 	 * @param format
-	 *            the format
+	 *            the message format
 	 * @param args
 	 *            the arguments
 	 */
-	public static void assertTrue(boolean result, String format, Object... args)
+	static public void assertTrue(boolean condition, String format, Object... args)
 	{
-		if (result)
-			return;
-		Assert.fail(String.format(format, args));
+		try
+		{
+			Assert.assertTrue(null, condition);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
 	}
 
 	/**
-	 * Assert that the condition is false. If not an
-	 * {@link AssertionError} is thrown with the given formatted message.
+	 * Assert.assert that a condition is false. If it isn't it throws an
+	 * {@link AssertionError} with a formatted message.
 	 *
-	 * @param result
-	 *            the result
+	 * @param condition
+	 *            condition to be checked
 	 * @param format
-	 *            the format
+	 *            the message format
 	 * @param args
 	 *            the arguments
 	 */
-	public static void assertFalse(boolean result, String format, Object... args)
+	static public void assertFalse(boolean condition, String format, Object... args)
 	{
-		if (!result)
-			return;
-		Assert.fail(String.format(format, args));
+		try
+		{
+			Assert.assertFalse(null, condition);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Fails a test with a formatted message.
+	 * 
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void fail(String format, Object... args)
+	{
+		throw new AssertionError(String.format(format, args));
+	}
+
+	/**
+	 * Assert.assert that two objects are equal. If they are not, an
+	 * {@link AssertionError} with a formatted message is thrown. If
+	 * <code>expected</code> and <code>actual</code> are <code>null</code>,
+	 * they are considered equal.
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertEquals(Object expected, Object actual, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertEquals(null, expected, actual);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two objects are <b>not</b> equals. If they are, an
+	 * {@link AssertionError} with a formatted message is thrown. If
+	 * <code>unexpected</code> and <code>actual</code> are <code>null</code>,
+	 * they are considered equal.
+	 *
+	 * @param unexpected
+	 *            unexpected value to check
+	 * @param actual
+	 *            the value to check against <code>unexpected</code>
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertNotEquals(Object unexpected, Object actual, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertNotEquals(null, unexpected, actual);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two longs are <b>not</b> equals. If they are, an
+	 * {@link AssertionError} with a formatted message is thrown.
+	 *
+	 * @param unexpected
+	 *            unexpected value to check
+	 * @param actual
+	 *            the value to check against <code>unexpected</code>
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertNotEquals(long unexpected, long actual, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertNotEquals(null, unexpected, actual);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two doubles are <b>not</b> equal to within a positive delta.
+	 * If they are, an {@link AssertionError} is thrown. If the unexpected
+	 * value is infinity then the delta value is ignored.NaNs are considered
+	 * equal: <code>assertNotEquals(Double.NaN, Double.NaN, *)</code> fails
+	 *
+	 * @param unexpected
+	 *            unexpected value
+	 * @param actual
+	 *            the value to check against <code>unexpected</code>
+	 * @param delta
+	 *            the maximum delta between <code>unexpected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertNotEquals(double unexpected, double actual, double delta, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertNotEquals(null, unexpected, actual, delta);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two floats are <b>not</b> equal to within a positive delta.
+	 * If they are, an {@link AssertionError} is thrown. If the unexpected
+	 * value is infinity then the delta value is ignored.NaNs are considered
+	 * equal: <code>assertNotEquals(Float.NaN, Float.NaN, *)</code> fails
+	 *
+	 * @param unexpected
+	 *            unexpected value
+	 * @param actual
+	 *            the value to check against <code>unexpected</code>
+	 * @param delta
+	 *            the maximum delta between <code>unexpected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertNotEquals(float unexpected, float actual, float delta, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertNotEquals(null, unexpected, actual, delta);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two object arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown. If <code>expected</code> and
+	 * <code>actual</code> are <code>null</code>, they are considered
+	 * equal.
+	 *
+	 * @param expecteds
+	 *            Object array or array of arrays (multi-dimensional array) with
+	 *            expected values
+	 * @param actuals
+	 *            Object array or array of arrays (multi-dimensional array) with
+	 *            actual values
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(Object[] expecteds, Object[] actuals, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two boolean arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown. If <code>expected</code> and
+	 * <code>actual</code> are <code>null</code>, they are considered
+	 * equal.
+	 *
+	 * @param expecteds
+	 *            boolean array with expected values.
+	 * @param actuals
+	 *            boolean array with expected values.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(boolean[] expecteds, boolean[] actuals, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two byte arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown.
+	 *
+	 * @param expecteds
+	 *            byte array with expected values.
+	 * @param actuals
+	 *            byte array with actual values
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(byte[] expecteds, byte[] actuals, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two char arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown.
+	 *
+	 * @param expecteds
+	 *            char array with expected values.
+	 * @param actuals
+	 *            char array with actual values
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(char[] expecteds, char[] actuals, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two short arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown.
+	 *
+	 * @param expecteds
+	 *            short array with expected values.
+	 * @param actuals
+	 *            short array with actual values
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(short[] expecteds, short[] actuals, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two int arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown.
+	 *
+	 * @param expecteds
+	 *            int array with expected values.
+	 * @param actuals
+	 *            int array with actual values
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(int[] expecteds, int[] actuals, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two long arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown.
+	 *
+	 * @param expecteds
+	 *            long array with expected values.
+	 * @param actuals
+	 *            long array with actual values
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(long[] expecteds, long[] actuals, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two double arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown.
+	 *
+	 * @param expecteds
+	 *            double array with expected values.
+	 * @param actuals
+	 *            double array with actual values
+	 * @param delta
+	 *            the maximum delta between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(double[] expecteds, double[] actuals, double delta, String format,
+			Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals, delta);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two float arrays are equal. If they are not, an
+	 * {@link AssertionError} is thrown.
+	 *
+	 * @param expecteds
+	 *            float array with expected values.
+	 * @param actuals
+	 *            float array with actual values
+	 * @param delta
+	 *            the maximum delta between <code>expecteds[i]</code> and
+	 *            <code>actuals[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertArrayEquals(float[] expecteds, float[] actuals, float delta, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertArrayEquals(null, expecteds, actuals, delta);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two longs are equal. If they are not, an
+	 * {@link AssertionError} is thrown.
+	 *
+	 * @param expected
+	 *            expected long value.
+	 * @param actual
+	 *            actual long value
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertLongEquals(long expected, long actual, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertEquals(null, expected, actual);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two doubles are equal to within a positive delta.
+	 * If they are not, an {@link AssertionError} is thrown. If the expected
+	 * value is infinity then the delta value is ignored.NaNs are considered
+	 * equal: <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param delta
+	 *            the maximum delta between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertEquals(double expected, double actual, double delta, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertEquals(null, expected, actual, delta);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two floats are equal to within a positive delta.
+	 * If they are not, an {@link AssertionError} is thrown. If the expected
+	 * value is infinity then the delta value is ignored. NaNs are considered
+	 * equal: <code>assertEquals(Float.NaN, Float.NaN, *)</code> passes
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param delta
+	 *            the maximum delta between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertEquals(float expected, float actual, float delta, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertEquals(null, expected, actual, delta);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that an object isn't null. If it is an {@link AssertionError} is
+	 * thrown.
+	 *
+	 * @param object
+	 *            Object to check or <code>null</code>
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertNotNull(Object object, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertNotNull(null, object);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that an object is null. If it isn't an {@link AssertionError} is
+	 * thrown.
+	 *
+	 * @param object
+	 *            Object to check or <code>null</code>
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertNull(Object object, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertNull(null, object);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two objects refer to the same object. If they are not the
+	 * same, an {@link AssertionError} with a formatted message is thrown.
+	 *
+	 * @param expected
+	 *            the expected object
+	 * @param actual
+	 *            the object to compare to <code>expected</code>
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertSame(Object expected, Object actual, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertSame(null, expected, actual);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that two objects do not refer to the same object. If they do
+	 * refer to the same object, an {@link AssertionError} with a formatted message is
+	 * thrown.
+	 *
+	 * @param unexpected
+	 *            the object you don't expect
+	 * @param actual
+	 *            the object to compare to <code>unexpected</code>
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	static public void assertNotSame(Object unexpected, Object actual, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertNotSame(null, unexpected, actual);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
+	}
+
+	/**
+	 * Assert.assert that <code>actual</code> satisfies the condition specified by
+	 * <code>matcher</code>. If not, an {@link AssertionError} is thrown with
+	 * information about the matcher and failing value. Example:
+	 *
+	 * <pre>
+	 *   assertThat(0, is(1)); // fails:
+	 *     // failure message:
+	 *     // expected: is &lt;1&gt;
+	 *     // got value: &lt;0&gt;
+	 *   assertThat(0, is(not(1))) // passes
+	 * </pre>
+	 *
+	 * <code>org.hamcrest.Matcher</code> does not currently document the meaning
+	 * of its type parameter <code>T</code>. This method assumes that a matcher
+	 * typed as <code>Matcher&lt;T&gt;</code> can be meaningfully applied only
+	 * to values that could be assigned to a variable of type <code>T</code>.
+	 *
+	 * @param <T>
+	 *            the static type accepted by the matcher (this can flag obvious
+	 *            compile-time problems such as {@code assertThat(1, is("a"))}
+	 * @param actual
+	 *            the computed value being compared
+	 * @param matcher
+	 *            an expression, built of {@link Matcher}s, specifying allowed
+	 *            values
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 * @see org.hamcrest.CoreMatchers
+	 * @see org.hamcrest.MatcherAssert
+	 */
+	public static <T> void assertThat(T actual, Matcher<? super T> matcher, String format, Object... args)
+	{
+		try
+		{
+			Assert.assertThat("", actual, matcher);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(format, ex, args);
+		}
 	}
 }
