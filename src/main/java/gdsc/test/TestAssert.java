@@ -566,7 +566,7 @@ public class TestAssert
 	public static void wrapAssertionError(AssertionError error, String format, Object... args) throws AssertionError
 	{
 		String msg = error.getMessage();
-		if (msg.length() == 0)
+		if (msg == null || msg.length() == 0)
 			throw new AssertionError(String.format(format, args), error);
 		else
 			throw new AssertionError(String.format(format, args) + " " + msg, error);
@@ -585,14 +585,9 @@ public class TestAssert
 	 */
 	static public void assertTrue(boolean condition, String format, Object... args)
 	{
-		try
-		{
-			Assert.assertTrue(null, condition);
-		}
-		catch (AssertionError ex)
-		{
-			wrapAssertionError(ex, format, args);
-		}
+		if (condition)
+			return;
+		fail(format, args);
 	}
 
 	/**
@@ -608,14 +603,8 @@ public class TestAssert
 	 */
 	static public void assertFalse(boolean condition, String format, Object... args)
 	{
-		try
-		{
-			Assert.assertFalse(null, condition);
-		}
-		catch (AssertionError ex)
-		{
-			wrapAssertionError(ex, format, args);
-		}
+		if (condition)
+			fail(format, args);
 	}
 
 	/**
