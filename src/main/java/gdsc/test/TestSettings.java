@@ -726,7 +726,7 @@ public class TestSettings
 
 	/**
 	 * Log the speed test result. If true the message will be written at the info level. If false the message will be
-	 * written at the warn level.
+	 * written at the silent level with a failure prefix.
 	 * <p>
 	 * This is a helper method for speed tests that may not always pass.
 	 *
@@ -737,13 +737,22 @@ public class TestSettings
 	 */
 	public static void logSpeedTestResult(boolean result, String message)
 	{
-		LogLevel l = (result) ? LogLevel.INFO : LogLevel.WARN;
+		LogLevel l;
+		if (result)
+		{
+			l = LogLevel.INFO;
+		}
+		else
+		{
+			l = LogLevel.SILENT;
+			message = "Speed-Test Failure: " + message;
+		}
 		logln(l, message);
 	}
 
 	/**
 	 * Log the speed test result. If true the message will be written at the info level. If false the message will be
-	 * written at the warn level.
+	 * written at the silent level with a failure prefix.
 	 * <p>
 	 * This is a helper method for speed tests that may not always pass.
 	 *
@@ -756,7 +765,16 @@ public class TestSettings
 	 */
 	public static void logSpeedTestResult(boolean result, String format, Object... args)
 	{
-		LogLevel l = (result) ? LogLevel.INFO : LogLevel.WARN;
+		LogLevel l;
+		if (result)
+		{
+			l = LogLevel.INFO;
+		}
+		else
+		{
+			l = LogLevel.SILENT;
+			format = "Speed-Test Failure: " + format;
+		}
 		log(l, format, args);
 	}
 }
