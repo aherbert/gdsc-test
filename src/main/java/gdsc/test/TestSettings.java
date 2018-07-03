@@ -831,7 +831,7 @@ public class TestSettings
 		else
 		{
 			l = LogLevel.WARN;
-			message = "Speed-Test Failure: " + message;
+			message = "Speed-Test Stage Failure: " + message;
 		}
 		logln(l, message);
 	}
@@ -859,7 +859,7 @@ public class TestSettings
 		else
 		{
 			l = LogLevel.WARN;
-			format = "Speed-Test Failure: " + format;
+			format = "Speed-Test Stage Failure: " + format;
 		}
 		log(l, format, args);
 	}
