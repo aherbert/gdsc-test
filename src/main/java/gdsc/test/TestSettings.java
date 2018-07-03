@@ -725,6 +725,22 @@ public class TestSettings
 	}
 
 	/**
+	 * Assume speed testing is allowed the {@link TestComplexity#MEDIUM} complexity level.
+	 * <p>
+	 * Use this at the start of a speed test that has a long run time or is otherwise complex
+	 * enough to warrant skipping the test if not testing at that level of complexity.
+	 * <p>
+	 * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
+	 *
+	 * @param complexity
+	 *            the complexity
+	 */
+	public static void assumeSpeedTest()
+	{
+		assumeSpeedTest(TestComplexity.MEDIUM);
+	}
+
+	/**
 	 * Assume speed testing is allowed at the given complexity.
 	 * <p>
 	 * Use this at the start of a speed test that has a long run time or is otherwise complex
