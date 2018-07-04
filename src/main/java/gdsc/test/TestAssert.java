@@ -107,8 +107,18 @@ public class TestAssert
 	 */
 	public static void assertEqualsRelative(String message, double expected, double actual, double relativeError)
 	{
-		final double difference = max(Math.abs(expected), Math.abs(actual)) * relativeError;
-		Assert.assertEquals(message, expected, actual, difference);
+		//final double difference = max(Math.abs(expected), Math.abs(actual)) * relativeError;
+		//Assert.assertEquals(message, expected, actual, difference);
+
+		final double max = max(Math.abs(expected), Math.abs(actual));
+		try
+		{
+			Assert.assertEquals(message, expected, actual, max * relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
+		}
 	}
 
 	/**
@@ -200,8 +210,19 @@ public class TestAssert
 	 */
 	public static void assertEqualsRelative(String message, float expected, float actual, double relativeError)
 	{
-		final float difference = (float) (max(Math.abs(expected), Math.abs(actual)) * relativeError);
-		Assert.assertEquals(message, expected, actual, difference);
+		//final float difference = (float) (max(Math.abs(expected), Math.abs(actual)) * relativeError);
+		//Assert.assertEquals(message, expected, actual, difference);
+
+		final float max = max(Math.abs(expected), Math.abs(actual));
+		try
+		{
+			Assert.assertEquals(message, expected, actual, (float) (max * relativeError));
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
+		}
+
 	}
 
 	/**
@@ -550,6 +571,28 @@ public class TestAssert
 	// assertion error containing a formatted message.
 	// No checks are made that the format or args are not null. 
 	////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * Wraps an assertion error with a new error that has a formatted message appended to
+	 * the input error's message
+	 * 
+	 * @param error
+	 *            The error
+	 * @param format
+	 *            The format
+	 * @param args
+	 *            The arguments
+	 * @throws AssertionError
+	 */
+	public static void wrapAssertionErrorAppend(AssertionError error, String format, Object... args)
+			throws AssertionError
+	{
+		String msg = error.getMessage();
+		if (msg == null || msg.length() == 0)
+			throw new AssertionError(String.format(format, args), error);
+		else
+			throw new AssertionError(msg + " " + String.format(format, args), error);
+	}
 
 	/**
 	 * Wraps an assertion error with a new error that has a formatted message prepended to
