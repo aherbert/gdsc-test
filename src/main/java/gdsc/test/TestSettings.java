@@ -863,4 +863,69 @@ public class TestSettings
 		}
 		log(l, format, args);
 	}
+
+	/**
+	 * Log a failure at the {@link LogLevel#SILENT} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void logFailure(String format, Object... args)
+	{
+		logFailure(null, format, args);
+	}
+
+	/**
+	 * Log a failure at the {@link LogLevel#SILENT} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param t
+	 *            the throwable that caused the failure
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void logFailure(Throwable t, String format, Object... args)
+	{
+		String msg = (t == null) ? null : t.getMessage();
+		if (msg == null || msg.length() == 0)
+			log(LogLevel.SILENT, "Failure: " + format, args);
+		else
+			log(LogLevel.SILENT, "Failure: " + format + " : " + msg, args);
+	}
+	
+	/**
+	 * Log a failure at the {@link LogLevel#SILENT} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param message the message
+	 */
+	public static void logFailure(String message)
+	{
+		logFailure(null, message);
+	}
+
+	/**
+	 * Log a failure at the {@link LogLevel#SILENT} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param t            the throwable that caused the failure
+	 * @param message the message
+	 */
+	public static void logFailure(Throwable t, String message)
+	{
+		String msg = (t == null) ? null : t.getMessage();
+		if (msg == null || msg.length() == 0)
+			log(LogLevel.SILENT, "Failure: " + message);
+		else
+			log(LogLevel.SILENT, "Failure: " + message + " : " + msg);
+	}
 }
