@@ -59,6 +59,6 @@ public class TestSettingsTest
 	{
 		Object[] args = new Object[] { 1, 2.3 };
 		// Use silent to always run
-		TestSettings.log(LogLevel.SILENT, "log Object[] = %d %f %d\n", args, 3);
+		TestSettings.log(LogLevel.SILENT, "%d %f %d\n", args, 3);
 	}
 }
