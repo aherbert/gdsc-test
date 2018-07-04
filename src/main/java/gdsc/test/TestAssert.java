@@ -33,6 +33,34 @@ import org.junit.internal.ComparisonCriteria;
 public class TestAssert
 {
 	/**
+	 * Get the maximum
+	 *
+	 * @param a
+	 *            the first number
+	 * @param b
+	 *            the second number
+	 * @return the maximum
+	 */
+	private static double max(double a, double b)
+	{
+		return (a >= b) ? a : b;
+	}
+
+	/**
+	 * Get the maximum
+	 *
+	 * @param a
+	 *            the first number
+	 * @param b
+	 *            the second number
+	 * @return the maximum
+	 */
+	private static float max(float a, float b)
+	{
+		return (a >= b) ? a : b;
+	}
+
+	/**
 	 * Asserts that two doubles are equal to within a positive relativeError.
 	 * If they are not, an {@link AssertionError} is thrown with no
 	 * message. If the expected value is infinity then the relativeError value is
@@ -122,20 +150,6 @@ public class TestAssert
 	}
 
 	/**
-	 * Get the maximum
-	 *
-	 * @param a
-	 *            the first number
-	 * @param b
-	 *            the second number
-	 * @return the maximum
-	 */
-	private static double max(double a, double b)
-	{
-		return (a >= b) ? a : b;
-	}
-
-	/**
 	 * Asserts that two floats are equal to within a positive relativeError.
 	 * If they are not, an {@link AssertionError} is thrown with no
 	 * message. If the expected value is infinity then the relativeError value is
@@ -222,21 +236,184 @@ public class TestAssert
 		{
 			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
 		}
-
 	}
 
 	/**
-	 * Get the maximum
+	 * Asserts that two doubles are <b>not</b> equal to within a positive relativeError.
+	 * If they are, an {@link AssertionError} is thrown with no
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertNotEquals(Double.NaN, Double.NaN, *)</code> fails
 	 *
-	 * @param a
-	 *            the first number
-	 * @param b
-	 *            the second number
-	 * @return the maximum
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
 	 */
-	private static float max(float a, float b)
+	public static void assertNotEqualsRelative(double expected, double actual, double relativeError)
 	{
-		return (a >= b) ? a : b;
+		assertNotEqualsRelative(null, expected, actual, relativeError);
+	}
+
+	/**
+	 * Asserts that two doubles are <b>not</b> equal to within a positive relativeError.
+	 * If they are, an {@link AssertionError} is thrown with the formatted
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertNotEquals(Double.NaN, Double.NaN, *)</code> fails
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertNotEqualsRelative(double expected, double actual, double relativeError, String format,
+			Object... args)
+	{
+		try
+		{
+			assertNotEqualsRelative(null, expected, actual, relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(ex, format, args);
+		}
+	}
+
+	/**
+	 * Asserts that two doubles are <b>not</b> equal to within a positive relativeError.
+	 * If they are, an {@link AssertionError} is thrown with the given
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertNotEquals(Double.NaN, Double.NaN, *)</code> fails
+	 *
+	 * @param message
+	 *            the identifying message for the {@link AssertionError} (<code>null</code>
+	 *            okay)
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertNotEqualsRelative(String message, double expected, double actual, double relativeError)
+	{
+		//final double difference = max(Math.abs(expected), Math.abs(actual)) * relativeError;
+		//Assert.assertNotEquals(message, expected, actual, difference);
+
+		final double max = max(Math.abs(expected), Math.abs(actual));
+		try
+		{
+			Assert.assertNotEquals(message, expected, actual, max * relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
+		}
+	}
+
+	/**
+	 * Asserts that two floats are <b>not</b> equal to within a positive relativeError.
+	 * If they are, an {@link AssertionError} is thrown with no
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertNotEquals(Float.NaN, Float.NaN, *)</code> fails
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertNotEqualsRelative(float expected, float actual, double relativeError)
+	{
+		assertNotEqualsRelative(null, expected, actual, relativeError);
+	}
+
+	/**
+	 * Asserts that two floats are <b>not</b> equal to within a positive relativeError.
+	 * If they are, an {@link AssertionError} is thrown with the formatted
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertNotEquals(Double.NaN, Double.NaN, *)</code> fails
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            the message format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void assertNotEqualsRelative(float expected, float actual, double relativeError, String format,
+			Object... args)
+	{
+		try
+		{
+			assertNotEqualsRelative(null, expected, actual, relativeError);
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionError(ex, format, args);
+		}
+	}
+
+	/**
+	 * Asserts that two floats are <b>not</b> equal to within a positive relativeError.
+	 * If they are, an {@link AssertionError} is thrown with the given
+	 * message. If the expected value is infinity then the relativeError value is
+	 * ignored. NaNs are considered equal:
+	 * <code>assertNotEquals(Float.NaN, Float.NaN, *)</code> fails
+	 *
+	 * @param message
+	 *            the identifying message for the {@link AssertionError} (<code>null</code>
+	 *            okay)
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @param relativeError
+	 *            the maximum relative error between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertNotEqualsRelative(String message, float expected, float actual, double relativeError)
+	{
+		//final float difference = (float) (max(Math.abs(expected), Math.abs(actual)) * relativeError);
+		//Assert.assertNotEquals(message, expected, actual, difference);
+
+		final float max = max(Math.abs(expected), Math.abs(actual));
+		try
+		{
+			Assert.assertNotEquals(message, expected, actual, (float) (max * relativeError));
+		}
+		catch (AssertionError ex)
+		{
+			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
+		}
 	}
 
 	/**
