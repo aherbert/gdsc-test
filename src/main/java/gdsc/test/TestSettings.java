@@ -897,7 +897,7 @@ public class TestSettings
 		if (msg == null || msg.length() == 0)
 			log(LogLevel.SILENT, "Failure: " + format, args);
 		else
-			log(LogLevel.SILENT, "Failure: " + format + " : " + msg, args);
+			log(LogLevel.SILENT, "Failure: " + msg + " : " + format, args);
 	}
 
 	/**
@@ -927,8 +927,8 @@ public class TestSettings
 	{
 		String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
-			log(LogLevel.SILENT, "Failure: " + message);
+			logln(LogLevel.SILENT, "Failure: " + message);
 		else
-			log(LogLevel.SILENT, "Failure: " + message + " : " + msg);
+			logln(LogLevel.SILENT, "Failure: " + msg + " : " + message);
 	}
 }
