@@ -899,13 +899,14 @@ public class TestSettings
 		else
 			log(LogLevel.SILENT, "Failure: " + format + " : " + msg, args);
 	}
-	
+
 	/**
 	 * Log a failure at the {@link LogLevel#SILENT} level.
 	 * <p>
 	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
 	public static void logFailure(String message)
 	{
@@ -917,8 +918,10 @@ public class TestSettings
 	 * <p>
 	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
 	 *
-	 * @param t            the throwable that caused the failure
-	 * @param message the message
+	 * @param t
+	 *            the throwable that caused the failure
+	 * @param message
+	 *            the message
 	 */
 	public static void logFailure(Throwable t, String message)
 	{
