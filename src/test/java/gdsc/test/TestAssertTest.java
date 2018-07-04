@@ -23,170 +23,11 @@
  */
 package gdsc.test;
 
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.Test;
 
 public class TestAssertTest
 {
-	@Test
-	public void canAssertEqualsDoubleArraysUsingRelativeError()
-	{
-		double[] e = new double[] { Math.PI };
-		for (double error : new double[] { 0, 1e-8, 1e-6 })
-		{
-			double[] o = e.clone();
-			if (error == 0)
-			{
-				TestAssert.assertArrayEqualsRelative(e, o, 0);
-				continue;
-			}
-
-			for (int i = 0; i < o.length; i++)
-				o[i] = Math.nextUp(e[i] - e[i] * error);
-			TestAssert.assertArrayEqualsRelative(e, o, error);
-
-			for (int i = 0; i < o.length; i++)
-				o[i] = Math.nextDown(e[i] + e[i] * error);
-			TestAssert.assertArrayEqualsRelative(e, o, error);
-		}
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canAssertNotEqualsDownDoubleArraysUsingRelativeError()
-	{
-		double[] e = new double[] { Math.PI };
-		double error = 1e-8;
-		double[] o = e.clone();
-
-		for (int i = 0; i < o.length; i++)
-			o[i] = Math.nextDown(e[i] - e[i] * error);
-		TestAssert.assertArrayEqualsRelative(e, o, error);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canAssertNotEqualsUpDoubleArraysUsingRelativeError()
-	{
-		double[] e = new double[] { Math.PI };
-		double error = 1e-8;
-		double[] o = e.clone();
-
-		for (int i = 0; i < o.length; i++)
-			o[i] = Math.nextUp(e[i] + e[i] * error);
-		TestAssert.assertArrayEqualsRelative(e, o, error);
-	}
-
-	@Test
-	public void canAssertEqualsObjectDoubleArraysUsingRelativeError()
-	{
-		double[] e = new double[] { 2 };
-		double[] o = new double[] { 2.1 };
-		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.05);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canAssertNotEqualsObjectDoubleArraysUsingRelativeError()
-	{
-		double[] e = new double[] { 2 };
-		double[] o = new double[] { 2.1 };
-		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.01);
-	}
-
-	@Test
-	public void canAssertEqualsObjectDoubleDoubleArraysUsingRelativeError()
-	{
-		double[][] e = new double[][] { { 2 } };
-		double[][] o = new double[][] { { 2.1 } };
-		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.05);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canAssertNotEqualsObjectDoubleDoubleArraysUsingRelativeError()
-	{
-		double[][] e = new double[][] { { 2 } };
-		double[][] o = new double[][] { { 2.1 } };
-		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.01);
-	}
-
-	@Test
-	public void canAssertEqualsFloatArraysUsingRelativeError()
-	{
-		float[] e = new float[] { (float) Math.PI };
-		for (double error : new double[] { 0, 1e-8, 1e-6 })
-		{
-			float[] o = e.clone();
-			if (error == 0)
-			{
-				TestAssert.assertArrayEqualsRelative(e, o, 0);
-				continue;
-			}
-
-			for (int i = 0; i < o.length; i++)
-				o[i] = (float) Math.nextUp(e[i] - e[i] * error);
-			TestAssert.assertArrayEqualsRelative(e, o, error);
-
-			for (int i = 0; i < o.length; i++)
-				o[i] = (float) Math.nextDown(e[i] + e[i] * error);
-			TestAssert.assertArrayEqualsRelative(e, o, error);
-		}
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canAssertNotEqualsDownFloatArraysUsingRelativeError()
-	{
-		float[] e = new float[] { (float) Math.PI };
-		double error = 1e-8;
-		float[] o = e.clone();
-
-		for (int i = 0; i < o.length; i++)
-			o[i] = Math.nextDown((float) (e[i] - e[i] * error));
-		TestAssert.assertArrayEqualsRelative(e, o, error);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canAssertNotEqualsUpFloatArraysUsingRelativeError()
-	{
-		float[] e = new float[] { (float) Math.PI };
-		double error = 1e-8;
-		float[] o = e.clone();
-
-		for (int i = 0; i < o.length; i++)
-			o[i] = Math.nextUp((float) (e[i] + e[i] * error));
-		TestAssert.assertArrayEqualsRelative(e, o, error);
-	}
-
-	@Test
-	public void canAssertEqualsObjectFloatArraysUsingRelativeError()
-	{
-		float[] e = new float[] { 2 };
-		float[] o = new float[] { 2.1f };
-		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.05);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canAssertNotEqualsObjectFloatArraysUsingRelativeError()
-	{
-		float[] e = new float[] { 2 };
-		float[] o = new float[] { 2.1f };
-		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.01);
-	}
-
-	@Test
-	public void canAssertEqualsObjectFloatFloatArraysUsingRelativeError()
-	{
-		float[][] e = new float[][] { { 2 } };
-		float[][] o = new float[][] { { 2.1f } };
-		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.05);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void canAssertNotEqualsObjectFloatFloatArraysUsingRelativeError()
-	{
-		float[][] e = new float[][] { { 2 } };
-		float[][] o = new float[][] { { 2.1f } };
-		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.01);
-	}
-
 	@Test
 	public void canAssertWithFormattedMessage()
 	{
@@ -200,5 +41,299 @@ public class TestAssertTest
 			TestSettings.info(msg);
 			Assert.assertTrue("Unexpected message", msg.startsWith("[2] == 3.50"));
 		}
+	}
+
+	// Testing of relative error.
+
+	// Observed and expected
+	static double doubleL = 1;
+	static double doubleH = 2;
+	static double relativeError;
+	// Create next up/down for each that changes the relative error
+	static double doubleLU, doubleLD, doubleHU, doubleHD;
+
+	// Since the relative error still uses a double the float values 
+	// are computed using the double relative error.
+	static float floatL = (float) doubleL;
+	static float floatH = (float) doubleH;
+	// Create next up/down for each that changes the relative error
+	static float floatLU, floatLD, floatHU, floatHD;
+
+	static
+	{
+		// Note the relative error is diff / max(e, o).
+		doubleLU = doubleLD = doubleL;
+		doubleHU = doubleHD = doubleH;
+		relativeError = relativeError(doubleL, doubleH);
+		while (relativeError(doubleLU, doubleH) == relativeError)
+			doubleLU = Math.nextUp(doubleLU);
+		while (relativeError(doubleLD, doubleH) == relativeError)
+			doubleLD = Math.nextDown(doubleLD);
+		while (relativeError(doubleHU, doubleL) == relativeError)
+			doubleHU = Math.nextUp(doubleHU);
+		while (relativeError(doubleHD, doubleL) == relativeError)
+			doubleHD = Math.nextDown(doubleHD);
+
+		// Since the relative error still uses a double the float values 
+		// are computed using the double relative error.
+		floatLU = floatLD = floatL;
+		floatHU = floatHD = floatH;
+		while (relativeError(floatLU, floatH) == relativeError)
+			floatLU = Math.nextUp(floatLU);
+		while (relativeError(floatLD, floatH) == relativeError)
+			floatLD = Math.nextDown(floatLD);
+		while (relativeError(floatHU, floatL) == relativeError)
+			floatHU = Math.nextUp(floatHU);
+		while (relativeError(floatHD, floatL) == relativeError)
+			floatHD = Math.nextDown(floatHD);
+	}
+
+	static double relativeError(double e, double o)
+	{
+		// Assumes o and e are positive
+		return Math.abs(o - e) / Math.max(o, e);
+	}
+
+	static double relativeError(float e, float o)
+	{
+		// This method is required to ensure float arithmetic in computing the error
+		
+		// Assumes o and e are positive
+		return Math.abs(o - e) / Math.max(o, e);
+	}
+
+	// XXX - Copy from here
+	@Test
+	public void canAssertEqualsAndNotEqualsDoubleUsingRelativeError()
+	{
+		// Equal within relative error
+		TestAssert.assertEqualsRelative(doubleL, doubleH, relativeError);
+
+		// Move closer together they should be equal
+		TestAssert.assertEqualsRelative(doubleLU, doubleH, relativeError);
+		TestAssert.assertEqualsRelative(doubleL, doubleHD, relativeError);
+
+		// Move further apart they should be not equal
+		TestAssert.assertNotEqualsRelative(doubleL, doubleHU, relativeError);
+		TestAssert.assertNotEqualsRelative(doubleLD, doubleH, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsUpDoubleUsingRelativeError()
+	{
+		// Move further apart they should be not equal
+		TestAssert.assertEqualsRelative(doubleL, doubleHU, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsDownDoubleUsingRelativeError()
+	{
+		// Move further apart they should be not equal
+		TestAssert.assertEqualsRelative(doubleLD, doubleH, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsErrorsDoubleUsingRelativeError()
+	{
+		// Equal within relative error
+		TestAssert.assertNotEqualsRelative(doubleL, doubleH, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsErrorsUpDoubleUsingRelativeError()
+	{
+		// Move closer together they should be equal
+		TestAssert.assertNotEqualsRelative(doubleLU, doubleH, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsErrorsDownDoubleUsingRelativeError()
+	{
+		// Move closer together they should be equal
+		TestAssert.assertNotEqualsRelative(doubleL, doubleHD, relativeError);
+	}
+
+	@Test
+	public void canAssertEqualsDoubleArraysUsingRelativeError()
+	{
+		double[] e = new double[] { doubleL };
+		TestAssert.assertArrayEqualsRelative(e, e, 0);
+
+		double[] o = new double[] { doubleH };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+
+		e = new double[] { doubleLU };
+		o = new double[] { doubleH };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+
+		e = new double[] { doubleL };
+		o = new double[] { doubleHD };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsUpDoubleArraysUsingRelativeError()
+	{
+		double[] e = new double[] { doubleL };
+		double[] o = new double[] { doubleHU };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsDownDoubleArraysUsingRelativeError()
+	{
+		double[] e = new double[] { doubleLD };
+		double[] o = new double[] { doubleH };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+	}
+
+	@Test
+	public void canAssertEqualsObjectDoubleArraysUsingRelativeError()
+	{
+		double[] e = new double[] { 1 };
+		double[] o = new double[] { 2 };
+		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.5);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsObjectDoubleArraysUsingRelativeError()
+	{
+		double[] e = new double[] { 1 };
+		double[] o = new double[] { 2 };
+		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.1);
+	}
+
+	@Test
+	public void canAssertEqualsObjectDoubleDoubleArraysUsingRelativeError()
+	{
+		double[][] e = new double[][] { { 1 } };
+		double[][] o = new double[][] { { 2 } };
+		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.5);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsObjectDoubleDoubleArraysUsingRelativeError()
+	{
+		double[][] e = new double[][] { { 1 } };
+		double[][] o = new double[][] { { 2 } };
+		TestAssert.assertDoubleArrayEqualsRelative((Object) e, (Object) o, 0.1);
+	}
+
+	// XXX - Copy to here	
+
+	@Test
+	public void canAssertEqualsAndNotEqualsFloatUsingRelativeError()
+	{
+		// Equal within relative error
+		TestAssert.assertEqualsRelative(floatL, floatH, relativeError);
+
+		// Move closer together they should be equal
+		TestAssert.assertEqualsRelative(floatLU, floatH, relativeError);
+		TestAssert.assertEqualsRelative(floatL, floatHD, relativeError);
+
+		// Move further apart they should be not equal
+		TestAssert.assertNotEqualsRelative(floatL, floatHU, relativeError);
+		TestAssert.assertNotEqualsRelative(floatLD, floatH, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsUpFloatUsingRelativeError()
+	{
+		// Move further apart they should be not equal
+		TestAssert.assertEqualsRelative(floatL, floatHU, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsDownFloatUsingRelativeError()
+	{
+		// Move further apart they should be not equal
+		TestAssert.assertEqualsRelative(floatLD, floatH, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsErrorsFloatUsingRelativeError()
+	{
+		// Equal within relative error
+		TestAssert.assertNotEqualsRelative(floatL, floatH, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsErrorsUpFloatUsingRelativeError()
+	{
+		// Move closer together they should be equal
+		TestAssert.assertNotEqualsRelative(floatLU, floatH, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertNotEqualsErrorsDownFloatUsingRelativeError()
+	{
+		// Move closer together they should be equal
+		TestAssert.assertNotEqualsRelative(floatL, floatHD, relativeError);
+	}
+
+	@Test
+	public void canAssertEqualsFloatArraysUsingRelativeError()
+	{
+		float[] e = new float[] { floatL };
+		TestAssert.assertArrayEqualsRelative(e, e, 0);
+
+		float[] o = new float[] { floatH };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+
+		e = new float[] { floatLU };
+		o = new float[] { floatH };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+
+		e = new float[] { floatL };
+		o = new float[] { floatHD };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsUpFloatArraysUsingRelativeError()
+	{
+		float[] e = new float[] { floatL };
+		float[] o = new float[] { floatHU };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsDownFloatArraysUsingRelativeError()
+	{
+		float[] e = new float[] { floatLD };
+		float[] o = new float[] { floatH };
+		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+	}
+
+	@Test
+	public void canAssertEqualsObjectFloatArraysUsingRelativeError()
+	{
+		float[] e = new float[] { 1 };
+		float[] o = new float[] { 2 };
+		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.5);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsObjectFloatArraysUsingRelativeError()
+	{
+		float[] e = new float[] { 1 };
+		float[] o = new float[] { 2 };
+		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.1);
+	}
+
+	@Test
+	public void canAssertEqualsObjectFloatFloatArraysUsingRelativeError()
+	{
+		float[][] e = new float[][] { { 1 } };
+		float[][] o = new float[][] { { 2 } };
+		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.5);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void canAssertEqualsErrorsObjectFloatFloatArraysUsingRelativeError()
+	{
+		float[][] e = new float[][] { { 1 } };
+		float[][] o = new float[][] { { 2 } };
+		TestAssert.assertFloatArrayEqualsRelative((Object) e, (Object) o, 0.1);
 	}
 }
