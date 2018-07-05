@@ -3,6 +3,7 @@ GDSC Test
 
 The GDSC Test package contains code for use with the JUnit test framework.
 
+[![Build Status](https://travis-ci.com/aherbert/GDSC-Test.svg?branch=master)](https://travis-ci.com/aherbert/GDSC-Test)
 
 Maven Installation
 ------------------
