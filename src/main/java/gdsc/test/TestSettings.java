@@ -777,7 +777,7 @@ public class TestSettings
 		else
 		{
 			l = LogLevel.SILENT;
-			message = "Speed-Test Failure: " + message;
+			message = getCodePoint(3) + "Speed-Test Failure: " + message;
 		}
 		logln(l, message);
 	}
@@ -805,7 +805,7 @@ public class TestSettings
 		else
 		{
 			l = LogLevel.SILENT;
-			format = "Speed-Test Failure: " + format;
+			format = getCodePoint(3) + "Speed-Test Failure: " + format;
 		}
 		log(l, format, args);
 	}
@@ -831,7 +831,7 @@ public class TestSettings
 		else
 		{
 			l = LogLevel.WARN;
-			message = "Speed-Test Stage Failure: " + message;
+			message = getCodePoint(3) + "Speed-Test Stage Failure: " + message;
 		}
 		logln(l, message);
 	}
@@ -859,9 +859,68 @@ public class TestSettings
 		else
 		{
 			l = LogLevel.WARN;
-			format = "Speed-Test Stage Failure: " + format;
+			format = getCodePoint(3) + "Speed-Test Stage Failure: " + format;
 		}
 		log(l, format, args);
+	}
+
+	/**
+	 * Log a failure at the {@link LogLevel#SILENT} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 */
+	public static void logFailure()
+	{
+		logln(LogLevel.SILENT, getCodePoint(3) + "Failure");
+	}
+
+	/**
+	 * Log a failure at the {@link LogLevel#SILENT} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param t
+	 *            the throwable that caused the failure
+	 */
+	public static void logFailure(Throwable t)
+	{
+		String msg = (t == null) ? null : t.getMessage();
+		if (msg == null || msg.length() == 0)
+			logln(LogLevel.SILENT, getCodePoint(3) + "Failure");
+		else
+			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + msg);
+	}
+
+	/**
+	 * Log a failure at the {@link LogLevel#SILENT} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param message
+	 *            the message
+	 */
+	public static void logFailure(String message)
+	{
+		logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
+	}
+
+	/**
+	 * Log a failure at the {@link LogLevel#SILENT} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param t
+	 *            the throwable that caused the failure
+	 * @param message
+	 *            the message
+	 */
+	public static void logFailure(Throwable t, String message)
+	{
+		String msg = (t == null) ? null : t.getMessage();
+		if (msg == null || msg.length() == 0)
+			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
+		else
+			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + msg + " : " + message);
 	}
 
 	/**
@@ -910,7 +969,7 @@ public class TestSettings
 		StackTraceElement e = getStaceTraceElement(countDown);
 		return (e == null) ? "" : String.format("%s:%s:%d:", e.getClassName(), e.getMethodName(), e.getLineNumber());
 	}
-	
+
 	/**
 	 * Gets the stacktrace element marking the position where this method was called.
 	 *
@@ -952,37 +1011,5 @@ public class TestSettings
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Log a failure at the {@link LogLevel#SILENT} level.
-	 * <p>
-	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
-	 *
-	 * @param message
-	 *            the message
-	 */
-	public static void logFailure(String message)
-	{
-		logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
-	}
-
-	/**
-	 * Log a failure at the {@link LogLevel#SILENT} level.
-	 * <p>
-	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
-	 *
-	 * @param t
-	 *            the throwable that caused the failure
-	 * @param message
-	 *            the message
-	 */
-	public static void logFailure(Throwable t, String message)
-	{
-		String msg = (t == null) ? null : t.getMessage();
-		if (msg == null || msg.length() == 0)
-			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
-		else
-			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + msg + " : " + message);
 	}
 }

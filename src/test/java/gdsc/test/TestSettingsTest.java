@@ -79,11 +79,24 @@ public class TestSettingsTest
 	@Test
 	public void canLogFailure()
 	{
-		TestSettings.logFailure("This is a test failure");
-		TestSettings.logFailure(new Throwable("Fail message"), "This is a test failure with throwable");
-		TestSettings.logFailure((Throwable) null, "This is a test failure with null throwable");
-		TestSettings.logFailure("This is a formatted test failure: %d\n", 1);
-		TestSettings.logFailure(new Throwable("Fail message"), "This is a formatted test failure with throwable: %d\n", 2);
-		TestSettings.logFailure((Throwable) null, "This is a formatted test failure with null throwable: %d\n", 3);
+		TestSettings.logFailure();
+		TestSettings.logFailure("This is a test failure message");
+		TestSettings.logFailure((Throwable) null);
+		TestSettings.logFailure(new Throwable("Throwable message"));
+		TestSettings.logFailure(new Throwable("Throwable message"), "This is a test failure message with throwable");
+		TestSettings.logFailure((Throwable) null, "This is a test failure message with null throwable");
+		TestSettings.logFailure("This is a formatted test failure message: %d\n", 1);
+		TestSettings.logFailure(new Throwable("Throwable message"),
+				"This is a formatted test failure message with throwable: %d\n", 2);
+		TestSettings.logFailure((Throwable) null, "This is a formatted test failure message with null throwable: %d\n", 3);
+	}
+
+	@Test
+	public void canLogSpeedTestFailure()
+	{
+		TestSettings.logSpeedTestResult(false, "This is a speed test failure message");
+		TestSettings.logSpeedTestResult(false, "This is a speed test failure formatted message: %d\n", 1);
+		TestSettings.logSpeedTestStageResult(false, "This is a speed test stage failure message");
+		TestSettings.logSpeedTestStageResult(false, "This is a speed test stage failure formatted message: %d\n", 1);
 	}
 }
