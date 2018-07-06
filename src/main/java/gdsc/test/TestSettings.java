@@ -831,6 +831,8 @@ public class TestSettings
 		else
 		{
 			l = LogLevel.WARN;
+			if (!allow(l)) // Avoid getting the stack trace if not logging
+				return;
 			message = getCodePoint(3) + "Speed-Test Stage Failure: " + message;
 		}
 		logln(l, message);
@@ -859,6 +861,8 @@ public class TestSettings
 		else
 		{
 			l = LogLevel.WARN;
+			if (!allow(l)) // Avoid getting the stack trace if not logging
+				return;
 			format = getCodePoint(3) + "Speed-Test Stage Failure: " + format;
 		}
 		log(l, format, args);
