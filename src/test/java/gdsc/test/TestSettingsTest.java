@@ -29,6 +29,7 @@ import org.junit.Test;
 
 import gdsc.test.TestSettings;
 import gdsc.test.TestSettings.LogLevel;
+import org.junit.Assert;
 
 public class TestSettingsTest
 {
@@ -40,25 +41,49 @@ public class TestSettingsTest
 		TestSettings.warn("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity());
 		TestSettings.warn("TestSettings Seed = %d\n", TestSettings.getSeed());
 	}
-	
+
 	@Test
 	public void canLogVarArgs()
 	{
 		TestSettings.log(LogLevel.WARN, "log varargs = %d %f\n", 1, 2.3);
 	}
-	
+
 	@Test
 	public void canLogObjectArray()
 	{
 		Object[] args = new Object[] { 1, 2.3 };
 		TestSettings.log(LogLevel.WARN, "log Object[] = %d %f\n", args);
 	}
-	
-	@Test(expected=IllegalFormatConversionException.class)
+
+	@Test(expected = IllegalFormatConversionException.class)
 	public void cannotLogObjectArrayAndVarargs()
 	{
 		Object[] args = new Object[] { 1, 2.3 };
 		// Use silent to always run
 		TestSettings.log(LogLevel.SILENT, "%d %f %d\n", args, 3);
+	}
+
+	@Test
+	public void canStaceTraceElement()
+	{
+		StackTraceElement e = new Throwable().getStackTrace()[0];
+		StackTraceElement o = TestSettings.getStaceTraceElement();
+		Assert.assertNotNull(e);
+		Assert.assertNotNull(o);
+		Assert.assertEquals(e.getClassName(), o.getClassName());
+		Assert.assertEquals(e.getMethodName(), o.getMethodName());
+		Assert.assertEquals(e.getLineNumber() + 1, o.getLineNumber());
+		TestSettings.log(LogLevel.INFO, "%s:%s:%d\n", o.getClassName(), o.getMethodName(), o.getLineNumber());
+	}
+
+	@Test
+	public void canLogFailure()
+	{
+		TestSettings.logFailure("This is a test failure");
+		TestSettings.logFailure(new Throwable("Fail message"), "This is a test failure with throwable");
+		TestSettings.logFailure((Throwable) null, "This is a test failure with null throwable");
+		TestSettings.logFailure("This is a formatted test failure: %d\n", 1);
+		TestSettings.logFailure(new Throwable("Fail message"), "This is a formatted test failure with throwable: %d\n", 2);
+		TestSettings.logFailure((Throwable) null, "This is a formatted test failure with null throwable: %d\n", 3);
 	}
 }

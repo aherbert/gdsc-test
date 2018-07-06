@@ -876,7 +876,7 @@ public class TestSettings
 	 */
 	public static void logFailure(String format, Object... args)
 	{
-		logFailure(null, format, args);
+		log(LogLevel.SILENT, getCodePoint(3) + "Failure: " + format, args);
 	}
 
 	/**
@@ -895,9 +895,63 @@ public class TestSettings
 	{
 		String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
-			log(LogLevel.SILENT, "Failure: " + format, args);
+			log(LogLevel.SILENT, getCodePoint(3) + "Failure: " + format, args);
 		else
-			log(LogLevel.SILENT, "Failure: " + msg + " : " + format, args);
+			log(LogLevel.SILENT, getCodePoint(3) + "Failure: " + msg + " : " + format, args);
+	}
+
+	/**
+	 * Gets the code point: ClassName:MethodName:LineNumber for the method that initialised the error.
+	 *
+	 * @return the code point
+	 */
+	private static String getCodePoint(int countDown)
+	{
+		StackTraceElement e = getStaceTraceElement(countDown);
+		return (e == null) ? "" : String.format("%s:%s:%d:", e.getClassName(), e.getMethodName(), e.getLineNumber());
+	}
+	
+	/**
+	 * Gets the stacktrace element marking the position where this method was called.
+	 *
+	 * @return the stacktrace element
+	 */
+	public static StackTraceElement getStaceTraceElement()
+	{
+		return ___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(1);
+	}
+
+	/**
+	 * Gets the stacktrace element marking the position where this method was called.
+	 *
+	 * @return the stacktrace element
+	 */
+	private static StackTraceElement getStaceTraceElement(int countDown)
+	{
+		return ___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(countDown);
+	}
+
+	private static StackTraceElement ___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(int countDown)
+	{
+		// Based on https://stackoverflow.com/questions/17473148/dynamically-get-the-current-line-number/17473358
+		boolean thisMethod = false;
+		StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+		for (int i = 0; i < elements.length; i++)
+		{
+			StackTraceElement e = elements[i];
+			if (thisMethod)
+			{
+				if (countDown-- == 0)
+				{
+					return e;
+				}
+			}
+			else if (e.getMethodName().equals("___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3"))
+			{
+				thisMethod = true;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -910,7 +964,7 @@ public class TestSettings
 	 */
 	public static void logFailure(String message)
 	{
-		logFailure(null, message);
+		logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
 	}
 
 	/**
@@ -927,8 +981,8 @@ public class TestSettings
 	{
 		String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
-			logln(LogLevel.SILENT, "Failure: " + message);
+			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
 		else
-			logln(LogLevel.SILENT, "Failure: " + msg + " : " + message);
+			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + msg + " : " + message);
 	}
 }
