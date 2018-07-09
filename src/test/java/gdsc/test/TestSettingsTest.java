@@ -100,4 +100,35 @@ public class TestSettingsTest
 		TestSettings.logSpeedTestStageResult(false, "This is a speed test stage failure message");
 		TestSettings.logSpeedTestStageResult(false, "This is a speed test stage failure formatted message: %d\n", 1);
 	}
+
+	@Test
+	public void canLogSpeedTestTaskFailure()
+	{
+		//@formatter:off
+		TimingTask fast = new TimingTask()
+		{
+			public Object run(Object data) { return null; }
+			public int getSize() { return 0; }
+			public String getName()	{ return "fast"; }
+			public Object getData(int i) { return null; }
+			public void check(int i, Object result) {}
+		};
+		TimingTask slow = new TimingTask()
+		{
+			public Object run(Object data) { return null; }
+			public int getSize() { return 0; }
+			public String getName()	{ return "slow"; }
+			public Object getData(int i) { return null; }
+			public void check(int i, Object result) {}
+		};
+		TimingResult fastR = new TimingResult(fast, new long[] { 100 });
+		TimingResult slowR = new TimingResult(slow, new long[] { 1000 });
+		TimingResult slowFastR = new TimingResult(fast, new long[] { 10000 });
+		//@formatter:on
+		
+		TestSettings.logSpeedTestResult(slowR, fastR);
+		TestSettings.logSpeedTestResult(slowR, slowFastR);
+		TestSettings.logSpeedTestStageResult(slowR, fastR);
+		TestSettings.logSpeedTestStageResult(slowR, slowFastR);
+	}
 }

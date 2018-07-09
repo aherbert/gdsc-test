@@ -778,6 +778,78 @@ public class TestSettings
 	}
 
 	/**
+	 * Log the speed test result of two timing tasks. A test is made to determine if the fast has a lower time than the
+	 * slow.
+	 * <p>
+	 * If true the message will be written at the {@link LogLevel#INFO} level. If false the message will be written at
+	 * the {@link LogLevel#SILENT} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param slow
+	 *            the slow task
+	 * @param fast
+	 *            the fast task
+	 */
+	public static void logSpeedTestResult(TimingResult slow, TimingResult fast)
+	{
+		double t1 = fast.getMean();
+		double t2 = slow.getMean();
+		LogLevel l;
+		String message;
+		if (t1 < t2)
+		{
+			l = LogLevel.INFO;
+			if (!allow(l))
+				return;		
+			message = "%s (%s) => %s (%s) : %.2fx\n";
+		}
+		else
+		{
+			l = LogLevel.SILENT;
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+		}
+		log(l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
+	}
+
+	/**
+	 * Log the speed test result of two timing tasks. A test is made to determine if the fast has a lower time than the
+	 * slow.
+	 * <p>
+	 * If true the message will be written at the {@link LogLevel#INFO} level. If false the message will be written at
+	 * the {@link LogLevel#SILENT} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param slow
+	 *            the slow task
+	 * @param fast
+	 *            the fast task
+	 * @param useMin
+	 *            Set to true to use the min execution time (the default is mean)
+	 */
+	public static void logSpeedTestResult(TimingResult slow, TimingResult fast, boolean useMin)
+	{
+		double t1 = (useMin) ? fast.getMin() : fast.getMean();
+		double t2 = (useMin) ? slow.getMin() : slow.getMean();
+		LogLevel l;
+		String message;
+		if (t1 < t2)
+		{
+			l = LogLevel.INFO;
+			if (!allow(l))
+				return;		
+			message = "%s (%s) => %s (%s) : %.2fx\n";
+		}
+		else
+		{
+			l = LogLevel.SILENT;
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+		}
+		log(l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
+	}
+
+	/**
 	 * Log the speed test intermediate stage result. If true the message will be written at the {@link LogLevel#INFO}
 	 * level. If false the message will be written at the {@link LogLevel#WARN} level with a failure prefix.
 	 * <p>
@@ -833,6 +905,84 @@ public class TestSettings
 			format = getCodePoint(3) + "Speed-Test Stage Failure: " + format;
 		}
 		log(l, format, args);
+	}
+
+	/**
+	 * Log the speed test stage result of two timing tasks. A test is made to determine if the fast has a lower time
+	 * than the
+	 * slow.
+	 * <p>
+	 * If true the message will be written at the {@link LogLevel#WARN} level. If false the message will be written at
+	 * the {@link LogLevel#SILENT} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param slow
+	 *            the slow task
+	 * @param fast
+	 *            the fast task
+	 */
+	public static void logSpeedTestStageResult(TimingResult slow, TimingResult fast)
+	{
+		double t1 = fast.getMean();
+		double t2 = slow.getMean();
+		LogLevel l;
+		String message;
+		if (t1 < t2)
+		{
+			l = LogLevel.INFO;
+			if (!allow(l))
+				return;		
+			message = "%s (%s) => %s (%s) : %.2fx\n";
+		}
+		else
+		{
+			l = LogLevel.WARN;
+			if (!allow(l))
+				return;		
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+		}
+		log(l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
+	}
+
+	/**
+	 * Log the speed test stage result of two timing tasks. A test is made to determine if the fast has a lower time
+	 * than the
+	 * slow.
+	 * <p>
+	 * If true the message will be written at the {@link LogLevel#WARN} level. If false the message will be written at
+	 * the {@link LogLevel#SILENT} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param slow
+	 *            the slow task
+	 * @param fast
+	 *            the fast task
+	 * @param useMin
+	 *            Set to true to use the min execution time (the default is mean)
+	 */
+	public static void logSpeedTestStageResult(TimingResult slow, TimingResult fast, boolean useMin)
+	{
+		double t1 = (useMin) ? fast.getMin() : fast.getMean();
+		double t2 = (useMin) ? slow.getMin() : slow.getMean();
+		LogLevel l;
+		String message;
+		if (t1 < t2)
+		{
+			l = LogLevel.INFO;
+			if (!allow(l))
+				return;		
+			message = "%s (%s) => %s (%s) : %.2fx\n";
+		}
+		else
+		{
+			l = LogLevel.WARN;
+			if (!allow(l))
+				return;		
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+		}
+		log(l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
 	}
 
 	/**
