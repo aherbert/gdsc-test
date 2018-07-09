@@ -26,6 +26,7 @@ package gdsc.test;
 import org.junit.Assert;
 import org.junit.Test;
 
+@SuppressWarnings("javadoc")
 public class TestCounterTest
 {
 	private void runTestAssert(int size, int limit, boolean exceed)

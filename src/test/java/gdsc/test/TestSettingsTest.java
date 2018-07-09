@@ -31,6 +31,7 @@ import gdsc.test.TestSettings;
 import gdsc.test.TestSettings.LogLevel;
 import org.junit.Assert;
 
+@SuppressWarnings("javadoc")
 public class TestSettingsTest
 {
 	@Test
