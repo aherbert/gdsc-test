@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>gdsc</groupId>
+	<groupId>uk.ac.sussex.gdsc</groupId>
 	<artifactId>gdsc-test</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>GDSC Test</name>
-	<url>http://www.sussex.ac.uk/gdsc/intranet/microscopy/imagej/gdsc_plugins</url>
+	<url>http:///github.com/aherbert/GDSC-Test</url>
 	<organization>
 		<name>Genome Damage and Stability Centre</name>
 		<url>http://www.sussex.ac.uk/gdsc/</url>
@@ -36,6 +36,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
 		<system>None</system>
 	</ciManagement>
 	<scm>
+		<connection>scm:git:git://github.com/aherbert/GDSC-Test.git</connection>
+		<developerConnection>scm:git:ssh://github.com:aherbert/GDSC-Test.git</developerConnection>
 		<url>https://github.com/aherbert/GDSC-Test</url>
 	</scm>
 
@@ -44,6 +46,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
 			<id>aherbert</id>
 			<name>Alex Herbert</name>
 			<email>a.herbert@sussex.ac.uk</email>
+			<organization>GDSC</organization>
+			<organizationUrl>http://www.sussex.ac.uk/gdsc/</organizationUrl>
 			<roles>
 				<role>developer</role>
 			</roles>
@@ -61,37 +65,11 @@ The GDSC Test package contains code for use with the JUnit test framework.
 		<build.date>${maven.build.timestamp}</build.date>
 		<license.licenseName>gpl_v3</license.licenseName>
 		<license.copyrightOwners>Alex Herbert</license.copyrightOwners>
-    	<license.projectName>${project.description}</license.projectName>
+		<license.projectName>${project.description}</license.projectName>
 	</properties>
 
 	<build>
 		<defaultGoal>clean install</defaultGoal>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<version>1.16</version>
-				<configuration>
-					<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-					<canUpdateDescription>true</canUpdateDescription>
-					<canUpdateCopyright>true</canUpdateCopyright>
-				</configuration>
-			</plugin>
-		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -104,8 +82,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
 					</configuration>
 				</plugin>
 				<plugin>
-					<!-- NOTE: We don't need a groupId specification because the group is 
-						org.apache.maven.plugins ...which is assumed by default. -->
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.4</version>
 					<configuration>
@@ -123,6 +100,45 @@ The GDSC Test package contains code for use with the JUnit test framework.
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.16</version>
+				<configuration>
+					<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+					<canUpdateDescription>true</canUpdateDescription>
+					<canUpdateCopyright>true</canUpdateCopyright>
+				</configuration>
+			</plugin>
+		</plugins>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -130,7 +146,67 @@ The GDSC Test package contains code for use with the JUnit test framework.
 			</resource>
 		</resources>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>ossrh</id>
+			<properties>
+				<gpg.executable>gpg</gpg.executable>
+				<gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
+				<gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+				<gpg.defaultKeyring>false</gpg.defaultKeyring>
+				<gpg.publicKeyring>${env.GPG_DIR}/pubring.gpg</gpg.publicKeyring>
+				<gpg.secretKeyring>${env.GPG_DIR}/secring.gpg</gpg.secretKeyring>
+			</properties>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.2</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
