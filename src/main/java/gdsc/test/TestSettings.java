@@ -47,8 +47,9 @@ public class TestSettings
 		INFO {@Override public int getValue() {	return 2; }},
 		/** Debug logging. */
 		DEBUG {	@Override public int getValue()	{ return 3; }};
+		
 		/**
-		 * Gets the value
+		 * Gets the value.
 		 *
 		 * @return the value
 		 */
@@ -60,21 +61,26 @@ public class TestSettings
 	 */
 	public enum TestComplexity
 	{
-		/** No complexity */
+		
+		/**  No complexity. */
 		NONE { @Override public int getValue() { return 0; }},
-		/** Low complexity */
+		
+		/**  Low complexity. */
 		LOW { @Override	public int getValue() {	return 1; }},
-		/** Medium complexity */ 
+		
+		/**  Medium complexity. */ 
 		MEDIUM { @Override	public int getValue() { return 2; }},
-		/** High complexity */
+		
+		/**  High complexity. */
 		HIGH { @Override public int getValue() { return 3; }},
-		/** Very high complexity */
+		
+		/**  Very high complexity. */
 		VERY_HIGH {	@Override public int getValue()	{ return 4;	}},
 		/** Maximum. Used to run any test that checks complexity settings */
 		MAXIMUM { @Override public int getValue() { return Integer.MAX_VALUE; }};
 
 		/**
-		 * Gets the value
+		 * Gets the value.
 		 *
 		 * @return the value
 		 */
@@ -137,10 +143,10 @@ public class TestSettings
 	/** The allowed log level. */
 	private static int logLevel;
 
-	/** The allowed test complexity */
+	/** The allowed test complexity. */
 	private static int testComplexity;
 
-	/** The fixed seed for random generator */
+	/** The fixed seed for random generator. */
 	private static long seed;
 
 	static
@@ -325,7 +331,7 @@ public class TestSettings
 	/**
 	 * Check if testing is allowed at the given complexity.
 	 *
-	 * @param omplexity
+	 * @param complexity
 	 *            the test complexity
 	 * @return true, if successful
 	 */
@@ -353,8 +359,6 @@ public class TestSettings
 	/**
 	 * Log at the debug level the message using the format and arguments.
 	 *
-	 * @param level
-	 *            the level
 	 * @param format
 	 *            the format
 	 * @param args
@@ -368,8 +372,6 @@ public class TestSettings
 	/**
 	 * Log at the debug level the message.
 	 *
-	 * @param level
-	 *            the level
 	 * @param msg
 	 *            the message
 	 */
@@ -381,8 +383,6 @@ public class TestSettings
 	/**
 	 * Log at the debug level the message using the format and arguments.
 	 *
-	 * @param level
-	 *            the level
 	 * @param msg
 	 *            the message
 	 */
@@ -394,8 +394,6 @@ public class TestSettings
 	/**
 	 * Log at the debug level the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -407,8 +405,6 @@ public class TestSettings
 	/**
 	 * Log at the debug level with newline the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -420,8 +416,6 @@ public class TestSettings
 	/**
 	 * Log at the debug level with newline the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -435,8 +429,6 @@ public class TestSettings
 	/**
 	 * Log at the info level the message using the format and arguments.
 	 *
-	 * @param level
-	 *            the level
 	 * @param format
 	 *            the format
 	 * @param args
@@ -450,8 +442,6 @@ public class TestSettings
 	/**
 	 * Log at the info level the message.
 	 *
-	 * @param level
-	 *            the level
 	 * @param msg
 	 *            the message
 	 */
@@ -463,8 +453,6 @@ public class TestSettings
 	/**
 	 * Log at the info level the message using the format and arguments.
 	 *
-	 * @param level
-	 *            the level
 	 * @param msg
 	 *            the message
 	 */
@@ -476,8 +464,6 @@ public class TestSettings
 	/**
 	 * Log at the info level the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -489,8 +475,6 @@ public class TestSettings
 	/**
 	 * Log at the info level with newline the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -502,8 +486,6 @@ public class TestSettings
 	/**
 	 * Log at the info level with newline the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -517,8 +499,6 @@ public class TestSettings
 	/**
 	 * Log at the warn level the message using the format and arguments.
 	 *
-	 * @param level
-	 *            the level
 	 * @param format
 	 *            the format
 	 * @param args
@@ -532,8 +512,6 @@ public class TestSettings
 	/**
 	 * Log at the warn level the message.
 	 *
-	 * @param level
-	 *            the level
 	 * @param msg
 	 *            the message
 	 */
@@ -545,8 +523,6 @@ public class TestSettings
 	/**
 	 * Log at the warn level the message using the format and arguments.
 	 *
-	 * @param level
-	 *            the level
 	 * @param msg
 	 *            the message
 	 */
@@ -558,8 +534,6 @@ public class TestSettings
 	/**
 	 * Log at the warn level the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -571,8 +545,6 @@ public class TestSettings
 	/**
 	 * Log at the warn level with newline the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -584,8 +556,6 @@ public class TestSettings
 	/**
 	 * Log at the warn level with newline the string value of the object.
 	 *
-	 * @param level
-	 *            the level
 	 * @param object
 	 *            the object
 	 */
@@ -731,9 +701,6 @@ public class TestSettings
 	 * enough to warrant skipping the test if not testing at that level of complexity.
 	 * <p>
 	 * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
-	 *
-	 * @param complexity
-	 *            the complexity
 	 */
 	public static void assumeSpeedTest()
 	{
@@ -966,6 +933,8 @@ public class TestSettings
 	/**
 	 * Gets the code point: ClassName:MethodName:LineNumber for the method that initialised the error.
 	 *
+	 * @param countDown
+	 *            the count down
 	 * @return the code point
 	 */
 	private static String getCodePoint(int countDown)
@@ -987,6 +956,8 @@ public class TestSettings
 	/**
 	 * Gets the stacktrace element marking the position where this method was called.
 	 *
+	 * @param countDown
+	 *            the count down
 	 * @return the stacktrace element
 	 */
 	private static StackTraceElement getStaceTraceElement(int countDown)
@@ -994,6 +965,13 @@ public class TestSettings
 		return ___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(countDown);
 	}
 
+	/**
+	 * Gets the stace trace element 499 ad 503 0184 4099 bf 36 65 c 73 b 4932 d 3.
+	 *
+	 * @param countDown
+	 *            the count down
+	 * @return the stack trace element
+	 */
 	private static StackTraceElement ___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(int countDown)
 	{
 		// Based on https://stackoverflow.com/questions/17473148/dynamically-get-the-current-line-number/17473358

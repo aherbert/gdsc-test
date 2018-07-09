@@ -423,8 +423,15 @@ public class TestAssert
 	 */
 	public static class DoubleRelativeComparisonCriteria extends ComparisonCriteria
 	{
-		public double delta;
+		/** The relative delta. */
+		public final double delta;
 
+		/**
+		 * Instantiates a new double relative comparison criteria.
+		 *
+		 * @param delta
+		 *            the delta
+		 */
 		public DoubleRelativeComparisonCriteria(double delta)
 		{
 			this.delta = delta;
@@ -444,8 +451,15 @@ public class TestAssert
 	 */
 	public static class FloatRelativeComparisonCriteria extends ComparisonCriteria
 	{
-		public double delta;
+		/** The relative delta. */
+		public final double delta;
 
+		/**
+		 * Instantiates a new float relative comparison criteria.
+		 *
+		 * @param delta
+		 *            the delta
+		 */
 		public FloatRelativeComparisonCriteria(double delta)
 		{
 			this.delta = delta;

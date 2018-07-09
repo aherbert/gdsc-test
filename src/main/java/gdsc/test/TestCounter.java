@@ -38,7 +38,10 @@ package gdsc.test;
  */
 public class TestCounter
 {
+	/** The failure limit. */
 	private final int failureLimit;
+	
+	/** The failures. */
 	private final int[] failures;
 
 	/**
@@ -82,7 +85,7 @@ public class TestCounter
 	 * @param failureLimit
 	 *            the failure limit that will generate an AssertionError to be thrown
 	 * @param size
-	 *            the number of different tests to be address by index in {@link #add(int, TestAssertion)}
+	 *            the number of different tests to be address by index in {@link #run(int, TestAssertion)}
 	 */
 	public TestCounter(int failureLimit, int size)
 	{

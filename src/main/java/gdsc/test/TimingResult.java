@@ -38,8 +38,6 @@ public class TimingResult
 	 *            the task
 	 * @param times
 	 *            the times
-	 * @param data
-	 *            the data
 	 */
 	public TimingResult(TimingTask task, long[] times)
 	{

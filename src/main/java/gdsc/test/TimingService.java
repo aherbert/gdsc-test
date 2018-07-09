@@ -113,8 +113,6 @@ public class TimingService
 	 *
 	 * @param task
 	 *            the task
-	 * @param check
-	 *            Set to true to validate result with the check method
 	 * @return the timing result
 	 */
 	public TimingResult execute(TimingTask task)
