@@ -1,7 +1,7 @@
 /*-
  * #%L
  * Genome Damage and Stability Centre Test Package
- * 
+ *
  * The GDSC Test package contains code for use with the JUnit test framework.
  * %%
  * Copyright (C) 2018 Alex Herbert
@@ -10,12 +10,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -31,58 +31,42 @@ public class TestCounterTest
 {
 	private static void runTestAssert(int size, int limit, boolean exceed)
 	{
-		TestCounter fc = new TestCounter(limit, size);
+		final TestCounter fc = new TestCounter(limit, size);
 		for (int i = 0; i < size; i++)
-		{
 			for (int j = 0; j < limit; j++)
-			{
 				fc.run(i, () -> {
 					Assert.fail();
 				});
-			}
-		}
 		if (exceed)
-		{
 			for (int i = 0; i < size; i++)
-			{
 				fc.run(i, () -> {
 					Assert.fail();
 				});
-			}
-		}
 	}
 
 	private static void runTestCase(int size, int limit, boolean exceed)
 	{
-		TestCounter fc = new TestCounter(limit, size);
+		final TestCounter fc = new TestCounter(limit, size);
 		for (int i = 0; i < size; i++)
-		{
 			for (int j = 0; j < limit; j++)
-			{
 				fc.run(i, () -> {
 					return false;
 				}, () -> {
 					Assert.fail();
 				});
-			}
-		}
 		if (exceed)
-		{
 			for (int i = 0; i < size; i++)
-			{
 				fc.run(i, () -> {
 					return false;
 				}, () -> {
 					Assert.fail();
 				});
-			}
-		}
 	}
 
 	@Test(expected = AssertionError.class)
 	public void singleTestCaseFail1Limit0ThrowsWhenNoAsserionErrorFunction()
 	{
-		TestCounter fc = new TestCounter(0);
+		final TestCounter fc = new TestCounter(0);
 		fc.run(() -> {
 			return false;
 		}, () -> {

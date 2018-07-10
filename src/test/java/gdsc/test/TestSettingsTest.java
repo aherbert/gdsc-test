@@ -1,7 +1,7 @@
 /*-
  * #%L
  * Genome Damage and Stability Centre Test Package
- * 
+ *
  * The GDSC Test package contains code for use with the JUnit test framework.
  * %%
  * Copyright (C) 2018 Alex Herbert
@@ -10,12 +10,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -52,14 +52,14 @@ public class TestSettingsTest
 	@Test
 	public void canLogObjectArray()
 	{
-		Object[] args = new Object[] { 1, 2.3 };
+		final Object[] args = new Object[] { 1, 2.3 };
 		TestSettings.log(LogLevel.WARN, "log Object[] = %d %f\n", args);
 	}
 
 	@Test(expected = IllegalFormatConversionException.class)
 	public void cannotLogObjectArrayAndVarargs()
 	{
-		Object[] args = new Object[] { 1, 2.3 };
+		final Object[] args = new Object[] { 1, 2.3 };
 		// Use silent to always run
 		TestSettings.log(LogLevel.SILENT, "%d %f %d\n", args, 3);
 	}
@@ -67,8 +67,8 @@ public class TestSettingsTest
 	@Test
 	public void canStaceTraceElement()
 	{
-		StackTraceElement e = new Throwable().getStackTrace()[0];
-		StackTraceElement o = TestSettings.getStaceTraceElement();
+		final StackTraceElement e = new Throwable().getStackTrace()[0];
+		final StackTraceElement o = TestSettings.getStaceTraceElement();
 		Assert.assertNotNull(e);
 		Assert.assertNotNull(o);
 		Assert.assertEquals(e.getClassName(), o.getClassName());
@@ -105,7 +105,7 @@ public class TestSettingsTest
 	public void canLogSpeedTestTaskFailure()
 	{
 		//@formatter:off
-		TimingTask fast = new TimingTask()
+		final TimingTask fast = new TimingTask()
 		{
 			@Override
 			public Object run(Object data) { return null; }
@@ -118,7 +118,7 @@ public class TestSettingsTest
 			@Override
 			public void check(int i, Object result) {}
 		};
-		TimingTask slow = new TimingTask()
+		final TimingTask slow = new TimingTask()
 		{
 			@Override
 			public Object run(Object data) { return null; }
@@ -131,11 +131,11 @@ public class TestSettingsTest
 			@Override
 			public void check(int i, Object result) {}
 		};
-		TimingResult fastR = new TimingResult(fast, new long[] { 100 });
-		TimingResult slowR = new TimingResult(slow, new long[] { 1000 });
-		TimingResult slowFastR = new TimingResult(fast, new long[] { 10000 });
+		final TimingResult fastR = new TimingResult(fast, new long[] { 100 });
+		final TimingResult slowR = new TimingResult(slow, new long[] { 1000 });
+		final TimingResult slowFastR = new TimingResult(fast, new long[] { 10000 });
 		//@formatter:on
-		
+
 		TestSettings.logSpeedTestResult(slowR, fastR);
 		TestSettings.logSpeedTestResult(slowR, slowFastR);
 		TestSettings.logSpeedTestStageResult(slowR, fastR);

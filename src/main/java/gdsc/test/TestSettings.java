@@ -1,7 +1,7 @@
 /*-
  * #%L
  * Genome Damage and Stability Centre Test Package
- * 
+ *
  * The GDSC Test package contains code for use with the JUnit test framework.
  * %%
  * Copyright (C) 2018 Alex Herbert
@@ -10,12 +10,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -47,7 +47,7 @@ public class TestSettings
 		INFO {@Override public int getValue() {	return 2; }},
 		/** Debug logging. */
 		DEBUG {	@Override public int getValue()	{ return 3; }};
-		
+
 		/**
 		 * Gets the value.
 		 *
@@ -61,19 +61,19 @@ public class TestSettings
 	 */
 	public enum TestComplexity
 	{
-		
+
 		/**  No complexity. */
 		NONE { @Override public int getValue() { return 0; }},
-		
+
 		/**  Low complexity. */
 		LOW { @Override	public int getValue() {	return 1; }},
-		
-		/**  Medium complexity. */ 
+
+		/**  Medium complexity. */
 		MEDIUM { @Override	public int getValue() { return 2; }},
-		
+
 		/**  High complexity. */
 		HIGH { @Override public int getValue() { return 3; }},
-		
+
 		/**  Very high complexity. */
 		VERY_HIGH {	@Override public int getValue()	{ return 4;	}},
 		/** Maximum. Used to run any test that checks complexity settings */
@@ -159,21 +159,21 @@ public class TestSettings
 		{
 			logLevel = Integer.parseInt(System.getProperty("gdsc.test.logging"));
 		}
-		catch (Exception e)
+		catch (final Exception e)
 		{
 		}
 		try
 		{
 			testComplexity = Integer.parseInt(System.getProperty("gdsc.test.level"));
 		}
-		catch (Exception e)
+		catch (final Exception e)
 		{
 		}
 		try
 		{
 			seed = Long.parseLong(System.getProperty("gdsc.test.seed"));
 		}
-		catch (Exception e)
+		catch (final Exception e)
 		{
 		}
 	}
@@ -738,9 +738,7 @@ public class TestSettings
 	{
 		LogLevel l;
 		if (result)
-		{
 			l = LogLevel.INFO;
-		}
 		else
 		{
 			l = LogLevel.SILENT;
@@ -766,9 +764,7 @@ public class TestSettings
 	{
 		LogLevel l;
 		if (result)
-		{
 			l = LogLevel.INFO;
-		}
 		else
 		{
 			l = LogLevel.SILENT;
@@ -793,15 +789,15 @@ public class TestSettings
 	 */
 	public static void logSpeedTestResult(TimingResult slow, TimingResult fast)
 	{
-		double t1 = fast.getMean();
-		double t2 = slow.getMean();
+		final double t1 = fast.getMean();
+		final double t2 = slow.getMean();
 		LogLevel l;
 		String message;
 		if (t1 < t2)
 		{
 			l = LogLevel.INFO;
 			if (!allow(l))
-				return;		
+				return;
 			message = "%s (%s) => %s (%s) : %.2fx\n";
 		}
 		else
@@ -830,15 +826,15 @@ public class TestSettings
 	 */
 	public static void logSpeedTestResult(TimingResult slow, TimingResult fast, boolean useMin)
 	{
-		double t1 = (useMin) ? fast.getMin() : fast.getMean();
-		double t2 = (useMin) ? slow.getMin() : slow.getMean();
+		final double t1 = (useMin) ? fast.getMin() : fast.getMean();
+		final double t2 = (useMin) ? slow.getMin() : slow.getMean();
 		LogLevel l;
 		String message;
 		if (t1 < t2)
 		{
 			l = LogLevel.INFO;
 			if (!allow(l))
-				return;		
+				return;
 			message = "%s (%s) => %s (%s) : %.2fx\n";
 		}
 		else
@@ -864,9 +860,7 @@ public class TestSettings
 	{
 		LogLevel l;
 		if (result)
-		{
 			l = LogLevel.INFO;
-		}
 		else
 		{
 			l = LogLevel.WARN;
@@ -894,9 +888,7 @@ public class TestSettings
 	{
 		LogLevel l;
 		if (result)
-		{
 			l = LogLevel.INFO;
-		}
 		else
 		{
 			l = LogLevel.WARN;
@@ -924,22 +916,22 @@ public class TestSettings
 	 */
 	public static void logSpeedTestStageResult(TimingResult slow, TimingResult fast)
 	{
-		double t1 = fast.getMean();
-		double t2 = slow.getMean();
+		final double t1 = fast.getMean();
+		final double t2 = slow.getMean();
 		LogLevel l;
 		String message;
 		if (t1 < t2)
 		{
 			l = LogLevel.INFO;
 			if (!allow(l))
-				return;		
+				return;
 			message = "%s (%s) => %s (%s) : %.2fx\n";
 		}
 		else
 		{
 			l = LogLevel.WARN;
 			if (!allow(l))
-				return;		
+				return;
 			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
 		}
 		log(l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
@@ -964,22 +956,22 @@ public class TestSettings
 	 */
 	public static void logSpeedTestStageResult(TimingResult slow, TimingResult fast, boolean useMin)
 	{
-		double t1 = (useMin) ? fast.getMin() : fast.getMean();
-		double t2 = (useMin) ? slow.getMin() : slow.getMean();
+		final double t1 = (useMin) ? fast.getMin() : fast.getMean();
+		final double t2 = (useMin) ? slow.getMin() : slow.getMean();
 		LogLevel l;
 		String message;
 		if (t1 < t2)
 		{
 			l = LogLevel.INFO;
 			if (!allow(l))
-				return;		
+				return;
 			message = "%s (%s) => %s (%s) : %.2fx\n";
 		}
 		else
 		{
 			l = LogLevel.WARN;
 			if (!allow(l))
-				return;		
+				return;
 			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
 		}
 		log(l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
@@ -1005,7 +997,7 @@ public class TestSettings
 	 */
 	public static void logFailure(Throwable t)
 	{
-		String msg = (t == null) ? null : t.getMessage();
+		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
 			logln(LogLevel.SILENT, getCodePoint(3) + "Failure");
 		else
@@ -1037,7 +1029,7 @@ public class TestSettings
 	 */
 	public static void logFailure(Throwable t, String message)
 	{
-		String msg = (t == null) ? null : t.getMessage();
+		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
 			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
 		else
@@ -1073,7 +1065,7 @@ public class TestSettings
 	 */
 	public static void logFailure(Throwable t, String format, Object... args)
 	{
-		String msg = (t == null) ? null : t.getMessage();
+		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
 			log(LogLevel.SILENT, getCodePoint(3) + "Failure: " + format, args);
 		else
@@ -1089,7 +1081,7 @@ public class TestSettings
 	 */
 	private static String getCodePoint(int countDown)
 	{
-		StackTraceElement e = getStaceTraceElement(countDown);
+		final StackTraceElement e = getStaceTraceElement(countDown);
 		return (e == null) ? "" : String.format("%s:%s:%d:", e.getClassName(), e.getMethodName(), e.getLineNumber());
 	}
 
@@ -1126,21 +1118,17 @@ public class TestSettings
 	{
 		// Based on https://stackoverflow.com/questions/17473148/dynamically-get-the-current-line-number/17473358
 		boolean thisMethod = false;
-		StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+		final StackTraceElement[] elements = Thread.currentThread().getStackTrace();
 		for (int i = 0; i < elements.length; i++)
 		{
-			StackTraceElement e = elements[i];
+			final StackTraceElement e = elements[i];
 			if (thisMethod)
 			{
 				if (countDown-- == 0)
-				{
 					return e;
-				}
 			}
 			else if (e.getMethodName().equals("___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3"))
-			{
 				thisMethod = true;
-			}
 		}
 		return null;
 	}

@@ -1,7 +1,7 @@
 /*-
  * #%L
  * Genome Damage and Stability Centre Test Package
- * 
+ *
  * The GDSC Test package contains code for use with the JUnit test framework.
  * %%
  * Copyright (C) 2018 Alex Herbert
@@ -10,12 +10,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -108,7 +108,7 @@ public class TestAssert
 		{
 			assertEqualsRelative(null, expected, actual, relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -143,7 +143,7 @@ public class TestAssert
 		{
 			Assert.assertEquals(message, expected, actual, max * relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
 		}
@@ -197,7 +197,7 @@ public class TestAssert
 		{
 			assertEqualsRelative(null, expected, actual, relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -232,7 +232,7 @@ public class TestAssert
 		{
 			Assert.assertEquals(message, expected, actual, (float) (max * relativeError));
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
 		}
@@ -286,7 +286,7 @@ public class TestAssert
 		{
 			assertNotEqualsRelative(null, expected, actual, relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -321,7 +321,7 @@ public class TestAssert
 		{
 			Assert.assertNotEquals(message, expected, actual, max * relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
 		}
@@ -375,7 +375,7 @@ public class TestAssert
 		{
 			assertNotEqualsRelative(null, expected, actual, relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -410,7 +410,7 @@ public class TestAssert
 		{
 			Assert.assertNotEquals(message, expected, actual, (float) (max * relativeError));
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionErrorAppend(ex, " (error=%s)", Math.abs(expected - actual) / max);
 		}
@@ -510,7 +510,7 @@ public class TestAssert
 		{
 			assertArrayEqualsRelative(null, expecteds, actuals, relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -584,7 +584,7 @@ public class TestAssert
 		{
 			assertDoubleArrayEqualsRelative(null, expecteds, actuals, relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -652,7 +652,7 @@ public class TestAssert
 		{
 			assertArrayEqualsRelative(null, expecteds, actuals, relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -726,7 +726,7 @@ public class TestAssert
 		{
 			assertFloatArrayEqualsRelative(null, expecteds, actuals, relativeError);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -757,10 +757,10 @@ public class TestAssert
 	}
 
 	////////////////////////////////////////////////////////////////////////////
-	// Formatted methods. 
-	// These wrap the JUnit assert methods with an 
+	// Formatted methods.
+	// These wrap the JUnit assert methods with an
 	// assertion error containing a formatted message.
-	// No checks are made that the format or args are not null. 
+	// No checks are made that the format or args are not null.
 	////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -779,7 +779,7 @@ public class TestAssert
 	public static void wrapAssertionErrorAppend(AssertionError error, String format, Object... args)
 			throws AssertionError
 	{
-		String msg = error.getMessage();
+		final String msg = error.getMessage();
 		if (msg == null || msg.length() == 0)
 			throw new AssertionError(String.format(format, args), error);
 		else
@@ -801,7 +801,7 @@ public class TestAssert
 	 */
 	public static void wrapAssertionError(AssertionError error, String format, Object... args) throws AssertionError
 	{
-		String msg = error.getMessage();
+		final String msg = error.getMessage();
 		if (msg == null || msg.length() == 0)
 			throw new AssertionError(String.format(format, args), error);
 		else
@@ -845,7 +845,7 @@ public class TestAssert
 
 	/**
 	 * Fails a test with a formatted message.
-	 * 
+	 *
 	 * @param format
 	 *            the message format
 	 * @param args
@@ -877,7 +877,7 @@ public class TestAssert
 		{
 			Assert.assertEquals(null, expected, actual);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -904,7 +904,7 @@ public class TestAssert
 		{
 			Assert.assertNotEquals(null, unexpected, actual);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -929,7 +929,7 @@ public class TestAssert
 		{
 			Assert.assertNotEquals(null, unexpected, actual);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -960,7 +960,7 @@ public class TestAssert
 		{
 			Assert.assertNotEquals(null, unexpected, actual, delta);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -991,7 +991,7 @@ public class TestAssert
 		{
 			Assert.assertNotEquals(null, unexpected, actual, delta);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1020,7 +1020,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1047,7 +1047,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1072,7 +1072,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1097,7 +1097,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1122,7 +1122,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1147,7 +1147,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1172,7 +1172,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1202,7 +1202,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals, delta);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1231,7 +1231,7 @@ public class TestAssert
 		{
 			Assert.assertArrayEquals(null, expecteds, actuals, delta);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1256,7 +1256,7 @@ public class TestAssert
 		{
 			Assert.assertEquals(null, expected, actual);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1287,7 +1287,7 @@ public class TestAssert
 		{
 			Assert.assertEquals(null, expected, actual, delta);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1318,7 +1318,7 @@ public class TestAssert
 		{
 			Assert.assertEquals(null, expected, actual, delta);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1341,7 +1341,7 @@ public class TestAssert
 		{
 			Assert.assertNotNull(null, object);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1364,7 +1364,7 @@ public class TestAssert
 		{
 			Assert.assertNull(null, object);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1389,7 +1389,7 @@ public class TestAssert
 		{
 			Assert.assertSame(null, expected, actual);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1415,7 +1415,7 @@ public class TestAssert
 		{
 			Assert.assertNotSame(null, unexpected, actual);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
@@ -1460,7 +1460,7 @@ public class TestAssert
 		{
 			Assert.assertThat("", actual, matcher);
 		}
-		catch (AssertionError ex)
+		catch (final AssertionError ex)
 		{
 			wrapAssertionError(ex, format, args);
 		}
