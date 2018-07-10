@@ -33,7 +33,7 @@ public interface TimingTask
 	 *
 	 * @return the number of tasks
 	 */
-	int getSize();
+	public int getSize();
 
 	/**
 	 * Gets the task data for given task.
@@ -44,7 +44,7 @@ public interface TimingTask
 	 *            the task index
 	 * @return the data
 	 */
-	Object getData(int i);
+	public Object getData(int i);
 
 	/**
 	 * Run the task.
@@ -53,14 +53,14 @@ public interface TimingTask
 	 *            the task data
 	 * @return the result
 	 */
-	Object run(Object data);
+	public Object run(Object data);
 
 	/**
 	 * The task name.
 	 *
 	 * @return the name
 	 */
-	String getName();
+	public String getName();
 
 	/**
 	 * Check the result produced by the given task.
@@ -73,5 +73,5 @@ public interface TimingTask
 	 * @param result
 	 *            the result
 	 */
-	void check(int i, Object result);
+	public void check(int i, Object result);
 }

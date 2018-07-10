@@ -98,7 +98,7 @@ public class TestSettings
 		 *
 		 * @return the message
 		 */
-		String getMessage();
+		public String getMessage();
 	}
 
 	/**

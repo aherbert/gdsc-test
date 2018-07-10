@@ -34,5 +34,5 @@ public interface TestAssertion
 	 *
 	 * @throws AssertionError If the test fails
 	 */
-	void test() throws AssertionError;
+	public void test() throws AssertionError;
 }
