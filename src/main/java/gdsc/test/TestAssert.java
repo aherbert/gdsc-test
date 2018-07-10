@@ -765,8 +765,8 @@ public class TestAssert
 
 	/**
 	 * Wraps an assertion error with a new error that has a formatted message appended to
-	 * the input error's message
-	 * 
+	 * the input error's message.
+	 *
 	 * @param error
 	 *            The error
 	 * @param format
@@ -774,6 +774,7 @@ public class TestAssert
 	 * @param args
 	 *            The arguments
 	 * @throws AssertionError
+	 *             the wrapped assertion error
 	 */
 	public static void wrapAssertionErrorAppend(AssertionError error, String format, Object... args)
 			throws AssertionError
@@ -787,8 +788,8 @@ public class TestAssert
 
 	/**
 	 * Wraps an assertion error with a new error that has a formatted message prepended to
-	 * the input error's message
-	 * 
+	 * the input error's message.
+	 *
 	 * @param error
 	 *            The error
 	 * @param format
@@ -796,6 +797,7 @@ public class TestAssert
 	 * @param args
 	 *            The arguments
 	 * @throws AssertionError
+	 *             the wrapped assertion error
 	 */
 	public static void wrapAssertionError(AssertionError error, String format, Object... args) throws AssertionError
 	{
