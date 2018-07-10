@@ -29,7 +29,7 @@ import org.junit.Test;
 @SuppressWarnings("javadoc")
 public class TestCounterTest
 {
-	private void runTestAssert(int size, int limit, boolean exceed)
+	private static void runTestAssert(int size, int limit, boolean exceed)
 	{
 		TestCounter fc = new TestCounter(limit, size);
 		for (int i = 0; i < size; i++)
@@ -52,7 +52,7 @@ public class TestCounterTest
 		}
 	}
 
-	private void runTestCase(int size, int limit, boolean exceed)
+	private static void runTestCase(int size, int limit, boolean exceed)
 	{
 		TestCounter fc = new TestCounter(limit, size);
 		for (int i = 0; i < size; i++)

@@ -34,7 +34,7 @@ public class TimingService
 {
 	private int runs;
 
-	private ArrayList<TimingResult> results = new ArrayList<TimingResult>();
+	private ArrayList<TimingResult> results = new ArrayList<>();
 
 	/**
 	 * @return The number of timing results

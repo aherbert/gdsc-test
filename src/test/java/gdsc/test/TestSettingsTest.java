@@ -107,18 +107,28 @@ public class TestSettingsTest
 		//@formatter:off
 		TimingTask fast = new TimingTask()
 		{
+			@Override
 			public Object run(Object data) { return null; }
+			@Override
 			public int getSize() { return 0; }
+			@Override
 			public String getName()	{ return "fast"; }
+			@Override
 			public Object getData(int i) { return null; }
+			@Override
 			public void check(int i, Object result) {}
 		};
 		TimingTask slow = new TimingTask()
 		{
+			@Override
 			public Object run(Object data) { return null; }
+			@Override
 			public int getSize() { return 0; }
+			@Override
 			public String getName()	{ return "slow"; }
+			@Override
 			public Object getData(int i) { return null; }
+			@Override
 			public void check(int i, Object result) {}
 		};
 		TimingResult fastR = new TimingResult(fast, new long[] { 100 });

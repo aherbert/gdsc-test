@@ -127,7 +127,7 @@ public class TestSettings
 		 *            the arguments for the message
 		 * @return the arguments for the message as an array
 		 */
-		final public Object[] wrap(Object... args)
+		final public static Object[] wrap(Object... args)
 		{
 			return args;
 		}
