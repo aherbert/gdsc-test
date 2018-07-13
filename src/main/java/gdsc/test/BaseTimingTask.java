@@ -60,6 +60,6 @@ public abstract class BaseTimingTask implements TimingTask
 	@Override
 	public void check(int i, Object result)
 	{
-
+		// Do nothing
 	}
 }

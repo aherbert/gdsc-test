@@ -161,6 +161,7 @@ public class TestSettings
 		}
 		catch (final Exception e)
 		{
+			// Do nothing
 		}
 		try
 		{
@@ -168,6 +169,7 @@ public class TestSettings
 		}
 		catch (final Exception e)
 		{
+			// Do nothing
 		}
 		try
 		{
@@ -175,6 +177,7 @@ public class TestSettings
 		}
 		catch (final Exception e)
 		{
+			// Do nothing
 		}
 	}
 

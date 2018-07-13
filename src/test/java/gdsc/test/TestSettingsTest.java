@@ -116,7 +116,7 @@ public class TestSettingsTest
 			@Override
 			public Object getData(int i) { return null; }
 			@Override
-			public void check(int i, Object result) {}
+			public void check(int i, Object result) { /* Do nothing */ }
 		};
 		final TimingTask slow = new TimingTask()
 		{
@@ -129,7 +129,7 @@ public class TestSettingsTest
 			@Override
 			public Object getData(int i) { return null; }
 			@Override
-			public void check(int i, Object result) {}
+			public void check(int i, Object result) { /* Do nothing */ }
 		};
 		final TimingResult fastR = new TimingResult(fast, new long[] { 100 });
 		final TimingResult slowR = new TimingResult(slow, new long[] { 1000 });

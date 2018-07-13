@@ -782,8 +782,7 @@ public class TestAssert
 		final String msg = error.getMessage();
 		if (msg == null || msg.length() == 0)
 			throw new AssertionError(String.format(format, args), error);
-		else
-			throw new AssertionError(msg + " " + String.format(format, args), error);
+		throw new AssertionError(msg + " " + String.format(format, args), error);
 	}
 
 	/**
@@ -804,8 +803,7 @@ public class TestAssert
 		final String msg = error.getMessage();
 		if (msg == null || msg.length() == 0)
 			throw new AssertionError(String.format(format, args), error);
-		else
-			throw new AssertionError(String.format(format, args) + " " + msg, error);
+		throw new AssertionError(String.format(format, args) + " " + msg, error);
 	}
 
 	/**
