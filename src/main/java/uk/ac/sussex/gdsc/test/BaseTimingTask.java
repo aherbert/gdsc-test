@@ -21,18 +21,45 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 /**
- * Simple interface for any test case that can generate a pass/fail result.
+ * Defines a task to run.
  */
-@FunctionalInterface
-public interface TestCase
+public abstract class BaseTimingTask implements TimingTask
 {
+	private final String name;
+
 	/**
-	 * Run the test assertion.
+	 * Instantiates a new base timing task.
 	 *
-	 * @return pass/fail
+	 * @param name
+	 *            the name
 	 */
-	public boolean test();
+	public BaseTimingTask(String name)
+	{
+		this.name = name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see gdsc.core.test.TimingTask#getName()
+	 */
+	@Override
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * This base class does nothing so that extending classes can override if necessary
+	 *
+	 * @see uk.ac.sussex.gdsc.test.TimingTask#check(int, java.lang.Object)
+	 */
+	@Override
+	public void check(int i, Object result)
+	{
+		// Do nothing
+	}
 }

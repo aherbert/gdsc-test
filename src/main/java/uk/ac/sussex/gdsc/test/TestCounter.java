@@ -21,7 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 /**
  * Runs test assertions and accumulates any thrown AssertionErrors. If the limit is exceeded then the last generated

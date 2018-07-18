@@ -21,27 +21,23 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 /**
- * The test complexity. Lower complexity tests are assumed to be faster.
+ * The Log Level. Lower levels result is less verbose output.
  */
-public enum TestComplexity
+public enum LogLevel
 {
 	//@formatter:off
 	
-	/**  No complexity. */
-	NONE { @Override public int getValue() { return 0; }},
-	/**  Low complexity. */
-	LOW { @Override	public int getValue() {	return 1; }},
-	/**  Medium complexity. */
-	MEDIUM { @Override	public int getValue() { return 2; }},
-	/**  High complexity. */
-	HIGH { @Override public int getValue() { return 3; }},
-	/**  Very high complexity. */
-	VERY_HIGH {	@Override public int getValue()	{ return 4;	}},
-	/** Maximum. Used to run any test that checks complexity settings */
-	MAXIMUM { @Override public int getValue() { return Integer.MAX_VALUE; }};
+	/** Silent. Use this level to output information even if logging is disabled. */
+	SILENT { @Override public int getValue() { return 0; }},
+	/** Warning logging. For example this can be used to log test results that fail but are not critical. */
+	WARN { @Override public int getValue() { return 1; }},
+	/** Information logging. */
+	INFO {@Override public int getValue() {	return 2; }},
+	/** Debug logging. */
+	DEBUG {	@Override public int getValue()	{ return 3; }};
 
 	//@formatter:on
 	

@@ -21,17 +21,18 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 /**
- * Provide messages dynamically for logging.
+ * Simple interface for any test assertion.
  */
-public interface MessageProvider
+@FunctionalInterface
+public interface TestAssertion
 {
 	/**
-	 * Gets the message.
+	 * Run the test assertion
 	 *
-	 * @return the message
+	 * @throws AssertionError If the test fails
 	 */
-	public String getMessage();
+	public void test() throws AssertionError;
 }

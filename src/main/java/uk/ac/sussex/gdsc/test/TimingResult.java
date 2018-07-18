@@ -21,10 +21,10 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 /**
- * Class to store results of running a timing task
+ * Class to store results of running a timing task.
  */
 public class TimingResult
 {

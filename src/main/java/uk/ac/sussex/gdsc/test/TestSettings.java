@@ -21,7 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.random.Well19937c;
@@ -51,7 +51,7 @@ public class TestSettings
 
 		try
 		{
-			logLevel = Integer.parseInt(System.getProperty("gdsc.test.logging"));
+			logLevel = Integer.parseInt(System.getProperty("uk.ac.sussex.gdsc.test.logging"));
 		}
 		catch (final Exception e)
 		{
@@ -59,7 +59,7 @@ public class TestSettings
 		}
 		try
 		{
-			testComplexity = Integer.parseInt(System.getProperty("gdsc.test.level"));
+			testComplexity = Integer.parseInt(System.getProperty("uk.ac.sussex.gdsc.test.level"));
 		}
 		catch (final Exception e)
 		{
@@ -67,7 +67,7 @@ public class TestSettings
 		}
 		try
 		{
-			seed = Long.parseLong(System.getProperty("gdsc.test.seed"));
+			seed = Long.parseLong(System.getProperty("uk.ac.sussex.gdsc.test.seed"));
 		}
 		catch (final Exception e)
 		{
@@ -98,7 +98,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the log level. This is setting using the system property gdsc.test.logging.
+	 * Gets the log level. This is setting using the system property uk.ac.sussex.gdsc.test.logging.
 	 *
 	 * @return the log level
 	 */
@@ -108,7 +108,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the test complexity. This is setting using the system property gdsc.test.level.
+	 * Gets the test complexity. This is setting using the system property uk.ac.sussex.gdsc.test.level.
 	 *
 	 * @return the test complexity
 	 */
@@ -118,7 +118,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the seed. This is setting using the system property gdsc.test.seed.
+	 * Gets the seed. This is setting using the system property uk.ac.sussex.gdsc.test.seed.
 	 *
 	 * @return the seed
 	 */
@@ -283,7 +283,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets a random generator with a fixed seed set using the system property gdsc.test.seed.
+	 * Gets a random generator with a fixed seed set using the system property uk.ac.sussex.gdsc.test.seed.
 	 *
 	 * @return the random generator
 	 */

@@ -21,43 +21,18 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 /**
- * Provide messages for logging. To be used when providing the arguments for the message is computationally intense.
+ * Simple interface for any test case that can generate a pass/fail result.
  */
-public abstract class Message
+@FunctionalInterface
+public interface TestCase
 {
-	/** The format. */
-	final String format;
-
 	/**
-	 * Instantiates a new message.
+	 * Run the test assertion.
 	 *
-	 * @param format
-	 *            the format
+	 * @return pass/fail
 	 */
-	public Message(String format)
-	{
-		this.format = format;
-	}
-
-	/**
-	 * Helper method to wrap the variable length arguments list for use in {@link #getArgs()}.
-	 *
-	 * @param args
-	 *            the arguments for the message
-	 * @return the arguments for the message as an array
-	 */
-	final public static Object[] wrap(Object... args)
-	{
-		return args;
-	}
-
-	/**
-	 * Gets the arguments for the message.
-	 *
-	 * @return the arguments
-	 */
-	public abstract Object[] getArgs();
+	public boolean test();
 }

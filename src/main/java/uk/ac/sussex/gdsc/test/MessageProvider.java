@@ -21,10 +21,17 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+package uk.ac.sussex.gdsc.test;
 
 /**
- * Contains code for use with the JUnit 4 test framework.
- * 
- * @see <a href="https://junit.org/junit4/">JUnit 4</a>
+ * Provide messages dynamically for logging.
  */
-package gdsc.test;
+public interface MessageProvider
+{
+	/**
+	 * Gets the message.
+	 *
+	 * @return the message
+	 */
+	public String getMessage();
+}

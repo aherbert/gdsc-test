@@ -21,30 +21,10 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
 
 /**
- * The Log Level. Lower levels result is less verbose output.
+ * Contains code for use with the JUnit 4 test framework.
+ * 
+ * @see <a href="https://junit.org/junit4/">JUnit 4</a>
  */
-public enum LogLevel
-{
-	//@formatter:off
-	
-	/** Silent. Use this level to output information even if logging is disabled. */
-	SILENT { @Override public int getValue() { return 0; }},
-	/** Warning logging. For example this can be used to log test results that fail but are not critical. */
-	WARN { @Override public int getValue() { return 1; }},
-	/** Information logging. */
-	INFO {@Override public int getValue() {	return 2; }},
-	/** Debug logging. */
-	DEBUG {	@Override public int getValue()	{ return 3; }};
-
-	//@formatter:on
-	
-	/**
-	 * Gets the value.
-	 *
-	 * @return the value
-	 */
-	public abstract int getValue();
-}
+package uk.ac.sussex.gdsc.test;

@@ -21,18 +21,43 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 /**
- * Simple interface for any test assertion
+ * Provide messages for logging. To be used when providing the arguments for the message is computationally intense.
  */
-@FunctionalInterface
-public interface TestAssertion
+public abstract class Message
 {
+	/** The format. */
+	final String format;
+
 	/**
-	 * Run the test assertion
+	 * Instantiates a new message.
 	 *
-	 * @throws AssertionError If the test fails
+	 * @param format
+	 *            the format
 	 */
-	public void test() throws AssertionError;
+	public Message(String format)
+	{
+		this.format = format;
+	}
+
+	/**
+	 * Helper method to wrap the variable length arguments list for use in {@link #getArgs()}.
+	 *
+	 * @param args
+	 *            the arguments for the message
+	 * @return the arguments for the message as an array
+	 */
+	final public static Object[] wrap(Object... args)
+	{
+		return args;
+	}
+
+	/**
+	 * Gets the arguments for the message.
+	 *
+	 * @return the arguments
+	 */
+	public abstract Object[] getArgs();
 }

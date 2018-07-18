@@ -21,45 +21,34 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package gdsc.test;
+package uk.ac.sussex.gdsc.test;
 
 /**
- * Defines a task to run
+ * The test complexity. Lower complexity tests are assumed to be faster.
  */
-public abstract class BaseTimingTask implements TimingTask
+public enum TestComplexity
 {
-	private final String name;
+	//@formatter:off
+	
+	/**  No complexity. */
+	NONE { @Override public int getValue() { return 0; }},
+	/**  Low complexity. */
+	LOW { @Override	public int getValue() {	return 1; }},
+	/**  Medium complexity. */
+	MEDIUM { @Override	public int getValue() { return 2; }},
+	/**  High complexity. */
+	HIGH { @Override public int getValue() { return 3; }},
+	/**  Very high complexity. */
+	VERY_HIGH {	@Override public int getValue()	{ return 4;	}},
+	/** Maximum. Used to run any test that checks complexity settings */
+	MAXIMUM { @Override public int getValue() { return Integer.MAX_VALUE; }};
 
+	//@formatter:on
+	
 	/**
-	 * Instantiates a new base timing task.
+	 * Gets the value.
 	 *
-	 * @param name
-	 *            the name
+	 * @return the value
 	 */
-	public BaseTimingTask(String name)
-	{
-		this.name = name;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see gdsc.core.test.TimingTask#getName()
-	 */
-	@Override
-	public String getName()
-	{
-		return name;
-	}
-
-	/**
-	 * This base class does nothing so that extending classes can override if necessary
-	 *
-	 * @see gdsc.test.TimingTask#check(int, java.lang.Object)
-	 */
-	@Override
-	public void check(int i, Object result)
-	{
-		// Do nothing
-	}
+	public abstract int getValue();
 }
