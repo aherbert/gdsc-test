@@ -33,7 +33,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
 		<url>https://github.com/aherbert/GDSC-Test/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>None</system>
+		<system>Travis CI</system>
+		<url>https://travis-ci.com/aherbert/GDSC-Test</url>
 	</ciManagement>
 	<scm>
 		<connection>scm:git:git://github.com/aherbert/GDSC-Test.git</connection>
