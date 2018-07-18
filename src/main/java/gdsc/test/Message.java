@@ -24,15 +24,40 @@
 package gdsc.test;
 
 /**
- * Simple interface for any test case that can generate a pass/fail result.
+ * Provide messages for logging. To be used when providing the arguments for the message is computationally intense.
  */
-@FunctionalInterface
-public interface TestCase
+public abstract class Message
 {
+	/** The format. */
+	final String format;
+
 	/**
-	 * Run the test assertion.
+	 * Instantiates a new message.
 	 *
-	 * @return pass/fail
+	 * @param format
+	 *            the format
 	 */
-	public boolean test();
+	public Message(String format)
+	{
+		this.format = format;
+	}
+
+	/**
+	 * Helper method to wrap the variable length arguments list for use in {@link #getArgs()}.
+	 *
+	 * @param args
+	 *            the arguments for the message
+	 * @return the arguments for the message as an array
+	 */
+	final public static Object[] wrap(Object... args)
+	{
+		return args;
+	}
+
+	/**
+	 * Gets the arguments for the message.
+	 *
+	 * @return the arguments
+	 */
+	public abstract Object[] getArgs();
 }

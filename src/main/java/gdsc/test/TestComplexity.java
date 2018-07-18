@@ -24,15 +24,31 @@
 package gdsc.test;
 
 /**
- * Simple interface for any test case that can generate a pass/fail result.
+ * The test complexity. Lower complexity tests are assumed to be faster.
  */
-@FunctionalInterface
-public interface TestCase
+public enum TestComplexity
 {
+	//@formatter:off
+	
+	/**  No complexity. */
+	NONE { @Override public int getValue() { return 0; }},
+	/**  Low complexity. */
+	LOW { @Override	public int getValue() {	return 1; }},
+	/**  Medium complexity. */
+	MEDIUM { @Override	public int getValue() { return 2; }},
+	/**  High complexity. */
+	HIGH { @Override public int getValue() { return 3; }},
+	/**  Very high complexity. */
+	VERY_HIGH {	@Override public int getValue()	{ return 4;	}},
+	/** Maximum. Used to run any test that checks complexity settings */
+	MAXIMUM { @Override public int getValue() { return Integer.MAX_VALUE; }};
+
+	//@formatter:on
+	
 	/**
-	 * Run the test assertion.
+	 * Gets the value.
 	 *
-	 * @return pass/fail
+	 * @return the value
 	 */
-	public boolean test();
+	public abstract int getValue();
 }

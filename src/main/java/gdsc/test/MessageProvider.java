@@ -24,15 +24,14 @@
 package gdsc.test;
 
 /**
- * Simple interface for any test case that can generate a pass/fail result.
+ * Provide messages dynamically for logging.
  */
-@FunctionalInterface
-public interface TestCase
+public interface MessageProvider
 {
 	/**
-	 * Run the test assertion.
+	 * Gets the message.
 	 *
-	 * @return pass/fail
+	 * @return the message
 	 */
-	public boolean test();
+	public String getMessage();
 }

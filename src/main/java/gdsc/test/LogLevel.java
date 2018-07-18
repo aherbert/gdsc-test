@@ -24,15 +24,27 @@
 package gdsc.test;
 
 /**
- * Simple interface for any test case that can generate a pass/fail result.
+ * The Log Level. Lower levels result is less verbose output.
  */
-@FunctionalInterface
-public interface TestCase
+public enum LogLevel
 {
+	//@formatter:off
+	
+	/** Silent. Use this level to output information even if logging is disabled. */
+	SILENT { @Override public int getValue() { return 0; }},
+	/** Warning logging. For example this can be used to log test results that fail but are not critical. */
+	WARN { @Override public int getValue() { return 1; }},
+	/** Information logging. */
+	INFO {@Override public int getValue() {	return 2; }},
+	/** Debug logging. */
+	DEBUG {	@Override public int getValue()	{ return 3; }};
+
+	//@formatter:on
+	
 	/**
-	 * Run the test assertion.
+	 * Gets the value.
 	 *
-	 * @return pass/fail
+	 * @return the value
 	 */
-	public boolean test();
+	public abstract int getValue();
 }
