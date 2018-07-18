@@ -27,14 +27,14 @@ package uk.ac.sussex.gdsc.test;
  * Runs test assertions and accumulates any thrown AssertionErrors. If the limit is exceeded then the last generated
  * error is thrown.
  * <p>
- * Use this class to fail tests that accumulate too many errors during random repeats, e.g. >5 out of 100.
+ * Use this class to fail tests that accumulate too many errors during random repeats, e.g. &gt;5 out of 100.
  * <p>
  * The class can be used with lambda functions, e.g.
  * <pre>
  * TestCounter c = new TestCounter(3);
- * c.run( () -> { Assert.fail(); } );
- * c.run( () -> { return false; }, () -> { Assert.fail(); } );
- * <pre>
+ * c.run( () -&gt; { Assert.fail(); } );
+ * c.run( () -&gt; { return false; }, () -&gt; { Assert.fail(); } );
+ * </pre>
  */
 public class TestCounter
 {
