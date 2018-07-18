@@ -25,10 +25,6 @@ package uk.ac.sussex.gdsc.test;
 
 import org.junit.Test;
 
-import uk.ac.sussex.gdsc.test.LogLevel;
-import uk.ac.sussex.gdsc.test.TestLog;
-import uk.ac.sussex.gdsc.test.TestSettings;
-
 @SuppressWarnings("javadoc")
 public class TestSettingsTest
 {

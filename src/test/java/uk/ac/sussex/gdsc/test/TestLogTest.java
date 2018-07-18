@@ -28,11 +28,6 @@ import java.util.IllegalFormatConversionException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import uk.ac.sussex.gdsc.test.LogLevel;
-import uk.ac.sussex.gdsc.test.TestLog;
-import uk.ac.sussex.gdsc.test.TimingResult;
-import uk.ac.sussex.gdsc.test.TimingTask;
-
 @SuppressWarnings("javadoc")
 public class TestLogTest
 {

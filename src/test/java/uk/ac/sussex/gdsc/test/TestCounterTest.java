@@ -26,8 +26,6 @@ package uk.ac.sussex.gdsc.test;
 import org.junit.Assert;
 import org.junit.Test;
 
-import uk.ac.sussex.gdsc.test.TestCounter;
-
 @SuppressWarnings("javadoc")
 public class TestCounterTest
 {
