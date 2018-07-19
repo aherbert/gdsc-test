@@ -23,7 +23,7 @@
  */
 
 /**
- * Contains code for use with the JUnit 4 test framework.
+ * Contains code for use with the <a href="https://junit.org/junit4/">JUnit 4</a> test framework.
  * 
  * @see <a href="https://junit.org/junit4/">JUnit 4</a>
  */

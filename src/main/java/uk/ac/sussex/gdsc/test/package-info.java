@@ -23,8 +23,9 @@
  */
 
 /**
- * Contains code for use with the JUnit test framework.
- * Support is provided for JUnit 4 and JUnit 5.
+ * Contains code for use with the <a href="https://junit.org/">JUnit</a> test framework.
+ * Support is provided for <a href="https://junit.org/junit4/">JUnit 4</a> and 
+ * <a href="https://junit.org/junit5/">JUnit 5</a>.
  * <p>
  * The package contains:
  * </p>
@@ -36,7 +37,7 @@
  * <li>A test timing service
  * </ul>
  * <p>
- * The package is configured using java runtime arguments.
+ * The package is configured using java runtime arguments (see {@link uk.ac.sussex.gdsc.test.TestSettings}).
  * </p>
  * 
  * @see <a href="https://junit.org/junit4/">JUnit 4</a>

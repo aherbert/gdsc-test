@@ -24,7 +24,7 @@
 package uk.ac.sussex.gdsc.test;
 
 /**
- * Runs test assertions and accumulates any thrown AssertionErrors. If the limit is exceeded then the last generated
+ * Runs test assertions and accumulates any thrown {@link AssertionError}s. If the limit is exceeded then the last generated
  * error is thrown.
  * <p>
  * Use this class to fail tests that accumulate too many errors during random repeats, e.g. &gt;5 out of 100.
