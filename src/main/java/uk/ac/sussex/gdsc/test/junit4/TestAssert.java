@@ -28,7 +28,16 @@ import org.junit.Assert;
 import org.junit.internal.ComparisonCriteria;
 
 /**
- * Class providing additional assert functions for tests.
+ * Adds additional helper assert functions to those provided by {@link org.junit.Assert}.
+ * <p>
+ * Assert functions are provided to compare float values using relative error, and assert methods to support formatted messages, e.g.
+ * <pre>
+ * &#64;Test
+ * public void myTest() {
+ *     TestAssert.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
+ *     TestAssert.fail("Failed number %d", 42);
+ * }
+ * </pre>
  */
 public class TestAssert
 {

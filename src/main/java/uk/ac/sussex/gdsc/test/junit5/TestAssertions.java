@@ -29,7 +29,15 @@ import org.junit.jupiter.api.Assertions;
 import org.opentest4j.AssertionFailedError;
 
 /**
- * Class providing additional assertion functions for tests.
+ * Adds additional helper assert functions to those provided by {@link org.junit.jupiter.api.Assertions}.
+ * <p>
+ * Assert functions are provided to compare float values using relative error, e.g.
+ * <pre>
+ * &#64;Test
+ * public void myTest() {
+ *     TestAssertions.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
+ * }
+ * </pre>
  */
 public class TestAssertions
 {

@@ -29,10 +29,43 @@ import org.apache.commons.math3.random.Well19937c;
 /**
  * Class used to control test settings.
  * <p>
- * This class is configured once using system properties.
+ * This class is configured once using system properties. 
+ * For example to configure the settings for tests run using 
+ * <a href="https://maven.apache.org/">Maven</a>:
+ * 
+ * <pre>
+ * mvn test -Dgdsc.test.logging=1 -Dgdsc.test.level=2 -Dgdsc.test.seed=12345
+ * </pre>
+ * 
+ * Test classes can then be coded to respond to this run-time configuration. 
  */
 public class TestSettings
 {
+	/**
+	 * The runtime property used for the log level, e.g.
+	 * 
+	 * <pre>
+	 * -Dgdsc.test.logging=1
+	 * </pre>
+	 */
+	public static final String PROPERTY_LOG_LEVEL = "gdsc.test.logging";
+	/**
+	 * The runtime property used for the test complexity level, e.g.
+	 * 
+	 * <pre>
+	 * -Dgdsc.test.level=1
+	 * </pre>
+	 */
+	public static final String PROPERTY_TEST_COMPLEXITY = "gdsc.test.level";
+	/**
+	 * The runtime property used to seed the random generator, e.g.
+	 * 
+	 * <pre>
+	 * -Dgdsc.test.seed=12345
+	 * </pre>
+	 */
+	public static final String PROPERTY_RANDOM_SEED = "gdsc.test.seed";
+
 	/** The allowed log level. */
 	private static int logLevel;
 
@@ -50,7 +83,7 @@ public class TestSettings
 
 		try
 		{
-			logLevel = Integer.parseInt(System.getProperty("uk.ac.sussex.gdsc.test.logging"));
+			logLevel = Integer.parseInt(System.getProperty(PROPERTY_LOG_LEVEL));
 		}
 		catch (final Exception e)
 		{
@@ -58,7 +91,7 @@ public class TestSettings
 		}
 		try
 		{
-			testComplexity = Integer.parseInt(System.getProperty("uk.ac.sussex.gdsc.test.level"));
+			testComplexity = Integer.parseInt(System.getProperty(PROPERTY_TEST_COMPLEXITY));
 		}
 		catch (final Exception e)
 		{
@@ -66,7 +99,7 @@ public class TestSettings
 		}
 		try
 		{
-			seed = Long.parseLong(System.getProperty("uk.ac.sussex.gdsc.test.seed"));
+			seed = Long.parseLong(System.getProperty(PROPERTY_RANDOM_SEED));
 		}
 		catch (final Exception e)
 		{
@@ -185,5 +218,5 @@ public class TestSettings
 	{
 		return getRandomGenerator(seed);
 	}
-	
+
 }

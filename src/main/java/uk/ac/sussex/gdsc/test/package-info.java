@@ -24,7 +24,23 @@
 
 /**
  * Contains code for use with the JUnit test framework.
+ * Support is provided for JUnit 4 and JUnit 5.
+ * <p>
+ * The package contains:
+ * </p>
+ * <ul>
+ * <li>Additional assert functions for floating point equality using relative error (in contrast to the JUnit standard of absolute error)
+ * <li>Run-time configurable logging functionality
+ * <li>Run-time configurable test complexity
+ * <li>Run-time configurable random generator
+ * <li>A test timing service
+ * </ul>
+ * <p>
+ * The package is configured using java runtime arguments.
+ * </p>
  * 
- * @see <a href="https://junit.org/">JUnit</a>
+ * @see <a href="https://junit.org/junit4/">JUnit 4</a>
+ * @see <a href="https://junit.org/junit5/">JUnit 5</a>
+ * @see uk.ac.sussex.gdsc.test.TestSettings
  */
 package uk.ac.sussex.gdsc.test;

@@ -31,9 +31,17 @@ import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 /**
- * Class used to control test settings.
+ * Adds additional helper assumptions to those provided by {@link org.junit.jupiter.api.Assumptions}.
  * <p>
- * This class is configured once using system properties.
+ * Tests can be written to respond to the run-time configured {@link LogLevel} and {@link TestComplexity}, e.g.
+ * <pre>
+ * &#64;Test
+ * public void myTest() {
+ *     TestAssumptions.assume(LogLevel.INFO);
+ *     TestAssumptions.assume(TestComplexity.MEDIUM);
+ *     // ... do the test
+ * }
+ * </pre>
  */
 public class TestAssumptions
 {
