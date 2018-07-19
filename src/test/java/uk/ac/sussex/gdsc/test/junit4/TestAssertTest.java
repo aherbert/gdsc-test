@@ -21,10 +21,13 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package uk.ac.sussex.gdsc.test;
+package uk.ac.sussex.gdsc.test.junit4;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import uk.ac.sussex.gdsc.test.TestLog;
+import uk.ac.sussex.gdsc.test.junit4.TestAssert;
 
 @SuppressWarnings("javadoc")
 public class TestAssertTest

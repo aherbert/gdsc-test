@@ -21,18 +21,10 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package uk.ac.sussex.gdsc.test;
 
-import org.junit.Test;
-
-@SuppressWarnings("javadoc")
-public class TestSettingsTest
-{
-	@Test
-	public void canPrintSettings()
-	{
-		System.out.printf("TestSettings Log Level = %d\n", TestSettings.getLogLevel());
-		System.out.printf("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity());
-		System.out.printf("TestSettings Seed = %d\n", TestSettings.getSeed());
-	}
-}
+/**
+ * Contains code for use with the JUnit 4 test framework.
+ * 
+ * @see <a href="https://junit.org/junit4/">JUnit 4</a>
+ */
+package uk.ac.sussex.gdsc.test.junit4;

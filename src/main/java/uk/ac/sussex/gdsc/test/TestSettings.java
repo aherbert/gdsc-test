@@ -25,7 +25,6 @@ package uk.ac.sussex.gdsc.test;
 
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.random.Well19937c;
-import org.junit.Assume;
 
 /**
  * Class used to control test settings.
@@ -166,111 +165,6 @@ public class TestSettings
 	}
 
 	/**
-	 * Assume logging is allowed at the given level.
-	 * <p>
-	 * Use this at the start of a test that only produces logging output (no assertions) to skip
-	 * the test as logging will be ignored.
-	 *
-	 * @param level
-	 *            the level
-	 */
-	public static void assume(LogLevel level)
-	{
-		Assume.assumeTrue(allow(level));
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#WARN} level.
-	 */
-	public static void assumeWarn()
-	{
-		assume(LogLevel.WARN);
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#INFO} level.
-	 */
-	public static void assumeInfo()
-	{
-		assume(LogLevel.INFO);
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#DEBUG} level.
-	 */
-	public static void assumeDebug()
-	{
-		assume(LogLevel.DEBUG);
-	}
-
-	/**
-	 * Assume testing is allowed at the given complexity.
-	 * <p>
-	 * Use this at the start of a test that has a long run time or is otherwise complex
-	 * enough to warrant skipping the test if not testing at that level of complexity.
-	 *
-	 * @param complexity
-	 *            the complexity
-	 */
-	public static void assume(TestComplexity complexity)
-	{
-		Assume.assumeTrue(allow(complexity));
-	}
-
-	/**
-	 * Assume testing is allowed at low complexity.
-	 */
-	public static void assumeLowComplexity()
-	{
-		assume(TestComplexity.LOW);
-	}
-
-	/**
-	 * Assume testing is allowed at medium complexity.
-	 */
-	public static void assumeMediumComplexity()
-	{
-		assume(TestComplexity.MEDIUM);
-	}
-
-	/**
-	 * Assume testing is allowed at high complexity.
-	 */
-	public static void assumeHighComplexity()
-	{
-		assume(TestComplexity.HIGH);
-	}
-
-	/**
-	 * Assume testing is allowed at very high complexity.
-	 */
-	public static void assumeVeryHighComplexity()
-	{
-		assume(TestComplexity.VERY_HIGH);
-	}
-
-	/**
-	 * Assume testing is allowed at maximum complexity.
-	 */
-	public static void assumeMaximumComplexity()
-	{
-		assume(TestComplexity.MAXIMUM);
-	}
-
-	/**
-	 * Assume logging and testing is allowed at the given level and complexity.
-	 *
-	 * @param level
-	 *            the level
-	 * @param complexity
-	 *            the complexity
-	 */
-	public static void assume(LogLevel level, TestComplexity complexity)
-	{
-		Assume.assumeTrue(allow(level, complexity));
-	}
-
-	/**
 	 * Gets the random generator. If the seed is 0 then a random seed will be used.
 	 *
 	 * @param seed
@@ -291,33 +185,5 @@ public class TestSettings
 	{
 		return getRandomGenerator(seed);
 	}
-
-	/**
-	 * Assume speed testing is allowed the {@link TestComplexity#MEDIUM} complexity level.
-	 * <p>
-	 * Use this at the start of a speed test that has a long run time or is otherwise complex
-	 * enough to warrant skipping the test if not testing at that level of complexity.
-	 * <p>
-	 * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
-	 */
-	public static void assumeSpeedTest()
-	{
-		assumeSpeedTest(TestComplexity.MEDIUM);
-	}
-
-	/**
-	 * Assume speed testing is allowed at the given complexity.
-	 * <p>
-	 * Use this at the start of a speed test that has a long run time or is otherwise complex
-	 * enough to warrant skipping the test if not testing at that level of complexity.
-	 * <p>
-	 * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
-	 *
-	 * @param complexity
-	 *            the complexity
-	 */
-	public static void assumeSpeedTest(TestComplexity complexity)
-	{
-		assume(complexity);
-	}
+	
 }

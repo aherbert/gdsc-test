@@ -21,18 +21,24 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package uk.ac.sussex.gdsc.test;
+package uk.ac.sussex.gdsc.test.junit5;
 
-import org.junit.Test;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@SuppressWarnings("javadoc")
-public class TestSettingsTest
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Annotation used to mark speed tests
+ */
+@Target({ ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Tag("speed")
+@Test
+public @interface SpeedTest
 {
-	@Test
-	public void canPrintSettings()
-	{
-		System.out.printf("TestSettings Log Level = %d\n", TestSettings.getLogLevel());
-		System.out.printf("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity());
-		System.out.printf("TestSettings Seed = %d\n", TestSettings.getSeed());
-	}
+	// Annotation
 }

@@ -21,7 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package uk.ac.sussex.gdsc.test;
+package uk.ac.sussex.gdsc.test.junit4;
 
 import org.hamcrest.Matcher;
 import org.junit.Assert;
@@ -65,7 +65,7 @@ public class TestAssert
 	 * If they are not, an {@link AssertionError} is thrown with no
 	 * message. If the expected value is infinity then the relativeError value is
 	 * ignored. NaNs are considered equal:
-	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 * <code>assertEqualsRelative(Double.NaN, Double.NaN, *)</code> passes
 	 *
 	 * @param expected
 	 *            expected value
@@ -75,8 +75,10 @@ public class TestAssert
 	 *            the maximum relative error between <code>expected</code> and
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	public static void assertEqualsRelative(double expected, double actual, double relativeError)
+	public static void assertEqualsRelative(double expected, double actual, double relativeError) throws AssertionError
 	{
 		assertEqualsRelative(null, expected, actual, relativeError);
 	}
@@ -86,7 +88,7 @@ public class TestAssert
 	 * If they are not, an {@link AssertionError} is thrown with the formatted
 	 * message. If the expected value is infinity then the relativeError value is
 	 * ignored. NaNs are considered equal:
-	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 * <code>assertEqualsRelative(Double.NaN, Double.NaN, *)</code> passes
 	 *
 	 * @param expected
 	 *            expected value
@@ -100,9 +102,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertEqualsRelative(double expected, double actual, double relativeError, String format,
-			Object... args)
+			Object... args) throws AssertionError
 	{
 		try
 		{
@@ -119,7 +123,7 @@ public class TestAssert
 	 * If they are not, an {@link AssertionError} is thrown with the given
 	 * message. If the expected value is infinity then the relativeError value is
 	 * ignored. NaNs are considered equal:
-	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 * <code>assertEqualsRelative(Double.NaN, Double.NaN, *)</code> passes
 	 *
 	 * @param message
 	 *            the identifying message for the {@link AssertionError} (<code>null</code>
@@ -132,8 +136,11 @@ public class TestAssert
 	 *            the maximum relative error between <code>expected</code> and
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertEqualsRelative(String message, double expected, double actual, double relativeError)
+			throws AssertionError
 	{
 		//final double difference = max(Math.abs(expected), Math.abs(actual)) * relativeError;
 		//Assert.assertEquals(message, expected, actual, difference);
@@ -164,8 +171,10 @@ public class TestAssert
 	 *            the maximum relative error between <code>expected</code> and
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	public static void assertEqualsRelative(float expected, float actual, double relativeError)
+	public static void assertEqualsRelative(float expected, float actual, double relativeError) throws AssertionError
 	{
 		assertEqualsRelative(null, expected, actual, relativeError);
 	}
@@ -175,7 +184,7 @@ public class TestAssert
 	 * If they are not, an {@link AssertionError} is thrown with the formatted
 	 * message. If the expected value is infinity then the relativeError value is
 	 * ignored. NaNs are considered equal:
-	 * <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 * <code>assertEqualsRelative(Double.NaN, Double.NaN, *)</code> passes
 	 *
 	 * @param expected
 	 *            expected value
@@ -189,9 +198,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertEqualsRelative(float expected, float actual, double relativeError, String format,
-			Object... args)
+			Object... args) throws AssertionError
 	{
 		try
 		{
@@ -221,8 +232,11 @@ public class TestAssert
 	 *            the maximum relative error between <code>expected</code> and
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertEqualsRelative(String message, float expected, float actual, double relativeError)
+			throws AssertionError
 	{
 		//final float difference = (float) (max(Math.abs(expected), Math.abs(actual)) * relativeError);
 		//Assert.assertEquals(message, expected, actual, difference);
@@ -253,8 +267,11 @@ public class TestAssert
 	 *            the maximum relative error between <code>expected</code> and
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertNotEqualsRelative(double expected, double actual, double relativeError)
+			throws AssertionError
 	{
 		assertNotEqualsRelative(null, expected, actual, relativeError);
 	}
@@ -278,9 +295,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertNotEqualsRelative(double expected, double actual, double relativeError, String format,
-			Object... args)
+			Object... args) throws AssertionError
 	{
 		try
 		{
@@ -310,8 +329,11 @@ public class TestAssert
 	 *            the maximum relative error between <code>expected</code> and
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertNotEqualsRelative(String message, double expected, double actual, double relativeError)
+			throws AssertionError
 	{
 		//final double difference = max(Math.abs(expected), Math.abs(actual)) * relativeError;
 		//Assert.assertNotEquals(message, expected, actual, difference);
@@ -342,8 +364,10 @@ public class TestAssert
 	 *            the maximum relative error between <code>expected</code> and
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	public static void assertNotEqualsRelative(float expected, float actual, double relativeError)
+	public static void assertNotEqualsRelative(float expected, float actual, double relativeError) throws AssertionError
 	{
 		assertNotEqualsRelative(null, expected, actual, relativeError);
 	}
@@ -367,9 +391,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertNotEqualsRelative(float expected, float actual, double relativeError, String format,
-			Object... args)
+			Object... args) throws AssertionError
 	{
 		try
 		{
@@ -399,8 +425,11 @@ public class TestAssert
 	 *            the maximum relative error between <code>expected</code> and
 	 *            <code>actual</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertNotEqualsRelative(String message, float expected, float actual, double relativeError)
+			throws AssertionError
 	{
 		//final float difference = (float) (max(Math.abs(expected), Math.abs(actual)) * relativeError);
 		//Assert.assertNotEquals(message, expected, actual, difference);
@@ -438,7 +467,7 @@ public class TestAssert
 		}
 
 		@Override
-		protected void assertElementsEqual(Object expected, Object actual)
+		protected void assertElementsEqual(Object expected, Object actual) throws AssertionError
 		{
 			assertEqualsRelative(null, (Double) expected, (Double) actual, delta);
 		}
@@ -466,7 +495,7 @@ public class TestAssert
 		}
 
 		@Override
-		protected void assertElementsEqual(Object expected, Object actual)
+		protected void assertElementsEqual(Object expected, Object actual) throws AssertionError
 		{
 			assertEqualsRelative(null, (Float) expected, (Float) actual, delta);
 		}
@@ -482,8 +511,11 @@ public class TestAssert
 	 *            double array with actual values
 	 * @param relativeError
 	 *            the relative error
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEqualsRelative(double[] expecteds, double[] actuals, double relativeError)
+			throws AssertionError
 	{
 		assertArrayEqualsRelative(null, expecteds, actuals, relativeError);
 	}
@@ -502,9 +534,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEqualsRelative(double[] expecteds, double[] actuals, double relativeError,
-			String format, Object... args)
+			String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -531,9 +565,11 @@ public class TestAssert
 	 *            the maximum relativeError between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEqualsRelative(String message, double[] expecteds, double[] actuals,
-			double relativeError)
+			double relativeError) throws AssertionError
 	{
 		new DoubleRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
@@ -552,8 +588,11 @@ public class TestAssert
 	 *            the maximum relativeError between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertDoubleArrayEqualsRelative(Object expecteds, Object actuals, double relativeError)
+			throws AssertionError
 	{
 		assertDoubleArrayEqualsRelative(null, expecteds, actuals, relativeError);
 	}
@@ -576,9 +615,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertDoubleArrayEqualsRelative(Object expecteds, Object actuals, double relativeError,
-			String format, Object... args)
+			String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -607,9 +648,11 @@ public class TestAssert
 	 *            the maximum relativeError between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertDoubleArrayEqualsRelative(String message, Object expecteds, Object actuals,
-			double relativeError)
+			double relativeError) throws AssertionError
 	{
 		new DoubleRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
@@ -624,8 +667,11 @@ public class TestAssert
 	 *            float array with actual values
 	 * @param relativeError
 	 *            the relative error
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEqualsRelative(float[] expecteds, float[] actuals, double relativeError)
+			throws AssertionError
 	{
 		assertArrayEqualsRelative(null, expecteds, actuals, relativeError);
 	}
@@ -644,9 +690,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEqualsRelative(float[] expecteds, float[] actuals, double relativeError,
-			String format, Object... args)
+			String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -673,9 +721,11 @@ public class TestAssert
 	 *            the maximum relativeError between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEqualsRelative(String message, float[] expecteds, float[] actuals,
-			double relativeError)
+			double relativeError) throws AssertionError
 	{
 		new FloatRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
@@ -694,8 +744,11 @@ public class TestAssert
 	 *            the maximum relativeError between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertFloatArrayEqualsRelative(Object expecteds, Object actuals, double relativeError)
+			throws AssertionError
 	{
 		assertFloatArrayEqualsRelative(null, expecteds, actuals, relativeError);
 	}
@@ -718,9 +771,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertFloatArrayEqualsRelative(Object expecteds, Object actuals, double relativeError,
-			String format, Object... args)
+			String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -749,9 +804,11 @@ public class TestAssert
 	 *            the maximum relativeError between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertFloatArrayEqualsRelative(String message, Object expecteds, Object actuals,
-			double relativeError)
+			double relativeError) throws AssertionError
 	{
 		new FloatRelativeComparisonCriteria(relativeError).arrayEquals(message, expecteds, actuals);
 	}
@@ -816,8 +873,10 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	static public void assertTrue(boolean condition, String format, Object... args)
+	static public void assertTrue(boolean condition, String format, Object... args) throws AssertionError
 	{
 		if (condition)
 			return;
@@ -834,8 +893,10 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	static public void assertFalse(boolean condition, String format, Object... args)
+	static public void assertFalse(boolean condition, String format, Object... args) throws AssertionError
 	{
 		if (condition)
 			fail(format, args);
@@ -848,8 +909,10 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	static public void fail(String format, Object... args)
+	static public void fail(String format, Object... args) throws AssertionError
 	{
 		throw new AssertionError(String.format(format, args));
 	}
@@ -868,8 +931,10 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	static public void assertEquals(Object expected, Object actual, String format, Object... args)
+	static public void assertEquals(Object expected, Object actual, String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -895,8 +960,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	static public void assertNotEquals(Object unexpected, Object actual, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -920,8 +988,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	static public void assertNotEquals(long unexpected, long actual, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -951,8 +1022,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	static public void assertNotEquals(double unexpected, double actual, double delta, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -982,8 +1056,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	static public void assertNotEquals(float unexpected, float actual, float delta, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1011,8 +1088,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(Object[] expecteds, Object[] actuals, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1038,8 +1118,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(boolean[] expecteds, boolean[] actuals, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1063,8 +1146,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(byte[] expecteds, byte[] actuals, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1088,8 +1174,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(char[] expecteds, char[] actuals, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1113,8 +1202,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(short[] expecteds, short[] actuals, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1138,8 +1230,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(int[] expecteds, int[] actuals, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1163,8 +1258,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(long[] expecteds, long[] actuals, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1192,9 +1290,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(double[] expecteds, double[] actuals, double delta, String format,
-			Object... args)
+			Object... args) throws AssertionError
 	{
 		try
 		{
@@ -1222,8 +1322,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	public static void assertArrayEquals(float[] expecteds, float[] actuals, float delta, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1247,8 +1350,10 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	static public void assertLongEquals(long expected, long actual, String format, Object... args)
+	static public void assertLongEquals(long expected, long actual, String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -1264,7 +1369,7 @@ public class TestAssert
 	 * Assert.assert that two doubles are equal to within a positive delta.
 	 * If they are not, an {@link AssertionError} is thrown. If the expected
 	 * value is infinity then the delta value is ignored.NaNs are considered
-	 * equal: <code>assertEquals(Double.NaN, Double.NaN, *)</code> passes
+	 * equal: <code>assertEqualsRelative(Double.NaN, Double.NaN, *)</code> passes
 	 *
 	 * @param expected
 	 *            expected value
@@ -1278,8 +1383,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	static public void assertEquals(double expected, double actual, double delta, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1309,8 +1417,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	static public void assertEquals(float expected, float actual, float delta, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1332,8 +1443,10 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	static public void assertNotNull(Object object, String format, Object... args)
+	static public void assertNotNull(Object object, String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -1355,8 +1468,10 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	static public void assertNull(Object object, String format, Object... args)
+	static public void assertNull(Object object, String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -1380,8 +1495,10 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
-	static public void assertSame(Object expected, Object actual, String format, Object... args)
+	static public void assertSame(Object expected, Object actual, String format, Object... args) throws AssertionError
 	{
 		try
 		{
@@ -1406,8 +1523,11 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 */
 	static public void assertNotSame(Object unexpected, Object actual, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{
@@ -1423,7 +1543,7 @@ public class TestAssert
 	 * Assert.assert that <code>actual</code> satisfies the condition specified by
 	 * <code>matcher</code>. If not, an {@link AssertionError} is thrown with
 	 * information about the matcher and failing value. Example:
-	 *
+	 * 
 	 * <pre>
 	 *   assertThat(0, is(1)); // fails:
 	 *     // failure message:
@@ -1431,7 +1551,7 @@ public class TestAssert
 	 *     // got value: &lt;0&gt;
 	 *   assertThat(0, is(not(1))) // passes
 	 * </pre>
-	 *
+	 * 
 	 * <code>org.hamcrest.Matcher</code> does not currently document the meaning
 	 * of its type parameter <code>T</code>. This method assumes that a matcher
 	 * typed as <code>Matcher&lt;T&gt;</code> can be meaningfully applied only
@@ -1449,10 +1569,13 @@ public class TestAssert
 	 *            the message format
 	 * @param args
 	 *            the arguments
+	 * @throws AssertionError
+	 *             if the assertion is not {@code true}
 	 * @see org.hamcrest.CoreMatchers
 	 * @see org.hamcrest.MatcherAssert
 	 */
 	public static <T> void assertThat(T actual, Matcher<? super T> matcher, String format, Object... args)
+			throws AssertionError
 	{
 		try
 		{

@@ -21,18 +21,21 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package uk.ac.sussex.gdsc.test;
+package uk.ac.sussex.gdsc.test.junit5;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Assertions;
+import org.opentest4j.AssertionFailedError;
 
 @SuppressWarnings("javadoc")
-public class TestSettingsTest
+public class AnnotationTest
 {
-	@Test
-	public void canPrintSettings()
+	@SpeedTest
+	public void canAnnotateSpeedTest()
 	{
-		System.out.printf("TestSettings Log Level = %d\n", TestSettings.getLogLevel());
-		System.out.printf("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity());
-		System.out.printf("TestSettings Seed = %d\n", TestSettings.getSeed());
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			fail("Not yet implemented");
+		});
 	}
 }

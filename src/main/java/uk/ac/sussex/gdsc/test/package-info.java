@@ -23,8 +23,8 @@
  */
 
 /**
- * Contains code for use with the JUnit 4 test framework.
+ * Contains code for use with the JUnit test framework.
  * 
- * @see <a href="https://junit.org/junit4/">JUnit 4</a>
+ * @see <a href="https://junit.org/">JUnit</a>
  */
 package uk.ac.sussex.gdsc.test;
