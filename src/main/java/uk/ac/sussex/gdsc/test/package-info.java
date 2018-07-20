@@ -23,7 +23,7 @@
  */
 
 /**
- * Contains code for use with the <a href="https://junit.org/">JUnit</a> test framework.
+ * Provides classes for use with the <a href="https://junit.org/">JUnit</a> test framework.
  * Support is provided for <a href="https://junit.org/junit4/">JUnit 4</a> and 
  * <a href="https://junit.org/junit5/">JUnit 5</a>.
  * <p>
