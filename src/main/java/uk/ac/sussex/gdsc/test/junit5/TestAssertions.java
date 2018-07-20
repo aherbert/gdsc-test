@@ -32,10 +32,12 @@ import org.opentest4j.AssertionFailedError;
  * Adds additional helper assert functions to those provided by {@link org.junit.jupiter.api.Assertions}.
  * <p>
  * Assert functions are provided to compare float values using relative error, e.g.
+ * 
  * <pre>
  * &#64;Test
- * public void myTest() {
- *     TestAssertions.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
+ * public void myTest()
+ * {
+ * 	TestAssertions.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
  * }
  * </pre>
  */
@@ -161,7 +163,7 @@ public class TestAssertions
 		final double max = max(Math.abs(expected), Math.abs(actual));
 		try
 		{
-			assertEqualsRelative(expected, actual, relativeError, messageSupplier);
+			Assertions.assertEquals(expected, actual, max * relativeError, messageSupplier);
 		}
 		catch (final AssertionFailedError ex)
 		{
@@ -197,7 +199,7 @@ public class TestAssertions
 		final double max = max(Math.abs(expected), Math.abs(actual));
 		try
 		{
-			assertEqualsRelative(expected, actual, relativeError, () -> {
+			Assertions.assertEquals(expected, actual, max * relativeError, () -> {
 				return String.format(format, args);
 			});
 		}
@@ -299,7 +301,7 @@ public class TestAssertions
 		final double max = max(Math.abs(expected), Math.abs(actual));
 		try
 		{
-			assertEqualsRelative(expected, actual, relativeError, messageSupplier);
+			Assertions.assertEquals(expected, actual, max * relativeError, messageSupplier);
 		}
 		catch (final AssertionFailedError ex)
 		{
@@ -335,7 +337,7 @@ public class TestAssertions
 		final double max = max(Math.abs(expected), Math.abs(actual));
 		try
 		{
-			assertEqualsRelative(expected, actual, relativeError, () -> {
+			Assertions.assertEquals(expected, actual, max * relativeError, () -> {
 				return String.format(format, args);
 			});
 		}
