@@ -43,5 +43,6 @@
  * @see <a href="https://junit.org/junit4/">JUnit 4</a>
  * @see <a href="https://junit.org/junit5/">JUnit 5</a>
  * @see uk.ac.sussex.gdsc.test.TestSettings
- */
+ * @since 1.0.0
+*/
 package uk.ac.sussex.gdsc.test;
