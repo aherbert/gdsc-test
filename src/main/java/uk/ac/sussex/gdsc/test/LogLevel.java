@@ -1,7 +1,7 @@
 /*-
  * #%L
  * Genome Damage and Stability Centre Test Package
- * 
+ *
  * The GDSC Test package contains code for use with the JUnit test framework.
  * %%
  * Copyright (C) 2018 Alex Herbert
@@ -10,12 +10,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -29,7 +29,7 @@ package uk.ac.sussex.gdsc.test;
 public enum LogLevel
 {
 	//@formatter:off
-	
+
 	/** Silent. Use this level to output information even if logging is disabled. */
 	SILENT { @Override public int getValue() { return 0; }},
 	/** Warning logging. For example this can be used to log test results that fail but are not critical. */
@@ -40,7 +40,7 @@ public enum LogLevel
 	DEBUG {	@Override public int getValue()	{ return 3; }};
 
 	//@formatter:on
-	
+
 	/**
 	 * Gets the value.
 	 *
