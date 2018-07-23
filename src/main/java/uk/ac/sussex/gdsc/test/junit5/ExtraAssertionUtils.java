@@ -40,7 +40,11 @@ class ExtraAssertionUtils
 {
 	/**
 	 * Assert that the relative error is valid.
-	 * The value must be in the range {@code 0} inclusive to {@code 2} exclusive.
+	 * The value must be in the range {@code 0} exclusive to {@code 2} exclusive.
+	 * Values outside this range are meaningless.
+	 * <p>
+	 * Note that 2 is the maximum relative error of two values if they are opposite signs:<br>
+	 * {@code abs(a-b) / max(abs(a), abs(b))}.
 	 *
 	 * @param relativeError
 	 *            the maximum relative error between <code>expected</code> and
@@ -49,7 +53,7 @@ class ExtraAssertionUtils
 	 */
 	static void assertValidRelativeError(double relativeError)
 	{
-		if (!(relativeError >= 0 && relativeError < 2))
+		if (!(relativeError > 0 && relativeError < 2))
 			fail("relative error expected but was: <" + relativeError + ">");
 	}
 
