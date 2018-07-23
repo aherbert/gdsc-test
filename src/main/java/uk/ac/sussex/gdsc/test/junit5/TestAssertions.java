@@ -147,9 +147,7 @@ public class TestAssertions
 	public static void assertEqualsRelative(double expected, double actual, double relativeError, String format,
 			Object... args)
 	{
-		ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, () -> {
-			return String.format(format, args);
-		});
+		ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, () -> String.format(format, args));
 	}
 
 	/**
@@ -252,9 +250,7 @@ public class TestAssertions
 	public static void assertEqualsRelative(float expected, float actual, double relativeError, String format,
 			Object... args)
 	{
-		ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, () -> {
-			return String.format(format, args);
-		});
+		ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, () -> String.format(format, args));
 	}
 
 	/**
@@ -360,9 +356,7 @@ public class TestAssertions
 	public static void assertArrayEqualsRelative(double[] expected, double[] actual, double relativeError,
 			String format, Object... args)
 	{
-		assertArrayEqualsRelative(expected, actual, relativeError, () -> {
-			return String.format(format, args);
-		});
+		assertArrayEqualsRelative(expected, actual, relativeError, () -> String.format(format, args));
 	}
 
 	/**
@@ -471,9 +465,7 @@ public class TestAssertions
 	public static void assertArrayEqualsRelative(float[] expected, float[] actual, double relativeError, String format,
 			Object... args)
 	{
-		assertArrayEqualsRelative(expected, actual, relativeError, () -> {
-			return String.format(format, args);
-		});
+		assertArrayEqualsRelative(expected, actual, relativeError, () -> String.format(format, args));
 	}
 
 	/**
@@ -597,9 +589,8 @@ public class TestAssertions
 	public static void assertArrayEqualsRelative(Object[] expected, Object[] actual, double relativeError,
 			String format, Object... args)
 	{
-		ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, () -> {
-			return String.format(format, args);
-		});
+		ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError,
+				() -> String.format(format, args));
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -628,9 +619,7 @@ public class TestAssertions
 	 */
 	public static void assertEquals(short expected, short actual, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
@@ -650,9 +639,7 @@ public class TestAssertions
 	 */
 	public static void assertEquals(byte expected, byte actual, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
@@ -672,9 +659,7 @@ public class TestAssertions
 	 */
 	public static void assertEquals(int expected, int actual, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
@@ -694,9 +679,7 @@ public class TestAssertions
 	 */
 	public static void assertEquals(long expected, long actual, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
@@ -716,9 +699,7 @@ public class TestAssertions
 	 */
 	public static void assertEquals(char expected, char actual, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
@@ -738,9 +719,29 @@ public class TestAssertions
 	 */
 	public static void assertEquals(float expected, float actual, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
+	}
+
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code delta}.
+	 * <p>
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
+	 * </p>
+	 *
+	 * @param expected
+	 *            The expected value.
+	 * @param actual
+	 *            The value to check against <code>expected</code>.
+	 * @param delta
+	 *            The delta.
+	 * @param format
+	 *            The format.
+	 * @param args
+	 *            The arguments.
+	 */
+	public static void assertEquals(float expected, float actual, float delta, String format, Object... args)
+	{
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
@@ -760,9 +761,29 @@ public class TestAssertions
 	 */
 	public static void assertEquals(double expected, double actual, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
+	}
+
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code delta}.
+	 * <p>
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
+	 * </p>
+	 *
+	 * @param expected
+	 *            The expected value.
+	 * @param actual
+	 *            The value to check against <code>expected</code>.
+	 * @param delta
+	 *            The delta.
+	 * @param format
+	 *            The format.
+	 * @param args
+	 *            The arguments.
+	 */
+	public static void assertEquals(double expected, double actual, double delta, String format, Object... args)
+	{
+		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	// This leads to ambiguous method overloading with all the above methods 
@@ -790,7 +811,7 @@ public class TestAssertions
 	//}
 
 	/**
-	 * <em>Asserts</em> that {@code[] expected} and {@code[] actual} are equal.
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal.
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
@@ -806,13 +827,11 @@ public class TestAssertions
 	 */
 	public static void assertArrayEquals(short[] expected, short[] actual, String format, Object... args)
 	{
-		Assertions.assertArrayEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertArrayEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
-	 * <em>Asserts</em> that {@code[] expected} and {@code[] actual} are equal.
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal.
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
@@ -828,13 +847,11 @@ public class TestAssertions
 	 */
 	public static void assertArrayEquals(byte[] expected, byte[] actual, String format, Object... args)
 	{
-		Assertions.assertArrayEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertArrayEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
-	 * <em>Asserts</em> that {@code[] expected} and {@code[] actual} are equal.
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal.
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
@@ -850,13 +867,11 @@ public class TestAssertions
 	 */
 	public static void assertArrayEquals(int[] expected, int[] actual, String format, Object... args)
 	{
-		Assertions.assertArrayEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertArrayEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
-	 * <em>Asserts</em> that {@code[] expected} and {@code[] actual} are equal.
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal.
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
@@ -872,13 +887,11 @@ public class TestAssertions
 	 */
 	public static void assertArrayEquals(long[] expected, long[] actual, String format, Object... args)
 	{
-		Assertions.assertArrayEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertArrayEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
-	 * <em>Asserts</em> that {@code[] expected} and {@code[] actual} are equal.
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal.
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
@@ -894,13 +907,11 @@ public class TestAssertions
 	 */
 	public static void assertArrayEquals(char[] expected, char[] actual, String format, Object... args)
 	{
-		Assertions.assertArrayEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertArrayEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
-	 * <em>Asserts</em> that {@code[] expected} and {@code[] actual} are equal.
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal.
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
@@ -916,13 +927,33 @@ public class TestAssertions
 	 */
 	public static void assertArrayEquals(float[] expected, float[] actual, String format, Object... args)
 	{
-		Assertions.assertArrayEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertArrayEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
-	 * <em>Asserts</em> that {@code[] expected} and {@code[] actual} are equal.
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal within the given {@code delta}.
+	 * <p>
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
+	 * </p>
+	 *
+	 * @param expected
+	 *            The expected value.
+	 * @param actual
+	 *            The value to check against <code>expected</code>.
+	 * @param delta
+	 *            The delta.
+	 * @param format
+	 *            The format.
+	 * @param args
+	 *            The arguments.
+	 */
+	public static void assertArrayEquals(float[] expected, float[] actual, float delta, String format, Object... args)
+	{
+		Assertions.assertArrayEquals(expected, actual, delta, () -> String.format(format, args));
+	}
+
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal.
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
@@ -938,9 +969,30 @@ public class TestAssertions
 	 */
 	public static void assertArrayEquals(double[] expected, double[] actual, String format, Object... args)
 	{
-		Assertions.assertArrayEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertArrayEquals(expected, actual, () -> String.format(format, args));
+	}
+
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} arrays are equal within the given {@code delta}.
+	 * <p>
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
+	 * </p>
+	 *
+	 * @param expected
+	 *            The expected value.
+	 * @param actual
+	 *            The value to check against <code>expected</code>.
+	 * @param delta
+	 *            The delta.
+	 * @param format
+	 *            The format.
+	 * @param args
+	 *            The arguments.
+	 */
+	public static void assertArrayEquals(double[] expected, double[] actual, double delta, String format,
+			Object... args)
+	{
+		Assertions.assertArrayEquals(expected, actual, delta, () -> String.format(format, args));
 	}
 
 	/**
@@ -969,17 +1021,17 @@ public class TestAssertions
 	 */
 	public static void assertArrayEquals(Object[] expected, Object[] actual, String format, Object... args)
 	{
-		Assertions.assertArrayEquals(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertArrayEquals(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
 	 * <em>Asserts</em> that {@code expected} and {@code actual} are not equal.
 	 * <p>
 	 * Fails if both are {@code null}.
+	 * </p>
 	 * <p>
-	 * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
+	 * </p>
 	 *
 	 * @param unexpected
 	 *            The unexpected value.
@@ -993,15 +1045,13 @@ public class TestAssertions
 	 */
 	public static void assertNotEquals(Object unexpected, Object actual, String format, Object... args)
 	{
-		Assertions.assertNotEquals(unexpected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertNotEquals(unexpected, actual, () -> String.format(format, args));
 	}
 
 	/**
 	 * <em>Asserts</em> that {@code expected} and {@code actual} refer to the same object.
 	 * <p>
-	 * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 *
 	 * @param expected
 	 *            The expected value.
@@ -1014,15 +1064,13 @@ public class TestAssertions
 	 */
 	public static void assertSame(Object expected, Object actual, String format, Object... args)
 	{
-		Assertions.assertSame(expected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertSame(expected, actual, () -> String.format(format, args));
 	}
 
 	/**
 	 * <em>Asserts</em> that {@code expected} and {@code actual} do not refer to the same object.
 	 * <p>
-	 * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 *
 	 * @param unexpected
 	 *            The unexpected value.
@@ -1035,9 +1083,63 @@ public class TestAssertions
 	 */
 	public static void assertNotSame(Object unexpected, Object actual, String format, Object... args)
 	{
-		Assertions.assertNotSame(unexpected, actual, () -> {
-			return String.format(format, args);
-		});
+		Assertions.assertNotSame(unexpected, actual, () -> String.format(format, args));
+	}
+
+	/**
+	 * <em>Asserts</em> that the supplied {@code condition} is {@code true}.
+	 * <p>
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
+	 *
+	 * @param condition
+	 *            The condition.
+	 * @param format
+	 *            The format.
+	 * @param args
+	 *            The arguments.
+	 */
+	public static void assertTrue(boolean condition, String format, Object... args)
+	{
+		Assertions.assertTrue(condition, () -> String.format(format, args));
+	}
+
+	/**
+	 * <em>Asserts</em> that the supplied {@code condition} is not {@code true}.
+	 * <p>
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
+	 *
+	 * @param condition
+	 *            The condition.
+	 * @param format
+	 *            The format.
+	 * @param args
+	 *            The arguments.
+	 */
+	public static void assertFalse(boolean condition, String format, Object... args)
+	{
+		Assertions.assertFalse(condition, () -> String.format(format, args));
+	}
+
+	/**
+	 * <em>Fails</em> a test with the failure message retrieved from the
+	 * given {@code format} and {@code args}.
+	 * 
+	 * <p>
+	 * See Javadoc for {@link Assertions#fail(String, Throwable)} for an explanation of
+	 * this method's generic return type {@code V}.
+	 *
+	 * @param <V>
+	 *            the value type
+	 * @param format
+	 *            The format.
+	 * @param args
+	 *            The arguments.
+	 * @return the v
+	 */
+	public static <V> V fail(String format, Object... args)
+	{
+		Assertions.fail(() -> String.format(format, args));
+		return null; // appeasing the compiler: this line will never be executed.
 	}
 
 	/**
