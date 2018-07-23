@@ -54,7 +54,7 @@ class ExtraAssertionUtils
 	static void assertValidRelativeError(double relativeError)
 	{
 		if (!(relativeError > 0 && relativeError < 2))
-			fail("relative error expected but was: <" + relativeError + ">");
+			fail("relative error expected <0 < e < 2> but was: <" + relativeError + ">");
 	}
 
 	/**
