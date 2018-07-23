@@ -130,9 +130,9 @@ class ExtraAssertionUtils
 	 */
 	static boolean doublesAreEqualRelative(double value1, double value2, double relativeError)
 	{
+		assertValidRelativeError(relativeError);
 		if (doublesAreEqual(value1, value2))
 			return true;
-		assertValidRelativeError(relativeError);
 		final double max = max(Math.abs(value1), Math.abs(value2));
 		return Math.abs(value1 - value2) <= max * relativeError;
 	}
@@ -304,9 +304,9 @@ class ExtraAssertionUtils
 	 */
 	static boolean floatsAreEqualRelative(float value1, float value2, double relativeError)
 	{
+		assertValidRelativeError(relativeError);
 		if (floatsAreEqual(value1, value2))
 			return true;
-		assertValidRelativeError(relativeError);
 		final float max = max(Math.abs(value1), Math.abs(value2));
 		return Math.abs(value1 - value2) <= (float) (max * relativeError);
 	}

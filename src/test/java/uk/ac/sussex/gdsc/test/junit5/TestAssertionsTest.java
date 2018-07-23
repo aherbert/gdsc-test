@@ -137,6 +137,27 @@ public class TestAssertionsTest
 	}
 
 	@Test
+	public void assertEqualsRelativeDoubleThrowsUsingBadThreshold()
+	{
+		final double e = 1;
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, 0);
+		}, "0");
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, 2);
+		}, "2");
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, Double.POSITIVE_INFINITY);
+		}, "+Inf");
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, Double.NaN);
+		}, "NaN");
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, -1);
+		}, "-1");
+	}
+
+	@Test
 	public void canAssertEqualsErrorsUpDoubleUsingRelativeError()
 	{
 		// Move further apart they should be not equal
@@ -392,6 +413,27 @@ public class TestAssertionsTest
 		{
 			Assertions.assertTrue(ex.getMessage().contains("Lambda message"));
 		}
+	}
+
+	@Test
+	public void assertEqualsRelativeFloatThrowsUsingBadThreshold()
+	{
+		final float e = 1;
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, 0);
+		}, "0");
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, 2);
+		}, "2");
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, Double.POSITIVE_INFINITY);
+		}, "+Inf");
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, Double.NaN);
+		}, "NaN");
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			TestAssertions.assertEqualsRelative(e, e, -1);
+		}, "-1");
 	}
 
 	@Test
