@@ -27,17 +27,17 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import uk.ac.sussex.gdsc.test.TestLog;
-import uk.ac.sussex.gdsc.test.junit4.TestAssert;
+import uk.ac.sussex.gdsc.test.junit4.ExtraAssert;
 
 @SuppressWarnings("javadoc")
-public class TestAssertTest
+public class ExtraAssertTest
 {
 	@Test
 	public void canAssertWithFormattedMessage()
 	{
 		try
 		{
-			TestAssert.assertLongEquals(0, 1, "[%d] == %.2f", 2, 3.5);
+			ExtraAssert.assertLongEquals(0, 1, "[%d] == %.2f", 2, 3.5);
 		}
 		catch (final AssertionError e)
 		{
@@ -111,68 +111,68 @@ public class TestAssertTest
 	public void canAssertEqualsAndNotEqualsDoubleUsingRelativeError()
 	{
 		// Equal within relative error
-		TestAssert.assertEqualsRelative(doubleL, doubleH, relativeError);
+		ExtraAssert.assertEqualsRelative(doubleL, doubleH, relativeError);
 
 		// Move closer together they should be equal
-		TestAssert.assertEqualsRelative(doubleLU, doubleH, relativeError);
-		TestAssert.assertEqualsRelative(doubleL, doubleHD, relativeError);
+		ExtraAssert.assertEqualsRelative(doubleLU, doubleH, relativeError);
+		ExtraAssert.assertEqualsRelative(doubleL, doubleHD, relativeError);
 
 		// Move further apart they should be not equal
-		TestAssert.assertNotEqualsRelative(doubleL, doubleHU, relativeError);
-		TestAssert.assertNotEqualsRelative(doubleLD, doubleH, relativeError);
+		ExtraAssert.assertNotEqualsRelative(doubleL, doubleHU, relativeError);
+		ExtraAssert.assertNotEqualsRelative(doubleLD, doubleH, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertEqualsErrorsUpDoubleUsingRelativeError()
 	{
 		// Move further apart they should be not equal
-		TestAssert.assertEqualsRelative(doubleL, doubleHU, relativeError);
+		ExtraAssert.assertEqualsRelative(doubleL, doubleHU, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertEqualsErrorsDownDoubleUsingRelativeError()
 	{
 		// Move further apart they should be not equal
-		TestAssert.assertEqualsRelative(doubleLD, doubleH, relativeError);
+		ExtraAssert.assertEqualsRelative(doubleLD, doubleH, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertNotEqualsErrorsDoubleUsingRelativeError()
 	{
 		// Equal within relative error
-		TestAssert.assertNotEqualsRelative(doubleL, doubleH, relativeError);
+		ExtraAssert.assertNotEqualsRelative(doubleL, doubleH, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertNotEqualsErrorsUpDoubleUsingRelativeError()
 	{
 		// Move closer together they should be equal
-		TestAssert.assertNotEqualsRelative(doubleLU, doubleH, relativeError);
+		ExtraAssert.assertNotEqualsRelative(doubleLU, doubleH, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertNotEqualsErrorsDownDoubleUsingRelativeError()
 	{
 		// Move closer together they should be equal
-		TestAssert.assertNotEqualsRelative(doubleL, doubleHD, relativeError);
+		ExtraAssert.assertNotEqualsRelative(doubleL, doubleHD, relativeError);
 	}
 
 	@Test
 	public void canAssertEqualsDoubleArraysUsingRelativeError()
 	{
 		double[] e = new double[] { doubleL };
-		TestAssert.assertArrayEqualsRelative(e, e, 0);
+		ExtraAssert.assertArrayEqualsRelative(e, e, 0);
 
 		double[] o = new double[] { doubleH };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 
 		e = new double[] { doubleLU };
 		o = new double[] { doubleH };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 
 		e = new double[] { doubleL };
 		o = new double[] { doubleHD };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -180,7 +180,7 @@ public class TestAssertTest
 	{
 		final double[] e = new double[] { doubleL };
 		final double[] o = new double[] { doubleHU };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -188,7 +188,7 @@ public class TestAssertTest
 	{
 		final double[] e = new double[] { doubleLD };
 		final double[] o = new double[] { doubleH };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 	}
 
 	@Test
@@ -196,7 +196,7 @@ public class TestAssertTest
 	{
 		final double[] e = new double[] { 1 };
 		final double[] o = new double[] { 2 };
-		TestAssert.assertDoubleArrayEqualsRelative(e, o, 0.5);
+		ExtraAssert.assertDoubleArrayEqualsRelative(e, o, 0.5);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -204,7 +204,7 @@ public class TestAssertTest
 	{
 		final double[] e = new double[] { 1 };
 		final double[] o = new double[] { 2 };
-		TestAssert.assertDoubleArrayEqualsRelative(e, o, 0.1);
+		ExtraAssert.assertDoubleArrayEqualsRelative(e, o, 0.1);
 	}
 
 	@Test
@@ -212,7 +212,7 @@ public class TestAssertTest
 	{
 		final double[][] e = new double[][] { { 1 } };
 		final double[][] o = new double[][] { { 2 } };
-		TestAssert.assertDoubleArrayEqualsRelative(e, o, 0.5);
+		ExtraAssert.assertDoubleArrayEqualsRelative(e, o, 0.5);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -220,7 +220,7 @@ public class TestAssertTest
 	{
 		final double[][] e = new double[][] { { 1 } };
 		final double[][] o = new double[][] { { 2 } };
-		TestAssert.assertDoubleArrayEqualsRelative(e, o, 0.1);
+		ExtraAssert.assertDoubleArrayEqualsRelative(e, o, 0.1);
 	}
 
 	// XXX - Copy to here
@@ -229,68 +229,68 @@ public class TestAssertTest
 	public void canAssertEqualsAndNotEqualsFloatUsingRelativeError()
 	{
 		// Equal within relative error
-		TestAssert.assertEqualsRelative(floatL, floatH, relativeError);
+		ExtraAssert.assertEqualsRelative(floatL, floatH, relativeError);
 
 		// Move closer together they should be equal
-		TestAssert.assertEqualsRelative(floatLU, floatH, relativeError);
-		TestAssert.assertEqualsRelative(floatL, floatHD, relativeError);
+		ExtraAssert.assertEqualsRelative(floatLU, floatH, relativeError);
+		ExtraAssert.assertEqualsRelative(floatL, floatHD, relativeError);
 
 		// Move further apart they should be not equal
-		TestAssert.assertNotEqualsRelative(floatL, floatHU, relativeError);
-		TestAssert.assertNotEqualsRelative(floatLD, floatH, relativeError);
+		ExtraAssert.assertNotEqualsRelative(floatL, floatHU, relativeError);
+		ExtraAssert.assertNotEqualsRelative(floatLD, floatH, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertEqualsErrorsUpFloatUsingRelativeError()
 	{
 		// Move further apart they should be not equal
-		TestAssert.assertEqualsRelative(floatL, floatHU, relativeError);
+		ExtraAssert.assertEqualsRelative(floatL, floatHU, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertEqualsErrorsDownFloatUsingRelativeError()
 	{
 		// Move further apart they should be not equal
-		TestAssert.assertEqualsRelative(floatLD, floatH, relativeError);
+		ExtraAssert.assertEqualsRelative(floatLD, floatH, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertNotEqualsErrorsFloatUsingRelativeError()
 	{
 		// Equal within relative error
-		TestAssert.assertNotEqualsRelative(floatL, floatH, relativeError);
+		ExtraAssert.assertNotEqualsRelative(floatL, floatH, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertNotEqualsErrorsUpFloatUsingRelativeError()
 	{
 		// Move closer together they should be equal
-		TestAssert.assertNotEqualsRelative(floatLU, floatH, relativeError);
+		ExtraAssert.assertNotEqualsRelative(floatLU, floatH, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
 	public void canAssertNotEqualsErrorsDownFloatUsingRelativeError()
 	{
 		// Move closer together they should be equal
-		TestAssert.assertNotEqualsRelative(floatL, floatHD, relativeError);
+		ExtraAssert.assertNotEqualsRelative(floatL, floatHD, relativeError);
 	}
 
 	@Test
 	public void canAssertEqualsFloatArraysUsingRelativeError()
 	{
 		float[] e = new float[] { floatL };
-		TestAssert.assertArrayEqualsRelative(e, e, 0);
+		ExtraAssert.assertArrayEqualsRelative(e, e, 0);
 
 		float[] o = new float[] { floatH };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 
 		e = new float[] { floatLU };
 		o = new float[] { floatH };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 
 		e = new float[] { floatL };
 		o = new float[] { floatHD };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -298,7 +298,7 @@ public class TestAssertTest
 	{
 		final float[] e = new float[] { floatL };
 		final float[] o = new float[] { floatHU };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -306,7 +306,7 @@ public class TestAssertTest
 	{
 		final float[] e = new float[] { floatLD };
 		final float[] o = new float[] { floatH };
-		TestAssert.assertArrayEqualsRelative(e, o, relativeError);
+		ExtraAssert.assertArrayEqualsRelative(e, o, relativeError);
 	}
 
 	@Test
@@ -314,7 +314,7 @@ public class TestAssertTest
 	{
 		final float[] e = new float[] { 1 };
 		final float[] o = new float[] { 2 };
-		TestAssert.assertFloatArrayEqualsRelative(e, o, 0.5);
+		ExtraAssert.assertFloatArrayEqualsRelative(e, o, 0.5);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -322,7 +322,7 @@ public class TestAssertTest
 	{
 		final float[] e = new float[] { 1 };
 		final float[] o = new float[] { 2 };
-		TestAssert.assertFloatArrayEqualsRelative(e, o, 0.1);
+		ExtraAssert.assertFloatArrayEqualsRelative(e, o, 0.1);
 	}
 
 	@Test
@@ -330,7 +330,7 @@ public class TestAssertTest
 	{
 		final float[][] e = new float[][] { { 1 } };
 		final float[][] o = new float[][] { { 2 } };
-		TestAssert.assertFloatArrayEqualsRelative(e, o, 0.5);
+		ExtraAssert.assertFloatArrayEqualsRelative(e, o, 0.5);
 	}
 
 	@Test(expected = AssertionError.class)
@@ -338,6 +338,6 @@ public class TestAssertTest
 	{
 		final float[][] e = new float[][] { { 1 } };
 		final float[][] o = new float[][] { { 2 } };
-		TestAssert.assertFloatArrayEqualsRelative(e, o, 0.1);
+		ExtraAssert.assertFloatArrayEqualsRelative(e, o, 0.1);
 	}
 }

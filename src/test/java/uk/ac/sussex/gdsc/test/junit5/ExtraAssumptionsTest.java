@@ -24,7 +24,7 @@
 package uk.ac.sussex.gdsc.test.junit5;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static uk.ac.sussex.gdsc.test.junit5.TestAssumptions.assume;
+import static uk.ac.sussex.gdsc.test.junit5.ExtraAssumptions.assume;
 
 import org.junit.jupiter.api.Test;
 import org.opentest4j.TestAbortedException;
@@ -34,7 +34,7 @@ import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 @SuppressWarnings("javadoc")
-public class TestAssumptionsTest
+public class ExtraAssumptionsTest
 {
 	@Test
 	public void canAssumeLogLevel()

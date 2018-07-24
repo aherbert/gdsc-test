@@ -32,7 +32,7 @@ import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 @SuppressWarnings("javadoc")
-public class TestAssumeTest
+public class ExtraAssumeTest
 {
 	@Test
 	public void canAssumeLogLevel()
@@ -41,7 +41,7 @@ public class TestAssumeTest
 			if (TestSettings.allow(l))
 				try
 				{
-					TestAssume.assume(l);
+					ExtraAssume.assume(l);
 				}
 				catch (final AssumptionViolatedException e)
 				{
@@ -51,7 +51,7 @@ public class TestAssumeTest
 			{
 				try
 				{
-					TestAssume.assume(l);
+					ExtraAssume.assume(l);
 				}
 				catch (final AssumptionViolatedException e)
 				{
@@ -68,7 +68,7 @@ public class TestAssumeTest
 			if (TestSettings.allow(tc))
 				try
 				{
-					TestAssume.assume(tc);
+					ExtraAssume.assume(tc);
 				}
 				catch (final AssumptionViolatedException e)
 				{
@@ -78,7 +78,7 @@ public class TestAssumeTest
 			{
 				try
 				{
-					TestAssume.assume(tc);
+					ExtraAssume.assume(tc);
 				}
 				catch (final AssumptionViolatedException e)
 				{

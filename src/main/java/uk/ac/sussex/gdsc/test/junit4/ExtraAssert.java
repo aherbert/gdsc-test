@@ -34,12 +34,12 @@ import org.junit.internal.ComparisonCriteria;
  * <pre>
  * &#64;Test
  * public void myTest() {
- *     TestAssert.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
- *     TestAssert.fail("Failed number %d", 42);
+ *     ExtraAssert.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
+ *     ExtraAssert.fail("Failed number %d", 42);
  * }
  * </pre>
  */
-public class TestAssert
+public class ExtraAssert
 {
 	/**
 	 * Get the maximum

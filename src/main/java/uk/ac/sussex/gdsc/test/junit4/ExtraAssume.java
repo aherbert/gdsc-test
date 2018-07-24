@@ -21,29 +21,29 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package uk.ac.sussex.gdsc.test.junit5;
+package uk.ac.sussex.gdsc.test.junit4;
 
-import org.junit.jupiter.api.Assumptions;
-import org.opentest4j.TestAbortedException;
+import org.junit.Assume;
+import org.junit.AssumptionViolatedException;
 
 import uk.ac.sussex.gdsc.test.LogLevel;
 import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 /**
- * Adds additional helper assumptions to those provided by {@link org.junit.jupiter.api.Assumptions}.
+ * Adds additional helper assumptions to those provided by {@link org.junit.Assume}.
  * <p>
  * Tests can be written to respond to the run-time configured {@link LogLevel} and {@link TestComplexity}, e.g.
  * <pre>
  * &#64;Test
  * public void myTest() {
- *     TestAssumptions.assume(LogLevel.INFO);
- *     TestAssumptions.assume(TestComplexity.MEDIUM);
+ *     ExtraAssume.assume(LogLevel.INFO);
+ *     ExtraAssume.assume(TestComplexity.MEDIUM);
  *     // ... do the test
  * }
  * </pre>
  */
-public class TestAssumptions
+public class ExtraAssume
 {
 	/**
 	 * Assume logging is allowed at the given level.
@@ -53,21 +53,21 @@ public class TestAssumptions
 	 *
 	 * @param level
 	 *            the level
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assume(LogLevel level) throws TestAbortedException
+	public static void assume(LogLevel level) throws AssumptionViolatedException
 	{
-		Assumptions.assumeTrue(TestSettings.allow(level));
+		Assume.assumeTrue(TestSettings.allow(level));
 	}
 
 	/**
 	 * Assume testing is logging at the {@link LogLevel#WARN} level.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeWarn() throws TestAbortedException
+	public static void assumeWarn() throws AssumptionViolatedException
 	{
 		assume(LogLevel.WARN);
 	}
@@ -75,10 +75,10 @@ public class TestAssumptions
 	/**
 	 * Assume testing is logging at the {@link LogLevel#INFO} level.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeInfo() throws TestAbortedException
+	public static void assumeInfo() throws AssumptionViolatedException
 	{
 		assume(LogLevel.INFO);
 	}
@@ -86,10 +86,10 @@ public class TestAssumptions
 	/**
 	 * Assume testing is logging at the {@link LogLevel#DEBUG} level.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeDebug() throws TestAbortedException
+	public static void assumeDebug() throws AssumptionViolatedException
 	{
 		assume(LogLevel.DEBUG);
 	}
@@ -102,21 +102,21 @@ public class TestAssumptions
 	 *
 	 * @param complexity
 	 *            the complexity
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assume(TestComplexity complexity) throws TestAbortedException
+	public static void assume(TestComplexity complexity) throws AssumptionViolatedException
 	{
-		Assumptions.assumeTrue(TestSettings.allow(complexity));
+		Assume.assumeTrue(TestSettings.allow(complexity));
 	}
 
 	/**
 	 * Assume testing is allowed at low complexity.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeLowComplexity() throws TestAbortedException
+	public static void assumeLowComplexity() throws AssumptionViolatedException
 	{
 		assume(TestComplexity.LOW);
 	}
@@ -124,10 +124,10 @@ public class TestAssumptions
 	/**
 	 * Assume testing is allowed at medium complexity.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeMediumComplexity() throws TestAbortedException
+	public static void assumeMediumComplexity() throws AssumptionViolatedException
 	{
 		assume(TestComplexity.MEDIUM);
 	}
@@ -135,10 +135,10 @@ public class TestAssumptions
 	/**
 	 * Assume testing is allowed at high complexity.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeHighComplexity() throws TestAbortedException
+	public static void assumeHighComplexity() throws AssumptionViolatedException
 	{
 		assume(TestComplexity.HIGH);
 	}
@@ -146,10 +146,10 @@ public class TestAssumptions
 	/**
 	 * Assume testing is allowed at very high complexity.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeVeryHighComplexity() throws TestAbortedException
+	public static void assumeVeryHighComplexity() throws AssumptionViolatedException
 	{
 		assume(TestComplexity.VERY_HIGH);
 	}
@@ -157,10 +157,10 @@ public class TestAssumptions
 	/**
 	 * Assume testing is allowed at maximum complexity.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeMaximumComplexity() throws TestAbortedException
+	public static void assumeMaximumComplexity() throws AssumptionViolatedException
 	{
 		assume(TestComplexity.MAXIMUM);
 	}
@@ -172,12 +172,12 @@ public class TestAssumptions
 	 *            the level
 	 * @param complexity
 	 *            the complexity
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assume(LogLevel level, TestComplexity complexity) throws TestAbortedException
+	public static void assume(LogLevel level, TestComplexity complexity) throws AssumptionViolatedException
 	{
-		Assumptions.assumeTrue(TestSettings.allow(level, complexity));
+		Assume.assumeTrue(TestSettings.allow(level, complexity));
 	}
 
 	/**
@@ -188,10 +188,10 @@ public class TestAssumptions
 	 * <p>
 	 * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
 	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeSpeedTest() throws TestAbortedException
+	public static void assumeSpeedTest() throws AssumptionViolatedException
 	{
 		assumeSpeedTest(TestComplexity.MEDIUM);
 	}
@@ -206,10 +206,10 @@ public class TestAssumptions
 	 *
 	 * @param complexity
 	 *            the complexity
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
 	 */
-	public static void assumeSpeedTest(TestComplexity complexity) throws TestAbortedException
+	public static void assumeSpeedTest(TestComplexity complexity) throws AssumptionViolatedException
 	{
 		assume(complexity);
 	}

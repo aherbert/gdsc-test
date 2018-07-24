@@ -39,13 +39,13 @@ import org.opentest4j.AssertionFailedError;
  * &#64;Test
  * public void myTest()
  * {
- * 	TestAssertions.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
+ * 	ExtraAssertions.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
  * }
  * </pre>
  *
  * @see org.opentest4j.AssertionFailedError
  */
-public class TestAssertions
+public class ExtraAssertions
 {
 	/**
 	 * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
@@ -607,7 +607,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -627,7 +627,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -647,7 +647,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -667,7 +667,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -687,7 +687,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -707,7 +707,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -749,7 +749,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -786,14 +786,14 @@ public class TestAssertions
 		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
 	}
 
-	// This leads to ambiguous method overloading with all the above methods 
+	// This leads to ambiguous method overloading with all the above methods
 
 	///**
 	// * <em>Asserts</em> that {@code expected} and {@code actual} are equal.
 	// * <p>
 	// * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	// * </p>
-	// * 
+	// *
 	// * @param expected
 	// *            The expected value.
 	// * @param actual
@@ -815,7 +815,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -835,7 +835,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -855,7 +855,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -875,7 +875,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -895,7 +895,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -915,7 +915,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -957,7 +957,7 @@ public class TestAssertions
 	 * <p>
 	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
 	 * </p>
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -1009,7 +1009,7 @@ public class TestAssertions
 	 *
 	 * @see Objects#equals(Object, Object)
 	 * @see Arrays#deepEquals(Object[], Object[])
-	 * 
+	 *
 	 * @param expected
 	 *            The expected value.
 	 * @param actual
@@ -1123,7 +1123,7 @@ public class TestAssertions
 	/**
 	 * <em>Fails</em> a test with the failure message retrieved from the
 	 * given {@code format} and {@code args}.
-	 * 
+	 *
 	 * <p>
 	 * See Javadoc for {@link Assertions#fail(String, Throwable)} for an explanation of
 	 * this method's generic return type {@code V}.
