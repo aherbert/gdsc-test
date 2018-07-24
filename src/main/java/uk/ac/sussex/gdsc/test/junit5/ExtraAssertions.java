@@ -741,7 +741,7 @@ public class ExtraAssertions
 	 */
 	public static void assertEquals(float expected, float actual, float delta, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
+		Assertions.assertEquals(expected, actual, delta, () -> String.format(format, args));
 	}
 
 	/**
@@ -783,7 +783,7 @@ public class ExtraAssertions
 	 */
 	public static void assertEquals(double expected, double actual, double delta, String format, Object... args)
 	{
-		Assertions.assertEquals(expected, actual, () -> String.format(format, args));
+		Assertions.assertEquals(expected, actual, delta, () -> String.format(format, args));
 	}
 
 	// This leads to ambiguous method overloading with all the above methods
