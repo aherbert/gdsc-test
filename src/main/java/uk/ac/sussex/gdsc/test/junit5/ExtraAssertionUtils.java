@@ -418,20 +418,20 @@ class ExtraAssertionUtils
 		throw new AssertionFailedError(message);
 	}
 
-	// Taken from AssertArrayEquals
+	// Taken from AssertionUtils
 	private static void fail(String message, Object expected, Object actual)
 	{
 		throw new AssertionFailedError(message, expected, actual);
 	}
 
-	// Taken from AssertArrayEquals
+	// Taken from AssertionUtils
 	private static String nullSafeGet(Supplier<String> messageSupplier)
 	{
 		return (messageSupplier != null ? messageSupplier.get() : null);
 	}
 
 	/**
-	 * Alternative to {@link #nullSafeGet(Supplier)} that is used to avoid
+	 * Alternative to {@code #nullSafeGet(Supplier)} that is used to avoid
 	 * wrapping a String in a lambda expression.
 	 *
 	 * @param messageOrSupplier
@@ -479,13 +479,13 @@ class ExtraAssertionUtils
 		return " at index " + indexesString;
 	}
 
-	// Taken from AssertArrayEquals
+	// Taken from AssertionUtils
 	private static boolean floatsAreEqual(float value1, float value2)
 	{
 		return Float.floatToIntBits(value1) == Float.floatToIntBits(value2);
 	}
 
-	// Taken from AssertArrayEquals
+	// Taken from AssertionUtils
 	private static boolean doublesAreEqual(double value1, double value2)
 	{
 		return Double.doubleToLongBits(value1) == Double.doubleToLongBits(value2);
