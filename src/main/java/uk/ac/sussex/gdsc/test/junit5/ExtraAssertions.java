@@ -1025,30 +1025,6 @@ public class ExtraAssertions
 	}
 
 	/**
-	 * <em>Asserts</em> that {@code expected} and {@code actual} are equal.
-	 * <p>
-	 * If both are {@code null}, they are considered equal.
-	 * </p>
-	 * <p>
-	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
-	 * </p>
-	 *
-	 * @param unexpected
-	 *            The unexpected value.
-	 * @param actual
-	 *            The value to check against <code>unexpected</code>.
-	 * @param format
-	 *            The format.
-	 * @param args
-	 *            The arguments.
-	 * @see Object#equals(Object)
-	 */
-	public static void assertEquals(Object unexpected, Object actual, String format, Object... args)
-	{
-		Assertions.assertEquals(unexpected, actual, () -> String.format(format, args));
-	}
-
-	/**
 	 * <em>Asserts</em> that {@code expected} and {@code actual} are not equal.
 	 * <p>
 	 * Fails if both are {@code null}.
