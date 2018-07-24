@@ -593,6 +593,131 @@ public class ExtraAssertions
 				() -> String.format(format, args));
 	}
 
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
+	 * {@code delta}.
+	 * <p>
+	 * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
+	 * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
+	 * {@link Float#compare(float, float)}.
+	 * </p>
+	 * <p>
+	 * This supports nested arrays, e.g. {@code double[][]}.
+	 * </p>
+	 *
+	 * @param expected
+	 *            The float/double array with expected values.
+	 * @param actual
+	 *            The float/double array with actual values.
+	 * @param delta
+	 *            The maximum delta between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta)
+	{
+		ExtraAssertArrayEquals.assertArrayEquals(expected, actual, delta);
+	}
+
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
+	 * {@code delta}.
+	 * <p>
+	 * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
+	 * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
+	 * {@link Float#compare(float, float)}.
+	 * </p>
+	 * <p>
+	 * Fails with the supplied failure {@code message}.
+	 * </p>
+	 * <p>
+	 * This supports nested arrays, e.g. {@code double[][]}.
+	 * </p>
+	 *
+	 * @param expected
+	 *            The float/double array with expected values.
+	 * @param actual
+	 *            The float/double array with actual values.
+	 * @param delta
+	 *            The maximum delta between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param message
+	 *            The message.
+	 */
+	public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta,
+			String message)
+	{
+		ExtraAssertArrayEquals.assertArrayEquals(expected, actual, delta, message);
+	}
+
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
+	 * {@code delta}.
+	 * <p>
+	 * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
+	 * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
+	 * {@link Float#compare(float, float)}.
+	 * </p>
+	 * <p>
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+	 * </p>
+	 * <p>
+	 * This supports nested arrays, e.g. {@code double[][]}.
+	 * </p>
+	 *
+	 * @param expected
+	 *            The float/double array with expected values.
+	 * @param actual
+	 *            The float/double array with actual values.
+	 * @param delta
+	 *            The maximum delta between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param messageSupplier
+	 *            The message supplier.
+	 */
+	public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta,
+			Supplier<String> messageSupplier)
+	{
+		ExtraAssertArrayEquals.assertArrayEquals(expected, actual, delta, messageSupplier);
+	}
+
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
+	 * {@code delta}.
+	 * <p>
+	 * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
+	 * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
+	 * {@link Float#compare(float, float)}.
+	 * </p>
+	 * <p>
+	 * If necessary, the failure message will be retrieved lazily from the supplied {@code format} and {@code args}.
+	 * </p>
+	 * <p>
+	 * This supports nested arrays, e.g. {@code double[][]}.
+	 * </p>
+	 *
+	 * @param expected
+	 *            The float/double array with expected values.
+	 * @param actual
+	 *            The float/double array with actual values.
+	 * @param delta
+	 *            The maximum delta between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param format
+	 *            The message format.
+	 * @param args
+	 *            The arguments.
+	 */
+	public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta,
+			String format, Object... args)
+	{
+		ExtraAssertArrayEquals.assertArrayEquals(expected, actual, delta,
+				() -> String.format(format, args));
+	}
+	
 	////////////////////////////////////////////////////////////////////////////
 	// Formatted methods.
 	// These wrap the JUnit assert methods with an

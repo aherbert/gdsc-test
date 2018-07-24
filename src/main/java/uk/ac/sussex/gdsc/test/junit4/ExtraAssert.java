@@ -571,7 +571,7 @@ public class ExtraAssert
 	 * @param actuals
 	 *            double array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            the maximum relative error between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @throws AssertionError
@@ -594,7 +594,7 @@ public class ExtraAssert
 	 * @param actuals
 	 *            double array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            the maximum relative error between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @throws AssertionError
@@ -617,7 +617,7 @@ public class ExtraAssert
 	 * @param actuals
 	 *            double array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            the maximum relative error between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @param format
@@ -654,7 +654,7 @@ public class ExtraAssert
 	 * @param actuals
 	 *            double array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            the maximum relative error between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @throws AssertionError
@@ -727,7 +727,7 @@ public class ExtraAssert
 	 * @param actuals
 	 *            float array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            the maximum relative error between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @throws AssertionError
@@ -750,7 +750,7 @@ public class ExtraAssert
 	 * @param actuals
 	 *            float array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            the maximum relative error between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @throws AssertionError
@@ -773,7 +773,7 @@ public class ExtraAssert
 	 * @param actuals
 	 *            float array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            the maximum relative error between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @param format
@@ -810,7 +810,7 @@ public class ExtraAssert
 	 * @param actuals
 	 *            float array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expecteds[i]</code> and
+	 *            the maximum relative error between <code>expecteds[i]</code> and
 	 *            <code>actuals[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @throws AssertionError

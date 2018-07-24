@@ -58,6 +58,40 @@ class ExtraAssertionUtils
 	}
 
 	/**
+	 * Assert that the delta is valid.
+	 * The value must be strictly positive and not NaN.
+	 *
+	 * @param delta
+	 *            the maximum positive delta between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	static void assertValidDelta(double delta)
+	{
+		if (Double.isNaN(delta) || delta <= 0.0)
+		{
+			fail("positive delta expected but was: <" + delta + ">");
+		}
+	}
+
+	/**
+	 * Assert that the delta is valid.
+	 * The value must be strictly positive and not NaN.
+	 *
+	 * @param delta
+	 *            the maximum positive delta between <code>expected</code> and
+	 *            <code>actual</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	static void assertValidDelta(float delta)
+	{
+		if (Float.isNaN(delta) || delta <= 0.0)
+		{
+			fail("positive delta expected but was: <" + delta + ">");
+		}
+	}
+
+	/**
 	 * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
 	 * <p>
 	 * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
@@ -177,6 +211,45 @@ class ExtraAssertionUtils
 		return (value1 >= value2) ? value1 : value2;
 	}
 
+	/**
+	 * Tests that two doubles are equal to within a positive delta.
+	 *
+	 * @param value1
+	 *            the first value
+	 * @param value2
+	 *            the second value
+	 * @param delta
+	 *            the maximum delta between <code>value1</code> and
+	 *            <code>value2</code> for which both numbers are still
+	 *            considered equal.
+	 * @return true, if equal
+	 */
+	static boolean doublesAreEqual(double value1, double value2, double delta)
+	{
+		assertValidDelta(delta);
+		return doublesAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
+	}
+
+	/**
+	 * Tests that two doubles are equal to within a positive delta.
+	 * <p>
+	 * It is assumed the relative error has been checked with {@link #assertValidDelta(double)}.
+	 *
+	 * @param value1
+	 *            the first value
+	 * @param value2
+	 *            the second value
+	 * @param delta
+	 *            the maximum delta between <code>value1</code> and
+	 *            <code>value2</code> for which both numbers are still
+	 *            considered equal.
+	 * @return true, if equal
+	 */
+	static boolean doublesAreEqualValid(double value1, double value2, double delta)
+	{
+		return doublesAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
+	}
+
 	private static void failNotEqual(double expected, double actual, double relativeError, String message)
 			throws AssertionFailedError
 	{
@@ -229,6 +302,25 @@ class ExtraAssertionUtils
 		final double max = max(Math.abs(expected), Math.abs(actual));
 		final String error = Double.toString(Math.abs(expected - actual) / max);
 		return String.format("expected: <%s> but was: <%s> (error=%s)", expectedString, actualString, error);
+	}
+
+	/**
+	 * Format the values.
+	 * <p>
+	 * Adapted from {@code formatValues(Object, Object)}.
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @return the formatted values
+	 */
+	static String formatValues(double expected, double actual)
+	{
+		final String expectedString = Double.toString(expected);
+		final String actualString = Double.toString(actual);
+		final String error = Double.toString(Math.abs(expected - actual));
+		return String.format("expected: <%s> but was: <%s> (delta=%s)", expectedString, actualString, error);
 	}
 
 	/**
@@ -338,6 +430,45 @@ class ExtraAssertionUtils
 	}
 
 	/**
+	 * Tests that two floats are equal to within a positive delta.
+	 *
+	 * @param value1
+	 *            the first value
+	 * @param value2
+	 *            the second value
+	 * @param delta
+	 *            the maximum delta between <code>value1</code> and
+	 *            <code>value2</code> for which both numbers are still
+	 *            considered equal.
+	 * @return true, if equal
+	 */
+	static boolean floatsAreEqual(float value1, float value2, float delta)
+	{
+		assertValidDelta(delta);
+		return floatsAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
+	}
+
+	/**
+	 * Tests that two floats are equal to within a positive delta.
+	 * <p>
+	 * It is assumed the relative error has been checked with {@link #assertValidDelta(float)}.
+	 *
+	 * @param value1
+	 *            the first value
+	 * @param value2
+	 *            the second value
+	 * @param delta
+	 *            the maximum delta between <code>value1</code> and
+	 *            <code>value2</code> for which both numbers are still
+	 *            considered equal.
+	 * @return true, if equal
+	 */
+	static boolean floatsAreEqualValid(float value1, float value2, float delta)
+	{
+		return floatsAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
+	}
+
+	/**
 	 * Get the maximum
 	 *
 	 * @param value1
@@ -402,6 +533,25 @@ class ExtraAssertionUtils
 		final String actualString = Float.toString(actual);
 		final float max = max(Math.abs(expected), Math.abs(actual));
 		final String error = Float.toString(Math.abs(expected - actual) / max);
+		return String.format("expected: <%s> but was: <%s> (error=%s)", expectedString, actualString, error);
+	}
+
+	/**
+	 * Format the values.
+	 * <p>
+	 * Adapted from {@code formatValues(Object, Object)}.
+	 *
+	 * @param expected
+	 *            expected value
+	 * @param actual
+	 *            the value to check against <code>expected</code>
+	 * @return the formatted values
+	 */
+	static String formatValues(float expected, float actual)
+	{
+		final String expectedString = Float.toString(expected);
+		final String actualString = Float.toString(actual);
+		final String error = Float.toString(Math.abs(expected - actual));
 		return String.format("expected: <%s> but was: <%s> (error=%s)", expectedString, actualString, error);
 	}
 
@@ -479,15 +629,31 @@ class ExtraAssertionUtils
 		return " at index " + indexesString;
 	}
 
-	// Taken from AssertionUtils
-	private static boolean floatsAreEqual(float value1, float value2)
-	{
-		return Float.floatToIntBits(value1) == Float.floatToIntBits(value2);
-	}
-
-	// Taken from AssertionUtils
-	private static boolean doublesAreEqual(double value1, double value2)
+	/**
+	 * Tests that two doubles are equal to within a positive delta.
+	 *
+	 * @param value1
+	 *            the first value
+	 * @param value2
+	 *            the second value
+	 * @return true, if equal
+	 */
+	static boolean doublesAreEqual(double value1, double value2)
 	{
 		return Double.doubleToLongBits(value1) == Double.doubleToLongBits(value2);
+	}
+
+	/**
+	 * Tests that two floats are equal to within a positive delta.
+	 *
+	 * @param value1
+	 *            the first value
+	 * @param value2
+	 *            the second value
+	 * @return true, if equal
+	 */
+	static boolean floatsAreEqual(float value1, float value2)
+	{
+		return Float.floatToIntBits(value1) == Float.floatToIntBits(value2);
 	}
 }

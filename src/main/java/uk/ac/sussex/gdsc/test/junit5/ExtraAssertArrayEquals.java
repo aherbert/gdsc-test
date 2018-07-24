@@ -62,12 +62,12 @@ class ExtraAssertArrayEquals
 	static void assertArrayEqualsRelative(double[] expected, double[] actual, double relativeError,
 			Deque<Integer> indexes, Object messageOrSupplier)
 	{
+		ExtraAssertionUtils.assertValidRelativeError(relativeError);
 		if (expected == actual)
 			return;
 		assertArraysNotNull(expected, actual, indexes, messageOrSupplier);
 		assertArraysHaveSameLength(expected.length, actual.length, indexes, messageOrSupplier);
 
-		ExtraAssertionUtils.assertValidRelativeError(relativeError);
 		for (int i = 0; i < expected.length; i++)
 			if (!ExtraAssertionUtils.doublesAreEqualRelativeValid(expected[i], actual[i], relativeError))
 				failArraysNotEqual(expected[i], actual[i], relativeError, nullSafeIndexes(indexes, i),
@@ -85,7 +85,7 @@ class ExtraAssertArrayEquals
 	 * @param actual
 	 *            float array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expected[i]</code> and
+	 *            the maximum relative error between <code>expected[i]</code> and
 	 *            <code>actual[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @param indexes
@@ -96,16 +96,86 @@ class ExtraAssertArrayEquals
 	static void assertArrayEqualsRelative(float[] expected, float[] actual, double relativeError,
 			Deque<Integer> indexes, Object messageOrSupplier)
 	{
+		ExtraAssertionUtils.assertValidRelativeError(relativeError);
 		if (expected == actual)
 			return;
 		assertArraysNotNull(expected, actual, indexes, messageOrSupplier);
 		assertArraysHaveSameLength(expected.length, actual.length, indexes, messageOrSupplier);
 
-		ExtraAssertionUtils.assertValidRelativeError(relativeError);
 		for (int i = 0; i < expected.length; i++)
 			if (!ExtraAssertionUtils.floatsAreEqualRelativeValid(expected[i], actual[i], relativeError))
 				failArraysNotEqual(expected[i], actual[i], relativeError, nullSafeIndexes(indexes, i),
 						messageOrSupplier);
+	}
+
+	/**
+	 * <em>Asserts</em> that {@code expected} and {@code actual} double arrays are equal within the given
+	 * {@code delta}.
+	 * <p>
+	 * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
+	 * {@link Double#compare(double, double)}.
+	 * </p>
+	 * <p>
+	 * Adapted from @code AssertArrayEquals.assertArrayEquals(double[], double[], Deque<Integer>, Object)}.
+	 *
+	 * @param expected
+	 *            The double array with expected values.
+	 * @param actual
+	 *            The double array with actual values.
+	 * @param delta
+	 *            The maximum relative error between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param indexes
+	 *            The indexes.
+	 * @param messageOrSupplier
+	 *            The message or supplier.
+	 */
+	static void assertArrayEquals(double[] expected, double[] actual, double delta, Deque<Integer> indexes,
+			Object messageOrSupplier)
+	{
+		ExtraAssertionUtils.assertValidDelta(delta);
+		if (expected == actual)
+			return;
+		assertArraysNotNull(expected, actual, indexes, messageOrSupplier);
+		assertArraysHaveSameLength(expected.length, actual.length, indexes, messageOrSupplier);
+
+		for (int i = 0; i < expected.length; i++)
+			if (!ExtraAssertionUtils.doublesAreEqualValid(expected[i], actual[i], delta))
+				failArraysNotEqual(expected[i], actual[i], nullSafeIndexes(indexes, i), messageOrSupplier);
+	}
+
+	/**
+	 * Asserts that two float arrays are equal. If they are not, an
+	 * {@link AssertionFailedError} is thrown with the given message.
+	 * <p>
+	 * Adapted from @code AssertArrayEquals.assertArrayEquals(float[], float[], Deque<Integer>, Object)}.
+	 *
+	 * @param expected
+	 *            float array with expected values.
+	 * @param actual
+	 *            float array with actual values
+	 * @param delta
+	 *            the maximum relative error between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param indexes
+	 *            the indexes
+	 * @param messageOrSupplier
+	 *            the message or supplier
+	 */
+	static void assertArrayEquals(float[] expected, float[] actual, float delta, Deque<Integer> indexes,
+			Object messageOrSupplier)
+	{
+		ExtraAssertionUtils.assertValidDelta(delta);
+		if (expected == actual)
+			return;
+		assertArraysNotNull(expected, actual, indexes, messageOrSupplier);
+		assertArraysHaveSameLength(expected.length, actual.length, indexes, messageOrSupplier);
+
+		for (int i = 0; i < expected.length; i++)
+			if (!ExtraAssertionUtils.floatsAreEqualValid(expected[i], actual[i], delta))
+				failArraysNotEqual(expected[i], actual[i], nullSafeIndexes(indexes, i), messageOrSupplier);
 	}
 
 	/**
@@ -119,7 +189,7 @@ class ExtraAssertArrayEquals
 	 * @param actual
 	 *            float/double array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expected[i]</code> and
+	 *            the maximum relative error between <code>expected[i]</code> and
 	 *            <code>actual[i]</code> for which both numbers are still
 	 *            considered equal.
 	 */
@@ -139,7 +209,7 @@ class ExtraAssertArrayEquals
 	 * @param actual
 	 *            float/double array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expected[i]</code> and
+	 *            the maximum relative error between <code>expected[i]</code> and
 	 *            <code>actual[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @param message
@@ -161,7 +231,7 @@ class ExtraAssertArrayEquals
 	 * @param actual
 	 *            float/double array with actual values
 	 * @param relativeError
-	 *            the maximum relativeError between <code>expected[i]</code> and
+	 *            the maximum relative error between <code>expected[i]</code> and
 	 *            <code>actual[i]</code> for which both numbers are still
 	 *            considered equal.
 	 * @param messageSupplier
@@ -191,13 +261,13 @@ class ExtraAssertArrayEquals
 				continue;
 
 			indexes.addLast(i);
-			assertArrayElementsEqual(expectedElement, actualElement, relativeError, indexes, messageOrSupplier);
+			assertArrayElementsEqualRelative(expectedElement, actualElement, relativeError, indexes, messageOrSupplier);
 			indexes.removeLast();
 		}
 	}
 
 	// Adapted from AssertArrayEquals
-	private static void assertArrayElementsEqual(Object expected, Object actual, double relativeError,
+	private static void assertArrayElementsEqualRelative(Object expected, Object actual, double relativeError,
 			Deque<Integer> indexes, Object messageOrSupplier)
 	{
 		if (expected instanceof Object[] && actual instanceof Object[])
@@ -210,6 +280,118 @@ class ExtraAssertArrayEquals
 					messageOrSupplier);
 		else
 			ExtraAssertionUtils.fail("relative error expected float/double array but was: <" + getClassName(expected) +
+					"> and <" + getClassName(actual) + ">");
+	}
+
+	/**
+	 * Asserts that two float/double arrays are equal. If they are not, an
+	 * {@link AssertionFailedError} is thrown.
+	 * <p>
+	 * This supports nested arrays, e.g. {@code double[][]}.
+	 *
+	 * @param expected
+	 *            float/double array with expected values.
+	 * @param actual
+	 *            float/double array with actual values
+	 * @param delta
+	 *            the maximum delta between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 */
+	static void assertArrayEquals(Object[] expected, Object[] actual, Number delta)
+	{
+		assertArrayEquals(expected, actual, delta, new ArrayDeque<>(), (String) null);
+	}
+
+	/**
+	 * Asserts that two float/double arrays are equal. If they are not, an
+	 * {@link AssertionFailedError} is thrown with the given message.
+	 * <p>
+	 * This supports nested arrays, e.g. {@code double[][]}.
+	 *
+	 * @param expected
+	 *            float/double array with expected values.
+	 * @param actual
+	 *            float/double array with actual values
+	 * @param delta
+	 *            the maximum delta between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param message
+	 *            the message
+	 */
+	static void assertArrayEquals(Object[] expected, Object[] actual, Number delta, String message)
+	{
+		assertArrayEquals(expected, actual, delta, new ArrayDeque<>(), message);
+	}
+
+	/**
+	 * Asserts that two float/double arrays are equal. If they are not, an
+	 * {@link AssertionFailedError} is thrown with the given message.
+	 * <p>
+	 * This supports nested arrays, e.g. {@code double[][]}.
+	 *
+	 * @param expected
+	 *            float/double array with expected values.
+	 * @param actual
+	 *            float/double array with actual values
+	 * @param delta
+	 *            the maximum delta between <code>expected[i]</code> and
+	 *            <code>actual[i]</code> for which both numbers are still
+	 *            considered equal.
+	 * @param messageSupplier
+	 *            the message supplier
+	 */
+	static void assertArrayEquals(Object[] expected, Object[] actual, Number delta, Supplier<String> messageSupplier)
+	{
+		assertArrayEquals(expected, actual, delta, new ArrayDeque<>(), messageSupplier);
+	}
+
+	// Adapted from AssertArrayEquals
+	private static void assertArrayEquals(Object[] expected, Object[] actual, Number delta, Deque<Integer> indexes,
+			Object messageOrSupplier)
+	{
+		if (expected == actual)
+			return;
+		assertArraysNotNull(expected, actual, indexes, messageOrSupplier);
+		assertArraysHaveSameLength(expected.length, actual.length, indexes, messageOrSupplier);
+
+		for (int i = 0; i < expected.length; i++)
+		{
+			final Object expectedElement = expected[i];
+			final Object actualElement = actual[i];
+
+			if (expectedElement == actualElement)
+				continue;
+
+			indexes.addLast(i);
+			assertArrayElementsEqual(expectedElement, actualElement, delta, indexes, messageOrSupplier);
+			indexes.removeLast();
+		}
+	}
+
+	// Adapted from AssertArrayEquals
+	private static void assertArrayElementsEqual(Object expected, Object actual, Number delta, Deque<Integer> indexes,
+			Object messageOrSupplier)
+	{
+		if (expected instanceof Object[] && actual instanceof Object[])
+			assertArrayEquals((Object[]) expected, (Object[]) actual, delta, indexes, messageOrSupplier);
+		else if (expected instanceof float[] && actual instanceof float[])
+		{
+			if (!(delta instanceof Float))
+				ExtraAssertionUtils.fail(" error expected float delta but was: <" + getClassName(delta) + ">");
+			assertArrayEquals((float[]) expected, (float[]) actual, ((Float) delta).floatValue(), indexes,
+					messageOrSupplier);
+		}
+		else if (expected instanceof double[] && actual instanceof double[])
+		{
+			if (!(delta instanceof Double))
+				ExtraAssertionUtils.fail(" error expected double delta but was: <" + getClassName(delta) + ">");
+			assertArrayEquals((double[]) expected, (double[]) actual, ((Double) delta).doubleValue(), indexes,
+					messageOrSupplier);
+		}
+		else
+			ExtraAssertionUtils.fail(" error expected float/double array but was: <" + getClassName(expected) +
 					"> and <" + getClassName(actual) + ">");
 	}
 
@@ -265,8 +447,8 @@ class ExtraAssertArrayEquals
 		if (expected != actual)
 		{
 			final String prefix = ExtraAssertionUtils.buildPrefix(ExtraAssertionUtils.nullSafeGet(messageOrSupplier));
-			final String message = "array lengths differ" + ExtraAssertionUtils.formatIndexes(indexes) + ", expected: <" +
-					expected + "> but was: <" + actual + ">";
+			final String message = "array lengths differ" + ExtraAssertionUtils.formatIndexes(indexes) +
+					", expected: <" + expected + "> but was: <" + actual + ">";
 			ExtraAssertionUtils.fail(prefix + message);
 		}
 	}
@@ -296,6 +478,26 @@ class ExtraAssertArrayEquals
 		final String prefix = ExtraAssertionUtils.buildPrefix(ExtraAssertionUtils.nullSafeGet(messageOrSupplier));
 		final String message = "array contents differ" + ExtraAssertionUtils.formatIndexes(indexes) + ", " +
 				ExtraAssertionUtils.formatValues(expected, actual, relativeError);
+		ExtraAssertionUtils.fail(prefix + message);
+	}
+
+	// Adapted from AssertArrayEquals
+	private static void failArraysNotEqual(double expected, double actual, Deque<Integer> indexes,
+			Object messageOrSupplier)
+	{
+		final String prefix = ExtraAssertionUtils.buildPrefix(ExtraAssertionUtils.nullSafeGet(messageOrSupplier));
+		final String message = "array contents differ" + ExtraAssertionUtils.formatIndexes(indexes) + ", " +
+				ExtraAssertionUtils.formatValues(expected, actual);
+		ExtraAssertionUtils.fail(prefix + message);
+	}
+
+	// Adapted from AssertArrayEquals
+	private static void failArraysNotEqual(float expected, float actual, Deque<Integer> indexes,
+			Object messageOrSupplier)
+	{
+		final String prefix = ExtraAssertionUtils.buildPrefix(ExtraAssertionUtils.nullSafeGet(messageOrSupplier));
+		final String message = "array contents differ" + ExtraAssertionUtils.formatIndexes(indexes) + ", " +
+				ExtraAssertionUtils.formatValues(expected, actual);
 		ExtraAssertionUtils.fail(prefix + message);
 	}
 }

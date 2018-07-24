@@ -93,7 +93,7 @@ public class ExtraAssertionsTest
 
 	// XXX - Copy from here
 	@Test
-	public void canAssertEqualsDoubleUsingRelativeError()
+	public void canAssertEqualsRelativeDouble()
 	{
 		// Equal within relative error
 		ExtraAssertions.assertEqualsRelative(doubleL, doubleH, relativeError);
@@ -104,10 +104,10 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsDoubleWithFormattedMessage()
+	public void canAssertEqualsRelativeDoubleThrowsWithFormattedMessage()
 	{
 		final double e = 1;
-		final double o = 1.1;
+		final double o = 2;
 		try
 		{
 			ExtraAssertions.assertEqualsRelative(e, o, Double.MIN_VALUE, "Fixed message");
@@ -158,7 +158,7 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsErrorsUpDoubleUsingRelativeError()
+	public void canAssertEqualsRelativeDoubleErrorsUp()
 	{
 		// Move further apart they should be not equal
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
@@ -167,7 +167,7 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsErrorsDownDoubleUsingRelativeError()
+	public void canAssertEqualsRelativeDoubleErrorsDown()
 	{
 		// Move further apart they should be not equal
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
@@ -176,7 +176,7 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsDoubleArraysUsingRelativeError()
+	public void canAssertArrayEqualsRelativeDouble()
 	{
 		double[] e = new double[] { doubleL };
 		ExtraAssertions.assertArrayEqualsRelative(e, e, Double.MIN_VALUE);
@@ -194,10 +194,10 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsDoubleArraysWithFormattedMessage()
+	public void canAssertArrayEqualsRelativeDoubleThrowsWithFormattedMessage()
 	{
 		final double[] e = { 1 };
-		final double[] o = { 1.1 };
+		final double[] o = { 2 };
 		try
 		{
 			ExtraAssertions.assertArrayEqualsRelative(e, o, Double.MIN_VALUE, "Fixed message");
@@ -227,29 +227,27 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsErrorsUpDoubleArraysUsingRelativeError()
+	public void canAssertArrayEqualsRelativeDoubleErrorsUp()
 	{
 		final double[] e = new double[] { doubleL };
 		final double[] o = new double[] { doubleHU };
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
 			ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
-			throw new AssertionFailedError(); // TODO - remove this when the implementation is done
 		});
 	}
 
 	@Test
-	public void canAssertEqualsErrorsDownDoubleArraysUsingRelativeError()
+	public void canAssertArrayEqualsRelativeDoubleErrorsDown()
 	{
 		final double[] e = new double[] { doubleLD };
 		final double[] o = new double[] { doubleH };
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
 			ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
-			throw new AssertionFailedError(); // TODO - remove this when the implementation is done
 		});
 	}
 
 	@Test
-	public void canAssertEqualsNestedDoubleArraysUsingRelativeError()
+	public void canAssertArrayEqualsRelativeNestedDouble()
 	{
 		final double[][] e = new double[][] { { 1 } };
 		final double[][] o = new double[][] { { 2 } };
@@ -257,10 +255,23 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsNestedDoubleArraysWithFormattedMessage()
+	public void canAssertArrayEqualsRelativeNestedDoubleThrows()
 	{
 		final double[][] e = new double[][] { { 1 } };
-		final double[][] o = new double[][] { { 1.1 } };
+		final double[][] o = new double[][] { { 2 } };
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEqualsRelative(e, o, 0.1);
+		});
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEqualsRelative(e, o, 0);
+		});
+	}
+	
+	@Test
+	public void canAssertArrayEqualsRelativeNestedDoubleThrowsWithFormattedMessage()
+	{
+		final double[][] e = new double[][] { { 1 } };
+		final double[][] o = new double[][] { { 2 } };
 		try
 		{
 			ExtraAssertions.assertArrayEqualsRelative(e, o, Double.MIN_VALUE, "Fixed message");
@@ -271,7 +282,7 @@ public class ExtraAssertionsTest
 		}
 		try
 		{
-			ExtraAssertions.assertArrayEqualsRelative((Object[]) e, (Object[]) o, Double.MIN_VALUE,
+			ExtraAssertions.assertArrayEqualsRelative(e, o, Double.MIN_VALUE,
 					"Formatted message %d", 3);
 		}
 		catch (final AssertionFailedError ex)
@@ -291,19 +302,72 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsErrorsNestedDoubleArraysUsingRelativeError()
+	public void canAssertArrayEqualsNestedDoubleArrays()
 	{
-		final double[][] e = new double[][] { { 1 } };
-		final double[][] o = new double[][] { { 2 } };
+		final double low = 1;
+		final double high = 2;
+		final double delta = high - low;
+		final double[][] e = new double[][] { { low } };
+		final double[][] o = new double[][] { { high } };
+		ExtraAssertions.assertArrayEquals(e, o, delta);
+	}
+	
+	@Test
+	public void canAssertArrayEqualsNestedDoubleArraysThrows()
+	{
+		final double low = 1;
+		final double high = 2;
+		final double delta = high - low;
+		final double[][] e = new double[][] { { low } };
+		final double[][] o = new double[][] { { high } };
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			ExtraAssertions.assertArrayEqualsRelative(e, o, 0.1);
-			throw new AssertionFailedError(); // TODO - remove this when the implementation is done
+			ExtraAssertions.assertArrayEquals(e, o, Math.nextDown(delta));
+		});
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEquals(e, o, new Integer(4));
+		});
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEquals(e, o, new Double(0));
 		});
 	}
 
+	@Test
+	public void canAssertEqualsNestedDoubleArraysThrowsWithFormattedMessage()
+	{
+		final double[][] e = new double[][] { { 1 } };
+		final double[][] o = new double[][] { { 2 } };
+		try
+		{
+			ExtraAssertions.assertArrayEquals(e, o, Double.MIN_VALUE, "Fixed message");
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Fixed message"));
+		}
+		try
+		{
+			ExtraAssertions.assertArrayEquals(e, o, Double.MIN_VALUE,
+					"Formatted message %d", 3);
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Formatted message 3"));
+		}
+		try
+		{
+			ExtraAssertions.assertArrayEquals(e, o, Double.MIN_VALUE, () -> {
+				return "Lambda message";
+			});
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Lambda message"));
+		}
+	}
+	
 	// XXX - Copy to here
 	@Test
-	public void canAssertEqualsFloatUsingRelativeError()
+	public void canAssertEqualsRelativeFloat()
 	{
 		// Equal within relative error
 		ExtraAssertions.assertEqualsRelative(floatL, floatH, relativeError);
@@ -314,13 +378,13 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsFloatWithFormattedMessage()
+	public void canAssertEqualsRelativeFloatThrowsWithFormattedMessage()
 	{
 		final float e = 1;
-		final float o = 1.1f;
+		final float o = 2;
 		try
 		{
-			ExtraAssertions.assertEqualsRelative(e, o, Double.MIN_VALUE, "Fixed message");
+			ExtraAssertions.assertEqualsRelative(e, o, Float.MIN_VALUE, "Fixed message");
 		}
 		catch (final AssertionFailedError ex)
 		{
@@ -328,7 +392,7 @@ public class ExtraAssertionsTest
 		}
 		try
 		{
-			ExtraAssertions.assertEqualsRelative(e, o, Double.MIN_VALUE, "Formatted message %d", 3);
+			ExtraAssertions.assertEqualsRelative(e, o, Float.MIN_VALUE, "Formatted message %d", 3);
 		}
 		catch (final AssertionFailedError ex)
 		{
@@ -336,76 +400,7 @@ public class ExtraAssertionsTest
 		}
 		try
 		{
-			ExtraAssertions.assertEqualsRelative(e, o, Double.MIN_VALUE, () -> {
-				return "Lambda message";
-			});
-		}
-		catch (final AssertionFailedError ex)
-		{
-			Assertions.assertTrue(ex.getMessage().contains("Lambda message"));
-		}
-	}
-
-	@Test
-	public void canAssertEqualsErrorsUpFloatUsingRelativeError()
-	{
-		// Move further apart they should be not equal
-		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			ExtraAssertions.assertEqualsRelative(floatL, floatHU, relativeError);
-		});
-	}
-
-	@Test
-	public void canAssertEqualsErrorsDownFloatUsingRelativeError()
-	{
-		// Move further apart they should be not equal
-		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			ExtraAssertions.assertEqualsRelative(floatLD, floatH, relativeError);
-		});
-	}
-
-	@Test
-	public void canAssertEqualsFloatArraysUsingRelativeError()
-	{
-		float[] e = new float[] { floatL };
-		ExtraAssertions.assertArrayEqualsRelative(e, e, Double.MIN_VALUE);
-
-		float[] o = new float[] { floatH };
-		ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
-
-		e = new float[] { floatLU };
-		o = new float[] { floatH };
-		ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
-
-		e = new float[] { floatL };
-		o = new float[] { floatHD };
-		ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
-	}
-
-	@Test
-	public void canAssertEqualsFloatArraysWithFormattedMessage()
-	{
-		final float[] e = { 1 };
-		final float[] o = { 1.1f };
-		try
-		{
-			ExtraAssertions.assertArrayEqualsRelative(e, o, Double.MIN_VALUE, "Fixed message");
-		}
-		catch (final AssertionFailedError ex)
-		{
-			Assertions.assertTrue(ex.getMessage().contains("Fixed message"));
-		}
-		try
-		{
-			ExtraAssertions.assertArrayEqualsRelative(e, o, Double.MIN_VALUE, "Formatted message %d", 3);
-		}
-		catch (final AssertionFailedError ex)
-		{
-			Assertions.assertTrue(ex.getMessage().contains("Formatted message 3"));
-		}
-		try
-		{
-			ExtraAssertions.assertArrayEqualsRelative(e, o, Double.MIN_VALUE, () -> {
+			ExtraAssertions.assertEqualsRelative(e, o, Float.MIN_VALUE, () -> {
 				return "Lambda message";
 			});
 		}
@@ -426,10 +421,10 @@ public class ExtraAssertionsTest
 			ExtraAssertions.assertEqualsRelative(e, e, 2);
 		}, "2");
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			ExtraAssertions.assertEqualsRelative(e, e, Double.POSITIVE_INFINITY);
+			ExtraAssertions.assertEqualsRelative(e, e, Float.POSITIVE_INFINITY);
 		}, "+Inf");
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			ExtraAssertions.assertEqualsRelative(e, e, Double.NaN);
+			ExtraAssertions.assertEqualsRelative(e, e, Float.NaN);
 		}, "NaN");
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
 			ExtraAssertions.assertEqualsRelative(e, e, -1);
@@ -437,43 +432,49 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsErrorsUpFloatArraysUsingRelativeError()
+	public void canAssertEqualsRelativeFloatErrorsUp()
 	{
-		final float[] e = new float[] { floatL };
-		final float[] o = new float[] { floatHU };
+		// Move further apart they should be not equal
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
-			throw new AssertionFailedError(); // TODO - remove this when the implementation is done
+			ExtraAssertions.assertEqualsRelative(floatL, floatHU, relativeError);
 		});
 	}
 
 	@Test
-	public void canAssertEqualsErrorsDownFloatArraysUsingRelativeError()
+	public void canAssertEqualsRelativeFloatErrorsDown()
 	{
-		final float[] e = new float[] { floatLD };
-		final float[] o = new float[] { floatH };
+		// Move further apart they should be not equal
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
-			throw new AssertionFailedError(); // TODO - remove this when the implementation is done
+			ExtraAssertions.assertEqualsRelative(floatLD, floatH, relativeError);
 		});
 	}
 
 	@Test
-	public void canAssertEqualsNestedFloatArraysUsingRelativeError()
+	public void canAssertArrayEqualsRelativeFloat()
 	{
-		final float[][] e = new float[][] { { 1 } };
-		final float[][] o = new float[][] { { 2 } };
-		ExtraAssertions.assertArrayEqualsRelative(e, o, 0.5);
+		float[] e = new float[] { floatL };
+		ExtraAssertions.assertArrayEqualsRelative(e, e, Float.MIN_VALUE);
+
+		float[] o = new float[] { floatH };
+		ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
+
+		e = new float[] { floatLU };
+		o = new float[] { floatH };
+		ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
+
+		e = new float[] { floatL };
+		o = new float[] { floatHD };
+		ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
 	}
 
 	@Test
-	public void canAssertEqualsNestedFloatArraysWithFormattedMessage()
+	public void canAssertArrayEqualsRelativeFloatThrowsWithFormattedMessage()
 	{
-		final float[][] e = new float[][] { { 1 } };
-		final float[][] o = new float[][] { { 1.1f } };
+		final float[] e = { 1 };
+		final float[] o = { 2 };
 		try
 		{
-			ExtraAssertions.assertArrayEqualsRelative(e, o, Double.MIN_VALUE, "Fixed message");
+			ExtraAssertions.assertArrayEqualsRelative(e, o, Float.MIN_VALUE, "Fixed message");
 		}
 		catch (final AssertionFailedError ex)
 		{
@@ -481,8 +482,7 @@ public class ExtraAssertionsTest
 		}
 		try
 		{
-			ExtraAssertions.assertArrayEqualsRelative((Object[]) e, (Object[]) o, Double.MIN_VALUE,
-					"Formatted message %d", 3);
+			ExtraAssertions.assertArrayEqualsRelative(e, o, Float.MIN_VALUE, "Formatted message %d", 3);
 		}
 		catch (final AssertionFailedError ex)
 		{
@@ -490,7 +490,7 @@ public class ExtraAssertionsTest
 		}
 		try
 		{
-			ExtraAssertions.assertArrayEqualsRelative(e, o, Double.MIN_VALUE, () -> {
+			ExtraAssertions.assertArrayEqualsRelative(e, o, Float.MIN_VALUE, () -> {
 				return "Lambda message";
 			});
 		}
@@ -501,13 +501,141 @@ public class ExtraAssertionsTest
 	}
 
 	@Test
-	public void canAssertEqualsErrorsNestedFloatArraysUsingRelativeError()
+	public void canAssertArrayEqualsRelativeFloatErrorsUp()
+	{
+		final float[] e = new float[] { floatL };
+		final float[] o = new float[] { floatHU };
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
+		});
+	}
+
+	@Test
+	public void canAssertArrayEqualsRelativeFloatErrorsDown()
+	{
+		final float[] e = new float[] { floatLD };
+		final float[] o = new float[] { floatH };
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
+		});
+	}
+
+	@Test
+	public void canAssertArrayEqualsRelativeNestedFloat()
+	{
+		final float[][] e = new float[][] { { 1 } };
+		final float[][] o = new float[][] { { 2 } };
+		ExtraAssertions.assertArrayEqualsRelative(e, o, 0.5);
+	}
+
+	@Test
+	public void canAssertArrayEqualsRelativeNestedFloatThrows()
 	{
 		final float[][] e = new float[][] { { 1 } };
 		final float[][] o = new float[][] { { 2 } };
 		Assertions.assertThrows(AssertionFailedError.class, () -> {
 			ExtraAssertions.assertArrayEqualsRelative(e, o, 0.1);
-			throw new AssertionFailedError(); // TODO - remove this when the implementation is done
 		});
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEqualsRelative(e, o, 0);
+		});
+	}
+	
+	@Test
+	public void canAssertArrayEqualsRelativeNestedFloatThrowsWithFormattedMessage()
+	{
+		final float[][] e = new float[][] { { 1 } };
+		final float[][] o = new float[][] { { 2 } };
+		try
+		{
+			ExtraAssertions.assertArrayEqualsRelative(e, o, Float.MIN_VALUE, "Fixed message");
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Fixed message"));
+		}
+		try
+		{
+			ExtraAssertions.assertArrayEqualsRelative(e, o, Float.MIN_VALUE,
+					"Formatted message %d", 3);
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Formatted message 3"));
+		}
+		try
+		{
+			ExtraAssertions.assertArrayEqualsRelative(e, o, Float.MIN_VALUE, () -> {
+				return "Lambda message";
+			});
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Lambda message"));
+		}
+	}
+
+	@Test
+	public void canAssertArrayEqualsNestedFloatArrays()
+	{
+		final float low = 1;
+		final float high = 2;
+		final float delta = high - low;
+		final float[][] e = new float[][] { { low } };
+		final float[][] o = new float[][] { { high } };
+		ExtraAssertions.assertArrayEquals(e, o, delta);
+	}
+	
+	@Test
+	public void canAssertArrayEqualsNestedFloatArraysThrows()
+	{
+		final float low = 1;
+		final float high = 2;
+		final float delta = high - low;
+		final float[][] e = new float[][] { { low } };
+		final float[][] o = new float[][] { { high } };
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEquals(e, o, Math.nextDown(delta));
+		});
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEquals(e, o, new Integer(4));
+		});
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			ExtraAssertions.assertArrayEquals(e, o, new Float(0));
+		});
+	}
+
+	@Test
+	public void canAssertEqualsNestedFloatArraysThrowsWithFormattedMessage()
+	{
+		final float[][] e = new float[][] { { 1 } };
+		final float[][] o = new float[][] { { 2 } };
+		try
+		{
+			ExtraAssertions.assertArrayEquals(e, o, Float.MIN_VALUE, "Fixed message");
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Fixed message"));
+		}
+		try
+		{
+			ExtraAssertions.assertArrayEquals(e, o, Float.MIN_VALUE,
+					"Formatted message %d", 3);
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Formatted message 3"));
+		}
+		try
+		{
+			ExtraAssertions.assertArrayEquals(e, o, Float.MIN_VALUE, () -> {
+				return "Lambda message";
+			});
+		}
+		catch (final AssertionFailedError ex)
+		{
+			Assertions.assertTrue(ex.getMessage().contains("Lambda message"));
+		}
 	}
 }
