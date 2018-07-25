@@ -301,7 +301,7 @@ class ExtraAssertionUtils
 		final String actualString = Double.toString(actual);
 		final double max = max(Math.abs(expected), Math.abs(actual));
 		final String error = Double.toString(Math.abs(expected - actual) / max);
-		return String.format("expected: <%s> but was: <%s> (error=%s)", expectedString, actualString, error);
+		return String.format("expected: <%s> but was: <%s> (relative error=%s)", expectedString, actualString, error);
 	}
 
 	/**
@@ -319,8 +319,8 @@ class ExtraAssertionUtils
 	{
 		final String expectedString = Double.toString(expected);
 		final String actualString = Double.toString(actual);
-		final String error = Double.toString(Math.abs(expected - actual));
-		return String.format("expected: <%s> but was: <%s> (delta=%s)", expectedString, actualString, error);
+		final String delta = Double.toString(Math.abs(expected - actual));
+		return String.format("expected: <%s> but was: <%s> (delta=%s)", expectedString, actualString, delta);
 	}
 
 	/**
@@ -533,7 +533,7 @@ class ExtraAssertionUtils
 		final String actualString = Float.toString(actual);
 		final float max = max(Math.abs(expected), Math.abs(actual));
 		final String error = Float.toString(Math.abs(expected - actual) / max);
-		return String.format("expected: <%s> but was: <%s> (error=%s)", expectedString, actualString, error);
+		return String.format("expected: <%s> but was: <%s> (relative error=%s)", expectedString, actualString, error);
 	}
 
 	/**
@@ -551,8 +551,8 @@ class ExtraAssertionUtils
 	{
 		final String expectedString = Float.toString(expected);
 		final String actualString = Float.toString(actual);
-		final String error = Float.toString(Math.abs(expected - actual));
-		return String.format("expected: <%s> but was: <%s> (error=%s)", expectedString, actualString, error);
+		final String delta = Float.toString(Math.abs(expected - actual));
+		return String.format("expected: <%s> but was: <%s> (delta=%s)", expectedString, actualString, delta);
 	}
 
 	// Methods below copied from AssertionUtils.
