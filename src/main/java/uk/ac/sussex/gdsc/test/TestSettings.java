@@ -157,7 +157,9 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the log level. This is set using the system property uk.ac.sussex.gdsc.test.logging.
+	 * Gets the log level. 
+	 * <p>
+	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.logging}.
 	 *
 	 * @return the log level
 	 */
@@ -167,7 +169,9 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the test complexity. This is set using the system property uk.ac.sussex.gdsc.test.level.
+	 * Gets the test complexity. 
+	 * <p>
+	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.level}.
 	 *
 	 * @return the test complexity
 	 */
@@ -177,7 +181,9 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the seed. This is set using the system property uk.ac.sussex.gdsc.test.seed.
+	 * Gets the seed. 
+	 * <p>
+	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.seed}.
 	 *
 	 * @return the seed
 	 */
@@ -187,7 +193,9 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the repeats. This is set using the system property uk.ac.sussex.gdsc.test.repeats.
+	 * Gets the repeats. 
+	 * <p>
+	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.repeats}.
 	 *
 	 * @return the repeats
 	 */
@@ -235,7 +243,9 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the uniform random provider. If the seed is 0 then a random seed will be used.
+	 * Gets the uniform random provider. 
+	 * <p>
+	 * If the {@code seed} is {@code 0} then a random seed will be used.
 	 *
 	 * @param seed
 	 *            the seed
@@ -247,7 +257,11 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets a uniform random provider with a fixed seed set using the system property uk.ac.sussex.gdsc.test.seed.
+	 * Gets a uniform random provider with a fixed seed set using the
+	 * system property {@code uk.ac.sussex.gdsc.test.seed}.
+	 * <p>
+	 * Note: To obtain a randomly seeded provider use {@link #getRandomGenerator(long)}
+	 * using zero as the seed.
 	 *
 	 * @return the uniform random provider
 	 */
