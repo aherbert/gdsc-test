@@ -34,8 +34,8 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 /**
  * {@code @SeededTest} is used to signal that the annotated method is a
- * {@link ParameterizedTest} using an argument of type {@link RandomSeed}. 
- * The {@link ArgumentsSource} for the test will use a {@link RandomSeedSource} 
+ * {@link ParameterizedTest} using an argument of type {@link RandomSeed}.
+ * The {@link ArgumentsSource} for the test will use a {@link RandomSeedSource}
  * to provide the seeds. At least one seed will be provided.
  * <p>
  * The annotation adds a {@code "seeded"} {@link Tag} and <code>@</code>{@link RandomTag}.

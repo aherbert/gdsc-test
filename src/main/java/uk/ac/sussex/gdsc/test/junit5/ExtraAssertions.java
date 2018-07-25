@@ -603,7 +603,7 @@ public class ExtraAssertions
 	 * <p>
 	 * This supports nested arrays, e.g. {@code double[][]}.
 	 * <p>
-	 * Nested float arrays are checked as in {@link #assertEquals(float, float, float, String, Object...)}. 
+	 * Nested float arrays are checked as in {@link #assertEquals(float, float, float, String, Object...)}.
 	 * The {@code delta} must be a {@code Float}.
 	 * <p>
 	 * Nested double arrays are checked as in {@link #assertEquals(double, double, double, String, Object...)}.
@@ -635,7 +635,7 @@ public class ExtraAssertions
 	 * <p>
 	 * This supports nested arrays, e.g. {@code double[][]}.
 	 * <p>
-	 * Nested float arrays are checked as in {@link #assertEquals(float, float, float, String, Object...)}. 
+	 * Nested float arrays are checked as in {@link #assertEquals(float, float, float, String, Object...)}.
 	 * The {@code delta} must be a {@code Float}.
 	 * <p>
 	 * Nested double arrays are checked as in {@link #assertEquals(double, double, double, String, Object...)}.
@@ -669,7 +669,7 @@ public class ExtraAssertions
 	 * <p>
 	 * This supports nested arrays, e.g. {@code double[][]}.
 	 * <p>
-	 * Nested float arrays are checked as in {@link #assertEquals(float, float, float, String, Object...)}. 
+	 * Nested float arrays are checked as in {@link #assertEquals(float, float, float, String, Object...)}.
 	 * The {@code delta} must be a {@code Float}.
 	 * <p>
 	 * Nested double arrays are checked as in {@link #assertEquals(double, double, double, String, Object...)}.
@@ -704,7 +704,7 @@ public class ExtraAssertions
 	 * <p>
 	 * This supports nested arrays, e.g. {@code double[][]}.
 	 * <p>
-	 * Nested float arrays are checked as in {@link #assertEquals(float, float, float, String, Object...)}. 
+	 * Nested float arrays are checked as in {@link #assertEquals(float, float, float, String, Object...)}.
 	 * The {@code delta} must be a {@code Float}.
 	 * <p>
 	 * Nested double arrays are checked as in {@link #assertEquals(double, double, double, String, Object...)}.

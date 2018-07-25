@@ -23,8 +23,8 @@
  */
 package uk.ac.sussex.gdsc.test;
 
-import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.commons.math3.random.Well19937c;
+import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.rng.simple.RandomSource;
 
 /**
  * Class used to control test settings.
@@ -58,7 +58,7 @@ public class TestSettings
 	 */
 	public static final String PROPERTY_TEST_COMPLEXITY = "gdsc.test.level";
 	/**
-	 * The runtime property used to seed the random generator, e.g.
+	 * The runtime property used to seed the uniform random generator, e.g.
 	 *
 	 * <pre>
 	 * -Dgdsc.test.seed=12345
@@ -67,7 +67,7 @@ public class TestSettings
 	public static final String PROPERTY_RANDOM_SEED = "gdsc.test.seed";
 	/**
 	 * The runtime property used to set the number of repeats for tests
-	 * using the seeded random generator, e.g.
+	 * using the seeded uniform random generator, e.g.
 	 *
 	 * <pre>
 	 * -Dgdsc.test.repeats=10
@@ -81,10 +81,10 @@ public class TestSettings
 	/** The allowed test complexity. */
 	private static int testComplexity;
 
-	/** The fixed seed for random generator. */
+	/** The fixed seed for uniform random generator. */
 	private static long seed;
 
-	/** The number of repeats for tests using the seeded random generator. */
+	/** The number of repeats for tests using the seeded uniform random generator. */
 	private static int repeats;
 
 	static
@@ -128,7 +128,7 @@ public class TestSettings
 		}
 		finally
 		{
-			// Ensure repeated tests run once. They should be disabled using other mechanisms. 
+			// Ensure repeated tests run once. They should be disabled using other mechanisms.
 			if (repeats < 1)
 				repeats = 1;
 		}
@@ -235,25 +235,24 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the random generator. If the seed is 0 then a random seed will be used.
+	 * Gets the uniform random provider. If the seed is 0 then a random seed will be used.
 	 *
 	 * @param seed
 	 *            the seed
-	 * @return the random generator
+	 * @return the uniform random provider
 	 */
-	public static RandomGenerator getRandomGenerator(long seed)
+	public static UniformRandomProvider getRandomGenerator(long seed)
 	{
-		return (seed == 0) ? new Well19937c() : new Well19937c(seed);
+		return RandomSource.create(RandomSource.WELL_19937_C, (seed == 0) ? null : seed);
 	}
 
 	/**
-	 * Gets a random generator with a fixed seed set using the system property uk.ac.sussex.gdsc.test.seed.
+	 * Gets a uniform random provider with a fixed seed set using the system property uk.ac.sussex.gdsc.test.seed.
 	 *
-	 * @return the random generator
+	 * @return the uniform random provider
 	 */
-	public static RandomGenerator getRandomGenerator()
+	public static UniformRandomProvider getRandomGenerator()
 	{
 		return getRandomGenerator(seed);
 	}
-
 }

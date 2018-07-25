@@ -37,7 +37,7 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  * Provides random seeds as a {@link RandomSeed} for use as an {@link ArgumentsSource}.
  * <p>
  * The starting seed and number of repeats are obtained from runtime system properties.
- * 
+ *
  * @see TestSettings
  */
 public class RandomSeedSource implements ArgumentsProvider

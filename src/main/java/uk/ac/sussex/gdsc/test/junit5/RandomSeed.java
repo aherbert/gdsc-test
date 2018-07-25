@@ -30,8 +30,8 @@ public class RandomSeed
 {
 	private final long seed;
 	private final int currentRepetition;
-	private final int totalRepetitions;	
-	
+	private final int totalRepetitions;
+
 	/**
 	 * Instantiates a new random seed.
 	 *

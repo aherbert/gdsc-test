@@ -69,9 +69,7 @@ class ExtraAssertionUtils
 	static void assertValidDelta(double delta)
 	{
 		if (Double.isNaN(delta) || delta <= 0.0)
-		{
 			fail("positive delta expected but was: <" + delta + ">");
-		}
 	}
 
 	/**
@@ -86,9 +84,7 @@ class ExtraAssertionUtils
 	static void assertValidDelta(float delta)
 	{
 		if (Float.isNaN(delta) || delta <= 0.0)
-		{
 			fail("positive delta expected but was: <" + delta + ">");
-		}
 	}
 
 	/**

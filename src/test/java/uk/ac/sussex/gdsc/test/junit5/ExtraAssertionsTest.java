@@ -266,7 +266,7 @@ public class ExtraAssertionsTest
 			ExtraAssertions.assertArrayEqualsRelative(e, o, 0);
 		});
 	}
-	
+
 	@Test
 	public void canAssertArrayEqualsRelativeNestedDoubleThrowsWithFormattedMessage()
 	{
@@ -311,7 +311,7 @@ public class ExtraAssertionsTest
 		final double[][] o = new double[][] { { high } };
 		ExtraAssertions.assertArrayEquals(e, o, delta);
 	}
-	
+
 	@Test
 	public void canAssertArrayEqualsNestedDoubleArraysThrows()
 	{
@@ -364,7 +364,7 @@ public class ExtraAssertionsTest
 			Assertions.assertTrue(ex.getMessage().contains("Lambda message"));
 		}
 	}
-	
+
 	// XXX - Copy to here
 	@Test
 	public void canAssertEqualsRelativeFloat()
@@ -540,7 +540,7 @@ public class ExtraAssertionsTest
 			ExtraAssertions.assertArrayEqualsRelative(e, o, 0);
 		});
 	}
-	
+
 	@Test
 	public void canAssertArrayEqualsRelativeNestedFloatThrowsWithFormattedMessage()
 	{
@@ -585,7 +585,7 @@ public class ExtraAssertionsTest
 		final float[][] o = new float[][] { { high } };
 		ExtraAssertions.assertArrayEquals(e, o, delta);
 	}
-	
+
 	@Test
 	public void canAssertArrayEqualsNestedFloatArraysThrows()
 	{
