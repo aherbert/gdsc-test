@@ -34,6 +34,7 @@
  * <li>Run-time configurable logging functionality
  * <li>Run-time configurable test complexity
  * <li>Run-time configurable random generator
+ * <li>Run-time configurable test repeats (JUnit 5)
  * <li>A test timing service
  * </ul>
  * <p>

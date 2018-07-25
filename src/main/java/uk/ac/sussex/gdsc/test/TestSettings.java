@@ -34,7 +34,7 @@ import org.apache.commons.math3.random.Well19937c;
  * <a href="https://maven.apache.org/">Maven</a>:
  *
  * <pre>
- * mvn test -Dgdsc.test.logging=1 -Dgdsc.test.level=2 -Dgdsc.test.seed=12345
+ * mvn test -Dgdsc.test.logging=1 -Dgdsc.test.level=2 -Dgdsc.test.seed=12345 -Dgdsc.test.repeats=5
  * </pre>
  *
  * Test classes can then be coded to respond to this run-time configuration.
