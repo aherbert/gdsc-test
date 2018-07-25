@@ -397,7 +397,7 @@ public class TestLog
 		final double t2 = slow.getMean();
 		LogLevel l;
 		String message;
-		if (t1 < t2)
+		if (t1 <= t2)
 		{
 			l = LogLevel.INFO;
 			if (!TestSettings.allow(l))
@@ -434,7 +434,7 @@ public class TestLog
 		final double t2 = (useMin) ? slow.getMin() : slow.getMean();
 		LogLevel l;
 		String message;
-		if (t1 < t2)
+		if (t1 <= t2)
 		{
 			l = LogLevel.INFO;
 			if (!TestSettings.allow(l))
@@ -524,7 +524,7 @@ public class TestLog
 		final double t2 = slow.getMean();
 		LogLevel l;
 		String message;
-		if (t1 < t2)
+		if (t1 <= t2)
 		{
 			l = LogLevel.INFO;
 			if (!TestSettings.allow(l))
@@ -564,7 +564,7 @@ public class TestLog
 		final double t2 = (useMin) ? slow.getMin() : slow.getMean();
 		LogLevel l;
 		String message;
-		if (t1 < t2)
+		if (t1 <= t2)
 		{
 			l = LogLevel.INFO;
 			if (!TestSettings.allow(l))
