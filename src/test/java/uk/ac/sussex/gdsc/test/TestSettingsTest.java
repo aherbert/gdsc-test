@@ -23,7 +23,10 @@
  */
 package uk.ac.sussex.gdsc.test;
 
+import org.apache.commons.rng.UniformRandomProvider;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.opentest4j.AssertionFailedError;
 
 @SuppressWarnings("javadoc")
 public class TestSettingsTest
@@ -34,5 +37,29 @@ public class TestSettingsTest
 		System.out.printf("TestSettings Log Level = %d\n", TestSettings.getLogLevel());
 		System.out.printf("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity());
 		System.out.printf("TestSettings Seed = %d\n", TestSettings.getSeed());
+	}
+
+	@Test
+	public void canGetSameRandom()
+	{
+		final long seed = 5656787697789L;
+		UniformRandomProvider r = TestSettings.getRandomGenerator(seed);
+		final double[] e = { r.nextDouble(), r.nextDouble() };
+		r = TestSettings.getRandomGenerator(seed);
+		final double[] o = { r.nextDouble(), r.nextDouble() };
+		Assertions.assertArrayEquals(e, o);
+	}
+
+	@Test
+	public void canGetDifferentRandom()
+	{
+		final long seed = 5656787697789L;
+		UniformRandomProvider r = TestSettings.getRandomGenerator(seed);
+		final double[] e = { r.nextDouble(), r.nextDouble() };
+		r = TestSettings.getRandomGenerator(seed * 2);
+		final double[] o = { r.nextDouble(), r.nextDouble() };
+		Assertions.assertThrows(AssertionFailedError.class, () -> {
+			Assertions.assertArrayEquals(e, o);
+		});
 	}
 }
