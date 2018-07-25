@@ -65,6 +65,15 @@ public class TestSettings
 	 * </pre>
 	 */
 	public static final String PROPERTY_RANDOM_SEED = "gdsc.test.seed";
+	/**
+	 * The runtime property used to set the number of repeats for tests
+	 * using the seeded random generator, e.g.
+	 *
+	 * <pre>
+	 * -Dgdsc.test.repeats=10
+	 * </pre>
+	 */
+	public static final String PROPERTY_RANDOM_REPEATS = "gdsc.test.repeats";
 
 	/** The allowed log level. */
 	private static int logLevel;
@@ -75,11 +84,15 @@ public class TestSettings
 	/** The fixed seed for random generator. */
 	private static long seed;
 
+	/** The number of repeats for tests using the seeded random generator. */
+	private static int repeats;
+
 	static
 	{
 		logLevel = LogLevel.SILENT.getValue();
 		testComplexity = TestComplexity.NONE.getValue();
 		seed = 30051977;
+		repeats = 1;
 
 		try
 		{
@@ -104,6 +117,20 @@ public class TestSettings
 		catch (final Exception e)
 		{
 			// Do nothing
+		}
+		try
+		{
+			repeats = Integer.parseInt(System.getProperty(PROPERTY_RANDOM_REPEATS));
+		}
+		catch (final Exception e)
+		{
+			// Do nothing
+		}
+		finally
+		{
+			// Ensure repeated tests run once. They should be disabled using other mechanisms. 
+			if (repeats < 1)
+				repeats = 1;
 		}
 	}
 
@@ -130,7 +157,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the log level. This is setting using the system property uk.ac.sussex.gdsc.test.logging.
+	 * Gets the log level. This is set using the system property uk.ac.sussex.gdsc.test.logging.
 	 *
 	 * @return the log level
 	 */
@@ -140,7 +167,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the test complexity. This is setting using the system property uk.ac.sussex.gdsc.test.level.
+	 * Gets the test complexity. This is set using the system property uk.ac.sussex.gdsc.test.level.
 	 *
 	 * @return the test complexity
 	 */
@@ -150,13 +177,23 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the seed. This is setting using the system property uk.ac.sussex.gdsc.test.seed.
+	 * Gets the seed. This is set using the system property uk.ac.sussex.gdsc.test.seed.
 	 *
 	 * @return the seed
 	 */
 	public static long getSeed()
 	{
 		return seed;
+	}
+
+	/**
+	 * Gets the repeats. This is set using the system property uk.ac.sussex.gdsc.test.repeats.
+	 *
+	 * @return the repeats
+	 */
+	public static int getRepeats()
+	{
+		return repeats;
 	}
 
 	/**

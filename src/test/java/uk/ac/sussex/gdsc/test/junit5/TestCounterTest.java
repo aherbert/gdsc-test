@@ -37,12 +37,12 @@ public class TestCounterTest
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < limit; j++)
 				fc.run(i, () -> {
-					Assertions.fail();
+					Assertions.fail("Throw an error");
 				});
 		if (exceed)
 			for (int i = 0; i < size; i++)
 				fc.run(i, () -> {
-					Assertions.fail();
+					Assertions.fail("Throw an error");
 				});
 	}
 
@@ -54,14 +54,14 @@ public class TestCounterTest
 				fc.run(i, () -> {
 					return false;
 				}, () -> {
-					Assertions.fail();
+					Assertions.fail("Throw an error");
 				});
 		if (exceed)
 			for (int i = 0; i < size; i++)
 				fc.run(i, () -> {
 					return false;
 				}, () -> {
-					Assertions.fail();
+					Assertions.fail("Throw an error");
 				});
 	}
 

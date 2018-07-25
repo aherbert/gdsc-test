@@ -131,6 +131,11 @@ The GDSC Test package contains code for use with the JUnit test framework.
 						<version>5.2.0</version>
 					</dependency>
 					<dependency>
+						<groupId>org.junit.jupiter</groupId>
+						<artifactId>junit-jupiter-params</artifactId>
+						<version>5.2.0</version>
+					</dependency>
+					<dependency>
 						<groupId>org.junit.vintage</groupId>
 						<artifactId>junit-vintage-engine</artifactId>
 						<version>5.2.0</version>
@@ -233,6 +238,11 @@ The GDSC Test package contains code for use with the JUnit test framework.
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
 			<version>5.2.0</version>
 		</dependency>
 		<dependency>

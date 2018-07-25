@@ -23,19 +23,102 @@
  */
 package uk.ac.sussex.gdsc.test.junit5;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
-import org.opentest4j.AssertionFailedError;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.RepetitionInfo;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.condition.EnabledIf;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @SuppressWarnings("javadoc")
 public class AnnotationTest
 {
-	@SpeedTest
-	public void canAnnotateSpeedTest()
+	@SpeedTag
+	@Test
+	public void canAnnotateSpeedTest(TestInfo info)
 	{
-		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			fail("Not yet implemented");
-		});
+		//System.out.println(info.getTestMethod().get().getName());
+		Assertions.assertTrue(info.getTags().contains("speed"));
+	}
+
+	@RandomTag
+	@Test
+	public void canAnnotateRandomTest(TestInfo info)
+	{
+		//System.out.println(info.getTestMethod().get().getName());
+		Assertions.assertTrue(info.getTags().contains("random"));
+	}
+
+	@RandomSpeedTag
+	@Test
+	public void canAnnotateRandomSpeedTest(TestInfo info)
+	{
+		//System.out.println(info.getTestMethod().get().getName());
+		Assertions.assertTrue(info.getTags().contains("speed"));
+		Assertions.assertTrue(info.getTags().contains("random"));
+	}
+
+	// This is just an example
+	//@RepeatedTest(value = 3)
+	public void canAnnotateRepeatedTest(TestInfo info, RepetitionInfo repInfo)
+	{
+		Assertions.assertEquals(3, repInfo.getTotalRepetitions());
+		System.out.printf("%s (%d/%d)\n", info.getTestMethod().get().getName(), repInfo.getCurrentRepetition(),
+				repInfo.getTotalRepetitions());
+	}
+
+	@Test
+	@EnabledIf("'CI' == systemEnvironment.get('ENV')")
+	public void canAnnotateEnableIfCI(TestInfo info)
+	{
+		System.out.println(info.getTestMethod().get().getName());
+	}
+
+	// This is just an example
+	//@TestFactory
+	public Stream<DynamicTest> canDynamicallyRepeatTests(TestInfo info)
+	{
+		return IntStream.iterate(0, n -> n + 1).limit(2)
+				.mapToObj(n -> DynamicTest.dynamicTest("test" + n, () -> testToBeRepeated(info, n)));
+	}
+
+	private static void testToBeRepeated(TestInfo info, int n)
+	{
+		System.out.printf("%s (%d)\n", info.getTestMethod().get().getName(), n);
+	}
+
+	// This is just an example
+	//@ParameterizedTest
+	@MethodSource(value = "createSeeds")
+	public void canDynamicallyProvideSeeds(int seed)
+	{
+		System.out.printf("Dynamic seed = %d\n", seed);
+	}
+
+	@SuppressWarnings("unused")
+	private static Stream<Integer> createSeeds()
+	{
+		return IntStream.iterate(0, n -> n + 1).limit(2).mapToObj(n -> n);
+	}
+
+	@ParameterizedTest
+	@ArgumentsSource(RandomSeedSource.class)
+	public void canDynamicallyProvideSeedsFromRandomSeedSource(RandomSeed seed, TestInfo info)
+	{
+		System.out.printf("%s seed = %d (%d/%d)\n", info.getTestMethod().get().getName(), seed.getSeed(),
+				seed.getCurrentRepetition(), seed.getTotalRepetitions());
+	}
+
+	@SeededTest
+	public void canAnnotateSeededTest(RandomSeed seed, TestInfo info)
+	{
+		System.out.printf("%s seed = %d (%d/%d)\n", info.getTestMethod().get().getName(), seed.getSeed(),
+				seed.getCurrentRepetition(), seed.getTotalRepetitions());
 	}
 }
