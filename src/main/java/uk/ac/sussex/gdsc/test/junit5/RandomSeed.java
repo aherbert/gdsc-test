@@ -44,7 +44,7 @@ public class RandomSeed
 	 */
 	public RandomSeed(long seed, int currentRepetition, int totalRepetitions)
 	{
-		this.seed=seed;
+		this.seed = seed;
 		this.currentRepetition = currentRepetition;
 		this.totalRepetitions = totalRepetitions;
 	}
@@ -77,5 +77,44 @@ public class RandomSeed
 	public int getTotalRepetitions()
 	{
 		return totalRepetitions;
+	}
+
+	/**
+	 * Returns a hash code value for the object.
+	 * <p>
+	 * The hashcode is computed using the components of the seed that contribute to randomness. The repetition counts
+	 * are ignored.
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		return Long.hashCode(seed);
+	}
+
+	/**
+	 * Indicates whether some other object is "equal to" this one.
+	 * <p>
+	 * Equality is computed using the components of the seed that contribute to randomness. The repetition counts
+	 * are ignored.
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o)
+	{
+		// self check
+		if (this == o)
+			return true;
+		// null check
+		if (o == null)
+			return false;
+		// type check and cast
+		if (getClass() != o.getClass())
+			return false;
+		RandomSeed that = (RandomSeed) o;
+		// field comparison
+		return this.seed == that.seed;
 	}
 }
