@@ -27,7 +27,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import uk.ac.sussex.gdsc.test.TestLog;
-import uk.ac.sussex.gdsc.test.junit4.ExtraAssert;
 
 @SuppressWarnings("javadoc")
 public class ExtraAssertTest
