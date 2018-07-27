@@ -23,22 +23,22 @@
  */
 package uk.ac.sussex.gdsc.test;
 
-import org.apache.commons.rng.UniformRandomProvider;
-
 /**
  * Provide data using a random source.
  *
+ * @param <S>
+ *            the type of the random source
  * @param <T>
- *            the generic type
+ *            the type of the data 
  */
-public interface DataProvider<T>
+public interface DataProvider<S, T>
 {
 	/**
 	 * Gets the data.
 	 *
-	 * @param r
+	 * @param source
 	 *            the random source
 	 * @return the data
 	 */
-	T getData(UniformRandomProvider r);
+	T getData(S source);
 }

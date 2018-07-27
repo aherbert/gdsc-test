@@ -21,45 +21,51 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package uk.ac.sussex.gdsc.test.junit5;
+package uk.ac.sussex.gdsc.test;
 
 import java.util.HashMap;
-
-import uk.ac.sussex.gdsc.test.DataProvider;
-import uk.ac.sussex.gdsc.test.TestSettings;
 
 /**
  * Cache data generated using a random source.
  *
+ * @param <S>
+ *            the type of the random source
  * @param <T>
- *            the generic type
+ *            the type of the data
  */
-public class DataCache<T>
+public class DataCache<S, T>
 {
-	private HashMap<RandomSeed, T> data = new HashMap<>();
+	private HashMap<S, T> data = new HashMap<>();
 
 	/**
 	 * Gets the data.
 	 * <p>
 	 * Uses the cached data if available, otherwise generates the data
-	 * using the data provider using a seeded random source.
+	 * using the data provider using a random source.
 	 * <p>
 	 * Note: The data should be considered immutable if the cache is to be reused.
 	 *
-	 * @param seed
-	 *            the seed for the random source
+	 * @param source
+	 *            the random source
 	 * @param provider
-	 *            the provider to generated the data (if not cached)
+	 *            the provider to generate the data (if not cached)
 	 * @return the data
 	 */
-	public synchronized T getData(RandomSeed seed, DataProvider<T> provider)
+	public synchronized T getData(S source, DataProvider<S, T> provider)
 	{
-		T stats = data.get(seed);
-		if (stats == null)
+		T t = data.get(source);
+		if (t == null)
 		{
-			stats = provider.getData(TestSettings.getRandomGenerator(seed.getSeed()));
-			data.put(seed, stats);
-		}		
-		return stats;
+			synchronized (data)
+			{
+				t = data.get(source);
+				if (t == null)
+				{
+					t = provider.getData(source);
+					data.put(source, t);
+				}
+			}
+		}
+		return t;
 	}
 }

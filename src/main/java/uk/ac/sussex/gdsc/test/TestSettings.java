@@ -24,6 +24,7 @@
 package uk.ac.sussex.gdsc.test;
 
 import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.rng.core.source64.SplitMix64;
 import org.apache.commons.rng.simple.RandomSource;
 
 /**
@@ -157,7 +158,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the log level. 
+	 * Gets the log level.
 	 * <p>
 	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.logging}.
 	 *
@@ -169,7 +170,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the test complexity. 
+	 * Gets the test complexity.
 	 * <p>
 	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.level}.
 	 *
@@ -181,7 +182,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the seed. 
+	 * Gets the seed.
 	 * <p>
 	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.seed}.
 	 *
@@ -193,7 +194,7 @@ public class TestSettings
 	}
 
 	/**
-	 * Gets the repeats. 
+	 * Gets the repeats.
 	 * <p>
 	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.repeats}.
 	 *
@@ -242,8 +243,36 @@ public class TestSettings
 		return allow(level) && allow(complexity);
 	}
 
+	/** Store the seeds for the UniformRandomProvider. */
+	private static final DataCache<Long, int[]> seedCache = new DataCache<>();
+
 	/**
-	 * Gets the uniform random provider. 
+	 * Class for generating full length seeds.
+	 */
+	private static class SeedGenerator implements DataProvider<Long, int[]>
+	{
+		@Override
+		public int[] getData(Long source)
+		{
+			// This has been copied from org.apache.commons.rng.simple.internal.SeedFactory
+			
+			// Generate a full length seed using another RNG
+			final SplitMix64 rng = new SplitMix64(source);
+			final int n = 624; // Size of the state array of "Well19937c".
+			final int[] array = new int[n];
+			for (int i = 0; i < n; i++)
+			{
+				array[i] = rng.nextInt();
+			}
+			return array;
+		}
+	}
+	
+	/** The seed generator. */
+	private static SeedGenerator SEED_GENERATOR = new SeedGenerator();
+
+	/**
+	 * Gets the uniform random provider.
 	 * <p>
 	 * If the {@code seed} is {@code 0} then a random seed will be used.
 	 *
@@ -253,7 +282,10 @@ public class TestSettings
 	 */
 	public static UniformRandomProvider getRandomGenerator(long seed)
 	{
-		return RandomSource.create(RandomSource.WELL_19937_C, (seed == 0) ? null : seed);
+		if (seed == 0)
+			return RandomSource.create(RandomSource.WELL_19937_C);
+		final int[] fullSeed = seedCache.getData(seed, SEED_GENERATOR);
+		return RandomSource.create(RandomSource.WELL_19937_C, fullSeed);
 	}
 
 	/**
