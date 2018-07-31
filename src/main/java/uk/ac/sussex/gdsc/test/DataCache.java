@@ -68,4 +68,12 @@ public class DataCache<S, T>
 		}
 		return t;
 	}
+
+	/**
+	 * Clear the data cache.
+	 */
+	public void clear()
+	{
+		data.clear();
+	}
 }
