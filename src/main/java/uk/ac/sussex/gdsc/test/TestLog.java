@@ -23,6 +23,10 @@
  */
 package uk.ac.sussex.gdsc.test;
 
+import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Class used to log messages.
  */
@@ -508,7 +512,8 @@ public class TestLog
 	 * than the
 	 * slow.
 	 * <p>
-	 * If true the message will be written at the {@link LogLevel#WARN} level. If false the message will be written at
+	 * If true the message will be written at the {@link LogLevel#WARN} level. If false the message will be written
+	 * at
 	 * the {@link LogLevel#SILENT} level with a failure prefix.
 	 * <p>
 	 * This is a helper method for speed tests that may not always pass.
@@ -546,7 +551,8 @@ public class TestLog
 	 * than the
 	 * slow.
 	 * <p>
-	 * If true the message will be written at the {@link LogLevel#WARN} level. If false the message will be written at
+	 * If true the message will be written at the {@link LogLevel#WARN} level. If false the message will be written
+	 * at
 	 * the {@link LogLevel#SILENT} level with a failure prefix.
 	 * <p>
 	 * This is a helper method for speed tests that may not always pass.
@@ -735,5 +741,553 @@ public class TestLog
 				thisMethod = true;
 		}
 		return null;
+	}
+
+	///////////////////////////////////////////
+	// Helper functionality for using a Logger
+	///////////////////////////////////////////
+
+	/**
+	 * Get a supplier for the string using the format and arguments.
+	 * <p>
+	 * This can be used where it is not convenient to create a lambda function using:
+	 * 
+	 * <pre>
+	 * <code>
+	 * () -> String.format(format, args);
+	 * </code>
+	 * </pre>
+	 * 
+	 * directly because the arguments are not effectively final.
+	 * 
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 * @return the supplier
+	 */
+	public static final Supplier<String> getSupplier(final String format, final Object... args)
+	{
+		return () -> String.format(format, args);
+	}
+
+	/**
+	 * Log a message to the logger.
+	 * <p>
+	 * This is a convenience method where it is not possible to create a
+	 * {@code Supplier<String>} instance using lambda functions to pass
+	 * directly to the {@code logger}.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param level
+	 *            the level
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static final void log(Logger logger, Level level, final String format, final Object... args)
+	{
+		if (logger.isLoggable(level))
+			logger.log(level, getSupplier(format, args));
+	}
+
+	/**
+	 * Log a message to the logger at the {@link Level#SEVERE} level.
+	 * <p>
+	 * This is a convenience method where it is not possible to create a
+	 * {@code Supplier<String>} instance using lambda functions to pass
+	 * directly to the {@code logger}.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static final void severe(Logger logger, final String format, final Object... args)
+	{
+		if (logger.isLoggable(Level.SEVERE))
+			logger.severe(getSupplier(format, args));
+	}
+
+	/**
+	 * Log a message to the logger at the {@link Level#WARNING} level.
+	 * <p>
+	 * This is a convenience method where it is not possible to create a
+	 * {@code Supplier<String>} instance using lambda functions to pass
+	 * directly to the {@code logger}.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static final void warning(Logger logger, final String format, final Object... args)
+	{
+		if (logger.isLoggable(Level.WARNING))
+			logger.warning(getSupplier(format, args));
+	}
+
+	/**
+	 * Log a message to the logger at the {@link Level#INFO} level.
+	 * <p>
+	 * This is a convenience method where it is not possible to create a
+	 * {@code Supplier<String>} instance using lambda functions to pass
+	 * directly to the {@code logger}.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static final void info(Logger logger, final String format, final Object... args)
+	{
+		if (logger.isLoggable(Level.INFO))
+			logger.info(getSupplier(format, args));
+	}
+
+	/**
+	 * Log a message to the logger at the {@link Level#FINE} level.
+	 * <p>
+	 * This is a convenience method where it is not possible to create a
+	 * {@code Supplier<String>} instance using lambda functions to pass
+	 * directly to the {@code logger}.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static final void fine(Logger logger, final String format, final Object... args)
+	{
+		if (logger.isLoggable(Level.FINE))
+			logger.fine(getSupplier(format, args));
+	}
+
+	/**
+	 * Log a message to the logger at the {@link Level#FINER} level.
+	 * <p>
+	 * This is a convenience method where it is not possible to create a
+	 * {@code Supplier<String>} instance using lambda functions to pass
+	 * directly to the {@code logger}.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static final void finer(Logger logger, final String format, final Object... args)
+	{
+		if (logger.isLoggable(Level.FINER))
+			logger.finer(getSupplier(format, args));
+	}
+
+	/**
+	 * Log a message to the logger at the {@link Level#FINEST} level.
+	 * <p>
+	 * This is a convenience method where it is not possible to create a
+	 * {@code Supplier<String>} instance using lambda functions to pass
+	 * directly to the {@code logger}.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static final void finest(Logger logger, final String format, final Object... args)
+	{
+		if (logger.isLoggable(Level.FINEST))
+			logger.finest(getSupplier(format, args));
+	}
+
+	/**
+	 * Log the speed test result. If true the message will be written at the {@link Level#INFO}
+	 * level. If false the message will be written at the {@link Level#SEVERE} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param result
+	 *            the result
+	 * @param message
+	 *            the message
+	 */
+	public static void logSpeedTestResult(Logger logger, boolean result, String message)
+	{
+		Level l;
+		if (result)
+			l = Level.INFO;
+		else
+		{
+			l = Level.SEVERE;
+			message = getCodePoint(3) + "Speed-Test Failure: " + message;
+		}
+		log(logger, l, message);
+	}
+
+	/**
+	 * Log the speed test result. If true the message will be written at the {@link Level#INFO}
+	 * level. If false the message will be written at the {@link Level#SEVERE} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param result
+	 *            the result
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void logSpeedTestResult(Logger logger, boolean result, String format, Object... args)
+	{
+		Level l;
+		if (result)
+			l = Level.INFO;
+		else
+		{
+			l = Level.SEVERE;
+			format = getCodePoint(3) + "Speed-Test Failure: " + format;
+		}
+		log(logger, l, format, args);
+	}
+
+	/**
+	 * Log the speed test result of two timing tasks. A test is made to determine if the fast has a lower time than the
+	 * slow.
+	 * <p>
+	 * If true the message will be written at the {@link Level#INFO} level. If false the message will be written at
+	 * the {@link Level#SEVERE} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param slow
+	 *            the slow task
+	 * @param fast
+	 *            the fast task
+	 */
+	public static void logSpeedTestResult(Logger logger, TimingResult slow, TimingResult fast)
+	{
+		final double t1 = fast.getMean();
+		final double t2 = slow.getMean();
+		Level l;
+		String message;
+		if (t1 <= t2)
+		{
+			l = Level.INFO;
+			if (!logger.isLoggable(l))
+				return;
+			message = "%s (%s) => %s (%s) : %.2fx\n";
+		}
+		else
+		{
+			l = Level.SEVERE;
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+		}
+		log(logger, l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
+	}
+
+	/**
+	 * Log the speed test result of two timing tasks. A test is made to determine if the fast has a lower time than the
+	 * slow.
+	 * <p>
+	 * If true the message will be written at the {@link Level#INFO} level. If false the message will be written at
+	 * the {@link Level#SEVERE} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param slow
+	 *            the slow task
+	 * @param fast
+	 *            the fast task
+	 * @param useMin
+	 *            Set to true to use the min execution time (the default is mean)
+	 */
+	public static void logSpeedTestResult(Logger logger, TimingResult slow, TimingResult fast, boolean useMin)
+	{
+		final double t1 = (useMin) ? fast.getMin() : fast.getMean();
+		final double t2 = (useMin) ? slow.getMin() : slow.getMean();
+		Level l;
+		String message;
+		if (t1 <= t2)
+		{
+			l = Level.INFO;
+			if (!logger.isLoggable(l))
+				return;
+			message = "%s (%s) => %s (%s) : %.2fx\n";
+		}
+		else
+		{
+			l = Level.SEVERE;
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+		}
+		log(logger, l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
+	}
+
+	/**
+	 * Log the speed test intermediate stage result. If true the message will be written at the {@link Level#INFO}
+	 * level. If false the message will be written at the {@link Level#WARNING} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param result
+	 *            the result
+	 * @param message
+	 *            the message
+	 */
+	public static void logSpeedTestStageResult(Logger logger, boolean result, String message)
+	{
+		Level l;
+		if (result)
+			l = Level.INFO;
+		else
+		{
+			l = Level.WARNING;
+			if (!logger.isLoggable(l)) // Avoid getting the stack trace if not logging
+				return;
+			message = getCodePoint(3) + "Speed-Test Stage Failure: " + message;
+		}
+		log(logger, l, message);
+	}
+
+	/**
+	 * Log the speed test intermediate stage result. If true the message will be written at the {@link Level#INFO}
+	 * level. If false the message will be written at the {@link Level#WARNING} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param result
+	 *            the result
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void logSpeedTestStageResult(Logger logger, boolean result, String format, Object... args)
+	{
+		Level l;
+		if (result)
+			l = Level.INFO;
+		else
+		{
+			l = Level.WARNING;
+			if (!logger.isLoggable(l)) // Avoid getting the stack trace if not logging
+				return;
+			format = getCodePoint(3) + "Speed-Test Stage Failure: " + format;
+		}
+		log(logger, l, format, args);
+	}
+
+	/**
+	 * Log the speed test stage result of two timing tasks. A test is made to determine if the fast has a lower time
+	 * than the
+	 * slow.
+	 * <p>
+	 * If true the message will be written at the {@link Level#WARNING} level. If false the message will be written at
+	 * the {@link Level#SEVERE} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param slow
+	 *            the slow task
+	 * @param fast
+	 *            the fast task
+	 */
+	public static void logSpeedTestStageResult(Logger logger, TimingResult slow, TimingResult fast)
+	{
+		final double t1 = fast.getMean();
+		final double t2 = slow.getMean();
+		Level l;
+		String message;
+		if (t1 <= t2)
+		{
+			l = Level.INFO;
+			if (!logger.isLoggable(l))
+				return;
+			message = "%s (%s) => %s (%s) : %.2fx\n";
+		}
+		else
+		{
+			l = Level.WARNING;
+			if (!logger.isLoggable(l))
+				return;
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+		}
+		log(logger, l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
+	}
+
+	/**
+	 * Log the speed test stage result of two timing tasks. A test is made to determine if the fast has a lower time
+	 * than the
+	 * slow.
+	 * <p>
+	 * If true the message will be written at the {@link Level#WARNING} level. If false the message will be written at
+	 * the {@link Level#SEVERE} level with a failure prefix.
+	 * <p>
+	 * This is a helper method for speed tests that may not always pass.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param slow
+	 *            the slow task
+	 * @param fast
+	 *            the fast task
+	 * @param useMin
+	 *            Set to true to use the min execution time (the default is mean)
+	 */
+	public static void logSpeedTestStageResult(Logger logger, TimingResult slow, TimingResult fast, boolean useMin)
+	{
+		final double t1 = (useMin) ? fast.getMin() : fast.getMean();
+		final double t2 = (useMin) ? slow.getMin() : slow.getMean();
+		Level l;
+		String message;
+		if (t1 <= t2)
+		{
+			l = Level.INFO;
+			if (!logger.isLoggable(l))
+				return;
+			message = "%s (%s) => %s (%s) : %.2fx\n";
+		}
+		else
+		{
+			l = Level.WARNING;
+			if (!logger.isLoggable(l))
+				return;
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+		}
+		log(logger, l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
+	}
+
+	/**
+	 * Log a failure at the {@link Level#SEVERE} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param logger
+	 *            the logger
+	 */
+	public static void logFailure(Logger logger)
+	{
+		log(logger, Level.SEVERE, getCodePoint(3) + "Failure");
+	}
+
+	/**
+	 * Log a failure at the {@link Level#SEVERE} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param t
+	 *            the throwable that caused the failure
+	 */
+	public static void logFailure(Logger logger, Throwable t)
+	{
+		final String msg = (t == null) ? null : t.getMessage();
+		if (msg == null || msg.length() == 0)
+			log(logger, Level.SEVERE, getCodePoint(3) + "Failure");
+		else
+			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + msg);
+	}
+
+	/**
+	 * Log a failure at the {@link Level#SEVERE} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param message
+	 *            the message
+	 */
+	public static void logFailure(Logger logger, String message)
+	{
+		log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + message);
+	}
+
+	/**
+	 * Log a failure at the {@link Level#SEVERE} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param t
+	 *            the throwable that caused the failure
+	 * @param message
+	 *            the message
+	 */
+	public static void logFailure(Logger logger, Throwable t, String message)
+	{
+		final String msg = (t == null) ? null : t.getMessage();
+		if (msg == null || msg.length() == 0)
+			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + message);
+		else
+			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + msg + " : " + message);
+	}
+
+	/**
+	 * Log a failure at the {@link Level#SEVERE} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void logFailure(Logger logger, String format, Object... args)
+	{
+		log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + format, args);
+	}
+
+	/**
+	 * Log a failure at the {@link Level#SEVERE} level.
+	 * <p>
+	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param t
+	 *            the throwable that caused the failure
+	 * @param format
+	 *            the format
+	 * @param args
+	 *            the arguments
+	 */
+	public static void logFailure(Logger logger, Throwable t, String format, Object... args)
+	{
+		final String msg = (t == null) ? null : t.getMessage();
+		if (msg == null || msg.length() == 0)
+			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + format, args);
+		else
+			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + msg + " : " + format, args);
 	}
 }

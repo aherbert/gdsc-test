@@ -23,6 +23,9 @@
  */
 package uk.ac.sussex.gdsc.test.junit5;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.junit.jupiter.api.Assumptions;
 import org.opentest4j.TestAbortedException;
 
@@ -34,12 +37,14 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  * Adds additional helper assumptions to those provided by {@link org.junit.jupiter.api.Assumptions}.
  * <p>
  * Tests can be written to respond to the run-time configured {@link LogLevel} and {@link TestComplexity}, e.g.
+ * 
  * <pre>
  * &#64;Test
- * public void myTest() {
- *     ExtraAssumptions.assume(LogLevel.INFO);
- *     ExtraAssumptions.assume(TestComplexity.MEDIUM);
- *     // ... do the test
+ * public void myTest()
+ * {
+ * 	ExtraAssumptions.assume(LogLevel.INFO);
+ * 	ExtraAssumptions.assume(TestComplexity.MEDIUM);
+ * 	// ... do the test
  * }
  * </pre>
  */
@@ -212,5 +217,101 @@ public class ExtraAssumptions
 	public static void assumeSpeedTest(TestComplexity complexity) throws TestAbortedException
 	{
 		assume(complexity);
+	}
+
+	/**
+	 * Assume logging is allowed at the given level.
+	 * <p>
+	 * Use this at the start of a test that only produces logging output (no assertions) to skip
+	 * the test as logging will be ignored.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param level
+	 *            the level
+	 * @throws TestAbortedException
+	 *             if the assumption is not {@code true}
+	 */
+	public static void assume(Logger logger, Level level)
+	{
+		Assumptions.assumeTrue(logger.isLoggable(level));
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#SEVERE} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws TestAbortedException
+	 *             if the assumption is not {@code true}
+	 */
+	public static void assumeSevere(Logger logger) throws TestAbortedException
+	{
+		assume(logger, Level.SEVERE);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#WARNING} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws TestAbortedException
+	 *             if the assumption is not {@code true}
+	 */
+	public static void assumeWarning(Logger logger) throws TestAbortedException
+	{
+		assume(logger, Level.WARNING);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#INFO} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws TestAbortedException
+	 *             if the assumption is not {@code true}
+	 */
+	public static void assumeInfo(Logger logger) throws TestAbortedException
+	{
+		assume(logger, Level.INFO);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#FINE} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws TestAbortedException
+	 *             if the assumption is not {@code true}
+	 */
+	public static void assumeFine(Logger logger) throws TestAbortedException
+	{
+		assume(logger, Level.FINE);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#FINER} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws TestAbortedException
+	 *             if the assumption is not {@code true}
+	 */
+	public static void assumeFiner(Logger logger) throws TestAbortedException
+	{
+		assume(logger, Level.FINER);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#FINEST} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws TestAbortedException
+	 *             if the assumption is not {@code true}
+	 */
+	public static void assumeFinest(Logger logger) throws TestAbortedException
+	{
+		assume(logger, Level.FINEST);
 	}
 }

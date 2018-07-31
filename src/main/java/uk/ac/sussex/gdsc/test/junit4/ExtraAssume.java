@@ -23,8 +23,12 @@
  */
 package uk.ac.sussex.gdsc.test.junit4;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;
+import org.junit.jupiter.api.Assumptions;
 
 import uk.ac.sussex.gdsc.test.LogLevel;
 import uk.ac.sussex.gdsc.test.TestComplexity;
@@ -212,5 +216,101 @@ public class ExtraAssume
 	public static void assumeSpeedTest(TestComplexity complexity) throws AssumptionViolatedException
 	{
 		assume(complexity);
+	}
+
+	/**
+	 * Assume logging is allowed at the given level.
+	 * <p>
+	 * Use this at the start of a test that only produces logging output (no assertions) to skip
+	 * the test as logging will be ignored.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param level
+	 *            the level
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 */
+	public static void assume(Logger logger, Level level)
+	{
+		Assumptions.assumeTrue(logger.isLoggable(level));
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#SEVERE} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 */
+	public static void assumeSevere(Logger logger) throws AssumptionViolatedException
+	{
+		assume(logger, Level.SEVERE);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#WARNING} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 */
+	public static void assumeWarning(Logger logger) throws AssumptionViolatedException
+	{
+		assume(logger, Level.WARNING);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#INFO} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 */
+	public static void assumeInfo(Logger logger) throws AssumptionViolatedException
+	{
+		assume(logger, Level.INFO);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#FINE} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 */
+	public static void assumeFine(Logger logger) throws AssumptionViolatedException
+	{
+		assume(logger, Level.FINE);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#FINER} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 */
+	public static void assumeFiner(Logger logger) throws AssumptionViolatedException
+	{
+		assume(logger, Level.FINER);
+	}
+
+	/**
+	 * Assume testing is logging at the {@link Level#FINEST} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @throws AssumptionViolatedException
+	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 */
+	public static void assumeFinest(Logger logger) throws AssumptionViolatedException
+	{
+		assume(logger, Level.FINEST);
 	}
 }
