@@ -26,24 +26,29 @@ package uk.ac.sussex.gdsc.test.junit5;
 import static org.junit.jupiter.api.Assertions.fail;
 import static uk.ac.sussex.gdsc.test.junit5.ExtraAssumptions.assume;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.junit.jupiter.api.Test;
 import org.opentest4j.TestAbortedException;
 
-import uk.ac.sussex.gdsc.test.LogLevel;
 import uk.ac.sussex.gdsc.test.TestComplexity;
+import uk.ac.sussex.gdsc.test.TestLogTest;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 @SuppressWarnings("javadoc")
 public class ExtraAssumptionsTest
 {
 	@Test
-	public void canAssumeLogLevel()
+	public void canAssumeLevel()
 	{
-		for (final LogLevel l : LogLevel.values())
-			if (TestSettings.allow(l))
+		final Logger logger = Logger.getLogger(TestLogTest.class.getName());
+		final Level[] levels = { Level.SEVERE, Level.INFO, Level.FINEST };
+		for (final Level l : levels)
+			if (logger.isLoggable(l))
 				try
 				{
-					assume(l);
+					assume(logger, l);
 				}
 				catch (final TestAbortedException e)
 				{
@@ -53,7 +58,7 @@ public class ExtraAssumptionsTest
 			{
 				try
 				{
-					assume(l);
+					assume(logger, l);
 				}
 				catch (final TestAbortedException e)
 				{

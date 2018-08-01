@@ -41,6 +41,7 @@ public class TestLog
 	 *            the format
 	 * @param args
 	 *            the arguments
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void log(LogLevel level, String format, Object... args)
 	{
@@ -55,6 +56,7 @@ public class TestLog
 	 *            the level
 	 * @param msg
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void log(LogLevel level, MessageProvider msg)
 	{
@@ -69,6 +71,7 @@ public class TestLog
 	 *            the level
 	 * @param msg
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void log(LogLevel level, Message msg)
 	{
@@ -83,6 +86,7 @@ public class TestLog
 	 *            the level
 	 * @param object
 	 *            the object
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void log(LogLevel level, Object object)
 	{
@@ -97,6 +101,7 @@ public class TestLog
 	 *            the level
 	 * @param message
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logln(LogLevel level, String message)
 	{
@@ -111,6 +116,7 @@ public class TestLog
 	 *            the level
 	 * @param object
 	 *            the object
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logln(LogLevel level, Object object)
 	{
@@ -127,6 +133,7 @@ public class TestLog
 	 *            the format
 	 * @param args
 	 *            the arguments
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void debug(String format, Object... args)
 	{
@@ -138,6 +145,7 @@ public class TestLog
 	 *
 	 * @param msg
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void debug(MessageProvider msg)
 	{
@@ -149,6 +157,7 @@ public class TestLog
 	 *
 	 * @param msg
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void debug(Message msg)
 	{
@@ -160,6 +169,7 @@ public class TestLog
 	 *
 	 * @param object
 	 *            the object
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void debug(Object object)
 	{
@@ -171,6 +181,7 @@ public class TestLog
 	 *
 	 * @param message
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void debugln(String message)
 	{
@@ -182,6 +193,7 @@ public class TestLog
 	 *
 	 * @param object
 	 *            the object
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void debugln(Object object)
 	{
@@ -197,6 +209,7 @@ public class TestLog
 	 *            the format
 	 * @param args
 	 *            the arguments
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void info(String format, Object... args)
 	{
@@ -208,6 +221,7 @@ public class TestLog
 	 *
 	 * @param msg
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void info(MessageProvider msg)
 	{
@@ -219,6 +233,7 @@ public class TestLog
 	 *
 	 * @param msg
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void info(Message msg)
 	{
@@ -230,6 +245,7 @@ public class TestLog
 	 *
 	 * @param object
 	 *            the object
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void info(Object object)
 	{
@@ -241,6 +257,7 @@ public class TestLog
 	 *
 	 * @param message
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void infoln(String message)
 	{
@@ -252,6 +269,7 @@ public class TestLog
 	 *
 	 * @param object
 	 *            the object
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void infoln(Object object)
 	{
@@ -267,6 +285,7 @@ public class TestLog
 	 *            the format
 	 * @param args
 	 *            the arguments
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void warn(String format, Object... args)
 	{
@@ -278,6 +297,7 @@ public class TestLog
 	 *
 	 * @param msg
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void warn(MessageProvider msg)
 	{
@@ -289,6 +309,7 @@ public class TestLog
 	 *
 	 * @param msg
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void warn(Message msg)
 	{
@@ -300,6 +321,7 @@ public class TestLog
 	 *
 	 * @param object
 	 *            the object
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void warn(Object object)
 	{
@@ -311,6 +333,7 @@ public class TestLog
 	 *
 	 * @param message
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void warnln(String message)
 	{
@@ -322,6 +345,7 @@ public class TestLog
 	 *
 	 * @param object
 	 *            the object
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void warnln(Object object)
 	{
@@ -332,17 +356,18 @@ public class TestLog
 	// Helper methods for testing
 
 	/**
-	 * Log the speed test result. If true the message will be written at the {@link LogLevel#INFO}
+	 * Log the test result. If true the message will be written at the {@link LogLevel#INFO}
 	 * level. If false the message will be written at the {@link LogLevel#SILENT} level with a failure prefix.
 	 * <p>
-	 * This is a helper method for speed tests that may not always pass.
+	 * This is a helper method for tests that may not always pass.
 	 *
 	 * @param result
 	 *            the result
 	 * @param message
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
-	public static void logSpeedTestResult(boolean result, String message)
+	public static void logTestResult(boolean result, String message)
 	{
 		LogLevel l;
 		if (result)
@@ -350,16 +375,16 @@ public class TestLog
 		else
 		{
 			l = LogLevel.SILENT;
-			message = getCodePoint(3) + "Speed-Test Failure: " + message;
+			message = getCodePoint(3) + "Test Failure: " + message;
 		}
 		logln(l, message);
 	}
 
 	/**
-	 * Log the speed test result. If true the message will be written at the {@link LogLevel#INFO}
+	 * Log the test result. If true the message will be written at the {@link LogLevel#INFO}
 	 * level. If false the message will be written at the {@link LogLevel#SILENT} level with a failure prefix.
 	 * <p>
-	 * This is a helper method for speed tests that may not always pass.
+	 * This is a helper method for tests that may not always pass.
 	 *
 	 * @param result
 	 *            the result
@@ -367,8 +392,9 @@ public class TestLog
 	 *            the format
 	 * @param args
 	 *            the arguments
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
-	public static void logSpeedTestResult(boolean result, String format, Object... args)
+	public static void logTestResult(boolean result, String format, Object... args)
 	{
 		LogLevel l;
 		if (result)
@@ -376,7 +402,7 @@ public class TestLog
 		else
 		{
 			l = LogLevel.SILENT;
-			format = getCodePoint(3) + "Speed-Test Failure: " + format;
+			format = getCodePoint(3) + "Test Failure: " + format;
 		}
 		log(l, format, args);
 	}
@@ -394,6 +420,7 @@ public class TestLog
 	 *            the slow task
 	 * @param fast
 	 *            the fast task
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logSpeedTestResult(TimingResult slow, TimingResult fast)
 	{
@@ -431,6 +458,7 @@ public class TestLog
 	 *            the fast task
 	 * @param useMin
 	 *            Set to true to use the min execution time (the default is mean)
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logSpeedTestResult(TimingResult slow, TimingResult fast, boolean useMin)
 	{
@@ -454,17 +482,18 @@ public class TestLog
 	}
 
 	/**
-	 * Log the speed test intermediate stage result. If true the message will be written at the {@link LogLevel#INFO}
+	 * Log the test intermediate stage result. If true the message will be written at the {@link LogLevel#INFO}
 	 * level. If false the message will be written at the {@link LogLevel#WARN} level with a failure prefix.
 	 * <p>
-	 * This is a helper method for speed tests that may not always pass.
+	 * This is a helper method for tests that may not always pass.
 	 *
 	 * @param result
 	 *            the result
 	 * @param message
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
-	public static void logSpeedTestStageResult(boolean result, String message)
+	public static void logTestStageResult(boolean result, String message)
 	{
 		LogLevel l;
 		if (result)
@@ -474,16 +503,16 @@ public class TestLog
 			l = LogLevel.WARN;
 			if (!TestSettings.allow(l)) // Avoid getting the stack trace if not logging
 				return;
-			message = getCodePoint(3) + "Speed-Test Stage Failure: " + message;
+			message = getCodePoint(3) + "Test Stage Failure: " + message;
 		}
 		logln(l, message);
 	}
 
 	/**
-	 * Log the speed test intermediate stage result. If true the message will be written at the {@link LogLevel#INFO}
+	 * Log the test intermediate stage result. If true the message will be written at the {@link LogLevel#INFO}
 	 * level. If false the message will be written at the {@link LogLevel#WARN} level with a failure prefix.
 	 * <p>
-	 * This is a helper method for speed tests that may not always pass.
+	 * This is a helper method for tests that may not always pass.
 	 *
 	 * @param result
 	 *            the result
@@ -491,8 +520,9 @@ public class TestLog
 	 *            the format
 	 * @param args
 	 *            the arguments
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
-	public static void logSpeedTestStageResult(boolean result, String format, Object... args)
+	public static void logTestStageResult(boolean result, String format, Object... args)
 	{
 		LogLevel l;
 		if (result)
@@ -502,7 +532,7 @@ public class TestLog
 			l = LogLevel.WARN;
 			if (!TestSettings.allow(l)) // Avoid getting the stack trace if not logging
 				return;
-			format = getCodePoint(3) + "Speed-Test Stage Failure: " + format;
+			format = getCodePoint(3) + "Test Stage Failure: " + format;
 		}
 		log(l, format, args);
 	}
@@ -522,6 +552,7 @@ public class TestLog
 	 *            the slow task
 	 * @param fast
 	 *            the fast task
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logSpeedTestStageResult(TimingResult slow, TimingResult fast)
 	{
@@ -563,6 +594,7 @@ public class TestLog
 	 *            the fast task
 	 * @param useMin
 	 *            Set to true to use the min execution time (the default is mean)
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logSpeedTestStageResult(TimingResult slow, TimingResult fast, boolean useMin)
 	{
@@ -591,6 +623,7 @@ public class TestLog
 	 * Log a failure at the {@link LogLevel#SILENT} level.
 	 * <p>
 	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
+	 * * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logFailure()
 	{
@@ -604,6 +637,7 @@ public class TestLog
 	 *
 	 * @param t
 	 *            the throwable that caused the failure
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logFailure(Throwable t)
 	{
@@ -621,6 +655,7 @@ public class TestLog
 	 *
 	 * @param message
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logFailure(String message)
 	{
@@ -636,6 +671,7 @@ public class TestLog
 	 *            the throwable that caused the failure
 	 * @param message
 	 *            the message
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logFailure(Throwable t, String message)
 	{
@@ -655,6 +691,7 @@ public class TestLog
 	 *            the format
 	 * @param args
 	 *            the arguments
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logFailure(String format, Object... args)
 	{
@@ -672,6 +709,7 @@ public class TestLog
 	 *            the format
 	 * @param args
 	 *            the arguments
+	 * @deprecated LogLevel and console logging is to be removed
 	 */
 	public static void logFailure(Throwable t, String format, Object... args)
 	{
@@ -774,9 +812,8 @@ public class TestLog
 	/**
 	 * Log a message to the logger.
 	 * <p>
-	 * This is a convenience method where it is not possible to create a
-	 * {@code Supplier<String>} instance using lambda functions to pass
-	 * directly to the {@code logger}.
+	 * Note: This is a special function using varargs.<br>
+	 * To pass an arguments array to the logger use: {@code logger.log(level, format, args)}.
 	 *
 	 * @param logger
 	 *            the logger
@@ -790,15 +827,14 @@ public class TestLog
 	public static final void log(Logger logger, Level level, final String format, final Object... args)
 	{
 		if (logger.isLoggable(level))
-			logger.log(level, getSupplier(format, args));
+			logger.log(level, String.format(format, args));
 	}
 
 	/**
 	 * Log a message to the logger at the {@link Level#SEVERE} level.
 	 * <p>
-	 * This is a convenience method where it is not possible to create a
-	 * {@code Supplier<String>} instance using lambda functions to pass
-	 * directly to the {@code logger}.
+	 * Note: This is a special function using varargs.<br>
+	 * To pass an arguments array to the logger use: {@code logger.log(level, format, args)}.
 	 *
 	 * @param logger
 	 *            the logger
@@ -809,16 +845,14 @@ public class TestLog
 	 */
 	public static final void severe(Logger logger, final String format, final Object... args)
 	{
-		if (logger.isLoggable(Level.SEVERE))
-			logger.severe(getSupplier(format, args));
+		log(logger, Level.SEVERE, format, args);
 	}
 
 	/**
 	 * Log a message to the logger at the {@link Level#WARNING} level.
 	 * <p>
-	 * This is a convenience method where it is not possible to create a
-	 * {@code Supplier<String>} instance using lambda functions to pass
-	 * directly to the {@code logger}.
+	 * Note: This is a special function using varargs.<br>
+	 * To pass an arguments array to the logger use: {@code logger.log(level, format, args)}.
 	 *
 	 * @param logger
 	 *            the logger
@@ -829,16 +863,14 @@ public class TestLog
 	 */
 	public static final void warning(Logger logger, final String format, final Object... args)
 	{
-		if (logger.isLoggable(Level.WARNING))
-			logger.warning(getSupplier(format, args));
+		log(logger, Level.WARNING, format, args);
 	}
 
 	/**
 	 * Log a message to the logger at the {@link Level#INFO} level.
 	 * <p>
-	 * This is a convenience method where it is not possible to create a
-	 * {@code Supplier<String>} instance using lambda functions to pass
-	 * directly to the {@code logger}.
+	 * Note: This is a special function using varargs.<br>
+	 * To pass an arguments array to the logger use: {@code logger.log(level, format, args)}.
 	 *
 	 * @param logger
 	 *            the logger
@@ -849,16 +881,14 @@ public class TestLog
 	 */
 	public static final void info(Logger logger, final String format, final Object... args)
 	{
-		if (logger.isLoggable(Level.INFO))
-			logger.info(getSupplier(format, args));
+		log(logger, Level.INFO, format, args);
 	}
 
 	/**
 	 * Log a message to the logger at the {@link Level#FINE} level.
 	 * <p>
-	 * This is a convenience method where it is not possible to create a
-	 * {@code Supplier<String>} instance using lambda functions to pass
-	 * directly to the {@code logger}.
+	 * Note: This is a special function using varargs.<br>
+	 * To pass an arguments array to the logger use: {@code logger.log(level, format, args)}.
 	 *
 	 * @param logger
 	 *            the logger
@@ -869,16 +899,14 @@ public class TestLog
 	 */
 	public static final void fine(Logger logger, final String format, final Object... args)
 	{
-		if (logger.isLoggable(Level.FINE))
-			logger.fine(getSupplier(format, args));
+		log(logger, Level.FINE, format, args);
 	}
 
 	/**
 	 * Log a message to the logger at the {@link Level#FINER} level.
 	 * <p>
-	 * This is a convenience method where it is not possible to create a
-	 * {@code Supplier<String>} instance using lambda functions to pass
-	 * directly to the {@code logger}.
+	 * Note: This is a special function using varargs.<br>
+	 * To pass an arguments array to the logger use: {@code logger.log(level, format, args)}.
 	 *
 	 * @param logger
 	 *            the logger
@@ -889,16 +917,14 @@ public class TestLog
 	 */
 	public static final void finer(Logger logger, final String format, final Object... args)
 	{
-		if (logger.isLoggable(Level.FINER))
-			logger.finer(getSupplier(format, args));
+		log(logger, Level.FINER, format, args);
 	}
 
 	/**
 	 * Log a message to the logger at the {@link Level#FINEST} level.
 	 * <p>
-	 * This is a convenience method where it is not possible to create a
-	 * {@code Supplier<String>} instance using lambda functions to pass
-	 * directly to the {@code logger}.
+	 * Note: This is a special function using varargs.<br>
+	 * To pass an arguments array to the logger use: {@code logger.log(level, format, args)}.
 	 *
 	 * @param logger
 	 *            the logger
@@ -909,15 +935,14 @@ public class TestLog
 	 */
 	public static final void finest(Logger logger, final String format, final Object... args)
 	{
-		if (logger.isLoggable(Level.FINEST))
-			logger.finest(getSupplier(format, args));
+		log(logger, Level.FINEST, format, args);
 	}
 
 	/**
-	 * Log the speed test result. If true the message will be written at the {@link Level#INFO}
+	 * Log the test result. If true the message will be written at the {@link Level#INFO}
 	 * level. If false the message will be written at the {@link Level#SEVERE} level with a failure prefix.
 	 * <p>
-	 * This is a helper method for speed tests that may not always pass.
+	 * This is a helper method for tests that may not always pass.
 	 *
 	 * @param logger
 	 *            the logger
@@ -926,7 +951,7 @@ public class TestLog
 	 * @param message
 	 *            the message
 	 */
-	public static void logSpeedTestResult(Logger logger, boolean result, String message)
+	public static void logTestResult(Logger logger, boolean result, String message)
 	{
 		Level l;
 		if (result)
@@ -934,16 +959,16 @@ public class TestLog
 		else
 		{
 			l = Level.SEVERE;
-			message = getCodePoint(3) + "Speed-Test Failure: " + message;
+			message = getCodePoint(3) + "Test Failure: " + message;
 		}
 		log(logger, l, message);
 	}
 
 	/**
-	 * Log the speed test result. If true the message will be written at the {@link Level#INFO}
+	 * Log the test result. If true the message will be written at the {@link Level#INFO}
 	 * level. If false the message will be written at the {@link Level#SEVERE} level with a failure prefix.
 	 * <p>
-	 * This is a helper method for speed tests that may not always pass.
+	 * This is a helper method for tests that may not always pass.
 	 *
 	 * @param logger
 	 *            the logger
@@ -954,7 +979,7 @@ public class TestLog
 	 * @param args
 	 *            the arguments
 	 */
-	public static void logSpeedTestResult(Logger logger, boolean result, String format, Object... args)
+	public static void logTestResult(Logger logger, boolean result, String format, Object... args)
 	{
 		Level l;
 		if (result)
@@ -962,7 +987,7 @@ public class TestLog
 		else
 		{
 			l = Level.SEVERE;
-			format = getCodePoint(3) + "Speed-Test Failure: " + format;
+			format = getCodePoint(3) + "Test Failure: " + format;
 		}
 		log(logger, l, format, args);
 	}
@@ -994,12 +1019,12 @@ public class TestLog
 			l = Level.INFO;
 			if (!logger.isLoggable(l))
 				return;
-			message = "%s (%s) => %s (%s) : %.2fx\n";
+			message = "%s (%s) => %s (%s) : %.2fx";
 		}
 		else
 		{
 			l = Level.SEVERE;
-			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx";
 		}
 		log(logger, l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
 	}
@@ -1033,21 +1058,21 @@ public class TestLog
 			l = Level.INFO;
 			if (!logger.isLoggable(l))
 				return;
-			message = "%s (%s) => %s (%s) : %.2fx\n";
+			message = "%s (%s) => %s (%s) : %.2fx";
 		}
 		else
 		{
 			l = Level.SEVERE;
-			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx";
 		}
 		log(logger, l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
 	}
 
 	/**
-	 * Log the speed test intermediate stage result. If true the message will be written at the {@link Level#INFO}
+	 * Log the test intermediate stage result. If true the message will be written at the {@link Level#INFO}
 	 * level. If false the message will be written at the {@link Level#WARNING} level with a failure prefix.
 	 * <p>
-	 * This is a helper method for speed tests that may not always pass.
+	 * This is a helper method for tests that may not always pass.
 	 *
 	 * @param logger
 	 *            the logger
@@ -1056,7 +1081,7 @@ public class TestLog
 	 * @param message
 	 *            the message
 	 */
-	public static void logSpeedTestStageResult(Logger logger, boolean result, String message)
+	public static void logTestStageResult(Logger logger, boolean result, String message)
 	{
 		Level l;
 		if (result)
@@ -1066,16 +1091,16 @@ public class TestLog
 			l = Level.WARNING;
 			if (!logger.isLoggable(l)) // Avoid getting the stack trace if not logging
 				return;
-			message = getCodePoint(3) + "Speed-Test Stage Failure: " + message;
+			message = getCodePoint(3) + "Test Stage Failure: " + message;
 		}
 		log(logger, l, message);
 	}
 
 	/**
-	 * Log the speed test intermediate stage result. If true the message will be written at the {@link Level#INFO}
+	 * Log the test intermediate stage result. If true the message will be written at the {@link Level#INFO}
 	 * level. If false the message will be written at the {@link Level#WARNING} level with a failure prefix.
 	 * <p>
-	 * This is a helper method for speed tests that may not always pass.
+	 * This is a helper method for tests that may not always pass.
 	 *
 	 * @param logger
 	 *            the logger
@@ -1086,7 +1111,7 @@ public class TestLog
 	 * @param args
 	 *            the arguments
 	 */
-	public static void logSpeedTestStageResult(Logger logger, boolean result, String format, Object... args)
+	public static void logTestStageResult(Logger logger, boolean result, String format, Object... args)
 	{
 		Level l;
 		if (result)
@@ -1096,7 +1121,7 @@ public class TestLog
 			l = Level.WARNING;
 			if (!logger.isLoggable(l)) // Avoid getting the stack trace if not logging
 				return;
-			format = getCodePoint(3) + "Speed-Test Stage Failure: " + format;
+			format = getCodePoint(3) + "Test Stage Failure: " + format;
 		}
 		log(logger, l, format, args);
 	}
@@ -1129,14 +1154,14 @@ public class TestLog
 			l = Level.INFO;
 			if (!logger.isLoggable(l))
 				return;
-			message = "%s (%s) => %s (%s) : %.2fx\n";
+			message = "%s (%s) => %s (%s) : %.2fx";
 		}
 		else
 		{
 			l = Level.WARNING;
 			if (!logger.isLoggable(l))
 				return;
-			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx";
 		}
 		log(logger, l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
 	}
@@ -1171,14 +1196,14 @@ public class TestLog
 			l = Level.INFO;
 			if (!logger.isLoggable(l))
 				return;
-			message = "%s (%s) => %s (%s) : %.2fx\n";
+			message = "%s (%s) => %s (%s) : %.2fx";
 		}
 		else
 		{
 			l = Level.WARNING;
 			if (!logger.isLoggable(l))
 				return;
-			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx\n";
+			message = getCodePoint(3) + "Speed-Test Failure: %s (%s) => %s (%s) : %.2fx";
 		}
 		log(logger, l, message, slow.getTask().getName(), t2, fast.getTask().getName(), t1, t2 / t1);
 	}

@@ -140,6 +140,7 @@ public class TestSettings
 	 *
 	 * @param level
 	 *            the new log level
+	 * @deprecated LogLevel is to be removed
 	 */
 	static void setLogLevel(LogLevel level)
 	{
@@ -211,6 +212,7 @@ public class TestSettings
 	 * @param level
 	 *            the level
 	 * @return true, if successful
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static boolean allow(LogLevel level)
 	{
@@ -237,6 +239,7 @@ public class TestSettings
 	 * @param complexity
 	 *            the complexity
 	 * @return true, if successful
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static boolean allow(LogLevel level, TestComplexity complexity)
 	{
@@ -255,7 +258,7 @@ public class TestSettings
 		public int[] getData(Long source)
 		{
 			// This has been copied from org.apache.commons.rng.simple.internal.SeedFactory
-			
+
 			// Generate a full length seed using another RNG
 			final SplitMix64 rng = new SplitMix64(source);
 			final int n = 624; // Size of the state array of "Well19937c".
@@ -267,7 +270,7 @@ public class TestSettings
 			return array;
 		}
 	}
-	
+
 	/** The seed generator. */
 	private static SeedGenerator SEED_GENERATOR = new SeedGenerator();
 

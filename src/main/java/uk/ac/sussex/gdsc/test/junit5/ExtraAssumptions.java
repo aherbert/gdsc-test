@@ -60,6 +60,7 @@ public class ExtraAssumptions
 	 *            the level
 	 * @throws TestAbortedException
 	 *             if the assumption is not {@code true}
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assume(LogLevel level) throws TestAbortedException
 	{
@@ -71,6 +72,7 @@ public class ExtraAssumptions
 	 *
 	 * @throws TestAbortedException
 	 *             if the assumption is not {@code true}
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assumeWarn() throws TestAbortedException
 	{
@@ -82,6 +84,7 @@ public class ExtraAssumptions
 	 *
 	 * @throws TestAbortedException
 	 *             if the assumption is not {@code true}
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assumeInfo() throws TestAbortedException
 	{
@@ -93,6 +96,7 @@ public class ExtraAssumptions
 	 *
 	 * @throws TestAbortedException
 	 *             if the assumption is not {@code true}
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assumeDebug() throws TestAbortedException
 	{
@@ -179,6 +183,7 @@ public class ExtraAssumptions
 	 *            the complexity
 	 * @throws TestAbortedException
 	 *             if the assumption is not {@code true}
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assume(LogLevel level, TestComplexity complexity) throws TestAbortedException
 	{

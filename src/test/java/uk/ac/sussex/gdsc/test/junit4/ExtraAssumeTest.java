@@ -23,12 +23,15 @@
  */
 package uk.ac.sussex.gdsc.test.junit4;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.junit.Assert;
 import org.junit.AssumptionViolatedException;
 import org.junit.Test;
 
-import uk.ac.sussex.gdsc.test.LogLevel;
 import uk.ac.sussex.gdsc.test.TestComplexity;
+import uk.ac.sussex.gdsc.test.TestLogTest;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 @SuppressWarnings("javadoc")
@@ -37,11 +40,13 @@ public class ExtraAssumeTest
 	@Test
 	public void canAssumeLogLevel()
 	{
-		for (final LogLevel l : LogLevel.values())
-			if (TestSettings.allow(l))
+		final Logger logger = Logger.getLogger(TestLogTest.class.getName());
+		final Level[] levels = { Level.SEVERE, Level.INFO, Level.FINEST };
+		for (final Level l : levels)
+			if (logger.isLoggable(l))
 				try
 				{
-					ExtraAssume.assume(l);
+					ExtraAssume.assume(logger, l);
 				}
 				catch (final AssumptionViolatedException e)
 				{
@@ -51,7 +56,7 @@ public class ExtraAssumeTest
 			{
 				try
 				{
-					ExtraAssume.assume(l);
+					ExtraAssume.assume(logger, l);
 				}
 				catch (final AssumptionViolatedException e)
 				{

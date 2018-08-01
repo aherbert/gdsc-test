@@ -38,12 +38,14 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  * Adds additional helper assumptions to those provided by {@link org.junit.Assume}.
  * <p>
  * Tests can be written to respond to the run-time configured {@link LogLevel} and {@link TestComplexity}, e.g.
+ * 
  * <pre>
  * &#64;Test
- * public void myTest() {
- *     ExtraAssume.assume(LogLevel.INFO);
- *     ExtraAssume.assume(TestComplexity.MEDIUM);
- *     // ... do the test
+ * public void myTest()
+ * {
+ * 	ExtraAssume.assume(LogLevel.INFO);
+ * 	ExtraAssume.assume(TestComplexity.MEDIUM);
+ * 	// ... do the test
  * }
  * </pre>
  */
@@ -59,6 +61,7 @@ public class ExtraAssume
 	 *            the level
 	 * @throws AssumptionViolatedException
 	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assume(LogLevel level) throws AssumptionViolatedException
 	{
@@ -70,6 +73,7 @@ public class ExtraAssume
 	 *
 	 * @throws AssumptionViolatedException
 	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assumeWarn() throws AssumptionViolatedException
 	{
@@ -81,6 +85,7 @@ public class ExtraAssume
 	 *
 	 * @throws AssumptionViolatedException
 	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assumeInfo() throws AssumptionViolatedException
 	{
@@ -92,6 +97,7 @@ public class ExtraAssume
 	 *
 	 * @throws AssumptionViolatedException
 	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assumeDebug() throws AssumptionViolatedException
 	{
@@ -178,6 +184,7 @@ public class ExtraAssume
 	 *            the complexity
 	 * @throws AssumptionViolatedException
 	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assume(LogLevel level, TestComplexity complexity) throws AssumptionViolatedException
 	{
@@ -194,6 +201,7 @@ public class ExtraAssume
 	 *
 	 * @throws AssumptionViolatedException
 	 *             Thrown if the assumption is invalid to stop the test and ignore it
+	 * @deprecated LogLevel is to be removed
 	 */
 	public static void assumeSpeedTest() throws AssumptionViolatedException
 	{

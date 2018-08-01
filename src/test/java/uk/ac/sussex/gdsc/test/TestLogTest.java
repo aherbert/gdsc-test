@@ -24,32 +24,54 @@
 package uk.ac.sussex.gdsc.test;
 
 import java.util.IllegalFormatConversionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
 public class TestLogTest
 {
+	private static Logger logger;
+
+	@BeforeAll
+	public static void beforeAll()
+	{
+		logger = Logger.getLogger(TestLogTest.class.getName());
+	}
+
+	@AfterAll
+	public static void afterAll()
+	{
+		logger = null;
+	}
+
 	@Test
 	public void canLogVarArgs()
 	{
-		TestLog.log(LogLevel.WARN, "log varargs = %d %f\n", 1, 2.3);
+		TestLog.log(logger, Level.WARNING, "log varargs = %d %f", 1, 2.3);
 	}
 
 	@Test
 	public void canLogObjectArray()
 	{
 		final Object[] args = new Object[] { 1, 2.3 };
-		TestLog.log(LogLevel.WARN, "log Object[] = %d %f\n", args);
+		TestLog.log(logger, Level.WARNING, "log Object[] = %d %f", args);
 	}
 
-	@Test(expected = IllegalFormatConversionException.class)
+	@Test
 	public void cannotLogObjectArrayAndVarargs()
 	{
+		// Use severe to always run
+		Assumptions.assumeTrue(logger.isLoggable(Level.SEVERE));
 		final Object[] args = new Object[] { 1, 2.3 };
-		// Use silent to always run
-		TestLog.log(LogLevel.SILENT, "%d %f %d\n", args, 3);
+		Assertions.assertThrows(IllegalFormatConversionException.class, () -> {
+			TestLog.log(logger, Level.SEVERE, "%d %f %d", args, 3);
+		});
 	}
 
 	@Test
@@ -57,36 +79,36 @@ public class TestLogTest
 	{
 		final StackTraceElement e = new Throwable().getStackTrace()[0];
 		final StackTraceElement o = TestLog.getStaceTraceElement();
-		Assert.assertNotNull(e);
-		Assert.assertNotNull(o);
-		Assert.assertEquals(e.getClassName(), o.getClassName());
-		Assert.assertEquals(e.getMethodName(), o.getMethodName());
-		Assert.assertEquals(e.getLineNumber() + 1, o.getLineNumber());
-		TestLog.log(LogLevel.INFO, "%s:%s:%d\n", o.getClassName(), o.getMethodName(), o.getLineNumber());
+		Assertions.assertNotNull(e);
+		Assertions.assertNotNull(o);
+		Assertions.assertEquals(e.getClassName(), o.getClassName());
+		Assertions.assertEquals(e.getMethodName(), o.getMethodName());
+		Assertions.assertEquals(e.getLineNumber() + 1, o.getLineNumber());
+		TestLog.log(logger, Level.INFO, "%s:%s:%d", o.getClassName(), o.getMethodName(), o.getLineNumber());
 	}
 
 	@Test
 	public void canLogFailure()
 	{
-		TestLog.logFailure();
-		TestLog.logFailure("This is a test failure message");
-		TestLog.logFailure((Throwable) null);
-		TestLog.logFailure(new Throwable("Throwable message"));
-		TestLog.logFailure(new Throwable("Throwable message"), "This is a test failure message with throwable");
-		TestLog.logFailure((Throwable) null, "This is a test failure message with null throwable");
-		TestLog.logFailure("This is a formatted test failure message: %d\n", 1);
-		TestLog.logFailure(new Throwable("Throwable message"),
-				"This is a formatted test failure message with throwable: %d\n", 2);
-		TestLog.logFailure((Throwable) null, "This is a formatted test failure message with null throwable: %d\n", 3);
+		TestLog.logFailure(logger);
+		TestLog.logFailure(logger,"This is a test failure message");
+		TestLog.logFailure(logger,(Throwable) null);
+		TestLog.logFailure(logger,new Throwable("Throwable message"));
+		TestLog.logFailure(logger,new Throwable("Throwable message"), "This is a test failure message with throwable");
+		TestLog.logFailure(logger,(Throwable) null, "This is a test failure message with null throwable");
+		TestLog.logFailure(logger,"This is a formatted test failure message: %d", 1);
+		TestLog.logFailure(logger,new Throwable("Throwable message"),
+				"This is a formatted test failure message with throwable: %d", 2);
+		TestLog.logFailure(logger,(Throwable) null, "This is a formatted test failure message with null throwable: %d", 3);
 	}
 
 	@Test
-	public void canLogSpeedTestFailure()
+	public void canLogTestResult()
 	{
-		TestLog.logSpeedTestResult(false, "This is a speed test failure message");
-		TestLog.logSpeedTestResult(false, "This is a speed test failure formatted message: %d\n", 1);
-		TestLog.logSpeedTestStageResult(false, "This is a speed test stage failure message");
-		TestLog.logSpeedTestStageResult(false, "This is a speed test stage failure formatted message: %d\n", 1);
+		TestLog.logTestResult(logger,false, "This is a test failure message");
+		TestLog.logTestResult(logger,false, "This is a test failure formatted message: %d", 1);
+		TestLog.logTestStageResult(logger,false, "This is a test stage failure message");
+		TestLog.logTestStageResult(logger,false, "This is a test stage failure formatted message: %d", 1);
 	}
 
 	@Test
@@ -124,9 +146,9 @@ public class TestLogTest
 		final TimingResult slowFastR = new TimingResult(fast, new long[] { 10000 });
 		//@formatter:on
 
-		TestLog.logSpeedTestResult(slowR, fastR);
-		TestLog.logSpeedTestResult(slowR, slowFastR);
-		TestLog.logSpeedTestStageResult(slowR, fastR);
-		TestLog.logSpeedTestStageResult(slowR, slowFastR);
+		TestLog.logSpeedTestResult(logger,slowR, fastR);
+		TestLog.logSpeedTestResult(logger,slowR, slowFastR);
+		TestLog.logSpeedTestStageResult(logger,slowR, fastR);
+		TestLog.logSpeedTestStageResult(logger,slowR, slowFastR);
 	}
 }
