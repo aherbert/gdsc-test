@@ -831,6 +831,24 @@ public class TestLog
 	}
 
 	/**
+	 * Log the value of an object to the logger.
+	 * <p>
+	 * First calls {@code String.valueOf(Object)} to get the string value.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param level
+	 *            the level
+	 * @param object
+	 *            the object
+	 */
+	public static final void log(Logger logger, Level level, final Object object)
+	{
+		if (logger.isLoggable(level))
+			logger.log(level, String.valueOf(object));
+	}
+	
+	/**
 	 * Log a message to the logger at the {@link Level#SEVERE} level.
 	 * <p>
 	 * Note: This is a special function using varargs.<br>

@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;
-import org.junit.jupiter.api.Assumptions;
 
 import uk.ac.sussex.gdsc.test.LogLevel;
 import uk.ac.sussex.gdsc.test.TestComplexity;
@@ -241,7 +240,7 @@ public class ExtraAssume
 	 */
 	public static void assume(Logger logger, Level level)
 	{
-		Assumptions.assumeTrue(logger.isLoggable(level));
+		Assume.assumeTrue(logger.isLoggable(level));
 	}
 
 	/**

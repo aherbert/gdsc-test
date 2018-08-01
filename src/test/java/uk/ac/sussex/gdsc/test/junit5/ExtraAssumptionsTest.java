@@ -42,7 +42,7 @@ public class ExtraAssumptionsTest
 	@Test
 	public void canAssumeLevel()
 	{
-		final Logger logger = Logger.getLogger(TestLogTest.class.getName());
+		final Logger logger = Logger.getLogger(ExtraAssumptionsTest.class.getName());
 		final Level[] levels = { Level.SEVERE, Level.INFO, Level.FINEST };
 		for (final Level l : levels)
 			if (logger.isLoggable(l))
