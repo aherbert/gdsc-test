@@ -23,9 +23,13 @@
  */
 package uk.ac.sussex.gdsc.test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class to run timing tasks.
@@ -206,11 +210,72 @@ public class TimingService
 	 */
 	public void report(PrintStream out, int n)
 	{
+		if (n < 1 || results.isEmpty())
+			return;
+		final int to = results.size();
+		int from = to - n;
+		if (from <= 0)
+		{
+			// Report all results
+			report(out);
+			return;
+		}
+		final TimingResult[] r = new TimingResult[to - from];
+		for (int i = 0, j = from; j < to; i++, j++)
+			r[i] = results.get(i);
+		report(out, r);
+	}
+
+	/**
+	 * Report the timing results to the logger at the {@link Level#INFO} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 */
+	public void report(Logger logger)
+	{
+		if (logger.isLoggable(Level.INFO))
+		{
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
+			{
+				report(ps);
+				ps.close();
+				logger.log(Level.INFO, new String(baos.toByteArray(), StandardCharsets.UTF_8));
+			}
+			catch (UnsupportedEncodingException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Report the last n timing results to the logger at the {@link Level#INFO} level.
+	 *
+	 * @param logger
+	 *            the logger
+	 * @param n
+	 *            the n
+	 */
+	public void report(Logger logger, int n)
+	{
 		if (n < 1)
 			return;
-		final TimingResult[] r = new TimingResult[results.size()];
-		results.toArray(r);
-		report(out, Arrays.copyOfRange(r, Math.max(0, r.length - n), r.length));
+		if (logger.isLoggable(Level.INFO))
+		{
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
+			{
+				report(ps, n);
+				ps.close();
+				logger.log(Level.INFO, new String(baos.toByteArray(), StandardCharsets.UTF_8));
+			}
+			catch (UnsupportedEncodingException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
