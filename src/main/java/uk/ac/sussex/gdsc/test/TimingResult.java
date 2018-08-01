@@ -39,10 +39,26 @@ public class TimingResult
 	 * @param times
 	 *            the times
 	 */
-	public TimingResult(TimingTask task, long[] times)
+	public TimingResult(TimingTask task, long... times)
 	{
 		this.task = task;
-		this.times = (times == null) ? new long[0] : times;
+		this.times = times;
+	}
+
+	/**
+	 * Instantiates a new timing result.
+	 * <p>
+	 * The result will be created with a dummy implementation of the {@link TimingTask} interface.
+	 *
+	 * @param name
+	 *            the name
+	 * @param times
+	 *            the times
+	 */
+	public TimingResult(String name, long... times)
+	{
+		this.task = new NamedTimingTask(name);
+		this.times = times;
 	}
 
 	/**
