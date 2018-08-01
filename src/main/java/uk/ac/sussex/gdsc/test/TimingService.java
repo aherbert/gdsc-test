@@ -239,6 +239,7 @@ public class TimingService
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
 			{
+				ps.println();
 				report(ps);
 				ps.close();
 				logger.log(Level.INFO, new String(baos.toByteArray(), StandardCharsets.UTF_8));
@@ -267,6 +268,7 @@ public class TimingService
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
 			{
+				ps.println();
 				report(ps, n);
 				ps.close();
 				logger.log(Level.INFO, new String(baos.toByteArray(), StandardCharsets.UTF_8));
