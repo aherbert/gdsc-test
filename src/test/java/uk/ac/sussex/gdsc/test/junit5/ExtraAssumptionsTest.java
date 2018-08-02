@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.TestAbortedException;
 
 import uk.ac.sussex.gdsc.test.TestComplexity;
-import uk.ac.sussex.gdsc.test.TestLogTest;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 @SuppressWarnings("javadoc")

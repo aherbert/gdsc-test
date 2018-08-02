@@ -29,20 +29,20 @@ import java.util.logging.Logger;
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;
 
-import uk.ac.sussex.gdsc.test.LogLevel;
 import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 /**
  * Adds additional helper assumptions to those provided by {@link org.junit.Assume}.
  * <p>
- * Tests can be written to respond to the run-time configured {@link LogLevel} and {@link TestComplexity}, e.g.
+ * Tests can be written to respond to the run-time configured {@link Level} and {@link TestComplexity}, e.g.
  * 
  * <pre>
  * &#64;Test
  * public void myTest()
  * {
- * 	ExtraAssume.assume(LogLevel.INFO);
+ * 	Logger logger = Logger.getLogger(getClass().getName());
+ * 	ExtraAssume.assume(logger, Level.INFO);
  * 	ExtraAssume.assume(TestComplexity.MEDIUM);
  * 	// ... do the test
  * }
@@ -50,59 +50,6 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  */
 public class ExtraAssume
 {
-	/**
-	 * Assume logging is allowed at the given level.
-	 * <p>
-	 * Use this at the start of a test that only produces logging output (no assertions) to skip
-	 * the test as logging will be ignored.
-	 *
-	 * @param level
-	 *            the level
-	 * @throws AssumptionViolatedException
-	 *             Thrown if the assumption is invalid to stop the test and ignore it
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assume(LogLevel level) throws AssumptionViolatedException
-	{
-		Assume.assumeTrue(TestSettings.allow(level));
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#WARN} level.
-	 *
-	 * @throws AssumptionViolatedException
-	 *             Thrown if the assumption is invalid to stop the test and ignore it
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assumeWarn() throws AssumptionViolatedException
-	{
-		assume(LogLevel.WARN);
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#INFO} level.
-	 *
-	 * @throws AssumptionViolatedException
-	 *             Thrown if the assumption is invalid to stop the test and ignore it
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assumeInfo() throws AssumptionViolatedException
-	{
-		assume(LogLevel.INFO);
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#DEBUG} level.
-	 *
-	 * @throws AssumptionViolatedException
-	 *             Thrown if the assumption is invalid to stop the test and ignore it
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assumeDebug() throws AssumptionViolatedException
-	{
-		assume(LogLevel.DEBUG);
-	}
-
 	/**
 	 * Assume testing is allowed at the given complexity.
 	 * <p>
@@ -172,22 +119,6 @@ public class ExtraAssume
 	public static void assumeMaximumComplexity() throws AssumptionViolatedException
 	{
 		assume(TestComplexity.MAXIMUM);
-	}
-
-	/**
-	 * Assume logging and testing is allowed at the given level and complexity.
-	 *
-	 * @param level
-	 *            the level
-	 * @param complexity
-	 *            the complexity
-	 * @throws AssumptionViolatedException
-	 *             Thrown if the assumption is invalid to stop the test and ignore it
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assume(LogLevel level, TestComplexity complexity) throws AssumptionViolatedException
-	{
-		Assume.assumeTrue(TestSettings.allow(level, complexity));
 	}
 
 	/**

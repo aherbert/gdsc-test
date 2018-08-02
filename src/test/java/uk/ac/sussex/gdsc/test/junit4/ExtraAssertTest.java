@@ -23,10 +23,10 @@
  */
 package uk.ac.sussex.gdsc.test.junit4;
 
+import java.util.logging.Logger;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import uk.ac.sussex.gdsc.test.TestLog;
 
 @SuppressWarnings("javadoc")
 public class ExtraAssertTest
@@ -40,8 +40,9 @@ public class ExtraAssertTest
 		}
 		catch (final AssertionError e)
 		{
+			Logger logger = Logger.getLogger(ExtraAssertTest.class.getName());
 			final String msg = e.getMessage();
-			TestLog.info(msg);
+			logger.info(msg);
 			Assert.assertTrue("Unexpected message", msg.startsWith("[2] == 3.50"));
 		}
 	}

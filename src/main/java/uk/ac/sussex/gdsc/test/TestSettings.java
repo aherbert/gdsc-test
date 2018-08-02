@@ -45,14 +45,6 @@ import org.apache.commons.rng.simple.RandomSource;
 public class TestSettings
 {
 	/**
-	 * The runtime property used for the log level, e.g.
-	 *
-	 * <pre>
-	 * -Dgdsc.test.logging=1
-	 * </pre>
-	 */
-	public static final String PROPERTY_LOG_LEVEL = "gdsc.test.logging";
-	/**
 	 * The runtime property used for the test complexity level, e.g.
 	 *
 	 * <pre>
@@ -78,9 +70,6 @@ public class TestSettings
 	 */
 	public static final String PROPERTY_RANDOM_REPEATS = "gdsc.test.repeats";
 
-	/** The allowed log level. */
-	private static int logLevel;
-
 	/** The allowed test complexity. */
 	private static int testComplexity;
 
@@ -92,19 +81,10 @@ public class TestSettings
 
 	static
 	{
-		logLevel = LogLevel.SILENT.getValue();
 		testComplexity = TestComplexity.NONE.getValue();
 		seed = 30051977;
 		repeats = 1;
 
-		try
-		{
-			logLevel = Integer.parseInt(System.getProperty(PROPERTY_LOG_LEVEL));
-		}
-		catch (final Exception e)
-		{
-			// Do nothing
-		}
 		try
 		{
 			testComplexity = Integer.parseInt(System.getProperty(PROPERTY_TEST_COMPLEXITY));
@@ -140,19 +120,6 @@ public class TestSettings
 	}
 
 	/**
-	 * Sets the log level. Package scope for testing.
-	 *
-	 * @param level
-	 *            the new log level
-	 * @deprecated LogLevel is to be removed
-	 */
-	@Deprecated
-	static void setLogLevel(LogLevel level)
-	{
-		logLevel = level.getValue();
-	}
-
-	/**
 	 * Sets the text complexity. Package scope for testing.
 	 *
 	 * @param complexity
@@ -161,18 +128,6 @@ public class TestSettings
 	static void setTextComplexity(TestComplexity complexity)
 	{
 		testComplexity = complexity.getValue();
-	}
-
-	/**
-	 * Gets the log level.
-	 * <p>
-	 * This is set using the system property {@code uk.ac.sussex.gdsc.test.logging}.
-	 *
-	 * @return the log level
-	 */
-	public static int getLogLevel()
-	{
-		return logLevel;
 	}
 
 	/**
@@ -212,20 +167,6 @@ public class TestSettings
 	}
 
 	/**
-	 * Check if logging is allowed at the given level.
-	 *
-	 * @param level
-	 *            the level
-	 * @return true, if successful
-	 * @deprecated LogLevel is to be removed
-	 */
-	@Deprecated
-	public static boolean allow(LogLevel level)
-	{
-		return level.getValue() <= logLevel;
-	}
-
-	/**
 	 * Check if testing is allowed at the given complexity.
 	 *
 	 * @param complexity
@@ -235,22 +176,6 @@ public class TestSettings
 	public static boolean allow(TestComplexity complexity)
 	{
 		return complexity.getValue() <= testComplexity;
-	}
-
-	/**
-	 * Check if logging and testing is allowed at the given level and complexity.
-	 *
-	 * @param level
-	 *            the level
-	 * @param complexity
-	 *            the complexity
-	 * @return true, if successful
-	 * @deprecated LogLevel is to be removed
-	 */
-	@Deprecated
-	public static boolean allow(LogLevel level, TestComplexity complexity)
-	{
-		return allow(level) && allow(complexity);
 	}
 
 	/** Store the seeds for the UniformRandomProvider. */

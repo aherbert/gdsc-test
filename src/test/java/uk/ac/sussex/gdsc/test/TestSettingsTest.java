@@ -52,7 +52,6 @@ public class TestSettingsTest
 	@Test
 	public void canPrintSettings()
 	{
-		logger.info(() -> String.format("TestSettings Log Level = %d", TestSettings.getLogLevel()));
 		logger.info(() -> String.format("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity()));
 		logger.info(() -> String.format("TestSettings Seed = %d\n", TestSettings.getSeed()));
 	}

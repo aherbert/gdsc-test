@@ -31,7 +31,6 @@ import org.junit.AssumptionViolatedException;
 import org.junit.Test;
 
 import uk.ac.sussex.gdsc.test.TestComplexity;
-import uk.ac.sussex.gdsc.test.TestLogTest;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 @SuppressWarnings("javadoc")

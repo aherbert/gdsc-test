@@ -51,26 +51,26 @@ public class TestLogTest
 	}
 
 	@Test
-	public void canLogVarArgs()
+	public void canSupplyVarArgs()
 	{
-		TestLog.log(logger, Level.WARNING, "log varargs = %d %f", 1, 2.3);
+		TestLog.getSupplier("log varargs = %d %f", 1, 2.3).get();
 	}
 
 	@Test
-	public void canLogObjectArray()
+	public void canSupplyObjectArray()
 	{
 		final Object[] args = new Object[] { 1, 2.3 };
-		TestLog.log(logger, Level.WARNING, "log Object[] = %d %f", args);
+		TestLog.getSupplier("log Object[] = %d %f", args).get();
 	}
 
 	@Test
-	public void cannotLogObjectArrayAndVarargs()
+	public void cannotSupplyObjectArrayAndVarargs()
 	{
 		// Use severe to always run
 		Assumptions.assumeTrue(logger.isLoggable(Level.SEVERE));
 		final Object[] args = new Object[] { 1, 2.3 };
 		Assertions.assertThrows(IllegalFormatConversionException.class, () -> {
-			TestLog.log(logger, Level.SEVERE, "%d %f %d", args, 3);
+			TestLog.getSupplier("%d %f %d", args, 3).get();
 		});
 	}
 
@@ -84,7 +84,7 @@ public class TestLogTest
 		Assertions.assertEquals(e.getClassName(), o.getClassName());
 		Assertions.assertEquals(e.getMethodName(), o.getMethodName());
 		Assertions.assertEquals(e.getLineNumber() + 1, o.getLineNumber());
-		TestLog.log(logger, Level.INFO, "%s:%s:%d", o.getClassName(), o.getMethodName(), o.getLineNumber());
+		logger.info(() -> String.format("%s:%s:%d", o.getClassName(), o.getMethodName(), o.getLineNumber()));
 	}
 
 	@Test
@@ -99,8 +99,7 @@ public class TestLogTest
 		TestLog.logFailure(logger, "This is a formatted failure message: %d", 1);
 		TestLog.logFailure(logger, new Throwable("Throwable message"),
 				"This is a formatted failure message with throwable: %d", 2);
-		TestLog.logFailure(logger, (Throwable) null, "This is a formatted failure message with null throwable: %d",
-				3);
+		TestLog.logFailure(logger, (Throwable) null, "This is a formatted failure message with null throwable: %d", 3);
 	}
 
 	@Test

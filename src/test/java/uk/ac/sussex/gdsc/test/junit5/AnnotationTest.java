@@ -39,9 +39,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import uk.ac.sussex.gdsc.test.TestLog;
-import uk.ac.sussex.gdsc.test.TestLogTest;
-
 @SuppressWarnings("javadoc")
 public class AnnotationTest
 {
@@ -89,8 +86,8 @@ public class AnnotationTest
 	public void canAnnotateRepeatedTest(TestInfo info, RepetitionInfo repInfo)
 	{
 		Assertions.assertEquals(3, repInfo.getTotalRepetitions());
-		TestLog.info(logger, "%s (%d/%d)", info.getTestMethod().get().getName(), repInfo.getCurrentRepetition(),
-				repInfo.getTotalRepetitions());
+		logger.info(() -> String.format("%s (%d/%d)", info.getTestMethod().get().getName(),
+				repInfo.getCurrentRepetition(), repInfo.getTotalRepetitions()));
 	}
 
 	@Test
@@ -110,7 +107,7 @@ public class AnnotationTest
 
 	private static void testToBeRepeated(TestInfo info, int n)
 	{
-		TestLog.info(logger, "%s (%d)", info.getTestMethod().get().getName(), n);
+		logger.info(() -> String.format("%s (%d)", info.getTestMethod().get().getName(), n));
 	}
 
 	// This is just an example
@@ -118,7 +115,7 @@ public class AnnotationTest
 	@MethodSource(value = "createSeeds")
 	public void canDynamicallyProvideSeeds(int seed)
 	{
-		TestLog.info(logger, "Dynamic seed = %d\n", seed);
+		logger.info(() -> String.format("Dynamic seed = %d\n", seed));
 	}
 
 	@SuppressWarnings("unused")
@@ -131,14 +128,14 @@ public class AnnotationTest
 	@ArgumentsSource(RandomSeedSource.class)
 	public void canDynamicallyProvideSeedsFromRandomSeedSource(RandomSeed seed, TestInfo info)
 	{
-		TestLog.info(logger, "%s seed = %d (%d/%d)", info.getTestMethod().get().getName(), seed.getSeed(),
-				seed.getCurrentRepetition(), seed.getTotalRepetitions());
+		logger.info(() -> String.format("%s seed = %d (%d/%d)", info.getTestMethod().get().getName(), seed.getSeed(),
+				seed.getCurrentRepetition(), seed.getTotalRepetitions()));
 	}
 
 	@SeededTest
 	public void canAnnotateSeededTest(RandomSeed seed, TestInfo info)
 	{
-		TestLog.info(logger, "%s seed = %d (%d/%d)", info.getTestMethod().get().getName(), seed.getSeed(),
-				seed.getCurrentRepetition(), seed.getTotalRepetitions());
+		logger.info(() -> String.format("%s seed = %d (%d/%d)", info.getTestMethod().get().getName(), seed.getSeed(),
+				seed.getCurrentRepetition(), seed.getTotalRepetitions()));
 	}
 }

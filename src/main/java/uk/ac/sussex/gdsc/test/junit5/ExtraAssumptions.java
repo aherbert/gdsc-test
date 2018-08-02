@@ -29,80 +29,27 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Assumptions;
 import org.opentest4j.TestAbortedException;
 
-import uk.ac.sussex.gdsc.test.LogLevel;
 import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 /**
  * Adds additional helper assumptions to those provided by {@link org.junit.jupiter.api.Assumptions}.
  * <p>
- * Tests can be written to respond to the run-time configured {@link LogLevel} and {@link TestComplexity}, e.g.
+ * Tests can be written to respond to the run-time configured {@link Level} and {@link TestComplexity}, e.g.
  * 
  * <pre>
  * &#64;Test
  * public void myTest()
  * {
- * 	ExtraAssumptions.assume(LogLevel.INFO);
- * 	ExtraAssumptions.assume(TestComplexity.MEDIUM);
- * 	// ... do the test
+ *   Logger logger = Logger.getLogger(getClass().getName());
+ *   ExtraAssumptions.assume(logger, Level.INFO);
+ *   ExtraAssumptions.assume(TestComplexity.MEDIUM);
+ *   // ... do the test
  * }
  * </pre>
  */
 public class ExtraAssumptions
 {
-	/**
-	 * Assume logging is allowed at the given level.
-	 * <p>
-	 * Use this at the start of a test that only produces logging output (no assertions) to skip
-	 * the test as logging will be ignored.
-	 *
-	 * @param level
-	 *            the level
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assume(LogLevel level) throws TestAbortedException
-	{
-		Assumptions.assumeTrue(TestSettings.allow(level));
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#WARN} level.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assumeWarn() throws TestAbortedException
-	{
-		assume(LogLevel.WARN);
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#INFO} level.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assumeInfo() throws TestAbortedException
-	{
-		assume(LogLevel.INFO);
-	}
-
-	/**
-	 * Assume testing is logging at the {@link LogLevel#DEBUG} level.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assumeDebug() throws TestAbortedException
-	{
-		assume(LogLevel.DEBUG);
-	}
-
 	/**
 	 * Assume testing is allowed at the given complexity.
 	 * <p>
@@ -172,22 +119,6 @@ public class ExtraAssumptions
 	public static void assumeMaximumComplexity() throws TestAbortedException
 	{
 		assume(TestComplexity.MAXIMUM);
-	}
-
-	/**
-	 * Assume logging and testing is allowed at the given level and complexity.
-	 *
-	 * @param level
-	 *            the level
-	 * @param complexity
-	 *            the complexity
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 * @deprecated LogLevel is to be removed
-	 */
-	public static void assume(LogLevel level, TestComplexity complexity) throws TestAbortedException
-	{
-		Assumptions.assumeTrue(TestSettings.allow(level, complexity));
 	}
 
 	/**
