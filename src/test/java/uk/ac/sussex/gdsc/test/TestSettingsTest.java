@@ -23,20 +23,38 @@
  */
 package uk.ac.sussex.gdsc.test;
 
+import java.util.logging.Logger;
+
 import org.apache.commons.rng.UniformRandomProvider;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 @SuppressWarnings("javadoc")
 public class TestSettingsTest
 {
+	private static Logger logger;
+
+	@BeforeAll
+	public static void beforeAll()
+	{
+		logger = Logger.getLogger(TestSettingsTest.class.getName());
+	}
+
+	@AfterAll
+	public static void afterAll()
+	{
+		logger = null;
+	}
+
 	@Test
 	public void canPrintSettings()
 	{
-		System.out.printf("TestSettings Log Level = %d\n", TestSettings.getLogLevel());
-		System.out.printf("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity());
-		System.out.printf("TestSettings Seed = %d\n", TestSettings.getSeed());
+		logger.info(() -> String.format("TestSettings Log Level = %d", TestSettings.getLogLevel()));
+		logger.info(() -> String.format("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity()));
+		logger.info(() -> String.format("TestSettings Seed = %d\n", TestSettings.getSeed()));
 	}
 
 	@Test

@@ -25,7 +25,7 @@ package uk.ac.sussex.gdsc.test;
 
 /**
  * The Log Level. Lower levels result is less verbose output.
- * 
+ *
  * @deprecated Replaced using java.util.logging
  */
 @Deprecated

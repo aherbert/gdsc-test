@@ -43,10 +43,13 @@ public class TestLog
 	 *            the arguments
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void log(LogLevel level, String format, Object... args)
 	{
 		if (TestSettings.allow(level))
+		{
 			System.out.printf(format, args);
+		}
 	}
 
 	/**
@@ -58,10 +61,13 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void log(LogLevel level, MessageProvider msg)
 	{
 		if (TestSettings.allow(level))
+		{
 			System.out.print(msg.getMessage());
+		}
 	}
 
 	/**
@@ -73,10 +79,13 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void log(LogLevel level, Message msg)
 	{
 		if (TestSettings.allow(level))
+		{
 			System.out.printf(msg.format, msg.getArgs());
+		}
 	}
 
 	/**
@@ -88,10 +97,13 @@ public class TestLog
 	 *            the object
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void log(LogLevel level, Object object)
 	{
 		if (TestSettings.allow(level))
+		{
 			System.out.print(object);
+		}
 	}
 
 	/**
@@ -103,10 +115,13 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logln(LogLevel level, String message)
 	{
 		if (TestSettings.allow(level))
+		{
 			System.out.println(message);
+		}
 	}
 
 	/**
@@ -118,10 +133,13 @@ public class TestLog
 	 *            the object
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logln(LogLevel level, Object object)
 	{
 		if (TestSettings.allow(level))
+		{
 			System.out.println(object);
+		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -135,6 +153,7 @@ public class TestLog
 	 *            the arguments
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void debug(String format, Object... args)
 	{
 		log(LogLevel.DEBUG, format, args);
@@ -147,6 +166,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void debug(MessageProvider msg)
 	{
 		log(LogLevel.DEBUG, msg);
@@ -159,6 +179,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void debug(Message msg)
 	{
 		log(LogLevel.DEBUG, msg);
@@ -171,6 +192,7 @@ public class TestLog
 	 *            the object
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void debug(Object object)
 	{
 		log(LogLevel.DEBUG, object);
@@ -183,6 +205,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void debugln(String message)
 	{
 		logln(LogLevel.DEBUG, message);
@@ -195,6 +218,7 @@ public class TestLog
 	 *            the object
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void debugln(Object object)
 	{
 		logln(LogLevel.DEBUG, object);
@@ -211,6 +235,7 @@ public class TestLog
 	 *            the arguments
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void info(String format, Object... args)
 	{
 		log(LogLevel.INFO, format, args);
@@ -223,6 +248,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void info(MessageProvider msg)
 	{
 		log(LogLevel.INFO, msg);
@@ -235,6 +261,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void info(Message msg)
 	{
 		log(LogLevel.INFO, msg);
@@ -247,6 +274,7 @@ public class TestLog
 	 *            the object
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void info(Object object)
 	{
 		log(LogLevel.INFO, object);
@@ -259,6 +287,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void infoln(String message)
 	{
 		logln(LogLevel.INFO, message);
@@ -271,6 +300,7 @@ public class TestLog
 	 *            the object
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void infoln(Object object)
 	{
 		logln(LogLevel.INFO, object);
@@ -287,6 +317,7 @@ public class TestLog
 	 *            the arguments
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void warn(String format, Object... args)
 	{
 		log(LogLevel.WARN, format, args);
@@ -299,6 +330,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void warn(MessageProvider msg)
 	{
 		log(LogLevel.WARN, msg);
@@ -311,6 +343,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void warn(Message msg)
 	{
 		log(LogLevel.WARN, msg);
@@ -323,6 +356,7 @@ public class TestLog
 	 *            the object
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void warn(Object object)
 	{
 		log(LogLevel.WARN, object);
@@ -335,6 +369,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void warnln(String message)
 	{
 		logln(LogLevel.WARN, message);
@@ -347,6 +382,7 @@ public class TestLog
 	 *            the object
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void warnln(Object object)
 	{
 		logln(LogLevel.WARN, object);
@@ -367,11 +403,14 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logTestResult(boolean result, String message)
 	{
 		LogLevel l;
 		if (result)
+		{
 			l = LogLevel.INFO;
+		}
 		else
 		{
 			l = LogLevel.SILENT;
@@ -394,11 +433,14 @@ public class TestLog
 	 *            the arguments
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logTestResult(boolean result, String format, Object... args)
 	{
 		LogLevel l;
 		if (result)
+		{
 			l = LogLevel.INFO;
+		}
 		else
 		{
 			l = LogLevel.SILENT;
@@ -422,6 +464,7 @@ public class TestLog
 	 *            the fast task
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logSpeedTestResult(TimingResult slow, TimingResult fast)
 	{
 		final double t1 = fast.getMean();
@@ -460,6 +503,7 @@ public class TestLog
 	 *            Set to true to use the min execution time (the default is mean)
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logSpeedTestResult(TimingResult slow, TimingResult fast, boolean useMin)
 	{
 		final double t1 = (useMin) ? fast.getMin() : fast.getMean();
@@ -493,11 +537,14 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logTestStageResult(boolean result, String message)
 	{
 		LogLevel l;
 		if (result)
+		{
 			l = LogLevel.INFO;
+		}
 		else
 		{
 			l = LogLevel.WARN;
@@ -522,11 +569,14 @@ public class TestLog
 	 *            the arguments
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logTestStageResult(boolean result, String format, Object... args)
 	{
 		LogLevel l;
 		if (result)
+		{
 			l = LogLevel.INFO;
+		}
 		else
 		{
 			l = LogLevel.WARN;
@@ -554,6 +604,7 @@ public class TestLog
 	 *            the fast task
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logSpeedTestStageResult(TimingResult slow, TimingResult fast)
 	{
 		final double t1 = fast.getMean();
@@ -596,6 +647,7 @@ public class TestLog
 	 *            Set to true to use the min execution time (the default is mean)
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logSpeedTestStageResult(TimingResult slow, TimingResult fast, boolean useMin)
 	{
 		final double t1 = (useMin) ? fast.getMin() : fast.getMean();
@@ -625,6 +677,7 @@ public class TestLog
 	 * This is a helper method for tests that may not strictly pass but do not warrant an AssertError.
 	 * * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logFailure()
 	{
 		logln(LogLevel.SILENT, getCodePoint(3) + "Failure");
@@ -639,13 +692,18 @@ public class TestLog
 	 *            the throwable that caused the failure
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logFailure(Throwable t)
 	{
 		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
+		{
 			logln(LogLevel.SILENT, getCodePoint(3) + "Failure");
+		}
 		else
+		{
 			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + msg);
+		}
 	}
 
 	/**
@@ -657,6 +715,7 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logFailure(String message)
 	{
 		logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
@@ -673,13 +732,18 @@ public class TestLog
 	 *            the message
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logFailure(Throwable t, String message)
 	{
 		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
+		{
 			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + message);
+		}
 		else
+		{
 			logln(LogLevel.SILENT, getCodePoint(3) + "Failure: " + msg + " : " + message);
+		}
 	}
 
 	/**
@@ -693,6 +757,7 @@ public class TestLog
 	 *            the arguments
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logFailure(String format, Object... args)
 	{
 		log(LogLevel.SILENT, getCodePoint(3) + "Failure: " + format, args);
@@ -711,13 +776,18 @@ public class TestLog
 	 *            the arguments
 	 * @deprecated LogLevel and console logging is to be removed
 	 */
+	@Deprecated
 	public static void logFailure(Throwable t, String format, Object... args)
 	{
 		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
+		{
 			log(LogLevel.SILENT, getCodePoint(3) + "Failure: " + format, args);
+		}
 		else
+		{
 			log(LogLevel.SILENT, getCodePoint(3) + "Failure: " + msg + " : " + format, args);
+		}
 	}
 
 	/**
@@ -776,7 +846,9 @@ public class TestLog
 					return e;
 			}
 			else if (e.getMethodName().equals("___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3"))
+			{
 				thisMethod = true;
+			}
 		}
 		return null;
 	}
@@ -789,15 +861,15 @@ public class TestLog
 	 * Get a supplier for the string using the format and arguments.
 	 * <p>
 	 * This can be used where it is not convenient to create a lambda function using:
-	 * 
+	 *
 	 * <pre>
 	 * <code>
 	 * () -> String.format(format, args);
 	 * </code>
 	 * </pre>
-	 * 
+	 *
 	 * directly because the arguments are not effectively final.
-	 * 
+	 *
 	 * @param format
 	 *            the format
 	 * @param args
@@ -827,7 +899,9 @@ public class TestLog
 	public static final void log(Logger logger, Level level, final String format, final Object... args)
 	{
 		if (logger.isLoggable(level))
+		{
 			logger.log(level, String.format(format, args));
+		}
 	}
 
 	/**
@@ -845,9 +919,11 @@ public class TestLog
 	public static final void log(Logger logger, Level level, final Object object)
 	{
 		if (logger.isLoggable(level))
+		{
 			logger.log(level, String.valueOf(object));
+		}
 	}
-	
+
 	/**
 	 * Log a message to the logger at the {@link Level#SEVERE} level.
 	 * <p>
@@ -973,7 +1049,9 @@ public class TestLog
 	{
 		Level l;
 		if (result)
+		{
 			l = Level.INFO;
+		}
 		else
 		{
 			l = Level.SEVERE;
@@ -1001,7 +1079,9 @@ public class TestLog
 	{
 		Level l;
 		if (result)
+		{
 			l = Level.INFO;
+		}
 		else
 		{
 			l = Level.SEVERE;
@@ -1103,7 +1183,9 @@ public class TestLog
 	{
 		Level l;
 		if (result)
+		{
 			l = Level.INFO;
+		}
 		else
 		{
 			l = Level.WARNING;
@@ -1133,7 +1215,9 @@ public class TestLog
 	{
 		Level l;
 		if (result)
+		{
 			l = Level.INFO;
+		}
 		else
 		{
 			l = Level.WARNING;
@@ -1253,9 +1337,13 @@ public class TestLog
 	{
 		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
+		{
 			log(logger, Level.SEVERE, getCodePoint(3) + "Failure");
+		}
 		else
+		{
 			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + msg);
+		}
 	}
 
 	/**
@@ -1289,9 +1377,13 @@ public class TestLog
 	{
 		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
+		{
 			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + message);
+		}
 		else
+		{
 			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + msg + " : " + message);
+		}
 	}
 
 	/**
@@ -1329,8 +1421,12 @@ public class TestLog
 	{
 		final String msg = (t == null) ? null : t.getMessage();
 		if (msg == null || msg.length() == 0)
+		{
 			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + format, args);
+		}
 		else
+		{
 			log(logger, Level.SEVERE, getCodePoint(3) + "Failure: " + msg + " : " + format, args);
+		}
 	}
 }

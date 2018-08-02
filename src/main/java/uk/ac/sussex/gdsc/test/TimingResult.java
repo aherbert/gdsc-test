@@ -99,7 +99,9 @@ public class TimingResult
 		long min = Long.MAX_VALUE;
 		for (int i = times.length; i-- > 0;)
 			if (min > times[i])
+			{
 				min = times[i];
+			}
 		return min;
 	}
 
@@ -114,7 +116,9 @@ public class TimingResult
 			return 0;
 		long sum = 0;
 		for (int i = times.length; i-- > 0;)
+		{
 			sum += times[i];
+		}
 		return (double) sum / times.length;
 	}
 }

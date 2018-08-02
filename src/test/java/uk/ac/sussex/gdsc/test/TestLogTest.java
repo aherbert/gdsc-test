@@ -91,64 +91,45 @@ public class TestLogTest
 	public void canLogFailure()
 	{
 		TestLog.logFailure(logger);
-		TestLog.logFailure(logger,"This is a test failure message");
-		TestLog.logFailure(logger,(Throwable) null);
-		TestLog.logFailure(logger,new Throwable("Throwable message"));
-		TestLog.logFailure(logger,new Throwable("Throwable message"), "This is a test failure message with throwable");
-		TestLog.logFailure(logger,(Throwable) null, "This is a test failure message with null throwable");
-		TestLog.logFailure(logger,"This is a formatted test failure message: %d", 1);
-		TestLog.logFailure(logger,new Throwable("Throwable message"),
-				"This is a formatted test failure message with throwable: %d", 2);
-		TestLog.logFailure(logger,(Throwable) null, "This is a formatted test failure message with null throwable: %d", 3);
+		TestLog.logFailure(logger, "This is a failure message");
+		TestLog.logFailure(logger, (Throwable) null);
+		TestLog.logFailure(logger, new Throwable("Throwable message"));
+		TestLog.logFailure(logger, new Throwable("Throwable message"), "This is a failure message with throwable");
+		TestLog.logFailure(logger, (Throwable) null, "This is a failure message with null throwable");
+		TestLog.logFailure(logger, "This is a formatted failure message: %d", 1);
+		TestLog.logFailure(logger, new Throwable("Throwable message"),
+				"This is a formatted failure message with throwable: %d", 2);
+		TestLog.logFailure(logger, (Throwable) null, "This is a formatted failure message with null throwable: %d",
+				3);
 	}
 
 	@Test
 	public void canLogTestResult()
 	{
-		TestLog.logTestResult(logger,false, "This is a test failure message");
-		TestLog.logTestResult(logger,false, "This is a test failure formatted message: %d", 1);
-		TestLog.logTestStageResult(logger,false, "This is a test stage failure message");
-		TestLog.logTestStageResult(logger,false, "This is a test stage failure formatted message: %d", 1);
+		TestLog.logTestResult(logger, true, "This is a test passed message");
+		TestLog.logTestResult(logger, true, "This is a test passed formatted message: %d", 1);
+		TestLog.logTestStageResult(logger, true, "This is a test stage passed message");
+		TestLog.logTestStageResult(logger, true, "This is a test stage passed formatted message: %d", 1);
+		TestLog.logTestResult(logger, false, "This is a test failure message");
+		TestLog.logTestResult(logger, false, "This is a test failure formatted message: %d", 1);
+		TestLog.logTestStageResult(logger, false, "This is a test stage failure message");
+		TestLog.logTestStageResult(logger, false, "This is a test stage failure formatted message: %d", 1);
 	}
 
 	@Test
 	public void canLogSpeedTestTaskFailure()
 	{
 		//@formatter:off
-		final TimingTask fast = new TimingTask()
-		{
-			@Override
-			public Object run(Object data) { return null; }
-			@Override
-			public int getSize() { return 0; }
-			@Override
-			public String getName()	{ return "fast"; }
-			@Override
-			public Object getData(int i) { return null; }
-			@Override
-			public void check(int i, Object result) { /* Do nothing */ }
-		};
-		final TimingTask slow = new TimingTask()
-		{
-			@Override
-			public Object run(Object data) { return null; }
-			@Override
-			public int getSize() { return 0; }
-			@Override
-			public String getName()	{ return "slow"; }
-			@Override
-			public Object getData(int i) { return null; }
-			@Override
-			public void check(int i, Object result) { /* Do nothing */ }
-		};
+		final TimingTask fast = new NamedTimingTask("Fast");
+		final TimingTask slow = new NamedTimingTask("Slow");
 		final TimingResult fastR = new TimingResult(fast, new long[] { 100 });
 		final TimingResult slowR = new TimingResult(slow, new long[] { 1000 });
 		final TimingResult slowFastR = new TimingResult(fast, new long[] { 10000 });
 		//@formatter:on
 
-		TestLog.logSpeedTestResult(logger,slowR, fastR);
-		TestLog.logSpeedTestResult(logger,slowR, slowFastR);
-		TestLog.logSpeedTestStageResult(logger,slowR, fastR);
-		TestLog.logSpeedTestStageResult(logger,slowR, slowFastR);
+		TestLog.logSpeedTestResult(logger, slowR, fastR);
+		TestLog.logSpeedTestResult(logger, slowR, slowFastR);
+		TestLog.logSpeedTestStageResult(logger, slowR, fastR);
+		TestLog.logSpeedTestStageResult(logger, slowR, slowFastR);
 	}
 }

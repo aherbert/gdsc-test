@@ -36,7 +36,7 @@ import java.util.function.Function;
  */
 public class DataCache<K, V>
 {
-	private HashMap<K, V> data = new HashMap<>();
+	private final HashMap<K, V> data = new HashMap<>();
 
 	/**
 	 * Gets the value stored under the given key.

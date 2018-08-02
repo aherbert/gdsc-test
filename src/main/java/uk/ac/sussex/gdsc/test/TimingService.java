@@ -36,6 +36,9 @@ import java.util.logging.Logger;
  */
 public class TimingService
 {
+	/** The new used in the report. */
+	private static final String newLine = System.getProperty("line.separator");
+
 	private int runs;
 
 	private final ArrayList<TimingResult> results = new ArrayList<>();
@@ -145,10 +148,14 @@ public class TimingService
 		{
 			final Object[] data = new Object[size];
 			for (int i = 0; i < size; i++)
+			{
 				data[i] = task.getData(i);
+			}
 			final long start = System.nanoTime();
 			for (int i = 0; i < size; i++)
+			{
 				result[i] = task.run(data[i]);
+			}
 			times[run] = System.nanoTime() - start;
 		}
 		// Remaining runs
@@ -156,15 +163,23 @@ public class TimingService
 		{
 			final Object[] data = new Object[size];
 			for (int i = 0; i < size; i++)
+			{
 				data[i] = task.getData(i);
+			}
 			final long start = System.nanoTime();
 			for (int i = 0; i < size; i++)
+			{
 				task.run(data[i]);
+			}
 			times[run] = System.nanoTime() - start;
 		}
 		if (check)
+		{
 			for (int i = 0; i < size; i++)
+			{
 				task.check(i, result[i]);
+			}
+		}
 		final TimingResult r = new TimingResult(task, times);
 		results.add(r);
 		return r;
@@ -213,7 +228,7 @@ public class TimingService
 		if (n < 1 || results.isEmpty())
 			return;
 		final int to = results.size();
-		int from = to - n;
+		final int from = to - n;
 		if (from <= 0)
 		{
 			// Report all results
@@ -222,7 +237,9 @@ public class TimingService
 		}
 		final TimingResult[] r = new TimingResult[to - from];
 		for (int i = 0, j = from; j < to; i++, j++)
+		{
 			r[i] = results.get(i);
+		}
 		report(out, r);
 	}
 
@@ -236,19 +253,28 @@ public class TimingService
 	{
 		if (logger.isLoggable(Level.INFO))
 		{
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
 			{
 				ps.println();
 				report(ps);
 				ps.close();
-				logger.log(Level.INFO, new String(baos.toByteArray(), StandardCharsets.UTF_8));
+				logger.log(Level.INFO, getReport(baos));
 			}
-			catch (UnsupportedEncodingException e)
+			catch (final UnsupportedEncodingException e)
 			{
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private static String getReport(ByteArrayOutputStream baos)
+	{
+		final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
+		// Remove the new line at the end
+		final int i = text.lastIndexOf(newLine);
+		assert i == text.length() - newLine.length() : "New-line not at the end of the string";
+		return (i < 0) ? text : text.substring(0, i);
 	}
 
 	/**
@@ -265,15 +291,15 @@ public class TimingService
 			return;
 		if (logger.isLoggable(Level.INFO))
 		{
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
 			{
 				ps.println();
 				report(ps, n);
 				ps.close();
-				logger.log(Level.INFO, new String(baos.toByteArray(), StandardCharsets.UTF_8));
+				logger.log(Level.INFO, getReport(baos));
 			}
-			catch (UnsupportedEncodingException e)
+			catch (final UnsupportedEncodingException e)
 			{
 				e.printStackTrace();
 			}
@@ -301,12 +327,14 @@ public class TimingService
 		{
 			final int l = results[i].getTask().getName().length();
 			if (width < l)
+			{
 				width = l;
+			}
 
 			mins[i] = results[i].getMin();
 			avs[i] = results[i].getMean();
 		}
-		final String format = String.format("%%-%ds : %%15d (%%8.3f)%%c: %%15f (%%8.3f)%%c\n", width);
+		final String format = String.format("%%-%ds : %%15d (%%8.3f)%%c: %%15f (%%8.3f)%%c" + newLine, width);
 
 		// Find the fastest
 		final long min = min(mins);
@@ -328,7 +356,9 @@ public class TimingService
 		long min = mins[0];
 		for (int i = 1; i < mins.length; i++)
 			if (min > mins[i])
+			{
 				min = mins[i];
+			}
 		return min;
 	}
 
@@ -337,7 +367,9 @@ public class TimingService
 		double min = mins[0];
 		for (int i = 1; i < mins.length; i++)
 			if (min > mins[i])
+			{
 				min = mins[i];
+			}
 		return min;
 	}
 
@@ -361,7 +393,9 @@ public class TimingService
 	public int repeat(int size)
 	{
 		for (int i = 0; i < size; i++)
+		{
 			execute(results.get(i).getTask());
+		}
 		return size;
 	}
 
@@ -372,7 +406,9 @@ public class TimingService
 	{
 		final int size = results.size();
 		for (int i = 0; i < size; i++)
+		{
 			check(results.get(i).getTask());
+		}
 	}
 
 	/**

@@ -133,7 +133,9 @@ public class TestSettings
 		{
 			// Ensure repeated tests run once. They should be disabled using other mechanisms.
 			if (repeats < 1)
+			{
 				repeats = 1;
+			}
 		}
 	}
 
@@ -144,6 +146,7 @@ public class TestSettings
 	 *            the new log level
 	 * @deprecated LogLevel is to be removed
 	 */
+	@Deprecated
 	static void setLogLevel(LogLevel level)
 	{
 		logLevel = level.getValue();
@@ -216,6 +219,7 @@ public class TestSettings
 	 * @return true, if successful
 	 * @deprecated LogLevel is to be removed
 	 */
+	@Deprecated
 	public static boolean allow(LogLevel level)
 	{
 		return level.getValue() <= logLevel;
@@ -243,6 +247,7 @@ public class TestSettings
 	 * @return true, if successful
 	 * @deprecated LogLevel is to be removed
 	 */
+	@Deprecated
 	public static boolean allow(LogLevel level, TestComplexity complexity)
 	{
 		return allow(level) && allow(complexity);

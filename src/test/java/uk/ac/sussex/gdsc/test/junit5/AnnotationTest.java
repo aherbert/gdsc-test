@@ -23,10 +23,13 @@
  */
 package uk.ac.sussex.gdsc.test.junit5;
 
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
@@ -36,14 +39,31 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import uk.ac.sussex.gdsc.test.TestLog;
+import uk.ac.sussex.gdsc.test.TestLogTest;
+
 @SuppressWarnings("javadoc")
 public class AnnotationTest
 {
+	private static Logger logger;
+
+	@BeforeAll
+	public static void beforeAll()
+	{
+		logger = Logger.getLogger(AnnotationTest.class.getName());
+	}
+
+	@AfterAll
+	public static void afterAll()
+	{
+		logger = null;
+	}
+
 	@SpeedTag
 	@Test
 	public void canAnnotateSpeedTest(TestInfo info)
 	{
-		//System.out.println(info.getTestMethod().get().getName());
+		//logger.info(info.getTestMethod().get().getName());
 		Assertions.assertTrue(info.getTags().contains("speed"));
 	}
 
@@ -51,7 +71,7 @@ public class AnnotationTest
 	@Test
 	public void canAnnotateRandomTest(TestInfo info)
 	{
-		//System.out.println(info.getTestMethod().get().getName());
+		//logger.info(info.getTestMethod().get().getName());
 		Assertions.assertTrue(info.getTags().contains("random"));
 	}
 
@@ -59,7 +79,7 @@ public class AnnotationTest
 	@Test
 	public void canAnnotateRandomSpeedTest(TestInfo info)
 	{
-		//System.out.println(info.getTestMethod().get().getName());
+		//logger.info(info.getTestMethod().get().getName());
 		Assertions.assertTrue(info.getTags().contains("speed"));
 		Assertions.assertTrue(info.getTags().contains("random"));
 	}
@@ -69,7 +89,7 @@ public class AnnotationTest
 	public void canAnnotateRepeatedTest(TestInfo info, RepetitionInfo repInfo)
 	{
 		Assertions.assertEquals(3, repInfo.getTotalRepetitions());
-		System.out.printf("%s (%d/%d)\n", info.getTestMethod().get().getName(), repInfo.getCurrentRepetition(),
+		TestLog.info(logger, "%s (%d/%d)", info.getTestMethod().get().getName(), repInfo.getCurrentRepetition(),
 				repInfo.getTotalRepetitions());
 	}
 
@@ -77,7 +97,7 @@ public class AnnotationTest
 	@EnabledIf("'CI' == systemEnvironment.get('ENV')")
 	public void canAnnotateEnableIfCI(TestInfo info)
 	{
-		System.out.println(info.getTestMethod().get().getName());
+		logger.info(info.getTestMethod().get().getName());
 	}
 
 	// This is just an example
@@ -90,7 +110,7 @@ public class AnnotationTest
 
 	private static void testToBeRepeated(TestInfo info, int n)
 	{
-		System.out.printf("%s (%d)\n", info.getTestMethod().get().getName(), n);
+		TestLog.info(logger, "%s (%d)", info.getTestMethod().get().getName(), n);
 	}
 
 	// This is just an example
@@ -98,7 +118,7 @@ public class AnnotationTest
 	@MethodSource(value = "createSeeds")
 	public void canDynamicallyProvideSeeds(int seed)
 	{
-		System.out.printf("Dynamic seed = %d\n", seed);
+		TestLog.info(logger, "Dynamic seed = %d\n", seed);
 	}
 
 	@SuppressWarnings("unused")
@@ -111,14 +131,14 @@ public class AnnotationTest
 	@ArgumentsSource(RandomSeedSource.class)
 	public void canDynamicallyProvideSeedsFromRandomSeedSource(RandomSeed seed, TestInfo info)
 	{
-		System.out.printf("%s seed = %d (%d/%d)\n", info.getTestMethod().get().getName(), seed.getSeed(),
+		TestLog.info(logger, "%s seed = %d (%d/%d)", info.getTestMethod().get().getName(), seed.getSeed(),
 				seed.getCurrentRepetition(), seed.getTotalRepetitions());
 	}
 
 	@SeededTest
 	public void canAnnotateSeededTest(RandomSeed seed, TestInfo info)
 	{
-		System.out.printf("%s seed = %d (%d/%d)\n", info.getTestMethod().get().getName(), seed.getSeed(),
+		TestLog.info(logger, "%s seed = %d (%d/%d)", info.getTestMethod().get().getName(), seed.getSeed(),
 				seed.getCurrentRepetition(), seed.getTotalRepetitions());
 	}
 }
