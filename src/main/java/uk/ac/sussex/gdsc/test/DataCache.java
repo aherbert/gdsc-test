@@ -36,45 +36,45 @@ import java.util.function.Function;
  */
 public class DataCache<K, V>
 {
-	private final HashMap<K, V> data = new HashMap<>();
+    private final HashMap<K, V> data = new HashMap<>();
 
-	/**
-	 * Gets the value stored under the given key.
-	 * <p>
-	 * Uses the cached value if available, otherwise generates the value
-	 * using the provider.
-	 * <p>
-	 * Note: The value should be considered immutable if the cache is to be reused.
-	 *
-	 * @param key
-	 *            the key
-	 * @param provider
-	 *            the provider to generate the value (if not cached)
-	 * @return the value
-	 */
-	public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider)
-	{
-		V t = data.get(key);
-		if (t == null)
-		{
-			synchronized (data)
-			{
-				t = data.get(key);
-				if (t == null)
-				{
-					t = provider.apply(key);
-					data.put(key, t);
-				}
-			}
-		}
-		return t;
-	}
+    /**
+     * Gets the value stored under the given key.
+     * <p>
+     * Uses the cached value if available, otherwise generates the value
+     * using the provider.
+     * <p>
+     * Note: The value should be considered immutable if the cache is to be reused.
+     *
+     * @param key
+     *            the key
+     * @param provider
+     *            the provider to generate the value (if not cached)
+     * @return the value
+     */
+    public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider)
+    {
+        V t = data.get(key);
+        if (t == null)
+        {
+            synchronized (data)
+            {
+                t = data.get(key);
+                if (t == null)
+                {
+                    t = provider.apply(key);
+                    data.put(key, t);
+                }
+            }
+        }
+        return t;
+    }
 
-	/**
-	 * Clear the cache.
-	 */
-	public void clear()
-	{
-		data.clear();
-	}
+    /**
+     * Clear the cache.
+     */
+    public void clear()
+    {
+        data.clear();
+    }
 }

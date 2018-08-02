@@ -29,10 +29,11 @@ package uk.ac.sussex.gdsc.test;
 @FunctionalInterface
 public interface TestAssertion
 {
-	/**
-	 * Run the test assertion
-	 *
-	 * @throws AssertionError If the test fails
-	 */
-	public void test() throws AssertionError;
+    /**
+     * Run the test assertion
+     *
+     * @throws AssertionError
+     *             If the test fails
+     */
+    public void test() throws AssertionError;
 }

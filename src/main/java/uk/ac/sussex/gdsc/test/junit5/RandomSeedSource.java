@@ -42,12 +42,12 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  */
 public class RandomSeedSource implements ArgumentsProvider
 {
-	@Override
-	public Stream<? extends Arguments> provideArguments(ExtensionContext arg0)
-	{
-		final long seed = TestSettings.getSeed();
-		final int repeats = TestSettings.getRepeats();
-		return IntStream.iterate(0, n -> n + 1).limit(repeats)
-				.mapToObj(n -> Arguments.of(new RandomSeed(n + seed, n + 1, repeats)));
-	}
+    @Override
+    public Stream<? extends Arguments> provideArguments(ExtensionContext arg0)
+    {
+        final long seed = TestSettings.getSeed();
+        final int repeats = TestSettings.getRepeats();
+        return IntStream.iterate(0, n -> n + 1).limit(repeats)
+                .mapToObj(n -> Arguments.of(new RandomSeed(n + seed, n + 1, repeats)));
+    }
 }

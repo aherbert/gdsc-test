@@ -30,7 +30,8 @@
  * The package contains:
  * </p>
  * <ul>
- * <li>Additional assert functions for floating point equality using relative error (in contrast to the JUnit standard of absolute error)
+ * <li>Additional assert functions for floating point equality using relative error (in contrast to the JUnit standard
+ * of absolute error)
  * <li>Run-time configurable logging functionality
  * <li>Run-time configurable test complexity
  * <li>Run-time configurable random generator
@@ -45,5 +46,5 @@
  * @see <a href="https://junit.org/junit5/">JUnit 5</a>
  * @see uk.ac.sussex.gdsc.test.TestSettings
  * @since 1.0.0
-*/
+ */
 package uk.ac.sussex.gdsc.test;

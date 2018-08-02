@@ -28,7 +28,7 @@ package uk.ac.sussex.gdsc.test;
  */
 public enum TestComplexity
 {
-	//@formatter:off
+    //@formatter:off
 
 	/**  No complexity. */
 	NONE { @Override public int getValue() { return 0; }},
@@ -45,10 +45,10 @@ public enum TestComplexity
 
 	//@formatter:on
 
-	/**
-	 * Gets the value.
-	 *
-	 * @return the value
-	 */
-	public abstract int getValue();
+    /**
+     * Gets the value.
+     *
+     * @return the value
+     */
+    public abstract int getValue();
 }

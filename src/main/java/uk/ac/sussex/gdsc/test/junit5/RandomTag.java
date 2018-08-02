@@ -47,5 +47,5 @@ import org.junit.jupiter.api.Tag;
 @Tag("random")
 public @interface RandomTag
 {
-	// Annotation
+    // Annotation
 }

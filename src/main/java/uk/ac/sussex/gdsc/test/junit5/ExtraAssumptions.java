@@ -41,213 +41,213 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  * &#64;Test
  * public void myTest()
  * {
- *   Logger logger = Logger.getLogger(getClass().getName());
- *   ExtraAssumptions.assume(logger, Level.INFO);
- *   ExtraAssumptions.assume(TestComplexity.MEDIUM);
- *   // ... do the test
+ *     Logger logger = Logger.getLogger(getClass().getName());
+ *     ExtraAssumptions.assume(logger, Level.INFO);
+ *     ExtraAssumptions.assume(TestComplexity.MEDIUM);
+ *     // ... do the test
  * }
  * </pre>
  */
 public class ExtraAssumptions
 {
-	/**
-	 * Assume testing is allowed at the given complexity.
-	 * <p>
-	 * Use this at the start of a test that has a long run time or is otherwise complex
-	 * enough to warrant skipping the test if not testing at that level of complexity.
-	 *
-	 * @param complexity
-	 *            the complexity
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assume(TestComplexity complexity) throws TestAbortedException
-	{
-		Assumptions.assumeTrue(TestSettings.allow(complexity));
-	}
+    /**
+     * Assume testing is allowed at the given complexity.
+     * <p>
+     * Use this at the start of a test that has a long run time or is otherwise complex
+     * enough to warrant skipping the test if not testing at that level of complexity.
+     *
+     * @param complexity
+     *            the complexity
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assume(TestComplexity complexity) throws TestAbortedException
+    {
+        Assumptions.assumeTrue(TestSettings.allow(complexity));
+    }
 
-	/**
-	 * Assume testing is allowed at low complexity.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeLowComplexity() throws TestAbortedException
-	{
-		assume(TestComplexity.LOW);
-	}
+    /**
+     * Assume testing is allowed at low complexity.
+     *
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeLowComplexity() throws TestAbortedException
+    {
+        assume(TestComplexity.LOW);
+    }
 
-	/**
-	 * Assume testing is allowed at medium complexity.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeMediumComplexity() throws TestAbortedException
-	{
-		assume(TestComplexity.MEDIUM);
-	}
+    /**
+     * Assume testing is allowed at medium complexity.
+     *
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeMediumComplexity() throws TestAbortedException
+    {
+        assume(TestComplexity.MEDIUM);
+    }
 
-	/**
-	 * Assume testing is allowed at high complexity.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeHighComplexity() throws TestAbortedException
-	{
-		assume(TestComplexity.HIGH);
-	}
+    /**
+     * Assume testing is allowed at high complexity.
+     *
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeHighComplexity() throws TestAbortedException
+    {
+        assume(TestComplexity.HIGH);
+    }
 
-	/**
-	 * Assume testing is allowed at very high complexity.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeVeryHighComplexity() throws TestAbortedException
-	{
-		assume(TestComplexity.VERY_HIGH);
-	}
+    /**
+     * Assume testing is allowed at very high complexity.
+     *
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeVeryHighComplexity() throws TestAbortedException
+    {
+        assume(TestComplexity.VERY_HIGH);
+    }
 
-	/**
-	 * Assume testing is allowed at maximum complexity.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeMaximumComplexity() throws TestAbortedException
-	{
-		assume(TestComplexity.MAXIMUM);
-	}
+    /**
+     * Assume testing is allowed at maximum complexity.
+     *
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeMaximumComplexity() throws TestAbortedException
+    {
+        assume(TestComplexity.MAXIMUM);
+    }
 
-	/**
-	 * Assume speed testing is allowed the {@link TestComplexity#MEDIUM} complexity level.
-	 * <p>
-	 * Use this at the start of a speed test that has a long run time or is otherwise complex
-	 * enough to warrant skipping the test if not testing at that level of complexity.
-	 * <p>
-	 * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
-	 *
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeSpeedTest() throws TestAbortedException
-	{
-		assumeSpeedTest(TestComplexity.MEDIUM);
-	}
+    /**
+     * Assume speed testing is allowed the {@link TestComplexity#MEDIUM} complexity level.
+     * <p>
+     * Use this at the start of a speed test that has a long run time or is otherwise complex
+     * enough to warrant skipping the test if not testing at that level of complexity.
+     * <p>
+     * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
+     *
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeSpeedTest() throws TestAbortedException
+    {
+        assumeSpeedTest(TestComplexity.MEDIUM);
+    }
 
-	/**
-	 * Assume speed testing is allowed at the given complexity.
-	 * <p>
-	 * Use this at the start of a speed test that has a long run time or is otherwise complex
-	 * enough to warrant skipping the test if not testing at that level of complexity.
-	 * <p>
-	 * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
-	 *
-	 * @param complexity
-	 *            the complexity
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeSpeedTest(TestComplexity complexity) throws TestAbortedException
-	{
-		assume(complexity);
-	}
+    /**
+     * Assume speed testing is allowed at the given complexity.
+     * <p>
+     * Use this at the start of a speed test that has a long run time or is otherwise complex
+     * enough to warrant skipping the test if not testing at that level of complexity.
+     * <p>
+     * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
+     *
+     * @param complexity
+     *            the complexity
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeSpeedTest(TestComplexity complexity) throws TestAbortedException
+    {
+        assume(complexity);
+    }
 
-	/**
-	 * Assume logging is allowed at the given level.
-	 * <p>
-	 * Use this at the start of a test that only produces logging output (no assertions) to skip
-	 * the test as logging will be ignored.
-	 *
-	 * @param logger
-	 *            the logger
-	 * @param level
-	 *            the level
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assume(Logger logger, Level level)
-	{
-		Assumptions.assumeTrue(logger.isLoggable(level));
-	}
+    /**
+     * Assume logging is allowed at the given level.
+     * <p>
+     * Use this at the start of a test that only produces logging output (no assertions) to skip
+     * the test as logging will be ignored.
+     *
+     * @param logger
+     *            the logger
+     * @param level
+     *            the level
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assume(Logger logger, Level level)
+    {
+        Assumptions.assumeTrue(logger.isLoggable(level));
+    }
 
-	/**
-	 * Assume testing is logging at the {@link Level#SEVERE} level.
-	 *
-	 * @param logger
-	 *            the logger
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeSevere(Logger logger) throws TestAbortedException
-	{
-		assume(logger, Level.SEVERE);
-	}
+    /**
+     * Assume testing is logging at the {@link Level#SEVERE} level.
+     *
+     * @param logger
+     *            the logger
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeSevere(Logger logger) throws TestAbortedException
+    {
+        assume(logger, Level.SEVERE);
+    }
 
-	/**
-	 * Assume testing is logging at the {@link Level#WARNING} level.
-	 *
-	 * @param logger
-	 *            the logger
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeWarning(Logger logger) throws TestAbortedException
-	{
-		assume(logger, Level.WARNING);
-	}
+    /**
+     * Assume testing is logging at the {@link Level#WARNING} level.
+     *
+     * @param logger
+     *            the logger
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeWarning(Logger logger) throws TestAbortedException
+    {
+        assume(logger, Level.WARNING);
+    }
 
-	/**
-	 * Assume testing is logging at the {@link Level#INFO} level.
-	 *
-	 * @param logger
-	 *            the logger
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeInfo(Logger logger) throws TestAbortedException
-	{
-		assume(logger, Level.INFO);
-	}
+    /**
+     * Assume testing is logging at the {@link Level#INFO} level.
+     *
+     * @param logger
+     *            the logger
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeInfo(Logger logger) throws TestAbortedException
+    {
+        assume(logger, Level.INFO);
+    }
 
-	/**
-	 * Assume testing is logging at the {@link Level#FINE} level.
-	 *
-	 * @param logger
-	 *            the logger
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeFine(Logger logger) throws TestAbortedException
-	{
-		assume(logger, Level.FINE);
-	}
+    /**
+     * Assume testing is logging at the {@link Level#FINE} level.
+     *
+     * @param logger
+     *            the logger
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeFine(Logger logger) throws TestAbortedException
+    {
+        assume(logger, Level.FINE);
+    }
 
-	/**
-	 * Assume testing is logging at the {@link Level#FINER} level.
-	 *
-	 * @param logger
-	 *            the logger
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeFiner(Logger logger) throws TestAbortedException
-	{
-		assume(logger, Level.FINER);
-	}
+    /**
+     * Assume testing is logging at the {@link Level#FINER} level.
+     *
+     * @param logger
+     *            the logger
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeFiner(Logger logger) throws TestAbortedException
+    {
+        assume(logger, Level.FINER);
+    }
 
-	/**
-	 * Assume testing is logging at the {@link Level#FINEST} level.
-	 *
-	 * @param logger
-	 *            the logger
-	 * @throws TestAbortedException
-	 *             if the assumption is not {@code true}
-	 */
-	public static void assumeFinest(Logger logger) throws TestAbortedException
-	{
-		assume(logger, Level.FINEST);
-	}
+    /**
+     * Assume testing is logging at the {@link Level#FINEST} level.
+     *
+     * @param logger
+     *            the logger
+     * @throws TestAbortedException
+     *             if the assumption is not {@code true}
+     */
+    public static void assumeFinest(Logger logger) throws TestAbortedException
+    {
+        assume(logger, Level.FINEST);
+    }
 }

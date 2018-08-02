@@ -52,5 +52,5 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 @RandomTag
 public @interface SeededTest
 {
-	// Annotation
+    // Annotation
 }

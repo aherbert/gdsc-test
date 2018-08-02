@@ -36,59 +36,59 @@ import uk.ac.sussex.gdsc.test.TestSettings;
 @SuppressWarnings("javadoc")
 public class ExtraAssumeTest
 {
-	@Test
-	public void canAssumeLogLevel()
-	{
-		final Logger logger = Logger.getLogger(ExtraAssumeTest.class.getName());
-		final Level[] levels = { Level.SEVERE, Level.INFO, Level.FINEST };
-		for (final Level l : levels)
-			if (logger.isLoggable(l))
-				try
-				{
-					ExtraAssume.assume(logger, l);
-				}
-				catch (final AssumptionViolatedException e)
-				{
-					Assert.fail("Log level is allowed: " + l);
-				}
-			else
-			{
-				try
-				{
-					ExtraAssume.assume(logger, l);
-				}
-				catch (final AssumptionViolatedException e)
-				{
-					continue; // This is expected
-				}
-				Assert.fail("Log level is not allowed: " + l);
-			}
-	}
+    @Test
+    public void canAssumeLogLevel()
+    {
+        final Logger logger = Logger.getLogger(ExtraAssumeTest.class.getName());
+        final Level[] levels = { Level.SEVERE, Level.INFO, Level.FINEST };
+        for (final Level l : levels)
+            if (logger.isLoggable(l))
+                try
+                {
+                    ExtraAssume.assume(logger, l);
+                }
+                catch (final AssumptionViolatedException e)
+                {
+                    Assert.fail("Log level is allowed: " + l);
+                }
+            else
+            {
+                try
+                {
+                    ExtraAssume.assume(logger, l);
+                }
+                catch (final AssumptionViolatedException e)
+                {
+                    continue; // This is expected
+                }
+                Assert.fail("Log level is not allowed: " + l);
+            }
+    }
 
-	@Test
-	public void canAssumeTestComplexity()
-	{
-		for (final TestComplexity tc : TestComplexity.values())
-			if (TestSettings.allow(tc))
-				try
-				{
-					ExtraAssume.assume(tc);
-				}
-				catch (final AssumptionViolatedException e)
-				{
-					Assert.fail("Test complexity is allowed: " + tc);
-				}
-			else
-			{
-				try
-				{
-					ExtraAssume.assume(tc);
-				}
-				catch (final AssumptionViolatedException e)
-				{
-					continue; // This is expected
-				}
-				Assert.fail("Test complexity is not allowed: " + tc);
-			}
-	}
+    @Test
+    public void canAssumeTestComplexity()
+    {
+        for (final TestComplexity tc : TestComplexity.values())
+            if (TestSettings.allow(tc))
+                try
+                {
+                    ExtraAssume.assume(tc);
+                }
+                catch (final AssumptionViolatedException e)
+                {
+                    Assert.fail("Test complexity is allowed: " + tc);
+                }
+            else
+            {
+                try
+                {
+                    ExtraAssume.assume(tc);
+                }
+                catch (final AssumptionViolatedException e)
+                {
+                    continue; // This is expected
+                }
+                Assert.fail("Test complexity is not allowed: " + tc);
+            }
+    }
 }

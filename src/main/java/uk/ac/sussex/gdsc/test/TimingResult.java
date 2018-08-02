@@ -28,97 +28,97 @@ package uk.ac.sussex.gdsc.test;
  */
 public class TimingResult
 {
-	private final TimingTask task;
-	private final long[] times;
+    private final TimingTask task;
+    private final long[] times;
 
-	/**
-	 * Instantiates a new timing result.
-	 *
-	 * @param task
-	 *            the task
-	 * @param times
-	 *            the times
-	 */
-	public TimingResult(TimingTask task, long... times)
-	{
-		this.task = task;
-		this.times = times;
-	}
+    /**
+     * Instantiates a new timing result.
+     *
+     * @param task
+     *            the task
+     * @param times
+     *            the times
+     */
+    public TimingResult(TimingTask task, long... times)
+    {
+        this.task = task;
+        this.times = times;
+    }
 
-	/**
-	 * Instantiates a new timing result.
-	 * <p>
-	 * The result will be created with a dummy implementation of the {@link TimingTask} interface.
-	 *
-	 * @param name
-	 *            the name
-	 * @param times
-	 *            the times
-	 */
-	public TimingResult(String name, long... times)
-	{
-		this.task = new NamedTimingTask(name);
-		this.times = times;
-	}
+    /**
+     * Instantiates a new timing result.
+     * <p>
+     * The result will be created with a dummy implementation of the {@link TimingTask} interface.
+     *
+     * @param name
+     *            the name
+     * @param times
+     *            the times
+     */
+    public TimingResult(String name, long... times)
+    {
+        this.task = new NamedTimingTask(name);
+        this.times = times;
+    }
 
-	/**
-	 * @return the task
-	 */
-	public TimingTask getTask()
-	{
-		return task;
-	}
+    /**
+     * @return the task
+     */
+    public TimingTask getTask()
+    {
+        return task;
+    }
 
-	/**
-	 * @return the times for running the timing task
-	 */
-	public long[] getTimes()
-	{
-		return times.clone();
-	}
+    /**
+     * @return the times for running the timing task
+     */
+    public long[] getTimes()
+    {
+        return times.clone();
+    }
 
-	/**
-	 * Gets the number of times
-	 *
-	 * @return the size
-	 */
-	public int getSize()
-	{
-		return times.length;
-	}
+    /**
+     * Gets the number of times
+     *
+     * @return the size
+     */
+    public int getSize()
+    {
+        return times.length;
+    }
 
-	/**
-	 * Gets the min time.
-	 *
-	 * @return the min
-	 */
-	public long getMin()
-	{
-		if (times.length == 0)
-			return 0;
-		long min = Long.MAX_VALUE;
-		for (int i = times.length; i-- > 0;)
-			if (min > times[i])
-			{
-				min = times[i];
-			}
-		return min;
-	}
+    /**
+     * Gets the min time.
+     *
+     * @return the min
+     */
+    public long getMin()
+    {
+        if (times.length == 0)
+            return 0;
+        long min = Long.MAX_VALUE;
+        for (int i = times.length; i-- > 0;)
+            if (min > times[i])
+            {
+                min = times[i];
+            }
+        return min;
+    }
 
-	/**
-	 * Gets the mean time.
-	 *
-	 * @return the mean
-	 */
-	public double getMean()
-	{
-		if (times.length == 0)
-			return 0;
-		long sum = 0;
-		for (int i = times.length; i-- > 0;)
-		{
-			sum += times[i];
-		}
-		return (double) sum / times.length;
-	}
+    /**
+     * Gets the mean time.
+     *
+     * @return the mean
+     */
+    public double getMean()
+    {
+        if (times.length == 0)
+            return 0;
+        long sum = 0;
+        for (int i = times.length; i-- > 0;)
+        {
+            sum += times[i];
+        }
+        return (double) sum / times.length;
+    }
 }

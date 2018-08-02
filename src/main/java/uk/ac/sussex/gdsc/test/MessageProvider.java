@@ -29,10 +29,10 @@ package uk.ac.sussex.gdsc.test;
 @FunctionalInterface
 public interface MessageProvider
 {
-	/**
-	 * Gets the message.
-	 *
-	 * @return the message
-	 */
-	public String getMessage();
+    /**
+     * Gets the message.
+     *
+     * @return the message
+     */
+    public String getMessage();
 }

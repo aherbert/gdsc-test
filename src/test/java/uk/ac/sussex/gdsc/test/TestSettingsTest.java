@@ -35,48 +35,48 @@ import org.opentest4j.AssertionFailedError;
 @SuppressWarnings("javadoc")
 public class TestSettingsTest
 {
-	private static Logger logger;
+    private static Logger logger;
 
-	@BeforeAll
-	public static void beforeAll()
-	{
-		logger = Logger.getLogger(TestSettingsTest.class.getName());
-	}
+    @BeforeAll
+    public static void beforeAll()
+    {
+        logger = Logger.getLogger(TestSettingsTest.class.getName());
+    }
 
-	@AfterAll
-	public static void afterAll()
-	{
-		logger = null;
-	}
+    @AfterAll
+    public static void afterAll()
+    {
+        logger = null;
+    }
 
-	@Test
-	public void canPrintSettings()
-	{
-		logger.info(() -> String.format("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity()));
-		logger.info(() -> String.format("TestSettings Seed = %d\n", TestSettings.getSeed()));
-	}
+    @Test
+    public void canPrintSettings()
+    {
+        logger.info(() -> String.format("TestSettings Test Complexity = %d\n", TestSettings.getTestComplexity()));
+        logger.info(() -> String.format("TestSettings Seed = %d\n", TestSettings.getSeed()));
+    }
 
-	@Test
-	public void canGetSameRandom()
-	{
-		final long seed = 5656787697789L;
-		UniformRandomProvider r = TestSettings.getRandomGenerator(seed);
-		final double[] e = { r.nextDouble(), r.nextDouble() };
-		r = TestSettings.getRandomGenerator(seed);
-		final double[] o = { r.nextDouble(), r.nextDouble() };
-		Assertions.assertArrayEquals(e, o);
-	}
+    @Test
+    public void canGetSameRandom()
+    {
+        final long seed = 5656787697789L;
+        UniformRandomProvider r = TestSettings.getRandomGenerator(seed);
+        final double[] e = { r.nextDouble(), r.nextDouble() };
+        r = TestSettings.getRandomGenerator(seed);
+        final double[] o = { r.nextDouble(), r.nextDouble() };
+        Assertions.assertArrayEquals(e, o);
+    }
 
-	@Test
-	public void canGetDifferentRandom()
-	{
-		final long seed = 5656787697789L;
-		UniformRandomProvider r = TestSettings.getRandomGenerator(seed);
-		final double[] e = { r.nextDouble(), r.nextDouble() };
-		r = TestSettings.getRandomGenerator(seed * 2);
-		final double[] o = { r.nextDouble(), r.nextDouble() };
-		Assertions.assertThrows(AssertionFailedError.class, () -> {
-			Assertions.assertArrayEquals(e, o);
-		});
-	}
+    @Test
+    public void canGetDifferentRandom()
+    {
+        final long seed = 5656787697789L;
+        UniformRandomProvider r = TestSettings.getRandomGenerator(seed);
+        final double[] e = { r.nextDouble(), r.nextDouble() };
+        r = TestSettings.getRandomGenerator(seed * 2);
+        final double[] o = { r.nextDouble(), r.nextDouble() };
+        Assertions.assertThrows(AssertionFailedError.class, () -> {
+            Assertions.assertArrayEquals(e, o);
+        });
+    }
 }

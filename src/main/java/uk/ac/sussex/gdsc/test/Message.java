@@ -28,36 +28,36 @@ package uk.ac.sussex.gdsc.test;
  */
 public abstract class Message
 {
-	/** The format. */
-	final String format;
+    /** The format. */
+    final String format;
 
-	/**
-	 * Instantiates a new message.
-	 *
-	 * @param format
-	 *            the format
-	 */
-	public Message(String format)
-	{
-		this.format = format;
-	}
+    /**
+     * Instantiates a new message.
+     *
+     * @param format
+     *            the format
+     */
+    public Message(String format)
+    {
+        this.format = format;
+    }
 
-	/**
-	 * Helper method to wrap the variable length arguments list for use in {@link #getArgs()}.
-	 *
-	 * @param args
-	 *            the arguments for the message
-	 * @return the arguments for the message as an array
-	 */
-	final public static Object[] wrap(Object... args)
-	{
-		return args;
-	}
+    /**
+     * Helper method to wrap the variable length arguments list for use in {@link #getArgs()}.
+     *
+     * @param args
+     *            the arguments for the message
+     * @return the arguments for the message as an array
+     */
+    final public static Object[] wrap(Object... args)
+    {
+        return args;
+    }
 
-	/**
-	 * Gets the arguments for the message.
-	 *
-	 * @return the arguments
-	 */
-	public abstract Object[] getArgs();
+    /**
+     * Gets the arguments for the message.
+     *
+     * @return the arguments
+     */
+    public abstract Object[] getArgs();
 }

@@ -45,5 +45,5 @@ import org.junit.jupiter.api.Tag;
 @Tag("speed")
 public @interface SpeedTag
 {
-	// Annotation
+    // Annotation
 }

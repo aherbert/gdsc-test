@@ -29,10 +29,10 @@ package uk.ac.sussex.gdsc.test;
 @FunctionalInterface
 public interface TestCase
 {
-	/**
-	 * Run the test assertion.
-	 *
-	 * @return pass/fail
-	 */
-	public boolean test();
+    /**
+     * Run the test assertion.
+     *
+     * @return pass/fail
+     */
+    public boolean test();
 }

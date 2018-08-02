@@ -42,5 +42,5 @@ import java.lang.annotation.Target;
 @RandomTag
 public @interface RandomSpeedTag
 {
-	// Annotation
+    // Annotation
 }

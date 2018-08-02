@@ -28,38 +28,38 @@ package uk.ac.sussex.gdsc.test;
  */
 public abstract class BaseTimingTask implements TimingTask
 {
-	private final String name;
+    private final String name;
 
-	/**
-	 * Instantiates a new base timing task.
-	 *
-	 * @param name
-	 *            the name
-	 */
-	public BaseTimingTask(String name)
-	{
-		this.name = name;
-	}
+    /**
+     * Instantiates a new base timing task.
+     *
+     * @param name
+     *            the name
+     */
+    public BaseTimingTask(String name)
+    {
+        this.name = name;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see gdsc.core.test.TimingTask#getName()
-	 */
-	@Override
-	public String getName()
-	{
-		return name;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see gdsc.core.test.TimingTask#getName()
+     */
+    @Override
+    public String getName()
+    {
+        return name;
+    }
 
-	/**
-	 * This base class does nothing so that extending classes can override if necessary
-	 *
-	 * @see uk.ac.sussex.gdsc.test.TimingTask#check(int, java.lang.Object)
-	 */
-	@Override
-	public void check(int i, Object result)
-	{
-		// Do nothing
-	}
+    /**
+     * This base class does nothing so that extending classes can override if necessary
+     *
+     * @see uk.ac.sussex.gdsc.test.TimingTask#check(int, java.lang.Object)
+     */
+    @Override
+    public void check(int i, Object result)
+    {
+        // Do nothing
+    }
 }

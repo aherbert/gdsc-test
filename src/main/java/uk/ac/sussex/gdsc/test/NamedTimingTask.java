@@ -30,32 +30,32 @@ package uk.ac.sussex.gdsc.test;
  */
 public class NamedTimingTask extends BaseTimingTask
 {
-	/**
-	 * Instantiates a new named timing task.
-	 *
-	 * @param name
-	 *            the name
-	 */
-	public NamedTimingTask(String name)
-	{
-		super(name);
-	}
+    /**
+     * Instantiates a new named timing task.
+     *
+     * @param name
+     *            the name
+     */
+    public NamedTimingTask(String name)
+    {
+        super(name);
+    }
 
-	@Override
-	public int getSize()
-	{
-		return 0;
-	}
+    @Override
+    public int getSize()
+    {
+        return 0;
+    }
 
-	@Override
-	public Object getData(int i)
-	{
-		return null;
-	}
+    @Override
+    public Object getData(int i)
+    {
+        return null;
+    }
 
-	@Override
-	public Object run(Object data)
-	{
-		return null;
-	}
+    @Override
+    public Object run(Object data)
+    {
+        return null;
+    }
 }

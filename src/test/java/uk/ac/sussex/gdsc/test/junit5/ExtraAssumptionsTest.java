@@ -38,59 +38,59 @@ import uk.ac.sussex.gdsc.test.TestSettings;
 @SuppressWarnings("javadoc")
 public class ExtraAssumptionsTest
 {
-	@Test
-	public void canAssumeLevel()
-	{
-		final Logger logger = Logger.getLogger(ExtraAssumptionsTest.class.getName());
-		final Level[] levels = { Level.SEVERE, Level.INFO, Level.FINEST };
-		for (final Level l : levels)
-			if (logger.isLoggable(l))
-				try
-				{
-					assume(logger, l);
-				}
-				catch (final TestAbortedException e)
-				{
-					fail("Log level is allowed: " + l);
-				}
-			else
-			{
-				try
-				{
-					assume(logger, l);
-				}
-				catch (final TestAbortedException e)
-				{
-					continue; // This is expected
-				}
-				fail("Log level is not allowed: " + l);
-			}
-	}
+    @Test
+    public void canAssumeLevel()
+    {
+        final Logger logger = Logger.getLogger(ExtraAssumptionsTest.class.getName());
+        final Level[] levels = { Level.SEVERE, Level.INFO, Level.FINEST };
+        for (final Level l : levels)
+            if (logger.isLoggable(l))
+                try
+                {
+                    assume(logger, l);
+                }
+                catch (final TestAbortedException e)
+                {
+                    fail("Log level is allowed: " + l);
+                }
+            else
+            {
+                try
+                {
+                    assume(logger, l);
+                }
+                catch (final TestAbortedException e)
+                {
+                    continue; // This is expected
+                }
+                fail("Log level is not allowed: " + l);
+            }
+    }
 
-	@Test
-	public void canAssumesTestComplexity()
-	{
-		for (final TestComplexity tc : TestComplexity.values())
-			if (TestSettings.allow(tc))
-				try
-				{
-					assume(tc);
-				}
-				catch (final TestAbortedException e)
-				{
-					fail("Test complexity is allowed: " + tc);
-				}
-			else
-			{
-				try
-				{
-					assume(tc);
-				}
-				catch (final TestAbortedException e)
-				{
-					continue; // This is expected
-				}
-				fail("Test complexity is not allowed: " + tc);
-			}
-	}
+    @Test
+    public void canAssumesTestComplexity()
+    {
+        for (final TestComplexity tc : TestComplexity.values())
+            if (TestSettings.allow(tc))
+                try
+                {
+                    assume(tc);
+                }
+                catch (final TestAbortedException e)
+                {
+                    fail("Test complexity is allowed: " + tc);
+                }
+            else
+            {
+                try
+                {
+                    assume(tc);
+                }
+                catch (final TestAbortedException e)
+                {
+                    continue; // This is expected
+                }
+                fail("Test complexity is not allowed: " + tc);
+            }
+    }
 }
