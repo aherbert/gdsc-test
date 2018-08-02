@@ -23,6 +23,8 @@
  */
 package uk.ac.sussex.gdsc.test;
 
+import java.util.function.Function;
+
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.core.source64.SplitMix64;
 import org.apache.commons.rng.simple.RandomSource;
@@ -252,10 +254,10 @@ public class TestSettings
 	/**
 	 * Class for generating full length seeds.
 	 */
-	private static class SeedGenerator implements DataProvider<Long, int[]>
+	private static class SeedGenerator implements Function<Long, int[]>
 	{
 		@Override
-		public int[] getData(Long source)
+		public int[] apply(Long source)
 		{
 			// This has been copied from org.apache.commons.rng.simple.internal.SeedFactory
 
@@ -287,7 +289,7 @@ public class TestSettings
 	{
 		if (seed == 0)
 			return RandomSource.create(RandomSource.WELL_19937_C);
-		final int[] fullSeed = seedCache.getData(seed, SEED_GENERATOR);
+		final int[] fullSeed = seedCache.getOrComputeIfAbsent(seed, SEED_GENERATOR);
 		return RandomSource.create(RandomSource.WELL_19937_C, fullSeed);
 	}
 

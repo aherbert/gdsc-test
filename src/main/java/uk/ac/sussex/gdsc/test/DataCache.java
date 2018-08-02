@@ -24,45 +24,46 @@
 package uk.ac.sussex.gdsc.test;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 /**
- * Cache data generated using a random source.
+ * Cache data under a given key and generate it if absent.
  *
- * @param <S>
- *            the type of the random source
- * @param <T>
- *            the type of the data
+ * @param <K>
+ *            the type of the key
+ * @param <V>
+ *            the type of the value
  */
-public class DataCache<S, T>
+public class DataCache<K, V>
 {
-	private HashMap<S, T> data = new HashMap<>();
+	private HashMap<K, V> data = new HashMap<>();
 
 	/**
-	 * Gets the data.
+	 * Gets the value stored under the given key.
 	 * <p>
-	 * Uses the cached data if available, otherwise generates the data
-	 * using the data provider using a random source.
+	 * Uses the cached value if available, otherwise generates the value
+	 * using the provider.
 	 * <p>
-	 * Note: The data should be considered immutable if the cache is to be reused.
+	 * Note: The value should be considered immutable if the cache is to be reused.
 	 *
-	 * @param source
-	 *            the random source
+	 * @param key
+	 *            the key
 	 * @param provider
-	 *            the provider to generate the data (if not cached)
-	 * @return the data
+	 *            the provider to generate the value (if not cached)
+	 * @return the value
 	 */
-	public synchronized T getData(S source, DataProvider<S, T> provider)
+	public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider)
 	{
-		T t = data.get(source);
+		V t = data.get(key);
 		if (t == null)
 		{
 			synchronized (data)
 			{
-				t = data.get(source);
+				t = data.get(key);
 				if (t == null)
 				{
-					t = provider.getData(source);
-					data.put(source, t);
+					t = provider.apply(key);
+					data.put(key, t);
 				}
 			}
 		}
@@ -70,7 +71,7 @@ public class DataCache<S, T>
 	}
 
 	/**
-	 * Clear the data cache.
+	 * Clear the cache.
 	 */
 	public void clear()
 	{
