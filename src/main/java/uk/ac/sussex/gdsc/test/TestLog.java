@@ -84,7 +84,7 @@ public class TestLog
             return java.util.logging.Level.parse(levelName);
         }
     }
-    
+
     /**
      * Extend {@link java.util.logging.LogRecord} to add support for a Supplier<String> or formatted message.
      */
@@ -92,11 +92,11 @@ public class TestLog
     {
         /** The serial version ID. */
         private static final long serialVersionUID = 1L;
-        
+
         private Supplier<String> msgSupplier;
         private String format;
         private Object[] args;
-        
+
         /**
          * Instantiates a new test log record.
          *
@@ -109,7 +109,7 @@ public class TestLog
         {
             super(level, msg);
         }
-        
+
         /**
          * Instantiates a new test log record.
          *
@@ -123,7 +123,7 @@ public class TestLog
             super(level, "");
             this.msgSupplier = message;
         }
-        
+
         /**
          * Instantiates a new test log record.
          *
@@ -140,7 +140,7 @@ public class TestLog
             this.format = format;
             this.args = args;
         }
-        
+
         @Override
         public String getMessage()
         {
@@ -152,7 +152,7 @@ public class TestLog
                 setMessage(msgSupplier.get());
             return super.getMessage();
         }
-        
+
         @Override
         public void setMessage(String message)
         {
@@ -658,6 +658,42 @@ public class TestLog
             l = TestLevel.STAGE_FAILURE;
         }
         return new TestLogRecord(l, message);
+    }
+
+    /**
+     * Gets the record to log the message.
+     * <p>
+     * The message will use lazy construction, only generating the string if passed 
+     * to a logger that is active at the specified level.
+     *
+     * @param level
+     *            the level
+     * @param format
+     *            the format
+     * @param args
+     *            the args
+     * @return the log record
+     */
+    public static LogRecord getRecord(Level level, String format, Object... args)
+    {
+        return new TestLogRecord(level, format, args);
+    }
+
+    /**
+     * Gets the record to log the message.
+     * <p>
+     * The message will use lazy construction, only generating the string if passed 
+     * to a logger that is active at the specified level.
+     * 
+     * @param level
+     *            the level
+     * @param message
+     *            the message
+     * @return the log record
+     */
+    public static LogRecord getRecord(Level level, Supplier<String> message)
+    {
+        return new TestLogRecord(level, message);
     }
 
     /**
