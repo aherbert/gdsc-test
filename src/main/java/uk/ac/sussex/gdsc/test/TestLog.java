@@ -697,6 +697,24 @@ public class TestLog
     }
 
     /**
+     * Gets the record to log the object using {@code String.valueOf(object)}.
+     * <p>
+     * The message will use lazy construction, only generating the string if passed
+     * to a logger that is active at the specified level.
+     *
+     * @param level
+     *            the level
+     * @param object
+     *            the object
+     * @return the log record
+     */
+    public static LogRecord getRecord(Level level, Object object)
+    {
+        return new TestLogRecord(level, () -> String.valueOf(object));
+    }
+
+    
+    /**
      * Log the speed test result of two timing tasks. A test is made to determine if the fast has a lower time than the
      * slow.
      * <p>
