@@ -252,29 +252,7 @@ public class TimingService
     public void report(Logger logger)
     {
         if (logger.isLoggable(Level.INFO))
-        {
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
-            {
-                ps.println();
-                report(ps);
-                ps.close();
-                logger.log(Level.INFO, getReport(baos));
-            }
-            catch (final UnsupportedEncodingException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private static String getReport(ByteArrayOutputStream baos)
-    {
-        final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
-        // Remove the new line at the end
-        final int i = text.lastIndexOf(newLine);
-        assert i == text.length() - newLine.length() : "New-line not at the end of the string";
-        return (i < 0) ? text : text.substring(0, i);
+            logger.log(Level.INFO, getReport());
     }
 
     /**
@@ -290,20 +268,64 @@ public class TimingService
         if (n < 1)
             return;
         if (logger.isLoggable(Level.INFO))
+            logger.log(Level.INFO, getReport(n));
+    }
+
+    /**
+     * Get a report with the timing results.
+     *
+     * @return the report
+     */
+    public String getReport()
+    {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
         {
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
-            {
-                ps.println();
-                report(ps, n);
-                ps.close();
-                logger.log(Level.INFO, getReport(baos));
-            }
-            catch (final UnsupportedEncodingException e)
-            {
-                e.printStackTrace();
-            }
+            report(ps);
+            ps.close();
+            return getReport(baos);
         }
+        catch (final UnsupportedEncodingException e)
+        {
+            // This should not happen!
+            e.printStackTrace();
+        }
+        return "";
+    }
+    
+    private static String getReport(ByteArrayOutputStream baos)
+    {
+        final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
+        // Remove the new line at the end
+        final int i = text.lastIndexOf(newLine);
+        assert i == text.length() - newLine.length() : "New-line not at the end of the string";
+        return (i < 0) ? text : text.substring(0, i);
+    }
+
+    /**
+     * Get a report with the last n timing results.
+     *
+     * @param n
+     *            the n
+     * @return the report
+     */
+    public String getReport(int n)
+    {
+        if (n < 1)
+            return "";
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
+        {
+            report(ps, n);
+            ps.close();
+            return getReport(baos);
+        }
+        catch (final UnsupportedEncodingException e)
+        {
+            // This should not happen!
+            e.printStackTrace();
+        }
+        return "";
     }
 
     /**

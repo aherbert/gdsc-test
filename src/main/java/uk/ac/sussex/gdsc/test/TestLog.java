@@ -25,6 +25,7 @@ package uk.ac.sussex.gdsc.test;
 
 import java.util.function.Supplier;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
@@ -32,6 +33,136 @@ import java.util.logging.Logger;
  */
 public class TestLog
 {
+    /**
+     * Extend {@link java.util.logging.Level} to add levels for test logging.
+     */
+    public static class TestLevel extends java.util.logging.Level
+    {
+        /**
+         * Additional level for logging test failures.
+         * <p>
+         * Equivalent level to {@link java.util.logging.Level#SEVERE}.
+         */
+        public static final Level TEST_FAILURE = new TestLevel("FAILURE", SEVERE.intValue());
+
+        /**
+         * Additional level for logging test stage failures.
+         * <p>
+         * Equivalent level to {@link java.util.logging.Level#WARNING}.
+         */
+        public static final Level STAGE_FAILURE = new TestLevel("STAGE FAILURE", WARNING.intValue());
+
+        /**
+         * Serial version.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Constructor.
+         * 
+         * @param name
+         *            Name
+         * @param value
+         *            Value
+         */
+        public TestLevel(String name, int value)
+        {
+            super(name, value);
+        }
+
+        /**
+         * Parse a logging level.
+         * 
+         * @param levelName
+         *            Name of level to parse.
+         * @return {@link java.util.logging.Level} level
+         */
+        public static synchronized java.util.logging.Level parse(String levelName)
+        {
+            // While this is a pass-through to the parent class,
+            // it ensures our own level have been added.
+            return java.util.logging.Level.parse(levelName);
+        }
+    }
+    
+    /**
+     * Extend {@link java.util.logging.LogRecord} to add support for a Supplier<String> or formatted message.
+     */
+    private static class TestLogRecord extends LogRecord
+    {
+        /** The serial version ID. */
+        private static final long serialVersionUID = 1L;
+        
+        private Supplier<String> msgSupplier;
+        private String format;
+        private Object[] args;
+        
+        /**
+         * Instantiates a new test log record.
+         *
+         * @param level
+         *            the level
+         * @param msg
+         *            the msg
+         */
+        public TestLogRecord(Level level, String msg)
+        {
+            super(level, msg);
+        }
+        
+        /**
+         * Instantiates a new test log record.
+         *
+         * @param level
+         *            the level
+         * @param message
+         *            the message
+         */
+        public TestLogRecord(Level level, Supplier<String> message)
+        {
+            super(level, "");
+            this.msgSupplier = message;
+        }
+        
+        /**
+         * Instantiates a new test log record.
+         *
+         * @param level
+         *            the level
+         * @param format
+         *            the format
+         * @param args
+         *            the arguments
+         */
+        public TestLogRecord(Level level, String format, Object... args)
+        {
+            super(level, "");
+            this.format = format;
+            this.args = args;
+        }
+        
+        @Override
+        public String getMessage()
+        {
+            // First call to this class will create the message.
+            // This should only be used when the message is logged.
+            if (format != null)
+                setMessage(String.format(format, args));
+            else if (msgSupplier != null)
+                setMessage(msgSupplier.get());
+            return super.getMessage();
+        }
+        
+        @Override
+        public void setMessage(String message)
+        {
+            // Clear the formatted messages
+            format = null;
+            msgSupplier = null;
+            super.setMessage(message);
+        }
+    }
+
     /**
      * Gets the code point: ClassName:MethodName:LineNumber for the method that initialised the error.
      *
@@ -102,15 +233,14 @@ public class TestLog
     /**
      * Get a supplier for the string using the format and arguments.
      * <p>
-     * This can be used where it is not convenient to create a lambda function using:
+     * This can be used where it is not convenient to create a lambda function directly because the arguments are not
+     * effectively final. Returns:
      *
      * <pre>
      * <code>
      * () -> String.format(format, args);
      * </code>
      * </pre>
-     *
-     * directly because the arguments are not effectively final.
      *
      * @param format
      *            the format
@@ -338,6 +468,196 @@ public class TestLog
             format = getCodePoint(3) + "Test Failure: " + format;
         }
         log(logger, l, format, args);
+    }
+
+    /**
+     * Gets the record to log the test result.
+     * <p>
+     * <ul>
+     * <li>If true the message will be written at the {@link Level#INFO} level.
+     * <li>If false the message will be written at the {@link TestLevel#TEST_FAILURE} level.
+     * </ul>
+     * <p>
+     * This is a helper method for tests that may not always pass so they are
+     * easily traced in the log.
+     *
+     * @param result
+     *            the result
+     * @param message
+     *            the message
+     * @return the log record
+     */
+    public static LogRecord getRecord(boolean result, String message)
+    {
+        Level l;
+        if (result)
+        {
+            l = Level.INFO;
+        }
+        else
+        {
+            l = TestLevel.TEST_FAILURE;
+        }
+        return new LogRecord(l, message);
+    }
+
+    /**
+     * Gets the record to log the test result.
+     * <p>
+     * <ul>
+     * <li>If true the message will be written at the {@link Level#INFO} level.
+     * <li>If false the message will be written at the {@link TestLevel#TEST_FAILURE} level.
+     * </ul>
+     * <p>
+     * This is a helper method for tests that may not always pass so they are
+     * easily traced in the log.
+     *
+     * @param result
+     *            the result
+     * @param format
+     *            the format
+     * @param args
+     *            the args
+     * @return the log record
+     */
+    public static LogRecord getRecord(boolean result, String format, Object... args)
+    {
+        Level l;
+        if (result)
+        {
+            l = Level.INFO;
+        }
+        else
+        {
+            l = TestLevel.TEST_FAILURE;
+        }
+        return new TestLogRecord(l, format, args);
+    }
+
+    /**
+     * Gets the record to log the test result.
+     * <p>
+     * <ul>
+     * <li>If true the message will be written at the {@link Level#INFO} level.
+     * <li>If false the message will be written at the {@link TestLevel#TEST_FAILURE} level.
+     * </ul>
+     * <p>
+     * This is a helper method for tests that may not always pass so they are
+     * easily traced in the log.
+     *
+     * @param result
+     *            the result
+     * @param message
+     *            the message
+     * @return the log record
+     */
+    public static LogRecord getRecord(boolean result, Supplier<String> message)
+    {
+        Level l;
+        if (result)
+        {
+            l = Level.INFO;
+        }
+        else
+        {
+            l = TestLevel.TEST_FAILURE;
+        }
+        return new TestLogRecord(l, message);
+    }
+
+    /**
+     * Gets the record to log the test stage result.
+     * <p>
+     * <ul>
+     * <li>If true the message will be written at the {@link Level#INFO} level.
+     * <li>If false the message will be written at the {@link TestLevel#STAGE_FAILURE} level.
+     * </ul>
+     * <p>
+     * This is a helper method for tests that may not always pass so they are
+     * easily traced in the log.
+     *
+     * @param result
+     *            the result
+     * @param message
+     *            the message
+     * @return the log record
+     */
+    public static LogRecord getStageRecord(boolean result, String message)
+    {
+        Level l;
+        if (result)
+        {
+            l = Level.INFO;
+        }
+        else
+        {
+            l = TestLevel.STAGE_FAILURE;
+        }
+        return new LogRecord(l, message);
+    }
+
+    /**
+     * Gets the record to log the test stage result.
+     * <p>
+     * <ul>
+     * <li>If true the message will be written at the {@link Level#INFO} level.
+     * <li>If false the message will be written at the {@link TestLevel#STAGE_FAILURE} level.
+     * </ul>
+     * <p>
+     * This is a helper method for tests that may not always pass so they are
+     * easily traced in the log.
+     *
+     * @param result
+     *            the result
+     * @param format
+     *            the format
+     * @param args
+     *            the args
+     * @return the log record
+     */
+    public static LogRecord getStageRecord(boolean result, String format, Object... args)
+    {
+        Level l;
+        if (result)
+        {
+            l = Level.INFO;
+        }
+        else
+        {
+            l = TestLevel.STAGE_FAILURE;
+        }
+        return new TestLogRecord(l, format, args);
+    }
+
+    /**
+     * Gets the record to log the test stage result.
+     * <p>
+     * <ul>
+     * <li>If true the message will be written at the {@link Level#INFO} level.
+     * <li>If false the message will be written at the {@link TestLevel#STAGE_FAILURE} level.
+     * </ul>
+     * <p>
+     * This is a helper method for tests that may not always pass so they are
+     * easily traced in the log.
+     *
+     * @param result
+     *            the result
+     * @param message
+     *            the message
+     * @return the log record
+     */
+    public static LogRecord getStageRecord(boolean result, Supplier<String> message)
+    {
+        Level l;
+        if (result)
+        {
+            l = Level.INFO;
+        }
+        else
+        {
+            l = TestLevel.STAGE_FAILURE;
+        }
+        return new TestLogRecord(l, message);
     }
 
     /**

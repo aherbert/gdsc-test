@@ -42,7 +42,7 @@ public class ExtraAssertTest
         {
             Logger logger = Logger.getLogger(ExtraAssertTest.class.getName());
             final String msg = e.getMessage();
-            logger.info(msg);
+            logger.fine(msg);
             Assert.assertTrue("Unexpected message", msg.startsWith("[2] == 3.50"));
         }
     }

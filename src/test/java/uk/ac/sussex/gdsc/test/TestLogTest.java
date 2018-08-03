@@ -24,6 +24,7 @@
 package uk.ac.sussex.gdsc.test;
 
 import java.util.IllegalFormatConversionException;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +33,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import uk.ac.sussex.gdsc.test.TestLog.TestLevel;
 
 @SuppressWarnings("javadoc")
 public class TestLogTest
@@ -50,6 +53,8 @@ public class TestLogTest
         logger = null;
     }
 
+    //@formatter:off
+    
     @Test
     public void canSupplyVarArgs()
     {
@@ -130,5 +135,62 @@ public class TestLogTest
         TestLog.logSpeedTestResult(logger, slowR, slowFastR);
         TestLog.logSpeedTestStageResult(logger, slowR, fastR);
         TestLog.logSpeedTestStageResult(logger, slowR, slowFastR);
+    }
+
+    private static class MessageSupplier implements Supplier<String>
+    {
+        int count = 0;
+
+        @Override
+        public String get()
+        {
+            count++;
+            return "Lazy message";
+        }
+    }
+
+    @Test
+    public void canGetLogRecord()
+    {
+        logger.log(TestLog.getRecord(true, "This is a test passed record"));
+        logger.log(TestLog.getRecord(true, "This is a test passed formatted record: %d", 1));
+        logger.log(TestLog.getStageRecord(true, "This is a test stage passed record"));
+        logger.log(TestLog.getStageRecord(true, "This is a test stage passed formatted record: %d", 1));
+        logger.log(TestLog.getRecord(false, "This is a test failure record"));
+        logger.log(TestLog.getRecord(false, "This is a test failure formatted record: %d", 1));
+        logger.log(TestLog.getStageRecord(false, "This is a test stage failure record"));
+        logger.log(TestLog.getStageRecord(false, "This is a test stage failure formatted record: %d", 1));
+
+
+        MessageSupplier message = new MessageSupplier();
+        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getRecord(false, "").getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getRecord(false, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getRecord(false, message).getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getRecord(true, "").getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getRecord(true, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getRecord(true, message).getLevel().intValue());
+        
+        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageRecord(false, "").getLevel().intValue());
+        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageRecord(false, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageRecord(false, message).getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageRecord(true, "").getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageRecord(true, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageRecord(true, message).getLevel().intValue());
+        
+        // Test the lazy loading of messages works.
+        if (logger.isLoggable(TestLevel.TEST_FAILURE))
+        {
+            message = new MessageSupplier();
+            logger.log(TestLog.getRecord(false, message));
+            Assertions.assertEquals(1, message.count);
+        }
+
+        if (!logger.isLoggable(Level.INFO))
+        {
+            message = new MessageSupplier();
+            logger.log(TestLog.getRecord(true, message));
+            // Should not try to create the message
+            Assertions.assertEquals(0, message.count);
+        }
     }
 }
