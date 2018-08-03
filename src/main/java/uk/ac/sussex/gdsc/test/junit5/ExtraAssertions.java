@@ -1236,7 +1236,10 @@ public class ExtraAssertions
      */
     public static void assertTrue(boolean condition, String format, Object... args)
     {
-        Assertions.assertTrue(condition, () -> String.format(format, args));
+        if (!condition)
+        {
+            Assertions.assertTrue(condition, () -> String.format(format, args));
+        }
     }
 
     /**
@@ -1253,7 +1256,10 @@ public class ExtraAssertions
      */
     public static void assertFalse(boolean condition, String format, Object... args)
     {
-        Assertions.assertFalse(condition, () -> String.format(format, args));
+        if (condition)
+        {
+            Assertions.assertFalse(condition, () -> String.format(format, args));
+        }
     }
 
     /**
