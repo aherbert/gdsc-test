@@ -131,7 +131,6 @@ public class ExtraAssume
      *
      * @throws AssumptionViolatedException
      *             Thrown if the assumption is invalid to stop the test and ignore it
-     * @deprecated LogLevel is to be removed
      */
     public static void assumeSpeedTest() throws AssumptionViolatedException
     {
