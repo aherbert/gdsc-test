@@ -292,7 +292,7 @@ public class TimingService
         }
         return "";
     }
-    
+
     private static String getReport(ByteArrayOutputStream baos)
     {
         final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
