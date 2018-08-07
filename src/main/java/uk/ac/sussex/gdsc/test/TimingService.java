@@ -28,8 +28,6 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class to run timing tasks.
@@ -186,25 +184,6 @@ public class TimingService
     }
 
     /**
-     * Report the timimg results to the standard output.
-     */
-    public void report()
-    {
-        report(System.out);
-    }
-
-    /**
-     * Report the last n timimg results to the standard output.
-     *
-     * @param n
-     *            the n
-     */
-    public void report(int n)
-    {
-        report(System.out, n);
-    }
-
-    /**
      * Report the timimg results to the output.
      *
      * @param out
@@ -241,34 +220,6 @@ public class TimingService
             r[i] = results.get(i);
         }
         report(out, r);
-    }
-
-    /**
-     * Report the timing results to the logger at the {@link Level#INFO} level.
-     *
-     * @param logger
-     *            the logger
-     */
-    public void report(Logger logger)
-    {
-        if (logger.isLoggable(Level.INFO))
-            logger.log(Level.INFO, getReport());
-    }
-
-    /**
-     * Report the last n timing results to the logger at the {@link Level#INFO} level.
-     *
-     * @param logger
-     *            the logger
-     * @param n
-     *            the n
-     */
-    public void report(Logger logger, int n)
-    {
-        if (n < 1)
-            return;
-        if (logger.isLoggable(Level.INFO))
-            logger.log(Level.INFO, getReport(n));
     }
 
     /**
