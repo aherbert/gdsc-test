@@ -115,7 +115,7 @@ public class AnnotationTest
     @MethodSource(value = "createSeeds")
     public void canDynamicallyProvideSeeds(int seed)
     {
-        logger.info(() -> String.format("Dynamic seed = %d\n", seed));
+        logger.info(() -> String.format("Dynamic seed = %d", seed));
     }
 
     @SuppressWarnings("unused")
