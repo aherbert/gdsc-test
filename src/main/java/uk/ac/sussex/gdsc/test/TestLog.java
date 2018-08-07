@@ -351,8 +351,8 @@ public class TestLog
      * Gets the record to log the test result.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#TEST_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are
@@ -374,8 +374,8 @@ public class TestLog
      * Gets the record to log the test result.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#TEST_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are
@@ -402,8 +402,8 @@ public class TestLog
      * Gets the record to log the test result.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#TEST_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are
@@ -428,8 +428,8 @@ public class TestLog
      * Gets the record to log the test stage result.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are
@@ -451,8 +451,8 @@ public class TestLog
      * Gets the record to log the test stage result.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are
@@ -479,8 +479,8 @@ public class TestLog
      * Gets the record to log the test stage result.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are
@@ -507,8 +507,8 @@ public class TestLog
      * slow.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#TEST_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for speed tests that may not always pass.
@@ -530,8 +530,8 @@ public class TestLog
      * slow.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#TEST_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for speed tests that may not always pass.
@@ -559,8 +559,8 @@ public class TestLog
      * slow.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for speed tests that may not always pass.
@@ -582,8 +582,8 @@ public class TestLog
      * slow.
      * <p>
      * <ul>
-     * <li>If true the message will be written at the {@link Level#INFO} level.
-     * <li>If false the message will be written at the {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
      * </ul>
      * <p>
      * This is a helper method for speed tests that may not always pass.
