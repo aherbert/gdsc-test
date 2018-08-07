@@ -248,7 +248,8 @@ public class TimingService
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
         {
-            ps.println();
+            if (leadingNewLine)
+                ps.println();
             report(ps);
             ps.close();
             return getReport(baos);
@@ -272,6 +273,8 @@ public class TimingService
 
     /**
      * Get a report with the last n timing results.
+     * <p>
+     * A leading new line is prefixed to the report and no final trailing new line is used.
      *
      * @param n
      *            the n
@@ -279,11 +282,29 @@ public class TimingService
      */
     public String getReport(int n)
     {
+        return getReport(n, true);
+    }
+
+    /**
+     * Get a report with the last n timing results.
+     * <p>
+     * A leading new line is optionally prefixed to the report and no final trailing new line is used.
+     *
+     * @param n
+     *            the n
+     * @param leadingNewLine
+     *            Set to true to add a leading new line
+     * @return the report
+     */
+    public String getReport(int n, boolean leadingNewLine)
+    {
         if (n < 1)
             return "";
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
         {
+            if (leadingNewLine)
+                ps.println();
             report(ps, n);
             ps.close();
             return getReport(baos);
