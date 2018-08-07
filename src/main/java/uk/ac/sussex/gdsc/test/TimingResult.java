@@ -23,6 +23,8 @@
  */
 package uk.ac.sussex.gdsc.test;
 
+import java.util.function.Supplier;
+
 /**
  * Class to store results of running a timing task.
  */
@@ -59,6 +61,21 @@ public class TimingResult
     {
         this.task = new NamedTimingTask(name);
         this.times = times;
+    }
+
+    /**
+     * Instantiates a new timing result.
+     * <p>
+     * The result will be created with a dummy implementation of the {@link TimingTask} interface.
+     *
+     * @param name
+     *            the name
+     * @param times
+     *            the times
+     */  public TimingResult(Supplier<String> name, long... times)
+    {
+         this.task = new NamedTimingTask(name);
+         this.times = times;
     }
 
     /**

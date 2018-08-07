@@ -28,7 +28,8 @@ package uk.ac.sussex.gdsc.test;
  */
 public abstract class BaseTimingTask implements TimingTask
 {
-    private final String name;
+    /** The name of the task. */
+    protected String name;
 
     /**
      * Instantiates a new base timing task.

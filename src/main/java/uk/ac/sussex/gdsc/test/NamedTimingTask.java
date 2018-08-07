@@ -23,6 +23,8 @@
  */
 package uk.ac.sussex.gdsc.test;
 
+import java.util.function.Supplier;
+
 /**
  * Defines a named task that was run.
  * <p>
@@ -30,6 +32,8 @@ package uk.ac.sussex.gdsc.test;
  */
 public class NamedTimingTask extends BaseTimingTask
 {
+    private Supplier<String> supplierName;
+
     /**
      * Instantiates a new named timing task.
      *
@@ -39,6 +43,31 @@ public class NamedTimingTask extends BaseTimingTask
     public NamedTimingTask(String name)
     {
         super(name);
+    }
+
+    /**
+     * Instantiates a new named timing task.
+     *
+     * @param name
+     *            the name
+     */
+    public NamedTimingTask(Supplier<String> name)
+    {
+        super("");
+        this.supplierName = name;
+    }
+
+    @Override
+    public String getName()
+    {
+        // Format the name on demand
+        Supplier<String> supplierName = this.supplierName;
+        if (supplierName != null)
+        {
+            name = supplierName.get();
+            this.supplierName = null;
+        }
+        return super.getName();
     }
 
     @Override
