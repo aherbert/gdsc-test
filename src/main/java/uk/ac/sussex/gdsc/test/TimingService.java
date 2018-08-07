@@ -231,7 +231,7 @@ public class TimingService
      */
     public String getReport()
     {
-        return getReport(true);
+        return getReport(Integer.MAX_VALUE, true);
     }
 
     /**
@@ -245,30 +245,7 @@ public class TimingService
      */
     public String getReport(boolean leadingNewLine)
     {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
-        {
-            if (leadingNewLine)
-                ps.println();
-            report(ps);
-            ps.close();
-            return getReport(baos);
-        }
-        catch (final UnsupportedEncodingException e)
-        {
-            // This should not happen!
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    private static String getReport(ByteArrayOutputStream baos)
-    {
-        final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
-        // Remove the new line at the end
-        final int i = text.lastIndexOf(newLine);
-        assert i == text.length() - newLine.length() : "New-line not at the end of the string";
-        return (i < 0) ? text : text.substring(0, i);
+        return getReport(Integer.MAX_VALUE, leadingNewLine);
     }
 
     /**
@@ -315,6 +292,15 @@ public class TimingService
             e.printStackTrace();
         }
         return "";
+    }
+
+    private static String getReport(ByteArrayOutputStream baos)
+    {
+        final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
+        // Remove the new line at the end
+        final int i = text.lastIndexOf(newLine);
+        assert i == text.length() - newLine.length() : "New-line not at the end of the string";
+        return (i < 0) ? text : text.substring(0, i);
     }
 
     /**
