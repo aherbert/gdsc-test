@@ -85,7 +85,8 @@ public class TestLog
     }
 
     /**
-     * Extend {@link java.util.logging.LogRecord} to add support for a Supplier<String> or formatted message.
+     * Extend {@link java.util.logging.LogRecord} to add support for a 
+     * {@code Supplier<String>} or formatted message.
      */
     private static class TestLogRecord extends LogRecord
     {
@@ -223,7 +224,7 @@ public class TestLog
      *
      * <pre>
      * <code>
-     * () -> String.format(format, args);
+     * () -&gt; String.format(format, args);
      * </code>
      * </pre>
      *
@@ -349,7 +350,6 @@ public class TestLog
 
     /**
      * Gets the record to log the test result.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
@@ -372,7 +372,6 @@ public class TestLog
 
     /**
      * Gets the record to log the test result.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
@@ -400,7 +399,6 @@ public class TestLog
 
     /**
      * Gets the record to log the test result.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
@@ -426,7 +424,6 @@ public class TestLog
 
     /**
      * Gets the record to log the test stage result.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
@@ -449,7 +446,6 @@ public class TestLog
 
     /**
      * Gets the record to log the test stage result.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
@@ -477,7 +473,6 @@ public class TestLog
 
     /**
      * Gets the record to log the test stage result.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
@@ -505,7 +500,6 @@ public class TestLog
      * Get the record to log the result of two timing tasks.
      * A test is made to determine if the fast has a lower time than the
      * slow.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
@@ -528,7 +522,6 @@ public class TestLog
      * Get the record to log the result of two timing tasks.
      * A test is made to determine if the fast has a lower time than the
      * slow.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
@@ -557,7 +550,6 @@ public class TestLog
      * Get the record to log the stage result of two timing tasks.
      * A test is made to determine if the fast has a lower time than the
      * slow.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
@@ -580,7 +572,6 @@ public class TestLog
      * Get the record to log the stage result of two timing tasks.
      * A test is made to determine if the fast has a lower time than the
      * slow.
-     * <p>
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
      * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
