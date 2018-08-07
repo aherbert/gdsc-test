@@ -224,14 +224,31 @@ public class TimingService
 
     /**
      * Get a report with the timing results.
+     * <p>
+     * A leading new line is prefixed to the report and no final trailing new line is used.
      *
      * @return the report
      */
     public String getReport()
     {
+        return getReport(true);
+    }
+
+    /**
+     * Get a report with the timing results.
+     * <p>
+     * A leading new line is optionally prefixed to the report and no final trailing new line is used.
+     * 
+     * @param leadingNewLine
+     *            Set to true to add a leading new line
+     * @return the report
+     */
+    public String getReport(boolean leadingNewLine)
+    {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
         {
+            ps.println();
             report(ps);
             ps.close();
             return getReport(baos);
