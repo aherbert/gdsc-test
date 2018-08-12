@@ -32,7 +32,7 @@ import org.junit.internal.ComparisonCriteria;
  * <p>
  * Assert functions are provided to compare float values using relative error, and assert methods to support formatted
  * messages, e.g.
- * 
+ *
  * <pre>
  * &#64;Test
  * public void myTest()
@@ -44,6 +44,13 @@ import org.junit.internal.ComparisonCriteria;
  */
 public class ExtraAssert
 {
+    /**
+     * Do not allow public construction.
+     */
+    private ExtraAssert()
+    {
+    }
+
     /**
      * Get the maximum
      *

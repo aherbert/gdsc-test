@@ -41,10 +41,18 @@ public class RandomSeed
      *            the current repetition
      * @param totalRepetitions
      *            the total repetitions
+     * @throws IllegalArgumentException
+     *             If {@code totalRepitions < 1} or {@code currentRepetition < 1} or {@code currentRepetition > totalRepetitions}
      */
-    public RandomSeed(long seed, int currentRepetition, int totalRepetitions)
+    public RandomSeed(long seed, int currentRepetition, int totalRepetitions) throws IllegalArgumentException
     {
         this.seed = seed;
+        if (totalRepetitions < 1)
+            throw new IllegalArgumentException("Total repetitions must be strictly positive");
+        if (currentRepetition < 1)
+            throw new IllegalArgumentException("Current repetition must be strictly positive");
+        if (currentRepetition > totalRepetitions)
+            throw new IllegalArgumentException("Current repetition is above total repetitions");
         this.currentRepetition = currentRepetition;
         this.totalRepetitions = totalRepetitions;
     }
@@ -84,7 +92,7 @@ public class RandomSeed
      * <p>
      * The hashcode is computed using the components of the seed that contribute to randomness. The repetition counts
      * are ignored.
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -98,7 +106,7 @@ public class RandomSeed
      * <p>
      * Equality is computed using the components of the seed that contribute to randomness. The repetition counts
      * are ignored.
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -113,7 +121,7 @@ public class RandomSeed
         // type check and cast
         if (getClass() != o.getClass())
             return false;
-        RandomSeed that = (RandomSeed) o;
+        final RandomSeed that = (RandomSeed) o;
         // field comparison
         return this.seed == that.seed;
     }

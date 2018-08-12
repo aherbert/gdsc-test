@@ -54,8 +54,6 @@ public class TestLogTest
         logger = null;
     }
 
-    //@formatter:off
-
     @Test
     public void canSupplyVarArgs()
     {
@@ -81,25 +79,65 @@ public class TestLogTest
     }
 
     @Test
-    public void canStaceTraceElement()
+    public void canGetStaceTraceElement()
     {
-        final StackTraceElement e = new Throwable().getStackTrace()[0];
-        final StackTraceElement o = TestLog.getStaceTraceElement();
+        final StackTraceElement[] e = new Throwable().getStackTrace();
+        final StackTraceElement o = TestLog.getStackTraceElement();
+        final StackTraceElement o2 = TestLog.getStackTraceElement(1);
         Assertions.assertNotNull(e);
         Assertions.assertNotNull(o);
-        Assertions.assertEquals(e.getClassName(), o.getClassName());
-        Assertions.assertEquals(e.getMethodName(), o.getMethodName());
-        Assertions.assertEquals(e.getLineNumber() + 1, o.getLineNumber());
+        Assertions.assertEquals(e[0].getClassName(), o.getClassName());
+        Assertions.assertEquals(e[0].getMethodName(), o.getMethodName());
+        Assertions.assertEquals(e[0].getLineNumber() + 1, o.getLineNumber());
         logger.info(() -> String.format("%s:%s:%d", o.getClassName(), o.getMethodName(), o.getLineNumber()));
+
+        Assertions.assertNotNull(o2);
+        Assertions.assertEquals(e[1].getClassName(), o2.getClassName());
+        Assertions.assertEquals(e[1].getMethodName(), o2.getMethodName());
+        Assertions.assertEquals(e[1].getLineNumber(), o2.getLineNumber());
+    }
+
+    @Test
+    public void getStaceTraceElementIsNullWhenNotLocated()
+    {
+        final int size = new Throwable().getStackTrace().length;
+        final StackTraceElement o = TestLog.getStackTraceElement(size);
+        Assertions.assertNull(o);
+    }
+
+    @Test
+    public void getStaceTraceElementThrowsWhenCountIsNegative()
+    {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            TestLog.getStackTraceElement(-1);
+        });
+    }
+
+    @Test
+    public void canGetCodePoint()
+    {
+        final StackTraceElement e = new Throwable().getStackTrace()[0];
+        final String codePoint = TestLog.getCodePoint();
+        Assertions.assertNotNull(e);
+        Assertions.assertNotNull(codePoint);
+        final String[] o = codePoint.split(":");
+        Assertions.assertEquals(e.getClassName(), o[0]);
+        Assertions.assertEquals(e.getMethodName(), o[1]);
+        Assertions.assertEquals(e.getLineNumber() + 1, Integer.parseInt(o[2]));
+        logger.info(codePoint);
+        Assertions.assertEquals("", TestLog.getCodePoint(null));
     }
 
     @Test
     public void canGetRecord()
     {
-        for (final Level l : new Level[] { Level.INFO, Level.FINER}) {
+        for (final Level l : new Level[] { Level.INFO, Level.FINER })
+        {
+            //@formatter:off
             logger.log(check(l, TestLog.getRecord(l, "This is a record")));
             logger.log(check(l, TestLog.getRecord(l, "This is a formatted record: %d", 1)));
             logger.log(check(l, TestLog.getRecord(l, () -> String.format("This is a supplier record: %d", 1))));
+            //@formatter:on
         }
     }
 
@@ -110,31 +148,51 @@ public class TestLogTest
     }
 
     @Test
-    public void canGetFailureRecord()
+    public void canGetFailRecord()
     {
-         logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord("This is a failed record")));
-         logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord( "This is a failed formatted record: %d", 1)));
-         logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord( () -> String.format("This is a failed supplier record: %d", 1))));
+        //@formatter:off
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord("This is a failed record")));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord( "This is a failed formatted record: %d", 1)));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord( () -> String.format("This is a failed supplier record: %d", 1))));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord(new Error("This is a failed record with thrown"))));
+        //@formatter:on
     }
 
     @Test
-    public void canGetTimingResultRecord()
+    public void canGetTimingRecord()
     {
-        final TimingTask fast = new NamedTimingTask("Fast");
-        final TimingTask slow = new NamedTimingTask("Slow");
-        final TimingResult fastR = new TimingResult(fast, new long[] { 100 });
-        final TimingResult slowR = new TimingResult(slow, new long[] { 1000 });
-        final TimingResult slowFastR = new TimingResult(fast, new long[] { 10000 });
+        //@formatter:off
+        // Default levels
+        logger.log(check(Level.INFO, TestLog.getTimingRecord("slow", 100, "fast", 10)));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getTimingRecord("slow", 1, "fast", 10)));
+        logger.log(check(Level.INFO, TestLog.getStageTimingRecord("slow", 100, "fast", 10)));
+        logger.log(check(TestLevel.STAGE_FAILURE, TestLog.getStageTimingRecord("slow", 1, "fast", 10)));
 
-         logger.log(check(Level.INFO, TestLog.getRecord(slowR, fastR)));
-         logger.log(check(TestLevel.TEST_FAILURE, TestLog.getRecord(slowR, slowFastR)));
-         logger.log(check(Level.INFO, TestLog.getStageRecord(slowR, fastR)));
-         logger.log(check(TestLevel.STAGE_FAILURE, TestLog.getStageRecord(slowR, slowFastR)));
+        // Explicit levels
+        // long version
+        logger.log(check(Level.FINE, TestLog.getTimingRecord("slow", 100, "fast", 10, Level.FINE, Level.WARNING)));
+        logger.log(check(Level.WARNING, TestLog.getTimingRecord("slow", 1, "fast", 10, Level.FINE, Level.WARNING)));
+        // double version
+        logger.log(check(Level.FINE, TestLog.getTimingRecord("slow", 100., "fast", 10., Level.FINE, Level.WARNING)));
+        logger.log(check(Level.WARNING, TestLog.getTimingRecord("slow", 1., "fast", 10., Level.FINE, Level.WARNING)));
+
+        // Using the TimingResult
+        final TimingResult fast = new TimingResult("Fast", new long[] { 100 });
+        final TimingResult slow = new TimingResult("Slow", new long[] { 1000 });
+        final TimingResult slowFast = new TimingResult("SlowFast", new long[] { 100, 10000 });
+
+        logger.log(check(Level.INFO, TestLog.getTimingRecord(slow, fast)));
+        logger.log(check(Level.INFO, TestLog.getTimingRecord(slow, slowFast, true)));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getTimingRecord(slow, slowFast, false)));
+        logger.log(check(Level.INFO, TestLog.getStageTimingRecord(slow, fast)));
+        logger.log(check(Level.INFO, TestLog.getStageTimingRecord(slow, slowFast, true)));
+        logger.log(check(TestLevel.STAGE_FAILURE, TestLog.getStageTimingRecord(slow, slowFast, false)));
+        //@formatter:on
     }
 
     private static class MessageSupplier implements Supplier<String>
     {
-        int count = 0;  
+        int count = 0;
 
         @Override
         public String get()
@@ -147,29 +205,31 @@ public class TestLogTest
     @Test
     public void canGetResultRecord()
     {
-        logger.log(TestLog.getRecord(true, "This is a test passed record"));
-        logger.log(TestLog.getRecord(true, "This is a test passed formatted record: %d", 1));
-        logger.log(TestLog.getStageRecord(true, "This is a test stage passed record"));
-        logger.log(TestLog.getStageRecord(true, "This is a test stage passed formatted record: %d", 1));
-        logger.log(TestLog.getRecord(false, "This is a test failure record"));
-        logger.log(TestLog.getRecord(false, "This is a test failure formatted record: %d", 1));
-        logger.log(TestLog.getStageRecord(false, "This is a test stage failure record"));
-        logger.log(TestLog.getStageRecord(false, "This is a test stage failure formatted record: %d", 1));
+        //@formatter:off
+        logger.log(TestLog.getResultRecord(true, "This is a test passed record"));
+        logger.log(TestLog.getResultRecord(true, "This is a test passed formatted record: %d", 1));
+        logger.log(TestLog.getStageResultRecord(true, "This is a test stage passed record"));
+        logger.log(TestLog.getStageResultRecord(true, "This is a test stage passed formatted record: %d", 1));
+        logger.log(TestLog.getResultRecord(false, "This is a test failure record"));
+        logger.log(TestLog.getResultRecord(false, "This is a test failure formatted record: %d", 1));
+        logger.log(TestLog.getStageResultRecord(false, "This is a test stage failure record"));
+        logger.log(TestLog.getStageResultRecord(false, "This is a test stage failure formatted record: %d", 1));
 
-        MessageSupplier message = new MessageSupplier();
-        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getRecord(false, "").getLevel().intValue());
-        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getRecord(false, "%d", 1).getLevel().intValue());
-        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getRecord(false, message).getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getRecord(true, "").getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getRecord(true, "%d", 1).getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getRecord(true, message).getLevel().intValue());
+        final MessageSupplier message = new MessageSupplier();
+        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getResultRecord(false, "").getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getResultRecord(false, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getResultRecord(false, message).getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getResultRecord(true, "").getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getResultRecord(true, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getResultRecord(true, message).getLevel().intValue());
 
-        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageRecord(false, "").getLevel().intValue());
-        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageRecord(false, "%d", 1).getLevel().intValue());
-        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageRecord(false, message).getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageRecord(true, "").getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageRecord(true, "%d", 1).getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageRecord(true, message).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageResultRecord(false, "").getLevel().intValue());
+        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageResultRecord(false, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageResultRecord(false, message).getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageResultRecord(true, "").getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageResultRecord(true, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageResultRecord(true, message).getLevel().intValue());
+        //@formatter:on
     }
 
     @Test
@@ -180,16 +240,16 @@ public class TestLogTest
         if (logger.isLoggable(TestLevel.TEST_FAILURE))
         {
             message = new MessageSupplier();
-            logger.log(TestLog.getRecord(false, message));
+            logger.log(TestLog.getResultRecord(false, message));
             Assertions.assertEquals(1, message.count);
         }
 
         if (!logger.isLoggable(Level.INFO))
         {
             message = new MessageSupplier();
-            logger.log(TestLog.getRecord(true, message));
+            logger.log(TestLog.getResultRecord(true, message));
             // Should not try to create the message
             Assertions.assertEquals(0, message.count);
-        }        
+        }
     }
 }

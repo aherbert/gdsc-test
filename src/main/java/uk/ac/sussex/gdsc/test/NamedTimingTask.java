@@ -61,7 +61,7 @@ public class NamedTimingTask extends BaseTimingTask
     public String getName()
     {
         // Format the name on demand
-        Supplier<String> supplierName = this.supplierName;
+        final Supplier<String> supplierName = this.supplierName;
         if (supplierName != null)
         {
             name = supplierName.get();
@@ -76,15 +76,35 @@ public class NamedTimingTask extends BaseTimingTask
         return 0;
     }
 
+    /**
+     * This should not be called as the task has no data.
+     *
+     * @param i
+     *            the i
+     * @return the data
+     * @throws IllegalStateException
+     *             If the method is called
+     * @see uk.ac.sussex.gdsc.test.TimingTask#getData(int)
+     */
     @Override
-    public Object getData(int i)
+    public Object getData(int i) throws IllegalStateException
     {
-        return null;
+        throw new IllegalStateException("This task has no data");
     }
 
+    /**
+     * This should not be called as the task has no data.
+     *
+     * @param data
+     *            the data
+     * @return the data
+     * @throws IllegalStateException
+     *             If the method is called
+     * @see uk.ac.sussex.gdsc.test.TimingTask#run(java.lang.Object)
+     */
     @Override
     public Object run(Object data)
     {
-        return null;
+        throw new IllegalStateException("This task has no data");
     }
 }

@@ -72,10 +72,11 @@ public class TimingResult
      *            the name
      * @param times
      *            the times
-     */  public TimingResult(Supplier<String> name, long... times)
+     */
+    public TimingResult(Supplier<String> name, long... times)
     {
-         this.task = new NamedTimingTask(name);
-         this.times = times;
+        this.task = new NamedTimingTask(name);
+        this.times = times;
     }
 
     /**

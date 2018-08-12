@@ -25,8 +25,6 @@ package uk.ac.sussex.gdsc.test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -34,10 +32,14 @@ import java.util.ArrayList;
  */
 public class TimingService
 {
-    /** The new used in the report. */
-    private static final String newLine = System.getProperty("line.separator");
+    /** The new line used in the report. Equal to {@code System.getProperty("line.separator")}. */
+    public static final String newLine;
+    static
+    {
+        newLine = System.getProperty("line.separator");
+    }
 
-    private int runs;
+    private int runs = 0;
 
     private final ArrayList<TimingResult> results = new ArrayList<>();
 
@@ -139,10 +141,9 @@ public class TimingService
         final int size = task.getSize();
         final long[] times = new long[runs];
 
-        // First run store the result
-        int run = 0;
+        // Store the result
         final Object[] result = new Object[size];
-        for (; run < runs; run++)
+        for (int run = 0; run < runs; run++)
         {
             final Object[] data = new Object[size];
             for (int i = 0; i < size; i++)
@@ -153,21 +154,6 @@ public class TimingService
             for (int i = 0; i < size; i++)
             {
                 result[i] = task.run(data[i]);
-            }
-            times[run] = System.nanoTime() - start;
-        }
-        // Remaining runs
-        for (; run < runs; run++)
-        {
-            final Object[] data = new Object[size];
-            for (int i = 0; i < size; i++)
-            {
-                data[i] = task.getData(i);
-            }
-            final long start = System.nanoTime();
-            for (int i = 0; i < size; i++)
-            {
-                task.run(data[i]);
             }
             times[run] = System.nanoTime() - start;
         }
@@ -217,7 +203,7 @@ public class TimingService
         final TimingResult[] r = new TimingResult[to - from];
         for (int i = 0, j = from; j < to; i++, j++)
         {
-            r[i] = results.get(i);
+            r[i] = results.get(j);
         }
         report(out, r);
     }
@@ -238,7 +224,7 @@ public class TimingService
      * Get a report with the timing results.
      * <p>
      * A leading new line is optionally prefixed to the report and no final trailing new line is used.
-     * 
+     *
      * @param leadingNewLine
      *            Set to true to add a leading new line
      * @return the report
@@ -278,7 +264,7 @@ public class TimingService
         if (n < 1)
             return "";
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true, "UTF-8"))
+        try (PrintStream ps = new PrintStream(baos, true))
         {
             if (leadingNewLine)
                 ps.println();
@@ -286,20 +272,14 @@ public class TimingService
             ps.close();
             return getReport(baos);
         }
-        catch (final UnsupportedEncodingException e)
-        {
-            // This should not happen!
-            e.printStackTrace();
-        }
-        return "";
     }
 
     private static String getReport(ByteArrayOutputStream baos)
     {
-        final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
+        final String text = new String(baos.toByteArray());
         // Remove the new line at the end
         final int i = text.lastIndexOf(newLine);
-        assert i == text.length() - newLine.length() : "New-line not at the end of the string";
+        //assert i == text.length() - newLine.length() : "New-line not at the end of the string";
         return (i < 0) ? text : text.substring(0, i);
     }
 

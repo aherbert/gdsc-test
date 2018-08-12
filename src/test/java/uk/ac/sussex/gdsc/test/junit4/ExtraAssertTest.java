@@ -40,7 +40,7 @@ public class ExtraAssertTest
         }
         catch (final AssertionError e)
         {
-            Logger logger = Logger.getLogger(ExtraAssertTest.class.getName());
+            final Logger logger = Logger.getLogger(ExtraAssertTest.class.getName());
             final String msg = e.getMessage();
             logger.fine(msg);
             Assert.assertTrue("Unexpected message", msg.startsWith("[2] == 3.50"));

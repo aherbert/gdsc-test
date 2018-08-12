@@ -36,7 +36,7 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  * Adds additional helper assumptions to those provided by {@link org.junit.Assume}.
  * <p>
  * Tests can be written to respond to the run-time configured {@link Level} and {@link TestComplexity}, e.g.
- * 
+ *
  * <pre>
  * &#64;Test
  * public void myTest()
@@ -51,6 +51,13 @@ import uk.ac.sussex.gdsc.test.TestSettings;
 public class ExtraAssume
 {
     /**
+     * Do not allow public construction.
+     */
+    private ExtraAssume()
+    {
+    }
+
+    /**
      * Assume testing is allowed at the given complexity.
      * <p>
      * Use this at the start of a test that has a long run time or is otherwise complex
@@ -64,95 +71,6 @@ public class ExtraAssume
     public static void assume(TestComplexity complexity) throws AssumptionViolatedException
     {
         Assume.assumeTrue(TestSettings.allow(complexity));
-    }
-
-    /**
-     * Assume testing is allowed at low complexity.
-     *
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeLowComplexity() throws AssumptionViolatedException
-    {
-        assume(TestComplexity.LOW);
-    }
-
-    /**
-     * Assume testing is allowed at medium complexity.
-     *
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeMediumComplexity() throws AssumptionViolatedException
-    {
-        assume(TestComplexity.MEDIUM);
-    }
-
-    /**
-     * Assume testing is allowed at high complexity.
-     *
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeHighComplexity() throws AssumptionViolatedException
-    {
-        assume(TestComplexity.HIGH);
-    }
-
-    /**
-     * Assume testing is allowed at very high complexity.
-     *
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeVeryHighComplexity() throws AssumptionViolatedException
-    {
-        assume(TestComplexity.VERY_HIGH);
-    }
-
-    /**
-     * Assume testing is allowed at maximum complexity.
-     *
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeMaximumComplexity() throws AssumptionViolatedException
-    {
-        assume(TestComplexity.MAXIMUM);
-    }
-
-    /**
-     * Assume speed testing is allowed the {@link TestComplexity#MEDIUM} complexity level.
-     * <p>
-     * Use this at the start of a speed test that has a long run time or is otherwise complex
-     * enough to warrant skipping the test if not testing at that level of complexity.
-     * <p>
-     * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
-     *
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeSpeedTest() throws AssumptionViolatedException
-    {
-        assumeSpeedTest(TestComplexity.MEDIUM);
-    }
-
-    /**
-     * Assume speed testing is allowed at the given complexity.
-     * <p>
-     * Use this at the start of a speed test that has a long run time or is otherwise complex
-     * enough to warrant skipping the test if not testing at that level of complexity.
-     * <p>
-     * This method is distinct from {@link #assume(TestComplexity)} so that speed tests can be optionally disabled.
-     *
-     * @param complexity
-     *            the complexity
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeSpeedTest(TestComplexity complexity) throws AssumptionViolatedException
-    {
-        assume(complexity);
     }
 
     /**
@@ -171,83 +89,5 @@ public class ExtraAssume
     public static void assume(Logger logger, Level level)
     {
         Assume.assumeTrue(logger.isLoggable(level));
-    }
-
-    /**
-     * Assume testing is logging at the {@link Level#SEVERE} level.
-     *
-     * @param logger
-     *            the logger
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeSevere(Logger logger) throws AssumptionViolatedException
-    {
-        assume(logger, Level.SEVERE);
-    }
-
-    /**
-     * Assume testing is logging at the {@link Level#WARNING} level.
-     *
-     * @param logger
-     *            the logger
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeWarning(Logger logger) throws AssumptionViolatedException
-    {
-        assume(logger, Level.WARNING);
-    }
-
-    /**
-     * Assume testing is logging at the {@link Level#INFO} level.
-     *
-     * @param logger
-     *            the logger
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeInfo(Logger logger) throws AssumptionViolatedException
-    {
-        assume(logger, Level.INFO);
-    }
-
-    /**
-     * Assume testing is logging at the {@link Level#FINE} level.
-     *
-     * @param logger
-     *            the logger
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeFine(Logger logger) throws AssumptionViolatedException
-    {
-        assume(logger, Level.FINE);
-    }
-
-    /**
-     * Assume testing is logging at the {@link Level#FINER} level.
-     *
-     * @param logger
-     *            the logger
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeFiner(Logger logger) throws AssumptionViolatedException
-    {
-        assume(logger, Level.FINER);
-    }
-
-    /**
-     * Assume testing is logging at the {@link Level#FINEST} level.
-     *
-     * @param logger
-     *            the logger
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
-     */
-    public static void assumeFinest(Logger logger) throws AssumptionViolatedException
-    {
-        assume(logger, Level.FINEST);
     }
 }

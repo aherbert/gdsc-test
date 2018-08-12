@@ -48,6 +48,13 @@ import org.opentest4j.AssertionFailedError;
 public class ExtraAssertions
 {
     /**
+     * Do not allow public construction.
+     */
+    private ExtraAssertions()
+    {
+    }
+
+    /**
      * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
      * <p>
      * Equality imposed by this method is consistent with {@link Double#equals(Object)} and

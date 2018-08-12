@@ -81,53 +81,66 @@ public class TestSettings
 
     static
     {
-        testComplexity = TestComplexity.NONE.getValue();
-        seed = 30051977;
-        repeats = 1;
-
-        try
-        {
-            testComplexity = Integer.parseInt(System.getProperty(PROPERTY_TEST_COMPLEXITY));
-        }
-        catch (final Exception e)
-        {
-            // Do nothing
-        }
-        try
-        {
-            seed = Long.parseLong(System.getProperty(PROPERTY_RANDOM_SEED));
-        }
-        catch (final Exception e)
-        {
-            // Do nothing
-        }
-        try
-        {
-            repeats = Integer.parseInt(System.getProperty(PROPERTY_RANDOM_REPEATS));
-        }
-        catch (final Exception e)
-        {
-            // Do nothing
-        }
-        finally
-        {
-            // Ensure repeated tests run once. They should be disabled using other mechanisms.
-            if (repeats < 1)
-            {
-                repeats = 1;
-            }
-        }
+        testComplexity = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
+        seed = getProperty(PROPERTY_RANDOM_SEED, 30051977L);
+        repeats = getProperty(PROPERTY_RANDOM_REPEATS, 1);
+        // Ensure repeated tests run once. They should be disabled using other mechanisms.
+        repeats = Math.max(1, repeats);
     }
 
     /**
-     * Sets the text complexity. Package scope for testing.
+     * Gets the system property or a default value.
      *
-     * @param complexity
-     *            the new text complexity
+     * @param name
+     *            the name
+     * @param defaultValue
+     *            the default value
+     * @return the property
      */
-    static void setTextComplexity(TestComplexity complexity)
+    static int getProperty(String name, int defaultValue)
     {
-        testComplexity = complexity.getValue();
+        final String text = System.getProperty(name);
+        if (text != null)
+            try
+            {
+                return Integer.parseInt(text);
+            }
+            catch (final NumberFormatException e)
+            {
+                // Do nothing
+            }
+        return defaultValue;
+    }
+
+    /**
+     * Gets the system property or a default value.
+     *
+     * @param name
+     *            the name
+     * @param defaultValue
+     *            the default value
+     * @return the property
+     */
+    static long getProperty(String name, long defaultValue)
+    {
+        final String text = System.getProperty(name);
+        if (text != null)
+            try
+            {
+                return Long.parseLong(text);
+            }
+            catch (final NumberFormatException e)
+            {
+                // Do nothing
+            }
+        return defaultValue;
+    }
+
+    /**
+     * Do not allow public construction.
+     */
+    private TestSettings()
+    {
     }
 
     /**

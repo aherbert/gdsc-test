@@ -58,7 +58,7 @@ public class TestLog
 
         /**
          * Constructor.
-         * 
+         *
          * @param name
          *            Name
          * @param value
@@ -68,24 +68,10 @@ public class TestLog
         {
             super(name, value);
         }
-
-        /**
-         * Parse a logging level.
-         * 
-         * @param levelName
-         *            Name of level to parse.
-         * @return {@link java.util.logging.Level} level
-         */
-        public static synchronized java.util.logging.Level parse(String levelName)
-        {
-            // While this is a pass-through to the parent class,
-            // it ensures our own level have been added.
-            return java.util.logging.Level.parse(levelName);
-        }
     }
 
     /**
-     * Extend {@link java.util.logging.LogRecord} to add support for a 
+     * Extend {@link java.util.logging.LogRecord} to add support for a
      * {@code Supplier<String>} or formatted message.
      */
     private static class TestLogRecord extends LogRecord
@@ -96,19 +82,6 @@ public class TestLog
         private Supplier<String> msgSupplier;
         private String format;
         private Object[] args;
-
-        /**
-         * Instantiates a new test log record.
-         *
-         * @param level
-         *            the level
-         * @param msg
-         *            the msg
-         */
-        public TestLogRecord(Level level, String msg)
-        {
-            super(level, msg);
-        }
 
         /**
          * Instantiates a new test log record.
@@ -141,6 +114,20 @@ public class TestLog
             this.args = args;
         }
 
+        /**
+         * Instantiates a new test log record.
+         *
+         * @param level
+         *            the level
+         * @param thrown
+         *            a throwable associated with the log event
+         */
+        public TestLogRecord(Level level, Throwable thrown)
+        {
+            super(level, thrown.getMessage());
+            setThrown(thrown);
+        }
+
         @Override
         public String getMessage()
         {
@@ -164,34 +151,76 @@ public class TestLog
     }
 
     /**
+     * Do not allow public construction.
+     */
+    private TestLog()
+    {
+    }
+
+    /**
      * Gets the code point (ClassName:MethodName:LineNumber) marking the position where this method was called.
      *
      * @return the code point
      */
     public static String getCodePoint()
     {
-        final StackTraceElement e = ___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(1);
-        return (e == null) ? "" : String.format("%s:%s:%d:", e.getClassName(), e.getMethodName(), e.getLineNumber());
+        final StackTraceElement e = ___getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(1);
+        return getCodePoint(e);
     }
 
     /**
-     * Gets the stacktrace element marking the position where this method was called.
+     * Gets the code point (ClassName:MethodName:LineNumber) from the stack trace element.
+     * <p>
+     * Returns an empty string if the element is null avoiding a NullPointerException if
+     * the element is not available.
      *
-     * @return the stacktrace element
+     * @param e
+     *            the stack trace element
+     * @return the code point (or empty string if the element is null)
      */
-    public static StackTraceElement getStaceTraceElement()
+    public static String getCodePoint(StackTraceElement e)
     {
-        return ___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(1);
+        if (e == null)
+            return "";
+        return String.format("%s:%s:%d:", e.getClassName(), e.getMethodName(), e.getLineNumber());
     }
 
     /**
-     * Gets the stace trace element 499 ad 503 0184 4099 bf 36 65 c 73 b 4932 d 3.
+     * Gets the stack trace element marking the position where this method was called.
      *
-     * @param countDown
-     *            the count down
      * @return the stack trace element
      */
-    private static StackTraceElement ___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(int countDown)
+    public static StackTraceElement getStackTraceElement()
+    {
+        return ___getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(1);
+    }
+
+    /**
+     * Gets the stack trace element marking the position a set count of elements before where this method was called.
+     *
+     * @param count
+     *            the count
+     * @return the stack trace element
+     * @throws IllegalArgumentException
+     *             If {@code count < 0}
+     */
+    public static StackTraceElement getStackTraceElement(int count) throws IllegalArgumentException
+    {
+        if (count < 0)
+            throw new IllegalArgumentException("Count must be positive: " + count);
+        return ___getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(count + 1);
+    }
+
+    /**
+     * Gets the stack trace element marking the call to this method in the stack trace.
+     * Optionally offset this by a count of elements to locate a position before this
+     * method in the stack trace.
+     *
+     * @param count
+     *            the count ({@code >=0})
+     * @return the stack trace element
+     */
+    private static StackTraceElement ___getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(int count)
     {
         // Based on https://stackoverflow.com/questions/17473148/dynamically-get-the-current-line-number/17473358
         boolean thisMethod = false;
@@ -201,10 +230,10 @@ public class TestLog
             final StackTraceElement e = elements[i];
             if (thisMethod)
             {
-                if (countDown-- == 0)
+                if (count-- == 0)
                     return e;
             }
-            else if (e.getMethodName().equals("___getStaceTraceElement_499ad503_0184_4099_bf36_65c73b4932d3"))
+            else if (e.getMethodName().equals("___getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3"))
             {
                 thisMethod = true;
             }
@@ -263,7 +292,7 @@ public class TestLog
      * <p>
      * The message will use lazy construction, only generating the string if passed
      * to a logger that is active at the specified level.
-     * 
+     *
      * @param level
      *            the level
      * @param message
@@ -349,6 +378,22 @@ public class TestLog
     }
 
     /**
+     * Gets the record to log the test result. The message will be written at the
+     * {@link TestLevel#TEST_FAILURE} level.
+     * <p>
+     * This is a helper method for tests that may not always pass so they are
+     * easily traced in the log.
+     *
+     * @param thrown
+     *            a throwable associated with the test result
+     * @return the log record
+     */
+    public static LogRecord getFailRecord(Throwable thrown)
+    {
+        return new TestLogRecord(TestLevel.TEST_FAILURE, thrown);
+    }
+
+    /**
      * Gets the record to log the test result.
      * <ul>
      * <li>If true the record will be created at the {@link Level#INFO} level.
@@ -364,9 +409,9 @@ public class TestLog
      *            the message
      * @return the log record
      */
-    public static LogRecord getRecord(boolean result, String message)
+    public static LogRecord getResultRecord(boolean result, String message)
     {
-        Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
+        final Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
         return new LogRecord(l, message);
     }
 
@@ -391,9 +436,9 @@ public class TestLog
      *            the args
      * @return the log record
      */
-    public static LogRecord getRecord(boolean result, String format, Object... args)
+    public static LogRecord getResultRecord(boolean result, String format, Object... args)
     {
-        Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
+        final Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
         return new TestLogRecord(l, format, args);
     }
 
@@ -416,9 +461,9 @@ public class TestLog
      *            the message
      * @return the log record
      */
-    public static LogRecord getRecord(boolean result, Supplier<String> message)
+    public static LogRecord getResultRecord(boolean result, Supplier<String> message)
     {
-        Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
+        final Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
         return new TestLogRecord(l, message);
     }
 
@@ -438,9 +483,9 @@ public class TestLog
      *            the message
      * @return the log record
      */
-    public static LogRecord getStageRecord(boolean result, String message)
+    public static LogRecord getStageResultRecord(boolean result, String message)
     {
-        Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
+        final Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
         return new LogRecord(l, message);
     }
 
@@ -465,9 +510,9 @@ public class TestLog
      *            the args
      * @return the log record
      */
-    public static LogRecord getStageRecord(boolean result, String format, Object... args)
+    public static LogRecord getStageResultRecord(boolean result, String format, Object... args)
     {
-        Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
+        final Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
         return new TestLogRecord(l, format, args);
     }
 
@@ -490,9 +535,9 @@ public class TestLog
      *            the message
      * @return the log record
      */
-    public static LogRecord getStageRecord(boolean result, Supplier<String> message)
+    public static LogRecord getStageResultRecord(boolean result, Supplier<String> message)
     {
-        Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
+        final Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
         return new TestLogRecord(l, message);
     }
 
@@ -513,9 +558,9 @@ public class TestLog
      *            the fast task
      * @return the log record
      */
-    public static LogRecord getRecord(TimingResult slow, TimingResult fast)
+    public static LogRecord getTimingRecord(TimingResult slow, TimingResult fast)
     {
-        return getRecord(slow, fast, false);
+        return getTimingRecord(slow, fast, false);
     }
 
     /**
@@ -537,13 +582,39 @@ public class TestLog
      *            Set to true to use the min execution time (the default is mean)
      * @return the record
      */
-    public static LogRecord getRecord(TimingResult slow, TimingResult fast, boolean useMin)
+    public static LogRecord getTimingRecord(TimingResult slow, TimingResult fast, boolean useMin)
     {
-        final double t1 = (useMin) ? fast.getMin() : fast.getMean();
-        final double t2 = (useMin) ? slow.getMin() : slow.getMean();
-        Level l = (t1 <= t2) ? Level.INFO : TestLevel.TEST_FAILURE;
-        return new TestLogRecord(l, "%s (%s) => %s (%s) : %.2fx", slow.getTask().getName(), t2,
-                fast.getTask().getName(), t1, t2 / t1);
+        final String slowName = slow.getTask().getName();
+        final double slowTime = (useMin) ? slow.getMin() : slow.getMean();
+        final String fastName = fast.getTask().getName();
+        final double fastTime = (useMin) ? fast.getMin() : fast.getMean();
+        return getTimingRecord(slowName, slowTime, fastName, fastTime, Level.INFO, TestLevel.TEST_FAILURE);
+    }
+
+    /**
+     * Get the record to log the result of two tasks.
+     * A test is made to determine if the fast has a lower time than the
+     * slow.
+     * <ul>
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
+     * </ul>
+     * <p>
+     * This is a helper method for speed tests that may not always pass.
+     *
+     * @param slowName
+     *            the slow task name
+     * @param slowTime
+     *            the slow task time
+     * @param fastName
+     *            the fast task name
+     * @param fastTime
+     *            the fast task time
+     * @return the record
+     */
+    public static LogRecord getTimingRecord(String slowName, long slowTime, String fastName, long fastTime)
+    {
+        return getTimingRecord(slowName, slowTime, fastName, fastTime, Level.INFO, TestLevel.TEST_FAILURE);
     }
 
     /**
@@ -563,9 +634,9 @@ public class TestLog
      *            the fast task
      * @return the log record
      */
-    public static LogRecord getStageRecord(TimingResult slow, TimingResult fast)
+    public static LogRecord getStageTimingRecord(TimingResult slow, TimingResult fast)
     {
-        return getStageRecord(slow, fast, false);
+        return getStageTimingRecord(slow, fast, false);
     }
 
     /**
@@ -587,12 +658,104 @@ public class TestLog
      *            Set to true to use the min execution time (the default is mean)
      * @return the record
      */
-    public static LogRecord getStageRecord(TimingResult slow, TimingResult fast, boolean useMin)
+    public static LogRecord getStageTimingRecord(TimingResult slow, TimingResult fast, boolean useMin)
     {
-        final double t1 = (useMin) ? fast.getMin() : fast.getMean();
-        final double t2 = (useMin) ? slow.getMin() : slow.getMean();
-        Level l = (t1 <= t2) ? Level.INFO : TestLevel.STAGE_FAILURE;
-        return new TestLogRecord(l, "%s (%s) => %s (%s) : %.2fx", slow.getTask().getName(), t2,
-                fast.getTask().getName(), t1, t2 / t1);
+        final String slowName = slow.getTask().getName();
+        final double slowTime = (useMin) ? slow.getMin() : slow.getMean();
+        final String fastName = fast.getTask().getName();
+        final double fastTime = (useMin) ? fast.getMin() : fast.getMean();
+        return getTimingRecord(slowName, slowTime, fastName, fastTime, Level.INFO, TestLevel.STAGE_FAILURE);
+    }
+
+    /**
+     * Get the record to log the result of two tasks.
+     * A test is made to determine if the fast has a lower time than the
+     * slow.
+     * <ul>
+     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If false the record will be created at the {@link TestLevel#STAGE_FAILURE} level.
+     * </ul>
+     * <p>
+     * This is a helper method for speed tests that may not always pass.
+     *
+     * @param slowName
+     *            the slow task name
+     * @param slowTime
+     *            the slow task time
+     * @param fastName
+     *            the fast task name
+     * @param fastTime
+     *            the fast task time
+     * @return the record
+     */
+    public static LogRecord getStageTimingRecord(String slowName, long slowTime, String fastName, long fastTime)
+    {
+        return getTimingRecord(slowName, slowTime, fastName, fastTime, Level.INFO, TestLevel.STAGE_FAILURE);
+    }
+
+    /**
+     * Get the record to log the result of two tasks.
+     * A test is made to determine if the fast has a lower time than the
+     * slow.
+     * <ul>
+     * <li>If true the record will be created at the pass level.
+     * <li>If false the record will be created at the fail level.
+     * </ul>
+     * <p>
+     * This is a helper method for speed tests that may not always pass.
+     *
+     * @param slowName
+     *            the slow task name
+     * @param slowTime
+     *            the slow task time
+     * @param fastName
+     *            the fast task name
+     * @param fastTime
+     *            the fast task time
+     * @param passLevel
+     *            the pass level
+     * @param failLevel
+     *            the fail level
+     * @return the record
+     */
+    public static LogRecord getTimingRecord(String slowName, double slowTime, String fastName, double fastTime,
+            Level passLevel, Level failLevel)
+    {
+        final Level l = (fastTime <= slowTime) ? passLevel : failLevel;
+        return new TestLogRecord(l, "%s (%s) => %s (%s) : %.2fx", slowName, slowTime, fastName, fastTime,
+                slowTime / fastTime);
+    }
+
+    /**
+     * Get the record to log the result of two tasks.
+     * A test is made to determine if the fast has a lower time than the
+     * slow.
+     * <ul>
+     * <li>If true the record will be created at the pass level.
+     * <li>If false the record will be created at the fail level.
+     * </ul>
+     * <p>
+     * This is a helper method for speed tests that may not always pass.
+     *
+     * @param slowName
+     *            the slow task name
+     * @param slowTime
+     *            the slow task time
+     * @param fastName
+     *            the fast task name
+     * @param fastTime
+     *            the fast task time
+     * @param passLevel
+     *            the pass level
+     * @param failLevel
+     *            the fail level
+     * @return the record
+     */
+    public static LogRecord getTimingRecord(String slowName, long slowTime, String fastName, long fastTime,
+            Level passLevel, Level failLevel)
+    {
+        final Level l = (fastTime <= slowTime) ? passLevel : failLevel;
+        return new TestLogRecord(l, "%s (%d) => %s (%d) : %.2fx", slowName, slowTime, fastName, fastTime,
+                (double) slowTime / fastTime);
     }
 }

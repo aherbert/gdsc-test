@@ -24,11 +24,11 @@
 package uk.ac.sussex.gdsc.test.junit5;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static uk.ac.sussex.gdsc.test.junit5.ExtraAssumptions.assume;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.TestAbortedException;
 
@@ -38,43 +38,53 @@ import uk.ac.sussex.gdsc.test.TestSettings;
 @SuppressWarnings("javadoc")
 public class ExtraAssumptionsTest
 {
+    private static class TestLevel extends Level
+    {
+        private static final long serialVersionUID = 1L;
+        final static TestLevel SEVERE_1 = new TestLevel("SEVERE_1", Level.SEVERE.intValue() + 1);
+        final static TestLevel WARNING_1 = new TestLevel("WARNING_1", Level.WARNING.intValue() + 1);
+        final static TestLevel INFO_1 = new TestLevel("INFO_1", Level.INFO.intValue() + 1);
+        final static TestLevel FINE_1 = new TestLevel("FINE_1", Level.FINE.intValue() + 1);
+        final static TestLevel FINER_1 = new TestLevel("FINER_1", Level.FINER.intValue() + 1);
+        final static TestLevel FINEST_1 = new TestLevel("FINEST_1", Level.FINEST.intValue() + 1);
+
+        protected TestLevel(String name, int value)
+        {
+            super(name, value);
+        }
+    }
+
     @Test
     public void canAssumeLevel()
     {
         final Logger logger = Logger.getLogger(ExtraAssumptionsTest.class.getName());
-        final Level[] levels = { Level.SEVERE, Level.INFO, Level.FINEST };
-        for (final Level l : levels)
-            if (logger.isLoggable(l))
-                try
-                {
-                    assume(logger, l);
-                }
-                catch (final TestAbortedException e)
-                {
-                    fail("Log level is allowed: " + l);
-                }
-            else
-            {
-                try
-                {
-                    assume(logger, l);
-                }
-                catch (final TestAbortedException e)
-                {
-                    continue; // This is expected
-                }
-                fail("Log level is not allowed: " + l);
-            }
+        // Test all levels
+        canAssume(logger, Level.SEVERE, TestLevel.SEVERE_1);
+        canAssume(logger, Level.WARNING, TestLevel.WARNING_1);
+        canAssume(logger, Level.INFO, TestLevel.INFO_1);
+        canAssume(logger, Level.FINE, TestLevel.FINE_1);
+        canAssume(logger, Level.FINER, TestLevel.FINER_1);
+        canAssume(logger, Level.FINEST, TestLevel.FINEST_1);
+    }
+
+    private static void canAssume(Logger logger, Level allowed, TestLevel notAllowed)
+    {
+        logger.setLevel(allowed);
+        ExtraAssumptions.assume(logger, allowed);
+        logger.setLevel(notAllowed);
+        Assertions.assertThrows(TestAbortedException.class, () -> {
+            ExtraAssumptions.assume(logger, allowed);
+        });
     }
 
     @Test
-    public void canAssumesTestComplexity()
+    public void canAssumeTestComplexity()
     {
         for (final TestComplexity tc : TestComplexity.values())
             if (TestSettings.allow(tc))
                 try
                 {
-                    assume(tc);
+                    ExtraAssumptions.assume(tc);
                 }
                 catch (final TestAbortedException e)
                 {
@@ -84,7 +94,7 @@ public class ExtraAssumptionsTest
             {
                 try
                 {
-                    assume(tc);
+                    ExtraAssumptions.assume(tc);
                 }
                 catch (final TestAbortedException e)
                 {
