@@ -26,9 +26,9 @@ package uk.ac.sussex.gdsc.test.junit4;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.Assert;
 import org.junit.AssumptionViolatedException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
@@ -49,7 +49,7 @@ public class ExtraAssumeTest
                 }
                 catch (final AssumptionViolatedException e)
                 {
-                    Assert.fail("Log level is allowed: " + l);
+                    Assertions.fail("Log level is allowed: " + l);
                 }
             else
             {
@@ -61,7 +61,7 @@ public class ExtraAssumeTest
                 {
                     continue; // This is expected
                 }
-                Assert.fail("Log level is not allowed: " + l);
+                Assertions.fail("Log level is not allowed: " + l);
             }
     }
 
@@ -76,7 +76,7 @@ public class ExtraAssumeTest
                 }
                 catch (final AssumptionViolatedException e)
                 {
-                    Assert.fail("Test complexity is allowed: " + tc);
+                    Assertions.fail("Test complexity is allowed: " + tc);
                 }
             else
             {
@@ -88,7 +88,7 @@ public class ExtraAssumeTest
                 {
                     continue; // This is expected
                 }
-                Assert.fail("Test complexity is not allowed: " + tc);
+                Assertions.fail("Test complexity is not allowed: " + tc);
             }
     }
 }

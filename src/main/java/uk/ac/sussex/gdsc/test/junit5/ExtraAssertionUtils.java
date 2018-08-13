@@ -39,6 +39,13 @@ import org.opentest4j.AssertionFailedError;
 class ExtraAssertionUtils
 {
     /**
+     * Do not allow public construction.
+     */
+    private ExtraAssertionUtils()
+    {
+    }
+
+    /**
      * Assert that the relative error is valid.
      * The value must be in the range {@code 0} exclusive to {@code 2} exclusive.
      * Values outside this range are meaningless.
@@ -54,7 +61,7 @@ class ExtraAssertionUtils
     static void assertValidRelativeError(double relativeError)
     {
         if (!(relativeError > 0 && relativeError < 2))
-            fail("relative error expected <0 < e < 2> but was: <" + relativeError + ">");
+            throw new AssertionFailedError("relative error expected <0 < e < 2> but was: <" + relativeError + ">");
     }
 
     /**
@@ -69,7 +76,7 @@ class ExtraAssertionUtils
     static void assertValidDelta(double delta)
     {
         if (Double.isNaN(delta) || delta <= 0.0)
-            fail("positive delta expected but was: <" + delta + ">");
+            throw new AssertionFailedError("positive delta expected but was: <" + delta + ">");
     }
 
     /**
@@ -84,7 +91,7 @@ class ExtraAssertionUtils
     static void assertValidDelta(float delta)
     {
         if (Float.isNaN(delta) || delta <= 0.0)
-            fail("positive delta expected but was: <" + delta + ">");
+            throw new AssertionFailedError("positive delta expected but was: <" + delta + ">");
     }
 
     /**
@@ -111,7 +118,7 @@ class ExtraAssertionUtils
     static void assertEqualsRelative(double expected, double actual, double relativeError, String message)
     {
         if (!doublesAreEqualRelative(expected, actual, relativeError))
-            failNotEqual(expected, actual, relativeError, message);
+            throw new AssertionFailedError(format(expected, actual, relativeError, message), expected, actual);
     }
 
     /**
@@ -139,7 +146,8 @@ class ExtraAssertionUtils
             Supplier<String> messageSupplier)
     {
         if (!doublesAreEqualRelative(expected, actual, relativeError))
-            failNotEqual(expected, actual, relativeError, messageSupplier);
+            throw new AssertionFailedError(format(expected, actual, relativeError, nullSafeGet(messageSupplier)),
+                    expected, actual);
     }
 
     /**
@@ -209,25 +217,6 @@ class ExtraAssertionUtils
 
     /**
      * Tests that two doubles are equal to within a positive delta.
-     *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
-     * @param delta
-     *            the maximum delta between <code>value1</code> and
-     *            <code>value2</code> for which both numbers are still
-     *            considered equal.
-     * @return true, if equal
-     */
-    static boolean doublesAreEqual(double value1, double value2, double delta)
-    {
-        assertValidDelta(delta);
-        return doublesAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
-    }
-
-    /**
-     * Tests that two doubles are equal to within a positive delta.
      * <p>
      * It is assumed the relative error has been checked with {@link #assertValidDelta(double)}.
      *
@@ -244,18 +233,6 @@ class ExtraAssertionUtils
     static boolean doublesAreEqualValid(double value1, double value2, double delta)
     {
         return doublesAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
-    }
-
-    private static void failNotEqual(double expected, double actual, double relativeError, String message)
-            throws AssertionFailedError
-    {
-        fail(format(expected, actual, relativeError, message), expected, actual);
-    }
-
-    private static void failNotEqual(double expected, double actual, double relativeError,
-            Supplier<String> messageSupplier) throws AssertionFailedError
-    {
-        fail(format(expected, actual, relativeError, nullSafeGet(messageSupplier)), expected, actual);
     }
 
     /**
@@ -343,7 +320,7 @@ class ExtraAssertionUtils
     static void assertEqualsRelative(float expected, float actual, double relativeError, String message)
     {
         if (!floatsAreEqualRelative(expected, actual, relativeError))
-            failNotEqual(expected, actual, relativeError, message);
+            throw new AssertionFailedError(format(expected, actual, relativeError, message), expected, actual);
     }
 
     /**
@@ -371,7 +348,8 @@ class ExtraAssertionUtils
             Supplier<String> messageSupplier)
     {
         if (!floatsAreEqualRelative(expected, actual, relativeError))
-            failNotEqual(expected, actual, relativeError, messageSupplier);
+            throw new AssertionFailedError(format(expected, actual, relativeError, nullSafeGet(messageSupplier)),
+                    expected, actual);
     }
 
     /**
@@ -427,25 +405,6 @@ class ExtraAssertionUtils
 
     /**
      * Tests that two floats are equal to within a positive delta.
-     *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
-     * @param delta
-     *            the maximum delta between <code>value1</code> and
-     *            <code>value2</code> for which both numbers are still
-     *            considered equal.
-     * @return true, if equal
-     */
-    static boolean floatsAreEqual(float value1, float value2, float delta)
-    {
-        assertValidDelta(delta);
-        return floatsAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
-    }
-
-    /**
-     * Tests that two floats are equal to within a positive delta.
      * <p>
      * It is assumed the relative error has been checked with {@link #assertValidDelta(float)}.
      *
@@ -476,18 +435,6 @@ class ExtraAssertionUtils
     private static float max(float value1, float value2)
     {
         return (value1 >= value2) ? value1 : value2;
-    }
-
-    private static void failNotEqual(float expected, float actual, double relativeError, String message)
-            throws AssertionFailedError
-    {
-        fail(format(expected, actual, relativeError, message), expected, actual);
-    }
-
-    private static void failNotEqual(float expected, float actual, double relativeError,
-            Supplier<String> messageSupplier) throws AssertionFailedError
-    {
-        fail(format(expected, actual, relativeError, nullSafeGet(messageSupplier)), expected, actual);
     }
 
     /**
@@ -552,23 +499,6 @@ class ExtraAssertionUtils
     }
 
     // Methods below copied from AssertionUtils.
-
-    /**
-     * Fail with the given message.
-     *
-     * @param message
-     *            the message
-     */
-    static void fail(String message)
-    {
-        throw new AssertionFailedError(message);
-    }
-
-    // Taken from AssertionUtils
-    private static void fail(String message, Object expected, Object actual)
-    {
-        throw new AssertionFailedError(message, expected, actual);
-    }
 
     // Taken from AssertionUtils
     private static String nullSafeGet(Supplier<String> messageSupplier)

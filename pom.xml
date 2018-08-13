@@ -195,17 +195,38 @@ The GDSC Test package contains code for use with the JUnit test framework.
             </goals>
             <configuration>
               <rules>
-                <!-- implementation is needed only for Maven 2 -->
-                <rule
-                  implementation="org.jacoco.maven.RuleConfiguration">
+                <rule>
                   <element>BUNDLE</element>
                   <limits>
-                    <!-- implementation is needed only for Maven 2 -->
-                    <limit
-                      implementation="org.jacoco.report.check.Limit">
+                    <limit>
+                      <counter>CLASS</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.96</minimum>
+                    </limit>
+                    <limit>
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.8</minimum>
+                    </limit>
+                    <limit>
+                      <counter>METHOD</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.8</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.8</minimum>
+                    </limit>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.85</minimum>
+                    </limit>
+                    <limit>
                       <counter>COMPLEXITY</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.60</minimum>
+                      <minimum>0.8</minimum>
                     </limit>
                   </limits>
                 </rule>

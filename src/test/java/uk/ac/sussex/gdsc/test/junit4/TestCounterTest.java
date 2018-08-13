@@ -28,6 +28,10 @@ import org.junit.Test;
 
 import uk.ac.sussex.gdsc.test.TestCounter;
 
+/**
+ * This test uses JUnit 4 to demonstrate that the TestCounter will work across
+ * Junit 4 and 5.
+ */
 @SuppressWarnings("javadoc")
 public class TestCounterTest
 {
