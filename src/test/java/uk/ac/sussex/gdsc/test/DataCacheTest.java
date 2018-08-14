@@ -29,23 +29,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class DataCacheTest
-{
-    private static class TestProvider implements Function<Integer, Integer>
-    {
+public class DataCacheTest {
+    private static class TestProvider implements Function<Integer, Integer> {
         int calls = 0;
 
         @Override
-        public Integer apply(Integer t)
-        {
+        public Integer apply(Integer t) {
             calls++;
             return new Integer(t + 1);
         }
     }
 
     @Test
-    public void canCacheData()
-    {
+    public void canCacheData() {
         int value;
         TestProvider provider = new TestProvider();
         DataCache<Integer, Integer> cache = new DataCache<>();

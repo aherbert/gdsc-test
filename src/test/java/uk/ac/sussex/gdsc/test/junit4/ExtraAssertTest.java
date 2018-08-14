@@ -27,8 +27,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class ExtraAssertTest
-{
+public class ExtraAssertTest {
     // Testing of relative error.
 
     // Observed and expected
@@ -45,8 +44,7 @@ public class ExtraAssertTest
     // Create next up/down for each that changes the relative error
     static float floatLU, floatLD, floatHU, floatHD;
 
-    static
-    {
+    static {
         // Note the relative error is diff / max(e, o).
         doubleLU = doubleLD = doubleL;
         doubleHU = doubleHD = doubleH;
@@ -74,14 +72,12 @@ public class ExtraAssertTest
             floatHD = Math.nextDown(floatHD);
     }
 
-    static double relativeError(double e, double o)
-    {
+    static double relativeError(double e, double o) {
         // Assumes o and e are positive
         return Math.abs(o - e) / Math.max(o, e);
     }
 
-    static double relativeError(float e, float o)
-    {
+    static double relativeError(float e, float o) {
         // This method is required to ensure float arithmetic in computing the error
 
         // Assumes o and e are positive
@@ -95,8 +91,7 @@ public class ExtraAssertTest
 
     // XXX - Copy from here
     @Test
-    public void testAssertEqualsRelativeDouble()
-    {
+    public void testAssertEqualsRelativeDouble() {
         double e = doubleL;
         double o = doubleL;
         ExtraAssert.assertEqualsRelative(e, o, Double.MIN_VALUE);
@@ -114,67 +109,47 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertEqualsRelativeDoubleThrowsWithMessage()
-    {
+    public void testAssertEqualsRelativeDoubleThrowsWithMessage() {
         final double e = 1;
         final double o = 2;
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(message, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(message, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(null, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(null, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(emptyMessage, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(emptyMessage, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
     }
 
     @Test
-    public void testAssertEqualsRelativeDoubleErrorsUp()
-    {
+    public void testAssertEqualsRelativeDoubleErrorsUp() {
         // Move further apart they should be not equal
         final double e = doubleL;
         final double o = doubleHU;
@@ -187,8 +162,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertEqualsRelativeDoubleErrorsDown()
-    {
+    public void testAssertEqualsRelativeDoubleErrorsDown() {
         // Move further apart they should be not equal
         final double e = doubleLD;
         final double o = doubleH;
@@ -201,8 +175,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertNotEqualsRelativeDouble()
-    {
+    public void testAssertNotEqualsRelativeDouble() {
         // Not equals should be OK
         final double e = doubleLD;
         final double o = doubleH;
@@ -221,67 +194,47 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertNotEqualsRelativeDoubleThrowsWithMessage()
-    {
+    public void testAssertNotEqualsRelativeDoubleThrowsWithMessage() {
         final double e = 1;
         final double o = 1;
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(message, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(message, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(null, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(null, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(emptyMessage, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(emptyMessage, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
     }
 
     @Test
-    public void testAssertNotEqualsRelativeDoubleErrors()
-    {
+    public void testAssertNotEqualsRelativeDoubleErrors() {
         // If equal this should throw
         Assertions.assertThrows(AssertionError.class, () -> {
             ExtraAssert.assertNotEqualsRelative(doubleL, doubleH, relativeError);
@@ -291,8 +244,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeDouble()
-    {
+    public void testAssertArrayEqualsRelativeDouble() {
         double[] e = new double[] { doubleL };
         // Check with self
         ExtraAssert.assertArrayEqualsRelative(e, e, Double.MIN_VALUE);
@@ -323,67 +275,47 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeDoubleThrowsWithFormattedMessage()
-    {
+    public void testAssertArrayEqualsRelativeDoubleThrowsWithFormattedMessage() {
         final double[] e = new double[] { 1 };
         final double[] o = new double[] { 2 };
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(message, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(message, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(null, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(null, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(emptyMessage, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(emptyMessage, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeDoubleErrorsUp()
-    {
+    public void testAssertArrayEqualsRelativeDoubleErrorsUp() {
         // Move further apart they should be not equal
         final double[] e = new double[] { doubleL };
         final double[] o = new double[] { doubleHU };
@@ -396,8 +328,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeDoubleErrorsDown()
-    {
+    public void testAssertArrayEqualsRelativeDoubleErrorsDown() {
         // Move further apart they should be not equal
         final double[] e = new double[] { doubleLD };
         final double[] o = new double[] { doubleH };
@@ -410,8 +341,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeDoubleThrowsWithNullArrays()
-    {
+    public void testAssertArrayEqualsRelativeDoubleThrowsWithNullArrays() {
         final double[] e = new double[] { 1 };
         final double[] o = null;
         Assertions.assertThrows(AssertionError.class, () -> {
@@ -429,8 +359,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeDoubleThrowsWithMismatchedArrays()
-    {
+    public void testAssertArrayEqualsRelativeDoubleThrowsWithMismatchedArrays() {
         final double[] e = new double[] { 1 };
         final double[] o = new double[] { 1, 2 };
         Assertions.assertThrows(AssertionError.class, () -> {
@@ -448,8 +377,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeDouble()
-    {
+    public void testAssertObjectArrayEqualsRelativeDouble() {
         double[][][] e = new double[][][] { { { doubleL } } };
         // Check with self
         ExtraAssert.assertDoubleArrayEqualsRelative(e, e, Double.MIN_VALUE);
@@ -488,66 +416,47 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithMessage()
-    {
+    public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithMessage() {
         final double[][][] e = new double[][][] { { { 1 } } };
         final double[][][] o = new double[][][] { { { 2 } } };
-        try
-        {
+        try {
             ExtraAssert.assertDoubleArrayEqualsRelative(message, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertDoubleArrayEqualsRelative(message, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertDoubleArrayEqualsRelative(null, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertDoubleArrayEqualsRelative(null, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
-        }        try
-        {
+        }
+        try {
             ExtraAssert.assertDoubleArrayEqualsRelative(emptyMessage, e, o, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertDoubleArrayEqualsRelative(emptyMessage, o, e, Double.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeDoubleErrorsUp()
-    {
+    public void testAssertObjectArrayEqualsRelativeDoubleErrorsUp() {
         // Move further apart they should be not equal
         final double[][][] e = new double[][][] { { { doubleL } } };
         final double[][][] o = new double[][][] { { { doubleHU } } };
@@ -560,8 +469,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeDoubleErrorsDown()
-    {
+    public void testAssertObjectArrayEqualsRelativeDoubleErrorsDown() {
         // Move further apart they should be not equal
         final double[][][] e = new double[][][] { { { doubleLD } } };
         final double[][][] o = new double[][][] { { { doubleH } } };
@@ -574,8 +482,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithNullArrays()
-    {
+    public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithNullArrays() {
         final double[][][] e = new double[][][] { { { 1 } } };
         final double[][][] o = null;
         Assertions.assertThrows(AssertionError.class, () -> {
@@ -593,8 +500,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithMismatchedArrays()
-    {
+    public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithMismatchedArrays() {
         final double[][][] e = new double[][][] { { { 1 } } };
         final double[][][] o = new double[][][] { { { 1, 2 } } };
         Assertions.assertThrows(AssertionError.class, () -> {
@@ -612,8 +518,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithNonArrayElements()
-    {
+    public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithNonArrayElements() {
         final Object object = new Object();
         final Object inner1 = new Object[] { object };
         final Object inner2 = new Object[] { object };
@@ -647,8 +552,7 @@ public class ExtraAssertTest
 
     // XXX - Copy to here
     @Test
-    public void testAssertEqualsRelativeFloat()
-    {
+    public void testAssertEqualsRelativeFloat() {
         float e = floatL;
         float o = floatL;
         ExtraAssert.assertEqualsRelative(e, o, Float.MIN_VALUE);
@@ -666,67 +570,47 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertEqualsRelativeFloatThrowsWithMessage()
-    {
+    public void testAssertEqualsRelativeFloatThrowsWithMessage() {
         final float e = 1;
         final float o = 2;
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(message, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(message, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(null, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(null, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(emptyMessage, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertEqualsRelative(emptyMessage, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
     }
 
     @Test
-    public void testAssertEqualsRelativeFloatErrorsUp()
-    {
+    public void testAssertEqualsRelativeFloatErrorsUp() {
         // Move further apart they should be not equal
         final float e = floatL;
         final float o = floatHU;
@@ -739,8 +623,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertEqualsRelativeFloatErrorsDown()
-    {
+    public void testAssertEqualsRelativeFloatErrorsDown() {
         // Move further apart they should be not equal
         final float e = floatLD;
         final float o = floatH;
@@ -753,8 +636,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertNotEqualsRelativeFloat()
-    {
+    public void testAssertNotEqualsRelativeFloat() {
         // Not equals should be OK
         final float e = floatLD;
         final float o = floatH;
@@ -773,67 +655,47 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertNotEqualsRelativeFloatThrowsWithMessage()
-    {
+    public void testAssertNotEqualsRelativeFloatThrowsWithMessage() {
         final float e = 1;
         final float o = 1;
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(message, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(message, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(null, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(null, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(emptyMessage, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertNotEqualsRelative(emptyMessage, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
     }
 
     @Test
-    public void testAssertNotEqualsRelativeFloatErrors()
-    {
+    public void testAssertNotEqualsRelativeFloatErrors() {
         // If equal this should throw
         Assertions.assertThrows(AssertionError.class, () -> {
             ExtraAssert.assertNotEqualsRelative(floatL, floatH, relativeError);
@@ -843,8 +705,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeFloat()
-    {
+    public void testAssertArrayEqualsRelativeFloat() {
         float[] e = new float[] { floatL };
         // Check with self
         ExtraAssert.assertArrayEqualsRelative(e, e, Float.MIN_VALUE);
@@ -875,67 +736,47 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeFloatThrowsWithFormattedMessage()
-    {
+    public void testAssertArrayEqualsRelativeFloatThrowsWithFormattedMessage() {
         final float[] e = new float[] { 1 };
         final float[] o = new float[] { 2 };
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(message, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(message, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(null, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(null, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(emptyMessage, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertArrayEqualsRelative(emptyMessage, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeFloatErrorsUp()
-    {
+    public void testAssertArrayEqualsRelativeFloatErrorsUp() {
         // Move further apart they should be not equal
         final float[] e = new float[] { floatL };
         final float[] o = new float[] { floatHU };
@@ -948,8 +789,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeFloatErrorsDown()
-    {
+    public void testAssertArrayEqualsRelativeFloatErrorsDown() {
         // Move further apart they should be not equal
         final float[] e = new float[] { floatLD };
         final float[] o = new float[] { floatH };
@@ -962,8 +802,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeFloatThrowsWithNullArrays()
-    {
+    public void testAssertArrayEqualsRelativeFloatThrowsWithNullArrays() {
         final float[] e = new float[] { 1 };
         final float[] o = null;
         Assertions.assertThrows(AssertionError.class, () -> {
@@ -981,8 +820,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertArrayEqualsRelativeFloatThrowsWithMismatchedArrays()
-    {
+    public void testAssertArrayEqualsRelativeFloatThrowsWithMismatchedArrays() {
         final float[] e = new float[] { 1 };
         final float[] o = new float[] { 1, 2 };
         Assertions.assertThrows(AssertionError.class, () -> {
@@ -1000,8 +838,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeFloat()
-    {
+    public void testAssertObjectArrayEqualsRelativeFloat() {
         float[][][] e = new float[][][] { { { floatL } } };
         // Check with self
         ExtraAssert.assertFloatArrayEqualsRelative(e, e, Float.MIN_VALUE);
@@ -1040,66 +877,47 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeFloatThrowsWithMessage()
-    {
+    public void testAssertObjectArrayEqualsRelativeFloatThrowsWithMessage() {
         final float[][][] e = new float[][][] { { { 1 } } };
         final float[][][] o = new float[][][] { { { 2 } } };
-        try
-        {
+        try {
             ExtraAssert.assertFloatArrayEqualsRelative(message, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertFloatArrayEqualsRelative(message, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains(message));
         }
-        try
-        {
+        try {
             ExtraAssert.assertFloatArrayEqualsRelative(null, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertFloatArrayEqualsRelative(null, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
-        }        try
-        {
+        }
+        try {
             ExtraAssert.assertFloatArrayEqualsRelative(emptyMessage, e, o, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
-        try
-        {
+        try {
             ExtraAssert.assertFloatArrayEqualsRelative(emptyMessage, o, e, Float.MIN_VALUE);
-        }
-        catch (final AssertionError ex)
-        {
+        } catch (final AssertionError ex) {
             Assertions.assertTrue(ex.getMessage().contains("expected"));
             Assertions.assertTrue(ex.getMessage().contains("but was"));
         }
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeFloatErrorsUp()
-    {
+    public void testAssertObjectArrayEqualsRelativeFloatErrorsUp() {
         // Move further apart they should be not equal
         final float[][][] e = new float[][][] { { { floatL } } };
         final float[][][] o = new float[][][] { { { floatHU } } };
@@ -1112,8 +930,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeFloatErrorsDown()
-    {
+    public void testAssertObjectArrayEqualsRelativeFloatErrorsDown() {
         // Move further apart they should be not equal
         final float[][][] e = new float[][][] { { { floatLD } } };
         final float[][][] o = new float[][][] { { { floatH } } };
@@ -1126,8 +943,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeFloatThrowsWithNullArrays()
-    {
+    public void testAssertObjectArrayEqualsRelativeFloatThrowsWithNullArrays() {
         final float[][][] e = new float[][][] { { { 1 } } };
         final float[][][] o = null;
         Assertions.assertThrows(AssertionError.class, () -> {
@@ -1145,8 +961,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeFloatThrowsWithMismatchedArrays()
-    {
+    public void testAssertObjectArrayEqualsRelativeFloatThrowsWithMismatchedArrays() {
         final float[][][] e = new float[][][] { { { 1 } } };
         final float[][][] o = new float[][][] { { { 1, 2 } } };
         Assertions.assertThrows(AssertionError.class, () -> {
@@ -1164,8 +979,7 @@ public class ExtraAssertTest
     }
 
     @Test
-    public void testAssertObjectArrayEqualsRelativeFloatThrowsWithNonArrayElements()
-    {
+    public void testAssertObjectArrayEqualsRelativeFloatThrowsWithNonArrayElements() {
         final Object object = new Object();
         final Object inner1 = new Object[] { object };
         final Object inner2 = new Object[] { object };

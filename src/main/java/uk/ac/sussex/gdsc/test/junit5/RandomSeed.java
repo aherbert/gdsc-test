@@ -26,8 +26,7 @@ package uk.ac.sussex.gdsc.test.junit5;
 /**
  * Provides random seeds for a repeated test.
  */
-public class RandomSeed
-{
+public class RandomSeed {
     private final long seed;
     private final int currentRepetition;
     private final int totalRepetitions;
@@ -35,17 +34,14 @@ public class RandomSeed
     /**
      * Instantiates a new random seed.
      *
-     * @param seed
-     *            the seed
-     * @param currentRepetition
-     *            the current repetition
-     * @param totalRepetitions
-     *            the total repetitions
-     * @throws IllegalArgumentException
-     *             If {@code totalRepitions < 1} or {@code currentRepetition < 1} or {@code currentRepetition > totalRepetitions}
+     * @param seed              the seed
+     * @param currentRepetition the current repetition
+     * @param totalRepetitions  the total repetitions
+     * @throws IllegalArgumentException If {@code totalRepitions < 1} or
+     *                                  {@code currentRepetition < 1} or
+     *                                  {@code currentRepetition > totalRepetitions}
      */
-    public RandomSeed(long seed, int currentRepetition, int totalRepetitions) throws IllegalArgumentException
-    {
+    public RandomSeed(long seed, int currentRepetition, int totalRepetitions) throws IllegalArgumentException {
         this.seed = seed;
         if (totalRepetitions < 1)
             throw new IllegalArgumentException("Total repetitions must be strictly positive");
@@ -62,8 +58,7 @@ public class RandomSeed
      *
      * @return the seed
      */
-    public long getSeed()
-    {
+    public long getSeed() {
         return seed;
     }
 
@@ -72,8 +67,7 @@ public class RandomSeed
      *
      * @return the current repetition
      */
-    public int getCurrentRepetition()
-    {
+    public int getCurrentRepetition() {
         return currentRepetition;
     }
 
@@ -82,36 +76,33 @@ public class RandomSeed
      *
      * @return the total repetitions
      */
-    public int getTotalRepetitions()
-    {
+    public int getTotalRepetitions() {
         return totalRepetitions;
     }
 
     /**
      * Returns a hash code value for the object.
      * <p>
-     * The hashcode is computed using the components of the seed that contribute to randomness. The repetition counts
-     * are ignored.
+     * The hashcode is computed using the components of the seed that contribute to
+     * randomness. The repetition counts are ignored.
      *
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Long.hashCode(seed);
     }
 
     /**
      * Indicates whether some other object is "equal to" this one.
      * <p>
-     * Equality is computed using the components of the seed that contribute to randomness. The repetition counts
-     * are ignored.
+     * Equality is computed using the components of the seed that contribute to
+     * randomness. The repetition counts are ignored.
      *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         // self check
         if (this == o)
             return true;

@@ -45,7 +45,9 @@ public class FunctionUtils {
      * Get a supplier for the string using the format and arguments.
      * <p>
      * This can be used where it is not convenient to create a lambda function
-     * directly because the arguments are not effectively final. Returns:
+     * directly because the arguments are not effectively final.
+     * <p>
+     * Returns the equivalent of:
      *
      * <pre>
      * <code>

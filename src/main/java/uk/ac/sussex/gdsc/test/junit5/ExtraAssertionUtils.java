@@ -34,140 +34,123 @@ import org.opentest4j.AssertionFailedError;
 /**
  * Adds additional helper assertion utility functions.
  * <p>
- * Note: Many methods have been copied from the {@code org.junit.jupiter.api} package.
+ * Note: Many methods have been copied from the {@code org.junit.jupiter.api}
+ * package.
  */
-class ExtraAssertionUtils
-{
+class ExtraAssertionUtils {
     /**
      * Do not allow public construction.
      */
-    private ExtraAssertionUtils()
-    {
+    private ExtraAssertionUtils() {
     }
 
     /**
-     * Assert that the relative error is valid.
-     * The value must be in the range {@code 0} exclusive to {@code 2} exclusive.
-     * Values outside this range are meaningless.
+     * Assert that the relative error is valid. The value must be in the range
+     * {@code 0} exclusive to {@code 2} exclusive. Values outside this range are
+     * meaningless.
      * <p>
-     * Note that 2 is the maximum relative error of two values if they are opposite signs:<br>
+     * Note that 2 is the maximum relative error of two values if they are opposite
+     * signs:<br>
      * {@code abs(a-b) / max(abs(a), abs(b))}.
      *
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
+     * @param relativeError the maximum relative error between <code>expected</code>
+     *                      and <code>actual</code> for which both numbers are still
+     *                      considered equal.
      */
-    static void assertValidRelativeError(double relativeError)
-    {
+    static void assertValidRelativeError(double relativeError) {
         if (!(relativeError > 0 && relativeError < 2))
             throw new AssertionFailedError("relative error expected <0 < e < 2> but was: <" + relativeError + ">");
     }
 
     /**
-     * Assert that the delta is valid.
-     * The value must be strictly positive and not NaN.
+     * Assert that the delta is valid. The value must be strictly positive and not
+     * NaN.
      *
-     * @param delta
-     *            the maximum positive delta between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
+     * @param delta the maximum positive delta between <code>expected</code> and
+     *              <code>actual</code> for which both numbers are still considered
+     *              equal.
      */
-    static void assertValidDelta(double delta)
-    {
+    static void assertValidDelta(double delta) {
         if (Double.isNaN(delta) || delta <= 0.0)
             throw new AssertionFailedError("positive delta expected but was: <" + delta + ">");
     }
 
     /**
-     * Assert that the delta is valid.
-     * The value must be strictly positive and not NaN.
+     * Assert that the delta is valid. The value must be strictly positive and not
+     * NaN.
      *
-     * @param delta
-     *            the maximum positive delta between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
+     * @param delta the maximum positive delta between <code>expected</code> and
+     *              <code>actual</code> for which both numbers are still considered
+     *              equal.
      */
-    static void assertValidDelta(float delta)
-    {
+    static void assertValidDelta(float delta) {
         if (Float.isNaN(delta) || delta <= 0.0)
             throw new AssertionFailedError("positive delta expected but was: <" + delta + ">");
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
-     * {@link Double#compare(double, double)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and {@link Double#compare(double, double)}.
      * </p>
      * <p>
      * Fails with the supplied failure {@code message}.
      * <p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
-     * @param message
-     *            The message.
+     * @param expected      The expected value.
+     * @param actual        The value to check against <code>expected</code>.
+     * @param relativeError the maximum relative error between <code>expected</code>
+     *                      and <code>actual</code> for which both numbers are still
+     *                      considered equal.
+     * @param message       The message.
      */
-    static void assertEqualsRelative(double expected, double actual, double relativeError, String message)
-    {
+    static void assertEqualsRelative(double expected, double actual, double relativeError, String message) {
         if (!doublesAreEqualRelative(expected, actual, relativeError))
             throw new AssertionFailedError(format(expected, actual, relativeError, message), expected, actual);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
-     * {@link Double#compare(double, double)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and {@link Double#compare(double, double)}.
      * </p>
      * <p>
-     * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+     * If necessary, the failure message will be retrieved lazily from the supplied
+     * {@code messageSupplier}.
      * </p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
-     * @param messageSupplier
-     *            The message supplier.
+     * @param expected        The expected value.
+     * @param actual          The value to check against <code>expected</code>.
+     * @param relativeError   the maximum relative error between
+     *                        <code>expected</code> and <code>actual</code> for
+     *                        which both numbers are still considered equal.
+     * @param messageSupplier The message supplier.
      */
     static void assertEqualsRelative(double expected, double actual, double relativeError,
-            Supplier<String> messageSupplier)
-    {
+            Supplier<String> messageSupplier) {
         if (!doublesAreEqualRelative(expected, actual, relativeError))
             throw new AssertionFailedError(format(expected, actual, relativeError, nullSafeGet(messageSupplier)),
                     expected, actual);
     }
 
     /**
-     * Tests that two doubles are equal to within a positive relativeError.
-     * If the expected value is infinity then the relativeError value is
-     * ignored. NaNs are considered equal:
+     * Tests that two doubles are equal to within a positive relativeError. If the
+     * expected value is infinity then the relativeError value is ignored. NaNs are
+     * considered equal:
      * <code>assertEqualsRelative(Double.NaN, Double.NaN, *)</code> passes.
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
-     * @param relativeError
-     *            the maximum relative error between <code>value1</code> and
-     *            <code>value2</code> for which both numbers are still
-     *            considered equal.
+     * @param value1        the first value
+     * @param value2        the second value
+     * @param relativeError the maximum relative error between <code>value1</code>
+     *                      and <code>value2</code> for which both numbers are still
+     *                      considered equal.
      * @return true, if equal
      */
-    static boolean doublesAreEqualRelative(double value1, double value2, double relativeError)
-    {
+    static boolean doublesAreEqualRelative(double value1, double value2, double relativeError) {
         assertValidRelativeError(relativeError);
         if (doublesAreEqual(value1, value2))
             return true;
@@ -176,25 +159,22 @@ class ExtraAssertionUtils
     }
 
     /**
-     * Tests that two doubles are equal to within a positive relativeError.
-     * If the expected value is infinity then the relativeError value is
-     * ignored. NaNs are considered equal:
+     * Tests that two doubles are equal to within a positive relativeError. If the
+     * expected value is infinity then the relativeError value is ignored. NaNs are
+     * considered equal:
      * <code>assertEqualsRelative(Double.NaN, Double.NaN, *)</code> passes.
      * <p>
-     * It is assumed the relative error has been checked with {@link #assertValidRelativeError(double)}.
+     * It is assumed the relative error has been checked with
+     * {@link #assertValidRelativeError(double)}.
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
-     * @param relativeError
-     *            the maximum relative error between <code>value1</code> and
-     *            <code>value2</code> for which both numbers are still
-     *            considered equal.
+     * @param value1        the first value
+     * @param value2        the second value
+     * @param relativeError the maximum relative error between <code>value1</code>
+     *                      and <code>value2</code> for which both numbers are still
+     *                      considered equal.
      * @return true, if equal
      */
-    static boolean doublesAreEqualRelativeValid(double value1, double value2, double relativeError)
-    {
+    static boolean doublesAreEqualRelativeValid(double value1, double value2, double relativeError) {
         if (doublesAreEqual(value1, value2))
             return true;
         final double max = max(Math.abs(value1), Math.abs(value2));
@@ -204,34 +184,28 @@ class ExtraAssertionUtils
     /**
      * Get the maximum
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
+     * @param value1 the first value
+     * @param value2 the second value
      * @return the maximum
      */
-    private static double max(double value1, double value2)
-    {
+    private static double max(double value1, double value2) {
         return (value1 >= value2) ? value1 : value2;
     }
 
     /**
      * Tests that two doubles are equal to within a positive delta.
      * <p>
-     * It is assumed the relative error has been checked with {@link #assertValidDelta(double)}.
+     * It is assumed the relative error has been checked with
+     * {@link #assertValidDelta(double)}.
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
-     * @param delta
-     *            the maximum delta between <code>value1</code> and
-     *            <code>value2</code> for which both numbers are still
-     *            considered equal.
+     * @param value1 the first value
+     * @param value2 the second value
+     * @param delta  the maximum delta between <code>value1</code> and
+     *               <code>value2</code> for which both numbers are still considered
+     *               equal.
      * @return true, if equal
      */
-    static boolean doublesAreEqualValid(double value1, double value2, double delta)
-    {
+    static boolean doublesAreEqualValid(double value1, double value2, double delta) {
         return doublesAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
     }
 
@@ -240,18 +214,13 @@ class ExtraAssertionUtils
      * <p>
      * Adapted from {@code format(Object, Object, String)}.
      *
-     * @param expected
-     *            expected value
-     * @param actual
-     *            the value to check against <code>expected</code>
-     * @param relativeError
-     *            the relative error
-     * @param message
-     *            the message
+     * @param expected      expected value
+     * @param actual        the value to check against <code>expected</code>
+     * @param relativeError the relative error
+     * @param message       the message
      * @return the formatted message
      */
-    static String format(double expected, double actual, double relativeError, String message)
-    {
+    static String format(double expected, double actual, double relativeError, String message) {
         return buildPrefix(message) + formatValues(expected, actual, relativeError);
     }
 
@@ -260,16 +229,12 @@ class ExtraAssertionUtils
      * <p>
      * Adapted from {@code formatValues(Object, Object)}.
      *
-     * @param expected
-     *            expected value
-     * @param actual
-     *            the value to check against <code>expected</code>
-     * @param relativeError
-     *            the relative error
+     * @param expected      expected value
+     * @param actual        the value to check against <code>expected</code>
+     * @param relativeError the relative error
      * @return the formatted values
      */
-    static String formatValues(double expected, double actual, double relativeError)
-    {
+    static String formatValues(double expected, double actual, double relativeError) {
         final String expectedString = Double.toString(expected);
         final String actualString = Double.toString(actual);
         final double max = max(Math.abs(expected), Math.abs(actual));
@@ -282,14 +247,11 @@ class ExtraAssertionUtils
      * <p>
      * Adapted from {@code formatValues(Object, Object)}.
      *
-     * @param expected
-     *            expected value
-     * @param actual
-     *            the value to check against <code>expected</code>
+     * @param expected expected value
+     * @param actual   the value to check against <code>expected</code>
      * @return the formatted values
      */
-    static String formatValues(double expected, double actual)
-    {
+    static String formatValues(double expected, double actual) {
         final String expectedString = Double.toString(expected);
         final String actualString = Double.toString(actual);
         final String delta = Double.toString(Math.abs(expected - actual));
@@ -297,79 +259,68 @@ class ExtraAssertionUtils
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
      * Fails with the supplied failure {@code message}.
      * <p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
-     * @param message
-     *            The message.
+     * @param expected      The expected value.
+     * @param actual        The value to check against <code>expected</code>.
+     * @param relativeError the maximum relative error between <code>expected</code>
+     *                      and <code>actual</code> for which both numbers are still
+     *                      considered equal.
+     * @param message       The message.
      */
-    static void assertEqualsRelative(float expected, float actual, double relativeError, String message)
-    {
+    static void assertEqualsRelative(float expected, float actual, double relativeError, String message) {
         if (!floatsAreEqualRelative(expected, actual, relativeError))
             throw new AssertionFailedError(format(expected, actual, relativeError, message), expected, actual);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
-     * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+     * If necessary, the failure message will be retrieved lazily from the supplied
+     * {@code messageSupplier}.
      * </p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
-     * @param messageSupplier
-     *            The message supplier.
+     * @param expected        The expected value.
+     * @param actual          The value to check against <code>expected</code>.
+     * @param relativeError   the maximum relative error between
+     *                        <code>expected</code> and <code>actual</code> for
+     *                        which both numbers are still considered equal.
+     * @param messageSupplier The message supplier.
      */
     static void assertEqualsRelative(float expected, float actual, double relativeError,
-            Supplier<String> messageSupplier)
-    {
+            Supplier<String> messageSupplier) {
         if (!floatsAreEqualRelative(expected, actual, relativeError))
             throw new AssertionFailedError(format(expected, actual, relativeError, nullSafeGet(messageSupplier)),
                     expected, actual);
     }
 
     /**
-     * Tests that two floats are equal to within a positive relativeError.
-     * If the expected value is infinity then the relativeError value is
-     * ignored. NaNs are considered equal:
-     * <code>assertEqualsRelative(Float.NaN, Float.NaN, *)</code> passes.
+     * Tests that two floats are equal to within a positive relativeError. If the
+     * expected value is infinity then the relativeError value is ignored. NaNs are
+     * considered equal: <code>assertEqualsRelative(Float.NaN, Float.NaN, *)</code>
+     * passes.
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
-     * @param relativeError
-     *            the maximum relative error between <code>value1</code> and
-     *            <code>value2</code> for which both numbers are still
-     *            considered equal.
+     * @param value1        the first value
+     * @param value2        the second value
+     * @param relativeError the maximum relative error between <code>value1</code>
+     *                      and <code>value2</code> for which both numbers are still
+     *                      considered equal.
      * @return true, if equal
      */
-    static boolean floatsAreEqualRelative(float value1, float value2, double relativeError)
-    {
+    static boolean floatsAreEqualRelative(float value1, float value2, double relativeError) {
         assertValidRelativeError(relativeError);
         if (floatsAreEqual(value1, value2))
             return true;
@@ -378,25 +329,22 @@ class ExtraAssertionUtils
     }
 
     /**
-     * Tests that two doubles are equal to within a positive relativeError.
-     * If the expected value is infinity then the relativeError value is
-     * ignored. NaNs are considered equal:
+     * Tests that two doubles are equal to within a positive relativeError. If the
+     * expected value is infinity then the relativeError value is ignored. NaNs are
+     * considered equal:
      * <code>assertEqualsRelative(Double.NaN, Double.NaN, *)</code> passes.
      * <p>
-     * It is assumed the relative error has been checked with {@link #assertValidRelativeError(double)}.
+     * It is assumed the relative error has been checked with
+     * {@link #assertValidRelativeError(double)}.
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
-     * @param relativeError
-     *            the maximum relative error between <code>value1</code> and
-     *            <code>value2</code> for which both numbers are still
-     *            considered equal.
+     * @param value1        the first value
+     * @param value2        the second value
+     * @param relativeError the maximum relative error between <code>value1</code>
+     *                      and <code>value2</code> for which both numbers are still
+     *                      considered equal.
      * @return true, if equal
      */
-    static boolean floatsAreEqualRelativeValid(float value1, float value2, double relativeError)
-    {
+    static boolean floatsAreEqualRelativeValid(float value1, float value2, double relativeError) {
         if (floatsAreEqual(value1, value2))
             return true;
         final float max = max(Math.abs(value1), Math.abs(value2));
@@ -406,34 +354,28 @@ class ExtraAssertionUtils
     /**
      * Tests that two floats are equal to within a positive delta.
      * <p>
-     * It is assumed the relative error has been checked with {@link #assertValidDelta(float)}.
+     * It is assumed the relative error has been checked with
+     * {@link #assertValidDelta(float)}.
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
-     * @param delta
-     *            the maximum delta between <code>value1</code> and
-     *            <code>value2</code> for which both numbers are still
-     *            considered equal.
+     * @param value1 the first value
+     * @param value2 the second value
+     * @param delta  the maximum delta between <code>value1</code> and
+     *               <code>value2</code> for which both numbers are still considered
+     *               equal.
      * @return true, if equal
      */
-    static boolean floatsAreEqualValid(float value1, float value2, float delta)
-    {
+    static boolean floatsAreEqualValid(float value1, float value2, float delta) {
         return floatsAreEqual(value1, value2) || Math.abs(value1 - value2) <= delta;
     }
 
     /**
      * Get the maximum
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
+     * @param value1 the first value
+     * @param value2 the second value
      * @return the maximum
      */
-    private static float max(float value1, float value2)
-    {
+    private static float max(float value1, float value2) {
         return (value1 >= value2) ? value1 : value2;
     }
 
@@ -442,18 +384,13 @@ class ExtraAssertionUtils
      * <p>
      * Adapted from {@code format(Object, Object, String)}.
      *
-     * @param expected
-     *            expected value
-     * @param actual
-     *            the value to check against <code>expected</code>
-     * @param relativeError
-     *            the relative error
-     * @param message
-     *            the message
+     * @param expected      expected value
+     * @param actual        the value to check against <code>expected</code>
+     * @param relativeError the relative error
+     * @param message       the message
      * @return the formatted message
      */
-    static String format(float expected, float actual, double relativeError, String message)
-    {
+    static String format(float expected, float actual, double relativeError, String message) {
         return buildPrefix(message) + formatValues(expected, actual, relativeError);
     }
 
@@ -462,16 +399,12 @@ class ExtraAssertionUtils
      * <p>
      * Adapted from {@code formatValues(Object, Object)}.
      *
-     * @param expected
-     *            expected value
-     * @param actual
-     *            the value to check against <code>expected</code>
-     * @param relativeError
-     *            the relative error
+     * @param expected      expected value
+     * @param actual        the value to check against <code>expected</code>
+     * @param relativeError the relative error
      * @return the formatted values
      */
-    static String formatValues(float expected, float actual, double relativeError)
-    {
+    static String formatValues(float expected, float actual, double relativeError) {
         final String expectedString = Float.toString(expected);
         final String actualString = Float.toString(actual);
         final float max = max(Math.abs(expected), Math.abs(actual));
@@ -484,14 +417,11 @@ class ExtraAssertionUtils
      * <p>
      * Adapted from {@code formatValues(Object, Object)}.
      *
-     * @param expected
-     *            expected value
-     * @param actual
-     *            the value to check against <code>expected</code>
+     * @param expected expected value
+     * @param actual   the value to check against <code>expected</code>
      * @return the formatted values
      */
-    static String formatValues(float expected, float actual)
-    {
+    static String formatValues(float expected, float actual) {
         final String expectedString = Float.toString(expected);
         final String actualString = Float.toString(actual);
         final String delta = Float.toString(Math.abs(expected - actual));
@@ -501,26 +431,22 @@ class ExtraAssertionUtils
     // Methods below copied from AssertionUtils.
 
     // Taken from AssertionUtils
-    private static String nullSafeGet(Supplier<String> messageSupplier)
-    {
+    private static String nullSafeGet(Supplier<String> messageSupplier) {
         return (messageSupplier != null ? messageSupplier.get() : null);
     }
 
     /**
-     * Alternative to {@code #nullSafeGet(Supplier)} that is used to avoid
-     * wrapping a String in a lambda expression.
+     * Alternative to {@code #nullSafeGet(Supplier)} that is used to avoid wrapping
+     * a String in a lambda expression.
      *
-     * @param messageOrSupplier
-     *            an object that is either a {@code String} or
-     *            {@code Supplier<String>}
+     * @param messageOrSupplier an object that is either a {@code String} or
+     *                          {@code Supplier<String>}
      * @return the string
      */
-    static String nullSafeGet(Object messageOrSupplier)
-    {
+    static String nullSafeGet(Object messageOrSupplier) {
         if (messageOrSupplier instanceof String)
             return (String) messageOrSupplier;
-        if (messageOrSupplier instanceof Supplier)
-        {
+        if (messageOrSupplier instanceof Supplier) {
             final Object message = ((Supplier<?>) messageOrSupplier).get();
             if (message != null)
                 return message.toString();
@@ -531,24 +457,20 @@ class ExtraAssertionUtils
     /**
      * Builds the fail message prefix.
      *
-     * @param message
-     *            the message
+     * @param message the message
      * @return the prefix
      */
-    static String buildPrefix(String message)
-    {
+    static String buildPrefix(String message) {
         return (StringUtils.isNotBlank(message) ? message + " ==> " : "");
     }
 
     /**
      * Format indexes for the array fail message.
      *
-     * @param indexes
-     *            the indexes
+     * @param indexes the indexes
      * @return the formatted indices
      */
-    static String formatIndexes(Deque<Integer> indexes)
-    {
+    static String formatIndexes(Deque<Integer> indexes) {
         if (indexes == null || indexes.isEmpty())
             return "";
         final String indexesString = indexes.stream().map(Object::toString).collect(joining("][", "[", "]"));
@@ -558,28 +480,22 @@ class ExtraAssertionUtils
     /**
      * Tests that two doubles are equal to within a positive delta.
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
+     * @param value1 the first value
+     * @param value2 the second value
      * @return true, if equal
      */
-    static boolean doublesAreEqual(double value1, double value2)
-    {
+    static boolean doublesAreEqual(double value1, double value2) {
         return Double.doubleToLongBits(value1) == Double.doubleToLongBits(value2);
     }
 
     /**
      * Tests that two floats are equal to within a positive delta.
      *
-     * @param value1
-     *            the first value
-     * @param value2
-     *            the second value
+     * @param value1 the first value
+     * @param value2 the second value
      * @return true, if equal
      */
-    static boolean floatsAreEqual(float value1, float value2)
-    {
+    static boolean floatsAreEqual(float value1, float value2) {
         return Float.floatToIntBits(value1) == Float.floatToIntBits(value2);
     }
 }

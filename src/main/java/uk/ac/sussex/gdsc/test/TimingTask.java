@@ -26,8 +26,7 @@ package uk.ac.sussex.gdsc.test;
 /**
  * Defines a task to run.
  */
-public interface TimingTask
-{
+public interface TimingTask {
     /**
      * Gets the number of tasks.
      *
@@ -38,10 +37,10 @@ public interface TimingTask
     /**
      * Gets the task data for given task.
      * <p>
-     * If the data is destructively modified by the {@link #run(Object)} method then this should be new data.
+     * If the data is destructively modified by the {@link #run(Object)} method then
+     * this should be new data.
      *
-     * @param i
-     *            the task index
+     * @param i the task index
      * @return the data
      */
     public Object getData(int i);
@@ -49,8 +48,7 @@ public interface TimingTask
     /**
      * Run the task.
      *
-     * @param data
-     *            the task data
+     * @param data the task data
      * @return the result
      */
     public Object run(Object data);
@@ -65,13 +63,11 @@ public interface TimingTask
     /**
      * Check the result produced by the given task.
      * <p>
-     * It is left to the implementation to decide how to handle incorrect results, e.g. throw an exception, log an
-     * error, etc.
+     * It is left to the implementation to decide how to handle incorrect results,
+     * e.g. throw an exception, log an error, etc.
      *
-     * @param i
-     *            the task index
-     * @param result
-     *            the result
+     * @param i      the task index
+     * @param result the result
      */
     public void check(int i, Object result);
 }

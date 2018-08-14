@@ -25,7 +25,7 @@
 /**
  * Provides classes that implement functional interfaces used in test reporting.
  * <p>
- * Many classes implement {@code java.util.function.Supplier<String>} for use in 
- * messages.  
+ * Many classes implement {@code java.util.function.Supplier<String>} for use in
+ * messages.
  */
 package uk.ac.sussex.gdsc.test.functions;

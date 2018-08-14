@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 /**
  * Supply a message for an n-dimensional index.
  * <p>
- * The default message will output the current index value {@code [x]}
- * for each of the {@code n} dimensions:
+ * The default message will output the current index value {@code [x]} for each
+ * of the {@code n} dimensions:
  * 
  * <pre>
  * messagePrefix + "[1][2]...[n-1][n]" + messageSuffix
@@ -39,8 +39,7 @@ import java.util.stream.Collectors;
  * 
  * The message prefix, suffix and index delimiters can be configured.
  */
-public class IndexSupplier implements Supplier<String>
-{
+public class IndexSupplier implements Supplier<String> {
     /** The indices. */
     private final int[] indices;
 
@@ -62,13 +61,10 @@ public class IndexSupplier implements Supplier<String>
     /**
      * Instantiates a new index supplier.
      *
-     * @param dimensions
-     *            the dimensions
-     * @throws IllegalArgumentException
-     *             If the dimensions are not strictly positive
+     * @param dimensions the dimensions
+     * @throws IllegalArgumentException If the dimensions are not strictly positive
      */
-    public IndexSupplier(int dimensions) throws IllegalArgumentException
-    {
+    public IndexSupplier(int dimensions) throws IllegalArgumentException {
         if (dimensions < 1)
             throw new IllegalArgumentException(dimensions + " < 1");
         this.indices = new int[dimensions];
@@ -77,17 +73,12 @@ public class IndexSupplier implements Supplier<String>
     /**
      * Instantiates a new index supplier.
      *
-     * @param dimensions
-     *            the dimensions
-     * @param messagePrefix
-     *            the message prefix
-     * @param messageSuffix
-     *            the message suffix
-     * @throws IllegalArgumentException
-     *             If the dimensions are not strictly positive
+     * @param dimensions    the dimensions
+     * @param messagePrefix the message prefix
+     * @param messageSuffix the message suffix
+     * @throws IllegalArgumentException If the dimensions are not strictly positive
      */
-    public IndexSupplier(int dimensions, String messagePrefix, String messageSuffix) throws IllegalArgumentException
-    {
+    public IndexSupplier(int dimensions, String messagePrefix, String messageSuffix) throws IllegalArgumentException {
         this(dimensions);
         setMessagePrefix(messagePrefix);
         setMessageSuffix(messageSuffix);
@@ -111,16 +102,13 @@ public class IndexSupplier implements Supplier<String>
      * @see java.util.function.Supplier#get()
      */
     @Override
-    public String get()
-    {
+    public String get() {
         String message = Arrays.stream(indices).boxed().map(Object::toString)
                 .collect(Collectors.joining(delimiter, prefix, suffix));
-        if (messagePrefix != null && messagePrefix.length() > 0)
-        {
+        if (messagePrefix != null && messagePrefix.length() > 0) {
             message = messagePrefix + message;
         }
-        if (messageSuffix != null && messageSuffix.length() > 0)
-        {
+        if (messageSuffix != null && messageSuffix.length() > 0) {
             message += messageSuffix;
         }
         return message;
@@ -129,14 +117,11 @@ public class IndexSupplier implements Supplier<String>
     /**
      * Sets the index.
      *
-     * @param i
-     *            the index
-     * @param value
-     *            the index value
+     * @param i     the index
+     * @param value the index value
      * @return the supplier
      */
-    public Supplier<String> set(int i, int value)
-    {
+    public Supplier<String> set(int i, int value) {
         indices[i] = value;
         return this;
     }
@@ -144,25 +129,20 @@ public class IndexSupplier implements Supplier<String>
     /**
      * Gets the index.
      *
-     * @param i
-     *            the index
+     * @param i the index
      * @return the index value
      */
-    public int get(int i)
-    {
+    public int get(int i) {
         return indices[i];
     }
 
     /**
      * Sets the format to use around each index.
      *
-     * @param prefix
-     *            the prefix for each index
-     * @param suffix
-     *            the suffix for each index
+     * @param prefix the prefix for each index
+     * @param suffix the suffix for each index
      */
-    public void setFormat(String prefix, String suffix)
-    {
+    public void setFormat(String prefix, String suffix) {
         this.prefix = prefix;
         this.suffix = suffix;
         this.delimiter = suffix + prefix;
@@ -173,19 +153,16 @@ public class IndexSupplier implements Supplier<String>
      *
      * @return the message prefix
      */
-    public String getMessagePrefix()
-    {
+    public String getMessagePrefix() {
         return messagePrefix;
     }
 
     /**
      * Sets the message prefix.
      *
-     * @param messagePrefix
-     *            the new message prefix
+     * @param messagePrefix the new message prefix
      */
-    public void setMessagePrefix(String messagePrefix)
-    {
+    public void setMessagePrefix(String messagePrefix) {
         this.messagePrefix = messagePrefix;
     }
 
@@ -194,19 +171,16 @@ public class IndexSupplier implements Supplier<String>
      *
      * @return the message suffix
      */
-    public String getMessageSuffix()
-    {
+    public String getMessageSuffix() {
         return messageSuffix;
     }
 
     /**
      * Sets the message suffix.
      *
-     * @param messageSuffix
-     *            the new message suffix
+     * @param messageSuffix the new message suffix
      */
-    public void setMessageSuffix(String messageSuffix)
-    {
+    public void setMessageSuffix(String messageSuffix) {
         this.messageSuffix = messageSuffix;
     }
 
@@ -215,8 +189,7 @@ public class IndexSupplier implements Supplier<String>
      *
      * @return the prefix
      */
-    public String getPrefix()
-    {
+    public String getPrefix() {
         return prefix;
     }
 
@@ -225,8 +198,7 @@ public class IndexSupplier implements Supplier<String>
      *
      * @return the suffix
      */
-    public String getSuffix()
-    {
+    public String getSuffix() {
         return suffix;
     }
 
@@ -237,8 +209,7 @@ public class IndexSupplier implements Supplier<String>
      *
      * @return the delimiter
      */
-    public String getDelimiter()
-    {
+    public String getDelimiter() {
         return delimiter;
     }
 
@@ -247,8 +218,7 @@ public class IndexSupplier implements Supplier<String>
      *
      * @return the dimensions
      */
-    public int getDimensions()
-    {
+    public int getDimensions() {
         return indices.length;
     }
 }

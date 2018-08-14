@@ -34,15 +34,16 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 /**
  * {@code @SeededTest} is used to signal that the annotated method is a
- * {@link ParameterizedTest} using an argument of type {@link RandomSeed}.
- * The {@link ArgumentsSource} for the test will use a {@link RandomSeedSource}
- * to provide the seeds. At least one seed will be provided.
+ * {@link ParameterizedTest} using an argument of type {@link RandomSeed}. The
+ * {@link ArgumentsSource} for the test will use a {@link RandomSeedSource} to
+ * provide the seeds. At least one seed will be provided.
  * <p>
- * The annotation adds a {@code "seeded"} {@link Tag} and <code>@</code>{@link RandomTag}.
+ * The annotation adds a {@code "seeded"} {@link Tag} and
+ * <code>@</code>{@link RandomTag}.
  * <p>
- * {@code @SeededTest} may also be used as a meta-annotation in order to
- * create a custom <em>composed annotation</em> that inherits the semantics
- * of {@code @SeededTest}.
+ * {@code @SeededTest} may also be used as a meta-annotation in order to create
+ * a custom <em>composed annotation</em> that inherits the semantics of
+ * {@code @SeededTest}.
  */
 @Target({ ElementType.ANNOTATION_TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
@@ -50,7 +51,6 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 @ParameterizedTest
 @ArgumentsSource(RandomSeedSource.class)
 @RandomTag
-public @interface SeededTest
-{
+public @interface SeededTest {
     // Annotation
 }

@@ -33,25 +33,21 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class TimingServiceTest
-{
+public class TimingServiceTest {
     private static Logger logger;
 
     @BeforeAll
-    public static void beforeAll()
-    {
+    public static void beforeAll() {
         logger = Logger.getLogger(TimingServiceTest.class.getName());
     }
 
     @AfterAll
-    public static void afterAll()
-    {
+    public static void afterAll() {
         logger = null;
     }
 
     @Test
-    public void canConstruct()
-    {
+    public void canConstruct() {
         TimingService ts = new TimingService();
         Assertions.assertNotNull(ts);
         Assertions.assertFalse(0 == ts.getRuns());
@@ -62,8 +58,7 @@ public class TimingServiceTest
         Assertions.assertEquals(0, ts.getSize());
     }
 
-    private static class LoggingTimingTask implements TimingTask
-    {
+    private static class LoggingTimingTask implements TimingTask {
         Object[] in = new Object[] { new Object(), new Object() };
         Object[] out = new Object[] { new Object(), new Object() };
 
@@ -71,47 +66,40 @@ public class TimingServiceTest
         int checkCounter = 0;
         String name;
 
-        LoggingTimingTask(String name)
-        {
+        LoggingTimingTask(String name) {
             this.name = name;
         }
 
         @Override
-        public int getSize()
-        {
+        public int getSize() {
             return in.length;
         }
 
         @Override
-        public Object getData(int i)
-        {
+        public Object getData(int i) {
             return in[i];
         }
 
         @Override
-        public Object run(Object data)
-        {
+        public Object run(Object data) {
             int index = runCounter++ % in.length;
             return out[index];
         }
 
         @Override
-        public String getName()
-        {
+        public String getName() {
             return name;
         }
 
         @Override
-        public void check(int i, Object result)
-        {
+        public void check(int i, Object result) {
             int index = checkCounter++ % in.length;
             Assertions.assertEquals(out[index], result);
         }
     }
 
     @Test
-    public void canRunTasks()
-    {
+    public void canRunTasks() {
         TimingService ts = new TimingService();
         LoggingTimingTask tt1 = new LoggingTimingTask("task1");
         LoggingTimingTask tt2 = new LoggingTimingTask("task2");
@@ -137,8 +125,7 @@ public class TimingServiceTest
         Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
         // Check get() can use negative index
         int size = ts.getSize();
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             TimingResult r1 = ts.get(i);
             TimingResult r2 = ts.get(-(size - i));
             Assertions.assertSame(r1, r2);
@@ -152,40 +139,32 @@ public class TimingServiceTest
         ts.clearResults();
     }
 
-    private static class SleepTimingTask extends BaseTimingTask
-    {
+    private static class SleepTimingTask extends BaseTimingTask {
         Object in = new Object();
         Object out = new Object();
 
         long millis;
 
-        SleepTimingTask(String name, long millis)
-        {
+        SleepTimingTask(String name, long millis) {
             super(name);
             this.millis = millis;
         }
 
         @Override
-        public int getSize()
-        {
+        public int getSize() {
             return 1;
         }
 
         @Override
-        public Object getData(int i)
-        {
+        public Object getData(int i) {
             return in;
         }
 
         @Override
-        public Object run(Object data)
-        {
-            try
-            {
+        public Object run(Object data) {
+            try {
                 Thread.sleep(millis);
-            }
-            catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 Assertions.fail("Cannot sleep in timing task: " + e.getMessage());
             }
             return out;
@@ -193,8 +172,7 @@ public class TimingServiceTest
     }
 
     @Test
-    public void canCheckTasks()
-    {
+    public void canCheckTasks() {
         TimingService ts = new TimingService();
         LoggingTimingTask tt1 = new LoggingTimingTask("task1");
         LoggingTimingTask tt2 = new LoggingTimingTask("task2");
@@ -222,8 +200,7 @@ public class TimingServiceTest
     }
 
     @Test
-    public void canGetReport()
-    {
+    public void canGetReport() {
         TimingService ts = new TimingService(2);
         Assertions.assertEquals("", ts.getReport());
         Assertions.assertEquals("", ts.getReport(false));
@@ -248,10 +225,8 @@ public class TimingServiceTest
 
         // The fast task should be marked with a '*' character
         String[] lines = report.split(TimingService.newLine);
-        for (String line : lines)
-        {
-            if (line.contains("*"))
-            {
+        for (String line : lines) {
+            if (line.contains("*")) {
                 Assertions.assertTrue(line.contains("fast"));
             }
         }
@@ -280,8 +255,7 @@ public class TimingServiceTest
     }
 
     @Test
-    public void canReport()
-    {
+    public void canReport() {
         TimingService ts = new TimingService(2);
         Assertions.assertEquals("", getReport(ts));
         Assertions.assertEquals("", getReport(ts, 1));
@@ -302,10 +276,8 @@ public class TimingServiceTest
 
         // The fast task should be marked with a '*' character
         String[] lines = report.split(TimingService.newLine);
-        for (String line : lines)
-        {
-            if (line.contains("*"))
-            {
+        for (String line : lines) {
+            if (line.contains("*")) {
                 Assertions.assertTrue(line.contains("fast"));
             }
         }
@@ -321,22 +293,18 @@ public class TimingServiceTest
         Assertions.assertEquals("", getReport(ts, 0));
     }
 
-    private static String getReport(TimingService ts)
-    {
+    private static String getReport(TimingService ts) {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true))
-        {
+        try (PrintStream ps = new PrintStream(baos, true)) {
             ts.report(ps);
             ps.close();
             return new String(baos.toByteArray());
         }
     }
 
-    private static String getReport(TimingService ts, int n)
-    {
+    private static String getReport(TimingService ts, int n) {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true))
-        {
+        try (PrintStream ps = new PrintStream(baos, true)) {
             ts.report(ps, n);
             ps.close();
             return new String(baos.toByteArray());
@@ -344,18 +312,15 @@ public class TimingServiceTest
     }
 
     @Test
-    public void canReportUsingEmptyResults()
-    {
+    public void canReportUsingEmptyResults() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true))
-        {
+        try (PrintStream ps = new PrintStream(baos, true)) {
             TimingService.report(ps, (TimingResult[]) null);
             ps.close();
             Assertions.assertEquals("", new String(baos.toByteArray()));
         }
         baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true))
-        {
+        try (PrintStream ps = new PrintStream(baos, true)) {
             TimingService.report(ps, new TimingResult[0]);
             ps.close();
             Assertions.assertEquals("", new String(baos.toByteArray()));

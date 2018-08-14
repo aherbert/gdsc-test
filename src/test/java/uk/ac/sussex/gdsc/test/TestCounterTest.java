@@ -27,11 +27,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class TestCounterTest
-{
+public class TestCounterTest {
     @Test
-    public void canComputeFailureLimit()
-    {
+    public void canComputeFailureLimit() {
         int size = 345;
         double fraction = 0.789;
         int e = (int) Math.floor(size * fraction);
@@ -49,8 +47,7 @@ public class TestCounterTest
     }
 
     @Test
-    public void canConstruct()
-    {
+    public void canConstruct() {
         int failLimit = 1;
         int size = 1;
         Assertions.assertNotNull(new TestCounter(failLimit));
@@ -65,8 +62,7 @@ public class TestCounterTest
     }
 
     @Test
-    public void canRunTests()
-    {
+    public void canRunTests() {
         int failLimit = 0;
         int size = 2;
         // All the following methods simulate a pass
@@ -101,8 +97,7 @@ public class TestCounterTest
     }
 
     @Test
-    public void canThrowAssertionError()
-    {
+    public void canThrowAssertionError() {
         int failLimit = 0;
         int size = 2;
         // All the following methods simulate a failure
@@ -137,8 +132,7 @@ public class TestCounterTest
     }
 
     @Test
-    public void canSwallowAssertionError()
-    {
+    public void canSwallowAssertionError() {
         int failLimit = 1;
         int size = 2;
         // All the following methods simulate a failure.
@@ -168,8 +162,7 @@ public class TestCounterTest
     }
 
     @Test
-    public void canThrowDefaultAssertionErrorForTestAssertion()
-    {
+    public void canThrowDefaultAssertionErrorForTestAssertion() {
         int failLimit = 0;
         int size = 2;
         TestCounter tc = new TestCounter(failLimit, size);

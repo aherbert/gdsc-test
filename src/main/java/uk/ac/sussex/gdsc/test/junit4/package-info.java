@@ -23,7 +23,8 @@
  */
 
 /**
- * Provides classes for use with the <a href="https://junit.org/junit4/">JUnit 4</a> test framework.
+ * Provides classes for use with the <a href="https://junit.org/junit4/">JUnit
+ * 4</a> test framework.
  *
  * @see <a href="https://junit.org/junit4/">JUnit 4</a>
  * @since 1.0.0

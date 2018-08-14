@@ -29,365 +29,316 @@ import org.junit.jupiter.api.Assertions;
 import org.opentest4j.AssertionFailedError;
 
 /**
- * Adds additional helper assert functions to those provided by {@link org.junit.jupiter.api.Assertions}.
+ * Adds additional helper assert functions to those provided by
+ * {@link org.junit.jupiter.api.Assertions}.
  * <p>
- * Assert functions are provided to compare float values using relative error, e.g.
+ * Assert functions are provided to compare float values using relative error,
+ * e.g.
  *
  * <pre>
  * &#64;Test
- * public void myTest()
- * {
+ * public void myTest() {
  *     ExtraAssertions.assertEqualsRelative(999.9, 1000.0, 1e-2); // passes
  * }
  * </pre>
  *
  * @see org.opentest4j.AssertionFailedError
  */
-public class ExtraAssertions
-{
+public class ExtraAssertions {
     /**
      * Do not allow public construction.
      */
-    private ExtraAssertions()
-    {
+    private ExtraAssertions() {
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
-     * {@link Double#compare(double, double)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and {@link Double#compare(double, double)}.
      * </p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
+     * @param expected      The expected value.
+     * @param actual        The value to check against <code>expected</code>.
+     * @param relativeError the maximum relative error between <code>expected</code>
+     *                      and <code>actual</code> for which both numbers are still
+     *                      considered equal.
      */
-    public static void assertEqualsRelative(double expected, double actual, double relativeError)
-    {
+    public static void assertEqualsRelative(double expected, double actual, double relativeError) {
         ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, (String) null);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
-     * {@link Double#compare(double, double)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and {@link Double#compare(double, double)}.
      * </p>
      * <p>
      * Fails with the supplied failure {@code message}.
      * <p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
-     * @param message
-     *            The message.
+     * @param expected      The expected value.
+     * @param actual        The value to check against <code>expected</code>.
+     * @param relativeError the maximum relative error between <code>expected</code>
+     *                      and <code>actual</code> for which both numbers are still
+     *                      considered equal.
+     * @param message       The message.
      */
-    public static void assertEqualsRelative(double expected, double actual, double relativeError, String message)
-    {
+    public static void assertEqualsRelative(double expected, double actual, double relativeError, String message) {
         ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, message);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
-     * {@link Double#compare(double, double)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and {@link Double#compare(double, double)}.
      * </p>
      * <p>
-     * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+     * If necessary, the failure message will be retrieved lazily from the supplied
+     * {@code messageSupplier}.
      * </p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
-     * @param messageSupplier
-     *            The message supplier.
+     * @param expected        The expected value.
+     * @param actual          The value to check against <code>expected</code>.
+     * @param relativeError   the maximum relative error between
+     *                        <code>expected</code> and <code>actual</code> for
+     *                        which both numbers are still considered equal.
+     * @param messageSupplier The message supplier.
      */
     public static void assertEqualsRelative(double expected, double actual, double relativeError,
-            Supplier<String> messageSupplier)
-    {
+            Supplier<String> messageSupplier) {
         ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, messageSupplier);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
+     * @param expected      The expected value.
+     * @param actual        The value to check against <code>expected</code>.
+     * @param relativeError the maximum relative error between <code>expected</code>
+     *                      and <code>actual</code> for which both numbers are still
+     *                      considered equal.
      */
-    public static void assertEqualsRelative(float expected, float actual, double relativeError)
-    {
+    public static void assertEqualsRelative(float expected, float actual, double relativeError) {
         ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, (String) null);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
      * Fails with the supplied failure {@code message}.
      * <p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
-     * @param message
-     *            The message.
+     * @param expected      The expected value.
+     * @param actual        The value to check against <code>expected</code>.
+     * @param relativeError the maximum relative error between <code>expected</code>
+     *                      and <code>actual</code> for which both numbers are still
+     *                      considered equal.
+     * @param message       The message.
      */
-    public static void assertEqualsRelative(float expected, float actual, double relativeError, String message)
-    {
+    public static void assertEqualsRelative(float expected, float actual, double relativeError, String message) {
         ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, message);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within the given {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal within
+     * the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
-     * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+     * If necessary, the failure message will be retrieved lazily from the supplied
+     * {@code messageSupplier}.
      * </p>
      *
-     * @param expected
-     *            The expected value.
-     * @param actual
-     *            The value to check against <code>expected</code>.
-     * @param relativeError
-     *            the maximum relative error between <code>expected</code> and
-     *            <code>actual</code> for which both numbers are still
-     *            considered equal.
-     * @param messageSupplier
-     *            The message supplier.
+     * @param expected        The expected value.
+     * @param actual          The value to check against <code>expected</code>.
+     * @param relativeError   the maximum relative error between
+     *                        <code>expected</code> and <code>actual</code> for
+     *                        which both numbers are still considered equal.
+     * @param messageSupplier The message supplier.
      */
     public static void assertEqualsRelative(float expected, float actual, double relativeError,
-            Supplier<String> messageSupplier)
-    {
+            Supplier<String> messageSupplier) {
         ExtraAssertionUtils.assertEqualsRelative(expected, actual, relativeError, messageSupplier);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} double arrays are equal within the given
-     * {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} double arrays are
+     * equal within the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
-     * {@link Double#compare(double, double)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and {@link Double#compare(double, double)}.
      * </p>
      *
-     * @param expected
-     *            The double array with expected values.
-     * @param actual
-     *            The double array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
+     * @param expected      The double array with expected values.
+     * @param actual        The double array with actual values.
+     * @param relativeError The maximum relative error between
+     *                      <code>expected[i]</code> and <code>actual[i]</code> for
+     *                      which both numbers are still considered equal.
      */
-    public static void assertArrayEqualsRelative(double[] expected, double[] actual, double relativeError)
-    {
+    public static void assertArrayEqualsRelative(double[] expected, double[] actual, double relativeError) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, null, null);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} double arrays are equal within the given
-     * {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} double arrays are
+     * equal within the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
-     * {@link Double#compare(double, double)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and {@link Double#compare(double, double)}.
      * </p>
      *
-     * @param expected
-     *            The double array with expected values.
-     * @param actual
-     *            The double array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
-     * @param message
-     *            the identifying message for the {@link AssertionFailedError} (<code>null</code>
-     *            okay)
+     * @param expected      The double array with expected values.
+     * @param actual        The double array with actual values.
+     * @param relativeError The maximum relative error between
+     *                      <code>expected[i]</code> and <code>actual[i]</code> for
+     *                      which both numbers are still considered equal.
+     * @param message       the identifying message for the
+     *                      {@link AssertionFailedError} (<code>null</code> okay)
      */
     public static void assertArrayEqualsRelative(double[] expected, double[] actual, double relativeError,
-            String message)
-    {
+            String message) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, null, message);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} double arrays are equal within the given
-     * {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} double arrays are
+     * equal within the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and
-     * {@link Double#compare(double, double)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and {@link Double#compare(double, double)}.
      * </p>
      * <p>
-     * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+     * If necessary, the failure message will be retrieved lazily from the supplied
+     * {@code messageSupplier}.
      * </p>
      *
-     * @param expected
-     *            The double array with expected values.
-     * @param actual
-     *            The double array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
-     * @param messageSupplier
-     *            The message supplier.
+     * @param expected        The double array with expected values.
+     * @param actual          The double array with actual values.
+     * @param relativeError   The maximum relative error between
+     *                        <code>expected[i]</code> and <code>actual[i]</code>
+     *                        for which both numbers are still considered equal.
+     * @param messageSupplier The message supplier.
      */
     public static void assertArrayEqualsRelative(double[] expected, double[] actual, double relativeError,
-            Supplier<String> messageSupplier)
-    {
+            Supplier<String> messageSupplier) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, null, messageSupplier);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float arrays are equal within the given
-     * {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float arrays are
+     * equal within the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      *
-     * @param expected
-     *            The float array with expected values.
-     * @param actual
-     *            The float array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
+     * @param expected      The float array with expected values.
+     * @param actual        The float array with actual values.
+     * @param relativeError The maximum relative error between
+     *                      <code>expected[i]</code> and <code>actual[i]</code> for
+     *                      which both numbers are still considered equal.
      */
-    public static void assertArrayEqualsRelative(float[] expected, float[] actual, double relativeError)
-    {
+    public static void assertArrayEqualsRelative(float[] expected, float[] actual, double relativeError) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, null, null);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float arrays are equal within the given
-     * {@code relativeError}.
-     * If they are not, an {@link AssertionFailedError} is thrown with the supplied failure {@code message}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float arrays are
+     * equal within the given {@code relativeError}. If they are not, an
+     * {@link AssertionFailedError} is thrown with the supplied failure
+     * {@code message}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
      * Fails with the supplied failure {@code message}.
      * <p>
      *
-     * @param expected
-     *            The float array with expected values.
-     * @param actual
-     *            The float array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
-     * @param message
-     *            the identifying message for the {@link AssertionFailedError} (<code>null</code>
-     *            okay)
+     * @param expected      The float array with expected values.
+     * @param actual        The float array with actual values.
+     * @param relativeError The maximum relative error between
+     *                      <code>expected[i]</code> and <code>actual[i]</code> for
+     *                      which both numbers are still considered equal.
+     * @param message       the identifying message for the
+     *                      {@link AssertionFailedError} (<code>null</code> okay)
      */
-    public static void assertArrayEqualsRelative(float[] expected, float[] actual, double relativeError, String message)
-    {
+    public static void assertArrayEqualsRelative(float[] expected, float[] actual, double relativeError,
+            String message) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, null, message);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float arrays are equal within the given
-     * {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float arrays are
+     * equal within the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
-     * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+     * If necessary, the failure message will be retrieved lazily from the supplied
+     * {@code messageSupplier}.
      * </p>
      *
-     * @param expected
-     *            The float array with expected values.
-     * @param actual
-     *            The float array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
-     * @param messageSupplier
-     *            The message supplier.
+     * @param expected        The float array with expected values.
+     * @param actual          The float array with actual values.
+     * @param relativeError   The maximum relative error between
+     *                        <code>expected[i]</code> and <code>actual[i]</code>
+     *                        for which both numbers are still considered equal.
+     * @param messageSupplier The message supplier.
      */
     public static void assertArrayEqualsRelative(float[] expected, float[] actual, double relativeError,
-            Supplier<String> messageSupplier)
-    {
+            Supplier<String> messageSupplier) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, null, messageSupplier);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
-     * {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays
+     * are equal within the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
-     * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and, {@link Double#compare(double, double)} or
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
      * This supports nested arrays, e.g. {@code double[][]}.
      * </p>
      *
-     * @param expected
-     *            The float/double array with expected values.
-     * @param actual
-     *            The float/double array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
+     * @param expected      The float/double array with expected values.
+     * @param actual        The float/double array with actual values.
+     * @param relativeError The maximum relative error between
+     *                      <code>expected[i]</code> and <code>actual[i]</code> for
+     *                      which both numbers are still considered equal.
      */
-    public static void assertArrayEqualsRelative(Object[] expected, Object[] actual, double relativeError)
-    {
+    public static void assertArrayEqualsRelative(Object[] expected, Object[] actual, double relativeError) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
-     * {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays
+     * are equal within the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
-     * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and, {@link Double#compare(double, double)} or
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
      * Fails with the supplied failure {@code message}.
@@ -396,151 +347,135 @@ public class ExtraAssertions
      * This supports nested arrays, e.g. {@code double[][]}.
      * </p>
      *
-     * @param expected
-     *            The float/double array with expected values.
-     * @param actual
-     *            The float/double array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
-     * @param message
-     *            The message.
+     * @param expected      The float/double array with expected values.
+     * @param actual        The float/double array with actual values.
+     * @param relativeError The maximum relative error between
+     *                      <code>expected[i]</code> and <code>actual[i]</code> for
+     *                      which both numbers are still considered equal.
+     * @param message       The message.
      */
     public static void assertArrayEqualsRelative(Object[] expected, Object[] actual, double relativeError,
-            String message)
-    {
+            String message) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, message);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
-     * {@code relativeError}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays
+     * are equal within the given {@code relativeError}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
-     * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and, {@link Double#compare(double, double)} or
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * </p>
      * <p>
-     * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+     * If necessary, the failure message will be retrieved lazily from the supplied
+     * {@code messageSupplier}.
      * </p>
      * <p>
      * This supports nested arrays, e.g. {@code double[][]}.
      * </p>
      *
-     * @param expected
-     *            The float/double array with expected values.
-     * @param actual
-     *            The float/double array with actual values.
-     * @param relativeError
-     *            The maximum relative error between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
-     * @param messageSupplier
-     *            The message supplier.
+     * @param expected        The float/double array with expected values.
+     * @param actual          The float/double array with actual values.
+     * @param relativeError   The maximum relative error between
+     *                        <code>expected[i]</code> and <code>actual[i]</code>
+     *                        for which both numbers are still considered equal.
+     * @param messageSupplier The message supplier.
      */
     public static void assertArrayEqualsRelative(Object[] expected, Object[] actual, double relativeError,
-            Supplier<String> messageSupplier)
-    {
+            Supplier<String> messageSupplier) {
         ExtraAssertArrayEquals.assertArrayEqualsRelative(expected, actual, relativeError, messageSupplier);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
-     * {@code delta}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays
+     * are equal within the given {@code delta}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
-     * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and, {@link Double#compare(double, double)} or
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * <p>
      * This supports nested arrays, e.g. {@code double[][]}.
      * <p>
-     * Nested float arrays are checked as in {@link Assertions#assertEquals(float, float, float)}.
-     * The {@code delta} must be a {@code Float}.
+     * Nested float arrays are checked as in
+     * {@link Assertions#assertEquals(float, float, float)}. The {@code delta} must
+     * be a {@code Float}.
      * <p>
-     * Nested double arrays are checked as in {@link Assertions#assertEquals(double, double, double)}.
-     * The {@code delta} must be a {@code Double}.
+     * Nested double arrays are checked as in
+     * {@link Assertions#assertEquals(double, double, double)}. The {@code delta}
+     * must be a {@code Double}.
      *
-     * @param expected
-     *            The float/double array with expected values.
-     * @param actual
-     *            The float/double array with actual values.
-     * @param delta
-     *            The maximum float/double delta between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
+     * @param expected The float/double array with expected values.
+     * @param actual   The float/double array with actual values.
+     * @param delta    The maximum float/double delta between
+     *                 <code>expected[i]</code> and <code>actual[i]</code> for which
+     *                 both numbers are still considered equal.
      */
-    public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta)
-    {
+    public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta) {
         ExtraAssertArrayEquals.assertArrayEquals(expected, actual, delta);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
-     * {@code delta}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays
+     * are equal within the given {@code delta}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
-     * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and, {@link Double#compare(double, double)} or
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * <p>
      * Fails with the supplied failure {@code message}.
      * <p>
      * This supports nested arrays, e.g. {@code double[][]}.
      * <p>
-     * Nested float arrays are checked as in {@link Assertions#assertEquals(float, float, float, String)}.
-     * The {@code delta} must be a {@code Float}.
+     * Nested float arrays are checked as in
+     * {@link Assertions#assertEquals(float, float, float, String)}. The
+     * {@code delta} must be a {@code Float}.
      * <p>
-     * Nested double arrays are checked as in {@link Assertions#assertEquals(double, double, double, String)}.
-     * The {@code delta} must be a {@code Double}.
+     * Nested double arrays are checked as in
+     * {@link Assertions#assertEquals(double, double, double, String)}. The
+     * {@code delta} must be a {@code Double}.
      *
-     * @param expected
-     *            The float/double array with expected values.
-     * @param actual
-     *            The float/double array with actual values.
-     * @param delta
-     *            The maximum float/double delta between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
-     * @param message
-     *            The message.
+     * @param expected The float/double array with expected values.
+     * @param actual   The float/double array with actual values.
+     * @param delta    The maximum float/double delta between
+     *                 <code>expected[i]</code> and <code>actual[i]</code> for which
+     *                 both numbers are still considered equal.
+     * @param message  The message.
      */
-    public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta, String message)
-    {
+    public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta, String message) {
         ExtraAssertArrayEquals.assertArrayEquals(expected, actual, delta, message);
     }
 
     /**
-     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays are equal within the given
-     * {@code delta}.
+     * <em>Asserts</em> that {@code expected} and {@code actual} float/double arrays
+     * are equal within the given {@code delta}.
      * <p>
-     * Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
-     * {@link Double#compare(double, double)} or {@link Float#equals(Object)} and
-     * {@link Float#compare(float, float)}.
+     * Equality imposed by this method is consistent with
+     * {@link Double#equals(Object)} and, {@link Double#compare(double, double)} or
+     * {@link Float#equals(Object)} and {@link Float#compare(float, float)}.
      * <p>
-     * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+     * If necessary, the failure message will be retrieved lazily from the supplied
+     * {@code messageSupplier}.
      * <p>
      * This supports nested arrays, e.g. {@code double[][]}.
      * <p>
-     * Nested float arrays are checked as in {@link Assertions#assertEquals(float, float, float, Supplier)}.
-     * The {@code delta} must be a {@code Float}.
+     * Nested float arrays are checked as in
+     * {@link Assertions#assertEquals(float, float, float, Supplier)}. The
+     * {@code delta} must be a {@code Float}.
      * <p>
-     * Nested double arrays are checked as in {@link Assertions#assertEquals(double, double, double, Supplier)}.
-     * The {@code delta} must be a {@code Double}.
+     * Nested double arrays are checked as in
+     * {@link Assertions#assertEquals(double, double, double, Supplier)}. The
+     * {@code delta} must be a {@code Double}.
      *
-     * @param expected
-     *            The float/double array with expected values.
-     * @param actual
-     *            The float/double array with actual values.
-     * @param delta
-     *            The maximum float/double delta between <code>expected[i]</code> and
-     *            <code>actual[i]</code> for which both numbers are still
-     *            considered equal.
-     * @param messageSupplier
-     *            The message supplier.
+     * @param expected        The float/double array with expected values.
+     * @param actual          The float/double array with actual values.
+     * @param delta           The maximum float/double delta between
+     *                        <code>expected[i]</code> and <code>actual[i]</code>
+     *                        for which both numbers are still considered equal.
+     * @param messageSupplier The message supplier.
      */
     public static void assertArrayEquals(Object[] expected, Object[] actual, Number delta,
-            Supplier<String> messageSupplier)
-    {
+            Supplier<String> messageSupplier) {
         ExtraAssertArrayEquals.assertArrayEquals(expected, actual, delta, messageSupplier);
     }
 }

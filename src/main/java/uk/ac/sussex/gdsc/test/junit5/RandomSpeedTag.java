@@ -29,18 +29,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * {@code @RandomSpeedTag} is used to signal that the annotated method is
- * both <code>@</code>{@link SpeedTag} and <code>@</code>{@link RandomTag}.
+ * {@code @RandomSpeedTag} is used to signal that the annotated method is both
+ * <code>@</code>{@link SpeedTag} and <code>@</code>{@link RandomTag}.
  * <p>
  * {@code @RandomSpeedTag} may also be used as a meta-annotation in order to
- * create a custom <em>composed annotation</em> that inherits the semantics
- * of {@code @RandomSpeedTag}.
+ * create a custom <em>composed annotation</em> that inherits the semantics of
+ * {@code @RandomSpeedTag}.
  */
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @SpeedTag
 @RandomTag
-public @interface RandomSpeedTag
-{
+public @interface RandomSpeedTag {
     // Annotation
 }

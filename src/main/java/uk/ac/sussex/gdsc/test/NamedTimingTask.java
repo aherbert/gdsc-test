@@ -28,42 +28,36 @@ import java.util.function.Supplier;
 /**
  * Defines a named task that was run.
  * <p>
- * This class is used for reporting and has no effect when passed to {@link TimingService#execute(TimingTask)}.
+ * This class is used for reporting and has no effect when passed to
+ * {@link TimingService#execute(TimingTask)}.
  */
-public class NamedTimingTask extends BaseTimingTask
-{
+public class NamedTimingTask extends BaseTimingTask {
     private Supplier<String> supplierName;
 
     /**
      * Instantiates a new named timing task.
      *
-     * @param name
-     *            the name
+     * @param name the name
      */
-    public NamedTimingTask(String name)
-    {
+    public NamedTimingTask(String name) {
         super(name);
     }
 
     /**
      * Instantiates a new named timing task.
      *
-     * @param name
-     *            the name
+     * @param name the name
      */
-    public NamedTimingTask(Supplier<String> name)
-    {
+    public NamedTimingTask(Supplier<String> name) {
         super("");
         this.supplierName = name;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         // Format the name on demand
         final Supplier<String> supplierName = this.supplierName;
-        if (supplierName != null)
-        {
+        if (supplierName != null) {
             name = supplierName.get();
             this.supplierName = null;
         }
@@ -71,40 +65,33 @@ public class NamedTimingTask extends BaseTimingTask
     }
 
     @Override
-    public int getSize()
-    {
+    public int getSize() {
         return 0;
     }
 
     /**
      * This should not be called as the task has no data.
      *
-     * @param i
-     *            the i
+     * @param i the i
      * @return the data
-     * @throws IllegalStateException
-     *             If the method is called
+     * @throws IllegalStateException If the method is called
      * @see uk.ac.sussex.gdsc.test.TimingTask#getData(int)
      */
     @Override
-    public Object getData(int i) throws IllegalStateException
-    {
+    public Object getData(int i) throws IllegalStateException {
         throw new IllegalStateException("This task has no data");
     }
 
     /**
      * This should not be called as the task has no data.
      *
-     * @param data
-     *            the data
+     * @param data the data
      * @return the data
-     * @throws IllegalStateException
-     *             If the method is called
+     * @throws IllegalStateException If the method is called
      * @see uk.ac.sussex.gdsc.test.TimingTask#run(java.lang.Object)
      */
     @Override
-    public Object run(Object data)
-    {
+    public Object run(Object data) {
         throw new IllegalStateException("This task has no data");
     }
 }

@@ -33,14 +33,15 @@ import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 /**
- * Adds additional helper assumptions to those provided by {@link org.junit.jupiter.api.Assumptions}.
+ * Adds additional helper assumptions to those provided by
+ * {@link org.junit.jupiter.api.Assumptions}.
  * <p>
- * Tests can be written to respond to the run-time configured {@link Level} and {@link TestComplexity}, e.g.
+ * Tests can be written to respond to the run-time configured {@link Level} and
+ * {@link TestComplexity}, e.g.
  *
  * <pre>
  * &#64;Test
- * public void myTest()
- * {
+ * public void myTest() {
  *     Logger logger = Logger.getLogger(getClass().getName());
  *     ExtraAssumptions.assume(logger, Level.INFO);
  *     ExtraAssumptions.assume(TestComplexity.MEDIUM);
@@ -48,46 +49,38 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  * }
  * </pre>
  */
-public class ExtraAssumptions
-{
+public class ExtraAssumptions {
     /**
      * Do not allow public construction.
      */
-    private ExtraAssumptions()
-    {
+    private ExtraAssumptions() {
     }
 
     /**
      * Assume testing is allowed at the given complexity.
      * <p>
-     * Use this at the start of a test that has a long run time or is otherwise complex
-     * enough to warrant skipping the test if not testing at that level of complexity.
+     * Use this at the start of a test that has a long run time or is otherwise
+     * complex enough to warrant skipping the test if not testing at that level of
+     * complexity.
      *
-     * @param complexity
-     *            the complexity
-     * @throws TestAbortedException
-     *             if the assumption is not {@code true}
+     * @param complexity the complexity
+     * @throws TestAbortedException if the assumption is not {@code true}
      */
-    public static void assume(TestComplexity complexity) throws TestAbortedException
-    {
+    public static void assume(TestComplexity complexity) throws TestAbortedException {
         Assumptions.assumeTrue(TestSettings.allow(complexity));
     }
 
     /**
      * Assume logging is allowed at the given level.
      * <p>
-     * Use this at the start of a test that only produces logging output (no assertions) to skip
-     * the test as logging will be ignored.
+     * Use this at the start of a test that only produces logging output (no
+     * assertions) to skip the test as logging will be ignored.
      *
-     * @param logger
-     *            the logger
-     * @param level
-     *            the level
-     * @throws TestAbortedException
-     *             if the assumption is not {@code true}
+     * @param logger the logger
+     * @param level  the level
+     * @throws TestAbortedException if the assumption is not {@code true}
      */
-    public static void assume(Logger logger, Level level)
-    {
+    public static void assume(Logger logger, Level level) {
         Assumptions.assumeTrue(logger.isLoggable(level));
     }
 }

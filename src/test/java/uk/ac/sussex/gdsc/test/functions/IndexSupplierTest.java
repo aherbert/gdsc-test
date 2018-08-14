@@ -32,14 +32,12 @@ import uk.ac.sussex.gdsc.test.junit5.RandomSeed;
 import uk.ac.sussex.gdsc.test.junit5.SeededTest;
 
 @SuppressWarnings("javadoc")
-public class IndexSupplierTest
-{
+public class IndexSupplierTest {
     private final String messagePrefix = "prefix ";
     private final String messageSuffix = " suffix";
-    
+
     @Test
-    public void testConstructer()
-    {
+    public void testConstructer() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             @SuppressWarnings("unused")
             IndexSupplier s = new IndexSupplier(0);
@@ -48,8 +46,7 @@ public class IndexSupplierTest
             @SuppressWarnings("unused")
             IndexSupplier s = new IndexSupplier(-1);
         });
-        for (int dim = 1; dim <= 3; dim++)
-        {
+        for (int dim = 1; dim <= 3; dim++) {
             IndexSupplier s = new IndexSupplier(dim);
             Assertions.assertNotNull(s);
             Assertions.assertEquals(dim, s.getDimensions());
@@ -63,8 +60,7 @@ public class IndexSupplierTest
     }
 
     @Test
-    public void testSetters()
-    {
+    public void testSetters() {
         IndexSupplier s = new IndexSupplier(1);
         Assertions.assertEquals("[", s.getPrefix());
         Assertions.assertEquals("]", s.getSuffix());
@@ -93,24 +89,21 @@ public class IndexSupplierTest
     }
 
     @SeededTest
-    public void test1DMessage(RandomSeed seed)
-    {
+    public void test1DMessage(RandomSeed seed) {
         IndexSupplier s = new IndexSupplier(1);
         Assertions.assertEquals("[0]", s.get());
         UniformRandomProvider rng = TestSettings.getRandomGenerator(seed.getSeed());
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             int next = rng.nextInt(10);
             s.set(0, next);
-            Assertions.assertEquals(next, s.get(0)  );
+            Assertions.assertEquals(next, s.get(0));
             Assertions.assertEquals("[" + next + "]", s.get());
         }
         s.setFormat("<", ">");
         // Try with empty message pre/suffix
         s.setMessagePrefix("");
         s.setMessageSuffix("");
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             int next = rng.nextInt(10);
             s.set(0, next);
             Assertions.assertEquals("<" + next + ">", s.get());
@@ -119,8 +112,7 @@ public class IndexSupplierTest
         // Try with empty message pre/suffix
         s.setMessagePrefix(messagePrefix);
         s.setMessageSuffix(messageSuffix);
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             int next = rng.nextInt(10);
             s.set(0, next);
             Assertions.assertEquals(messagePrefix + "(" + next + ")" + messageSuffix, s.get());
@@ -132,18 +124,15 @@ public class IndexSupplierTest
     }
 
     @SeededTest
-    public void test2DMessage(RandomSeed seed)
-    {
+    public void test2DMessage(RandomSeed seed) {
         IndexSupplier s = new IndexSupplier(2);
         Assertions.assertEquals("[0][0]", s.get());
         UniformRandomProvider rng = TestSettings.getRandomGenerator(seed.getSeed());
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             int nexti = rng.nextInt(10);
             s.set(0, nexti);
             Assertions.assertEquals(nexti, s.get(0));
-            for (int j = 0; j < 3; j++)
-            {
+            for (int j = 0; j < 3; j++) {
                 int nextj = rng.nextInt(10);
                 s.set(1, nextj);
                 Assertions.assertEquals(nextj, s.get(1));

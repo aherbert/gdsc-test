@@ -29,11 +29,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class TimingResultTest
-{
+public class TimingResultTest {
     @Test
-    public void canConstruct()
-    {
+    public void canConstruct() {
         final String name = "name";
         TimingResult r = new TimingResult(name, 2, 1);
         Assertions.assertEquals(name, r.getTask().getName());
@@ -58,8 +56,7 @@ public class TimingResultTest
     }
 
     @Test
-    public void canConstructEmpty()
-    {
+    public void canConstructEmpty() {
         final String name = "name";
         TimingResult r = new TimingResult(name);
         Assertions.assertEquals(name, r.getTask().getName());

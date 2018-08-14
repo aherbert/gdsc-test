@@ -34,17 +34,17 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 /**
- * Provides random seeds as a {@link RandomSeed} for use as an {@link ArgumentsSource}.
+ * Provides random seeds as a {@link RandomSeed} for use as an
+ * {@link ArgumentsSource}.
  * <p>
- * The starting seed and number of repeats are obtained from runtime system properties.
+ * The starting seed and number of repeats are obtained from runtime system
+ * properties.
  *
  * @see TestSettings
  */
-public class RandomSeedSource implements ArgumentsProvider
-{
+public class RandomSeedSource implements ArgumentsProvider {
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext arg0)
-    {
+    public Stream<? extends Arguments> provideArguments(ExtensionContext arg0) {
         final long seed = TestSettings.getSeed();
         final int repeats = TestSettings.getRepeats();
         return IntStream.iterate(0, n -> n + 1).limit(repeats)

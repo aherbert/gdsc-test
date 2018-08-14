@@ -31,19 +31,18 @@ import java.lang.annotation.Target;
 import org.junit.jupiter.api.Tag;
 
 /**
- * {@code @SpeedTag} is used to signal that the annotated method is a
- * speed test method. It is expected that the method measures performance.
+ * {@code @SpeedTag} is used to signal that the annotated method is a speed test
+ * method. It is expected that the method measures performance.
  * <p>
  * The annotation add a {@code "speed"} {@link Tag}.
  * <p>
- * {@code @SpeedTag} may also be used as a meta-annotation in order to
- * create a custom <em>composed annotation</em> that inherits the semantics
- * of {@code @SpeedTag}.
+ * {@code @SpeedTag} may also be used as a meta-annotation in order to create a
+ * custom <em>composed annotation</em> that inherits the semantics of
+ * {@code @SpeedTag}.
  */
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Tag("speed")
-public @interface SpeedTag
-{
+public @interface SpeedTag {
     // Annotation
 }

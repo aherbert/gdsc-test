@@ -32,8 +32,8 @@ import org.apache.commons.rng.simple.RandomSource;
 /**
  * Class used to control test settings.
  * <p>
- * This class is configured once using system properties.
- * For example to configure the settings for tests run using
+ * This class is configured once using system properties. For example to
+ * configure the settings for tests run using
  * <a href="https://maven.apache.org/">Maven</a>:
  *
  * <pre>
@@ -42,8 +42,7 @@ import org.apache.commons.rng.simple.RandomSource;
  *
  * Test classes can then be coded to respond to this run-time configuration.
  */
-public class TestSettings
-{
+public class TestSettings {
     /**
      * The runtime property used for the test complexity level, e.g.
      *
@@ -61,8 +60,8 @@ public class TestSettings
      */
     public static final String PROPERTY_RANDOM_SEED = "gdsc.test.seed";
     /**
-     * The runtime property used to set the number of repeats for tests
-     * using the seeded uniform random generator, e.g.
+     * The runtime property used to set the number of repeats for tests using the
+     * seeded uniform random generator, e.g.
      *
      * <pre>
      * -Dgdsc.test.repeats=10
@@ -76,37 +75,33 @@ public class TestSettings
     /** The fixed seed for uniform random generator. */
     private static long seed;
 
-    /** The number of repeats for tests using the seeded uniform random generator. */
+    /**
+     * The number of repeats for tests using the seeded uniform random generator.
+     */
     private static int repeats;
 
-    static
-    {
+    static {
         testComplexity = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
         seed = getProperty(PROPERTY_RANDOM_SEED, 30051977L);
         repeats = getProperty(PROPERTY_RANDOM_REPEATS, 1);
-        // Ensure repeated tests run once. They should be disabled using other mechanisms.
+        // Ensure repeated tests run once. They should be disabled using other
+        // mechanisms.
         repeats = Math.max(1, repeats);
     }
 
     /**
      * Gets the system property or a default value.
      *
-     * @param name
-     *            the name
-     * @param defaultValue
-     *            the default value
+     * @param name         the name
+     * @param defaultValue the default value
      * @return the property
      */
-    static int getProperty(String name, int defaultValue)
-    {
+    static int getProperty(String name, int defaultValue) {
         final String text = System.getProperty(name);
         if (text != null)
-            try
-            {
+            try {
                 return Integer.parseInt(text);
-            }
-            catch (final NumberFormatException e)
-            {
+            } catch (final NumberFormatException e) {
                 // Do nothing
             }
         return defaultValue;
@@ -115,22 +110,16 @@ public class TestSettings
     /**
      * Gets the system property or a default value.
      *
-     * @param name
-     *            the name
-     * @param defaultValue
-     *            the default value
+     * @param name         the name
+     * @param defaultValue the default value
      * @return the property
      */
-    static long getProperty(String name, long defaultValue)
-    {
+    static long getProperty(String name, long defaultValue) {
         final String text = System.getProperty(name);
         if (text != null)
-            try
-            {
+            try {
                 return Long.parseLong(text);
-            }
-            catch (final NumberFormatException e)
-            {
+            } catch (final NumberFormatException e) {
                 // Do nothing
             }
         return defaultValue;
@@ -139,8 +128,7 @@ public class TestSettings
     /**
      * Do not allow public construction.
      */
-    private TestSettings()
-    {
+    private TestSettings() {
     }
 
     /**
@@ -150,8 +138,7 @@ public class TestSettings
      *
      * @return the test complexity
      */
-    public static int getTestComplexity()
-    {
+    public static int getTestComplexity() {
         return testComplexity;
     }
 
@@ -162,8 +149,7 @@ public class TestSettings
      *
      * @return the seed
      */
-    public static long getSeed()
-    {
+    public static long getSeed() {
         return seed;
     }
 
@@ -174,20 +160,17 @@ public class TestSettings
      *
      * @return the repeats
      */
-    public static int getRepeats()
-    {
+    public static int getRepeats() {
         return repeats;
     }
 
     /**
      * Check if testing is allowed at the given complexity.
      *
-     * @param complexity
-     *            the test complexity
+     * @param complexity the test complexity
      * @return true, if successful
      */
-    public static boolean allow(TestComplexity complexity)
-    {
+    public static boolean allow(TestComplexity complexity) {
         return complexity.getValue() <= testComplexity;
     }
 
@@ -197,19 +180,16 @@ public class TestSettings
     /**
      * Class for generating full length seeds.
      */
-    private static class SeedGenerator implements Function<Long, int[]>
-    {
+    private static class SeedGenerator implements Function<Long, int[]> {
         @Override
-        public int[] apply(Long source)
-        {
+        public int[] apply(Long source) {
             // This has been copied from org.apache.commons.rng.simple.internal.SeedFactory
 
             // Generate a full length seed using another RNG
             final SplitMix64 rng = new SplitMix64(source);
             final int n = 624; // Size of the state array of "Well19937c".
             final int[] array = new int[n];
-            for (int i = 0; i < n; i++)
-            {
+            for (int i = 0; i < n; i++) {
                 array[i] = rng.nextInt();
             }
             return array;
@@ -224,12 +204,10 @@ public class TestSettings
      * <p>
      * If the {@code seed} is {@code 0} then a random seed will be used.
      *
-     * @param seed
-     *            the seed
+     * @param seed the seed
      * @return the uniform random provider
      */
-    public static UniformRandomProvider getRandomGenerator(long seed)
-    {
+    public static UniformRandomProvider getRandomGenerator(long seed) {
         if (seed == 0)
             return RandomSource.create(RandomSource.WELL_19937_C);
         final int[] fullSeed = seedCache.getOrComputeIfAbsent(seed, SEED_GENERATOR);
@@ -237,16 +215,15 @@ public class TestSettings
     }
 
     /**
-     * Gets a uniform random provider with a fixed seed set using the
-     * system property {@code uk.ac.sussex.gdsc.test.seed}.
+     * Gets a uniform random provider with a fixed seed set using the system
+     * property {@code uk.ac.sussex.gdsc.test.seed}.
      * <p>
-     * Note: To obtain a randomly seeded provider use {@link #getRandomGenerator(long)}
-     * using zero as the seed.
+     * Note: To obtain a randomly seeded provider use
+     * {@link #getRandomGenerator(long)} using zero as the seed.
      *
      * @return the uniform random provider
      */
-    public static UniformRandomProvider getRandomGenerator()
-    {
+    public static UniformRandomProvider getRandomGenerator() {
         return getRandomGenerator(seed);
     }
 }

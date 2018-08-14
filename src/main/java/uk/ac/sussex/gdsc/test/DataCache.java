@@ -29,39 +29,30 @@ import java.util.function.Function;
 /**
  * Cache data under a given key and generate it if absent.
  *
- * @param <K>
- *            the type of the key
- * @param <V>
- *            the type of the value
+ * @param <K> the type of the key
+ * @param <V> the type of the value
  */
-public class DataCache<K, V>
-{
+public class DataCache<K, V> {
     private final HashMap<K, V> data = new HashMap<>();
 
     /**
      * Gets the value stored under the given key.
      * <p>
-     * Uses the cached value if available, otherwise generates the value
-     * using the provider.
+     * Uses the cached value if available, otherwise generates the value using the
+     * provider.
      * <p>
      * Note: The value should be considered immutable if the cache is to be reused.
      *
-     * @param key
-     *            the key
-     * @param provider
-     *            the provider to generate the value (if not cached)
+     * @param key      the key
+     * @param provider the provider to generate the value (if not cached)
      * @return the value
      */
-    public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider)
-    {
+    public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider) {
         V t = data.get(key);
-        if (t == null)
-        {
-            synchronized (data)
-            {
+        if (t == null) {
+            synchronized (data) {
                 t = data.get(key);
-                if (t == null)
-                {
+                if (t == null) {
                     t = provider.apply(key);
                     data.put(key, t);
                 }
@@ -73,8 +64,7 @@ public class DataCache<K, V>
     /**
      * Clear the cache.
      */
-    public void clear()
-    {
+    public void clear() {
         data.clear();
     }
 }

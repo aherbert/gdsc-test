@@ -33,14 +33,15 @@ import uk.ac.sussex.gdsc.test.TestComplexity;
 import uk.ac.sussex.gdsc.test.TestSettings;
 
 /**
- * Adds additional helper assumptions to those provided by {@link org.junit.Assume}.
+ * Adds additional helper assumptions to those provided by
+ * {@link org.junit.Assume}.
  * <p>
- * Tests can be written to respond to the run-time configured {@link Level} and {@link TestComplexity}, e.g.
+ * Tests can be written to respond to the run-time configured {@link Level} and
+ * {@link TestComplexity}, e.g.
  *
  * <pre>
  * &#64;Test
- * public void myTest()
- * {
+ * public void myTest() {
  *     Logger logger = Logger.getLogger(getClass().getName());
  *     ExtraAssume.assume(logger, Level.INFO);
  *     ExtraAssume.assume(TestComplexity.MEDIUM);
@@ -48,46 +49,40 @@ import uk.ac.sussex.gdsc.test.TestSettings;
  * }
  * </pre>
  */
-public class ExtraAssume
-{
+public class ExtraAssume {
     /**
      * Do not allow public construction.
      */
-    private ExtraAssume()
-    {
+    private ExtraAssume() {
     }
 
     /**
      * Assume testing is allowed at the given complexity.
      * <p>
-     * Use this at the start of a test that has a long run time or is otherwise complex
-     * enough to warrant skipping the test if not testing at that level of complexity.
+     * Use this at the start of a test that has a long run time or is otherwise
+     * complex enough to warrant skipping the test if not testing at that level of
+     * complexity.
      *
-     * @param complexity
-     *            the complexity
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
+     * @param complexity the complexity
+     * @throws AssumptionViolatedException Thrown if the assumption is invalid to
+     *                                     stop the test and ignore it
      */
-    public static void assume(TestComplexity complexity) throws AssumptionViolatedException
-    {
+    public static void assume(TestComplexity complexity) throws AssumptionViolatedException {
         Assume.assumeTrue(TestSettings.allow(complexity));
     }
 
     /**
      * Assume logging is allowed at the given level.
      * <p>
-     * Use this at the start of a test that only produces logging output (no assertions) to skip
-     * the test as logging will be ignored.
+     * Use this at the start of a test that only produces logging output (no
+     * assertions) to skip the test as logging will be ignored.
      *
-     * @param logger
-     *            the logger
-     * @param level
-     *            the level
-     * @throws AssumptionViolatedException
-     *             Thrown if the assumption is invalid to stop the test and ignore it
+     * @param logger the logger
+     * @param level  the level
+     * @throws AssumptionViolatedException Thrown if the assumption is invalid to
+     *                                     stop the test and ignore it
      */
-    public static void assume(Logger logger, Level level)
-    {
+    public static void assume(Logger logger, Level level) {
         Assume.assumeTrue(logger.isLoggable(level));
     }
 }

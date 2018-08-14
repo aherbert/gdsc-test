@@ -33,32 +33,27 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 @SuppressWarnings("javadoc")
-public class TestSettingsTest
-{
+public class TestSettingsTest {
     private static Logger logger;
 
     @BeforeAll
-    public static void beforeAll()
-    {
+    public static void beforeAll() {
         logger = Logger.getLogger(TestSettingsTest.class.getName());
     }
 
     @AfterAll
-    public static void afterAll()
-    {
+    public static void afterAll() {
         logger = null;
     }
 
     @Test
-    public void canPrintSettings()
-    {
+    public void canPrintSettings() {
         logger.info(() -> String.format("TestSettings Test Complexity = %d", TestSettings.getTestComplexity()));
         logger.info(() -> String.format("TestSettings Seed = %d", TestSettings.getSeed()));
     }
 
     @Test
-    public void canSystemProperty()
-    {
+    public void canSystemProperty() {
         final String key = "A long key that should be really, really unique";
         System.clearProperty(key);
         final int iValue = -6765757;
@@ -77,8 +72,7 @@ public class TestSettingsTest
     }
 
     @Test
-    public void canGetSameRandomWithSameSeed()
-    {
+    public void canGetSameRandomWithSameSeed() {
         final long seed = 5656787697789L;
         UniformRandomProvider r = TestSettings.getRandomGenerator(seed);
         final double[] e = { r.nextDouble(), r.nextDouble() };
@@ -88,8 +82,7 @@ public class TestSettingsTest
     }
 
     @Test
-    public void canGetDifferentRandomWithDifferentSeed()
-    {
+    public void canGetDifferentRandomWithDifferentSeed() {
         final long seed = 5656787697789L;
         UniformRandomProvider r = TestSettings.getRandomGenerator(seed);
         final double[] e = { r.nextDouble(), r.nextDouble() };
@@ -101,8 +94,7 @@ public class TestSettingsTest
     }
 
     @Test
-    public void canGetSameRandomWithoutSeedMatchingConfiguredSeed()
-    {
+    public void canGetSameRandomWithoutSeedMatchingConfiguredSeed() {
         final long seed = TestSettings.getSeed();
         UniformRandomProvider r = TestSettings.getRandomGenerator();
         final double[] e = { r.nextDouble(), r.nextDouble() };
@@ -112,8 +104,7 @@ public class TestSettingsTest
     }
 
     @Test
-    public void canGetDifferentRandomWithZeroSeed()
-    {
+    public void canGetDifferentRandomWithZeroSeed() {
         UniformRandomProvider r = TestSettings.getRandomGenerator(0);
         final double[] e = { r.nextDouble(), r.nextDouble() };
         r = TestSettings.getRandomGenerator(0);

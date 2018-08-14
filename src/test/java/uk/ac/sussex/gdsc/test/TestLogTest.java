@@ -36,25 +36,21 @@ import org.junit.jupiter.api.Test;
 import uk.ac.sussex.gdsc.test.TestLog.TestLevel;
 
 @SuppressWarnings("javadoc")
-public class TestLogTest
-{
+public class TestLogTest {
     private static Logger logger;
 
     @BeforeAll
-    public static void beforeAll()
-    {
+    public static void beforeAll() {
         logger = Logger.getLogger(TestLogTest.class.getName());
     }
 
     @AfterAll
-    public static void afterAll()
-    {
+    public static void afterAll() {
         logger = null;
     }
 
     @Test
-    public void canGetStaceTraceElement()
-    {
+    public void canGetStaceTraceElement() {
         final StackTraceElement[] e = new Throwable().getStackTrace();
         final StackTraceElement o = TestLog.getStackTraceElement();
         final StackTraceElement o2 = TestLog.getStackTraceElement(1);
@@ -72,24 +68,21 @@ public class TestLogTest
     }
 
     @Test
-    public void getStaceTraceElementIsNullWhenNotLocated()
-    {
+    public void getStaceTraceElementIsNullWhenNotLocated() {
         final int size = new Throwable().getStackTrace().length;
         final StackTraceElement o = TestLog.getStackTraceElement(size);
         Assertions.assertNull(o);
     }
 
     @Test
-    public void getStaceTraceElementThrowsWhenCountIsNegative()
-    {
+    public void getStaceTraceElementThrowsWhenCountIsNegative() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             TestLog.getStackTraceElement(-1);
         });
     }
 
     @Test
-    public void canGetCodePoint()
-    {
+    public void canGetCodePoint() {
         final StackTraceElement e = new Throwable().getStackTrace()[0];
         final String codePoint = TestLog.getCodePoint();
         Assertions.assertNotNull(e);
@@ -103,10 +96,8 @@ public class TestLogTest
     }
 
     @Test
-    public void canGetRecord()
-    {
-        for (final Level l : new Level[] { Level.INFO, Level.FINER })
-        {
+    public void canGetRecord() {
+        for (final Level l : new Level[] { Level.INFO, Level.FINER }) {
             //@formatter:off
             logger.log(check(l, TestLog.getRecord(l, "This is a record")));
             logger.log(check(l, TestLog.getRecord(l, "This is a formatted record: %d", 1)));
@@ -115,15 +106,13 @@ public class TestLogTest
         }
     }
 
-    private static LogRecord check(Level level, LogRecord record)
-    {
+    private static LogRecord check(Level level, LogRecord record) {
         Assertions.assertEquals(level, record.getLevel());
         return record;
     }
 
     @Test
-    public void canGetFailRecord()
-    {
+    public void canGetFailRecord() {
         //@formatter:off
         logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord("This is a failed record")));
         logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord( "This is a failed formatted record: %d", 1)));
@@ -133,8 +122,7 @@ public class TestLogTest
     }
 
     @Test
-    public void canGetTimingRecord()
-    {
+    public void canGetTimingRecord() {
         //@formatter:off
         // Default levels
         logger.log(check(Level.INFO, TestLog.getTimingRecord("slow", 100, "fast", 10)));
@@ -164,21 +152,18 @@ public class TestLogTest
         //@formatter:on
     }
 
-    private static class MessageSupplier implements Supplier<String>
-    {
+    private static class MessageSupplier implements Supplier<String> {
         int count = 0;
 
         @Override
-        public String get()
-        {
+        public String get() {
             count++;
             return "Lazy message";
         }
     }
 
     @Test
-    public void canGetResultRecord()
-    {
+    public void canGetResultRecord() {
         //@formatter:off
         logger.log(TestLog.getResultRecord(true, "This is a test passed record"));
         logger.log(TestLog.getResultRecord(true, "This is a test passed formatted record: %d", 1));
@@ -207,19 +192,16 @@ public class TestLogTest
     }
 
     @Test
-    public void canLazyLoadRecordMessage()
-    {
+    public void canLazyLoadRecordMessage() {
         MessageSupplier message = new MessageSupplier();
 
-        if (logger.isLoggable(TestLevel.TEST_FAILURE))
-        {
+        if (logger.isLoggable(TestLevel.TEST_FAILURE)) {
             message = new MessageSupplier();
             logger.log(TestLog.getResultRecord(false, message));
             Assertions.assertEquals(1, message.count);
         }
 
-        if (!logger.isLoggable(Level.INFO))
-        {
+        if (!logger.isLoggable(Level.INFO)) {
             message = new MessageSupplier();
             logger.log(TestLog.getResultRecord(true, message));
             // Should not try to create the message

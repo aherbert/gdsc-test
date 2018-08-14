@@ -29,74 +29,53 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class TestUtilsTest
-{
+public class TestUtilsTest {
     /** The supplied message. */
     private final Supplier<String> messageSupplier = () -> {
         return "Lambda message";
     };
-    
+
     @Test
-    public void testWrapAssertionFailedErrorAppend()
-    {
-        try
-        {
+    public void testWrapAssertionFailedErrorAppend() {
+        try {
             TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(), messageSupplier);
-        }
-        catch (AssertionError e)
-        {
+        } catch (AssertionError e) {
             // Null is ignored
             Assertions.assertEquals(e.getMessage(), messageSupplier.get());
-        }               
-        try
-        {
-            TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(""), messageSupplier);
         }
-        catch (AssertionError e)
-        {
+        try {
+            TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(""), messageSupplier);
+        } catch (AssertionError e) {
             // Empty string is ignored
             Assertions.assertEquals(e.getMessage(), messageSupplier.get());
-        }                
-        try
-        {
-            TestUtils.wrapAssertionFailedErrorAppend(new AssertionError("Something bad"), messageSupplier);
         }
-        catch (AssertionError e)
-        {
+        try {
+            TestUtils.wrapAssertionFailedErrorAppend(new AssertionError("Something bad"), messageSupplier);
+        } catch (AssertionError e) {
             // Empty string is ignored
             Assertions.assertEquals(e.getMessage(), "Something bad " + messageSupplier.get());
-        }                
-    }
-    
-    @Test
-    public void testWrapAssertionFailedError()
-    {
-        try
-        {
-            TestUtils.wrapAssertionFailedError(new AssertionError(), messageSupplier);
         }
-        catch (AssertionError e)
-        {
+    }
+
+    @Test
+    public void testWrapAssertionFailedError() {
+        try {
+            TestUtils.wrapAssertionFailedError(new AssertionError(), messageSupplier);
+        } catch (AssertionError e) {
             // Null is ignored
             Assertions.assertEquals(e.getMessage(), messageSupplier.get());
-        }               
-        try
-        {
-            TestUtils.wrapAssertionFailedError(new AssertionError(""), messageSupplier);
         }
-        catch (AssertionError e)
-        {
+        try {
+            TestUtils.wrapAssertionFailedError(new AssertionError(""), messageSupplier);
+        } catch (AssertionError e) {
             // Empty string is ignored
             Assertions.assertEquals(e.getMessage(), messageSupplier.get());
-        }                
-        try
-        {
-            TestUtils.wrapAssertionFailedError(new AssertionError("Something bad"), messageSupplier);
         }
-        catch (AssertionError e)
-        {
+        try {
+            TestUtils.wrapAssertionFailedError(new AssertionError("Something bad"), messageSupplier);
+        } catch (AssertionError e) {
             // Empty string is ignored
             Assertions.assertEquals(e.getMessage(), messageSupplier.get() + " Something bad");
-        }                
+        }
     }
 }

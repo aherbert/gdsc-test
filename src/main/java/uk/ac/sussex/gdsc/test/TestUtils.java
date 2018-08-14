@@ -28,29 +28,23 @@ import java.util.function.Supplier;
 /**
  * Contains test utility functions.
  */
-public class TestUtils
-{
+public class TestUtils {
     /**
      * Do not allow public construction.
      */
-    private TestUtils()
-    {
+    private TestUtils() {
     }
 
     /**
-     * Wraps an assertion error with a new error that has a formatted message appended to
-     * the input error's message.
+     * Wraps an assertion error with a new error that has a formatted message
+     * appended to the input error's message.
      *
-     * @param error
-     *            The error.
-     * @param messageSupplier
-     *            The message supplier.
-     * @throws AssertionError
-     *             The wrapped assertion error.
+     * @param error           The error.
+     * @param messageSupplier The message supplier.
+     * @throws AssertionError The wrapped assertion error.
      */
     public static void wrapAssertionFailedErrorAppend(AssertionError error, Supplier<String> messageSupplier)
-            throws AssertionError
-    {
+            throws AssertionError {
         final String msg = error.getMessage();
         if (msg == null || msg.length() == 0)
             throw new AssertionError(messageSupplier.get(), error);
@@ -58,19 +52,15 @@ public class TestUtils
     }
 
     /**
-     * Wraps an assertion error with a new error that has a formatted message prepended to
-     * the input error's message.
+     * Wraps an assertion error with a new error that has a formatted message
+     * prepended to the input error's message.
      *
-     * @param error
-     *            The error.
-     * @param messageSupplier
-     *            The message supplier.
-     * @throws AssertionError
-     *             The wrapped assertion error.
+     * @param error           The error.
+     * @param messageSupplier The message supplier.
+     * @throws AssertionError The wrapped assertion error.
      */
     public static void wrapAssertionFailedError(AssertionError error, Supplier<String> messageSupplier)
-            throws AssertionError
-    {
+            throws AssertionError {
         final String msg = error.getMessage();
         if (msg == null || msg.length() == 0)
             throw new AssertionError(messageSupplier.get(), error);

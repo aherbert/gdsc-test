@@ -27,29 +27,23 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class BaseTimingTaskTest
-{
+public class BaseTimingTaskTest {
     @Test
-    public void canConstruct()
-    {
+    public void canConstruct() {
         final String name = "name";
-        final TimingTask task = new BaseTimingTask(name)
-        {
+        final TimingTask task = new BaseTimingTask(name) {
             @Override
-            public int getSize()
-            {
+            public int getSize() {
                 return 0;
             }
 
             @Override
-            public Object getData(int i)
-            {
+            public Object getData(int i) {
                 return null;
             }
 
             @Override
-            public Object run(Object data)
-            {
+            public Object run(Object data) {
                 return null;
             }
         };

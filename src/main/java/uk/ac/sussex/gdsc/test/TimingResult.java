@@ -28,21 +28,17 @@ import java.util.function.Supplier;
 /**
  * Class to store results of running a timing task.
  */
-public class TimingResult
-{
+public class TimingResult {
     private final TimingTask task;
     private final long[] times;
 
     /**
      * Instantiates a new timing result.
      *
-     * @param task
-     *            the task
-     * @param times
-     *            the times
+     * @param task  the task
+     * @param times the times
      */
-    public TimingResult(TimingTask task, long... times)
-    {
+    public TimingResult(TimingTask task, long... times) {
         this.task = task;
         this.times = times;
     }
@@ -50,15 +46,13 @@ public class TimingResult
     /**
      * Instantiates a new timing result.
      * <p>
-     * The result will be created with a dummy implementation of the {@link TimingTask} interface.
+     * The result will be created with a dummy implementation of the
+     * {@link TimingTask} interface.
      *
-     * @param name
-     *            the name
-     * @param times
-     *            the times
+     * @param name  the name
+     * @param times the times
      */
-    public TimingResult(String name, long... times)
-    {
+    public TimingResult(String name, long... times) {
         this.task = new NamedTimingTask(name);
         this.times = times;
     }
@@ -66,15 +60,13 @@ public class TimingResult
     /**
      * Instantiates a new timing result.
      * <p>
-     * The result will be created with a dummy implementation of the {@link TimingTask} interface.
+     * The result will be created with a dummy implementation of the
+     * {@link TimingTask} interface.
      *
-     * @param name
-     *            the name
-     * @param times
-     *            the times
+     * @param name  the name
+     * @param times the times
      */
-    public TimingResult(Supplier<String> name, long... times)
-    {
+    public TimingResult(Supplier<String> name, long... times) {
         this.task = new NamedTimingTask(name);
         this.times = times;
     }
@@ -82,16 +74,14 @@ public class TimingResult
     /**
      * @return the task
      */
-    public TimingTask getTask()
-    {
+    public TimingTask getTask() {
         return task;
     }
 
     /**
      * @return the times for running the timing task
      */
-    public long[] getTimes()
-    {
+    public long[] getTimes() {
         return times.clone();
     }
 
@@ -100,8 +90,7 @@ public class TimingResult
      *
      * @return the size
      */
-    public int getSize()
-    {
+    public int getSize() {
         return times.length;
     }
 
@@ -110,14 +99,12 @@ public class TimingResult
      *
      * @return the min
      */
-    public long getMin()
-    {
+    public long getMin() {
         if (times.length == 0)
             return 0;
         long min = Long.MAX_VALUE;
         for (int i = times.length; i-- > 0;)
-            if (min > times[i])
-            {
+            if (min > times[i]) {
                 min = times[i];
             }
         return min;
@@ -128,13 +115,11 @@ public class TimingResult
      *
      * @return the mean
      */
-    public double getMean()
-    {
+    public double getMean() {
         if (times.length == 0)
             return 0;
         long sum = 0;
-        for (int i = times.length; i-- > 0;)
-        {
+        for (int i = times.length; i-- > 0;) {
             sum += times[i];
         }
         return (double) sum / times.length;

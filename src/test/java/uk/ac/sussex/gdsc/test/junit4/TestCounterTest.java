@@ -33,10 +33,8 @@ import uk.ac.sussex.gdsc.test.TestCounter;
  * Junit 4 and 5.
  */
 @SuppressWarnings("javadoc")
-public class TestCounterTest
-{
-    private static void runTestAssert(int size, int limit, boolean exceed)
-    {
+public class TestCounterTest {
+    private static void runTestAssert(int size, int limit, boolean exceed) {
         final TestCounter fc = new TestCounter(limit, size);
         for (int i = 0; i < size; i++)
             for (int j = 0; j < limit; j++)
@@ -50,8 +48,7 @@ public class TestCounterTest
                 });
     }
 
-    private static void runTestCase(int size, int limit, boolean exceed)
-    {
+    private static void runTestCase(int size, int limit, boolean exceed) {
         final TestCounter fc = new TestCounter(limit, size);
         for (int i = 0; i < size; i++)
             for (int j = 0; j < limit; j++)
@@ -70,8 +67,7 @@ public class TestCounterTest
     }
 
     @Test(expected = AssertionError.class)
-    public void singleTestCaseFail1Limit0ThrowsWhenNoAsserionErrorFunction()
-    {
+    public void singleTestCaseFail1Limit0ThrowsWhenNoAsserionErrorFunction() {
         final TestCounter fc = new TestCounter(0);
         fc.run(() -> {
             return false;
@@ -82,123 +78,103 @@ public class TestCounterTest
 
     // XXX Copy from here
     @Test(expected = AssertionError.class)
-    public void singleTestAssertLimit0Fail1Throws()
-    {
+    public void singleTestAssertLimit0Fail1Throws() {
         runTestAssert(1, 0, true);
     }
 
     @Test
-    public void singleTestAssertLimit1Fail1Allowed()
-    {
+    public void singleTestAssertLimit1Fail1Allowed() {
         runTestAssert(1, 1, false);
     }
 
     @Test(expected = AssertionError.class)
-    public void singleTestAssertLimit1Fail2Throws()
-    {
+    public void singleTestAssertLimit1Fail2Throws() {
         runTestAssert(1, 1, true);
     }
 
     @Test
-    public void singleTestAssertLimit2Fail2Allowed()
-    {
+    public void singleTestAssertLimit2Fail2Allowed() {
         runTestAssert(1, 2, false);
     }
 
     @Test(expected = AssertionError.class)
-    public void singleTestAssertLimit2Fail3Throws()
-    {
+    public void singleTestAssertLimit2Fail3Throws() {
         runTestAssert(1, 2, true);
     }
 
     @Test(expected = AssertionError.class)
-    public void multiTestAssertLimit0Fail1Throws()
-    {
+    public void multiTestAssertLimit0Fail1Throws() {
         runTestAssert(2, 0, true);
     }
 
     @Test
-    public void multiTestAssertLimit1Fail1Allowed()
-    {
+    public void multiTestAssertLimit1Fail1Allowed() {
         runTestAssert(2, 1, false);
     }
 
     @Test(expected = AssertionError.class)
-    public void multiTestAssertLimit1Fail2Throws()
-    {
+    public void multiTestAssertLimit1Fail2Throws() {
         runTestAssert(2, 1, true);
     }
 
     @Test
-    public void multiTestAssertLimit2Fail2Allowed()
-    {
+    public void multiTestAssertLimit2Fail2Allowed() {
         runTestAssert(2, 2, false);
     }
 
     @Test(expected = AssertionError.class)
-    public void multiTestAssertLimit2Fail3Throws()
-    {
+    public void multiTestAssertLimit2Fail3Throws() {
         runTestAssert(2, 2, true);
     }
 
     // XXX Copy to here
     @Test(expected = AssertionError.class)
-    public void singleTestCaseLimit0Fail1Throws()
-    {
+    public void singleTestCaseLimit0Fail1Throws() {
         runTestCase(1, 0, true);
     }
 
     @Test
-    public void singleTestCaseLimit1Fail1Allowed()
-    {
+    public void singleTestCaseLimit1Fail1Allowed() {
         runTestCase(1, 1, false);
     }
 
     @Test(expected = AssertionError.class)
-    public void singleTestCaseLimit1Fail2Throws()
-    {
+    public void singleTestCaseLimit1Fail2Throws() {
         runTestCase(1, 1, true);
     }
 
     @Test
-    public void singleTestCaseLimit2Fail2Allowed()
-    {
+    public void singleTestCaseLimit2Fail2Allowed() {
         runTestCase(1, 2, false);
     }
 
     @Test(expected = AssertionError.class)
-    public void singleTestCaseLimit2Fail3Throws()
-    {
+    public void singleTestCaseLimit2Fail3Throws() {
         runTestCase(1, 2, true);
     }
 
     @Test(expected = AssertionError.class)
-    public void multiTestCaseLimit0Fail1Throws()
-    {
+    public void multiTestCaseLimit0Fail1Throws() {
         runTestCase(2, 0, true);
     }
 
     @Test
-    public void multiTestCaseLimit1Fail1Allowed()
-    {
+    public void multiTestCaseLimit1Fail1Allowed() {
         runTestCase(2, 1, false);
     }
 
     @Test(expected = AssertionError.class)
-    public void multiTestCaseLimit1Fail2Throws()
-    {
+    public void multiTestCaseLimit1Fail2Throws() {
         runTestCase(2, 1, true);
     }
 
     @Test
-    public void multiTestCaseLimit2Fail2Allowed()
-    {
+    public void multiTestCaseLimit2Fail2Allowed() {
         runTestCase(2, 2, false);
     }
 
     @Test(expected = AssertionError.class)
-    public void multiTestCaseLimit2Fail3Throws()
-    {
+    public void multiTestCaseLimit2Fail3Throws() {
         runTestCase(2, 2, true);
     }
 }

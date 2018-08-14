@@ -26,8 +26,7 @@ package uk.ac.sussex.gdsc.test;
 /**
  * The test complexity. Lower complexity tests are assumed to be faster.
  */
-public enum TestComplexity
-{
+public enum TestComplexity {
     //@formatter:off
 
 	/**  No complexity. */

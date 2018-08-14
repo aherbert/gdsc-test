@@ -27,8 +27,7 @@ package uk.ac.sussex.gdsc.test;
  * Simple interface for any test case that can generate a pass/fail result.
  */
 @FunctionalInterface
-public interface TestCase
-{
+public interface TestCase {
     /**
      * Run the test assertion.
      *

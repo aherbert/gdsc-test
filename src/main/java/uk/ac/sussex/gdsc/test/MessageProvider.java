@@ -27,8 +27,7 @@ package uk.ac.sussex.gdsc.test;
  * Provide messages dynamically for logging.
  */
 @FunctionalInterface
-public interface MessageProvider
-{
+public interface MessageProvider {
     /**
      * Gets the message.
      *
