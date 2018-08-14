@@ -37,9 +37,10 @@ import java.util.stream.Collectors;
  * messagePrefix + "[1][2]...[n-1][n]" + messageSuffix
  * </pre>
  *
- * The message prefix, suffix and index delimiters can be configured.
+ * The message prefix, suffix and index value delimiters can be configured.
  */
 public class IndexSupplier implements Supplier<String> {
+
     /** The indices. */
     private final int[] indices;
 
@@ -59,7 +60,7 @@ public class IndexSupplier implements Supplier<String> {
     private String delimiter = suffix + prefix;
 
     /**
-     * Instantiates a new index supplier.
+     * Constructs a new instance of this class.
      *
      * @param dimensions the dimensions
      * @throws IllegalArgumentException If the dimensions are not strictly positive
@@ -71,7 +72,7 @@ public class IndexSupplier implements Supplier<String> {
     }
 
     /**
-     * Instantiates a new index supplier.
+     * Constructs a new instance of this class.
      *
      * @param dimensions    the dimensions
      * @param messagePrefix the message prefix
@@ -113,7 +114,7 @@ public class IndexSupplier implements Supplier<String> {
     }
 
     /**
-     * Sets the index.
+     * Sets the index value.
      *
      * @param i     the index
      * @param value the index value
@@ -125,7 +126,7 @@ public class IndexSupplier implements Supplier<String> {
     }
 
     /**
-     * Gets the index.
+     * Gets the index value.
      *
      * @param i the index
      * @return the index value
@@ -137,8 +138,8 @@ public class IndexSupplier implements Supplier<String> {
     /**
      * Sets the format to use around each index.
      *
-     * @param prefix the prefix for each index
-     * @param suffix the suffix for each index
+     * @param prefix the prefix for each index value
+     * @param suffix the suffix for each index value
      */
     public void setFormat(String prefix, String suffix) {
         this.prefix = prefix;
@@ -183,7 +184,7 @@ public class IndexSupplier implements Supplier<String> {
     }
 
     /**
-     * Gets the prefix for each index.
+     * Gets the prefix for each index value.
      *
      * @return the prefix
      */
@@ -192,7 +193,7 @@ public class IndexSupplier implements Supplier<String> {
     }
 
     /**
-     * Gets the suffix for each index.
+     * Gets the suffix for each index value.
      *
      * @return the suffix
      */
@@ -201,7 +202,7 @@ public class IndexSupplier implements Supplier<String> {
     }
 
     /**
-     * Gets the delimiter used when joining each index.
+     * Gets the delimiter used when joining each index value.
      * <p>
      * This is composed of {@link #getSuffix()} + {@link #getPrefix()}.
      *

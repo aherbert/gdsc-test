@@ -29,10 +29,11 @@ import java.util.function.Supplier;
  * Supply a formatted message using the {@link String#format(String, Object...)}
  * function.
  * <p>
- * This is a base class to allow dynamic update of a message supplier for
- * use in messages.
+ * This is a base class to allow dynamic update of a message supplier for use in
+ * messages.
  */
 public abstract class FormatSupplier implements Supplier<String> {
+
     /** The message format. */
     private final String format;
 
