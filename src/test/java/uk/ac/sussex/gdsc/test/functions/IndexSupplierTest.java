@@ -40,10 +40,12 @@ public class IndexSupplierTest {
     public void testConstructer() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             @SuppressWarnings("unused")
+            final
             IndexSupplier s = new IndexSupplier(0);
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             @SuppressWarnings("unused")
+            final
             IndexSupplier s = new IndexSupplier(-1);
         });
         for (int dim = 1; dim <= 3; dim++) {
@@ -61,7 +63,7 @@ public class IndexSupplierTest {
 
     @Test
     public void testSetters() {
-        IndexSupplier s = new IndexSupplier(1);
+        final IndexSupplier s = new IndexSupplier(1);
         Assertions.assertEquals("[", s.getPrefix());
         Assertions.assertEquals("]", s.getSuffix());
         Assertions.assertEquals("][", s.getDelimiter());
@@ -90,11 +92,11 @@ public class IndexSupplierTest {
 
     @SeededTest
     public void test1DMessage(RandomSeed seed) {
-        IndexSupplier s = new IndexSupplier(1);
+        final IndexSupplier s = new IndexSupplier(1);
         Assertions.assertEquals("[0]", s.get());
-        UniformRandomProvider rng = TestSettings.getRandomGenerator(seed.getSeed());
+        final UniformRandomProvider rng = TestSettings.getRandomGenerator(seed.getSeed());
         for (int i = 0; i < 5; i++) {
-            int next = rng.nextInt(10);
+            final int next = rng.nextInt(10);
             s.set(0, next);
             Assertions.assertEquals(next, s.get(0));
             Assertions.assertEquals("[" + next + "]", s.get());
@@ -104,7 +106,7 @@ public class IndexSupplierTest {
         s.setMessagePrefix("");
         s.setMessageSuffix("");
         for (int i = 0; i < 5; i++) {
-            int next = rng.nextInt(10);
+            final int next = rng.nextInt(10);
             s.set(0, next);
             Assertions.assertEquals("<" + next + ">", s.get());
         }
@@ -113,7 +115,7 @@ public class IndexSupplierTest {
         s.setMessagePrefix(messagePrefix);
         s.setMessageSuffix(messageSuffix);
         for (int i = 0; i < 5; i++) {
-            int next = rng.nextInt(10);
+            final int next = rng.nextInt(10);
             s.set(0, next);
             Assertions.assertEquals(messagePrefix + "(" + next + ")" + messageSuffix, s.get());
         }
@@ -125,15 +127,15 @@ public class IndexSupplierTest {
 
     @SeededTest
     public void test2DMessage(RandomSeed seed) {
-        IndexSupplier s = new IndexSupplier(2);
+        final IndexSupplier s = new IndexSupplier(2);
         Assertions.assertEquals("[0][0]", s.get());
-        UniformRandomProvider rng = TestSettings.getRandomGenerator(seed.getSeed());
+        final UniformRandomProvider rng = TestSettings.getRandomGenerator(seed.getSeed());
         for (int i = 0; i < 3; i++) {
-            int nexti = rng.nextInt(10);
+            final int nexti = rng.nextInt(10);
             s.set(0, nexti);
             Assertions.assertEquals(nexti, s.get(0));
             for (int j = 0; j < 3; j++) {
-                int nextj = rng.nextInt(10);
+                final int nextj = rng.nextInt(10);
                 s.set(1, nextj);
                 Assertions.assertEquals(nextj, s.get(1));
                 Assertions.assertEquals("[" + nexti + "][" + nextj + "]", s.get());

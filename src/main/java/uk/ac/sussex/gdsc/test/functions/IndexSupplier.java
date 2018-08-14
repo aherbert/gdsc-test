@@ -32,11 +32,11 @@ import java.util.stream.Collectors;
  * <p>
  * The default message will output the current index value {@code [x]} for each
  * of the {@code n} dimensions:
- * 
+ *
  * <pre>
  * messagePrefix + "[1][2]...[n-1][n]" + messageSuffix
  * </pre>
- * 
+ *
  * The message prefix, suffix and index delimiters can be configured.
  */
 public class IndexSupplier implements Supplier<String> {
@@ -92,25 +92,23 @@ public class IndexSupplier implements Supplier<String> {
      * <li>The message suffix
      * </ul>
      * E.g.
-     * 
+     *
      * <pre>
      * messagePrefix + "[1][2]...[n-1][n]" + messageSuffix
      * </pre>
-     * 
+     *
      * The message prefix, suffix and index delimiters can be configured.
-     * 
+     *
      * @see java.util.function.Supplier#get()
      */
     @Override
     public String get() {
         String message = Arrays.stream(indices).boxed().map(Object::toString)
                 .collect(Collectors.joining(delimiter, prefix, suffix));
-        if (messagePrefix != null && messagePrefix.length() > 0) {
+        if (messagePrefix != null && messagePrefix.length() > 0)
             message = messagePrefix + message;
-        }
-        if (messageSuffix != null && messageSuffix.length() > 0) {
+        if (messageSuffix != null && messageSuffix.length() > 0)
             message += messageSuffix;
-        }
         return message;
     }
 
