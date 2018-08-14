@@ -241,32 +241,9 @@ public class TestLog
         return null;
     }
 
-    ///////////////////////////////////////////
-    // Helper functionality for using a Logger
-    ///////////////////////////////////////////
-
-    /**
-     * Get a supplier for the string using the format and arguments.
-     * <p>
-     * This can be used where it is not convenient to create a lambda function directly because the arguments are not
-     * effectively final. Returns:
-     *
-     * <pre>
-     * <code>
-     * () -&gt; String.format(format, args);
-     * </code>
-     * </pre>
-     *
-     * @param format
-     *            the format
-     * @param args
-     *            the arguments
-     * @return the supplier
-     */
-    public static final Supplier<String> getSupplier(final String format, final Object... args)
-    {
-        return () -> String.format(format, args);
-    }
+    ////////////////////////////////////////////////////
+    // Helper functionality for using java.util.logging
+    ////////////////////////////////////////////////////
 
     /**
      * Gets the record to log the message.

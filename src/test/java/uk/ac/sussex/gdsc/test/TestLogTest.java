@@ -23,7 +23,6 @@
  */
 package uk.ac.sussex.gdsc.test;
 
-import java.util.IllegalFormatConversionException;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -31,7 +30,6 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -52,30 +50,6 @@ public class TestLogTest
     public static void afterAll()
     {
         logger = null;
-    }
-
-    @Test
-    public void canSupplyVarArgs()
-    {
-        TestLog.getSupplier("log varargs = %d %f", 1, 2.3).get();
-    }
-
-    @Test
-    public void canSupplyObjectArray()
-    {
-        final Object[] args = new Object[] { 1, 2.3 };
-        TestLog.getSupplier("log Object[] = %d %f", args).get();
-    }
-
-    @Test
-    public void cannotSupplyObjectArrayAndVarargs()
-    {
-        // Use severe to always run
-        Assumptions.assumeTrue(logger.isLoggable(Level.SEVERE));
-        final Object[] args = new Object[] { 1, 2.3 };
-        Assertions.assertThrows(IllegalFormatConversionException.class, () -> {
-            TestLog.getSupplier("%d %f %d", args, 3).get();
-        });
     }
 
     @Test
