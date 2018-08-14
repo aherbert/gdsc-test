@@ -32,9 +32,8 @@ import org.junit.jupiter.api.Tag;
 
 /**
  * {@code @RandomTag} is used to signal that the annotated method is a
- * test method that uses a variable random number generator, i.e. not a
- * fixed seed. It is expected that the method can be repeated with
- * different results.
+ * test method that uses a variable random number generator. It is expected 
+ * that the method can be repeated with different results.
  * <p>
  * The annotation add a {@code "random"} {@link Tag}.
  * <p>

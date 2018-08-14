@@ -32,7 +32,6 @@
  * <ul>
  * <li>Additional assert functions for floating point equality using relative error (in contrast to the JUnit standard
  * of absolute error)
- * <li>Run-time configurable logging functionality
  * <li>Run-time configurable test complexity
  * <li>Run-time configurable random generator
  * <li>Run-time configurable test repeats (JUnit 5)
