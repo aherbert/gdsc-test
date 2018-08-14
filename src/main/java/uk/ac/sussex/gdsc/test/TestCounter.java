@@ -24,7 +24,7 @@
 package uk.ac.sussex.gdsc.test;
 
 /**
- * Runs test assertions and accumulates any thrown {@link AssertionError}s. If the limit is exceeded then the last
+ * Runs test assertions and counts any thrown {@link AssertionError}s. If the limit is exceeded then the last
  * generated error is thrown.
  * <p>
  * Use this class to fail tests that accumulate too many errors during random repeats, e.g. &gt;5 out of 100.
@@ -177,7 +177,6 @@ public class TestCounter
                 // This should throw
                 error.test();
                 // In case it doesn't then throw a default error
-                //org.junit.Assert.fail();
                 throw new AssertionError();
             }
     }
