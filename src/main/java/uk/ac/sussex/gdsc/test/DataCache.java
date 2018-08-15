@@ -48,17 +48,7 @@ public class DataCache<K, V> {
      * @return the value
      */
     public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider) {
-        V t = data.get(key);
-        if (t == null) {
-            synchronized (data) {
-                t = data.get(key);
-                if (t == null) {
-                    t = provider.apply(key);
-                    data.put(key, t);
-                }
-            }
-        }
-        return t;
+        return data.computeIfAbsent(key, provider);
     }
 
     /**
