@@ -9,7 +9,7 @@
   <packaging>jar</packaging>
 
   <name>GDSC Test</name>
-  <url>http:///github.com/aherbert/GDSC-Test</url>
+  <url>http:///github.com/aherbert/gdsc-test</url>
   <organization>
     <name>Genome Damage and Stability Centre</name>
     <url>http://www.sussex.ac.uk/gdsc/</url>
@@ -30,16 +30,16 @@ The GDSC Test package contains code for use with the JUnit test framework.
   <inceptionYear>2018</inceptionYear>
   <issueManagement>
     <system>GitHub Issues</system>
-    <url>https://github.com/aherbert/GDSC-Test/issues</url>
+    <url>https://github.com/aherbert/gdsc-test/issues</url>
   </issueManagement>
   <ciManagement>
     <system>Travis CI</system>
-    <url>https://travis-ci.com/aherbert/GDSC-Test</url>
+    <url>https://travis-ci.com/aherbert/gdsc-test</url>
   </ciManagement>
   <scm>
-    <connection>scm:git:git://github.com/aherbert/GDSC-Test.git</connection>
-    <developerConnection>scm:git:ssh://github.com:aherbert/GDSC-Test.git</developerConnection>
-    <url>https://github.com/aherbert/GDSC-Test</url>
+    <connection>scm:git:git://github.com/aherbert/gdsc-test.git</connection>
+    <developerConnection>scm:git:ssh://github.com:aherbert/gdsc-test.git</developerConnection>
+    <url>https://github.com/aherbert/gdsc-test</url>
   </scm>
 
   <developers>
