@@ -44,9 +44,6 @@ Alex Herbert
 ###### Institution ######
 Genome Damage and Stability Centre, University of Sussex
 
-###### URL ######
-http://www.sussex.ac.uk/gdsc/intranet/microscopy/imagej/gdsc_plugins
-
 ###### Email ######
 a.herbert@sussex.ac.uk
 
