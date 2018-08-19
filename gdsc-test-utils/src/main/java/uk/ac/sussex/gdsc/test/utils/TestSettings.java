@@ -180,6 +180,8 @@ public class TestSettings {
      * Gets the repeats.
      * <p>
      * This is set using the system property {@value #PROPERTY_RANDOM_REPEATS}.
+     * <p>
+     * The returned value is {@code >= 1} even when the system property is not set.
      *
      * @return the repeats
      */

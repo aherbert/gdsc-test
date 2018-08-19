@@ -45,17 +45,24 @@ public class TestSettingsTest {
     }
 
     @Test
-    public void canPrintSettings() {
-        long seed = TestSettings.getSeed();
+    public void testGetSettings() {
         // Check the seed is random if not set as a parameter
-        if (System.getProperty(TestSettings.PROPERTY_RANDOM_SEED) != null)
+        final long seed = TestSettings.getSeed();
+        if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_SEED, 0L) == 0)
             Assertions.assertNotEquals(0, seed);
         logger.info(() -> String.format("TestSettings Seed = %d", seed));
-        logger.info(() -> String.format("TestSettings Test Complexity = %d", TestSettings.getTestComplexity()));
+        // Check the repeats is 1 if not set as a parameter
+        final int repeats = TestSettings.getRepeats();
+        if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_REPEATS, 0) == 0)
+            Assertions.assertEquals(1, repeats);
+        logger.info(() -> String.format("TestSettings Repeats = %d", repeats));
+        // Currently no restrictions on complexity
+        final int complexity = TestSettings.getTestComplexity();
+        logger.info(() -> String.format("TestSettings Test Complexity = %d", complexity));
     }
 
     @Test
-    public void canSystemProperty() {
+    public void testGetProperty() {
         final String key = "A long key that should be really, really unique";
         System.clearProperty(key);
         final int iValue = -6765757;
@@ -71,5 +78,12 @@ public class TestSettingsTest {
         Assertions.assertEquals(lValue, TestSettings.getProperty(key, lValue));
         System.setProperty(key, "1");
         Assertions.assertEquals(1, TestSettings.getProperty(key, lValue));
+    }
+
+    @Test
+    public void testAllowTestComplexity() {
+        final int complexity = TestSettings.getTestComplexity();
+        for (final TestComplexity tc : TestComplexity.values())
+            Assertions.assertEquals(tc.getValue() <= complexity, TestSettings.allow(tc));
     }
 }
