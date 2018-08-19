@@ -1,4 +1,15 @@
-/target
-.project
 .classpath
+.project
 .settings
+.checkstyle
+target
+site-content
+*.class
+*.iml
+*.ipr
+*.iws
+.idea
+.DS_Store
+*~
+/.externalToolBuilders/
+/maven-eclipse.xml

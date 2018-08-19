@@ -4,9 +4,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>uk.ac.sussex.gdsc</groupId>
-  <artifactId>gdsc-test</artifactId>
+  <artifactId>gdsc-test-parent</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>GDSC Test</name>
   <url>http:///github.com/aherbert/gdsc-test</url>
@@ -67,7 +67,35 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <license.licenseName>gpl_v3</license.licenseName>
     <license.copyrightOwners>Alex Herbert</license.copyrightOwners>
     <license.projectName>${project.description}</license.projectName>
+    <org.junit.jupiter.version>5.2.0</org.junit.jupiter.version>
+    <org.junit.version>4.12</org.junit.version>
+    <commons.rng.version>1.1</commons.rng.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${org.junit.jupiter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${org.junit.jupiter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${org.junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-rng-simple</artifactId>
+        <version>${commons.rng.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <defaultGoal>clean install</defaultGoal>
@@ -105,7 +133,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.1</version>
+        <version>2.2</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -134,12 +162,12 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.2.0</version>
+            <version>${org.junit.jupiter.version}</version>
           </dependency>
           <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.2.0</version>
+            <version>${org.junit.jupiter.version}</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -237,13 +265,24 @@ The GDSC Test package contains code for use with the JUnit test framework.
         </executions>
       </plugin>
     </plugins>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- select non-aggregate reports -->
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <profiles>
     <profile>
@@ -305,27 +344,12 @@ The GDSC Test package contains code for use with the JUnit test framework.
     </repository>
   </distributionManagement>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>5.2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>5.2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-rng-simple</artifactId>
-      <version>1.1</version>
-    </dependency>
-  </dependencies>
+  <modules>
+    <module>gdsc-test-utils</module>
+    <module>gdsc-test-junit4</module>
+    <module>gdsc-test-junit5</module>
+    <module>gdsc-test-rng</module>
+    <module>gdsc-test-doc</module>
+  </modules>
 
 </project>
