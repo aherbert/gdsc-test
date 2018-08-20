@@ -67,6 +67,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <license.licenseName>gpl_v3</license.licenseName>
     <license.copyrightOwners>Alex Herbert</license.copyrightOwners>
     <license.projectName>${project.description}</license.projectName>
+    <org.junit.platform.version>1.2.0</org.junit.platform.version>
     <org.junit.jupiter.version>5.2.0</org.junit.jupiter.version>
     <org.junit.version>4.12</org.junit.version>
     <commons.rng.version>1.1</commons.rng.version>
@@ -157,7 +158,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>1.2.0</version>
+            <version>${org.junit.platform.version}</version>
           </dependency>
           <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -331,6 +332,41 @@ The GDSC Test package contains code for use with the JUnit test framework.
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>eclipse</id>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${org.junit.jupiter.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${org.junit.platform.version}</version>
+            <scope>test</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>org.junit.platform</groupId>
+          <artifactId>junit-platform-launcher</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <!-- Selectively build the entire project documentation -->
+    <profile>
+      <id>gdsc-test-doc</id>
+      <modules>
+        <module>gdsc-test-doc</module>
+      </modules>
+    </profile>
   </profiles>
 
   <distributionManagement>
@@ -349,7 +385,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <module>gdsc-test-junit4</module>
     <module>gdsc-test-junit5</module>
     <module>gdsc-test-rng</module>
-    <module>gdsc-test-doc</module>
   </modules>
 
 </project>

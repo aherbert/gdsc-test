@@ -23,6 +23,8 @@
  */
 package uk.ac.sussex.gdsc.test.utils;
 
+import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.logging.Logger;
@@ -31,11 +33,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import uk.ac.sussex.gdsc.test.utils.BaseTimingTask;
-import uk.ac.sussex.gdsc.test.utils.TimingResult;
-import uk.ac.sussex.gdsc.test.utils.TimingService;
-import uk.ac.sussex.gdsc.test.utils.TimingTask;
 
 @SuppressWarnings("javadoc")
 public class TimingServiceTest {
@@ -222,7 +219,7 @@ public class TimingServiceTest {
         ts.execute(tt3, false);
 
         String report = ts.getReport();
-        logger.info(report);
+        logger.log(TEST_INFO, report);
 
         Assertions.assertTrue(report.contains("slow"));
         Assertions.assertTrue(report.contains("fast"));
@@ -243,7 +240,7 @@ public class TimingServiceTest {
         Assertions.assertEquals(report, report2);
 
         report = ts.getReport(2);
-        logger.info(report);
+        logger.log(TEST_INFO, report);
 
         Assertions.assertFalse(report.contains("slow"));
         Assertions.assertTrue(report.contains("fast"));
@@ -273,7 +270,7 @@ public class TimingServiceTest {
         ts.execute(tt3, false);
 
         String report = getReport(ts);
-        logger.info(report);
+        logger.log(TEST_INFO, report);
 
         Assertions.assertTrue(report.contains("slow"));
         Assertions.assertTrue(report.contains("fast"));
@@ -289,7 +286,7 @@ public class TimingServiceTest {
 
         // Test variants of the default report
         report = getReport(ts, 2);
-        logger.info(report);
+        logger.log(TEST_INFO, report);
 
         Assertions.assertFalse(report.contains("slow"));
         Assertions.assertTrue(report.contains("fast"));

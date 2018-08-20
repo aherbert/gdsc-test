@@ -86,8 +86,8 @@
             <configuration>
               <reportOutputDirectory>${project.build.directory}/apidocs</reportOutputDirectory>
               <includeDependencySources>true</includeDependencySources>
-              <doctitle>GDSC Test ${qualified.bundle.version} API</doctitle>
-              <windowtitle>GDSC Test ${qualified.bundle.version} API</windowtitle>
+              <doctitle>GDSC Test ${project.version} API</doctitle>
+              <windowtitle>GDSC Test ${project.version} API</windowtitle>
               <use>true</use>
               <version>false</version>
               <groups>

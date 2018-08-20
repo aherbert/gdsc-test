@@ -11,9 +11,10 @@ import uk.ac.sussex.gdsc.test.utils.TestSettings;
 @SuppressWarnings("javadoc")
 public class RNGFactoryTest {
 
+    private final long seed = 5656787697789L;
+    
     @Test
     public void canGetSameRandomWithSameSeed() {
-        final long seed = 5656787697789L;
         UniformRandomProvider r = RNGFactory.create(seed);
         final double[] e = { r.nextDouble(), r.nextDouble() };
         r = RNGFactory.create(seed);
@@ -23,7 +24,6 @@ public class RNGFactoryTest {
 
     @Test
     public void canGetDifferentRandomWithDifferentSeed() {
-        final long seed = 5656787697789L;
         UniformRandomProvider r = RNGFactory.create(seed);
         final double[] e = { r.nextDouble(), r.nextDouble() };
         r = RNGFactory.create(seed * 2);
@@ -52,5 +52,20 @@ public class RNGFactoryTest {
         Assertions.assertThrows(AssertionFailedError.class, () -> {
             Assertions.assertArrayEquals(e, o);
         });
+    }
+    
+    @Test
+    public void canGetSameRandomWithSameSeedAndNoCache() {
+        final long seed = this.seed + 1;
+        UniformRandomProvider r = RNGFactory.create(seed, false);
+        final double[] e = { r.nextDouble(), r.nextDouble() };
+        r = RNGFactory.create(seed, false);
+        final double[] o = { r.nextDouble(), r.nextDouble() };
+        Assertions.assertArrayEquals(e, o);
+        
+        // Check verses cached version
+        r = RNGFactory.create(seed);
+        final double[] o2 = { r.nextDouble(), r.nextDouble() };
+        Assertions.assertArrayEquals(e, o2);
     }
 }

@@ -49,23 +49,46 @@ public class RNGFactory {
      * Gets the uniform random provider.
      * <p>
      * If the {@code seed} is {@code 0} then a random seed will be used.
+     * <p>
+     * This optionally makes use of a cache to improve construction performance by
+     * storing the full seed state of the provider for each input seed.
+     *
+     * @param seed  the seed
+     * @param cache Set to true to enable the cache
+     * @return the uniform random provider
+     */
+    public static UniformRandomProvider create(long seed, boolean cache) {
+        if (seed == 0)
+            return RandomSource.create(RandomSource.MWC_256);
+        final int[] fullSeed;
+        if (cache) {
+            fullSeed = seedCache.getOrComputeIfAbsent(seed, SEED_GENERATOR);
+        } else {
+            fullSeed = SEED_GENERATOR.apply(seed);
+        }
+        return RandomSource.create(RandomSource.MWC_256, fullSeed);
+    }
+
+    /**
+     * Gets the uniform random provider.
+     * <p>
+     * If the {@code seed} is {@code 0} then a random seed will be used.
+     * <p>
+     * This makes use of a cache to improve construction performance.
      *
      * @param seed the seed
      * @return the uniform random provider
      */
     public static UniformRandomProvider create(long seed) {
-        if (seed == 0)
-            return RandomSource.create(RandomSource.MWC_256);
-        final int[] fullSeed = seedCache.getOrComputeIfAbsent(seed, SEED_GENERATOR);
-        return RandomSource.create(RandomSource.MWC_256, fullSeed);
+        return create(seed, true);
     }
 
     /**
      * Gets a uniform random provider with a fixed seed set using the system
-     * property {@value TestSettings#PROPERTY_RANDOM_SEED}.
+     * property {@link TestSettings#PROPERTY_RANDOM_SEED}.
      * <p>
-     * Note: To obtain a randomly seeded provider use
-     * {@link #create(long)} using zero as the seed.
+     * Note: To obtain a randomly seeded provider use {@link #create(long)} using
+     * zero as the seed.
      *
      * @return the uniform random provider
      */

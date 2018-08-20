@@ -23,6 +23,8 @@
  */
 package uk.ac.sussex.gdsc.test.utils;
 
+import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
+
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterAll;
@@ -50,15 +52,15 @@ public class TestSettingsTest {
         final long seed = TestSettings.getSeed();
         if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_SEED, 0L) == 0)
             Assertions.assertNotEquals(0, seed);
-        logger.info(() -> String.format("TestSettings Seed = %d", seed));
+        logger.log(TEST_INFO,() -> String.format("TestSettings Seed = %d", seed));
         // Check the repeats is 1 if not set as a parameter
         final int repeats = TestSettings.getRepeats();
         if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_REPEATS, 0) == 0)
             Assertions.assertEquals(1, repeats);
-        logger.info(() -> String.format("TestSettings Repeats = %d", repeats));
+        logger.log(TEST_INFO,() -> String.format("TestSettings Repeats = %d", repeats));
         // Currently no restrictions on complexity
         final int complexity = TestSettings.getTestComplexity();
-        logger.info(() -> String.format("TestSettings Test Complexity = %d", complexity));
+        logger.log(TEST_INFO,() -> String.format("TestSettings Test Complexity = %d", complexity));
     }
 
     @Test

@@ -40,14 +40,28 @@ public class TestLog {
          * <p>
          * Equivalent level to {@link java.util.logging.Level#SEVERE}.
          */
-        public static final Level TEST_FAILURE = new TestLevel("FAILURE", SEVERE.intValue());
+        public static final Level TEST_FAILURE = new TestLevel("TEST FAILURE", SEVERE.intValue());
 
         /**
-         * Additional level for logging test stage failures.
+         * Additional level for logging test warnings.
          * <p>
          * Equivalent level to {@link java.util.logging.Level#WARNING}.
          */
-        public static final Level STAGE_FAILURE = new TestLevel("STAGE FAILURE", WARNING.intValue());
+        public static final Level TEST_WARNING = new TestLevel("TEST WARNING", WARNING.intValue());
+
+        /**
+         * Additional level for logging test information.
+         * <p>
+         * Equivalent level to {@link java.util.logging.Level#FINE}.
+         */
+        public static final Level TEST_INFO = new TestLevel("TEST INFO", FINE.intValue());
+
+        /**
+         * Additional level for logging test debugging.
+         * <p>
+         * Equivalent level to {@link java.util.logging.Level#FINER}.
+         */
+        public static final Level TEST_DEBUG = new TestLevel("TEST DEBUG", FINER.intValue());
 
         /**
          * Serial version.
@@ -327,7 +341,8 @@ public class TestLog {
     /**
      * Gets the record to log the test result.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE}
      * level.
      * </ul>
@@ -340,14 +355,15 @@ public class TestLog {
      * @return the log record
      */
     public static LogRecord getResultRecord(boolean result, String message) {
-        final Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
+        final Level l = (result) ? TestLevel.TEST_INFO : TestLevel.TEST_FAILURE;
         return new LogRecord(l, message);
     }
 
     /**
      * Gets the record to log the test result.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE}
      * level.
      * </ul>
@@ -364,14 +380,15 @@ public class TestLog {
      * @return the log record
      */
     public static LogRecord getResultRecord(boolean result, String format, Object... args) {
-        final Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
+        final Level l = (result) ? TestLevel.TEST_INFO : TestLevel.TEST_FAILURE;
         return new TestLogRecord(l, format, args);
     }
 
     /**
      * Gets the record to log the test result.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE}
      * level.
      * </ul>
@@ -387,16 +404,17 @@ public class TestLog {
      * @return the log record
      */
     public static LogRecord getResultRecord(boolean result, Supplier<String> message) {
-        final Level l = (result) ? Level.INFO : TestLevel.TEST_FAILURE;
+        final Level l = (result) ? TestLevel.TEST_INFO : TestLevel.TEST_FAILURE;
         return new TestLogRecord(l, message);
     }
 
     /**
      * Gets the record to log the test stage result.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
-     * <li>If false the record will be created at the
-     * {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_WARNING}
+     * level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are easily
@@ -407,16 +425,17 @@ public class TestLog {
      * @return the log record
      */
     public static LogRecord getStageResultRecord(boolean result, String message) {
-        final Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
+        final Level l = (result) ? TestLevel.TEST_INFO : TestLevel.TEST_WARNING;
         return new LogRecord(l, message);
     }
 
     /**
      * Gets the record to log the test stage result.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
-     * <li>If false the record will be created at the
-     * {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_WARNING}
+     * level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are easily
@@ -431,16 +450,17 @@ public class TestLog {
      * @return the log record
      */
     public static LogRecord getStageResultRecord(boolean result, String format, Object... args) {
-        final Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
+        final Level l = (result) ? TestLevel.TEST_INFO : TestLevel.TEST_WARNING;
         return new TestLogRecord(l, format, args);
     }
 
     /**
      * Gets the record to log the test stage result.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
-     * <li>If false the record will be created at the
-     * {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_WARNING}
+     * level.
      * </ul>
      * <p>
      * This is a helper method for tests that may not always pass so they are easily
@@ -454,7 +474,7 @@ public class TestLog {
      * @return the log record
      */
     public static LogRecord getStageResultRecord(boolean result, Supplier<String> message) {
-        final Level l = (result) ? Level.INFO : TestLevel.STAGE_FAILURE;
+        final Level l = (result) ? TestLevel.TEST_INFO : TestLevel.TEST_WARNING;
         return new TestLogRecord(l, message);
     }
 
@@ -462,7 +482,8 @@ public class TestLog {
      * Get the record to log the result of two timing tasks. A test is made to
      * determine if the fast has a lower time than the slow.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE}
      * level.
      * </ul>
@@ -481,7 +502,8 @@ public class TestLog {
      * Get the record to log the result of two timing tasks. A test is made to
      * determine if the fast has a lower time than the slow.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE}
      * level.
      * </ul>
@@ -498,14 +520,15 @@ public class TestLog {
         final double slowTime = (useMin) ? slow.getMin() : slow.getMean();
         final String fastName = fast.getTask().getName();
         final double fastTime = (useMin) ? fast.getMin() : fast.getMean();
-        return getTimingRecord(slowName, slowTime, fastName, fastTime, Level.INFO, TestLevel.TEST_FAILURE);
+        return getTimingRecord(slowName, slowTime, fastName, fastTime, TestLevel.TEST_INFO, TestLevel.TEST_FAILURE);
     }
 
     /**
      * Get the record to log the result of two tasks. A test is made to determine if
      * the fast has a lower time than the slow.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
      * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE}
      * level.
      * </ul>
@@ -519,16 +542,17 @@ public class TestLog {
      * @return the record
      */
     public static LogRecord getTimingRecord(String slowName, long slowTime, String fastName, long fastTime) {
-        return getTimingRecord(slowName, slowTime, fastName, fastTime, Level.INFO, TestLevel.TEST_FAILURE);
+        return getTimingRecord(slowName, slowTime, fastName, fastTime, TestLevel.TEST_INFO, TestLevel.TEST_FAILURE);
     }
 
     /**
-     * Get the record to log the stage result of two timing tasks. A test is made to
-     * determine if the fast has a lower time than the slow.
+     * Get the record to log the intermediate stage result of two timing tasks. A
+     * test is made to determine if the fast has a lower time than the slow.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
-     * <li>If false the record will be created at the
-     * {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_WARNING}
+     * level.
      * </ul>
      * <p>
      * This is a helper method for speed tests that may not always pass.
@@ -542,12 +566,13 @@ public class TestLog {
     }
 
     /**
-     * Get the record to log the stage result of two timing tasks. A test is made to
-     * determine if the fast has a lower time than the slow.
+     * Get the record to log the intermediate stage result of two timing tasks. A
+     * test is made to determine if the fast has a lower time than the slow.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
-     * <li>If false the record will be created at the
-     * {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_WARNING}
+     * level.
      * </ul>
      * <p>
      * This is a helper method for speed tests that may not always pass.
@@ -562,16 +587,17 @@ public class TestLog {
         final double slowTime = (useMin) ? slow.getMin() : slow.getMean();
         final String fastName = fast.getTask().getName();
         final double fastTime = (useMin) ? fast.getMin() : fast.getMean();
-        return getTimingRecord(slowName, slowTime, fastName, fastTime, Level.INFO, TestLevel.STAGE_FAILURE);
+        return getTimingRecord(slowName, slowTime, fastName, fastTime, TestLevel.TEST_INFO, TestLevel.TEST_WARNING);
     }
 
     /**
      * Get the record to log the result of two tasks. A test is made to determine if
      * the fast has a lower time than the slow.
      * <ul>
-     * <li>If true the record will be created at the {@link Level#INFO} level.
-     * <li>If false the record will be created at the
-     * {@link TestLevel#STAGE_FAILURE} level.
+     * <li>If true the record will be created at the {@link TestLevel#TEST_INFO}
+     * level.
+     * <li>If false the record will be created at the {@link TestLevel#TEST_WARNING}
+     * level.
      * </ul>
      * <p>
      * This is a helper method for speed tests that may not always pass.
@@ -583,7 +609,7 @@ public class TestLog {
      * @return the record
      */
     public static LogRecord getStageTimingRecord(String slowName, long slowTime, String fastName, long fastTime) {
-        return getTimingRecord(slowName, slowTime, fastName, fastTime, Level.INFO, TestLevel.STAGE_FAILURE);
+        return getTimingRecord(slowName, slowTime, fastName, fastTime, TestLevel.TEST_INFO, TestLevel.TEST_WARNING);
     }
 
     /**

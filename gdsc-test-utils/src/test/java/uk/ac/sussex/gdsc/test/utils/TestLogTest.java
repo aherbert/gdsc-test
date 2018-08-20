@@ -23,6 +23,9 @@
  */
 package uk.ac.sussex.gdsc.test.utils;
 
+import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
+
+import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -33,8 +36,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import uk.ac.sussex.gdsc.test.utils.TestLog;
-import uk.ac.sussex.gdsc.test.utils.TimingResult;
 import uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel;
 
 @SuppressWarnings("javadoc")
@@ -50,7 +51,7 @@ public class TestLogTest {
     public static void afterAll() {
         logger = null;
     }
-
+    
     @Test
     public void canGetStaceTraceElement() {
         final StackTraceElement[] e = new Throwable().getStackTrace();
@@ -61,7 +62,7 @@ public class TestLogTest {
         Assertions.assertEquals(e[0].getClassName(), o.getClassName());
         Assertions.assertEquals(e[0].getMethodName(), o.getMethodName());
         Assertions.assertEquals(e[0].getLineNumber() + 1, o.getLineNumber());
-        logger.info(() -> String.format("%s:%s:%d", o.getClassName(), o.getMethodName(), o.getLineNumber()));
+        logger.log(TEST_INFO, () -> String.format("%s:%s:%d", o.getClassName(), o.getMethodName(), o.getLineNumber()));
 
         Assertions.assertNotNull(o2);
         Assertions.assertEquals(e[1].getClassName(), o2.getClassName());
@@ -93,64 +94,84 @@ public class TestLogTest {
         Assertions.assertEquals(e.getClassName(), o[0]);
         Assertions.assertEquals(e.getMethodName(), o[1]);
         Assertions.assertEquals(e.getLineNumber() + 1, Integer.parseInt(o[2]));
-        logger.info(codePoint);
+        logger.log(TEST_INFO, codePoint);
         Assertions.assertEquals("", TestLog.getCodePoint(null));
     }
 
     @Test
     public void canGetRecord() {
-        for (final Level l : new Level[] { Level.INFO, Level.FINER }) {
+        final StringBuilder sb = new StringBuilder("A StringBuilder passed as an object");
+        for (final Level l : new Level[] { TestLevel.TEST_INFO, TestLevel.TEST_DEBUG }) {
             //@formatter:off
-            logger.log(check(l, TestLog.getRecord(l, "This is a record")));
-            logger.log(check(l, TestLog.getRecord(l, "This is a formatted record: %d", 1)));
-            logger.log(check(l, TestLog.getRecord(l, () -> String.format("This is a supplier record: %d", 1))));
+            logger.log(check(l, TestLog.getRecord(l, "This is a record"), "This is a record"));
+            logger.log(check(l, TestLog.getRecord(l, "This is a formatted record: %d", 1), String.format("This is a formatted record: %d", 1)));
+            logger.log(check(l, TestLog.getRecord(l, () -> String.format("This is a supplier record: %d", 1)), String.format("This is a supplier record: %d", 1)));
+            logger.log(check(l, TestLog.getRecord(l, sb), sb.toString()));
             //@formatter:on
         }
     }
 
-    private static LogRecord check(Level level, LogRecord record) {
+    private static LogRecord check(Level level, LogRecord record, String expected) {
         Assertions.assertEquals(level, record.getLevel());
+        Assertions.assertEquals(expected, record.getMessage());
+        return record;
+    }
+
+    private static LogRecord check(Level level, LogRecord record, String... contains) {
+        Assertions.assertEquals(level, record.getLevel());
+        String msg = record.getMessage();
+        for (String expected : contains)
+            Assertions.assertTrue(msg.contains(expected), expected);
         return record;
     }
 
     @Test
     public void canGetFailRecord() {
         //@formatter:off
-        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord("This is a failed record")));
-        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord( "This is a failed formatted record: %d", 1)));
-        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord( () -> String.format("This is a failed supplier record: %d", 1))));
-        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord(new Error("This is a failed record with thrown"))));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord("This is a failed record"), "This is a failed record"));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord("This is a failed formatted record: %d", 1), String.format("This is a failed formatted record: %d", 1)));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord(() -> String.format("This is a failed supplier record: %d", 1)), String.format("This is a failed supplier record: %d", 1)));
         //@formatter:on
+
+        // Since the stack trace looks bad in the output create a dummy one
+        Throwable t = new Throwable("This is a failed record with thrown");
+        StackTraceElement[] trace = t.getStackTrace();
+        trace = Arrays.copyOf(trace, 2);
+        final String className = this.getClass().getSimpleName();
+        trace[1] = new StackTraceElement("stack.trace.truncated.for." + className, "itWouldBeLonger", "DummyClass.java",
+                10);
+        t.setStackTrace(trace);
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getFailRecord(t), "This is a failed record with thrown"));
     }
 
     @Test
     public void canGetTimingRecord() {
         //@formatter:off
         // Default levels
-        logger.log(check(Level.INFO, TestLog.getTimingRecord("slow", 100, "fast", 10)));
-        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getTimingRecord("slow", 1, "fast", 10)));
-        logger.log(check(Level.INFO, TestLog.getStageTimingRecord("slow", 100, "fast", 10)));
-        logger.log(check(TestLevel.STAGE_FAILURE, TestLog.getStageTimingRecord("slow", 1, "fast", 10)));
+        logger.log(check(TestLevel.TEST_INFO, TestLog.getTimingRecord("slow", 123, "fast", 21), "slow", "fast", "123", "21"));
+        logger.log(check(TestLevel.TEST_FAILURE, TestLog.getTimingRecord("slow", 7, "fast", 21), "slow", "fast", "7", "21"));
+        logger.log(check(TestLevel.TEST_INFO, TestLog.getStageTimingRecord("slow", 123, "fast", 21), "slow", "fast", "123", "21"));
+        logger.log(check(TestLevel.TEST_WARNING, TestLog.getStageTimingRecord("slow", 7, "fast", 21), "slow", "fast", "7", "21"));
 
         // Explicit levels
         // long version
-        logger.log(check(Level.FINE, TestLog.getTimingRecord("slow", 100, "fast", 10, Level.FINE, Level.WARNING)));
-        logger.log(check(Level.WARNING, TestLog.getTimingRecord("slow", 1, "fast", 10, Level.FINE, Level.WARNING)));
+        logger.log(check(Level.FINER, TestLog.getTimingRecord("slow", 123, "fast", 21, Level.FINER, Level.WARNING), "slow", "fast", "123", "21"));
+        logger.log(check(Level.WARNING, TestLog.getTimingRecord("slow", 7, "fast", 21, Level.FINER, Level.WARNING), "slow", "fast", "7", "21"));
         // double version
-        logger.log(check(Level.FINE, TestLog.getTimingRecord("slow", 100., "fast", 10., Level.FINE, Level.WARNING)));
-        logger.log(check(Level.WARNING, TestLog.getTimingRecord("slow", 1., "fast", 10., Level.FINE, Level.WARNING)));
+        logger.log(check(Level.FINER, TestLog.getTimingRecord("slow", 123., "fast", 21., Level.FINER, Level.WARNING), "slow", "fast", "123.", "21."));
+        logger.log(check(Level.WARNING, TestLog.getTimingRecord("slow", 7., "fast", 21., Level.FINER, Level.WARNING), "slow", "fast", "7.", "21."));
 
         // Using the TimingResult
         final TimingResult fast = new TimingResult("Fast", new long[] { 100 });
         final TimingResult slow = new TimingResult("Slow", new long[] { 1000 });
         final TimingResult slowFast = new TimingResult("SlowFast", new long[] { 100, 10000 });
 
-        logger.log(check(Level.INFO, TestLog.getTimingRecord(slow, fast)));
-        logger.log(check(Level.INFO, TestLog.getTimingRecord(slow, slowFast, true)));
+        logger.log(check(TestLevel.TEST_INFO, TestLog.getTimingRecord(slow, fast)));
+        logger.log(check(TestLevel.TEST_INFO, TestLog.getTimingRecord(slow, slowFast, true)));
         logger.log(check(TestLevel.TEST_FAILURE, TestLog.getTimingRecord(slow, slowFast, false)));
-        logger.log(check(Level.INFO, TestLog.getStageTimingRecord(slow, fast)));
-        logger.log(check(Level.INFO, TestLog.getStageTimingRecord(slow, slowFast, true)));
-        logger.log(check(TestLevel.STAGE_FAILURE, TestLog.getStageTimingRecord(slow, slowFast, false)));
+        logger.log(check(TestLevel.TEST_INFO, TestLog.getStageTimingRecord(slow, fast)));
+        logger.log(check(TestLevel.TEST_INFO, TestLog.getStageTimingRecord(slow, slowFast, true)));
+        logger.log(check(TestLevel.TEST_WARNING, TestLog.getStageTimingRecord(slow, slowFast, false)));
         //@formatter:on
     }
 
@@ -180,16 +201,16 @@ public class TestLogTest {
         Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getResultRecord(false, "").getLevel().intValue());
         Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getResultRecord(false, "%d", 1).getLevel().intValue());
         Assertions.assertEquals(TestLevel.TEST_FAILURE.intValue(), TestLog.getResultRecord(false, message).getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getResultRecord(true, "").getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getResultRecord(true, "%d", 1).getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getResultRecord(true, message).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_INFO.intValue(), TestLog.getResultRecord(true, "").getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_INFO.intValue(), TestLog.getResultRecord(true, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_INFO.intValue(), TestLog.getResultRecord(true, message).getLevel().intValue());
 
-        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageResultRecord(false, "").getLevel().intValue());
-        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageResultRecord(false, "%d", 1).getLevel().intValue());
-        Assertions.assertEquals(TestLevel.STAGE_FAILURE.intValue(), TestLog.getStageResultRecord(false, message).getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageResultRecord(true, "").getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageResultRecord(true, "%d", 1).getLevel().intValue());
-        Assertions.assertEquals(Level.INFO.intValue(), TestLog.getStageResultRecord(true, message).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_WARNING.intValue(), TestLog.getStageResultRecord(false, "").getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_WARNING.intValue(), TestLog.getStageResultRecord(false, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_WARNING.intValue(), TestLog.getStageResultRecord(false, message).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_INFO.intValue(), TestLog.getStageResultRecord(true, "").getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_INFO.intValue(), TestLog.getStageResultRecord(true, "%d", 1).getLevel().intValue());
+        Assertions.assertEquals(TestLevel.TEST_INFO.intValue(), TestLog.getStageResultRecord(true, message).getLevel().intValue());
         //@formatter:on
     }
 
@@ -203,11 +224,19 @@ public class TestLogTest {
             Assertions.assertEquals(1, message.count);
         }
 
-        if (!logger.isLoggable(Level.INFO)) {
+        if (!logger.isLoggable(TestLevel.TEST_INFO)) {
             message = new MessageSupplier();
             logger.log(TestLog.getResultRecord(true, message));
             // Should not try to create the message
             Assertions.assertEquals(0, message.count);
         }
+    }
+
+    @Test
+    public void canParseTestLevel() {
+        Assertions.assertEquals(TestLevel.TEST_FAILURE, Level.parse("TEST FAILURE"));
+        Assertions.assertEquals(TestLevel.TEST_WARNING, Level.parse("TEST WARNING"));
+        Assertions.assertEquals(TestLevel.TEST_INFO, Level.parse("TEST INFO"));
+        Assertions.assertEquals(TestLevel.TEST_DEBUG, Level.parse("TEST DEBUG"));
     }
 }
