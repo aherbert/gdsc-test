@@ -34,7 +34,7 @@ public class RNGFactoryTest {
     }
 
     @Test
-    public void canGetSameRandomWithoutSeedMatchingConfiguredSeed() {
+    public void canGetSameRandomWithFixedSeedMatchingConfiguredSeed() {
         final long seed = TestSettings.getSeed();
         UniformRandomProvider r = RNGFactory.createWithFixedSeed();
         final double[] e = { r.nextDouble(), r.nextDouble() };
