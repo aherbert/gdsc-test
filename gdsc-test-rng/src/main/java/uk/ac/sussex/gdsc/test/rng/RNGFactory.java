@@ -46,12 +46,12 @@ public class RNGFactory {
     private static SeedGenerator SEED_GENERATOR = new SeedGenerator();
 
     /**
-     * Gets the uniform random provider.
+     * Gets the uniform random provider using the given seed.
      * <p>
      * If the {@code seed} is {@code 0} then a random seed will be used.
      * <p>
      * This optionally makes use of a cache to improve construction performance by
-     * storing the full seed state of the provider for each input seed.
+     * storing (and reusing) the full seed state of the provider for each input seed.
      *
      * @param seed  the seed
      * @param cache Set to true to enable the cache
@@ -70,7 +70,7 @@ public class RNGFactory {
     }
 
     /**
-     * Gets the uniform random provider.
+     * Gets the uniform random provider using the given seed.
      * <p>
      * If the {@code seed} is {@code 0} then a random seed will be used.
      * <p>
@@ -78,6 +78,7 @@ public class RNGFactory {
      *
      * @param seed the seed
      * @return the uniform random provider
+     * @see #create(long, boolean)
      */
     public static UniformRandomProvider create(long seed) {
         return create(seed, true);
@@ -92,7 +93,7 @@ public class RNGFactory {
      *
      * @return the uniform random provider
      */
-    public static UniformRandomProvider create() {
+    public static UniformRandomProvider createWithFixedSeed() {
         return create(TestSettings.getSeed());
     }
 }
