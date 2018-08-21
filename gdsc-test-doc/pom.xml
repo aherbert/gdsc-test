@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -11,8 +10,8 @@
   </parent>
 
   <artifactId>gdsc-test-doc</artifactId>
-  <!-- do not set packaging to pom, because otherwise we will receive "Not 
-    executing Javadoc as the project is not a Java classpath-capable package" -->
+  <!-- do not set packaging to pom, because otherwise we will receive "Not executing Javadoc as the project is not a Java 
+    classpath-capable package" -->
 
   <name>GDSC Test Documentation</name>
   <description>Genome Damage and Stability Centre Test Documentation</description>
@@ -64,8 +63,7 @@
               <footer>Code Coverage Report for GDSC Test
                 ${project.version}</footer>
               <includes>
-                <!-- Analyze class files only to exclude shaded agent JAR 
-                  from report -->
+                <!-- Analyze class files only to exclude shaded agent JAR from report -->
                 <include>**/*.class</include>
               </includes>
             </configuration>
@@ -92,20 +90,20 @@
               <version>false</version>
               <groups>
                 <group>
-                  <title>Bundle uk.ac.sussex.gsdc.test.utils</title>
-                  <packages>uk.ac.sussex.gsdc.test.utils*</packages>
+                  <title>Utilities Package</title>
+                  <packages>uk.ac.sussex.gdsc.test.utils*</packages>
                 </group>
                 <group>
-                  <title>Bundle uk.ac.sussex.gsdc.test.junit4</title>
-                  <packages>uk.ac.sussex.gsdc.test.junit4*</packages>
+                  <title>JUnit 5 Package</title>
+                  <packages>uk.ac.sussex.gdsc.test.junit5*</packages>
                 </group>
                 <group>
-                  <title>Bundle uk.ac.sussex.gsdc.test.junit5</title>
-                  <packages>uk.ac.sussex.gsdc.test.junit5*</packages>
+                  <title>JUnit4 Package</title>
+                  <packages>uk.ac.sussex.gdsc.test.junit4*</packages>
                 </group>
                 <group>
-                  <title>Bundle uk.ac.sussex.gsdc.test.rng</title>
-                  <packages>uk.ac.sussex.gsdc.test.rng*</packages>
+                  <title>RNG Package</title>
+                  <packages>uk.ac.sussex.gdsc.test.rng*</packages>
                 </group>
               </groups>
             </configuration>

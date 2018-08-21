@@ -67,10 +67,29 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <license.licenseName>gpl_v3</license.licenseName>
     <license.copyrightOwners>Alex Herbert</license.copyrightOwners>
     <license.projectName>${project.description}</license.projectName>
-    <org.junit.platform.version>1.2.0</org.junit.platform.version>
+    <!-- Versions -->
     <org.junit.jupiter.version>5.2.0</org.junit.jupiter.version>
+    <org.junit.platform.version>1.2.0</org.junit.platform.version>
     <org.junit.version>4.12</org.junit.version>
     <commons.rng.version>1.1</commons.rng.version>
+    <org.jacoco.verion>0.8.1</org.jacoco.verion>
+    <license-maven-plugin.version>1.16</license-maven-plugin.version>
+    <!-- Maven -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
+    <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+    <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+    <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+    <maven-gpg-plugin>1.6</maven-gpg-plugin>
+    <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+    <!-- JaCoCo -->
+    <org.jacoco.class.covered>0.96</org.jacoco.class.covered>
+    <org.jacoco.instruction.covered>0.8</org.jacoco.instruction.covered>
+    <org.jacoco.method.covered>0.8</org.jacoco.method.covered>
+    <org.jacoco.branch.covered>0.8</org.jacoco.branch.covered>
+    <org.jacoco.line.covered>0.85</org.jacoco.line.covered>
+    <org.jacoco.complexity.covered>0.8</org.jacoco.complexity.covered>
   </properties>
 
   <dependencyManagement>
@@ -103,18 +122,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.1</version>
-          <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.4</version>
+          <version>${maven-assembly-plugin}</version>
           <configuration>
             <descriptorRefs>
               <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -132,9 +141,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
     </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.2</version>
+        <version>${maven-source-plugin.version}</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -147,7 +155,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.0</version>
+        <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <systemPropertyVariables>
             <!-- Set JUL Formatting -->
@@ -173,9 +181,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
         </dependencies>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
+        <version>${maven-javadoc-plugin.version}</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -188,82 +195,12 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
-        <version>1.16</version>
+        <version>${license-maven-plugin.version}</version>
         <configuration>
           <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
           <canUpdateDescription>true</canUpdateDescription>
           <canUpdateCopyright>true</canUpdateCopyright>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.eluder.coveralls</groupId>
-        <artifactId>coveralls-maven-plugin</artifactId>
-        <version>4.3.0</version>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.1</version>
-        <executions>
-          <execution>
-            <id>default-prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>default-report</id>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>default-check</id>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <rule>
-                  <element>BUNDLE</element>
-                  <limits>
-                    <limit>
-                      <counter>CLASS</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.96</minimum>
-                    </limit>
-                    <limit>
-                      <counter>INSTRUCTION</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.8</minimum>
-                    </limit>
-                    <limit>
-                      <counter>METHOD</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.8</minimum>
-                    </limit>
-                    <limit>
-                      <counter>BRANCH</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.8</minimum>
-                    </limit>
-                    <limit>
-                      <counter>LINE</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.85</minimum>
-                    </limit>
-                    <limit>
-                      <counter>COMPLEXITY</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.8</minimum>
-                    </limit>
-                  </limits>
-                </rule>
-              </rules>
-              <haltOnFailure>false</haltOnFailure>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
@@ -305,9 +242,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
+            <version>${maven-gpg-plugin.version}</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -321,7 +257,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.2</version>
+            <version>${nexus-staging-maven-plugin.version}</version>
             <extensions>true</extensions>
             <configuration>
               <serverId>ossrh</serverId>
@@ -351,12 +287,12 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </dependencyManagement>
       <dependencies>
         <dependency>
-          <groupId>org.junit.platform</groupId>
-          <artifactId>junit-platform-launcher</artifactId>
-        </dependency>
-        <dependency>
           <groupId>org.junit.jupiter</groupId>
           <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.junit.platform</groupId>
+          <artifactId>junit-platform-launcher</artifactId>
         </dependency>
       </dependencies>
     </profile>
@@ -366,6 +302,171 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <modules>
         <module>gdsc-test-doc</module>
       </modules>
+    </profile>
+    <profile>
+      <id>coveralls</id>
+      <activation>
+        <property>
+          <name>env.TRAVIS</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <!-- Submit coverage -->
+          <plugin>
+            <groupId>org.eluder.coveralls</groupId>
+            <artifactId>coveralls-maven-plugin</artifactId>
+            <version>4.3.0</version>
+          </plugin>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${org.jacoco.verion}</version>
+            <executions>
+              <execution>
+                <id>default-prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>default-report</id>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>default-check</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+                <!-- Currently the same as the jacoco profile but halts on 
+                  failure -->
+                <configuration>
+                  <rules>
+                    <rule>
+                      <element>BUNDLE</element>
+                      <limits>
+                        <limit>
+                          <counter>CLASS</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.class.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>INSTRUCTION</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.instruction.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>METHOD</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.method.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>BRANCH</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.branch.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>LINE</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.line.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>COMPLEXITY</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.complexity.covered}</minimum>
+                        </limit>
+                      </limits>
+                    </rule>
+                  </rules>
+                  <haltOnFailure>true</haltOnFailure>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>jacoco</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${org.jacoco.verion}</version>
+            <executions>
+              <execution>
+                <id>default-prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>default-report</id>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>default-check</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <rule>
+                      <element>BUNDLE</element>
+                      <limits>
+                        <limit>
+                          <counter>CLASS</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.class.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>INSTRUCTION</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.instruction.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>METHOD</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.method.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>BRANCH</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.branch.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>LINE</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.line.covered}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>COMPLEXITY</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${org.jacoco.complexity.covered}</minimum>
+                        </limit>
+                      </limits>
+                    </rule>
+                  </rules>
+                  <haltOnFailure>false</haltOnFailure>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>fast</id>
+      <properties>
+        <skipTests>true</skipTests>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+      </properties>
     </profile>
   </profiles>
 
@@ -385,6 +486,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <module>gdsc-test-junit4</module>
     <module>gdsc-test-junit5</module>
     <module>gdsc-test-rng</module>
+    <!-- <module>gdsc-test-doc</module> uses profile gdsc-test-doc -->
   </modules>
 
 </project>
