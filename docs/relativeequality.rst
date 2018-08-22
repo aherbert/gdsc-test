@@ -2,10 +2,10 @@
 .. _relativeequality:
 
 Relative Equality
-=====
+=================
 
 Definition
------
+----------
 
 The GDSC Test library contains assertion functionality for relative equality between
 floating point numbers.
@@ -40,7 +40,7 @@ Relative error can be expressed in Java as::
     }
 
 Value around zero
------
+-----------------
 
 Note that relative equality uses the maximum of :math:`a` or :math:`b` to define the scale.
 This produces different results from:
@@ -104,7 +104,7 @@ considered equal::
     }
 
 JUnit Support
------
+-------------
 
 The GDSC Test library contains ``assertEqualsRelative`` and ``assertEqualsRelativeOrAbsolute``
 to complement the standard JUnit ``assertEquals`` function.
@@ -137,13 +137,13 @@ This would not be supported in JUnit without loop constructs::
                                 expected[i] * 1e-3);
 
 JUnit 5
------
+-------
 
 `JUnit 5 <https://junit.org/junit5/>`_ support is within the module ``gdsc-test-junit5``
 that contains the package ``uk.ac.sussex.gdsc.test.junit5``.
 
 JUnit 4
------
+-------
 
 `JUnit 4 <https://junit.org/junit4/>`_ support is within the module ``gdsc-test-junit4``
 that contains the package ``uk.ac.sussex.gdsc.test.junit4``.

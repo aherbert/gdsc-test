@@ -2,14 +2,14 @@
 .. _installation:
 
 Installation
-=====
+============
 
 This package is a library to be used used by other Java programs. It is only
 necessary to perform an install if you are building other packages that depend
 on it.
 
 Installation using Maven
------
+------------------------
 
 .. highlight:: console
 

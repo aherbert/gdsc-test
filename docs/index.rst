@@ -1,5 +1,5 @@
 GDSC Test Documentation
-=====
+=======================
 
 .. image:: https://travis-ci.com/aherbert/gdsc-test.svg?branch=master
     :target: https://travis-ci.com/aherbert/gdsc-test
@@ -8,6 +8,10 @@ GDSC Test Documentation
 .. image:: https://coveralls.io/repos/github/aherbert/gdsc-test/badge.svg?branch=master
     :target: https://coveralls.io/github/aherbert/gdsc-test?branch=master
     :alt: Coverage Status
+
+.. image:: https://readthedocs.org/projects/gdsc-test/badge/?version=latest
+    :target: https://gdsc-test.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
     :target: https://www.gnu.org/licenses/gpl-3.0
@@ -19,12 +23,12 @@ GDSC Test provides utility functionality for writing Java tests including:
 - Dynamic messages implementing ``Supplier<String>``
 - Configurable random seed
 
-:Note: The GDSC Test library works for Java 1.8+
-:Documentation: `On ReadTheDocs <http://gdsc-test.readthedocs.io/en/master>`_
-:GitHub: `On github <https://github.com/aherbert/gdsc-test>`_
+Note: The GDSC Test library works for Java 1.8+.
+
+The code is hosted on `GitHub <https://github.com/aherbert/gdsc-test>`_.
 
 Relative Equality
-====
+=================
 
 Support for relative equality is provided for `JUnit 4 <https://junit.org/junit4/>`_
 and `JUnit 5 <https://junit.org/junit5/>`_, for example::
@@ -43,7 +47,7 @@ and `JUnit 5 <https://junit.org/junit5/>`_, for example::
     }
 
 Dynamic Messages
-=====
+================
 
 Support for dynamic messages using ``Supplier<String>`` suppliers.
 These store updatable arguments to pass to ``String.format(String, Object...)``
@@ -67,7 +71,7 @@ Reports:
     Index: [23][14]
 
 Configurable Random Seed
-=====
+========================
 
 Support for test randomness is provided using a single ``long`` seed::
 
@@ -117,7 +121,7 @@ An example implementation for test randomness is provided using
     }
 
 Modular Design
-=====
+==============
 
 GDSC Test is separated into different packages so that only the desired
 functionality can be included as a project dependency.
@@ -125,14 +129,14 @@ functionality can be included as a project dependency.
 ================================= ===========
 Package                           Description
 ================================= ===========
-``uk.ac.sussex.gdsc.test.utils``  Utilities
+``uk.ac.sussex.gdsc.test.utils``  Utilities for error messages, logging and timing
 ``uk.ac.sussex.gdsc.test.junit5`` JUnit5 assertions and assumptions
 ``uk.ac.sussex.gdsc.test.junit4`` JUnit4 assertions and assumptions
-``uk.ac.sussex.gdsc.test.rng``    Commons RNG
+``uk.ac.sussex.gdsc.test.rng``    Uses Commons RNG as a random source
 ================================= ===========
 
 Contents
-=====
+========
 
 .. toctree::
     :numbered:
@@ -142,7 +146,7 @@ Contents
     relativeequality.rst
 
 Issues
-=====
+======
 
 Please fill bug report in https://github.com/aherbert/gdsc-test/issues.
 
@@ -152,7 +156,7 @@ Please fill bug report in https://github.com/aherbert/gdsc-test/issues.
     changelog.rst
 
 Indices and tables
-=====
+==================
 
 * :ref:`genindex`
 * :ref:`search`
