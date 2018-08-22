@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Package
+ * Genome Damage and Stability Centre Test Utilities
  *
- * The GDSC Test package contains code for use with the JUnit test framework.
+ * Contains utilities for use with JUnit 5.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -902,10 +902,10 @@ public class ExtraAssertionsTest
     public void testAssertObjectArrayEqualsRelativeDoubleThrowsWithNonArrayElements()
     {
         final Object object = new Object();
-        final Object inner1 = new Object[] { object }; 
-        final Object inner2 = new Object[] { object }; 
+        final Object inner1 = new Object[] { object };
+        final Object inner2 = new Object[] { object };
         final Object inner3 = new Object();
-        
+
         Object[] e = new Object[][] { { inner1, inner2 } };
         Object[] o = new Object[][] { { inner1, inner2 } };
         ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
@@ -937,7 +937,7 @@ public class ExtraAssertionsTest
             ExtraAssertions.assertArrayEqualsRelative(o2, e2, relativeError, messageSupplier);
         });
     }
-    
+
     // Non-relative array equals
 
     @Test
@@ -972,7 +972,7 @@ public class ExtraAssertionsTest
         ExtraAssertions.assertArrayEquals(e, o, delta, messageSupplier);
         ExtraAssertions.assertArrayEquals(e, o, delta, nullMessage);
         ExtraAssertions.assertArrayEquals(e, o, delta, nullMessageSupplier);
-        
+
         // At least one of the same element
         final double[] element = new double[] { 1 };
         e = new double[][][] { { element, { 2 } } };
@@ -1175,15 +1175,15 @@ public class ExtraAssertionsTest
             ExtraAssertions.assertArrayEquals(o, e, delta, messageSupplier);
         });
     }
-    
+
     @Test
     public void testAssertObjectArrayEqualsDoubleThrowsWithNonArrayElements()
     {
         final Object object = new Object();
-        final Object inner1 = new Object[] { object }; 
-        final Object inner2 = new Object[] { object }; 
+        final Object inner1 = new Object[] { object };
+        final Object inner2 = new Object[] { object };
         final Object inner3 = new Object();
-        
+
         Object[] e = new Object[][] { { inner1, inner2 } };
         Object[] o = new Object[][] { { inner1, inner2 } };
         final double delta = new Double(1);
@@ -1925,10 +1925,10 @@ public class ExtraAssertionsTest
     public void testAssertObjectArrayEqualsRelativeFloatThrowsWithNonArrayElements()
     {
         final Object object = new Object();
-        final Object inner1 = new Object[] { object }; 
-        final Object inner2 = new Object[] { object }; 
+        final Object inner1 = new Object[] { object };
+        final Object inner2 = new Object[] { object };
         final Object inner3 = new Object();
-        
+
         Object[] e = new Object[][] { { inner1, inner2 } };
         Object[] o = new Object[][] { { inner1, inner2 } };
         ExtraAssertions.assertArrayEqualsRelative(e, o, relativeError);
@@ -1960,7 +1960,7 @@ public class ExtraAssertionsTest
             ExtraAssertions.assertArrayEqualsRelative(o2, e2, relativeError, messageSupplier);
         });
     }
-    
+
     // Non-relative array equals
 
     @Test
@@ -1995,7 +1995,7 @@ public class ExtraAssertionsTest
         ExtraAssertions.assertArrayEquals(e, o, delta, messageSupplier);
         ExtraAssertions.assertArrayEquals(e, o, delta, nullMessage);
         ExtraAssertions.assertArrayEquals(e, o, delta, nullMessageSupplier);
-        
+
         // At least one of the same element
         final float[] element = new float[] { 1 };
         e = new float[][][] { { element, { 2 } } };
@@ -2180,15 +2180,15 @@ public class ExtraAssertionsTest
             ExtraAssertions.assertArrayEquals(o, e, delta, messageSupplier);
         });
     }
-    
+
     @Test
     public void testAssertObjectArrayEqualsFloatThrowsWithNonArrayElements()
     {
         final Object object = new Object();
-        final Object inner1 = new Object[] { object }; 
-        final Object inner2 = new Object[] { object }; 
+        final Object inner1 = new Object[] { object };
+        final Object inner2 = new Object[] { object };
         final Object inner3 = new Object();
-        
+
         Object[] e = new Object[][] { { inner1, inner2 } };
         Object[] o = new Object[][] { { inner1, inner2 } };
         final float delta = new Float(1);

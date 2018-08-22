@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Package
+ * Genome Damage and Stability Centre Test Utilities
  *
- * The GDSC Test package contains code for use with the JUnit test framework.
+ * Contains utilities for use with JUnit 5.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -34,11 +34,13 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 /**
  * {@code @SeededTest} is used to signal that the annotated method is a
- * {@link ParameterizedTest} using an argument of type {@link RandomSeed}. The
- * {@link ArgumentsSource} for the test will use a {@link RandomSeedSource} to
- * provide the seeds. At least one seed will be provided.
+ * {@link org.junit.jupiter.params.ParameterizedTest} using an argument of type
+ * {@link RandomSeed}. The
+ * {@link org.junit.jupiter.params.provider.ArgumentsSource} for the test will
+ * use a {@link RandomSeedSource} to provide the seeds. At least one seed will
+ * be provided.
  * <p>
- * The annotation adds a {@code "seeded"} {@link Tag} and
+ * The annotation adds a {@code "seeded"} <code>@</code>{@link Tag} and
  * <code>@</code>{@link RandomTag}.
  * <p>
  * {@code @SeededTest} may also be used as a meta-annotation in order to create

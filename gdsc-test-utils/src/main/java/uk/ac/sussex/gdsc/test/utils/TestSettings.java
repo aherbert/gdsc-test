@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Package
+ * Genome Damage and Stability Centre Test Utilities
  *
- * The GDSC Test package contains code for use with the JUnit test framework.
+ * Contains utilities for use with test frameworks.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  * <a href="https://maven.apache.org/">Maven</a>:
  *
  * <pre>
- * mvn test -Dgdsc.test.logging=1 -Dgdsc.test.level=2 -Dgdsc.test.seed=12345 -Dgdsc.test.repeats=5
+ * mvn test -Dgdsc.test.level=2 -Dgdsc.test.seed=12345 -Dgdsc.test.repeats=5
  * </pre>
  *
  * Test classes can then be coded to respond to this run-time configuration.
@@ -167,7 +167,7 @@ public class TestSettings {
 
     /**
      * Copied from org.apache.commons.rng.core.util.NumberFactory.
-     * 
+     *
      * @param v Number (high order bits).
      * @param w Number (low order bits).
      * @return a {@code long} value.

@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -29,7 +29,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
 
   <inceptionYear>2018</inceptionYear>
   <issueManagement>
-    <system>GitHub Issues</system>
+    <system>GitHub</system>
     <url>https://github.com/aherbert/gdsc-test/issues</url>
   </issueManagement>
   <ciManagement>
@@ -38,7 +38,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
   </ciManagement>
   <scm>
     <connection>scm:git:git://github.com/aherbert/gdsc-test.git</connection>
-    <developerConnection>scm:git:ssh://github.com:aherbert/gdsc-test.git</developerConnection>
+    <developerConnection>scm:git:ssh://github.com/aherbert/gdsc-test.git</developerConnection>
     <url>https://github.com/aherbert/gdsc-test</url>
   </scm>
 
@@ -72,8 +72,10 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <org.junit.platform.version>1.2.0</org.junit.platform.version>
     <org.junit.version>4.12</org.junit.version>
     <commons.rng.version>1.1</commons.rng.version>
-    <org.jacoco.verion>0.8.1</org.jacoco.verion>
+    <org.jacoco.version>0.8.1</org.jacoco.version>
     <license-maven-plugin.version>1.16</license-maven-plugin.version>
+    <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+    <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <!-- Maven -->
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -82,8 +84,10 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
     <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
     <maven-gpg-plugin>1.6</maven-gpg-plugin>
-    <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
-    <!-- JaCoCo -->
+    <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
+    <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+    <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
+    <!-- JaCoCo Checks -->
     <org.jacoco.class.covered>0.96</org.jacoco.class.covered>
     <org.jacoco.instruction.covered>0.8</org.jacoco.instruction.covered>
     <org.jacoco.method.covered>0.8</org.jacoco.method.covered>
@@ -123,18 +127,49 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <plugins>
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>${maven-assembly-plugin}</version>
+          <version>${maven-assembly-plugin.version}</version>
           <configuration>
             <descriptorRefs>
               <descriptorRef>jar-with-dependencies</descriptorRef>
             </descriptorRefs>
             <archive>
               <manifest>
-                <addClasspath>true</addClasspath>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               </manifest>
             </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${maven-site-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>${maven-project-info-reports-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+          <configuration>
+            <source>${maven.compiler.source}</source>
+            <encoding>UTF-8</encoding>
+            <docencoding>UTF-8</docencoding>
+            <linksource>true</linksource>
+            <notimestamp>true</notimestamp>
+            <links>
+              <link>http://docs.oracle.com/javase/8/docs/api/</link>
+              <link>http://docs.oracle.com/javase/7/docs/api/</link>
+              <link>http://docs.oracle.com/javaee/6/api/</link>
+            </links>
+            <archive>
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              </manifest>
+            </archive>
+            <!-- Enable MathJax -->
+            <additionalparam><![CDATA[${doclint.javadoc.qualifier} ${allowscript.javadoc.qualifier} -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalparam>
           </configuration>
         </plugin>
       </plugins>
@@ -183,9 +218,21 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>${maven-javadoc-plugin.version}</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <docencoding>UTF-8</docencoding>
+          <notimestamp>true</notimestamp>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            </manifest>
+          </archive>
+          <!-- Enable MathJax -->
+          <additionalparam><![CDATA[${doclint.javadoc.qualifier} ${allowscript.javadoc.qualifier} -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalparam>
+        </configuration>
         <executions>
           <execution>
-            <id>attach-javadocs</id>
             <goals>
               <goal>jar</goal>
             </goals>
@@ -210,11 +257,55 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${org.jacoco.version}</version>
         <reportSets>
           <reportSet>
             <reports>
               <!-- select non-aggregate reports -->
               <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>${maven-changes-plugin.version}</version>
+        <configuration>
+          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>changes-report</report>
+              <report>github-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <!-- NOTE: javadoc config must also be set under <build> -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <docencoding>UTF-8</docencoding>
+          <notimestamp>true</notimestamp>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            </manifest>
+          </archive>
+          <!-- Enable MathJax -->
+          <additionalparam><![CDATA[${doclint.javadoc.qualifier} ${allowscript.javadoc.qualifier} -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalparam>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <id>default</id>
+            <reports>
+              <report>javadoc</report>
+              <report>aggregate</report>
             </reports>
           </reportSet>
         </reportSets>
@@ -322,7 +413,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>${org.jacoco.verion}</version>
+            <version>${org.jacoco.version}</version>
             <executions>
               <execution>
                 <id>default-prepare-agent</id>
@@ -341,8 +432,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
                 <goals>
                   <goal>check</goal>
                 </goals>
-                <!-- Currently the same as the jacoco profile but halts on 
-                  failure -->
+                <!-- Currently the same as the jacoco profile but halts on failure -->
                 <configuration>
                   <rules>
                     <rule>
@@ -396,7 +486,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>${org.jacoco.verion}</version>
+            <version>${org.jacoco.version}</version>
             <executions>
               <execution>
                 <id>default-prepare-agent</id>

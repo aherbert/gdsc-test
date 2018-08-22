@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Package
+ * Genome Damage and Stability Centre Test Utilities
  *
- * The GDSC Test package contains code for use with the JUnit test framework.
+ * Contains utilities for use with JUnit 4.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -34,7 +34,7 @@
  * <li>Additional assert functions for floating point equality using relative
  * error (in contrast to the JUnit standard of absolute error)
  * </ul>
- * 
+ *
  * @see <a href="https://junit.org/junit4/">JUnit 4</a>
  * @since 1.0.0
  */

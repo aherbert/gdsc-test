@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Package
+ * Genome Damage and Stability Centre Test Utilities
  *
- * The GDSC Test package contains code for use with the JUnit test framework.
+ * Contains utilities for use with JUnit 5.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -61,7 +61,7 @@ public class ExtraAssertArrayEqualsTest
         @SuppressWarnings("serial")
         Object anonymous = new java.io.Serializable()
         {
-            // Do nothing 
+            // Do nothing
         };
         String expected = this.getClass().getName() + "$1";
         Assertions.assertEquals(expected, ExtraAssertArrayEquals.getClassName(anonymous));

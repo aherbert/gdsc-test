@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Package
+ * Genome Damage and Stability Centre Test Utilities
  *
- * The GDSC Test package contains code for use with the JUnit test framework.
+ * Contains utilities for use with JUnit 5.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Tag;
  * custom <em>composed annotation</em> that inherits the semantics of
  * {@code @SpeedTag}.
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ ElementType.ANNOTATION_TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Tag("speed")
 public @interface SpeedTag {

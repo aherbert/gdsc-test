@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Package
+ * Genome Damage and Stability Centre Test Utilities
  *
- * The GDSC Test package contains code for use with the JUnit test framework.
+ * Contains utilities for use with test frameworks.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -39,13 +39,11 @@ public class IndexSupplierTest {
     public void testConstructer() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             @SuppressWarnings("unused")
-            final
-            IndexSupplier s = new IndexSupplier(0);
+            final IndexSupplier s = new IndexSupplier(0);
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             @SuppressWarnings("unused")
-            final
-            IndexSupplier s = new IndexSupplier(-1);
+            final IndexSupplier s = new IndexSupplier(-1);
         });
         for (int dim = 1; dim <= 3; dim++) {
             IndexSupplier s = new IndexSupplier(dim);
@@ -144,5 +142,26 @@ public class IndexSupplierTest {
         Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
             s.set(2, 0);
         });
+    }
+
+    @Test
+    public void demoIndexSupplier() {
+        final int dimensions = 2;
+        final IndexSupplier s = new IndexSupplier(dimensions);
+        s.setMessagePrefix("Index count: ");
+        s.setFormat("(", ")");
+        try {
+            int c = 0;
+            for (int i = 0; i < 3; i++) {
+                s.set(0, i);
+                for (int j = 0; j < 3; j++) {
+                    // Fails at message "Index count: (2)(1)"
+                    Assertions.assertTrue(c++ < 7, s.set(1, j));
+                }
+            }
+            Assertions.fail("Should not reach here!");
+        } catch (AssertionError e) {
+            Assertions.assertTrue(e.getMessage().startsWith("Index count: (2)(1)"));
+        }
     }
 }

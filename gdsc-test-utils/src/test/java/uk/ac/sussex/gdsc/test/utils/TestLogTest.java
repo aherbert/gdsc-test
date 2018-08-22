@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Package
+ * Genome Damage and Stability Centre Test Utilities
  *
- * The GDSC Test package contains code for use with the JUnit test framework.
+ * Contains utilities for use with test frameworks.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -51,7 +51,7 @@ public class TestLogTest {
     public static void afterAll() {
         logger = null;
     }
-    
+
     @Test
     public void canGetStaceTraceElement() {
         final StackTraceElement[] e = new Throwable().getStackTrace();
