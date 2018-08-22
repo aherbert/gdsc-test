@@ -112,10 +112,12 @@ to complement the standard JUnit ``assertEquals`` function.
 This removes the need to use code such as::
 
     double expected, actual;
+    // equal within relative delta of expected
     Assertions.assertEquals(expected, actual, expected * 1e-3);
 
 Replacing it with::
 
+    // equal within relative error
     ExtraAssertions.assertEqualsRelative(expected, actual, 1e-3);
 
 The support extends to using arrays::
@@ -129,7 +131,8 @@ and object arrays that are nested ``double[]`` or ``float[]`` primitive arrays::
     Object[] actual = new double[x][y][z];
     ExtraAssertions.assertArrayEqualsRelative(expected, actual, 1e-3);
 
-This would not be supported in JUnit without loop constructs::
+Note that a relative delta for arrays is not natively supported in JUnit
+without loop constructs::
 
     double[] expected, actual;
     for (int i=0; i < expected.length; i++)

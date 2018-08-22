@@ -92,6 +92,7 @@ Support for seeded tests is provided using `JUnit 5 <https://junit.org/junit5/>`
     import uk.ac.sussex.gdsc.test.junit5.SeededTest;
 
     // A repeated parameterised test with run-time configurable seed
+    // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
         long seed = seed.getSeed();
@@ -114,6 +115,7 @@ An example implementation for test randomness is provided using
     import uk.ac.sussex.gdsc.test.rng.RNGFactory;
 
     // A repeated parameterised test with run-time configurable seed
+    // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
         UniformRandomProvider rng = RNGFactory.create(seed.getSeed());
