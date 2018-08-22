@@ -277,7 +277,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
         <reportSets>
           <reportSet>
             <reports>
-              <report>changes-report</report>
               <report>github-report</report>
             </reports>
           </reportSet>

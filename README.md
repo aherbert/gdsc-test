@@ -12,7 +12,7 @@ Maven Installation
 
 This package is a library to be used used by other Java programs. It is only 
 necessary to perform an install if you are building other packages that depend
-on it. 
+on it.
 
 1. Clone the repository
 
@@ -23,8 +23,8 @@ on it.
         cd gdsc-test
         mvn install
 
-	This will produce a gdsc-test-[VERSION].jar file in the local Maven
-	repository. You can now build the other packages that depend on this code.
+    This will produce a gdsc-test-[package]-[VERSION].jar file in the local Maven
+    repository. You can now build the other packages that depend on this code.
 
 
 Legal

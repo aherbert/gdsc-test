@@ -1,5 +1,6 @@
 .classpath
 .project
+.pydevproject
 .settings
 .checkstyle
 target
@@ -13,3 +14,5 @@ site-content
 *~
 /.externalToolBuilders/
 /maven-eclipse.xml
+# Sphinx documentation
+docs/_build/
