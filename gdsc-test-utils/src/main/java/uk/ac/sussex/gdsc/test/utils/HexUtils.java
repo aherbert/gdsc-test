@@ -67,9 +67,9 @@ public class HexUtils {
 
   /**
    * Encode the bytes as hex characters.
-   * 
+   *
    * <p>Output hex characters are [0-9a-f].
-   * 
+   *
    * <p>If the bytes are null then an empty array is returned.
    *
    * @param bytes the bytes
@@ -92,9 +92,9 @@ public class HexUtils {
 
   /**
    * Encode the bytes as a hex string.
-   * 
+   *
    * <p>Output hex characters are [0-9a-f].
-   * 
+   *
    * <p>If the bytes are null then an empty string is returned.
    *
    * @param bytes the bytes
@@ -106,9 +106,9 @@ public class HexUtils {
 
   /**
    * Decode the hex char sequence into bytes. Hex characters are [0-9A-Fa-f].
-   * 
+   *
    * <p>If the sequence is not a valid hex character then an empty array is returned.
-   * 
+   *
    * <p>If the sequence is an odd length then the final hex character is assumed to be '0'.
    *
    * @param string the string
