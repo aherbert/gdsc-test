@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils.functions;
 
 import java.util.IllegalFormatConversionException;
@@ -32,24 +33,24 @@ import uk.ac.sussex.gdsc.test.utils.functions.FunctionUtils;
 
 @SuppressWarnings("javadoc")
 public class FunctionUtilsTest {
-    @Test
-    public void testGetSupplierUsingArrayOfParameters() {
-        final String message = FunctionUtils.getSupplier("%d %.1f", 1, 2.3).get();
-        Assertions.assertEquals("1 2.3", message);
-    }
+  @Test
+  public void testGetSupplierUsingArrayOfParameters() {
+    final String message = FunctionUtils.getSupplier("%d %.1f", 1, 2.3).get();
+    Assertions.assertEquals("1 2.3", message);
+  }
 
-    @Test
-    public void testGetSupplierUsingSingleObjectArray() {
-        final Object[] args = new Object[] { 1, 2.3 };
-        final String message = FunctionUtils.getSupplier("%d %.1f", args).get();
-        Assertions.assertEquals("1 2.3", message);
-    }
+  @Test
+  public void testGetSupplierUsingSingleObjectArray() {
+    final Object[] args = new Object[] {1, 2.3};
+    final String message = FunctionUtils.getSupplier("%d %.1f", args).get();
+    Assertions.assertEquals("1 2.3", message);
+  }
 
-    @Test
-    public void testGetSupplierUsingSingleObjectArrayAndArrayOfParametersThrows() {
-        final Object[] args = new Object[] { 1, 2.3 };
-        Assertions.assertThrows(IllegalFormatConversionException.class, () -> {
-            FunctionUtils.getSupplier("%d %f %d", args, 3).get();
-        });
-    }
+  @Test
+  public void testGetSupplierUsingSingleObjectArrayAndArrayOfParametersThrows() {
+    final Object[] args = new Object[] {1, 2.3};
+    Assertions.assertThrows(IllegalFormatConversionException.class, () -> {
+      FunctionUtils.getSupplier("%d %f %d", args, 3).get();
+    });
+  }
 }

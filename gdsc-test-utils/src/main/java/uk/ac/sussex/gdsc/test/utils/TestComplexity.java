@@ -21,33 +21,60 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 /**
  * The test complexity. Lower complexity tests are assumed to be faster.
  */
 public enum TestComplexity {
-    //@formatter:off
+  /** No complexity. */
+  NONE {
+    @Override
+    public int getValue() {
+      return 0;
+    }
+  },
+  /** Low complexity. */
+  LOW {
+    @Override
+    public int getValue() {
+      return 1;
+    }
+  },
+  /** Medium complexity. */
+  MEDIUM {
+    @Override
+    public int getValue() {
+      return 2;
+    }
+  },
+  /** High complexity. */
+  HIGH {
+    @Override
+    public int getValue() {
+      return 3;
+    }
+  },
+  /** Very high complexity. */
+  VERY_HIGH {
+    @Override
+    public int getValue() {
+      return 4;
+    }
+  },
+  /** Maximum. Used to run any test that checks complexity settings */
+  MAXIMUM {
+    @Override
+    public int getValue() {
+      return Integer.MAX_VALUE;
+    }
+  };
 
-	/**  No complexity. */
-	NONE { @Override public int getValue() { return 0; }},
-	/**  Low complexity. */
-	LOW { @Override	public int getValue() {	return 1; }},
-	/**  Medium complexity. */
-	MEDIUM { @Override	public int getValue() { return 2; }},
-	/**  High complexity. */
-	HIGH { @Override public int getValue() { return 3; }},
-	/**  Very high complexity. */
-	VERY_HIGH {	@Override public int getValue()	{ return 4;	}},
-	/** Maximum. Used to run any test that checks complexity settings */
-	MAXIMUM { @Override public int getValue() { return Integer.MAX_VALUE; }};
-
-	//@formatter:on
-
-    /**
-     * Gets the value.
-     *
-     * @return the value
-     */
-    public abstract int getValue();
+  /**
+   * Gets the value.
+   *
+   * @return the value
+   */
+  public abstract int getValue();
 }

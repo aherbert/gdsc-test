@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.function.Function;
@@ -32,30 +33,30 @@ import uk.ac.sussex.gdsc.test.utils.DataCache;
 
 @SuppressWarnings("javadoc")
 public class DataCacheTest {
-    private static class TestProvider implements Function<Integer, Integer> {
-        int calls = 0;
+  private static class TestProvider implements Function<Integer, Integer> {
+    int calls = 0;
 
-        @Override
-        public Integer apply(Integer t) {
-            calls++;
-            return new Integer(t + 1);
-        }
+    @Override
+    public Integer apply(Integer t) {
+      calls++;
+      return new Integer(t + 1);
     }
+  }
 
-    @Test
-    public void canCacheData() {
-        int value;
-        TestProvider provider = new TestProvider();
-        DataCache<Integer, Integer> cache = new DataCache<>();
-        value = cache.getOrComputeIfAbsent(1, provider);
-        Assertions.assertEquals(2, value);
-        Assertions.assertEquals(1, provider.calls);
-        value = cache.getOrComputeIfAbsent(1, provider);
-        Assertions.assertEquals(2, value);
-        Assertions.assertEquals(1, provider.calls); // Not called again
-        cache.clear();
-        value = cache.getOrComputeIfAbsent(1, provider);
-        Assertions.assertEquals(2, value);
-        Assertions.assertEquals(2, provider.calls); // Called again
-    }
+  @Test
+  public void canCacheData() {
+    int value;
+    final TestProvider provider = new TestProvider();
+    final DataCache<Integer, Integer> cache = new DataCache<>();
+    value = cache.getOrComputeIfAbsent(1, provider);
+    Assertions.assertEquals(2, value);
+    Assertions.assertEquals(1, provider.calls);
+    value = cache.getOrComputeIfAbsent(1, provider);
+    Assertions.assertEquals(2, value);
+    Assertions.assertEquals(1, provider.calls); // Not called again
+    cache.clear();
+    value = cache.getOrComputeIfAbsent(1, provider);
+    Assertions.assertEquals(2, value);
+    Assertions.assertEquals(2, provider.calls); // Called again
+  }
 }

@@ -21,77 +21,78 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.function.Supplier;
 
 /**
  * Defines a named task that was run.
- * <p>
- * This class is used for reporting and has no effect when passed to
+ *
+ * <p>This class is used for reporting and has no effect when passed to
  * {@link TimingService#execute(TimingTask)}.
  */
 public class NamedTimingTask extends BaseTimingTask {
-    private Supplier<String> supplierName;
+  private Supplier<String> supplierName;
 
-    /**
-     * Instantiates a new named timing task.
-     *
-     * @param name the name
-     */
-    public NamedTimingTask(String name) {
-        super(name);
-    }
+  /**
+   * Instantiates a new named timing task.
+   *
+   * @param name the name
+   */
+  public NamedTimingTask(String name) {
+    super(name);
+  }
 
-    /**
-     * Instantiates a new named timing task.
-     *
-     * @param name the name
-     */
-    public NamedTimingTask(Supplier<String> name) {
-        super("");
-        this.supplierName = name;
-    }
+  /**
+   * Instantiates a new named timing task.
+   *
+   * @param name the name
+   */
+  public NamedTimingTask(Supplier<String> name) {
+    super("");
+    this.supplierName = name;
+  }
 
-    @Override
-    public String getName() {
-        // Format the name on demand
-        final Supplier<String> supplierName = this.supplierName;
-        if (supplierName != null) {
-            name = supplierName.get();
-            this.supplierName = null;
-        }
-        return super.getName();
+  @Override
+  public String getName() {
+    // Format the name on demand
+    final Supplier<String> supplierName = this.supplierName;
+    if (supplierName != null) {
+      name = supplierName.get();
+      this.supplierName = null;
     }
+    return super.getName();
+  }
 
-    @Override
-    public int getSize() {
-        return 0;
-    }
+  @Override
+  public int getSize() {
+    return 0;
+  }
 
-    /**
-     * This should not be called as the task has no data.
-     *
-     * @param i the i
-     * @return the data
-     * @throws IllegalStateException If the method is called
-     * @see uk.ac.sussex.gdsc.test.utils.TimingTask#getData(int)
-     */
-    @Override
-    public Object getData(int i) throws IllegalStateException {
-        throw new IllegalStateException("This task has no data");
-    }
+  /**
+   * This should not be called as the task has no data.
+   *
+   * @param index the index
+   * @return the data
+   * @throws IllegalStateException If the method is called
+   * @see uk.ac.sussex.gdsc.test.utils.TimingTask#getData(int)
+   */
+  @Override
+  public Object getData(int index) throws IllegalStateException {
+    throw new IllegalStateException("This task has no data");
+  }
 
-    /**
-     * This should not be called as the task has no data.
-     *
-     * @param data the data
-     * @return the data
-     * @throws IllegalStateException If the method is called
-     * @see uk.ac.sussex.gdsc.test.utils.TimingTask#run(java.lang.Object)
-     */
-    @Override
-    public Object run(Object data) {
-        throw new IllegalStateException("This task has no data");
-    }
+  /**
+   * This should not be called as the task has no data.
+   *
+   * @param data the data
+   * @return the data
+   * @throws IllegalStateException If the method is called
+   * @see uk.ac.sussex.gdsc.test.utils.TimingTask#run(java.lang.Object)
+   */
+  @Override
+  public Object run(Object data) {
+    throw new IllegalStateException("This task has no data");
+  }
 }

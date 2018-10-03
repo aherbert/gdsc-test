@@ -21,41 +21,42 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils.functions;
 
 /**
- * Supply a formatted message using the {@link String#format(String, Object...)}
- * function with an array of arguments.
- * <p>
- * This is a base class to allow dynamic update of a message supplier for use in
- * messages.
+ * Supply a formatted message using the {@link String#format(String, Object...)} function with an
+ * array of arguments.
+ *
+ * <p>This is a base class to allow dynamic update of a message supplier for use in messages.
  */
 public abstract class ArrayFormatSupplier extends FormatSupplier {
 
-    /** The size. */
-    private final int size;
+  /** The size. */
+  private final int size;
 
-    /**
-     * Constructs a new instance of this class.
-     *
-     * @param format the format
-     * @param size   the size
-     * @throws IllegalArgumentException If the format is null or empty, or size if
-     *                                  not strictly positive
-     */
-    public ArrayFormatSupplier(String format, int size) throws IllegalArgumentException {
-        super(format);
-        if (size < 1)
-            throw new IllegalArgumentException(size + " < 1");
-        this.size = size;
+  /**
+   * Constructs a new instance of this class.
+   *
+   * @param format the format
+   * @param size the size
+   * @throws IllegalArgumentException If the format is null or empty, or size if not strictly
+   *         positive
+   */
+  public ArrayFormatSupplier(String format, int size) throws IllegalArgumentException {
+    super(format);
+    if (size < 1) {
+      throw new IllegalArgumentException(size + " < 1");
     }
+    this.size = size;
+  }
 
-    /**
-     * Gets the size of the array.
-     *
-     * @return the size
-     */
-    public int getSize() {
-        return size;
-    }
+  /**
+   * Gets the size of the array.
+   *
+   * @return the size
+   */
+  public int getSize() {
+    return size;
+  }
 }

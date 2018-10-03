@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.Arrays;
@@ -53,14 +54,14 @@ public class HexUtilsTest {
 
   @Test
   public void testEncode() {
-    UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
+    final UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
     final boolean toLowerCase = true;
     for (int i = 1; i < 20; i++) {
       final byte[] bytes = new byte[i];
       for (int j = 0; j < 5; j++) {
         rng.nextBytes(bytes);
-        String expected = Hex.encodeHexString(bytes, toLowerCase);
-        String actual = HexUtils.encodeHexString(bytes);
+        final String expected = Hex.encodeHexString(bytes, toLowerCase);
+        final String actual = HexUtils.encodeHexString(bytes);
         Assertions.assertEquals(expected, actual, "Bad encoding");
       }
     }
@@ -68,7 +69,7 @@ public class HexUtilsTest {
 
   @Test
   public void testDecode() {
-    UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
+    final UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
     final boolean toLowerCase = true;
     /** Output Hex characters. */
     final char[] HEX_DIGITS =
@@ -77,21 +78,21 @@ public class HexUtilsTest {
       final byte[] bytes = new byte[i];
       for (int j = 0; j < 5; j++) {
         rng.nextBytes(bytes);
-        String hex = Hex.encodeHexString(bytes, toLowerCase);
-        byte[] actual = HexUtils.decodeHex(hex);
+        final String hex = Hex.encodeHexString(bytes, toLowerCase);
+        final byte[] actual = HexUtils.decodeHex(hex);
         Assertions.assertArrayEquals(bytes, actual, "Bad decoding");
 
         // Test with odd length string. It should be the same as if it had a '0' on the end.
-        StringBuilder sb = new StringBuilder(hex);
+        final StringBuilder sb = new StringBuilder(hex);
         sb.append(HEX_DIGITS[rng.nextInt(16)]);
 
-        byte[] padded = HexUtils.decodeHex(sb);
+        final byte[] padded = HexUtils.decodeHex(sb);
         sb.append('0');
-        byte[] unpadded = HexUtils.decodeHex(sb);
+        final byte[] unpadded = HexUtils.decodeHex(sb);
         Assertions.assertArrayEquals(padded, unpadded, "Bad padding");
 
         // Check against original
-        byte[] clipped = Arrays.copyOf(padded, bytes.length);
+        final byte[] clipped = Arrays.copyOf(padded, bytes.length);
         Assertions.assertArrayEquals(bytes, clipped, "Bad decoding after padding");
       }
     }

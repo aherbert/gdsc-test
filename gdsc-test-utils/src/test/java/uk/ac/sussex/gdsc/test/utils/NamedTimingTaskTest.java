@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.function.Supplier;
@@ -33,24 +34,24 @@ import uk.ac.sussex.gdsc.test.utils.TimingTask;
 
 @SuppressWarnings("javadoc")
 public class NamedTimingTaskTest {
-    @Test
-    public void canConstruct() {
-        final String name = "name";
-        final TimingTask task = new NamedTimingTask(name);
-        Assertions.assertEquals(name, task.getName());
-        Assertions.assertEquals(0, task.getSize());
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            task.getData(0);
-        });
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            task.run(null);
-        });
-        final Supplier<String> supplier = () -> String.format("Name = %s", "this");
-        final TimingTask task2 = new NamedTimingTask(supplier);
-        Assertions.assertEquals(supplier.get(), task2.getName());
-        Assertions.assertEquals(0, task2.getSize());
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            task2.getData(0);
-        });
-    }
+  @Test
+  public void canConstruct() {
+    final String name = "name";
+    final TimingTask task = new NamedTimingTask(name);
+    Assertions.assertEquals(name, task.getName());
+    Assertions.assertEquals(0, task.getSize());
+    Assertions.assertThrows(IllegalStateException.class, () -> {
+      task.getData(0);
+    });
+    Assertions.assertThrows(IllegalStateException.class, () -> {
+      task.run(null);
+    });
+    final Supplier<String> supplier = () -> String.format("Name = %s", "this");
+    final TimingTask task2 = new NamedTimingTask(supplier);
+    Assertions.assertEquals(supplier.get(), task2.getName());
+    Assertions.assertEquals(0, task2.getSize());
+    Assertions.assertThrows(IllegalStateException.class, () -> {
+      task2.getData(0);
+    });
+  }
 }

@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import org.junit.jupiter.api.Assertions;
@@ -31,29 +32,29 @@ import uk.ac.sussex.gdsc.test.utils.TimingTask;
 
 @SuppressWarnings("javadoc")
 public class BaseTimingTaskTest {
-    @Test
-    public void canConstruct() {
-        final String name = "name";
-        final TimingTask task = new BaseTimingTask(name) {
-            @Override
-            public int getSize() {
-                return 0;
-            }
+  @Test
+  public void canConstruct() {
+    final String name = "name";
+    final TimingTask task = new BaseTimingTask(name) {
+      @Override
+      public int getSize() {
+        return 0;
+      }
 
-            @Override
-            public Object getData(int i) {
-                return null;
-            }
+      @Override
+      public Object getData(int i) {
+        return null;
+      }
 
-            @Override
-            public Object run(Object data) {
-                return null;
-            }
-        };
-        Assertions.assertEquals(name, task.getName());
-        Assertions.assertEquals(0, task.getSize());
-        // Just test the check method can be called.
-        // It is an empty implementation in the abstract class.
-        task.check(0, null);
-    }
+      @Override
+      public Object run(Object data) {
+        return null;
+      }
+    };
+    Assertions.assertEquals(name, task.getName());
+    Assertions.assertEquals(0, task.getSize());
+    // Just test the check method can be called.
+    // It is an empty implementation in the abstract class.
+    task.check(0, null);
+  }
 }

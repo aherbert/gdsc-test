@@ -21,53 +21,53 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils.functions;
 
 import java.util.function.Supplier;
 
 /**
- * Supply a formatted message using the {@link String#format(String, Object...)}
- * function.
- * <p>
- * This is a base class to allow dynamic update of a message supplier for use in
- * messages.
+ * Supply a formatted message using the {@link String#format(String, Object...)} function.
+ *
+ * <p>This is a base class to allow dynamic update of a message supplier for use in messages.
  */
 public abstract class FormatSupplier implements Supplier<String> {
 
-    /** The message format. */
-    private final String format;
+  /** The message format. */
+  private final String format;
 
-    /**
-     * Constructs a new instance of this class.
-     *
-     * @param format the format
-     * @throws IllegalArgumentException If the format is null or empty
-     */
-    public FormatSupplier(String format) throws IllegalArgumentException {
-        if (format == null || format.length() == 0)
-            throw new IllegalArgumentException("Format is null or empty");
-        this.format = format;
+  /**
+   * Constructs a new instance of this class.
+   *
+   * @param format the format
+   * @throws IllegalArgumentException If the format is null or empty
+   */
+  public FormatSupplier(String format) throws IllegalArgumentException {
+    if (format == null || format.length() == 0) {
+      throw new IllegalArgumentException("Format is null or empty");
     }
+    this.format = format;
+  }
 
-    /**
-     * Gets a message consisting of:
-     *
-     * <pre>
-     * String.format(format, getArgs());
-     * </pre>
-     *
-     * @see java.util.function.Supplier#get()
-     * @see #getArgs()
-     */
-    @Override
-    public String get() {
-        return String.format(format, getArgs());
-    }
+  /**
+   * Gets a message consisting of:
+   *
+   * <pre>
+   * String.format(format, getArgs());
+   * </pre>
+   *
+   * @see java.util.function.Supplier#get()
+   * @see #getArgs()
+   */
+  @Override
+  public String get() {
+    return String.format(format, getArgs());
+  }
 
-    /**
-     * Gets the arguments for the {@link String#format(String, Object...)} function.
-     *
-     * @return the arguments
-     */
-    public abstract Object[] getArgs();
+  /**
+   * Gets the arguments for the {@link String#format(String, Object...)} function.
+   *
+   * @return the arguments
+   */
+  public abstract Object[] getArgs();
 }

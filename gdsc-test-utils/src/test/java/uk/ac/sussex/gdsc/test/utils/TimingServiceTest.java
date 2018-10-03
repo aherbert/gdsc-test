@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
@@ -36,296 +37,296 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
 public class TimingServiceTest {
-    private static Logger logger;
+  private static Logger logger;
 
-    @BeforeAll
-    public static void beforeAll() {
-        logger = Logger.getLogger(TimingServiceTest.class.getName());
+  @BeforeAll
+  public static void beforeAll() {
+    logger = Logger.getLogger(TimingServiceTest.class.getName());
+  }
+
+  @AfterAll
+  public static void afterAll() {
+    logger = null;
+  }
+
+  @Test
+  public void canConstruct() {
+    TimingService ts = new TimingService();
+    Assertions.assertNotNull(ts);
+    Assertions.assertFalse(0 == ts.getRuns());
+    Assertions.assertEquals(0, ts.getSize());
+    ts = new TimingService(10);
+    Assertions.assertNotNull(ts);
+    Assertions.assertEquals(10, ts.getRuns());
+    Assertions.assertEquals(0, ts.getSize());
+  }
+
+  private static class LoggingTimingTask implements TimingTask {
+    Object[] in = new Object[] {new Object(), new Object()};
+    Object[] out = new Object[] {new Object(), new Object()};
+
+    int runCounter = 0;
+    int checkCounter = 0;
+    String name;
+
+    LoggingTimingTask(String name) {
+      this.name = name;
     }
 
-    @AfterAll
-    public static void afterAll() {
-        logger = null;
+    @Override
+    public int getSize() {
+      return in.length;
     }
 
-    @Test
-    public void canConstruct() {
-        TimingService ts = new TimingService();
-        Assertions.assertNotNull(ts);
-        Assertions.assertFalse(0 == ts.getRuns());
-        Assertions.assertEquals(0, ts.getSize());
-        ts = new TimingService(10);
-        Assertions.assertNotNull(ts);
-        Assertions.assertEquals(10, ts.getRuns());
-        Assertions.assertEquals(0, ts.getSize());
+    @Override
+    public Object getData(int i) {
+      return in[i];
     }
 
-    private static class LoggingTimingTask implements TimingTask {
-        Object[] in = new Object[] { new Object(), new Object() };
-        Object[] out = new Object[] { new Object(), new Object() };
-
-        int runCounter = 0;
-        int checkCounter = 0;
-        String name;
-
-        LoggingTimingTask(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public int getSize() {
-            return in.length;
-        }
-
-        @Override
-        public Object getData(int i) {
-            return in[i];
-        }
-
-        @Override
-        public Object run(Object data) {
-            int index = runCounter++ % in.length;
-            return out[index];
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        @Override
-        public void check(int i, Object result) {
-            int index = checkCounter++ % in.length;
-            Assertions.assertEquals(out[index], result);
-        }
+    @Override
+    public Object run(Object data) {
+      final int index = runCounter++ % in.length;
+      return out[index];
     }
 
-    @Test
-    public void canRunTasks() {
-        TimingService ts = new TimingService();
-        LoggingTimingTask tt1 = new LoggingTimingTask("task1");
-        LoggingTimingTask tt2 = new LoggingTimingTask("task2");
-        ts.execute(tt1, false);
-        ts.execute(tt2, true);
-        Assertions.assertEquals(2, ts.getSize());
-        int expectedRuns = ts.getRuns() * tt1.getSize();
-        Assertions.assertEquals(expectedRuns, tt1.runCounter);
-        Assertions.assertEquals(0, tt1.checkCounter);
-        Assertions.assertEquals(expectedRuns, tt2.runCounter);
-        Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
-        ts.repeat();
-        Assertions.assertEquals(4, ts.getSize());
-        Assertions.assertEquals(expectedRuns * 2, tt1.runCounter);
-        Assertions.assertEquals(0, tt1.checkCounter);
-        Assertions.assertEquals(expectedRuns * 2, tt2.runCounter);
-        Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
-        ts.repeat(1);
-        Assertions.assertEquals(5, ts.getSize());
-        Assertions.assertEquals(expectedRuns * 3, tt1.runCounter);
-        Assertions.assertEquals(0, tt1.checkCounter);
-        Assertions.assertEquals(expectedRuns * 2, tt2.runCounter);
-        Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
-        // Check get() can use negative index
-        int size = ts.getSize();
-        for (int i = 0; i < size; i++) {
-            TimingResult r1 = ts.get(i);
-            TimingResult r2 = ts.get(-(size - i));
-            Assertions.assertSame(r1, r2);
-        }
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            ts.get(size);
-        });
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            ts.get(-(size + 1));
-        });
-        ts.clearResults();
+    @Override
+    public String getName() {
+      return name;
     }
 
-    private static class SleepTimingTask extends BaseTimingTask {
-        Object in = new Object();
-        Object out = new Object();
+    @Override
+    public void check(int i, Object result) {
+      final int index = checkCounter++ % in.length;
+      Assertions.assertEquals(out[index], result);
+    }
+  }
 
-        long millis;
+  @Test
+  public void canRunTasks() {
+    final TimingService ts = new TimingService();
+    final LoggingTimingTask tt1 = new LoggingTimingTask("task1");
+    final LoggingTimingTask tt2 = new LoggingTimingTask("task2");
+    ts.execute(tt1, false);
+    ts.execute(tt2, true);
+    Assertions.assertEquals(2, ts.getSize());
+    final int expectedRuns = ts.getRuns() * tt1.getSize();
+    Assertions.assertEquals(expectedRuns, tt1.runCounter);
+    Assertions.assertEquals(0, tt1.checkCounter);
+    Assertions.assertEquals(expectedRuns, tt2.runCounter);
+    Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
+    ts.repeat();
+    Assertions.assertEquals(4, ts.getSize());
+    Assertions.assertEquals(expectedRuns * 2, tt1.runCounter);
+    Assertions.assertEquals(0, tt1.checkCounter);
+    Assertions.assertEquals(expectedRuns * 2, tt2.runCounter);
+    Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
+    ts.repeat(1);
+    Assertions.assertEquals(5, ts.getSize());
+    Assertions.assertEquals(expectedRuns * 3, tt1.runCounter);
+    Assertions.assertEquals(0, tt1.checkCounter);
+    Assertions.assertEquals(expectedRuns * 2, tt2.runCounter);
+    Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
+    // Check get() can use negative index
+    final int size = ts.getSize();
+    for (int i = 0; i < size; i++) {
+      final TimingResult r1 = ts.get(i);
+      final TimingResult r2 = ts.get(-(size - i));
+      Assertions.assertSame(r1, r2);
+    }
+    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+      ts.get(size);
+    });
+    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+      ts.get(-(size + 1));
+    });
+    ts.clearResults();
+  }
 
-        SleepTimingTask(String name, long millis) {
-            super(name);
-            this.millis = millis;
-        }
+  private static class SleepTimingTask extends BaseTimingTask {
+    Object in = new Object();
+    Object out = new Object();
 
-        @Override
-        public int getSize() {
-            return 1;
-        }
+    long millis;
 
-        @Override
-        public Object getData(int i) {
-            return in;
-        }
-
-        @Override
-        public Object run(Object data) {
-            try {
-                Thread.sleep(millis);
-            } catch (InterruptedException e) {
-                Assertions.fail("Cannot sleep in timing task: " + e.getMessage());
-            }
-            return out;
-        }
+    SleepTimingTask(String name, long millis) {
+      super(name);
+      this.millis = millis;
     }
 
-    @Test
-    public void canCheckTasks() {
-        TimingService ts = new TimingService();
-        LoggingTimingTask tt1 = new LoggingTimingTask("task1");
-        LoggingTimingTask tt2 = new LoggingTimingTask("task2");
-        ts.execute(tt1, false);
-        ts.execute(tt2, false);
-        Assertions.assertEquals(2, ts.getSize());
-        int expectedRuns = ts.getRuns() * tt1.getSize();
-        Assertions.assertEquals(expectedRuns, tt1.runCounter);
-        Assertions.assertEquals(0, tt1.checkCounter);
-        Assertions.assertEquals(expectedRuns, tt2.runCounter);
-        Assertions.assertEquals(0, tt2.checkCounter);
-
-        // Check will only run the task once
-        ts.check();
-        Assertions.assertEquals(2, ts.getSize());
-        Assertions.assertEquals(expectedRuns + tt1.getSize(), tt1.runCounter);
-        Assertions.assertEquals(tt1.getSize(), tt1.checkCounter);
-        Assertions.assertEquals(expectedRuns + tt2.getSize(), tt2.runCounter);
-        Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
-
-        // Static method
-        TimingService.check(tt1);
-        Assertions.assertEquals(expectedRuns + 2 * tt1.getSize(), tt1.runCounter);
-        Assertions.assertEquals(tt1.getSize() * 2, tt1.checkCounter);
+    @Override
+    public int getSize() {
+      return 1;
     }
 
-    @Test
-    public void canGetReport() {
-        TimingService ts = new TimingService(2);
-        Assertions.assertEquals("", ts.getReport());
-        Assertions.assertEquals("", ts.getReport(false));
-        Assertions.assertEquals("", ts.getReport(true));
-        Assertions.assertEquals("", ts.getReport(1));
-        Assertions.assertEquals("", ts.getReport(1, false));
-        Assertions.assertEquals("", ts.getReport(1, true));
-
-        SleepTimingTask tt1 = new SleepTimingTask("slow", 50);
-        SleepTimingTask tt2 = new SleepTimingTask("fast", 10);
-        SleepTimingTask tt3 = new SleepTimingTask("medium", 25);
-        ts.execute(tt1, false);
-        ts.execute(tt2, false);
-        ts.execute(tt3, false);
-
-        String report = ts.getReport();
-        logger.log(TEST_INFO, report);
-
-        Assertions.assertTrue(report.contains("slow"));
-        Assertions.assertTrue(report.contains("fast"));
-        Assertions.assertTrue(report.contains("medium"));
-
-        // The fast task should be marked with a '*' character
-        String[] lines = report.split(TimingService.newLine);
-        for (String line : lines) {
-            if (line.contains("*")) {
-                Assertions.assertTrue(line.contains("fast"));
-            }
-        }
-
-        // Test variants of the default report
-        String report2 = ts.getReport(false);
-        Assertions.assertEquals(report, TimingService.newLine + report2);
-        report2 = ts.getReport(true);
-        Assertions.assertEquals(report, report2);
-
-        report = ts.getReport(2);
-        logger.log(TEST_INFO, report);
-
-        Assertions.assertFalse(report.contains("slow"));
-        Assertions.assertTrue(report.contains("fast"));
-        Assertions.assertTrue(report.contains("medium"));
-
-        report2 = ts.getReport(2, false);
-        Assertions.assertEquals(report, TimingService.newLine + report2);
-        report2 = ts.getReport(2, true);
-        Assertions.assertEquals(report, report2);
-
-        Assertions.assertEquals("", ts.getReport(0));
-        Assertions.assertEquals("", ts.getReport(0, false));
-        Assertions.assertEquals("", ts.getReport(0, true));
+    @Override
+    public Object getData(int i) {
+      return in;
     }
 
-    @Test
-    public void canReport() {
-        TimingService ts = new TimingService(2);
-        Assertions.assertEquals("", getReport(ts));
-        Assertions.assertEquals("", getReport(ts, 1));
+    @Override
+    public Object run(Object data) {
+      try {
+        Thread.sleep(millis);
+      } catch (final InterruptedException e) {
+        Assertions.fail("Cannot sleep in timing task: " + e.getMessage());
+      }
+      return out;
+    }
+  }
 
-        SleepTimingTask tt1 = new SleepTimingTask("slow", 50);
-        SleepTimingTask tt2 = new SleepTimingTask("fast", 10);
-        SleepTimingTask tt3 = new SleepTimingTask("medium", 25);
-        ts.execute(tt1, false);
-        ts.execute(tt2, false);
-        ts.execute(tt3, false);
+  @Test
+  public void canCheckTasks() {
+    final TimingService ts = new TimingService();
+    final LoggingTimingTask tt1 = new LoggingTimingTask("task1");
+    final LoggingTimingTask tt2 = new LoggingTimingTask("task2");
+    ts.execute(tt1, false);
+    ts.execute(tt2, false);
+    Assertions.assertEquals(2, ts.getSize());
+    final int expectedRuns = ts.getRuns() * tt1.getSize();
+    Assertions.assertEquals(expectedRuns, tt1.runCounter);
+    Assertions.assertEquals(0, tt1.checkCounter);
+    Assertions.assertEquals(expectedRuns, tt2.runCounter);
+    Assertions.assertEquals(0, tt2.checkCounter);
 
-        String report = getReport(ts);
-        logger.log(TEST_INFO, report);
+    // Check will only run the task once
+    ts.check();
+    Assertions.assertEquals(2, ts.getSize());
+    Assertions.assertEquals(expectedRuns + tt1.getSize(), tt1.runCounter);
+    Assertions.assertEquals(tt1.getSize(), tt1.checkCounter);
+    Assertions.assertEquals(expectedRuns + tt2.getSize(), tt2.runCounter);
+    Assertions.assertEquals(tt2.getSize(), tt2.checkCounter);
 
-        Assertions.assertTrue(report.contains("slow"));
-        Assertions.assertTrue(report.contains("fast"));
-        Assertions.assertTrue(report.contains("medium"));
+    // Static method
+    TimingService.check(tt1);
+    Assertions.assertEquals(expectedRuns + 2 * tt1.getSize(), tt1.runCounter);
+    Assertions.assertEquals(tt1.getSize() * 2, tt1.checkCounter);
+  }
 
-        // The fast task should be marked with a '*' character
-        String[] lines = report.split(TimingService.newLine);
-        for (String line : lines) {
-            if (line.contains("*")) {
-                Assertions.assertTrue(line.contains("fast"));
-            }
-        }
+  @Test
+  public void canGetReport() {
+    final TimingService ts = new TimingService(2);
+    Assertions.assertEquals("", ts.getReport());
+    Assertions.assertEquals("", ts.getReport(false));
+    Assertions.assertEquals("", ts.getReport(true));
+    Assertions.assertEquals("", ts.getReport(1));
+    Assertions.assertEquals("", ts.getReport(1, false));
+    Assertions.assertEquals("", ts.getReport(1, true));
 
-        // Test variants of the default report
-        report = getReport(ts, 2);
-        logger.log(TEST_INFO, report);
+    final SleepTimingTask tt1 = new SleepTimingTask("slow", 50);
+    final SleepTimingTask tt2 = new SleepTimingTask("fast", 10);
+    final SleepTimingTask tt3 = new SleepTimingTask("medium", 25);
+    ts.execute(tt1, false);
+    ts.execute(tt2, false);
+    ts.execute(tt3, false);
 
-        Assertions.assertFalse(report.contains("slow"));
-        Assertions.assertTrue(report.contains("fast"));
-        Assertions.assertTrue(report.contains("medium"));
+    String report = ts.getReport();
+    logger.log(TEST_INFO, report);
 
-        Assertions.assertEquals("", getReport(ts, 0));
+    Assertions.assertTrue(report.contains("slow"));
+    Assertions.assertTrue(report.contains("fast"));
+    Assertions.assertTrue(report.contains("medium"));
+
+    // The fast task should be marked with a '*' character
+    final String[] lines = report.split(TimingService.newLine);
+    for (final String line : lines) {
+      if (line.contains("*")) {
+        Assertions.assertTrue(line.contains("fast"));
+      }
     }
 
-    private static String getReport(TimingService ts) {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true)) {
-            ts.report(ps);
-            ps.close();
-            return new String(baos.toByteArray());
-        }
+    // Test variants of the default report
+    String report2 = ts.getReport(false);
+    Assertions.assertEquals(report, TimingService.newLine + report2);
+    report2 = ts.getReport(true);
+    Assertions.assertEquals(report, report2);
+
+    report = ts.getReport(2);
+    logger.log(TEST_INFO, report);
+
+    Assertions.assertFalse(report.contains("slow"));
+    Assertions.assertTrue(report.contains("fast"));
+    Assertions.assertTrue(report.contains("medium"));
+
+    report2 = ts.getReport(2, false);
+    Assertions.assertEquals(report, TimingService.newLine + report2);
+    report2 = ts.getReport(2, true);
+    Assertions.assertEquals(report, report2);
+
+    Assertions.assertEquals("", ts.getReport(0));
+    Assertions.assertEquals("", ts.getReport(0, false));
+    Assertions.assertEquals("", ts.getReport(0, true));
+  }
+
+  @Test
+  public void canReport() {
+    final TimingService ts = new TimingService(2);
+    Assertions.assertEquals("", getReport(ts));
+    Assertions.assertEquals("", getReport(ts, 1));
+
+    final SleepTimingTask tt1 = new SleepTimingTask("slow", 50);
+    final SleepTimingTask tt2 = new SleepTimingTask("fast", 10);
+    final SleepTimingTask tt3 = new SleepTimingTask("medium", 25);
+    ts.execute(tt1, false);
+    ts.execute(tt2, false);
+    ts.execute(tt3, false);
+
+    String report = getReport(ts);
+    logger.log(TEST_INFO, report);
+
+    Assertions.assertTrue(report.contains("slow"));
+    Assertions.assertTrue(report.contains("fast"));
+    Assertions.assertTrue(report.contains("medium"));
+
+    // The fast task should be marked with a '*' character
+    final String[] lines = report.split(TimingService.newLine);
+    for (final String line : lines) {
+      if (line.contains("*")) {
+        Assertions.assertTrue(line.contains("fast"));
+      }
     }
 
-    private static String getReport(TimingService ts, int n) {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true)) {
-            ts.report(ps, n);
-            ps.close();
-            return new String(baos.toByteArray());
-        }
-    }
+    // Test variants of the default report
+    report = getReport(ts, 2);
+    logger.log(TEST_INFO, report);
 
-    @Test
-    public void canReportUsingEmptyResults() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true)) {
-            TimingService.report(ps, (TimingResult[]) null);
-            ps.close();
-            Assertions.assertEquals("", new String(baos.toByteArray()));
-        }
-        baos = new ByteArrayOutputStream();
-        try (PrintStream ps = new PrintStream(baos, true)) {
-            TimingService.report(ps, new TimingResult[0]);
-            ps.close();
-            Assertions.assertEquals("", new String(baos.toByteArray()));
-        }
+    Assertions.assertFalse(report.contains("slow"));
+    Assertions.assertTrue(report.contains("fast"));
+    Assertions.assertTrue(report.contains("medium"));
+
+    Assertions.assertEquals("", getReport(ts, 0));
+  }
+
+  private static String getReport(TimingService ts) {
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    try (PrintStream ps = new PrintStream(baos, true)) {
+      ts.report(ps);
+      ps.close();
+      return new String(baos.toByteArray());
     }
+  }
+
+  private static String getReport(TimingService ts, int n) {
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    try (PrintStream ps = new PrintStream(baos, true)) {
+      ts.report(ps, n);
+      ps.close();
+      return new String(baos.toByteArray());
+    }
+  }
+
+  @Test
+  public void canReportUsingEmptyResults() {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    try (PrintStream ps = new PrintStream(baos, true)) {
+      TimingService.report(ps, (TimingResult[]) null);
+      ps.close();
+      Assertions.assertEquals("", new String(baos.toByteArray()));
+    }
+    baos = new ByteArrayOutputStream();
+    try (PrintStream ps = new PrintStream(baos, true)) {
+      TimingService.report(ps, new TimingResult[0]);
+      ps.close();
+      Assertions.assertEquals("", new String(baos.toByteArray()));
+    }
+  }
 }

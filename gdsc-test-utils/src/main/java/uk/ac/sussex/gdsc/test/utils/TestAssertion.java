@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 /**
@@ -28,10 +29,10 @@ package uk.ac.sussex.gdsc.test.utils;
  */
 @FunctionalInterface
 public interface TestAssertion {
-    /**
-     * Run the test assertion
-     *
-     * @throws AssertionError If the test fails
-     */
-    public void test() throws AssertionError;
+  /**
+   * Run the test assertion.
+   *
+   * @throws AssertionError If the test fails
+   */
+  public void test() throws AssertionError;
 }

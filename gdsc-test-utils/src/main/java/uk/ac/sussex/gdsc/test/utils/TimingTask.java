@@ -21,53 +21,54 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 /**
  * Defines a task to run.
  */
 public interface TimingTask {
-    /**
-     * Gets the number of tasks.
-     *
-     * @return the number of tasks
-     */
-    public int getSize();
+  /**
+   * Gets the number of tasks.
+   *
+   * @return the number of tasks
+   */
+  public int getSize();
 
-    /**
-     * Gets the task data for given task.
-     * <p>
-     * If the data is destructively modified by the {@link #run(Object)} method then
-     * this should be new data.
-     *
-     * @param i the task index
-     * @return the data
-     */
-    public Object getData(int i);
+  /**
+   * Gets the task data for given task.
+   *
+   * <p>If the data is destructively modified by the {@link #run(Object)} method then this should be
+   * new data.
+   *
+   * @param index the task index
+   * @return the data
+   */
+  public Object getData(int index);
 
-    /**
-     * Run the task.
-     *
-     * @param data the task data
-     * @return the result
-     */
-    public Object run(Object data);
+  /**
+   * Run the task.
+   *
+   * @param data the task data
+   * @return the result
+   */
+  public Object run(Object data);
 
-    /**
-     * The task name.
-     *
-     * @return the name
-     */
-    public String getName();
+  /**
+   * The task name.
+   *
+   * @return the name
+   */
+  public String getName();
 
-    /**
-     * Check the result produced by the given task.
-     * <p>
-     * It is left to the implementation to decide how to handle incorrect results,
-     * e.g. throw an exception, log an error, etc.
-     *
-     * @param i      the task index
-     * @param result the result
-     */
-    public void check(int i, Object result);
+  /**
+   * Check the result produced by the given task.
+   *
+   * <p>It is left to the implementation to decide how to handle incorrect results, e.g. throw an
+   * exception, log an error, etc.
+   *
+   * @param index the task index
+   * @param result the result
+   */
+  public void check(int index, Object result);
 }

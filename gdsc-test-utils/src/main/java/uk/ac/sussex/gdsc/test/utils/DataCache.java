@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.HashMap;
@@ -33,28 +34,27 @@ import java.util.function.Function;
  * @param <V> the type of the value
  */
 public class DataCache<K, V> {
-    private final HashMap<K, V> data = new HashMap<>();
+  private final HashMap<K, V> data = new HashMap<>();
 
-    /**
-     * Gets the value stored under the given key.
-     * <p>
-     * Uses the cached value if available, otherwise generates the value using the
-     * provider.
-     * <p>
-     * Note: The value should be considered immutable if the cache is to be reused.
-     *
-     * @param key      the key
-     * @param provider the provider to generate the value (if not cached)
-     * @return the value
-     */
-    public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider) {
-        return data.computeIfAbsent(key, provider);
-    }
+  /**
+   * Gets the value stored under the given key.
+   *
+   * <p>Uses the cached value if available, otherwise generates the value using the provider.
+   *
+   * <p>Note: The value should be considered immutable if the cache is to be reused.
+   *
+   * @param key the key
+   * @param provider the provider to generate the value (if not cached)
+   * @return the value
+   */
+  public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider) {
+    return data.computeIfAbsent(key, provider);
+  }
 
-    /**
-     * Clear the cache.
-     */
-    public void clear() {
-        data.clear();
-    }
+  /**
+   * Clear the cache.
+   */
+  public void clear() {
+    data.clear();
+  }
 }

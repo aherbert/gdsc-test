@@ -23,30 +23,24 @@
  */
 
 /**
- * <p>
- * Provides classes for use with a test framework. Support is provided for
- * <a href="https://junit.org/junit4/">JUnit 4</a> and
- * <a href="https://junit.org/junit5/">JUnit 5</a> using optional packages.
- * </p>
- * <p>
- * The package contains:
- * </p>
- * <ul>
- * <li>Additional assert functions for floating point equality using relative
- * error (in contrast to the JUnit standard of absolute error)
- * <li>Run-time configurable test complexity
- * <li>Run-time configurable random seed
- * <li>Run-time configurable test repeats (JUnit 5)
- * <li>A test timing service
- * </ul>
- * <p>
- * The package is configured using java runtime arguments (see
- * {@link uk.ac.sussex.gdsc.test.utils.TestSettings}).
- * </p>
+ *
+ *
+ * <p>Provides classes for use with a test framework. Support is provided for <a
+ * href="https://junit.org/junit4/">JUnit 4</a> and <a href="https://junit.org/junit5/">JUnit 5</a>
+ * using optional packages. </p>
+ *
+ * <p>The package contains: </p> <ul> <li>Additional assert functions for floating point equality
+ * using relative error (in contrast to the JUnit standard of absolute error) <li>Run-time
+ * configurable test complexity <li>Run-time configurable random seed <li>Run-time configurable test
+ * repeats (JUnit 5) <li>A test timing service </ul>
+ *
+ * <p>The package is configured using java runtime arguments (see
+ * {@link uk.ac.sussex.gdsc.test.utils.TestSettings}). </p>
  *
  * @see <a href="https://junit.org/junit4/">JUnit 4</a>
  * @see <a href="https://junit.org/junit5/">JUnit 5</a>
  * @see uk.ac.sussex.gdsc.test.utils.TestSettings
  * @since 1.0.0
  */
+
 package uk.ac.sussex.gdsc.test.utils;

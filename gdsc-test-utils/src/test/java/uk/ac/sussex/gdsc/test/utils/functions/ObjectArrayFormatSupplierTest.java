@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils.functions;
 
 import org.apache.commons.rng.UniformRandomProvider;
@@ -33,84 +34,84 @@ import uk.ac.sussex.gdsc.test.utils.functions.ObjectArrayFormatSupplier;
 @SuppressWarnings("javadoc")
 public class ObjectArrayFormatSupplierTest {
 
-    private final String nullString = null;
+  private final String nullString = null;
 
-    @Test
-    public void testConstructer() {
-        final String format = "not-empty";
-        final int size = 1;
+  @Test
+  public void testConstructer() {
+    final String format = "not-empty";
+    final int size = 1;
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            @SuppressWarnings("unused")
-            final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(null, size);
-        });
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            @SuppressWarnings("unused")
-            final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier("", size);
-        });
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      @SuppressWarnings("unused")
+      final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(null, size);
+    });
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      @SuppressWarnings("unused")
+      final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier("", size);
+    });
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            @SuppressWarnings("unused")
-            final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, 0);
-        });
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            @SuppressWarnings("unused")
-            final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, -1);
-        });
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      @SuppressWarnings("unused")
+      final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, 0);
+    });
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      @SuppressWarnings("unused")
+      final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, -1);
+    });
 
-        final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, size);
-        Assertions.assertNotNull(s);
-        Assertions.assertEquals(size, s.getSize());
+    final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, size);
+    Assertions.assertNotNull(s);
+    Assertions.assertEquals(size, s.getSize());
+  }
+
+  @Test
+  public void test1DMessage() {
+    final String format = "[%s]";
+    final int size = 1;
+
+    final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, size);
+    Assertions.assertEquals(String.format(format, nullString), s.get());
+    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+
+    for (int i = 0; i < 5; i++) {
+      final String next = next(rng);
+      s.set(0, next);
+      Assertions.assertEquals(next, s.get(0));
+      Assertions.assertEquals(String.format(format, next), s.get());
     }
 
-    @Test
-    public void test1DMessage() {
-        final String format = "[%s]";
-        final int size = 1;
+    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+      s.set(1, 0);
+    });
+  }
 
-        final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, size);
-        Assertions.assertEquals(String.format(format, nullString), s.get());
-        final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
-
-        for (int i = 0; i < 5; i++) {
-            final String next = next(rng);
-            s.set(0, next);
-            Assertions.assertEquals(next, s.get(0));
-            Assertions.assertEquals(String.format(format, next), s.get());
-        }
-
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            s.set(1, 0);
-        });
+  @Test
+  public void test2DMessage() {
+    final String format = "[%s][%s]";
+    final int size = 2;
+    final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, size);
+    Assertions.assertEquals(String.format(format, nullString, nullString), s.get());
+    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    for (int i = 0; i < 3; i++) {
+      final String nexti = next(rng);
+      s.set(0, nexti);
+      Assertions.assertEquals(nexti, s.get(0));
+      for (int j = 0; j < 3; j++) {
+        final String nextj = next(rng);
+        s.set(1, nextj);
+        Assertions.assertEquals(nextj, s.get(1));
+        Assertions.assertEquals(String.format(format, nexti, nextj), s.get());
+      }
     }
 
-    @Test
-    public void test2DMessage() {
-        final String format = "[%s][%s]";
-        final int size = 2;
-        final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, size);
-        Assertions.assertEquals(String.format(format, nullString, nullString), s.get());
-        final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
-        for (int i = 0; i < 3; i++) {
-            final String nexti = next(rng);
-            s.set(0, nexti);
-            Assertions.assertEquals(nexti, s.get(0));
-            for (int j = 0; j < 3; j++) {
-                final String nextj = next(rng);
-                s.set(1, nextj);
-                Assertions.assertEquals(nextj, s.get(1));
-                Assertions.assertEquals(String.format(format, nexti, nextj), s.get());
-            }
-        }
+    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+      s.set(2, 0);
+    });
+  }
 
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            s.set(2, 0);
-        });
-    }
-
-    private static String next(UniformRandomProvider rng) {
-        final byte[] bytes = new byte[20];
-        rng.nextBytes(bytes);
-        return new String(bytes);
-    }
+  private static String next(UniformRandomProvider rng) {
+    final byte[] bytes = new byte[20];
+    rng.nextBytes(bytes);
+    return new String(bytes);
+  }
 }

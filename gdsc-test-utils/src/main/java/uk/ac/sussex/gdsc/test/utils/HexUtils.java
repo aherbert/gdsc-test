@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.Arrays;
@@ -28,7 +29,7 @@ import java.util.Arrays;
 /**
  * Contains utility functions for Hexidecimal (Hex) numbers.
  */
-public class HexUtils {
+public final class HexUtils {
 
   /** The empty string. */
   private static final char[] EMPTY_CHARS = new char[0];
@@ -123,7 +124,7 @@ public class HexUtils {
     // Check for hex byte representation for each character
     final byte[] hexNumber = new byte[string.length()];
     for (int i = 0; i < hexNumber.length; i++) {
-      byte ch = mapToHexNumber(string.charAt(i));
+      final byte ch = mapToHexNumber(string.charAt(i));
       if (ch == UNMAPPED) {
         // Not valid so return empty
         return EMPTY_BYTES;

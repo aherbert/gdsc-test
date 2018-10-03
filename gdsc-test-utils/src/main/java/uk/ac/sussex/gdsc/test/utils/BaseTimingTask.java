@@ -21,42 +21,42 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 /**
  * Defines a task to run.
  */
 public abstract class BaseTimingTask implements TimingTask {
-    /** The name of the task. */
-    protected String name;
+  /** The name of the task. */
+  protected String name;
 
-    /**
-     * Instantiates a new base timing task.
-     *
-     * @param name the name
-     */
-    public BaseTimingTask(String name) {
-        this.name = name;
-    }
+  /**
+   * Instantiates a new base timing task.
+   *
+   * @param name the name
+   */
+  public BaseTimingTask(String name) {
+    this.name = name;
+  }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see gdsc.core.test.TimingTask#getName()
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
+  /*
+   * (non-Javadoc)
+   *
+   * @see gdsc.core.test.TimingTask#getName()
+   */
+  @Override
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * This base class does nothing so that extending classes can override if
-     * necessary
-     *
-     * @see uk.ac.sussex.gdsc.test.utils.TimingTask#check(int, java.lang.Object)
-     */
-    @Override
-    public void check(int i, Object result) {
-        // Do nothing
-    }
+  /**
+   * This base class does nothing so that extending classes can override if necessary
+   *
+   * @see uk.ac.sussex.gdsc.test.utils.TimingTask#check(int, java.lang.Object)
+   */
+  @Override
+  public void check(int index, Object result) {
+    // Do nothing
+  }
 }
