@@ -13,7 +13,7 @@ public class <Float><Float>CmpTest {
    */
   @Test
   public void testTest() {
-    <Float><Float>Cmp predicate = new <Float><Float>Cmp();
+    <Float><Float>Cmp predicate = <Float><Float>Cmp.getInstance();
     <float>[] values = { <values> };
     for (<float> value1 : values) {
       for (<float> value2 : values) {

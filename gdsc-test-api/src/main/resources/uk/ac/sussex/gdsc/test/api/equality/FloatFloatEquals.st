@@ -11,6 +11,9 @@ import java.util.function.Supplier;
  */
 public class <Float><Float>Equals implements <Float><Float>BiPredicate, Supplier\<String> {
 
+  /** A default instance. */
+  private static final <Float><Float>Equals INSTANCE = new <Float><Float>Equals();
+
   /**
    * {@inheritDoc}
    *
@@ -37,5 +40,14 @@ public class <Float><Float>Equals implements <Float><Float>BiPredicate, Supplier
   @Override
   public String get() {
     return "value1 == value2";
+  }
+
+  /**
+   * Gets an instance.
+   *
+   * @return an instance
+   */
+  public static <Float><Float>Equals getInstance() {
+    return INSTANCE;
   }
 }

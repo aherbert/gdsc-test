@@ -12,6 +12,9 @@ import java.util.function.Supplier;
  */
 public class <Float><Float>Cmp implements <Float><Float>BiPredicate, Supplier\<String> {
 
+  /** A default instance. */
+  private static final <Float><Float>Cmp INSTANCE = new <Float><Float>Cmp();
+
   /**
    * {@inheritDoc}
    *
@@ -39,5 +42,14 @@ public class <Float><Float>Cmp implements <Float><Float>BiPredicate, Supplier\<S
   @Override
   public String get() {
     return "value1 cmp value2";
+  }
+
+  /**
+   * Gets an instance.
+   *
+   * @return an instance
+   */
+  public static <Float><Float>Cmp getInstance() {
+    return INSTANCE;
   }
 }
