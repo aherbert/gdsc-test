@@ -26,6 +26,8 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -279,18 +281,21 @@ public class TimingService {
       return "";
     }
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    try (PrintStream ps = new PrintStream(baos, true)) {
+    try (PrintStream ps = new PrintStream(baos, false, StandardCharsets.UTF_8.name())) {
       if (leadingNewLine) {
         ps.println();
       }
       report(ps, lastN);
       ps.close();
       return getReport(baos);
+    } catch (UnsupportedEncodingException ex) {
+      // This should never happen since the encoding is a requirement of the JVM
+      throw new Error("UTF-8 is not supported!", ex);
     }
   }
 
   private static String getReport(ByteArrayOutputStream baos) {
-    final String text = new String(baos.toByteArray());
+    final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
     // Remove the new line at the end
     final int i = text.lastIndexOf(newLine);
     // assert i == text.length() - newLine.length() : "New-line not at the end of

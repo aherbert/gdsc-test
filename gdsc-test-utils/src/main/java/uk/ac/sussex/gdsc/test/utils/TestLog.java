@@ -24,6 +24,8 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -88,8 +90,25 @@ public class TestLog {
     /** The serial version ID. */
     private static final long serialVersionUID = 1L;
 
-    private Supplier<String> msgSupplier;
+    /**
+     * The message supplier.
+     * 
+     * <p>This is not serialised so is marked as transient.
+     */
+    private transient Supplier<String> msgSupplier;
+
+    /**
+     * The format string for variable arguments. 
+     * 
+     * <p>This is serialised.
+     */
     private String format;
+
+    /**
+     * The arguments to the format string. 
+     * 
+     * <p>This is serialised.
+     */
     private Object[] args;
 
     /**
@@ -145,6 +164,25 @@ public class TestLog {
       format = null;
       msgSupplier = null;
       super.setMessage(message);
+    }
+
+    /**
+     * Write the object.
+     * 
+     * <p>This is here to support {@link Serializable}.
+     *
+     * @param out the object output stream
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+      // The message supplier cannot be serialised so convert to a format string
+      // and empty arguments
+      if (msgSupplier != null) {
+        format = msgSupplier.get();
+        args = null; // These can be null
+        msgSupplier = null;
+      }
+      out.defaultWriteObject();
     }
   }
 

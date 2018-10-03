@@ -71,6 +71,6 @@ public class ObjectArrayFormatSupplier extends ArrayFormatSupplier {
 
   @Override
   public Object[] getArgs() {
-    return values;
+    return values.clone();
   }
 }
