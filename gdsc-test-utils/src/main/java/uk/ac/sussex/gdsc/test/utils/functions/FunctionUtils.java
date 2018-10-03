@@ -59,7 +59,7 @@ public final class FunctionUtils {
    *
    * <p>Uses the default locale. This is set once so any changes to the default locale will be
    * ignored.
-   * 
+   *
    * @param format the format
    * @param args the arguments
    * @return the supplier

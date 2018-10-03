@@ -98,21 +98,21 @@ public class TestLog {
 
     /**
      * The message supplier.
-     * 
+     *
      * <p>This is not serialised so is marked as transient.
      */
     private transient Supplier<String> msgSupplier;
 
     /**
      * The format string for variable arguments.
-     * 
+     *
      * <p>This is serialised.
      */
     private String format;
 
     /**
      * The arguments to the format string.
-     * 
+     *
      * <p>This is serialised.
      */
     private Object[] args;
@@ -174,7 +174,7 @@ public class TestLog {
 
     /**
      * Write the object.
-     * 
+     *
      * <p>This is here to support {@link Serializable}.
      *
      * @param out the object output stream

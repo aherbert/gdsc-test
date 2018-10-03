@@ -49,7 +49,7 @@ public class TimingResult {
 
   /**
    * Instantiates a new timing result.
-   * 
+   *
    * <p>This is package level constructor that optionally takes over the input times array.
    *
    * @param task the task
