@@ -67,8 +67,8 @@ public class IndexSupplier implements Supplier<String> {
    * @throws IllegalArgumentException If the dimensions are not strictly positive
    */
   public IndexSupplier(int dimensions) throws IllegalArgumentException {
-    if (dimensions < 1) {
-      throw new IllegalArgumentException(dimensions + " < 1");
+    if (dimensions <= 0) {
+      throw new IllegalArgumentException(dimensions + " <= 0");
     }
     this.indices = new int[dimensions];
   }
@@ -84,8 +84,8 @@ public class IndexSupplier implements Supplier<String> {
   public IndexSupplier(int dimensions, String messagePrefix, String messageSuffix)
       throws IllegalArgumentException {
     this(dimensions);
-    setMessagePrefix(messagePrefix);
-    setMessageSuffix(messageSuffix);
+    this.messagePrefix = messagePrefix;
+    this.messageSuffix = messageSuffix;
   }
 
   /**
@@ -102,15 +102,16 @@ public class IndexSupplier implements Supplier<String> {
    */
   @Override
   public String get() {
-    String message = Arrays.stream(indices).boxed().map(Object::toString)
-        .collect(Collectors.joining(delimiter, prefix, suffix));
+    final StringBuilder message = new StringBuilder();
     if (messagePrefix != null && messagePrefix.length() > 0) {
-      message = messagePrefix + message;
+      message.append(messagePrefix);
     }
+    message.append(Arrays.stream(indices).boxed().map(Object::toString)
+        .collect(Collectors.joining(delimiter, prefix, suffix)));
     if (messageSuffix != null && messageSuffix.length() > 0) {
-      message += messageSuffix;
+      message.append(messageSuffix);
     }
-    return message;
+    return message.toString();
   }
 
   /**

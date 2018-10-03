@@ -45,8 +45,8 @@ public abstract class ArrayFormatSupplier extends FormatSupplier {
    */
   public ArrayFormatSupplier(String format, int size) throws IllegalArgumentException {
     super(format);
-    if (size < 1) {
-      throw new IllegalArgumentException(size + " < 1");
+    if (size <= 0) {
+      throw new IllegalArgumentException(size + " <= 0");
     }
     this.size = size;
   }

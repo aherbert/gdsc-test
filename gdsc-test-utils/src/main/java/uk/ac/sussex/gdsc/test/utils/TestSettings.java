@@ -39,7 +39,7 @@ import java.util.logging.Logger;
  *
  * <p>Test classes can then be coded to respond to this run-time configuration.
  */
-public class TestSettings {
+public final class TestSettings {
   /**
    * The runtime property used for the test complexity level, e.g.
    *
@@ -99,7 +99,7 @@ public class TestSettings {
       try {
         return Integer.parseInt(text);
       } catch (final NumberFormatException ex) {
-        // Do nothing
+        // Ignore and return the default
       }
     }
     return defaultValue;
@@ -118,7 +118,7 @@ public class TestSettings {
       try {
         return Long.parseLong(text);
       } catch (final NumberFormatException ex) {
-        // Do nothing
+        // Ignore and return the default
       }
     }
     return defaultValue;

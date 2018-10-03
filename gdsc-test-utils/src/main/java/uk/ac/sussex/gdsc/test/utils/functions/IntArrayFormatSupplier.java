@@ -36,6 +36,7 @@ import java.util.function.Supplier;
  */
 public class IntArrayFormatSupplier extends ArrayFormatSupplier {
 
+  /** The values. */
   private final int[] values;
 
   /**

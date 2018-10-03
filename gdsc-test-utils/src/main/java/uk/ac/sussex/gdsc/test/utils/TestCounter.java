@@ -65,7 +65,7 @@ public class TestCounter {
    * @throws IllegalArgumentException if fraction is not in the range 0-1 or size is not positive
    */
   public static int computeFailureLimit(int size, double fraction) throws IllegalArgumentException {
-    if (size < 1) {
+    if (size <= 0) {
       throw new IllegalArgumentException("Size must be strictly positive: " + size);
     }
     if (fraction < 0 || fraction > 1) {
@@ -92,7 +92,7 @@ public class TestCounter {
    */
   public TestCounter(int failureLimit, int size) {
     this.failureLimit = failureLimit;
-    if (size < 1) {
+    if (size <= 0) {
       throw new IllegalArgumentException("Size must be strictly positive: " + size);
     }
     failures = new int[size];
@@ -120,9 +120,10 @@ public class TestCounter {
     try {
       test.test();
     } catch (final AssertionError ex) {
-      if (++failures[index] > failureLimit) {
+      if (failures[index] >= failureLimit) {
         throw ex;
       }
+      failures[index]++;
     }
   }
 
@@ -149,12 +150,13 @@ public class TestCounter {
   public void run(int index, TestCase test, TestAssertion error)
       throws IndexOutOfBoundsException, AssertionError {
     if (!test.test()) {
-      if (++failures[index] > failureLimit) {
+      if (failures[index] >= failureLimit) {
         // This should throw
         error.test();
         // In case it doesn't then throw a default error
         throw new AssertionError();
       }
+      failures[index]++;
     }
   }
 }

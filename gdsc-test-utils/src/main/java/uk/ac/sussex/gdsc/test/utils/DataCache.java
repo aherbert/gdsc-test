@@ -24,7 +24,8 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
@@ -34,12 +35,15 @@ import java.util.function.Function;
  * @param <V> the type of the value
  */
 public class DataCache<K, V> {
-  private final HashMap<K, V> data = new HashMap<>();
+
+  /** The data. */
+  private final Map<K, V> data = new ConcurrentHashMap<>();
 
   /**
    * Gets the value stored under the given key.
    *
-   * <p>Uses the cached value if available, otherwise generates the value using the provider.
+   * <p>Uses the cached value if available, otherwise generates the value using the provider. Use of
+   * the provider is synchronised to avoid multiple threads computing the same value.
    *
    * <p>Note: The value should be considered immutable if the cache is to be reused.
    *
@@ -47,7 +51,7 @@ public class DataCache<K, V> {
    * @param provider the provider to generate the value (if not cached)
    * @return the value
    */
-  public synchronized V getOrComputeIfAbsent(K key, Function<K, V> provider) {
+  public V getOrComputeIfAbsent(K key, Function<K, V> provider) {
     return data.computeIfAbsent(key, provider);
   }
 
@@ -55,6 +59,8 @@ public class DataCache<K, V> {
    * Clear the cache.
    */
   public void clear() {
+    // This is not synchronised.
+    // Only the use of a provider of values is synchronised.
     data.clear();
   }
 }

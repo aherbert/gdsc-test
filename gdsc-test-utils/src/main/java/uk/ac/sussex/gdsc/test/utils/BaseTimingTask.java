@@ -51,7 +51,10 @@ public abstract class BaseTimingTask implements TimingTask {
   }
 
   /**
-   * This base class does nothing so that extending classes can override if necessary
+   * {@inheritDoc}
+   *
+   * <p>This base class does nothing so that extending classes can override if necessary to validate
+   * results.
    *
    * @see uk.ac.sussex.gdsc.test.utils.TimingTask#check(int, java.lang.Object)
    */

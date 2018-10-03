@@ -33,7 +33,7 @@ public interface TimingTask {
    *
    * @return the number of tasks
    */
-  public int getSize();
+  int getSize();
 
   /**
    * Gets the task data for given task.
@@ -44,7 +44,7 @@ public interface TimingTask {
    * @param index the task index
    * @return the data
    */
-  public Object getData(int index);
+  Object getData(int index);
 
   /**
    * Run the task.
@@ -52,23 +52,20 @@ public interface TimingTask {
    * @param data the task data
    * @return the result
    */
-  public Object run(Object data);
+  Object run(Object data);
 
   /**
    * The task name.
    *
    * @return the name
    */
-  public String getName();
+  String getName();
 
   /**
    * Check the result produced by the given task.
    *
-   * <p>It is left to the implementation to decide how to handle incorrect results, e.g. throw an
-   * exception, log an error, etc.
-   *
    * @param index the task index
    * @param result the result
    */
-  public void check(int index, Object result);
+  void check(int index, Object result);
 }

@@ -33,7 +33,12 @@ import java.util.function.Supplier;
  * {@link TimingService#execute(TimingTask)}.
  */
 public class NamedTimingTask extends BaseTimingTask {
-  private Supplier<String> supplierName;
+
+  /** Constant for no supplier. */
+  private static final Supplier<String> NO_SUPPLIER =  null; 
+
+  /** The name supplier. */
+  private Supplier<String> nameSupplier;
 
   /**
    * Instantiates a new named timing task.
@@ -51,16 +56,16 @@ public class NamedTimingTask extends BaseTimingTask {
    */
   public NamedTimingTask(Supplier<String> name) {
     super("");
-    this.supplierName = name;
+    this.nameSupplier = name;
   }
 
   @Override
   public String getName() {
     // Format the name on demand
-    final Supplier<String> supplierName = this.supplierName;
-    if (supplierName != null) {
-      name = supplierName.get();
-      this.supplierName = null;
+    final Supplier<String> nameSupplier = this.nameSupplier;
+    if (nameSupplier != null) {
+      name = nameSupplier.get();
+      this.nameSupplier = NO_SUPPLIER;
     }
     return super.getName();
   }

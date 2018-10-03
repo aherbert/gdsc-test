@@ -32,6 +32,7 @@ import java.util.function.Supplier;
  */
 public class ObjectArrayFormatSupplier extends ArrayFormatSupplier {
 
+  /** The values. */
   private final Object[] values;
 
   /**

@@ -33,6 +33,7 @@ import java.util.function.Supplier;
  */
 public final class FunctionUtils {
 
+  /** The default locale. */
   private static final Locale locale = Locale.getDefault(Locale.Category.FORMAT);
 
   /**
@@ -56,11 +57,15 @@ public final class FunctionUtils {
    * </code>
    * </pre>
    *
+   * <p>Uses the default locale. This is set once so any changes to the default locale will be
+   * ignored.
+   * 
    * @param format the format
    * @param args the arguments
    * @return the supplier
+   * @see Locale#getDefault(Locale.Category)
    */
-  public static final Supplier<String> getSupplier(String format, Object... args) {
+  public static Supplier<String> getSupplier(String format, Object... args) {
     return () -> new Formatter(locale).format(format, args).toString();
   }
 }

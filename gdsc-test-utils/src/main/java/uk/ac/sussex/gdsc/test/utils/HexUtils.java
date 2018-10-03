@@ -50,13 +50,16 @@ public final class HexUtils {
     // Lower case is after upper case
     DECODE_TABLE = new byte['f' + 1];
     Arrays.fill(DECODE_TABLE, UNMAPPED);
-    for (int c = '0', i = 0; c <= '9'; c++, i++) {
+    for (int c = '0', 
+        i = 0; c <= '9'; c++, i++) {
       DECODE_TABLE[c] = (byte) i;
     }
-    for (int c = 'A', i = 10; c <= 'F'; c++, i++) {
+    for (int c = 'A', 
+        i = 10; c <= 'F'; c++, i++) {
       DECODE_TABLE[c] = (byte) i;
     }
-    for (int c = 'a', i = 10; c <= 'f'; c++, i++) {
+    for (int c = 'a', 
+        i = 10; c <= 'f'; c++, i++) {
       DECODE_TABLE[c] = (byte) i;
     }
   }
@@ -83,10 +86,10 @@ public final class HexUtils {
     }
     final int l = bytes.length;
     // Two hex characters per byte
-    final char[] chars = new char[l << 1];
-    for (int i = 0, j = 0; i < l; i++) {
-      chars[j++] = HEX_DIGITS[(0xF0 & bytes[i]) >>> 4];
-      chars[j++] = HEX_DIGITS[0x0F & bytes[i]];
+    final char[] chars = new char[l * 2];
+    for (int i = 0; i < l; i++) {
+      chars[2 * i] = HEX_DIGITS[(0xF0 & bytes[i]) >>> 4];
+      chars[2 * i + 1] = HEX_DIGITS[0x0F & bytes[i]];
     }
     return chars;
   }
@@ -138,10 +141,10 @@ public final class HexUtils {
     final boolean odd = hexNumber.length % 2 == 1;
     final byte[] decoded = new byte[length + ((odd) ? 1 : 0)];
     // Process pairs
-    for (int i = 0, j = 0; i < length; i++, j += 2) {
-      byte hexPair = hexNumber[j];
+    for (int i = 0; i < length; i++) {
+      byte hexPair = hexNumber[2 * i];
       hexPair <<= 4; // Shift to upper 4 bits
-      hexPair |= hexNumber[j + 1]; // Combined lower bits
+      hexPair |= hexNumber[2 * i + 1]; // Combined lower bits
       decoded[i] = hexPair;
     }
 

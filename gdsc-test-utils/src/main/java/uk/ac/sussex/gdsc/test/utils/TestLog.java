@@ -35,34 +35,34 @@ import java.util.logging.LogRecord;
  */
 public class TestLog {
   /**
-   * Extend {@link java.util.logging.Level} to add levels for test logging.
+   * Extend {@link Level} to add levels for test logging.
    */
-  public static class TestLevel extends java.util.logging.Level {
+  public static class TestLevel extends Level {
     /**
      * Additional level for logging test failures.
      *
-     * <p>Equivalent level to {@link java.util.logging.Level#SEVERE}.
+     * <p>Equivalent level to {@link Level#SEVERE}.
      */
     public static final Level TEST_FAILURE = new TestLevel("TEST FAILURE", SEVERE.intValue());
 
     /**
      * Additional level for logging test warnings.
      *
-     * <p>Equivalent level to {@link java.util.logging.Level#WARNING}.
+     * <p>Equivalent level to {@link Level#WARNING}.
      */
     public static final Level TEST_WARNING = new TestLevel("TEST WARNING", WARNING.intValue());
 
     /**
      * Additional level for logging test information.
      *
-     * <p>Equivalent level to {@link java.util.logging.Level#FINE}.
+     * <p>Equivalent level to {@link Level#FINE}.
      */
     public static final Level TEST_INFO = new TestLevel("TEST INFO", FINE.intValue());
 
     /**
      * Additional level for logging test debugging.
      *
-     * <p>Equivalent level to {@link java.util.logging.Level#FINER}.
+     * <p>Equivalent level to {@link Level#FINER}.
      */
     public static final Level TEST_DEBUG = new TestLevel("TEST DEBUG", FINER.intValue());
 
@@ -89,6 +89,12 @@ public class TestLog {
   private static class TestLogRecord extends LogRecord {
     /** The serial version ID. */
     private static final long serialVersionUID = 1L;
+    /** The constant for no supplier. */
+    private static final Supplier<String> NO_SUPPLIER = null;
+    /** The constant for no format. */
+    private static final String NO_FORMAT = null;
+    /** The constant for no arguments. */
+    private static final Object[] NO_ARGS = null;
 
     /**
      * The message supplier.
@@ -98,14 +104,14 @@ public class TestLog {
     private transient Supplier<String> msgSupplier;
 
     /**
-     * The format string for variable arguments. 
+     * The format string for variable arguments.
      * 
      * <p>This is serialised.
      */
     private String format;
 
     /**
-     * The arguments to the format string. 
+     * The arguments to the format string.
      * 
      * <p>This is serialised.
      */
@@ -117,7 +123,7 @@ public class TestLog {
      * @param level the level
      * @param message the message
      */
-    public TestLogRecord(Level level, Supplier<String> message) {
+    TestLogRecord(Level level, Supplier<String> message) {
       super(level, "");
       this.msgSupplier = message;
     }
@@ -127,9 +133,9 @@ public class TestLog {
      *
      * @param level the level
      * @param format the format
-     * @param args the arguments
+     * @param args the arguments (stored by reference)
      */
-    public TestLogRecord(Level level, String format, Object... args) {
+    TestLogRecord(Level level, String format, Object... args) {
       super(level, "");
       this.format = format;
       this.args = args;
@@ -141,7 +147,7 @@ public class TestLog {
      * @param level the level
      * @param thrown a throwable associated with the log event
      */
-    public TestLogRecord(Level level, Throwable thrown) {
+    TestLogRecord(Level level, Throwable thrown) {
       super(level, thrown.getMessage());
       setThrown(thrown);
     }
@@ -161,8 +167,8 @@ public class TestLog {
     @Override
     public void setMessage(String message) {
       // Clear the formatted messages
-      format = null;
-      msgSupplier = null;
+      format = NO_FORMAT;
+      msgSupplier = NO_SUPPLIER;
       super.setMessage(message);
     }
 
@@ -179,8 +185,8 @@ public class TestLog {
       // and empty arguments
       if (msgSupplier != null) {
         format = msgSupplier.get();
-        args = null; // These can be null
-        msgSupplier = null;
+        args = NO_ARGS; // These can be null
+        msgSupplier = NO_SUPPLIER;
       }
       out.defaultWriteObject();
     }
@@ -254,15 +260,15 @@ public class TestLog {
       int count) {
     // Based on
     // https://stackoverflow.com/questions/17473148/dynamically-get-the-current-line-number/17473358
+    int remaining = count;
     boolean thisMethod = false;
-    final StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-    for (int i = 0; i < elements.length; i++) {
-      final StackTraceElement e = elements[i];
+    for (final StackTraceElement element : Thread.currentThread().getStackTrace()) {
       if (thisMethod) {
-        if (count-- == 0) {
-          return e;
+        if (remaining == 0) {
+          return element;
         }
-      } else if (e.getMethodName()
+        remaining--;
+      } else if (element.getMethodName()
           .equals("getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3")) {
         thisMethod = true;
       }

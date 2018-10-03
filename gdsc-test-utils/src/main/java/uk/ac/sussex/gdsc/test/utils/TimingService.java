@@ -29,6 +29,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to run timing tasks.
@@ -37,15 +38,17 @@ public class TimingService {
   /**
    * The new line used in the report. Equal to {@code System.getProperty("line.separator")}.
    */
-  public static final String newLine;
+  public static final String NEW_LINE;
 
   static {
-    newLine = System.getProperty("line.separator");
+    NEW_LINE = System.getProperty("line.separator");
   }
 
-  private int runs = 0;
+  /** The number of timing runs. */
+  private int runs;
 
-  private final ArrayList<TimingResult> results = new ArrayList<>();
+  /** The results. */
+  private final List<TimingResult> results = new ArrayList<>();
 
   /**
    * Gets the number of timing results.
@@ -135,8 +138,8 @@ public class TimingService {
 
     // Store the result
     final Object[] result = new Object[size];
+    final Object[] data = new Object[size];
     for (int run = 0; run < runs; run++) {
-      final Object[] data = new Object[size];
       for (int i = 0; i < size; i++) {
         data[i] = task.getData(i);
       }
@@ -151,7 +154,7 @@ public class TimingService {
         task.check(i, result[i]);
       }
     }
-    final TimingResult r = new TimingResult(task, times);
+    final TimingResult r = new TimingResult(task, times, false);
     results.add(r);
     return r;
   }
@@ -172,7 +175,7 @@ public class TimingService {
    * @param lastN the last N
    */
   public void report(PrintStream out, int lastN) {
-    if (lastN < 1 || results.isEmpty()) {
+    if (lastN <= 0 || results.isEmpty()) {
       return;
     }
     final int to = results.size();
@@ -183,7 +186,8 @@ public class TimingService {
       return;
     }
     final TimingResult[] r = new TimingResult[to - from];
-    for (int i = 0, j = from; j < to; i++, j++) {
+    for (int i = 0, 
+        j = from; j < to; i++, j++) {
       r[i] = results.get(j);
     }
     report(out, r);
@@ -214,7 +218,7 @@ public class TimingService {
       avs[i] = results[i].getMean();
     }
     final String format =
-        String.format("%%-%ds : %%15d (%%8.3f)%%c: %%15f (%%8.3f)%%c" + newLine, width);
+        String.format("%%-%ds : %%15d (%%8.3f)%%c: %%15f (%%8.3f)%%c" + NEW_LINE, width);
 
     // Find the fastest
     final long min = min(mins);
@@ -277,7 +281,7 @@ public class TimingService {
    * @return the report
    */
   public String getReport(int lastN, boolean leadingNewLine) {
-    if (lastN < 1) {
+    if (lastN <= 0) {
       return "";
     }
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -297,7 +301,7 @@ public class TimingService {
   private static String getReport(ByteArrayOutputStream baos) {
     final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
     // Remove the new line at the end
-    final int i = text.lastIndexOf(newLine);
+    final int i = text.lastIndexOf(NEW_LINE);
     // assert i == text.length() - newLine.length() : "New-line not at the end of
     // the string";
     return (i < 0) ? text : text.substring(0, i);

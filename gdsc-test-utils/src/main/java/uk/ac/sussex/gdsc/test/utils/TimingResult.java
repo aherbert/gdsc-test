@@ -30,7 +30,11 @@ import java.util.function.Supplier;
  * Class to store results of running a timing task.
  */
 public class TimingResult {
+
+  /** The task. */
   private final TimingTask task;
+
+  /** The times. */
   private final long[] times;
 
   /**
@@ -40,8 +44,21 @@ public class TimingResult {
    * @param times the times
    */
   public TimingResult(TimingTask task, long... times) {
+    this(task, times, true);
+  }
+
+  /**
+   * Instantiates a new timing result.
+   * 
+   * <p>This is package level constructor that optionally takes over the input times array.
+   *
+   * @param task the task
+   * @param times the times
+   * @param cloneArray the clone array
+   */
+  TimingResult(TimingTask task, long[] times, boolean cloneArray) {
     this.task = task;
-    this.times = times;
+    this.times = (cloneArray) ? times.clone() : times;
   }
 
   /**
@@ -54,7 +71,7 @@ public class TimingResult {
    */
   public TimingResult(String name, long... times) {
     this.task = new NamedTimingTask(name);
-    this.times = times;
+    this.times = times.clone();
   }
 
   /**
@@ -67,7 +84,7 @@ public class TimingResult {
    */
   public TimingResult(Supplier<String> name, long... times) {
     this.task = new NamedTimingTask(name);
-    this.times = times;
+    this.times = times.clone();
   }
 
   /**
@@ -107,9 +124,9 @@ public class TimingResult {
       return 0;
     }
     long min = Long.MAX_VALUE;
-    for (int i = times.length; i-- > 0;) {
-      if (min > times[i]) {
-        min = times[i];
+    for (final long time : times) {
+      if (min > time) {
+        min = time;
       }
     }
     return min;
@@ -125,8 +142,8 @@ public class TimingResult {
       return 0;
     }
     long sum = 0;
-    for (int i = times.length; i-- > 0;) {
-      sum += times[i];
+    for (final long time : times) {
+      sum += time;
     }
     return (double) sum / times.length;
   }

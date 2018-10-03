@@ -227,7 +227,7 @@ public class TimingServiceTest {
     Assertions.assertTrue(report.contains("medium"));
 
     // The fast task should be marked with a '*' character
-    final String[] lines = report.split(TimingService.newLine);
+    final String[] lines = report.split(TimingService.NEW_LINE);
     for (final String line : lines) {
       if (line.contains("*")) {
         Assertions.assertTrue(line.contains("fast"));
@@ -236,7 +236,7 @@ public class TimingServiceTest {
 
     // Test variants of the default report
     String report2 = ts.getReport(false);
-    Assertions.assertEquals(report, TimingService.newLine + report2);
+    Assertions.assertEquals(report, TimingService.NEW_LINE + report2);
     report2 = ts.getReport(true);
     Assertions.assertEquals(report, report2);
 
@@ -248,7 +248,7 @@ public class TimingServiceTest {
     Assertions.assertTrue(report.contains("medium"));
 
     report2 = ts.getReport(2, false);
-    Assertions.assertEquals(report, TimingService.newLine + report2);
+    Assertions.assertEquals(report, TimingService.NEW_LINE + report2);
     report2 = ts.getReport(2, true);
     Assertions.assertEquals(report, report2);
 
@@ -278,7 +278,7 @@ public class TimingServiceTest {
     Assertions.assertTrue(report.contains("medium"));
 
     // The fast task should be marked with a '*' character
-    final String[] lines = report.split(TimingService.newLine);
+    final String[] lines = report.split(TimingService.NEW_LINE);
     for (final String line : lines) {
       if (line.contains("*")) {
         Assertions.assertTrue(line.contains("fast"));

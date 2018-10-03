@@ -34,5 +34,5 @@ public interface TestCase {
    *
    * @return pass/fail
    */
-  public boolean test();
+  boolean test();
 }
