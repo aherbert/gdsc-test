@@ -13,7 +13,7 @@ public class <Type><Type>EqualsTest {
    */
   @Test
   public void testTest() {
-    <Type><Type>Equals predicate = new <Type><Type>Equals();
+    <Type><Type>Equals predicate = <Type><Type>Equals.getInstance();
     <type>[] values = { <values> };
     for (<type> value1 : values) {
       for (<type> value2 : values) {

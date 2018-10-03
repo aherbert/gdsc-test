@@ -89,141 +89,137 @@ final class TestAssertionUtils {
     final String indexesString =
         indexes.stream().map(Object::toString).collect(joining("][", "[", "]"));
     return " at index " + indexesString;
-  }
-  <types,Types,Classes:{type,Type,Class |
+  }<types,Types,Classes:{type,Type,Class |
 <\n>
-/////////////////////////////////////
-//<type>
-/////////////////////////////////////
+  /////////////////////////////////////
+  //<type>
+  /////////////////////////////////////
 
-/**
- * \<em>Asserts\</em> the test between {@code expected\} and {@code actual\}.
- *
- * \<p>Fails with the supplied failure {@code message\}.
- *
- * @param expected The expected value.
- * @param actual The value to check against \<code>expected\</code>.
- * @param test The test.
- * @param message The message.
- */
-static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
-    String message) {
-  if (!test.test(expected, actual)) {
-    throw new AssertionFailedError(format(expected, actual, test, message), expected, actual);
+  /**
+   * \<em>Asserts\</em> the test between {@code expected\} and {@code actual\}.
+   *
+   * \<p>Fails with the supplied failure {@code message\}.
+   *
+   * @param expected The expected value.
+   * @param actual The value to check against \<code>expected\</code>.
+   * @param test The test.
+   * @param message The message.
+   */
+  static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
+      String message) {
+    if (!test.test(expected, actual)) {
+      throw new AssertionFailedError(format(expected, actual, test, message), expected, actual);
+    \}
   \}
-\}
 
-/**
- * \<em>Asserts\</em> the test between {@code expected\} and {@code actual\}.
- *
- * \<p>If necessary, the failure message will be retrieved lazily from the supplied
- * {@code messageSupplier\}.
- *
- * @param expected The expected value.
- * @param actual The value to check against \<code>expected\</code>.
- * @param test The test.
- * @param messageSupplier The message supplier.
- */
-static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
-    Supplier\<String> messageSupplier) {
-  if (!test.test(expected, actual)) {
-    throw new AssertionFailedError(format(expected, actual, test, nullSafeGet(messageSupplier)),
-        expected, actual);
+  /**
+   * \<em>Asserts\</em> the test between {@code expected\} and {@code actual\}.
+   *
+   * \<p>If necessary, the failure message will be retrieved lazily from the supplied
+   * {@code messageSupplier\}.
+   *
+   * @param expected The expected value.
+   * @param actual The value to check against \<code>expected\</code>.
+   * @param test The test.
+   * @param messageSupplier The message supplier.
+   */
+  static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
+      Supplier\<String> messageSupplier) {
+    if (!test.test(expected, actual)) {
+      throw new AssertionFailedError(format(expected, actual, test, nullSafeGet(messageSupplier)),
+          expected, actual);
+    \}
   \}
-\}
 
-/**
- * \<em>Asserts\</em> the test on {@code value\}.
- *
- * \<p>Fails with the supplied failure {@code message\}.
- *
- * @param value The value to test.
- * @param test The test.
- * @param message The message.
- */
-static void assertTest(<type> value, <Type>Predicate test, String message) {
-  if (!test.test(value)) {
-    throw new AssertionFailedError(format(value, test, message), null, value);
+  /**
+   * \<em>Asserts\</em> the test on {@code value\}.
+   *
+   * \<p>Fails with the supplied failure {@code message\}.
+   *
+   * @param value The value to test.
+   * @param test The test.
+   * @param message The message.
+   */
+  static void assertTest(<type> value, <Type>Predicate test, String message) {
+    if (!test.test(value)) {
+      throw new AssertionFailedError(format(value, test, message), null, value);
+    \}
   \}
-\}
 
-/**
- * \<em>Asserts\</em> the test on {@code value\}.
- *
- * \<p>If necessary, the failure message will be retrieved lazily from the supplied
- * {@code messageSupplier\}.
- *
- * @param value The value to test.
- * @param test The test.
- * @param messageSupplier The message supplier.
- */
-static void assertTest(<type> value, <Type>Predicate test, Supplier\<String> messageSupplier) {
-  if (!test.test(value)) {
-    throw new AssertionFailedError(format(value, test, nullSafeGet(messageSupplier)), null,
-        value);
-  \}
-\}}>
-  <types,Types,Classes:{type,Type,Class |
+  /**
+   * \<em>Asserts\</em> the test on {@code value\}.
+   *
+   * \<p>If necessary, the failure message will be retrieved lazily from the supplied
+   * {@code messageSupplier\}.
+   *
+   * @param value The value to test.
+   * @param test The test.
+   * @param messageSupplier The message supplier.
+   */
+  static void assertTest(<type> value, <Type>Predicate test, Supplier\<String> messageSupplier) {
+    if (!test.test(value)) {
+      throw new AssertionFailedError(format(value, test, nullSafeGet(messageSupplier)), null,
+          value);
+    \}
+  \}}><types,Types,Classes:{type,Type,Class |
 <\n>
-/**
-* Format the message.
- *
- * \<p>Adapted from {@code format(Object, Object, String)\}.
- *
- * @param expected The expected value.
- * @param actual The value to check against \<code>expected\</code>.
- * @param test The test.
- * @param message The message.
- * @return the formatted message
- */
-static String format(<type> expected, <type> actual, <Type><Type>BiPredicate test,
-    String message) {
-  return buildPrefix(message) + formatValues(expected, actual, test);
-\}
+  /**
+  * Format the message.
+   *
+   * \<p>Adapted from {@code format(Object, Object, String)\}.
+   *
+   * @param expected The expected value.
+   * @param actual The value to check against \<code>expected\</code>.
+   * @param test The test.
+   * @param message The message.
+   * @return the formatted message
+   */
+  static String format(<type> expected, <type> actual, <Type><Type>BiPredicate test,
+      String message) {
+    return buildPrefix(message) + formatValues(expected, actual, test);
+  \}
 
-/**
- * Format the message.
- *
- * @param value The value to test.
- * @param test The test.
- * @param message The message.
- * @return the formatted message
- */
-static String format(<type> value, <Type>Predicate test, String message) {
-  return buildPrefix(message) + formatValue(value, test);
-\}}>
-  <types,Types,Classes:{type,Type,Class |
+  /**
+   * Format the message.
+   *
+   * @param value The value to test.
+   * @param test The test.
+   * @param message The message.
+   * @return the formatted message
+   */
+  static String format(<type> value, <Type>Predicate test, String message) {
+    return buildPrefix(message) + formatValue(value, test);
+  \}}><types,Types,Classes:{type,Type,Class |
+  <\n>
+  /**
+   * Format the values.
+   *
+   * \<p>Adapted from {@code formatValues(Object, Object)\}.
+   *
+   * @param expected The expected value.
+   * @param actual The value to check against \<code>expected\</code>.
+   * @param test The test.
+   * @return the formatted values
+   */
+  static String formatValues(<type> expected, <type> actual, <Type><Type>BiPredicate test) {
+    final StringBuilder msg = new StringBuilder(EXPECTED_FORMAT).append(expected)
+        .append(ACTUAL_FORMAT).append(actual).append('>');
+    appendPredicate(msg, test);
+    return msg.toString();
+  \}}><types,Types,Classes:{type,Type,Class |
 <\n>
-/**
- * Format the values.
- *
- * \<p>Adapted from {@code formatValues(Object, Object)\}.
- *
- * @param expected The expected value.
- * @param actual The value to check against \<code>expected\</code>.
- * @param test The test.
- * @return the formatted values
- */
-static String formatValues(<type> expected, <type> actual, <Type><Type>BiPredicate test) {
-  final StringBuilder msg = new StringBuilder(EXPECTED_FORMAT).append(expected)
-      .append(ACTUAL_FORMAT).append(actual).append('>');
-  appendPredicate(msg, test);
-  return msg.toString();
-\}}>
-  <types,Types,Classes:{type,Type,Class |
-<\n>
-/**
- * Format the value.
- *
- * @param value The value to test.
- * @param test The test.
- * @return the formatted values
- */
-static String formatValue(<type> value, <Type>Predicate test) {
-  final StringBuilder msg = new StringBuilder(VALUE_FORMAT).append(value).append('>');
-  appendPredicate(msg, test);
-  return msg.toString();
-\}}>
+  /**
+   * Format the value.
+   *
+   * @param value The value to test.
+   * @param test The test.
+   * @return the formatted values
+   */
+  static String formatValue(<type> value, <Type>Predicate test) {
+    final StringBuilder msg = new StringBuilder(VALUE_FORMAT).append(value).append('>');
+    appendPredicate(msg, test);
+    return msg.toString();
+  \}}>
 
   private static void appendPredicate(final StringBuilder msg, final Object predicate) {
     final String description = StringUtils.toString(predicate);

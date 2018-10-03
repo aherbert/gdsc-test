@@ -227,42 +227,118 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
   \}
 \}}>
 
-  // Adapted from AssertArrayEquals
+  /**
+   * \<em>Asserts\</em> the test between two elements from Object[] arrays.
+   *
+   * \<p>If the elements are matching array types then the appropriate assertArrayTest method is
+   * invoked, otherwise fails.
+   *
+   * @param expected The expected value.
+   * @param actual The value to check against \<code>expected\</code>.
+   * @param test The test.
+   */
   private static void assertArrayElements(Object expected, Object actual, PrimitiveBiPredicate test,
       Deque\<Integer> indexes, Object messageOrSupplier) {
-    if (expected instanceof Object[] && actual instanceof Object[]) {
+    if (expected instanceof Object[]) {
+      assertObjectArray(expected, actual);
       assertArrayTest((Object[]) expected, (Object[]) actual, test, indexes, messageOrSupplier);
     <types,Types:{type,Type |
-\} else if (expected instanceof <type>[] && actual instanceof <type>[]) {
-  if (!(test instanceof <Type><Type>BiPredicate)) {
-    throw new AssertionFailedError(
-        "Expected <Type><Type>BiPredicate but was: \<" + getClassName(test) + ">");
-  \}
+\} else if (expected instanceof <type>[]) {
+  assert<Type>Array(expected, actual);
+  assert<Type><Type>BiPredicate(test);
   assertArrayTest((<type>[]) expected, (<type>[]) actual, (<Type><Type>BiPredicate) test,
       indexes, messageOrSupplier);
 }>    } else {
-      throw new AssertionFailedError("Expected matching array types but was: \<"
-          + getClassName(expected) + "> and \<" + getClassName(actual) + ">");
+      failNotMatchingArrayTypes(expected, actual);
     }
   }
 
-  // Adapted from AssertArrayEquals
+  /**
+   * Asserts the actual object is a Object array.
+   *
+   * \<p>If false then fail using the array type of the expected object in the message.
+   *
+   * @param expected The expected object (should be an Object array).
+   * @param actual The actual object.
+   */
+  private static void assertObjectArray(Object expected, Object actual) {
+    if (!(actual instanceof Object[])) {
+      failNotMatchingArrayTypes(expected, actual);
+    }
+  }
+
+  /**
+   * Fail due to the array types not matching.
+   *
+   * @param expected The expected value.
+   * @param actual The value to check against <code>expected</code>.
+   */
+  private static void failNotMatchingArrayTypes(Object expected, Object actual)
+      throws AssertionFailedError {
+    throw new AssertionFailedError("Expected matching array types but was: \<"
+        + getClassName(expected) + "> and \<" + getClassName(actual) + ">");
+  }<types,Types:{type,Type |
+<\n>
+  /**
+   * Asserts the actual object is a primitive <type> array.
+   *
+   * \<p>If false then fail using the array type of the expected object in the message.
+   *
+   * @param expected The expected object (should be a primitive <type> array).
+   * @param actual The actual object.
+   */
+  private static void assert<Type>Array(Object expected, Object actual) {
+    if (!(actual instanceof <type>[])) {
+      failNotMatchingArrayTypes(expected, actual);
+    \}
+  \}
+
+  /**
+   * Asserts the test predicate is a <Type><Type>BiPredicate.
+   *
+   * @param test The test.
+   */
+  private static void assert<Type><Type>BiPredicate(PrimitiveBiPredicate test) {
+    if (!(test instanceof <Type><Type>BiPredicate)) {
+      throw new AssertionFailedError(
+          "Expected <Type><Type>BiPredicate but was: \<" + getClassName(test) + ">");
+    \}
+  \}}>
+
+  /**
+   * \<em>Asserts\</em> the test on an element from an Object[] array.
+   *
+   * \<p>If the element is a array then the appropriate assertArrayTest method is invoked,
+   * otherwise fails.
+   *
+   * @param value The value.
+   * @param test The test.
+   */
   private static void assertArrayElement(Object value, PrimitivePredicate test,
       Deque\<Integer> indexes, Object messageOrSupplier) {
     if (value instanceof Object[]) {
       assertArrayTest((Object[]) value, test, indexes, messageOrSupplier);
     <types,Types:{type,Type |
 \} else if (value instanceof <type>[]) {
-  if (!(test instanceof <Type>Predicate)) {
-    throw new AssertionFailedError(
-        "Expected <Type>Predicate but was: \<" + getClassName(test) + ">");
-  \}
+  assert<Type>Predicate(test);
   assertArrayTest((<type>[]) value, (<Type>Predicate) test, indexes, messageOrSupplier);
 }>    } else {
       throw new AssertionFailedError("Expected primitive array but was: \<"
           + getClassName(value) + ">");
     }
-  }
+  }<types,Types:{type,Type |
+<\n>
+  /**
+   * Asserts the test predicate is a <Type>Predicate.
+   *
+   * @param test The test.
+   */
+  private static void assert<Type>Predicate(PrimitivePredicate test) {
+    if (!(test instanceof <Type>Predicate)) {
+      throw new AssertionFailedError(
+          "Expected <Type>Predicate but was: \<" + getClassName(test) + ">");
+    \}
+  \}}>
 
   /**
    * Gets the class name of the object.
@@ -351,23 +427,21 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
    */
   private static String buildContentsFailMessage(Deque\<Integer> indexes, String formattedValue) {
     return "array content" + TestAssertionUtils.formatIndexes(indexes) + ", " + formattedValue;
-  }
-  <types,Types:{type,Type |
+  }<types,Types:{type,Type |
 <\n>
-private static String failArraysMessage(<type> expected, <type> actual,
-    <Type><Type>BiPredicate test, Deque\<Integer> indexes, Object messageOrSupplier) {
-  final String prefix = TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier));
-  final String message = buildContentsDifferMessage(indexes,
-      TestAssertionUtils.formatValues(expected, actual, test));
-  return prefix + message;
-\}}>
-  <types,Types:{type,Type |
-<\n>
-private static String failArrayMessage(<type> value, <Type>Predicate test,
-    Deque\<Integer> indexes, Object messageOrSupplier) {
-  final String prefix = TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier));
-  final String message = buildContentsFailMessage(indexes,
-      TestAssertionUtils.formatValue(value, test));
-  return prefix + message;
-\}}>
+  private static String failArraysMessage(<type> expected, <type> actual,
+      <Type><Type>BiPredicate test, Deque\<Integer> indexes, Object messageOrSupplier) {
+    final String prefix = TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier));
+    final String message = buildContentsDifferMessage(indexes,
+        TestAssertionUtils.formatValues(expected, actual, test));
+    return prefix + message;
+  \}}><types,Types:{type,Type |
+  <\n>
+  private static String failArrayMessage(<type> value, <Type>Predicate test,
+      Deque\<Integer> indexes, Object messageOrSupplier) {
+    final String prefix = TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier));
+    final String message = buildContentsFailMessage(indexes,
+        TestAssertionUtils.formatValue(value, test));
+    return prefix + message;
+  \}}>
 }
