@@ -292,7 +292,7 @@ public class TimingService {
       report(ps, lastN);
       ps.close();
       return getReport(baos);
-    } catch (UnsupportedEncodingException ex) {
+    } catch (final UnsupportedEncodingException ex) {
       // This should never happen since the encoding is a requirement of the JVM
       throw new Error("UTF-8 is not supported!", ex);
     }

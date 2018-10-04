@@ -66,11 +66,14 @@ public final class TestSettings {
    */
   public static final String PROPERTY_RANDOM_REPEATS = "gdsc.test.repeats";
 
+  /** The constant used to reset the seed. */
+  private static final byte[] NO_SEED = null;
+
   /** The allowed test complexity. */
   private static int testComplexity;
 
   /** The fixed seed for uniform random generator. */
-  private static long seed;
+  private static byte[] seed;
 
   /**
    * The number of repeats for tests using the seeded uniform random generator.
@@ -79,7 +82,7 @@ public final class TestSettings {
 
   static {
     testComplexity = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
-    seed = getProperty(PROPERTY_RANDOM_SEED, 0L);
+    setSeed(HexUtils.decodeHex(System.getProperty(PROPERTY_RANDOM_SEED)));
     repeats = getProperty(PROPERTY_RANDOM_REPEATS, 1);
     // Ensure repeated tests run once. They should be disabled using other
     // mechanisms.
@@ -141,6 +144,28 @@ public final class TestSettings {
   }
 
   /**
+   * Sets the seed.
+   *
+   * <p>If the input bytes contains no information then the seed is set to null.
+   *
+   * <p>This is package scope for testing.
+   *
+   * @param bytes the new seed
+   */
+  static void setSeed(byte[] bytes) {
+    setCurrentSeed((SeedUtils.emptyBytes(bytes)) ? NO_SEED : bytes.clone());
+  }
+
+  /**
+   * Sets the current seed.
+   *
+   * @param bytes the new current seed
+   */
+  private static synchronized void setCurrentSeed(byte[] bytes) {
+    seed = bytes;
+  }
+
+  /**
    * Gets the seed.
    *
    * <p>This is set using the system property {@value #PROPERTY_RANDOM_SEED}.
@@ -153,28 +178,18 @@ public final class TestSettings {
    *
    * @return the seed
    */
-  public static long getSeed() {
-    if (seed == 0) {
-      // Seed generation copied from Commons RNG
-      // org.apache.commons.rng.simple.internal.SeedFactory
-      final long t = System.currentTimeMillis();
-      final int h = System.identityHashCode(Runtime.getRuntime());
-      seed = t ^ makeLong(h, ~h);
+  public static byte[] getSeed() {
+    byte[] currentSeed = seed;
+    if (currentSeed == null) {
+      currentSeed = SeedUtils.generateSeed();
+      // Log the seed that is generated
       final Logger logger = Logger.getLogger(TestSettings.class.getName());
-      logger.log(Level.INFO, String.format("-D%s=%d", PROPERTY_RANDOM_SEED, seed));
+      logger.log(Level.INFO,
+          String.format("-D%s=%s", PROPERTY_RANDOM_SEED, HexUtils.encodeHexString(currentSeed)));
+      setCurrentSeed(currentSeed);
     }
-    return seed;
-  }
-
-  /**
-   * Make a long from two integer values.
-   *
-   * @param v1 Number 1 (high order bits).
-   * @param v2 Number 2 (low order bits).
-   * @return a {@code long} value.
-   */
-  private static long makeLong(int v1, int v2) {
-    return (((long) v1) << 32) | (v2 & 0xffffffffL);
+    // Do not expose the internal seed by using a copy
+    return currentSeed.clone();
   }
 
   /**

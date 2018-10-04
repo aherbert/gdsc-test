@@ -135,9 +135,9 @@ public class TestLogTest {
 
   @Test
   public void canSerializeRecord() throws IOException, ClassNotFoundException {
-    String format = "This is a supplier record: %d";
-    Object[] args = new Object[] {1};
-    String expected = String.format(format, args);
+    final String format = "This is a supplier record: %d";
+    final Object[] args = new Object[] {1};
+    final String expected = String.format(format, args);
     for (final Level l : new Level[] {TestLevel.TEST_INFO, TestLevel.TEST_DEBUG}) {
       checkSerialize(l, TestLog.getRecord(l, expected), expected);
       checkSerialize(l, TestLog.getRecord(l, format, args), expected);
@@ -148,14 +148,14 @@ public class TestLogTest {
   private static void checkSerialize(Level level, LogRecord record, String expected)
       throws IOException, ClassNotFoundException {
 
-    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    final ByteArrayOutputStream bos = new ByteArrayOutputStream();
     try (ObjectOutputStream out = new ObjectOutputStream(bos)) {
       out.writeObject(record);
     }
 
-    ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+    final ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
     try (ObjectInputStream in = new ObjectInputStream(bis)) {
-      LogRecord deserializedRecord = (LogRecord) in.readObject();
+      final LogRecord deserializedRecord = (LogRecord) in.readObject();
       Assertions.assertEquals(level, deserializedRecord.getLevel());
       Assertions.assertEquals(expected, deserializedRecord.getMessage());
     }

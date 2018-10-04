@@ -50,11 +50,26 @@ public class TestSettingsTest {
   @Test
   public void testGetSettings() {
     // Check the seed is random if not set as a parameter
-    final long seed = TestSettings.getSeed();
-    if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_SEED, 0L) == 0) {
-      Assertions.assertNotEquals(0, seed);
+    final byte[] seed = TestSettings.getSeed();
+    if (System.getProperty(TestSettings.PROPERTY_RANDOM_SEED) == null) {
+      Assertions.assertNotNull(seed, "Seed should be generated");
     }
-    logger.log(TEST_INFO, () -> String.format("TestSettings Seed = %d", seed));
+    final byte[] seed2 = TestSettings.getSeed();
+    Assertions.assertArrayEquals(seed, seed2, "Seed should be constant");
+    Assertions.assertNotSame(seed, seed2, "Seed should be a new array");
+    logger.log(TEST_INFO,
+        () -> String.format("TestSettings Seed = %s", HexUtils.encodeHexString(seed)));
+
+    // Test setting the seed to null
+    TestSettings.setSeed(null);
+    final byte[] seed3 = TestSettings.getSeed();
+    Assertions.assertThrows(AssertionError.class, () -> {
+      Assertions.assertArrayEquals(seed, seed3);
+    }, "Seed should be different");
+
+    // Restore
+    TestSettings.setSeed(seed);
+
     // Check the repeats is 1 if not set as a parameter
     final int repeats = TestSettings.getRepeats();
     if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_REPEATS, 0) == 0) {
