@@ -40,7 +40,7 @@
  * @see <a href="https://junit.org/junit4/">JUnit 4</a>
  * @see <a href="https://junit.org/junit5/">JUnit 5</a>
  * @see uk.ac.sussex.gdsc.test.utils.TestSettings
- * @since 1.0.0
+ * @since 1.0
  */
 
 package uk.ac.sussex.gdsc.test.utils;
