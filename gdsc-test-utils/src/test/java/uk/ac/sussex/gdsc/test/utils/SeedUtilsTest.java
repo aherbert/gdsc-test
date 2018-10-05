@@ -37,12 +37,20 @@ import java.util.Arrays;
 @SuppressWarnings("javadoc")
 public class SeedUtilsTest {
   @Test
-  public void testEmptyBytes() {
-    Assertions.assertTrue(SeedUtils.emptyBytes(null), "Null should be empty");
-    Assertions.assertTrue(SeedUtils.emptyBytes(new byte[0]), "byte[0] should be empty");
-    Assertions.assertTrue(SeedUtils.emptyBytes(new byte[10]), "byte[10] should be empty");
-    Assertions.assertFalse(SeedUtils.emptyBytes(new byte[] {1, 2, 3}),
+  public void testZeroBytes() {
+    Assertions.assertTrue(SeedUtils.zeroBytes(null), "Null should be empty");
+    Assertions.assertTrue(SeedUtils.zeroBytes(new byte[0]), "byte[0] should be empty");
+    Assertions.assertTrue(SeedUtils.zeroBytes(new byte[10]), "byte[10] should be empty");
+    Assertions.assertFalse(SeedUtils.zeroBytes(new byte[] {1, 2, 3}),
         "filled byte[] should not be empty");
+  }
+
+  @Test
+  public void testNullOrEmpty() {
+    Assertions.assertTrue(SeedUtils.nullOrEmpty(null), "Null should be null or empty");
+    Assertions.assertTrue(SeedUtils.nullOrEmpty(new byte[0]), "byte[0] should be null or empty");
+    Assertions.assertFalse(SeedUtils.nullOrEmpty(new byte[10]),
+        "byte[10] should be not null or empty");
   }
 
   @Test
@@ -186,5 +194,28 @@ public class SeedUtilsTest {
       Assertions.assertArrayEquals(values, actual,
           () -> nBytes + " byte trucated array is different");
     }
+  }
+
+  @Test
+  public void testMakeLong() {
+    Assertions.assertEquals(0L, SeedUtils.makeLong(), "No bytes should be zero");
+
+    // Check it is most significant first
+    final byte allBits = (byte) 0xFF;
+    final byte zeroBits = 0;
+    long expected = 0xFF00000000000000L;
+
+    Assertions.assertEquals(expected, SeedUtils.makeLong(allBits), "1 byte input (0xFF)");
+    Assertions.assertEquals(expected, SeedUtils.makeLong(allBits, zeroBits),
+        "2 byte input (0xFF00)");
+
+    expected >>>= Byte.SIZE;
+    Assertions.assertEquals(expected, SeedUtils.makeLong(zeroBits, allBits),
+        "2 byte input (0x00FF)");
+
+    // Test a full size long (8 bytes)
+    expected = 0xFFL;
+    Assertions.assertEquals(expected, SeedUtils.makeLong(zeroBits, zeroBits, zeroBits, zeroBits,
+        zeroBits, zeroBits, zeroBits, allBits), "8 byte input (0x00000000000000FF)");
   }
 }

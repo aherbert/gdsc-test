@@ -46,21 +46,37 @@ public final class SeedUtils {
   private SeedUtils() {}
 
   /**
-   * Check if the bytes contain only zeros.
+   * Check if the bytes contain only zeros (no information).
+   * 
+   * <p>This also returns true if the bytes are null or zero length.
    *
    * @param bytes the bytes
-   * @return true, if empty (or null)
+   * @return true if the array contains only zeros
    */
-  public static boolean emptyBytes(byte[] bytes) {
+  public static boolean zeroBytes(byte[] bytes) {
     if (bytes != null) {
       for (final byte b : bytes) {
         if (b != 0) {
-          // The bytes are not empty
+          // The bytes are not all zero
           return false;
         }
       }
     }
     return true;
+  }
+
+  /**
+   * Check if the bytes are null or empty (length zero).
+   * 
+   * <p>Note: An array that is zero filled will return false. This can be detected with a call to
+   * {@link #zeroBytes(byte[])}.
+   *
+   * @param bytes the bytes
+   * @return true if null or empty
+   * @see SeedUtils#zeroBytes(byte[])
+   */
+  public static boolean nullOrEmpty(byte[] bytes) {
+    return (bytes == null || bytes.length == 0);
   }
 
   /**
@@ -116,7 +132,7 @@ public final class SeedUtils {
     // Seed generation copied from Commons RNG
     // org.apache.commons.rng.simple.internal.SeedFactory
     final int hash = System.identityHashCode(Runtime.getRuntime());
-    final long hashLong = makeLong(hash, ~hash);
+    final long hashLong = createLong(hash, ~hash);
     // Pack as bytes
     return makeByteArray(time, hashLong);
   }
@@ -128,7 +144,7 @@ public final class SeedUtils {
    * @param v2 Number 2 (low order bits).
    * @return a {@code long} value.
    */
-  public static long makeLong(int v1, int v2) {
+  private static long createLong(int v1, int v2) {
     return (((long) v1) << 32) | (v2 & 0xffffffffL);
   }
 
@@ -203,7 +219,7 @@ public final class SeedUtils {
       // Update the shift to set the position in the long to write the bits
       shift -= Byte.SIZE;
       // Convert the byte to a long then shift
-      values[count] |= ((long) (bi & 0xFF) << shift);
+      values[count] |= ((bi & 0xFFL) << shift);
       if (shift == 0) {
         shift = Long.SIZE;
         count++;
@@ -242,5 +258,25 @@ public final class SeedUtils {
     }
 
     return values;
+  }
+
+  /**
+   * Make a {@code long} from a series of {@code byte} values.
+   *
+   * <p>Returns {@code 0} if the input is length zero.
+   *
+   * <p>Creates long values from the byte values then combines them using the xor operator.
+   *
+   * @param bytes the bytes (must not be null)
+   * @return the value
+   */
+  public static long makeLong(byte... bytes) {
+    long result = 0;
+    if (bytes.length > 0) {
+      for (long value : makeLongArray(bytes)) {
+        result ^= value;
+      }
+    }
+    return result;
   }
 }
