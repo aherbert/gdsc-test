@@ -35,8 +35,8 @@ import java.util.Arrays;
  * seed.
  *
  * <p>Each block is used to initialise an MD5 digest. Each call to scramble the seed will update the
- * digest with a random byte. The current digest state from each block are then concatenated to
- * create the scrambled sequence.
+ * digest with bytes from a sequence. The current digest state from each block are then concatenated
+ * to create the scrambled sequence.
  */
 public class ByteScrambler {
 
@@ -46,17 +46,14 @@ public class ByteScrambler {
   /** The message digest. */
   private final MessageDigest[] messageDigest;
 
-  /** The seed size. */
-  private final int seedSize;
-
   /** The block size. */
   private final int blockSize;
 
-  /** The bytes. */
-  private final byte[] bytes;
+  /** The seed bytes. */
+  private final byte[] seed;
 
-  /** The next byte. */
-  private byte nextByte;
+  /** The output bytes. */
+  private final byte[] bytes;
 
   /**
    * Instantiates a new byte scrambler using the MD5 algorithm.
@@ -66,7 +63,7 @@ public class ByteScrambler {
    *
    * @param seed the seed
    * @return the byte scrambler
-   * @throws RuntimeException If the MD5 algorithm is not supported or the the digest is not
+   * @throws IllegalArgumentException If the MD5 algorithm is not supported or the digest is not
    *         cloneable
    */
   public static ByteScrambler getByteScrambler(byte[] seed) {
@@ -74,7 +71,7 @@ public class ByteScrambler {
       return new ByteScrambler(seed, MD5_ALGORITHM);
     } catch (NoSuchAlgorithmException | CloneNotSupportedException ex) {
       // This should not happen
-      throw new RuntimeException("MD5 algorithm not supported", ex);
+      throw new IllegalArgumentException("MD5 algorithm not supported", ex);
     }
   }
 
@@ -87,11 +84,10 @@ public class ByteScrambler {
    * @param algorithm the algorithm
    * @throws NoSuchAlgorithmException If the algorithm is not supported
    * @throws CloneNotSupportedException If the digest is not cloneable
+   * @throws IllegalArgumentException If the algorithm digest length is unknown
    */
   public ByteScrambler(byte[] seed, String algorithm)
       throws NoSuchAlgorithmException, CloneNotSupportedException {
-    seedSize = seed.length;
-
     // Try and create the digest
     final MessageDigest md = MessageDigest.getInstance(algorithm);
 
@@ -101,18 +97,18 @@ public class ByteScrambler {
       throw new IllegalArgumentException("Unknown block size for algorithm: " + algorithm);
     }
     final int blocks = (seed.length + blockSize - 1) / blockSize;
+
+    // Copy the seed
+    this.seed = seed.clone();
+    // Working space for digest output
     bytes = new byte[blocks * blockSize];
-    messageDigest = new MessageDigest[blocks];
 
     // Create a digest for each block of the original seed
-    for (int i = 0; i < blocks; i++) {
+    messageDigest = new MessageDigest[blocks];
+    messageDigest[0] = md;
+    for (int i = 1; i < blocks; i++) {
       // It must be cloneable to support staged computation
       messageDigest[i] = (MessageDigest) md.clone();
-
-      // Fill will a block from the seed
-      final int from = i * blockSize;
-      final int to = Math.min(seed.length, from + blockSize);
-      messageDigest[i].update(seed, from, to - from);
     }
   }
 
@@ -122,24 +118,34 @@ public class ByteScrambler {
    * @return the bytes
    */
   public byte[] scramble() {
+    // This changes all the bytes in the initial seed.
+    // The operation does not matter as the digest does the scrambling,
+    // it just needs to be fed (ideally) different bytes each round.
+    for (int i = 0; i < seed.length; i++) {
+      seed[i]++;
+    }
+
     for (int i = 0; i < messageDigest.length; i++) {
-      messageDigest[i].update(++nextByte);
+      // Update the digest
+      final int from = i * blockSize;
+      final int to = Math.min(seed.length, from + blockSize);
+      final int length = to - from;
+      messageDigest[i].update(seed, from, length);
 
       // Clone the digest to allow the state to continue
       MessageDigest md;
       try {
         md = (MessageDigest) messageDigest[i].clone();
-      } catch (final CloneNotSupportedException e) {
+      } catch (final CloneNotSupportedException ex) {
         // This should not happen as it has already been tested to be cloneable
-        throw new RuntimeException("Clone not supported", e);
+        throw new RuntimeException("Clone not supported", ex);
       }
 
       // Finalise the clone and copy to the current random bytes
       final byte[] digest = md.digest();
-      final int from = i * blockSize;
-      final int to = Math.min(bytes.length, from + blockSize);
       System.arraycopy(digest, 0, bytes, from, to - from);
     }
-    return Arrays.copyOf(bytes, seedSize);
+
+    return Arrays.copyOf(bytes, seed.length);
   }
 }
