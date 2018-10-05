@@ -25,13 +25,12 @@
 package uk.ac.sussex.gdsc.test.rng;
 
 import uk.ac.sussex.gdsc.test.utils.DataCache;
+import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.core.source64.SplitMix64;
 import org.apache.commons.rng.simple.RandomSource;
-
-import java.util.function.Function;
 
 /**
  * A factory for creation of random number generators (RNG) that implement
@@ -42,27 +41,10 @@ public final class RngFactory {
   /** Store the seeds for the UniformRandomProvider. */
   private static final DataCache<Long, int[]> seedCache = new DataCache<>();
 
-  /** The seed generator. */
-  private static SeedGenerator seedGenerator = new SeedGenerator();
-
   /**
-   * Class for generating full length seeds.
+   * The size of the state array of {@link RandomSource#MWC_256}.
    */
-  private static class SeedGenerator implements Function<Long, int[]> {
-    @Override
-    public int[] apply(Long source) {
-      // This has been copied from org.apache.commons.rng.simple.internal.SeedFactory
-
-      // Generate a full length seed using another RNG
-      final SplitMix64 rng = new SplitMix64(source);
-      final int n = 257; // Size of the state array of "MultiplyWithCarry256".
-      final int[] array = new int[n];
-      for (int i = 0; i < n; i++) {
-        array[i] = rng.nextInt();
-      }
-      return array;
-    }
-  }
+  private static final int MWC_256_SEED_SIZE = 257;
 
   /**
    * Do not allow public construction.
@@ -72,31 +54,53 @@ public final class RngFactory {
   /**
    * Gets the uniform random provider using the given seed.
    *
-   * <p>If the {@code seed} is {@code 0} then a random seed will be used.
+   * <p>If the {@code seed} is null or empty then a random seed will be used.
+   *
+   * <p>This makes use of a cache to improve construction performance.
+   *
+   * @param seed the seed
+   * @return the uniform random provider
+   * @see #create(long, boolean)
+   */
+  public static UniformRandomProvider create(byte[] seed) {
+    return create(seed, true);
+  }
+
+  /**
+   * Gets the uniform random provider using the given seed.
+   *
+   * <p>If the {@code seed} is null or empty then a random seed will be used.
    *
    * <p>This optionally makes use of a cache to improve construction performance by storing (and
-   * reusing) the full seed state of the provider for each input seed.
+   * reusing) the full seed state of the provider for each input seed. Set {@code cache} to false to
+   * limit memory usage.
    *
    * @param seed the seed
    * @param cache Set to true to enable the cache
    * @return the uniform random provider
    */
-  public static UniformRandomProvider create(long seed, boolean cache) {
-    if (seed == 0) {
+  public static UniformRandomProvider create(byte[] seed, boolean cache) {
+    if (SeedUtils.nullOrEmpty(seed)) {
       return RandomSource.create(RandomSource.MWC_256);
     }
+
+    // Currently the factory only supports limited functionality from the
+    // RNG library. Convert seed to a long.
+    final long longSeed = SeedUtils.makeLong(seed);
+
     final int[] fullSeed = (cache)
         // Use the cache
-        ? seedCache.getOrComputeIfAbsent(seed, seedGenerator)
+        ? seedCache.getOrComputeIfAbsent(longSeed, RngFactory::generateMwc256Seed)
         // Create a new seed
-        : seedGenerator.apply(seed);
+        : generateMwc256Seed(longSeed);
     return RandomSource.create(RandomSource.MWC_256, fullSeed);
   }
 
   /**
    * Gets the uniform random provider using the given seed.
    *
-   * <p>If the {@code seed} is {@code 0} then a random seed will be used.
+   * <p>Note: A value of {@code 0} for {@code seed} is valid. To obtain a randomly seeded provider
+   * use {@link #create(byte[])} using null as the seed.
    *
    * <p>This makes use of a cache to improve construction performance.
    *
@@ -109,10 +113,52 @@ public final class RngFactory {
   }
 
   /**
+   * Gets the uniform random provider using the given seed.
+   *
+   * <p>Note: A value of {@code 0} for {@code seed} is valid. To obtain a randomly seeded provider
+   * use {@link #create(byte[])} using null as the seed.
+   *
+   * <p>This optionally makes use of a cache to improve construction performance by storing (and
+   * reusing) the full seed state of the provider for each input seed. Set {@code cache} to false to
+   * limit memory usage.
+   *
+   * @param seed the seed
+   * @param cache Set to true to enable the cache
+   * @return the uniform random provider
+   */
+  public static UniformRandomProvider create(long seed, boolean cache) {
+    final int[] fullSeed = (cache)
+        // Use the cache
+        ? seedCache.getOrComputeIfAbsent(seed, RngFactory::generateMwc256Seed)
+        // Create a new seed
+        : generateMwc256Seed(seed);
+    return RandomSource.create(RandomSource.MWC_256, fullSeed);
+  }
+
+  /**
+   * Generating a full length seed for the {@link RandomSource#MWC_256} algorithm.
+   *
+   * @param seed the seed
+   * @return the full length seed
+   */
+  private static int[] generateMwc256Seed(long seed) {
+    // This has been copied from org.apache.commons.rng.simple.internal.SeedFactory
+
+    // Generate a full length seed using another RNG
+    final SplitMix64 rng = new SplitMix64(seed);
+    final int[] array = new int[MWC_256_SEED_SIZE];
+    for (int i = 0; i < MWC_256_SEED_SIZE; i++) {
+      array[i] = rng.nextInt();
+    }
+    return array;
+  }
+
+  /**
    * Gets a uniform random provider with a fixed seed set using the system property
    * {@link TestSettings#PROPERTY_RANDOM_SEED}.
    *
-   * <p>Note: To obtain a randomly seeded provider use {@link #create(long)} using zero as the seed.
+   * <p>Note: To obtain a randomly seeded provider use {@link #create(byte[])} using null as the
+   * seed.
    *
    * @return the uniform random provider
    */
