@@ -6,23 +6,34 @@
   <parent>
     <groupId>uk.ac.sussex.gdsc</groupId>
     <artifactId>gdsc-test-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>gdsc-test-doc</artifactId>
-  <!-- do not set packaging to pom, because otherwise we will receive "Not executing Javadoc as the project is not a Java 
+  <!-- do not set packaging to pom, because otherwise we will receive "Not executing Javadoc as the project is not a Java
     classpath-capable package" -->
 
   <name>GDSC Test Documentation</name>
   <description>Genome Damage and Stability Centre Test Documentation</description>
 
   <properties>
+    <!-- Workaround to avoid duplicating config files. -->
+    <parent.dir>${basedir}/..</parent.dir>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
 
-  <!-- Deopend on all other modules -->
+  <!-- Depend on all other modules -->
   <dependencies>
+    <dependency>
+      <groupId>uk.ac.sussex.gdsc</groupId>
+      <artifactId>gdsc-test-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>uk.ac.sussex.gdsc</groupId>
+      <artifactId>gdsc-test-api-tests</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
       <artifactId>gdsc-test-utils</artifactId>
@@ -90,6 +101,10 @@
               <use>true</use>
               <version>false</version>
               <groups>
+                <group>
+                  <title>Test API Package</title>
+                  <packages>uk.ac.sussex.gdsc.test.api*</packages>
+                </group>
                 <group>
                   <title>Utilities Package</title>
                   <packages>uk.ac.sussex.gdsc.test.utils*</packages>

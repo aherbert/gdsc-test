@@ -1,13 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>uk.ac.sussex.gdsc</groupId>
     <artifactId>gdsc-test-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>gdsc-test-utils</artifactId>
@@ -19,6 +17,11 @@
 Contains utilities for use with test frameworks.
 </description>
 
+  <properties>
+    <!-- Workaround to avoid duplicating config files. -->
+    <parent.dir>${basedir}/..</parent.dir>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -28,6 +31,11 @@ Contains utilities for use with test frameworks.
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-rng-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
