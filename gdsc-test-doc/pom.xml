@@ -41,11 +41,6 @@
     </dependency>
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
-      <artifactId>gdsc-test-junit4</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>uk.ac.sussex.gdsc</groupId>
       <artifactId>gdsc-test-junit5</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -112,10 +107,6 @@
                 <group>
                   <title>JUnit 5 Package</title>
                   <packages>uk.ac.sussex.gdsc.test.junit5*</packages>
-                </group>
-                <group>
-                  <title>JUnit4 Package</title>
-                  <packages>uk.ac.sussex.gdsc.test.junit4*</packages>
                 </group>
                 <group>
                   <title>RNG Package</title>
