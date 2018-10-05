@@ -44,7 +44,7 @@ public class TestAssertionsTest {
   /**
    * Assert the message contains the sub-string.
    *
-   * <p>If missing fails with a description of the sub-string.
+   * \<p>If missing fails with a description of the sub-string.
    *
    * @param message the message
    * @param subString the sub-string
@@ -196,7 +196,7 @@ public class TestAssertionsTest {
     assertMessageContains(message, "<Type> limit", "the predicate description");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
-    // Test with a custom predicate which does not implement Supplier<String> (i.e. no description)
+    // Test with a custom predicate which does not implement Supplier\<String> (i.e. no description)
     <Type>Predicate customPredicate = (v) -> false;
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertTest(value, customPredicate);
@@ -254,7 +254,7 @@ public class TestAssertionsTest {
     assertMessageContains(message, "<Type><Type>Bi limit", "the predicate description");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
-    // Test with a custom predicate which does not implement Supplier<String> (i.e. no description)
+    // Test with a custom predicate which does not implement Supplier\<String> (i.e. no description)
     <Type><Type>BiPredicate customPredicate = (v1,v2) -> false;
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertTest(value1, value2, customPredicate);
@@ -313,7 +313,7 @@ public class TestAssertionsTest {
     assertMessageContains(message, "null", "the failure was due to the value being null");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
-    // Test with a custom predicate which does not implement Supplier<String> (i.e. no description)
+    // Test with a custom predicate which does not implement Supplier\<String> (i.e. no description)
     <Type>Predicate customPredicate = (v) -> false;
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(value, customPredicate);
@@ -424,7 +424,7 @@ public class TestAssertionsTest {
     assertMessageContains(message, "lengths differ", "the failure was to to different lengths");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
-    // Test with a custom predicate which does not implement Supplier<String> (i.e. no description)
+    // Test with a custom predicate which does not implement Supplier\<String> (i.e. no description)
     <Type><Type>BiPredicate customPredicate = (v1,v2) -> false;
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(value1, value2, customPredicate);

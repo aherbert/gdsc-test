@@ -271,7 +271,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
    * Fail due to the array types not matching.
    *
    * @param expected The expected value.
-   * @param actual The value to check against <code>expected</code>.
+   * @param actual The value to check against \<code>expected\</code>.
    */
   private static void failNotMatchingArrayTypes(Object expected, Object actual)
       throws AssertionFailedError {
