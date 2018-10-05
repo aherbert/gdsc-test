@@ -24,6 +24,8 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
+import uk.ac.sussex.gdsc.test.utils.SeedUtils;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -49,6 +51,9 @@ public class RandomSeed implements Serializable {
 
   /** The hash code. */
   private int hash;
+
+  /** The seed as a long. */
+  private long seedAsLong;
 
   /**
    * Instantiates a new random seed.
@@ -82,6 +87,22 @@ public class RandomSeed implements Serializable {
    */
   public byte[] getSeed() {
     return seed.clone();
+  }
+
+  /**
+   * Gets the seed as a single long value.
+   * 
+   * <p>The seed is created using all of the information in the byte seed.
+   *
+   * @return the seed as a long
+   */
+  public long getSeedAsLong() {
+    long result = seedAsLong;
+    if (result == 0) {
+      result = SeedUtils.makeLong(seed);
+      seedAsLong = result;
+    }
+    return result;
   }
 
   /**

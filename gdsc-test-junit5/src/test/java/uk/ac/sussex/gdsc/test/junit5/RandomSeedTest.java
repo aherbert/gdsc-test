@@ -24,6 +24,10 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
+import uk.ac.sussex.gdsc.test.utils.SeedUtils;
+
+import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
@@ -92,14 +96,37 @@ public class RandomSeedTest {
   public void testHashCode() {
     final int currentRepetition = 1678;
     final int totalRepetitions = 579797;
+
+    // Zero length seed
     final RandomSeed rs1 = new RandomSeed(new byte[0], currentRepetition, totalRepetitions);
     Assertions.assertFalse(rs1.hashCode() == 0, "Hashcode is zero for zero length seed");
 
-    // Same seed
+    // Length 1 seed
     final RandomSeed rs2 = new RandomSeed(new byte[1], currentRepetition, totalRepetitions);
     Assertions.assertFalse(rs2.hashCode() == 0, "Hashcode is zero for length 1 seed");
 
     Assertions.assertFalse(rs1.hashCode() == rs2.hashCode(),
         "Hashcode is same for different length zero filled seeds");
+  }
+
+  @Test
+  public void testGetSeedAsLong() {
+    final int currentRepetition = 1;
+    final int totalRepetitions = 1;
+
+    // The long value should be the same a long converted to a byte array
+    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    long value = rng.nextLong();
+    for (int i = 0; i < 5; i++) {
+      RandomSeed rs =
+          new RandomSeed(SeedUtils.makeByteArray(value), currentRepetition, totalRepetitions);
+      Assertions.assertEquals(value, rs.getSeedAsLong(),
+          "Single long converted to byte[] doesn't match");
+      long value2 = value;
+      value = rng.nextLong();
+      rs = new RandomSeed(SeedUtils.makeByteArray(value, value2), currentRepetition, totalRepetitions);
+      Assertions.assertNotEquals(value, rs.getSeedAsLong(),
+          "Two longs converted to byte[] matches the first long value");
+    }
   }
 }
