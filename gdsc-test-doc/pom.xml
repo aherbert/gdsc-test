@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>gdsc-test-doc</artifactId>
-  <!-- do not set packaging to pom, because otherwise we will receive "Not executing Javadoc as the project is not a Java
+  <!-- do not set packaging to pom, because otherwise we will receive "Not executing Javadoc as the project is not a Java 
     classpath-capable package" -->
 
   <name>GDSC Test Documentation</name>
@@ -26,12 +26,12 @@
   <dependencies>
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
-      <artifactId>gdsc-test-api</artifactId>
+      <artifactId>gdsc-test-api-generator</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
-      <artifactId>gdsc-test-api-tests</artifactId>
+      <artifactId>gdsc-test-api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
