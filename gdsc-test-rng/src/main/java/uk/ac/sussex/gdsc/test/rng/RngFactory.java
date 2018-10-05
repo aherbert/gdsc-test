@@ -24,13 +24,15 @@
 
 package uk.ac.sussex.gdsc.test.rng;
 
-import uk.ac.sussex.gdsc.test.utils.DataCache;
 import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.core.source64.SplitMix64;
 import org.apache.commons.rng.simple.RandomSource;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A factory for creation of random number generators (RNG) that implement
@@ -39,7 +41,7 @@ import org.apache.commons.rng.simple.RandomSource;
 public final class RngFactory {
 
   /** Store the seeds for the UniformRandomProvider. */
-  private static final DataCache<Long, int[]> seedCache = new DataCache<>();
+  private static final Map<Long, int[]> seedCache = new ConcurrentHashMap<>();
 
   /**
    * The size of the state array of {@link RandomSource#MWC_256}.
@@ -90,7 +92,7 @@ public final class RngFactory {
 
     final int[] fullSeed = (cache)
         // Use the cache
-        ? seedCache.getOrComputeIfAbsent(longSeed, RngFactory::generateMwc256Seed)
+        ? seedCache.computeIfAbsent(longSeed, RngFactory::generateMwc256Seed)
         // Create a new seed
         : generateMwc256Seed(longSeed);
     return RandomSource.create(RandomSource.MWC_256, fullSeed);
@@ -129,7 +131,7 @@ public final class RngFactory {
   public static UniformRandomProvider create(long seed, boolean cache) {
     final int[] fullSeed = (cache)
         // Use the cache
-        ? seedCache.getOrComputeIfAbsent(seed, RngFactory::generateMwc256Seed)
+        ? seedCache.computeIfAbsent(seed, RngFactory::generateMwc256Seed)
         // Create a new seed
         : generateMwc256Seed(seed);
     return RandomSource.create(RandomSource.MWC_256, fullSeed);
