@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.junit5;
 
 import org.junit.jupiter.api.Assertions;
@@ -28,61 +29,77 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 @SuppressWarnings("javadoc")
-public class RandomSeedTest
-{
-    @SuppressWarnings("unused")
-    @Test
-    public void canConstruct()
-    {
-        long seed = 67868L;
-        int currentRepetition = 1678;
-        int totalRepetitions = 579797;
-        RandomSeed rs = new RandomSeed(seed, currentRepetition, totalRepetitions);
-        Assertions.assertNotNull(rs);
-        Assertions.assertEquals(seed, rs.getSeed());
-        Assertions.assertEquals(currentRepetition, rs.getCurrentRepetition());
-        Assertions.assertEquals(totalRepetitions, rs.getTotalRepetitions());
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new RandomSeed(seed, 0, totalRepetitions);
-        });
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new RandomSeed(seed, 1, 0);
-        });
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new RandomSeed(seed, totalRepetitions + 1, totalRepetitions);
-        });
-    }
+public class RandomSeedTest {
+  @SuppressWarnings("unused")
+  @Test
+  public void testConstructor() {
+    final byte[] seed = {1, 2, 3, 4, 5};
+    final int currentRepetition = 1678;
+    final int totalRepetitions = 579797;
 
-    @Test
-    public void canEquals()
-    {
-        long seed = 67868L;
-        int currentRepetition = 1678;
-        int totalRepetitions = 579797;
-        RandomSeed rs1 = new RandomSeed(seed, currentRepetition, totalRepetitions);
-        Assertions.assertNotNull(rs1);
-        Assertions.assertEquals(rs1, rs1);
-        Assertions.assertThrows(AssertionFailedError.class, () -> {
-            Assertions.assertEquals(rs1, null);
-        });
-        Assertions.assertThrows(AssertionFailedError.class, () -> {
-            Assertions.assertEquals(rs1, new Object());
-        });
+    final RandomSeed rs = new RandomSeed(seed, currentRepetition, totalRepetitions);
+    Assertions.assertNotSame(seed, rs.getSeed(), "Seed reference");
+    Assertions.assertArrayEquals(seed, rs.getSeed(), "Seed");
+    Assertions.assertEquals(currentRepetition, rs.getCurrentRepetition(), "Current repetition");
+    Assertions.assertEquals(totalRepetitions, rs.getTotalRepetitions(), "Total repetitions");
 
-        // Same seed
-        RandomSeed rs2 = new RandomSeed(seed, currentRepetition, totalRepetitions);
-        Assertions.assertNotNull(rs2);
-        Assertions.assertNotSame(rs1, rs2);
-        Assertions.assertEquals(rs1, rs2);
-        Assertions.assertEquals(rs1.hashCode(), rs2.hashCode());
+    Assertions.assertThrows(NullPointerException.class, () -> {
+      new RandomSeed(null, currentRepetition, totalRepetitions);
+    }, "Null seed");
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new RandomSeed(seed, 0, totalRepetitions);
+    }, "Zero current repetition");
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new RandomSeed(seed, 1, 0);
+    }, "Zero total repetitions");
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      new RandomSeed(seed, totalRepetitions + 1, totalRepetitions);
+    }, "Current repetitions above total repetitions");
+  }
 
-        // Different
-        RandomSeed rs3 = new RandomSeed(seed + 1, currentRepetition, totalRepetitions);
-        Assertions.assertNotNull(rs3);
-        Assertions.assertNotNull(rs2);
-        Assertions.assertNotEquals(rs1, rs3);
-        Assertions.assertThrows(AssertionFailedError.class, () -> {
-            Assertions.assertEquals(rs1.hashCode(), rs3.hashCode());
-        });
-    }
+  @Test
+  public void testEquals() {
+    final byte[] seed = {1, 2, 3, 4, 5};
+    final int currentRepetition = 1678;
+    final int totalRepetitions = 579797;
+
+    final RandomSeed rs1 = new RandomSeed(seed, currentRepetition, totalRepetitions);
+    Assertions.assertEquals(rs1, rs1, "Not equals to the same seed");
+    Assertions.assertEquals(rs1.hashCode(), rs1.hashCode(), "Hashcode not same with the same seed");
+    Assertions.assertThrows(AssertionFailedError.class, () -> {
+      Assertions.assertEquals(rs1, null);
+    }, "Equals null");
+    Assertions.assertThrows(AssertionFailedError.class, () -> {
+      Assertions.assertEquals(rs1, new Object());
+    }, "Equals another object");
+
+    // Same seed
+    final RandomSeed rs2 = new RandomSeed(seed, currentRepetition, totalRepetitions);
+    Assertions.assertEquals(rs1, rs2, "Not equals to a duplicate seed");
+    Assertions.assertEquals(rs1.hashCode(), rs2.hashCode(),
+        "Hashcode not same as a duplicate seed");
+
+    // Different seed
+    seed[0]++;
+    final RandomSeed rs3 = new RandomSeed(seed, currentRepetition, totalRepetitions);
+    Assertions.assertNotEquals(rs1, rs3, "Equals a different seed");
+    Assertions.assertThrows(AssertionFailedError.class, () -> {
+      Assertions.assertEquals(rs1.hashCode(), rs3.hashCode());
+    }, "Hashcode same as a different seed");
+  }
+
+  @Test
+  public void testHashCode() {
+    final int currentRepetition = 1678;
+    final int totalRepetitions = 579797;
+    final RandomSeed rs1 = new RandomSeed(new byte[0], currentRepetition, totalRepetitions);
+    Assertions.assertFalse(rs1.hashCode() == 0, "Hashcode is zero for zero length seed");
+
+    // Same seed
+    final RandomSeed rs2 = new RandomSeed(new byte[1], currentRepetition, totalRepetitions);
+    Assertions.assertFalse(rs2.hashCode() == 0, "Hashcode is zero for length 1 seed");
+
+    Assertions.assertFalse(rs1.hashCode() == rs2.hashCode(),
+        "Hashcode is same for different length zero filled seeds");
+  }
 }

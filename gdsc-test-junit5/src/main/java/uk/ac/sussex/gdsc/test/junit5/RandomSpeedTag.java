@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.junit5;
 
 import java.lang.annotation.ElementType;
@@ -31,15 +32,14 @@ import java.lang.annotation.Target;
 /**
  * {@code @RandomSpeedTag} is used to signal that the annotated method is both
  * <code>@</code>{@link SpeedTag} and <code>@</code>{@link RandomTag}.
- * <p>
- * {@code @RandomSpeedTag} may also be used as a meta-annotation in order to
- * create a custom <em>composed annotation</em> that inherits the semantics of
- * {@code @RandomSpeedTag}.
+ *
+ * <p>{@code @RandomSpeedTag} may also be used as a meta-annotation in order to create a custom
+ * <em>composed annotation</em> that inherits the semantics of {@code @RandomSpeedTag}.
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @SpeedTag
 @RandomTag
 public @interface RandomSpeedTag {
-    // Annotation
+  // Annotation
 }

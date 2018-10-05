@@ -21,38 +21,36 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.junit5;
+
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ArgumentsSource;
-
 /**
  * {@code @SeededTest} is used to signal that the annotated method is a
- * {@link org.junit.jupiter.params.ParameterizedTest} using an argument of type
- * {@link RandomSeed}. The
- * {@link org.junit.jupiter.params.provider.ArgumentsSource} for the test will
- * use a {@link RandomSeedSource} to provide the seeds. At least one seed will
- * be provided.
- * <p>
- * The annotation adds a {@code "seeded"} <code>@</code>{@link Tag} and
+ * {@link org.junit.jupiter.params.ParameterizedTest} using an argument of type {@link RandomSeed}.
+ * The {@link org.junit.jupiter.params.provider.ArgumentsSource} for the test will use a
+ * {@link RandomSeedSource} to provide the seeds. At least one seed will be provided.
+ *
+ * <p>The annotation adds a {@code "seeded"} <code>@</code>{@link Tag} and
  * <code>@</code>{@link RandomTag}.
- * <p>
- * {@code @SeededTest} may also be used as a meta-annotation in order to create
- * a custom <em>composed annotation</em> that inherits the semantics of
- * {@code @SeededTest}.
+ *
+ * <p>{@code @SeededTest} may also be used as a meta-annotation in order to create a custom
+ * <em>composed annotation</em> that inherits the semantics of {@code @SeededTest}.
  */
-@Target({ ElementType.ANNOTATION_TYPE, ElementType.METHOD })
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Tag("seeded")
 @ParameterizedTest
 @ArgumentsSource(RandomSeedSource.class)
 @RandomTag
 public @interface SeededTest {
-    // Annotation
+  // Annotation
 }

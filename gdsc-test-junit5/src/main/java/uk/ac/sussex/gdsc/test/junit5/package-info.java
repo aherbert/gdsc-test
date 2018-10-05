@@ -23,27 +23,18 @@
  */
 
 /**
- * <p>
- * Provides classes for use with the <a href="https://junit.org/junit5/">JUnit
- * 5</a> test framework.
- * </p>
- * <p>
- * The package contains:
- * </p>
- * <ul>
- * <li>Additional assert functions for floating point equality using relative
- * error (in contrast to the JUnit standard of absolute error)
- * <li>Annotations for test repeats with run-time configurable random seed
- * </ul>
- * <p>
- * The package is configured using java runtime arguments (see
+ * Provides classes for use with the <a href="https://junit.org/junit5/">JUnit 5</a> test framework.
+ *
+ * <p>The package contains:
+ *
+ * <ul><li>Annotations for test repeats with run-time configurable random seed</li></ul>
+ *
+ * <p>The package is configured using java runtime arguments (see
  * {@link uk.ac.sussex.gdsc.test.utils.TestSettings}).
- * </p>
  *
  * @see <a href="https://junit.org/junit5/">JUnit 5</a>
  * @see uk.ac.sussex.gdsc.test.utils.TestSettings
- *
- * @see <a href="https://junit.org/junit5/">JUnit 5</a>
  * @since 1.0.0
  */
+
 package uk.ac.sussex.gdsc.test.junit5;
