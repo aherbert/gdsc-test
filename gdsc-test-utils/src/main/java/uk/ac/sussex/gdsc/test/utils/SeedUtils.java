@@ -47,7 +47,7 @@ public final class SeedUtils {
 
   /**
    * Check if the bytes contain only zeros (no information).
-   * 
+   *
    * <p>This also returns true if the bytes are null or zero length.
    *
    * @param bytes the bytes
@@ -67,7 +67,7 @@ public final class SeedUtils {
 
   /**
    * Check if the bytes are null or empty (length zero).
-   * 
+   *
    * <p>Note: An array that is zero filled will return false. This can be detected with a call to
    * {@link #zeroBytes(byte[])}.
    *

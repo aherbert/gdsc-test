@@ -91,7 +91,7 @@ public class RandomSeed implements Serializable {
 
   /**
    * Gets the seed as a single long value.
-   * 
+   *
    * <p>The seed is created using all of the information in the byte seed.
    *
    * @return the seed as a long
