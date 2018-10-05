@@ -26,6 +26,7 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterAll;
@@ -48,34 +49,65 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testGetSettings() {
-    // Check the seed is random if not set as a parameter
-    final byte[] seed = TestSettings.getSeed();
-    if (System.getProperty(TestSettings.PROPERTY_RANDOM_SEED) == null) {
-      Assertions.assertNotNull(seed, "Seed should be generated");
+  public void testGetSeed() {
+    // Disable logging the seed
+    final Logger logger = Logger.getLogger(TestSettings.class.getName());
+    Level level = logger.getLevel();
+    logger.setLevel(Level.OFF);
+
+    try {
+      // Check the seed is random if not set as a parameter
+      final byte[] seed = TestSettings.getSeed();
+      if (System.getProperty(TestSettings.PROPERTY_RANDOM_SEED) == null) {
+        Assertions.assertNotNull(seed, "Seed should be generated");
+      }
+      final byte[] seed2 = TestSettings.getSeed();
+      Assertions.assertArrayEquals(seed, seed2, "Seed should be constant");
+      Assertions.assertNotSame(seed, seed2, "Seed should be a new array");
+      logger.log(TEST_INFO,
+          () -> String.format("TestSettings Seed = %s", HexUtils.encodeHexString(seed)));
+
+      // Test setting the seed to null
+      TestSettings.setSeed(null);
+      final byte[] seed3 = TestSettings.getSeed();
+      Assertions.assertThrows(AssertionError.class, () -> {
+        Assertions.assertArrayEquals(seed, seed3);
+      }, "Seed should be different after setting to null");
+
+      // Test setting the seed to empty
+      TestSettings.setSeed(new byte[0]);
+      final byte[] seed4 = TestSettings.getSeed();
+      Assertions.assertThrows(AssertionError.class, () -> {
+        Assertions.assertArrayEquals(seed, seed4);
+      }, "Seed should be different after setting to empty");
+
+      // Test setting the seed to empty
+      byte[] zeroSeed = new byte[32];
+      TestSettings.setSeed(zeroSeed);
+      final byte[] seed5 = TestSettings.getSeed();
+      Assertions.assertArrayEquals(zeroSeed, seed5, "Zero filled seed is not supported");
+      Assertions.assertNotSame(zeroSeed, seed5, "Zero filled seed is copied by reference");
+
+      // Restore
+      TestSettings.setSeed(seed);
+
+    } finally {
+      logger.setLevel(level);
     }
-    final byte[] seed2 = TestSettings.getSeed();
-    Assertions.assertArrayEquals(seed, seed2, "Seed should be constant");
-    Assertions.assertNotSame(seed, seed2, "Seed should be a new array");
-    logger.log(TEST_INFO,
-        () -> String.format("TestSettings Seed = %s", HexUtils.encodeHexString(seed)));
+  }
 
-    // Test setting the seed to null
-    TestSettings.setSeed(null);
-    final byte[] seed3 = TestSettings.getSeed();
-    Assertions.assertThrows(AssertionError.class, () -> {
-      Assertions.assertArrayEquals(seed, seed3);
-    }, "Seed should be different");
-
-    // Restore
-    TestSettings.setSeed(seed);
-
+  @Test
+  public void testGetRepeats() {
     // Check the repeats is 1 if not set as a parameter
     final int repeats = TestSettings.getRepeats();
     if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_REPEATS, 0) == 0) {
       Assertions.assertEquals(1, repeats);
     }
     logger.log(TEST_INFO, () -> String.format("TestSettings Repeats = %d", repeats));
+  }
+
+  @Test
+  public void testGetComplexity() {
     // Currently no restrictions on complexity
     final int complexity = TestSettings.getTestComplexity();
     logger.log(TEST_INFO, () -> String.format("TestSettings Test Complexity = %d", complexity));

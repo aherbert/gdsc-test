@@ -146,14 +146,14 @@ public final class TestSettings {
   /**
    * Sets the seed.
    *
-   * <p>If the input bytes contains no information then the seed is set to null.
+   * <p>If the input bytes is null or empty then the seed is set to null.
    *
    * <p>This is package scope for testing.
    *
    * @param bytes the new seed
    */
   static void setSeed(byte[] bytes) {
-    setCurrentSeed((SeedUtils.emptyBytes(bytes)) ? NO_SEED : bytes.clone());
+    setCurrentSeed((SeedUtils.nullOrEmpty(bytes)) ? NO_SEED : bytes.clone());
   }
 
   /**
