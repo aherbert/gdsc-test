@@ -278,7 +278,7 @@ public class ApiGenerator {
     final String propsPath = FilenameUtils.removeExtension(stFile.getPath()) + ".properties";
     if (!new File(propsPath).exists()) {
       // Does not cause the code to fail
-      logger.log(Level.WARNING, () -> "No properies file: " + propsPath);
+      logger.log(Level.WARNING, () -> "No properties file: " + propsPath);
       return;
     }
 
@@ -301,7 +301,7 @@ public class ApiGenerator {
     final StringTemplateModel model =
         new StringTemplateModel(props, packageName, templateClassName, template);
 
-    if (canSkipModel(pathForTarget, model)) {
+    if (canSkipModel(stFile, pathForTarget, model)) {
       return;
     }
 
@@ -331,13 +331,15 @@ public class ApiGenerator {
   }
 
   /**
-   * Determine if all the model output files already exist and no overwrite option is enabled.
+   * Determine if all the model output files already exist, are newer than the template, and no
+   * overwrite option is enabled. This allows the template to be skipped.
    *
+   * @param stFile the string template file
    * @param pathForTarget the path for target
    * @param model the model
    * @return true, if the model can be skipped
    */
-  private boolean canSkipModel(File pathForTarget, StringTemplateModel model) {
+  private boolean canSkipModel(File stFile, File pathForTarget, StringTemplateModel model) {
     if (overwrite) {
       // Do not skip
       return false;
@@ -345,8 +347,8 @@ public class ApiGenerator {
     // Check all templates exist
     for (final String name : StringTemplateHelper.listNames(model)) {
       final File targetFile = getTargetFile(pathForTarget, name);
-      if (!targetFile.exists()) {
-        // Template missing
+      if (!FileUtils.isFileNewer(targetFile, stFile)) {
+        // Target file missing or not newer than the template
         return false;
       }
     }

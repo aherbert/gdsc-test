@@ -128,8 +128,8 @@ public class ApiGeneratorTest {
     FileUtils.write(headerFile, header, StandardCharsets.UTF_8);
 
     // Run the generator
-    final ExitCode result = ApiGenerator
-        .run(getArgs(pathForSource, pathForTarget, "-l", "WARNING", "--header", headerFile.getPath()));
+    final ExitCode result = ApiGenerator.run(
+        getArgs(pathForSource, pathForTarget, "-l", "WARNING", "--header", headerFile.getPath()));
     Assertions.assertEquals(ExitCode.OK, result, "Exit code");
 
     // Check the expected target templates
@@ -284,8 +284,8 @@ public class ApiGeneratorTest {
     // Write a template file
     final String templateClassName = "MyTemplate";
     final String template = "<gender>";
-    FileUtils.write(new File(sourceDir, templateClassName + ".st"), template,
-        StandardCharsets.UTF_8);
+    final File templateFile = new File(sourceDir, templateClassName + ".st");
+    FileUtils.write(templateFile, template, StandardCharsets.UTF_8);
 
     // Write a properties file
     final Properties properties = new Properties();
@@ -309,17 +309,30 @@ public class ApiGeneratorTest {
     final String template2 = FileUtils.readFileToString(templateFile2, StandardCharsets.UTF_8);
     Assertions.assertEquals("Female", template2, "Template 2");
 
-    // Change contents
+    // Change contents of the output Java file
     final String badContents = "nothing";
     FileUtils.write(templateFile1, badContents, StandardCharsets.UTF_8);
+    // Ensure the template file is modified before it
+    templateFile.setLastModified(templateFile1.lastModified() - 2000);
 
-    // Rerun - This will skip existing templates
+    // Rerun - This will skip existing newer output Java files
     result = ApiGenerator.run(getArgs(pathForSource, pathForTarget, "-l", "WARNING"));
     Assertions.assertEquals(ExitCode.OK, result, "Exit code");
 
     // Should be unchanged
     template1 = FileUtils.readFileToString(templateFile1, StandardCharsets.UTF_8);
     Assertions.assertEquals(badContents, template1, "Template 1");
+
+    // Ensure the Java file is older than the template file
+    templateFile1.setLastModified(templateFile.lastModified() - 2000);
+
+    // Rerun - This will generate only missing templates
+    result = ApiGenerator.run(getArgs(pathForSource, pathForTarget, "-l", "WARNING"));
+    Assertions.assertEquals(ExitCode.OK, result, "Exit code");
+
+    // Should be fixed
+    template1 = FileUtils.readFileToString(templateFile1, StandardCharsets.UTF_8);
+    Assertions.assertEquals("Male", template1, "Template 1");
 
     // Delete bad file
     templateFile1.delete();
