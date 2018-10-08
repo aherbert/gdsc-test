@@ -13,8 +13,8 @@ public class <Type><Type>EqualsTest {
    */
   @Test
   public void testTest() {
-    <Type><Type>Equals predicate = <Type><Type>Equals.getInstance();
-    <type>[] values = { <values> };
+    final <Type><Type>Equals predicate = <Type><Type>Equals.getInstance();
+    final <type>[] values = { <values> };
     for (<type> value1 : values) {
       for (<type> value2 : values) {
         Assertions.assertEquals(value1 == value2, predicate.test(value1, value2),
@@ -28,7 +28,7 @@ public class <Type><Type>EqualsTest {
    */
   @Test
   public void testGet() {
-    <Type><Type>Equals predicate = new <Type><Type>Equals();
+    final <Type><Type>Equals predicate = new <Type><Type>Equals();
     Assertions.assertTrue(predicate.get().contains("=="), "Description missing ==");
   }
 }

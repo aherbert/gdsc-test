@@ -13,8 +13,8 @@ public class <Float><Float>CmpTest {
    */
   @Test
   public void testTest() {
-    <Float><Float>Cmp predicate = <Float><Float>Cmp.getInstance();
-    <float>[] values = { <values> };
+    final <Float><Float>Cmp predicate = <Float><Float>Cmp.getInstance();
+    final <float>[] values = { <values> };
     for (<float> value1 : values) {
       for (<float> value2 : values) {
         Assertions.assertEquals(<Float>.compare(value1, value2) == 0,
@@ -29,7 +29,7 @@ public class <Float><Float>CmpTest {
    */
   @Test
   public void testGet() {
-    <Float><Float>Cmp predicate = new <Float><Float>Cmp();
+    final <Float><Float>Cmp predicate = new <Float><Float>Cmp();
     Assertions.assertTrue(predicate.get().contains("cmp"), "Description missing ==");
   }
 }

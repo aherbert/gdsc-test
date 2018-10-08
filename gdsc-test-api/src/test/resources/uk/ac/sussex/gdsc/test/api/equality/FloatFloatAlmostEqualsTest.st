@@ -13,15 +13,15 @@ public class <Float><Float>AlmostEqualsTest {
    */
   @Test
   public void testTest() {
+    final <float>[] values = { <values> };
     for (double relativeError : new double[] { -1, 0, 0.5}) {
       for (<float> absoluteError : new <float>[] { -1, 0, 1}) {
         if (relativeError \< 0 && absoluteError \< 0) {
           // Not a valid combination
           continue;
         }
-        <Float><Float>AlmostEquals predicate =
+        final <Float><Float>AlmostEquals predicate =
             new <Float><Float>AlmostEquals(relativeError, absoluteError);
-        <float>[] values = { <values> };
         for (<float> value1 : values) {
           for (<float> value2 : values) {
             boolean expected =
@@ -41,9 +41,10 @@ public class <Float><Float>AlmostEqualsTest {
    */
   @Test
   public void testGet() {
-    double relativeError = <relError>;
-    <float> absoluteError = <absError>;
-    <Float><Float>AlmostEquals predicate = new <Float><Float>AlmostEquals(relativeError, absoluteError);
+    final double relativeError = <relError>;
+    final <float> absoluteError = <absError>;
+    final <Float><Float>AlmostEquals predicate = new <Float><Float>AlmostEquals(relativeError,
+        absoluteError);
     for (String item : new String[] {"||", String.valueOf(relativeError),
         String.valueOf(absoluteError)}) {
       Assertions.assertTrue(predicate.get().contains(item),
