@@ -24,6 +24,31 @@ Generates API classes for the GDSC Test project.
     <project.mainClass>uk.ac.sussex.gdsc.test.api.generator.ApiGenerator</project.mainClass>
   </properties>
 
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.antlr/stringtemplate -->
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>stringtemplate</artifactId>
+      <version>4.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>3.5.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -72,30 +97,5 @@ Generates API classes for the GDSC Test project.
       </plugin>
     </plugins>
   </build>
-
-  <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.antlr/stringtemplate -->
-    <dependency>
-      <groupId>org.antlr</groupId>
-      <artifactId>stringtemplate</artifactId>
-      <version>4.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>info.picocli</groupId>
-      <artifactId>picocli</artifactId>
-      <version>3.5.2</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.6</version>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
 
 </project>
