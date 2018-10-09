@@ -24,12 +24,10 @@
 
 package uk.ac.sussex.gdsc.test.utils.functions;
 
-import java.util.IllegalFormatConversionException;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import uk.ac.sussex.gdsc.test.utils.functions.FunctionUtils;
+import java.util.IllegalFormatConversionException;
 
 @SuppressWarnings("javadoc")
 public class FunctionUtilsTest {

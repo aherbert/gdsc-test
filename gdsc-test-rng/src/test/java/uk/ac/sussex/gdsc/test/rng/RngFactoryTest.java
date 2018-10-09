@@ -21,40 +21,40 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.rng;
+
+import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 import org.apache.commons.rng.UniformRandomProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
-import uk.ac.sussex.gdsc.test.rng.RngFactory;
-import uk.ac.sussex.gdsc.test.utils.TestSettings;
-
 @SuppressWarnings("javadoc")
 public class RngFactoryTest {
 
   /** The long seed. */
-  private final long LONG_SEED = 5656787697789L;
+  private static final long LONG_SEED = 5656787697789L;
 
   /** The long seed. */
-  private final byte[] BYTE_SEED = {1, 2, 3, 4, 5, 6, 7, 8};
+  private static final byte[] BYTE_SEED = {1, 2, 3, 4, 5, 6, 7, 8};
 
   @Test
   public void canGetSameRandomWithSameSeed() {
-    UniformRandomProvider r = RngFactory.create(LONG_SEED);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(LONG_SEED);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.create(LONG_SEED);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(LONG_SEED);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o);
   }
 
   @Test
   public void canGetDifferentRandomWithDifferentSeed() {
-    UniformRandomProvider r = RngFactory.create(LONG_SEED);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(LONG_SEED * 2);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.create(LONG_SEED);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(LONG_SEED * 2);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
     });
@@ -63,45 +63,45 @@ public class RngFactoryTest {
   @Test
   public void canGetSameRandomWithZeroSeed() {
     // Test zero is allowed as a random seed.
-    UniformRandomProvider r = RngFactory.create(0);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(0);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.create(0);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(0);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o);
   }
 
   @Test
   public void canGetSameRandomWithSameSeedAndNoCache() {
-    final long seed = this.LONG_SEED + 1;
-    UniformRandomProvider r = RngFactory.create(seed, false);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(seed, false);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    final long seed = LONG_SEED + 1;
+    UniformRandomProvider rng = RngFactory.create(seed, false);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(seed, false);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o);
 
     // Check verses cached version
-    r = RngFactory.create(seed);
-    final double[] o2 = {r.nextDouble(), r.nextDouble()};
+    rng = RngFactory.create(seed);
+    final double[] o2 = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o2);
   }
 
   @Test
   public void canGetSameRandomWithSameByteSeed() {
-    UniformRandomProvider r = RngFactory.create(BYTE_SEED);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(BYTE_SEED);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.create(BYTE_SEED);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(BYTE_SEED);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o);
   }
 
   @Test
   public void canGetDifferentRandomWithDifferentByteSeed() {
-    UniformRandomProvider r = RngFactory.create(BYTE_SEED);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.create(BYTE_SEED);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
     final byte[] seed = BYTE_SEED.clone();
     seed[0]++;
-    r = RngFactory.create(seed);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    rng = RngFactory.create(seed);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
     });
@@ -110,10 +110,10 @@ public class RngFactoryTest {
   @Test
   public void canGetDifferentRandomWithNullByteSeed() {
     // The use of a null byte[] seed will create randomly seeded RNG
-    UniformRandomProvider r = RngFactory.create(null);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(null);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.create(null);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(null);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
     });
@@ -123,10 +123,10 @@ public class RngFactoryTest {
   public void canGetDifferentRandomWithZeroLengthByteSeed() {
     // The use of a null byte[] seed will create randomly seeded RNG
     final byte[] seed = new byte[0];
-    UniformRandomProvider r = RngFactory.create(seed);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(seed);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.create(seed);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(seed);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
     });
@@ -136,25 +136,25 @@ public class RngFactoryTest {
   public void canGetSameRandomWithSameByteSeedAndNoCache() {
     final byte[] seed = BYTE_SEED.clone();
     seed[0]++;
-    UniformRandomProvider r = RngFactory.create(seed, false);
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(seed, false);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.create(seed, false);
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(seed, false);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o);
 
     // Check verses cached version
-    r = RngFactory.create(seed);
-    final double[] o2 = {r.nextDouble(), r.nextDouble()};
+    rng = RngFactory.create(seed);
+    final double[] o2 = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o2);
   }
 
   @Test
   public void canGetSameRandomWithFixedSeedMatchingConfiguredSeed() {
     final byte[] seed = TestSettings.getSeed();
-    UniformRandomProvider r = RngFactory.createWithFixedSeed();
-    final double[] e = {r.nextDouble(), r.nextDouble()};
-    r = RngFactory.create(seed, true);
-    final double[] o = {r.nextDouble(), r.nextDouble()};
+    UniformRandomProvider rng = RngFactory.createWithFixedSeed();
+    final double[] e = {rng.nextDouble(), rng.nextDouble()};
+    rng = RngFactory.create(seed, true);
+    final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o);
   }
 }

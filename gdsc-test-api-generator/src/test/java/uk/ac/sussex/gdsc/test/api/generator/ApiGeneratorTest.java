@@ -24,6 +24,12 @@
 
 package uk.ac.sussex.gdsc.test.api.generator;
 
+import uk.ac.sussex.gdsc.test.api.generator.ApiGenerator.ExitCode;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,12 +37,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
-
-import uk.ac.sussex.gdsc.test.api.generator.ApiGenerator.ExitCode;
-
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
 public class ApiGeneratorTest {

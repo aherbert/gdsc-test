@@ -26,6 +26,13 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
 
+import uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -36,13 +43,6 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel;
 
 @SuppressWarnings("javadoc")
 public class TestLogTest {
@@ -110,10 +110,12 @@ public class TestLogTest {
     final StringBuilder sb = new StringBuilder("A StringBuilder passed as an object");
     for (final Level l : new Level[] {TestLevel.TEST_INFO, TestLevel.TEST_DEBUG}) {
       //@formatter:off
+      //CHECKSTYLE:OFF
       logger.log(check(l, TestLog.getRecord(l, "This is a record"), "This is a record"));
       logger.log(check(l, TestLog.getRecord(l, "This is a formatted record: %d", 1), String.format("This is a formatted record: %d", 1)));
       logger.log(check(l, TestLog.getRecord(l, () -> String.format("This is a supplier record: %d", 1)), String.format("This is a supplier record: %d", 1)));
       logger.log(check(l, TestLog.getRecord(l, sb), sb.toString()));
+      //CHECKSTYLE:ON
       //@formatter:on
     }
   }

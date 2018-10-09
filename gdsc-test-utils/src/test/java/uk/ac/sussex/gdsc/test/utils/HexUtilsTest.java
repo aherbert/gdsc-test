@@ -24,31 +24,31 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
-import java.util.Arrays;
-
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 @SuppressWarnings("javadoc")
 public class HexUtilsTest {
 
   @Test
   public void testEncodeWithBadInput() {
-    final String EMPTY = "";
-    Assertions.assertEquals(EMPTY, HexUtils.encodeHexString(null), "Null input");
-    Assertions.assertEquals(EMPTY, HexUtils.encodeHexString(new byte[0]), "Empty input");
+    final String empty = "";
+    Assertions.assertEquals(empty, HexUtils.encodeHexString(null), "Null input");
+    Assertions.assertEquals(empty, HexUtils.encodeHexString(new byte[0]), "Empty input");
   }
 
   @Test
   public void testDecodeWithBadInput() {
-    final byte[] EMPTY = new byte[0];
-    Assertions.assertArrayEquals(EMPTY, HexUtils.decodeHex(null), "Null input");
-    Assertions.assertArrayEquals(EMPTY, HexUtils.decodeHex(""), "Empty input");
-    Assertions.assertArrayEquals(EMPTY, HexUtils.decodeHex("j"), "Bad single chaarcter");
-    Assertions.assertArrayEquals(EMPTY, HexUtils.decodeHex("abcsfp678"),
+    final byte[] empty = new byte[0];
+    Assertions.assertArrayEquals(empty, HexUtils.decodeHex(null), "Null input");
+    Assertions.assertArrayEquals(empty, HexUtils.decodeHex(""), "Empty input");
+    Assertions.assertArrayEquals(empty, HexUtils.decodeHex("j"), "Bad single chaarcter");
+    Assertions.assertArrayEquals(empty, HexUtils.decodeHex("abcsfp678"),
         "Bad single character in larger string");
   }
 
@@ -72,7 +72,7 @@ public class HexUtilsTest {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
     final boolean toLowerCase = true;
     /** Output Hex characters. */
-    final char[] HEX_DIGITS =
+    final char[] hexDigits =
         {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     for (int i = 1; i < 20; i++) {
       final byte[] bytes = new byte[i];
@@ -84,7 +84,7 @@ public class HexUtilsTest {
 
         // Test with odd length string. It should be the same as if it had a '0' on the end.
         final StringBuilder sb = new StringBuilder(hex);
-        sb.append(HEX_DIGITS[rng.nextInt(16)]);
+        sb.append(hexDigits[rng.nextInt(16)]);
 
         final byte[] padded = HexUtils.decodeHex(sb);
         sb.append('0');

@@ -24,11 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.api.generator;
 
-import java.util.List;
-import java.util.Properties;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Properties;
 
 @SuppressWarnings("javadoc")
 public class StringTemplateHelperTest {

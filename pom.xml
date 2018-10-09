@@ -81,6 +81,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <spotbugs.version>3.1.6</spotbugs.version>
+    <checkstyle.version>8.13</checkstyle.version>
     <pmd.version>6.7.0</pmd.version>
     <!-- Maven -->
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -220,6 +221,17 @@ The GDSC Test package contains code for use with the JUnit test framework.
           </configuration>
         </plugin>
         <plugin>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven-checkstyle-plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>${checkstyle.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
           <artifactId>maven-pmd-plugin</artifactId>
           <version>${maven-pmd-plugin.version}</version>
           <dependencies>
@@ -314,13 +326,13 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven-checkstyle-plugin.version}</version>
         <configuration>
           <configLocation>${parent.dir}/src/main/resources/checkstyle/checkstyle.xml</configLocation>
           <encoding>UTF-8</encoding>
           <consoleOutput>true</consoleOutput>
           <failsOnError>true</failsOnError>
           <linkXRef>true</linkXRef>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
         </configuration>
         <executions>
           <execution>

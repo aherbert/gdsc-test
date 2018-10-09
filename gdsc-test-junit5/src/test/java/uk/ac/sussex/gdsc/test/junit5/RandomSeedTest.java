@@ -124,7 +124,8 @@ public class RandomSeedTest {
           "Single long converted to byte[] doesn't match");
       long value2 = value;
       value = rng.nextLong();
-      rs = new RandomSeed(SeedUtils.makeByteArray(value, value2), currentRepetition, totalRepetitions);
+      rs = new RandomSeed(SeedUtils.makeByteArray(value, value2), currentRepetition,
+          totalRepetitions);
       Assertions.assertNotEquals(value, rs.getSeedAsLong(),
           "Two longs converted to byte[] matches the first long value");
     }

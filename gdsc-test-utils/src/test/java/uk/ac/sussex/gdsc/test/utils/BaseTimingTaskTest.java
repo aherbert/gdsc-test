@@ -27,9 +27,6 @@ package uk.ac.sussex.gdsc.test.utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import uk.ac.sussex.gdsc.test.utils.BaseTimingTask;
-import uk.ac.sussex.gdsc.test.utils.TimingTask;
-
 @SuppressWarnings("javadoc")
 public class BaseTimingTaskTest {
   @Test
@@ -42,7 +39,7 @@ public class BaseTimingTaskTest {
       }
 
       @Override
-      public Object getData(int i) {
+      public Object getData(int index) {
         return null;
       }
 

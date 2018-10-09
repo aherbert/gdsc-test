@@ -26,14 +26,14 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.logging.Logger;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.logging.Logger;
 
 @SuppressWarnings("javadoc")
 public class TimingServiceTest {
@@ -79,8 +79,8 @@ public class TimingServiceTest {
     }
 
     @Override
-    public Object getData(int i) {
-      return in[i];
+    public Object getData(int index) {
+      return in[index];
     }
 
     @Override
@@ -95,7 +95,7 @@ public class TimingServiceTest {
     }
 
     @Override
-    public void check(int i, Object result) {
+    public void check(int ignored, Object result) {
       final int index = checkCounter++ % in.length;
       Assertions.assertEquals(out[index], result);
     }
@@ -159,7 +159,7 @@ public class TimingServiceTest {
     }
 
     @Override
-    public Object getData(int i) {
+    public Object getData(int ignored) {
       return in;
     }
 
@@ -167,8 +167,8 @@ public class TimingServiceTest {
     public Object run(Object data) {
       try {
         Thread.sleep(millis);
-      } catch (final InterruptedException e) {
-        Assertions.fail("Cannot sleep in timing task: " + e.getMessage());
+      } catch (final InterruptedException ex) {
+        Assertions.fail("Cannot sleep in timing task: " + ex.getMessage());
       }
       return out;
     }
@@ -305,10 +305,10 @@ public class TimingServiceTest {
     }
   }
 
-  private static String getReport(TimingService ts, int n) {
+  private static String getReport(TimingService ts, int number) {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try (PrintStream ps = new PrintStream(baos, true)) {
-      ts.report(ps, n);
+      ts.report(ps, number);
       ps.close();
       return new String(baos.toByteArray());
     }

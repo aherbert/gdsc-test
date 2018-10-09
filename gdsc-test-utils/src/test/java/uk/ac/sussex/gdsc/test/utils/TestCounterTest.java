@@ -27,8 +27,6 @@ package uk.ac.sussex.gdsc.test.utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import uk.ac.sussex.gdsc.test.utils.TestCounter;
-
 @SuppressWarnings("javadoc")
 public class TestCounterTest {
   @Test
@@ -69,34 +67,22 @@ public class TestCounterTest {
     final int failLimit = 0;
     final int size = 2;
     // All the following methods simulate a pass
-    {
-      final TestCounter tc = new TestCounter(failLimit, size);
-      tc.run(() -> {
-        // No failure
-      });
-    }
-    {
-      final TestCounter tc = new TestCounter(failLimit, size);
-      tc.run(1, () -> {
-        // No failure
-      });
-    }
-    {
-      final TestCounter tc = new TestCounter(failLimit, size);
-      tc.run(() -> {
-        return true;
-      }, () -> {
-        throw new AssertionError();
-      });
-    }
-    {
-      final TestCounter tc = new TestCounter(failLimit, size);
-      tc.run(1, () -> {
-        return true;
-      }, () -> {
-        throw new AssertionError();
-      });
-    }
+    final TestCounter tc1 = new TestCounter(failLimit, size);
+    tc1.run(() -> {
+      // No failure
+    });
+    final TestCounter tc2 = new TestCounter(failLimit, size);
+    tc2.run(1, () -> {
+      // No failure
+    });
+    final TestCounter tc3 = new TestCounter(failLimit, size);
+    tc3.run(() -> true, () -> {
+      throw new AssertionError();
+    });
+    final TestCounter tc4 = new TestCounter(failLimit, size);
+    tc4.run(1, () -> true, () -> {
+      throw new AssertionError();
+    });
   }
 
   @Test
@@ -118,17 +104,13 @@ public class TestCounterTest {
     });
     Assertions.assertThrows(AssertionError.class, () -> {
       final TestCounter tc = new TestCounter(failLimit, size);
-      tc.run(() -> {
-        return false;
-      }, () -> {
+      tc.run(() -> false, () -> {
         throw new AssertionError();
       });
     });
     Assertions.assertThrows(AssertionError.class, () -> {
       final TestCounter tc = new TestCounter(failLimit, size);
-      tc.run(1, () -> {
-        return false;
-      }, () -> {
+      tc.run(1, () -> false, () -> {
         throw new AssertionError();
       });
     });
@@ -140,28 +122,20 @@ public class TestCounterTest {
     final int size = 2;
     // All the following methods simulate a failure.
     // Both indices can fail and it should be OK.
-    {
-      final TestCounter tc = new TestCounter(failLimit, size);
-      tc.run(() -> {
-        throw new AssertionError();
-      });
-      tc.run(1, () -> {
-        throw new AssertionError();
-      });
-    }
-    {
-      final TestCounter tc = new TestCounter(failLimit, size);
-      tc.run(() -> {
-        return false;
-      }, () -> {
-        throw new AssertionError();
-      });
-      tc.run(1, () -> {
-        return false;
-      }, () -> {
-        throw new AssertionError();
-      });
-    }
+    final TestCounter tc1 = new TestCounter(failLimit, size);
+    tc1.run(() -> {
+      throw new AssertionError();
+    });
+    tc1.run(1, () -> {
+      throw new AssertionError();
+    });
+    final TestCounter tc2 = new TestCounter(failLimit, size);
+    tc2.run(() -> false, () -> {
+      throw new AssertionError();
+    });
+    tc2.run(1, () -> false, () -> {
+      throw new AssertionError();
+    });
   }
 
   @Test
@@ -170,9 +144,7 @@ public class TestCounterTest {
     final int size = 2;
     final TestCounter tc = new TestCounter(failLimit, size);
     Assertions.assertThrows(AssertionError.class, () -> {
-      tc.run(1, () -> {
-        return false;
-      }, () -> {
+      tc.run(1, () -> false, () -> {
         // Do nothing. The TestCounter will generate a default error.
       });
     });

@@ -24,11 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.api.generator;
 
-import java.util.List;
-import java.util.Properties;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Properties;
 
 @SuppressWarnings("javadoc")
 public class StringTemplateModelTest {
@@ -516,7 +516,7 @@ public class StringTemplateModelTest {
   /**
    * Assert the message contains the sub-string.
    *
-   * If missing fails with a description of the sub-string.
+   * <p>If missing fails with a description of the sub-string.
    *
    * @param message the message
    * @param subString the sub-string

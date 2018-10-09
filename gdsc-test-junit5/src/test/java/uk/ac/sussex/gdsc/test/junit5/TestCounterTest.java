@@ -39,16 +39,12 @@ public class TestCounterTest {
     final TestCounter fc = new TestCounter(limit, size);
     for (int i = 0; i < size; i++) {
       for (int j = 0; j < limit; j++) {
-        fc.run(i, () -> {
-          Assertions.fail("Throw an error");
-        });
+        fc.run(i, () -> Assertions.fail("Throw an error"));
       }
     }
     if (exceed) {
       for (int i = 0; i < size; i++) {
-        fc.run(i, () -> {
-          Assertions.fail("Throw an error");
-        });
+        fc.run(i, () -> Assertions.fail("Throw an error"));
       }
     }
   }
@@ -57,20 +53,12 @@ public class TestCounterTest {
     final TestCounter fc = new TestCounter(limit, size);
     for (int i = 0; i < size; i++) {
       for (int j = 0; j < limit; j++) {
-        fc.run(i, () -> {
-          return false;
-        }, () -> {
-          Assertions.fail("Throw an error");
-        });
+        fc.run(i, () -> false, () -> Assertions.fail("Throw an error"));
       }
     }
     if (exceed) {
       for (int i = 0; i < size; i++) {
-        fc.run(i, () -> {
-          return false;
-        }, () -> {
-          Assertions.fail("Throw an error");
-        });
+        fc.run(i, () -> false, () -> Assertions.fail("Throw an error"));
       }
     }
   }
@@ -79,9 +67,7 @@ public class TestCounterTest {
   public void singleTestCaseFail1Limit0ThrowsWhenNoAsserionErrorFunction() {
     final TestCounter fc = new TestCounter(0);
     Assertions.assertThrows(AssertionError.class, () -> {
-      fc.run(() -> {
-        return false;
-      }, () -> {
+      fc.run(() -> false, () -> {
         // EMPTY FUNCTION! It should throw an assertion error
       });
     });

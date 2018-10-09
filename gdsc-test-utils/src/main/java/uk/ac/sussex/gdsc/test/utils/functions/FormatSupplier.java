@@ -50,7 +50,7 @@ public abstract class FormatSupplier implements Supplier<String> {
   }
 
   /**
-   * Gets a message consisting of:
+   * Gets a message. The message consists of:
    *
    * <pre>
    * String.format(format, getArgs());

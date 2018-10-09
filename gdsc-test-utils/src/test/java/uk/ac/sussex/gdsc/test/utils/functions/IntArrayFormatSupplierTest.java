@@ -29,8 +29,6 @@ import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import uk.ac.sussex.gdsc.test.utils.functions.IntArrayFormatSupplier;
-
 @SuppressWarnings("javadoc")
 public class IntArrayFormatSupplierTest {
 

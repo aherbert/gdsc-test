@@ -31,14 +31,11 @@ import uk.ac.sussex.gdsc.test.utils.HexUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -77,41 +74,10 @@ public class AnnotationTest {
     Assertions.assertTrue(info.getTags().contains("random"));
   }
 
-  // This is just an example
-  // @RepeatedTest(value = 3)
-  public void canAnnotateRepeatedTest(TestInfo info, RepetitionInfo repInfo) {
-    Assertions.assertEquals(3, repInfo.getTotalRepetitions());
-    logger.log(TEST_INFO, () -> String.format("%s (%d/%d)", info.getTestMethod().get().getName(),
-        repInfo.getCurrentRepetition(), repInfo.getTotalRepetitions()));
-  }
-
   @Test
   @EnabledIf("'CI' == systemEnvironment.get('ENV')")
-  public void canAnnotateEnableIfCI(TestInfo info) {
+  public void canAnnotateEnableIf(TestInfo info) {
     logger.log(TEST_INFO, info.getTestMethod().get().getName());
-  }
-
-  // This is just an example
-  // @TestFactory
-  public Stream<DynamicTest> canDynamicallyRepeatTests(TestInfo info) {
-    return IntStream.iterate(0, n -> n + 1).limit(2)
-        .mapToObj(n -> DynamicTest.dynamicTest("test" + n, () -> testToBeRepeated(info, n)));
-  }
-
-  private static void testToBeRepeated(TestInfo info, int n) {
-    logger.log(TEST_INFO, () -> String.format("%s (%d)", info.getTestMethod().get().getName(), n));
-  }
-
-  // This is just an example
-  // @ParameterizedTest
-  @MethodSource(value = "createSeeds")
-  public void canDynamicallyProvideSeeds(int seed) {
-    logger.log(TEST_INFO, () -> String.format("Dynamic seed = %d", seed));
-  }
-
-  @SuppressWarnings("unused")
-  private static Stream<Integer> createSeeds() {
-    return IntStream.iterate(0, n -> n + 1).limit(2).mapToObj(n -> n);
   }
 
   @ParameterizedTest

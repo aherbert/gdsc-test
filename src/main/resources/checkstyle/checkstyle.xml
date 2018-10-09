@@ -51,9 +51,7 @@
             <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
         </module>
         <module name="NeedBraces"/>
-        <module name="LeftCurly">
-            <property name="maxLineLength" value="100"/>
-        </module>
+        <module name="LeftCurly" />
         <module name="RightCurly"/>
         <module name="RightCurly">
             <property name="option" value="alone"/>
@@ -191,7 +189,7 @@
             <property name="allowMissingThrowsTags" value="true"/>
             <property name="allowMissingReturnTag" value="true"/>
             <property name="minLineCount" value="2"/>
-            <property name="allowedAnnotations" value="Override, Test"/>
+            <property name="allowedAnnotations" value="Override, Test, ParameterizedTest, SeededTest"/>
             <property name="allowThrowsTagsForSubclasses" value="true"/>
         </module>
         <module name="MethodName">
@@ -213,5 +211,13 @@
           <property name="illegalPattern" value="true"/>
           <property name="message" value="Trailing whitespace"/>
         </module>
+
+        <!-- Setup special comments to suppress specific checks from source files -->
+        <module name="SuppressionCommentFilter">
+          <property name="offCommentFormat" value="@formatter\:off"/>
+          <property name="onCommentFormat"  value="@formatter\:on"/>
+        </module>
+
     </module>
+
 </module>

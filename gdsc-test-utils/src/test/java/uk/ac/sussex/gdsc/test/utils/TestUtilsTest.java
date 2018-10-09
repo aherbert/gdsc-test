@@ -24,12 +24,10 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
-import java.util.function.Supplier;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import uk.ac.sussex.gdsc.test.utils.TestUtils;
+import java.util.function.Supplier;
 
 @SuppressWarnings("javadoc")
 public class TestUtilsTest {
@@ -42,22 +40,22 @@ public class TestUtilsTest {
   public void testWrapAssertionFailedErrorAppend() {
     try {
       TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(), messageSupplier);
-    } catch (final AssertionError e) {
+    } catch (final AssertionError ex) {
       // Null is ignored
-      Assertions.assertEquals(e.getMessage(), messageSupplier.get());
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
       TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(""), messageSupplier);
-    } catch (final AssertionError e) {
+    } catch (final AssertionError ex) {
       // Empty string is ignored
-      Assertions.assertEquals(e.getMessage(), messageSupplier.get());
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
       TestUtils.wrapAssertionFailedErrorAppend(new AssertionError("Something bad"),
           messageSupplier);
-    } catch (final AssertionError e) {
+    } catch (final AssertionError ex) {
       // Empty string is ignored
-      Assertions.assertEquals(e.getMessage(), "Something bad " + messageSupplier.get());
+      Assertions.assertEquals(ex.getMessage(), "Something bad " + messageSupplier.get());
     }
   }
 
@@ -65,21 +63,21 @@ public class TestUtilsTest {
   public void testWrapAssertionFailedError() {
     try {
       TestUtils.wrapAssertionFailedError(new AssertionError(), messageSupplier);
-    } catch (final AssertionError e) {
+    } catch (final AssertionError ex) {
       // Null is ignored
-      Assertions.assertEquals(e.getMessage(), messageSupplier.get());
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
       TestUtils.wrapAssertionFailedError(new AssertionError(""), messageSupplier);
-    } catch (final AssertionError e) {
+    } catch (final AssertionError ex) {
       // Empty string is ignored
-      Assertions.assertEquals(e.getMessage(), messageSupplier.get());
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
       TestUtils.wrapAssertionFailedError(new AssertionError("Something bad"), messageSupplier);
-    } catch (final AssertionError e) {
+    } catch (final AssertionError ex) {
       // Empty string is ignored
-      Assertions.assertEquals(e.getMessage(), messageSupplier.get() + " Something bad");
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get() + " Something bad");
     }
   }
 }

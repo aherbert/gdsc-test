@@ -24,64 +24,60 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
-import java.util.function.Supplier;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import uk.ac.sussex.gdsc.test.utils.NamedTimingTask;
-import uk.ac.sussex.gdsc.test.utils.TimingResult;
-import uk.ac.sussex.gdsc.test.utils.TimingTask;
+import java.util.function.Supplier;
 
 @SuppressWarnings("javadoc")
 public class TimingResultTest {
   @Test
   public void canConstruct() {
     final String name = "name";
-    TimingResult r = new TimingResult(name, 2, 1);
-    Assertions.assertEquals(name, r.getTask().getName());
-    Assertions.assertEquals(2, r.getSize());
-    Assertions.assertEquals(1, r.getMin());
-    Assertions.assertEquals(1.5, r.getMean());
-    Assertions.assertArrayEquals(new long[] {2, 1}, r.getTimes());
+    TimingResult tr = new TimingResult(name, 2, 1);
+    Assertions.assertEquals(name, tr.getTask().getName());
+    Assertions.assertEquals(2, tr.getSize());
+    Assertions.assertEquals(1, tr.getMin());
+    Assertions.assertEquals(1.5, tr.getMean());
+    Assertions.assertArrayEquals(new long[] {2, 1}, tr.getTimes());
     final TimingTask task = new NamedTimingTask("name2");
-    r = new TimingResult(task, 3);
-    Assertions.assertEquals(task.getName(), r.getTask().getName());
-    Assertions.assertEquals(1, r.getSize());
-    Assertions.assertEquals(3, r.getMin());
-    Assertions.assertEquals(3, r.getMean());
-    Assertions.assertArrayEquals(new long[] {3}, r.getTimes());
+    tr = new TimingResult(task, 3);
+    Assertions.assertEquals(task.getName(), tr.getTask().getName());
+    Assertions.assertEquals(1, tr.getSize());
+    Assertions.assertEquals(3, tr.getMin());
+    Assertions.assertEquals(3, tr.getMean());
+    Assertions.assertArrayEquals(new long[] {3}, tr.getTimes());
     final Supplier<String> supplier = () -> String.format("Name = %s", "this");
-    r = new TimingResult(supplier, 10, 20);
-    Assertions.assertEquals(supplier.get(), r.getTask().getName());
-    Assertions.assertEquals(2, r.getSize());
-    Assertions.assertEquals(10, r.getMin());
-    Assertions.assertEquals(15, r.getMean());
-    Assertions.assertArrayEquals(new long[] {10, 20}, r.getTimes());
+    tr = new TimingResult(supplier, 10, 20);
+    Assertions.assertEquals(supplier.get(), tr.getTask().getName());
+    Assertions.assertEquals(2, tr.getSize());
+    Assertions.assertEquals(10, tr.getMin());
+    Assertions.assertEquals(15, tr.getMean());
+    Assertions.assertArrayEquals(new long[] {10, 20}, tr.getTimes());
   }
 
   @Test
   public void canConstructEmpty() {
     final String name = "name";
-    TimingResult r = new TimingResult(name);
-    Assertions.assertEquals(name, r.getTask().getName());
-    Assertions.assertEquals(0, r.getSize());
-    Assertions.assertEquals(0, r.getMin());
-    Assertions.assertEquals(0, r.getMean());
-    Assertions.assertArrayEquals(new long[0], r.getTimes());
+    TimingResult tr = new TimingResult(name);
+    Assertions.assertEquals(name, tr.getTask().getName());
+    Assertions.assertEquals(0, tr.getSize());
+    Assertions.assertEquals(0, tr.getMin());
+    Assertions.assertEquals(0, tr.getMean());
+    Assertions.assertArrayEquals(new long[0], tr.getTimes());
     final TimingTask task = new NamedTimingTask("name2");
-    r = new TimingResult(task);
-    Assertions.assertEquals(task.getName(), r.getTask().getName());
-    Assertions.assertEquals(0, r.getSize());
-    Assertions.assertEquals(0, r.getMin());
-    Assertions.assertEquals(0, r.getMean());
-    Assertions.assertArrayEquals(new long[0], r.getTimes());
+    tr = new TimingResult(task);
+    Assertions.assertEquals(task.getName(), tr.getTask().getName());
+    Assertions.assertEquals(0, tr.getSize());
+    Assertions.assertEquals(0, tr.getMin());
+    Assertions.assertEquals(0, tr.getMean());
+    Assertions.assertArrayEquals(new long[0], tr.getTimes());
     final Supplier<String> supplier = () -> String.format("Name = %s", "this");
-    r = new TimingResult(supplier);
-    Assertions.assertEquals(supplier.get(), r.getTask().getName());
-    Assertions.assertEquals(0, r.getSize());
-    Assertions.assertEquals(0, r.getMin());
-    Assertions.assertEquals(0, r.getMean());
-    Assertions.assertArrayEquals(new long[0], r.getTimes());
+    tr = new TimingResult(supplier);
+    Assertions.assertEquals(supplier.get(), tr.getTask().getName());
+    Assertions.assertEquals(0, tr.getSize());
+    Assertions.assertEquals(0, tr.getMin());
+    Assertions.assertEquals(0, tr.getMean());
+    Assertions.assertArrayEquals(new long[0], tr.getTimes());
   }
 }
