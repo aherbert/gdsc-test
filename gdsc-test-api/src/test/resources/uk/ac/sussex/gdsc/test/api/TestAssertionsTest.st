@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link TestAssertionsTest}.
+ * Tests {@link TestAssertions}.
  */
 public class TestAssertionsTest {
 
