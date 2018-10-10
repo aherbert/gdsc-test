@@ -291,8 +291,9 @@ public class ApiGeneratorTest {
     final Properties properties = new Properties();
     properties.put("classname.My", "His Her");
     properties.put("class.gender", "Male Female");
+    final File propsFile = new File(sourceDir, templateClassName + ".properties");
     try (FileOutputStream outStream =
-        new FileOutputStream(new File(sourceDir, templateClassName + ".properties"))) {
+        new FileOutputStream(propsFile)) {
       properties.store(outStream, "Test template");
     }
 
@@ -314,6 +315,7 @@ public class ApiGeneratorTest {
     FileUtils.write(templateFile1, badContents, StandardCharsets.UTF_8);
     // Ensure the template file is modified before it
     templateFile.setLastModified(templateFile1.lastModified() - 2000);
+    propsFile.setLastModified(templateFile1.lastModified() - 2000);
 
     // Rerun - This will skip existing newer output Java files
     result = ApiGenerator.run(getArgs(pathForSource, pathForTarget, "-l", "WARNING"));

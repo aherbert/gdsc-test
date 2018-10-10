@@ -44,7 +44,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -276,14 +275,15 @@ public class ApiGenerator {
     logger.log(Level.INFO, stFile.getPath());
     // Check for .properties file
     final String propsPath = FilenameUtils.removeExtension(stFile.getPath()) + ".properties";
-    if (!new File(propsPath).exists()) {
+    final File propsFile = new File(propsPath);
+    if (!propsFile.exists()) {
       // Does not cause the code to fail
       logger.log(Level.WARNING, () -> "No properties file: " + propsPath);
       return;
     }
 
     final Properties props = new Properties();
-    try (InputStream inStream = Files.newInputStream(Paths.get(propsPath))) {
+    try (InputStream inStream = Files.newInputStream(propsFile.toPath())) {
       props.load(inStream);
     }
 
@@ -301,7 +301,7 @@ public class ApiGenerator {
     final StringTemplateModel model =
         new StringTemplateModel(props, packageName, templateClassName, template);
 
-    if (canSkipModel(stFile, pathForTarget, model)) {
+    if (canSkipModel(stFile, propsFile, pathForTarget, model)) {
       return;
     }
 
@@ -335,20 +335,23 @@ public class ApiGenerator {
    * overwrite option is enabled. This allows the template to be skipped.
    *
    * @param stFile the string template file
+   * @param propsFile the properties file
    * @param pathForTarget the path for target
    * @param model the model
    * @return true, if the model can be skipped
    */
-  private boolean canSkipModel(File stFile, File pathForTarget, StringTemplateModel model) {
+  private boolean canSkipModel(File stFile, File propsFile, File pathForTarget,
+      StringTemplateModel model) {
     if (overwrite) {
       // Do not skip
       return false;
     }
-    // Check all templates exist
+    // Check all template output files exist and are newer than the source files.
+    final long timestamp = Math.max(stFile.lastModified(), propsFile.lastModified());
     for (final String name : StringTemplateHelper.listNames(model)) {
       final File targetFile = getTargetFile(pathForTarget, name);
-      if (!FileUtils.isFileNewer(targetFile, stFile)) {
-        // Target file missing or not newer than the template
+      if (!FileUtils.isFileNewer(targetFile, timestamp)) {
+        // Target file missing or not newer than the source files
         return false;
       }
     }
