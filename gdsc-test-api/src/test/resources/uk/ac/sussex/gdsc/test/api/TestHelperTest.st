@@ -25,8 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link TestHelper}.
  */
-public class TestHelperTest {
-<types,Types,TypeValues:{type,Type,values |
+public class TestHelperTest {<types,Types:{type,Type |
 <\n>
   /**
    * Test creates a predicate to compare a {@code <type>\} value to the reference value using the
@@ -34,15 +33,15 @@ public class TestHelperTest {
    */
   @Test
   public void testEquals<Type>() {
-    final <type>[] values = { <values> \};
+    final <type>[] values = ApiTestUtils.get<Type>Values();
     for (<type> value1 : values) {
       final <Type>Predicate test = TestHelper.equals(value1);
       for (<type> value2 : values) {
-        Assertions.assertEquals(value1 == value2, test.test(value2), 
+        Assertions.assertEquals(value1 == value2, test.test(value2),
             "Predicate does not compute ==");
       \}
     \}
-  \}}><types,Types,TypeValues:{type,Type,values |
+  \}}><types,Types:{type,Type |
 <\n>
   /**
    * Test creates a predicate to compare a {@code <type>\} values using the
@@ -51,14 +50,14 @@ public class TestHelperTest {
   @Test
   public void testEqual<Type>s() {
     final <Type><Type>BiPredicate test = TestHelper.equal<Type>s();
-    final <type>[] values = { <values> \};
+    final <type>[] values = ApiTestUtils.get<Type>Values();
     for (<type> value1 : values) {
       for (<type> value2 : values) {
-        Assertions.assertEquals(value1 == value2, test.test(value1, value2), 
+        Assertions.assertEquals(value1 == value2, test.test(value1, value2),
             "Predicate does not compute ==");
       \}
     \}
-  \}}><floats,Floats,FloatValues:{float,Float,values |
+  \}}><floats,Floats:{float,Float |
 <\n>
   /**
    * Test creates a predicate to compare a {@code <float>\} value to the reference value using
@@ -66,15 +65,15 @@ public class TestHelperTest {
    */
   @Test
   public void testCmp<Float>() {
-    final <float>[] values = { <values> \};
+    final <float>[] values = ApiTestUtils.get<Float>Values();
     for (<float> value1 : values) {
       final <Float>Predicate test = TestHelper.cmp(value1);
       for (<float> value2 : values) {
-        Assertions.assertEquals(<Float>.compare(value1, value2) == 0, test.test(value2), 
+        Assertions.assertEquals(<Float>.compare(value1, value2) == 0, test.test(value2),
             "Predicate does not compute <Float>.compare");
       \}
     \}
-  \}}><floats,Floats,FloatValues:{float,Float,values |
+  \}}><floats,Floats:{float,Float |
 <\n>
   /**
    * Test creates a predicate to compare {@code <float>\} values using binary comparison.
@@ -82,14 +81,14 @@ public class TestHelperTest {
   @Test
   public void testCmp<Float>s() {
     final <Float><Float>BiPredicate test = TestHelper.cmp<Float>s();
-    final <float>[] values = { <values> \};
+    final <float>[] values = ApiTestUtils.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {
-        Assertions.assertEquals(<Float>.compare(value1, value2) == 0, test.test(value1, value2), 
+        Assertions.assertEquals(<Float>.compare(value1, value2) == 0, test.test(value1, value2),
             "Predicate does not compute <Float>.compare");
       \}
     \}
-  \}}><floats,Floats,FloatValues:{float,Float,values |
+  \}}><floats,Floats:{float,Float |
 <\n>
   /**
    * Test creates a predicate to compare {@code <float>\} values are almost equal.
@@ -98,13 +97,13 @@ public class TestHelperTest {
   public void testAlmostEqual<Float>s() {
     final double relativeError = 0.5;
     final <float> absoluteError = 0;
-    final <Float><Float>BiPredicate test = TestHelper.almostEqual<Float>s(relativeError, 
+    final <Float><Float>BiPredicate test = TestHelper.almostEqual<Float>s(relativeError,
         absoluteError);
-    final <float>[] values = { <values> \};
+    final <float>[] values = ApiTestUtils.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {
         Assertions.assertEquals(EqualityUtils.<float>sAreAlmostEqual(value1, value2,
-            relativeError, absoluteError), test.test(value1, value2), 
+            relativeError, absoluteError), test.test(value1, value2),
             "Predicate does not compute almost equal");
       \}
     \}

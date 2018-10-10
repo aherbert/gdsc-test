@@ -1,5 +1,7 @@
 <package>
 
+import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ public class <Float><Float>CmpTest {
   @Test
   public void testTest() {
     final <Float><Float>Cmp predicate = <Float><Float>Cmp.getInstance();
-    final <float>[] values = { <values> };
+    final <float>[] values = ApiTestUtils.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {
         Assertions.assertEquals(<Float>.compare(value1, value2) == 0,

@@ -1,5 +1,7 @@
 <package>
 
+import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +15,7 @@ public class <Type>EqualsTest {
    */
   @Test
   public void testTest() {
-    final <type>[] values = { <values> };
+    final <type>[] values = ApiTestUtils.get<Type>Values();
     for (<type> value1 : values) {
       final <Type>Equals predicate = new <Type>Equals(value1);
       Assertions.assertEquals(value1, predicate.getReferenceValue(),
@@ -30,7 +32,7 @@ public class <Type>EqualsTest {
    */
   @Test
   public void testGet() {
-    final <type>[] values = { <values> };
+    final <type>[] values = ApiTestUtils.get<Type>Values();
     for (<type> value : values) {
       final <Type>Equals predicate = new <Type>Equals(value);
       Assertions.assertTrue(predicate.get().contains("=="), "Description missing ==");

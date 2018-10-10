@@ -1,12 +1,29 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.function.*;
-
-import java.util.ArrayList;
-import java.util.function.Supplier;
+import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
+import uk.ac.sussex.gdsc.test.api.function.ByteByteBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.BytePredicate;
+import uk.ac.sussex.gdsc.test.api.function.CharCharBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.CharPredicate;
+import uk.ac.sussex.gdsc.test.api.function.DoubleDoubleBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.DoublePredicate;
+import uk.ac.sussex.gdsc.test.api.function.FloatFloatBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.FloatPredicate;
+import uk.ac.sussex.gdsc.test.api.function.IntIntBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.IntPredicate;
+import uk.ac.sussex.gdsc.test.api.function.LongLongBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.LongPredicate;
+import uk.ac.sussex.gdsc.test.api.function.PrimitiveBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.PrimitivePredicate;
+import uk.ac.sussex.gdsc.test.api.function.ShortPredicate;
+import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.function.Supplier;
 
 /**
  * Tests {@link TestAssertions}.
@@ -162,7 +179,6 @@ public class TestAssertionsTest {
   public void testAssertTest<Type>Predicate() {
     String message;
     <type> value = <dummyValue1>;
-    String valueString = String.valueOf(<dummyValue1>);
 
     // No message
     Assertions.assertDoesNotThrow(() -> {
@@ -171,6 +187,7 @@ public class TestAssertionsTest {
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertTest(value, new Dummy<Type>Predicate(0));
     \}, "Do not throw with failed test").getMessage();
+    String valueString = String.valueOf(<dummyValue1>);
     assertMessageContains(message, valueString, "the value");
     assertMessageContains(message, "<Type> limit", "the predicate description");
 
@@ -212,8 +229,6 @@ public class TestAssertionsTest {
     String message;
     <type> value1 = <dummyValue1>;
     <type> value2 = <dummyValue2>;
-    String valueString1 = String.valueOf(<dummyValue1>);
-    String valueString2 = String.valueOf(<dummyValue2>);
 
     // No message
     Assertions.assertDoesNotThrow(() -> {
@@ -222,6 +237,8 @@ public class TestAssertionsTest {
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertTest(value1, value2, new Dummy<Type><Type>BiPredicate(0));
     \}, "Do not throw with failed test").getMessage();
+    String valueString1 = String.valueOf(<dummyValue1>);
+    String valueString2 = String.valueOf(<dummyValue2>);
     assertMessageContains(message, valueString1, "the expected value");
     assertMessageContains(message, valueString2, "the actual value");
     assertMessageContains(message, "<Type><Type>Bi limit", "the predicate description");
@@ -270,7 +287,6 @@ public class TestAssertionsTest {
   public void testAssertArrayTest<Type>Predicate() {
     String message;
     <type>[] value = new <type>[]{ <dummyValue1> \};
-    String valueString = String.valueOf(<dummyValue1>);
 
     // No message
     Assertions.assertDoesNotThrow(() -> {
@@ -279,6 +295,7 @@ public class TestAssertionsTest {
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(value, new Dummy<Type>Predicate(0));
     \}, "Does not throw with failed test").getMessage();
+    String valueString = String.valueOf(<dummyValue1>);
     assertMessageContains(message, valueString, "the value");
     assertMessageContains(message, "<Type> limit", "the predicate description");
 
@@ -307,7 +324,8 @@ public class TestAssertionsTest {
     // Null array
     <type>[] nullValue = null;
     message = Assertions.assertThrows(AssertionError.class, () -> {
-      TestAssertions.assertArrayTest(nullValue, new Dummy<Type>Predicate(1), testMessageSupplier);
+      TestAssertions.assertArrayTest(nullValue, new Dummy<Type>Predicate(1),
+          testMessageSupplier);
     \}, "Does not throw with null array").getMessage();
     assertMessageContains(message, "value", "the failure was due to the value being null");
     assertMessageContains(message, "null", "the failure was due to the value being null");
@@ -342,8 +360,6 @@ public class TestAssertionsTest {
     // Arrays must be different
     <type>[] value1 = new <type>[]{ <dummyValue1> \};
     <type>[] value2 = new <type>[]{ <dummyValue2> \};
-    String valueString1 = String.valueOf(<dummyValue1>);
-    String valueString2 = String.valueOf(<dummyValue2>);
 
     // Same array
     Assertions.assertDoesNotThrow(() -> {
@@ -357,6 +373,8 @@ public class TestAssertionsTest {
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(value1, value2, new Dummy<Type><Type>BiPredicate(0));
     \}, "Does not throw with failed test").getMessage();
+    String valueString1 = String.valueOf(<dummyValue1>);
+    String valueString2 = String.valueOf(<dummyValue2>);
     assertMessageContains(message, valueString1, "the expected value");
     assertMessageContains(message, valueString2, "the actual value");
     assertMessageContains(message, "<Type><Type>Bi limit", "the predicate description");
@@ -456,7 +474,6 @@ public class TestAssertionsTest {
     String message;
     <type>[] value = new <type>[]{ <dummyValue1> \};
     Object[] nestedValue = new <type>[][][]{{ value \}\};
-    String valueString = String.valueOf(<dummyValue1>);
 
     // Test with null predicate
     PrimitivePredicate nullPredicate = null;
@@ -478,6 +495,7 @@ public class TestAssertionsTest {
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(nestedValue, new Dummy<Type>Predicate(0));
     \}, "Does not throw with failed test").getMessage();
+    String valueString = String.valueOf(<dummyValue1>);
     assertMessageContains(message, valueString, "the value");
     assertMessageContains(message, "<Type> limit", "the predicate description");
 
@@ -494,10 +512,12 @@ public class TestAssertionsTest {
 
     // Message supplier
     Assertions.assertDoesNotThrow(() -> {
-      TestAssertions.assertArrayTest(nestedValue, new Dummy<Type>Predicate(1), testMessageSupplier);
+      TestAssertions.assertArrayTest(nestedValue, new Dummy<Type>Predicate(1),
+          testMessageSupplier);
     \}, "Throws with passed test with message supplier");
     message = Assertions.assertThrows(AssertionError.class, () -> {
-      TestAssertions.assertArrayTest(nestedValue, new Dummy<Type>Predicate(0), testMessageSupplier);
+      TestAssertions.assertArrayTest(nestedValue, new Dummy<Type>Predicate(0),
+          testMessageSupplier);
     \}, "Does not throw with failed test with message supplier").getMessage();
     assertMessageContains(message, valueString, "the value");
     assertMessageContains(message, "<Type> limit", "the predicate description");
@@ -506,7 +526,8 @@ public class TestAssertionsTest {
     // Null array
     Object[] nullValue = null;
     message = Assertions.assertThrows(AssertionError.class, () -> {
-      TestAssertions.assertArrayTest(nullValue, new Dummy<Type>Predicate(1), testMessageSupplier);
+      TestAssertions.assertArrayTest(nullValue, new Dummy<Type>Predicate(1),
+          testMessageSupplier);
     \}, "Does not throw with null array").getMessage();
     assertMessageContains(message, "value", "the failure was due to the value being null");
     assertMessageContains(message, "null", "the failure was due to the value being null");
@@ -538,13 +559,12 @@ public class TestAssertionsTest {
     <type>[] value2 = new <type>[]{ <dummyValue2> \};
     Object[] nestedValue1 = new <type>[][][]{{ value1 \}\};
     Object[] nestedValue2 = new <type>[][][]{{ value2 \}\};
-    String valueString1 = String.valueOf(<dummyValue1>);
-    String valueString2 = String.valueOf(<dummyValue2>);
 
     // Test with null predicate
     PrimitiveBiPredicate nullPredicate = null;
     message = Assertions.assertThrows(AssertionError.class, () -> {
-      TestAssertions.assertArrayTest(nestedValue1, nestedValue2, nullPredicate, testMessageSupplier);
+      TestAssertions.assertArrayTest(nestedValue1, nestedValue2, nullPredicate,
+          testMessageSupplier);
     \}, "Does not throw with null predicate").getMessage();
     assertMessageContains(message, "null", "the failure was due to the predicate being null");
 
@@ -577,6 +597,8 @@ public class TestAssertionsTest {
       TestAssertions.assertArrayTest(nestedValue1, nestedValue2,
           new Dummy<Type><Type>BiPredicate(0));
     \}, "Does not throw with failed test").getMessage();
+    String valueString1 = String.valueOf(<dummyValue1>);
+    String valueString2 = String.valueOf(<dummyValue2>);
     assertMessageContains(message, valueString1, "the expected value");
     assertMessageContains(message, valueString2, "the actual value");
     assertMessageContains(message, "<Type><Type>Bi limit", "the predicate description");

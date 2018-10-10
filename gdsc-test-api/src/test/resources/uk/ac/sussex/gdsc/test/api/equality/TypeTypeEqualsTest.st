@@ -1,5 +1,7 @@
 <package>
 
+import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ public class <Type><Type>EqualsTest {
   @Test
   public void testTest() {
     final <Type><Type>Equals predicate = <Type><Type>Equals.getInstance();
-    final <type>[] values = { <values> };
+    final <type>[] values = ApiTestUtils.get<Type>Values();
     for (<type> value1 : values) {
       for (<type> value2 : values) {
         Assertions.assertEquals(value1 == value2, predicate.test(value1, value2),

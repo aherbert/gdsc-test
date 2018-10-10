@@ -114,11 +114,11 @@ public final class TestHelper {
    * @param absoluteError The maximum absolute error between \<code>value1\</code>
    *                      and \<code>value2\</code> for which both numbers are still
    *                      considered equal. Ignored if set to negative.
+   * @return the predicate
    * @throws IllegalArgumentException If the relative error is not below 2
    * @throws IllegalArgumentException If the absolute error is not finite
    * @throws IllegalArgumentException If both tolerances are ignored (i.e. no
    *                                  equality test is performed)
-   * @return the predicate
    */
   public static <Float><Float>BiPredicate almostEqual<Float>s(double relativeError,
       <float> absoluteError) {
