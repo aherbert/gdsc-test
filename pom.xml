@@ -371,6 +371,9 @@ The GDSC Test package contains code for use with the JUnit test framework.
         <version>${spotbugs.version}</version>
         <configuration>
           <failOnError>false</failOnError>
+          <threshold>Normal</threshold>
+          <effort>Default</effort>
+          <excludeFilterFile>${basedir}/src/main/resources/spotbugs/spotbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
         <executions>
           <execution>
