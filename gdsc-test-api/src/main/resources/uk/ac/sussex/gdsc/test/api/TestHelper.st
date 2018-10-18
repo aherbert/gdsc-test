@@ -72,7 +72,7 @@ public final class TestHelper {
   \}}><floats,Floats,Ints:{float,Float,Int |
 <\n>
   /**
-   * Creates a predicate to compare a {@code <type>\} value to the reference value using binary
+   * Creates a predicate to compare a {@code <float>\} value to the reference value using binary
    * comparison of the values converted using {@link <Float>#<float>To<Int>Bits(<float>)\}.
    *
    * @param referenceValue the reference value

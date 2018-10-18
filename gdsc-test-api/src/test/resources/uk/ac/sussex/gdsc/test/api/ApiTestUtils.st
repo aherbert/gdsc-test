@@ -40,7 +40,7 @@ public final class ApiTestUtils {
   /** Do not allow public construction. */
   private ApiTestUtils() {
     // No construction
-  }<types,Types,TypeValues:{type,Type,values |
+  }<types,Types:{type,Type |
 <\n>
   /**
    * Get the test values for the {@code <type>\} type.
