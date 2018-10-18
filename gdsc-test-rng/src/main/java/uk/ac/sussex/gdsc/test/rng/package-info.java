@@ -26,7 +26,7 @@
  * Provides classes for working with the <a
  * href="https://commons.apache.org/proper/commons-rng/">Commons RNG</a> library to add a source of
  * randomness for tests.
- * 
+ *
  * <p> The package contains:
  *
  * <ul> <li>A factory for generating a random provider</li> </ul>
