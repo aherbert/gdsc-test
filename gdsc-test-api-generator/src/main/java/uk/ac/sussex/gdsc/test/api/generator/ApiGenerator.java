@@ -65,20 +65,20 @@ public class ApiGenerator {
    * <p>A non-zero exit code indicates error.
    */
   public enum ExitCode {
-  /** The return code for normal completion. */
-  OK,
-  /** The return code for printing help. */
-  HELP,
-  /** The return code for bad parameters. */
-  BAD_PARAMETERS,
-  /** The return code for an invalid model. */
-  INVALID_MODEL,
-  /** The return code for a missing source directory. */
-  MISSING_SOURCE,
-  /** The return code for a missing template files. */
-  MISSING_TEMPLATES,
-  /** The return code for any other error. */
-  FAILED;
+    /** The return code for normal completion. */
+    OK,
+    /** The return code for printing help. */
+    HELP,
+    /** The return code for bad parameters. */
+    BAD_PARAMETERS,
+    /** The return code for an invalid model. */
+    INVALID_MODEL,
+    /** The return code for a missing source directory. */
+    MISSING_SOURCE,
+    /** The return code for a missing template files. */
+    MISSING_TEMPLATES,
+    /** The return code for any other error. */
+    FAILED;
 
     /**
      * Gets the exit code.

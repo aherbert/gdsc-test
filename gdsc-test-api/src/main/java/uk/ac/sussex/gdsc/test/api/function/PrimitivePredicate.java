@@ -27,12 +27,11 @@ package uk.ac.sussex.gdsc.test.api.function;
 import java.util.function.Predicate;
 
 /**
- * Represents a predicate (boolean-valued function) of one primitive-valued
- * argument.
+ * Represents a predicate (boolean-valued function) of one primitive-valued argument.
  *
- * <p>This is a marker interface for a primitive type specialisation of the
- * {@link Predicate} interface.
+ * <p>This is a marker interface for a primitive type specialisation of the {@link Predicate}
+ * interface.
  */
 public interface PrimitivePredicate {
-    // This is a marker interface
+  // This is a marker interface
 }

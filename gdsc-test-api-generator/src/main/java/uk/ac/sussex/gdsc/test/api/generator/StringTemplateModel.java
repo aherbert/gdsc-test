@@ -43,18 +43,18 @@ public class StringTemplateModel {
    * The scope of the template substitution.
    */
   public enum SubstitutionScope {
-  /**
-   * The substitution occurs at the class name. A new class is created for each defined
-   * substitution. If absent then only template level substitutions are valid.
-   */
-  CLASSNAME,
-  /**
-   * The substitution occurs at the class. The number of substitutions must match the number defined
-   * by {@link #CLASSNAME}, i.e. one per class.
-   */
-  CLASS,
-  /** The substitution occurs at the template. */
-  TEMPLATE
+    /**
+     * The substitution occurs at the class name. A new class is created for each defined
+     * substitution. If absent then only template level substitutions are valid.
+     */
+    CLASSNAME,
+    /**
+     * The substitution occurs at the class. The number of substitutions must match the number
+     * defined by {@link #CLASSNAME}, i.e. one per class.
+     */
+    CLASS,
+    /** The substitution occurs at the template. */
+    TEMPLATE
   }
 
   /** The regular expression to split the key into scope and pattern. */

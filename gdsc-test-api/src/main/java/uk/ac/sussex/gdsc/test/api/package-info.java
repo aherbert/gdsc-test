@@ -27,10 +27,8 @@
  *
  * <p>The package contains:
  *
- * <ul>
- * <li>Assert functions for the value of one primitive
- * <li>Assert functions for comparisons between two primitives
- * </ul>
+ * <ul> <li>Assert functions for the value of one primitive <li>Assert functions for comparisons
+ * between two primitives </ul>
  *
  * @since 1.0
  */

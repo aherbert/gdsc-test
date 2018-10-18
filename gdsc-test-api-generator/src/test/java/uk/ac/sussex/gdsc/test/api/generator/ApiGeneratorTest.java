@@ -292,8 +292,7 @@ public class ApiGeneratorTest {
     properties.put("classname.My", "His Her");
     properties.put("class.gender", "Male Female");
     final File propsFile = new File(sourceDir, templateClassName + ".properties");
-    try (FileOutputStream outStream =
-        new FileOutputStream(propsFile)) {
+    try (FileOutputStream outStream = new FileOutputStream(propsFile)) {
       properties.store(outStream, "Test template");
     }
 

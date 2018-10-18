@@ -27,12 +27,11 @@ package uk.ac.sussex.gdsc.test.api.function;
 import java.util.function.BiPredicate;
 
 /**
- * Represents a predicate (boolean-valued function) of two primitive-valued
- * arguments.
+ * Represents a predicate (boolean-valued function) of two primitive-valued arguments.
  *
- * <p>This is a marker interface for a primitive type specialisation of the
- * {@link BiPredicate} interface.
+ * <p>This is a marker interface for a primitive type specialisation of the {@link BiPredicate}
+ * interface.
  */
 public interface PrimitiveBiPredicate {
-    // This is a marker interface
+  // This is a marker interface
 }
