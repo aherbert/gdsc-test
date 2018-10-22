@@ -756,6 +756,10 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <id>ossrh</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
+    <site>
+      <id>${project.artifactId}-site</id>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </site>
   </distributionManagement>
 
   <modules>
