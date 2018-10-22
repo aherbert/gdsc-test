@@ -43,23 +43,23 @@ public final class StringUtils {
   private StringUtils() {}
 
   /**
-   * Checks if the message is not empty.
+   * Checks if the message is not null or empty whitespace.
    *
    * @param message the message
    * @return true, if is not empty
    */
   public static boolean isNotEmpty(String message) {
-    return message != null && message.length() > 0;
+    return message != null && message.trim().length() > 0;
   }
 
   /**
-   * Checks if the message is null or empty.
+   * Checks if the message is null or empty whitespace.
    *
    * @param message the message
    * @return true, if null or empty
    */
   public static boolean isNullOrEmpty(String message) {
-    return message == null || message.length() == 0;
+    return message == null || message.trim().length() == 0;
   }
 
   //@formatter:off

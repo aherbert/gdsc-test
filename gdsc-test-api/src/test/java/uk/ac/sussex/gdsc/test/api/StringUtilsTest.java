@@ -36,6 +36,8 @@ public class StringUtilsTest {
   public void testIsNotEmpty() {
     Assertions.assertTrue(StringUtils.isNotEmpty("Not empty"));
     Assertions.assertFalse(StringUtils.isNotEmpty(""));
+    Assertions.assertFalse(StringUtils.isNotEmpty(" "));
+    Assertions.assertFalse(StringUtils.isNotEmpty("\t"));
     Assertions.assertFalse(StringUtils.isNotEmpty(null));
   }
 
@@ -43,6 +45,8 @@ public class StringUtilsTest {
   public void testNullOrEmpty() {
     Assertions.assertFalse(StringUtils.isNullOrEmpty("Not empty"));
     Assertions.assertTrue(StringUtils.isNullOrEmpty(""));
+    Assertions.assertTrue(StringUtils.isNullOrEmpty(" "));
+    Assertions.assertTrue(StringUtils.isNullOrEmpty("\t"));
     Assertions.assertTrue(StringUtils.isNullOrEmpty(null));
   }
 
