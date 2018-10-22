@@ -37,8 +37,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <url>https://travis-ci.com/aherbert/gdsc-test</url>
   </ciManagement>
   <scm>
-    <connection>scm:git:git://github.com/aherbert/gdsc-test.git</connection>
-    <developerConnection>scm:git:ssh://github.com/aherbert/gdsc-test.git</developerConnection>
+    <connection>scm:git:http://github.com/aherbert/gdsc-test.git</connection>
+    <developerConnection>scm:git:https://github.com/aherbert/gdsc-test.git</developerConnection>
     <url>https://github.com/aherbert/gdsc-test</url>
   </scm>
 
@@ -73,7 +73,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <org.junit.jupiter.version>5.2.0</org.junit.jupiter.version>
     <org.junit.platform.version>1.2.0</org.junit.platform.version>
     <org.junit.version>4.12</org.junit.version>
-    <org.opentest4j.version>1.1.0</org.opentest4j.version>
     <commons.rng.version>1.1</commons.rng.version>
     <commons.codec.version>1.11</commons.codec.version>
     <org.jacoco.version>0.8.1</org.jacoco.version>
@@ -137,11 +136,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
         <version>${commons.codec.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.opentest4j</groupId>
-        <artifactId>opentest4j</artifactId>
-        <version>${org.opentest4j.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -765,7 +759,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
   </distributionManagement>
 
   <modules>
-    <module>gdsc-test-api-generator</module>
+    <module>gdsc-test-generator</module>
     <module>gdsc-test-api</module>
     <module>gdsc-test-utils</module>
     <module>gdsc-test-junit5</module>

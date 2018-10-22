@@ -19,8 +19,6 @@ import uk.ac.sussex.gdsc.test.api.function.LongPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
 
-import org.opentest4j.AssertionFailedError;
-
 import java.util.Deque;
 import java.util.function.Supplier;
 
@@ -108,7 +106,7 @@ final class TestAssertionUtils {
   static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
       String message) {
     if (!test.test(expected, actual)) {
-      throw new AssertionFailedError(format(expected, actual, test, message), expected, actual);
+      throw new AssertionError(format(expected, actual, test, message));
     \}
   \}
 
@@ -126,8 +124,7 @@ final class TestAssertionUtils {
   static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
       Supplier\<String> messageSupplier) {
     if (!test.test(expected, actual)) {
-      throw new AssertionFailedError(format(expected, actual, test, nullSafeGet(messageSupplier)),
-          expected, actual);
+      throw new AssertionError(format(expected, actual, test, nullSafeGet(messageSupplier)));
     \}
   \}
 
@@ -142,7 +139,7 @@ final class TestAssertionUtils {
    */
   static void assertTest(<type> value, <Type>Predicate test, String message) {
     if (!test.test(value)) {
-      throw new AssertionFailedError(format(value, test, message), null, value);
+      throw new AssertionError(format(value, test, message));
     \}
   \}
 
@@ -158,8 +155,7 @@ final class TestAssertionUtils {
    */
   static void assertTest(<type> value, <Type>Predicate test, Supplier\<String> messageSupplier) {
     if (!test.test(value)) {
-      throw new AssertionFailedError(format(value, test, nullSafeGet(messageSupplier)), null,
-          value);
+      throw new AssertionError(format(value, test, nullSafeGet(messageSupplier)));
     \}
   \}}><types,Types,Classes:{type,Type,Class |
 <\n>

@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test API
+ * Genome Damage and Stability Centre Test Utilities
  *
- * Contains a generic framework for test predicates.
+ * Generates API classes for the GDSC Test project.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -22,9 +22,32 @@
  * #L%
  */
 
+package uk.ac.sussex.gdsc.test.generator;
+
 /**
- * Provides classes for creating and asserting {@code true/false} conditional predicates.
- *
- * @since 1.0
+ * Used to signal that a model is not valid.
  */
-package uk.ac.sussex.gdsc.test.api;
+public class InvalidModelException extends Exception {
+
+  /** The serial version UID. */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Instantiates a new illegal model exception.
+   *
+   * @param message the message
+   */
+  public InvalidModelException(String message) {
+    super(message);
+  }
+
+  /**
+   * Instantiates a new illegal model exception.
+   *
+   * @param message the message
+   * @param cause the cause
+   */
+  public InvalidModelException(String message, Throwable cause) {
+    super(message, cause);
+  }
+}

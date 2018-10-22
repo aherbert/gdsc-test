@@ -19,14 +19,12 @@ import uk.ac.sussex.gdsc.test.api.function.PrimitivePredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
 
-import org.opentest4j.AssertionFailedError;
-
 import java.util.function.Supplier;
 
 /**
  * Adds helper assert functions for tests.
  *
- * @see org.opentest4j.AssertionFailedError
+ * @see AssertionError
  */
 public final class TestAssertions {
 
@@ -45,10 +43,10 @@ public final class TestAssertions {
    * @param expected The expected value.
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
-  public static void assertArrayTest(Object[] expected, Object[] actual, PrimitiveBiPredicate test)
-      throws AssertionFailedError {
+  public static void assertArrayTest(Object[] expected, Object[] actual,
+      PrimitiveBiPredicate test) {
     TestAssertionArrayUtils.assertArrayTest(expected, actual, test);
   }
 
@@ -65,10 +63,10 @@ public final class TestAssertions {
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
    * @param message The message.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertArrayTest(Object[] expected, Object[] actual, PrimitiveBiPredicate test,
-      String message) throws AssertionFailedError {
+      String message) {
     TestAssertionArrayUtils.assertArrayTest(expected, actual, test, message);
   }
 
@@ -86,10 +84,10 @@ public final class TestAssertions {
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
    * @param messageSupplier The message supplier.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertArrayTest(Object[] expected, Object[] actual, PrimitiveBiPredicate test,
-      Supplier\<String> messageSupplier) throws AssertionFailedError {
+      Supplier\<String> messageSupplier) {
     TestAssertionArrayUtils.assertArrayTest(expected, actual, test, messageSupplier);
   }
 
@@ -102,10 +100,9 @@ public final class TestAssertions {
    *
    * @param value The value.
    * @param test The test.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
-  public static void assertArrayTest(Object[] value, PrimitivePredicate test)
-      throws AssertionFailedError {
+  public static void assertArrayTest(Object[] value, PrimitivePredicate test) {
     TestAssertionArrayUtils.assertArrayTest(value, test);
   }
 
@@ -121,10 +118,9 @@ public final class TestAssertions {
    * @param value The value.
    * @param test The test.
    * @param message The message.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
-  public static void assertArrayTest(Object[] value, PrimitivePredicate test, String message)
-      throws AssertionFailedError {
+  public static void assertArrayTest(Object[] value, PrimitivePredicate test, String message) {
     TestAssertionArrayUtils.assertArrayTest(value, test, message);
   }
 
@@ -141,10 +137,10 @@ public final class TestAssertions {
    * @param value The value.
    * @param test The test.
    * @param messageSupplier The message supplier.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertArrayTest(Object[] value, PrimitivePredicate test,
-      Supplier\<String> messageSupplier) throws AssertionFailedError {
+      Supplier\<String> messageSupplier) {
     TestAssertionArrayUtils.assertArrayTest(value, test, messageSupplier);
   }<types,Types:{type,Type |
 <\n>
@@ -158,10 +154,10 @@ public final class TestAssertions {
    * @param expected The expected value.
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertArrayTest(<type>[] expected, <type>[] actual,
-      <Type><Type>BiPredicate test) throws AssertionFailedError {
+      <Type><Type>BiPredicate test) {
     TestAssertionArrayUtils.assertArrayTest(expected, actual, test, null, (String) null);
   \}
 
@@ -174,10 +170,10 @@ public final class TestAssertions {
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
    * @param message The message.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertArrayTest(<type>[] expected, <type>[] actual,
-      <Type><Type>BiPredicate test, String message) throws AssertionFailedError {
+      <Type><Type>BiPredicate test, String message) {
     TestAssertionArrayUtils.assertArrayTest(expected, actual, test, null, message);
   \}
 
@@ -191,11 +187,10 @@ public final class TestAssertions {
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
    * @param messageSupplier The message supplier.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertArrayTest(<type>[] expected, <type>[] actual,
-      <Type><Type>BiPredicate test, Supplier\<String> messageSupplier)
-          throws AssertionFailedError {
+      <Type><Type>BiPredicate test, Supplier\<String> messageSupplier) {
     TestAssertionArrayUtils.assertArrayTest(expected, actual, test, null, messageSupplier);
   \}
 
@@ -204,10 +199,9 @@ public final class TestAssertions {
    *
    * @param value The value to test.
    * @param test The test.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
-  public static void assertArrayTest(<type>[] value, <Type>Predicate test)
-      throws AssertionFailedError {
+  public static void assertArrayTest(<type>[] value, <Type>Predicate test) {
     TestAssertionArrayUtils.assertArrayTest(value, test, null, (String) null);
   \}
 
@@ -219,10 +213,9 @@ public final class TestAssertions {
    * @param value The value to test.
    * @param test The test.
    * @param message The message.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
-  public static void assertArrayTest(<type>[] value, <Type>Predicate test, String message)
-      throws AssertionFailedError {
+  public static void assertArrayTest(<type>[] value, <Type>Predicate test, String message) {
     TestAssertionArrayUtils.assertArrayTest(value, test, null, message);
   \}
 
@@ -235,10 +228,10 @@ public final class TestAssertions {
    * @param value The value to test.
    * @param test The test.
    * @param messageSupplier The message supplier.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertArrayTest(<type>[] value, <Type>Predicate test,
-      Supplier\<String> messageSupplier) throws AssertionFailedError {
+      Supplier\<String> messageSupplier) {
     TestAssertionArrayUtils.assertArrayTest(value, test, null, messageSupplier);
   \}}><types,Types:{type,Type |
 <\n>
@@ -252,10 +245,9 @@ public final class TestAssertions {
    * @param expected The expected value.
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
-  public static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test)
-      throws AssertionFailedError {
+  public static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test) {
     TestAssertionUtils.assertTest(expected, actual, test, (String) null);
   \}
 
@@ -268,10 +260,10 @@ public final class TestAssertions {
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
    * @param message The message.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
-      String message) throws AssertionFailedError {
+      String message) {
     TestAssertionUtils.assertTest(expected, actual, test, message);
   \}
 
@@ -285,10 +277,10 @@ public final class TestAssertions {
    * @param actual The value to test against \<code>expected\</code>.
    * @param test The test.
    * @param messageSupplier The message supplier.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
-      Supplier\<String> messageSupplier) throws AssertionFailedError {
+      Supplier\<String> messageSupplier) {
     TestAssertionUtils.assertTest(expected, actual, test, messageSupplier);
   \}
 
@@ -297,9 +289,9 @@ public final class TestAssertions {
    *
    * @param value The value to test.
    * @param test The test.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
-  public static void assertTest(<type> value, <Type>Predicate test) throws AssertionFailedError {
+  public static void assertTest(<type> value, <Type>Predicate test) {
     TestAssertionUtils.assertTest(value, test, (String) null);
   \}
 
@@ -311,10 +303,9 @@ public final class TestAssertions {
    * @param value The value to test.
    * @param test The test.
    * @param message The message.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
-  public static void assertTest(<type> value, <Type>Predicate test, String message)
-      throws AssertionFailedError {
+  public static void assertTest(<type> value, <Type>Predicate test, String message) {
     TestAssertionUtils.assertTest(value, test, message);
   \}
 
@@ -327,10 +318,10 @@ public final class TestAssertions {
    * @param value The value to test.
    * @param test The test.
    * @param messageSupplier The message supplier.
-   * @throws AssertionFailedError If the test failed or the primitive test was not the correct type.
+   * @throws AssertionError If the test failed or the primitive test was not the correct type.
    */
   public static void assertTest(<type> value, <Type>Predicate test,
-      Supplier\<String> messageSupplier) throws AssertionFailedError {
+      Supplier\<String> messageSupplier) {
     TestAssertionUtils.assertTest(value, test, messageSupplier);
   \}}>
 }

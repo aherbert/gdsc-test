@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test API
+ * Genome Damage and Stability Centre Test Utilities
  *
- * Contains a generic framework for test predicates.
+ * Generates API classes for the GDSC Test project.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -22,9 +22,30 @@
  * #L%
  */
 
+package uk.ac.sussex.gdsc.test.generator;
+
 /**
- * Provides classes for creating and asserting {@code true/false} conditional predicates.
+ * A generic pair.
  *
- * @since 1.0
+ * @param <A> the generic type of the first value
+ * @param <B> the generic type of the second value
  */
-package uk.ac.sussex.gdsc.test.api;
+public class Pair<A, B> {
+
+  /** The first value. */
+  public final A first;
+
+  /** The second value. */
+  public final B second;
+
+  /**
+   * Instantiates a new pair.
+   *
+   * @param first the first value
+   * @param second the second value
+   */
+  public Pair(A first, B second) {
+    this.first = first;
+    this.second = second;
+  }
+}

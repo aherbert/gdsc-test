@@ -27,7 +27,7 @@ package uk.ac.sussex.gdsc.test.api;
 import java.util.function.Supplier;
 
 /**
- * Defines utilities for functions.
+ * Defines {@link String} utilities.
  */
 public final class StringUtils {
 

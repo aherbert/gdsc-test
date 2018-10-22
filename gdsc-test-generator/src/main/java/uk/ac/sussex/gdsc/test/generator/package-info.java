@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test API
+ * Genome Damage and Stability Centre Test Utilities
  *
- * Contains a generic framework for test predicates.
+ * Generates API classes for the GDSC Test project.
  * %%
  * Copyright (C) 2018 Alex Herbert
  * %%
@@ -23,8 +23,10 @@
  */
 
 /**
- * Provides classes for creating and asserting {@code true/false} conditional predicates.
+ * <p> Provides classes for generating Java code using the <a
+ * href="http://www.stringtemplate.org/">String Template</a> library.
  *
+ * @see <a href="http://www.stringtemplate.org/">String Template</a>
  * @since 1.0
  */
-package uk.ac.sussex.gdsc.test.api;
+package uk.ac.sussex.gdsc.test.generator;

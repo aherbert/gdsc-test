@@ -31,12 +31,12 @@ import java.util.Arrays;
 /**
  * Class used for scrambling bytes.
  *
- * <p>This is done using the digest algorithm to scramble consecutive n-bit blocks from a source
- * seed.
+ * <p>This is done using the a {@link MessageDigest} algorithm to scramble consecutive n-bit blocks
+ * from a source seed.
  *
- * <p>Each block is used to initialise an MD5 digest. Each call to scramble the seed will update the
- * digest with bytes from a sequence. The current digest state from each block are then concatenated
- * to create the scrambled sequence.
+ * <p>Each block from the source seed is used to initialise a {@link MessageDigest}. Each call to
+ * scramble the seed will update the digest with bytes from a sequence. The current digest state
+ * from each block are then concatenated to create the scrambled sequence.
  */
 public class ByteScrambler {
 
@@ -58,7 +58,7 @@ public class ByteScrambler {
   /**
    * Instantiates a new byte scrambler using the MD5 algorithm.
    *
-   * <p>For convenience the checked exceptions are caught and rethrown as unchecked. The MD5
+   * <p>For convenience the checked exceptions are caught and re-thrown as unchecked. The MD5
    * algorithm should be supported on any Java platform.
    *
    * @param seed the seed
@@ -78,7 +78,8 @@ public class ByteScrambler {
   /**
    * Instantiates a new byte scrambler.
    *
-   * <p>Note: The algorithm must support {@link MessageDigest#clone()}.
+   * <p>Note: The algorithm must support {@link MessageDigest#clone()} and
+   * {@link MessageDigest#getDigestLength()}.
    *
    * @param seed the seed
    * @param algorithm the algorithm

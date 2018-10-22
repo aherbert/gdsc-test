@@ -27,12 +27,8 @@ Contains a generic framework for test predicates.
   <dependencies>
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
-      <artifactId>gdsc-test-api-generator</artifactId>
+      <artifactId>gdsc-test-generator</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opentest4j</groupId>
-      <artifactId>opentest4j</artifactId>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -64,7 +60,7 @@ Contains a generic framework for test predicates.
                 <argument>-classpath</argument>
                 <!-- automatically creates the classpath using all project dependencies, also adding the project build directory -->
                 <classpath />
-                <argument>uk.ac.sussex.gdsc.test.api.generator.ApiGenerator</argument>
+                <argument>uk.ac.sussex.gdsc.test.generator.CodeGenerator</argument>
                 <argument>src/main/resources</argument>
                 <argument>${generated.sources}</argument>
                 <argument>--header</argument>
@@ -84,7 +80,7 @@ Contains a generic framework for test predicates.
                 <argument>-classpath</argument>
                 <!-- automatically creates the classpath using all project dependencies, also adding the project build directory -->
                 <classpath />
-                <argument>uk.ac.sussex.gdsc.test.api.generator.ApiGenerator</argument>
+                <argument>uk.ac.sussex.gdsc.test.generator.CodeGenerator</argument>
                 <argument>src/test/resources</argument>
                 <argument>${generated.test.sources}</argument>
                 <argument>--header</argument>

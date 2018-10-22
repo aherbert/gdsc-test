@@ -19,8 +19,6 @@ import uk.ac.sussex.gdsc.test.api.function.PrimitivePredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
 
-import org.opentest4j.AssertionFailedError;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.function.Supplier;
@@ -199,7 +197,7 @@ static void assertArrayTest(<type>[] expected, <type>[] actual,
 
   for (int i = 0; i \< expected.length; i++) {
     if (!test.test(expected[i], actual[i])) {
-      throw new AssertionFailedError(failArraysMessage(expected[i], actual[i], test,
+      throw new AssertionError(failArraysMessage(expected[i], actual[i], test,
           nullSafeIndexes(indexes, i), messageOrSupplier));
     \}
   \}
@@ -221,7 +219,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
 
   for (int i = 0; i \< value.length; i++) {
     if (!test.test(value[i])) {
-      throw new AssertionFailedError(failArrayMessage(value[i], test,
+      throw new AssertionError(failArrayMessage(value[i], test,
           nullSafeIndexes(indexes, i), messageOrSupplier));
     \}
   \}
@@ -273,9 +271,8 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
    * @param expected The expected value.
    * @param actual The value to check against \<code>expected\</code>.
    */
-  private static void failNotMatchingArrayTypes(Object expected, Object actual)
-      throws AssertionFailedError {
-    throw new AssertionFailedError("Expected matching array types but was: \<"
+  private static void failNotMatchingArrayTypes(Object expected, Object actual) {
+    throw new AssertionError("Expected matching array types but was: \<"
         + getClassName(expected) + "> and \<" + getClassName(actual) + ">");
   }<types,Types:{type,Type |
 <\n>
@@ -300,7 +297,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
    */
   private static void assert<Type><Type>BiPredicate(PrimitiveBiPredicate test) {
     if (!(test instanceof <Type><Type>BiPredicate)) {
-      throw new AssertionFailedError(
+      throw new AssertionError(
           "Expected <Type><Type>BiPredicate but was: \<" + getClassName(test) + ">");
     \}
   \}}>
@@ -323,7 +320,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
   assert<Type>Predicate(test);
   assertArrayTest((<type>[]) value, (<Type>Predicate) test, indexes, messageOrSupplier);
 }>    } else {
-      throw new AssertionFailedError("Expected primitive array but was: \<"
+      throw new AssertionError("Expected primitive array but was: \<"
           + getClassName(value) + ">");
     }
   }<types,Types:{type,Type |
@@ -335,7 +332,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
    */
   private static void assert<Type>Predicate(PrimitivePredicate test) {
     if (!(test instanceof <Type>Predicate)) {
-      throw new AssertionFailedError(
+      throw new AssertionError(
           "Expected <Type>Predicate but was: \<" + getClassName(test) + ">");
     \}
   \}}>
@@ -366,12 +363,12 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
   private static void assertArraysNotNull(Object expected, Object actual, Deque\<Integer> indexes,
       Object messageOrSupplier) {
     if (expected == null) {
-      throw new AssertionFailedError(
+      throw new AssertionError(
           TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier))
               + "expected array was \<null>" + TestAssertionUtils.formatIndexes(indexes));
     }
     if (actual == null) {
-      throw new AssertionFailedError(
+      throw new AssertionError(
           TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier))
               + "actual array was \<null>" + TestAssertionUtils.formatIndexes(indexes));
     }
@@ -381,7 +378,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
   private static void assertArrayNotNull(Object value, Deque\<Integer> indexes,
       Object messageOrSupplier) {
     if (value == null) {
-      throw new AssertionFailedError(
+      throw new AssertionError(
           TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier))
               + "value array was \<null>" + TestAssertionUtils.formatIndexes(indexes));
     }
@@ -395,7 +392,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
           StringUtils.toString(messageOrSupplier));
       final String message = "array lengths differ" + TestAssertionUtils.formatIndexes(indexes)
           + ", expected: \<" + expected + "> but was: \<" + actual + ">";
-      throw new AssertionFailedError(prefix + message);
+      throw new AssertionError(prefix + message);
     }
   }
 

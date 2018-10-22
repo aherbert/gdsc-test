@@ -26,7 +26,7 @@
   <dependencies>
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
-      <artifactId>gdsc-test-api-generator</artifactId>
+      <artifactId>gdsc-test-generator</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -58,6 +58,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${org.jacoco.version}</version>
         <executions>
           <execution>
             <id>report-aggregate</id>
@@ -91,11 +92,15 @@
             <configuration>
               <reportOutputDirectory>${project.build.directory}/apidocs</reportOutputDirectory>
               <includeDependencySources>true</includeDependencySources>
-              <doctitle>GDSC Test ${project.version} API</doctitle>
-              <windowtitle>GDSC Test ${project.version} API</windowtitle>
+              <doctitle>GDSC Test ${project.version}</doctitle>
+              <windowtitle>GDSC Test ${project.version}</windowtitle>
               <use>true</use>
               <version>false</version>
               <groups>
+                <group>
+                  <title>Test Generator Package</title>
+                  <packages>uk.ac.sussex.gdsc.test.generator*</packages>
+                </group>
                 <group>
                   <title>Test API Package</title>
                   <packages>uk.ac.sussex.gdsc.test.api*</packages>
