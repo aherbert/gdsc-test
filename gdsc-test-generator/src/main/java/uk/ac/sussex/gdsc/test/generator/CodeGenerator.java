@@ -80,7 +80,7 @@ public class CodeGenerator {
 
   /** The logging level. */
   @Option(names = {"-l", "--logging"}, description = "INFO, FINE, FINER, ...")
-  private Level level = Level.INFO;
+  private Level level = Level.INFO; // NOPMD - Cannot be final to allow update by PicoCLI 
 
   /** The debug flag. */
   @Option(names = {"-d", "--debug"}, description = "Extra debug information.")
@@ -132,10 +132,10 @@ public class CodeGenerator {
   /**
    * A DirectoryWalker that searches the source directory for String Template (.st) files.
    */
-  private class SourceDirectoryWalker extends DirectoryWalker<File> {
+  private final class SourceDirectoryWalker extends DirectoryWalker<File> {
 
     /** The files. */
-    List<File> files = new ArrayList<>();
+    final List<File> files = new ArrayList<>();
 
     /**
      * Instantiates a new source directory walker.
@@ -158,7 +158,7 @@ public class CodeGenerator {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     List<File> getFiles() throws IOException {
-      walk(sourceDirectory, files);
+      walk(getSourceDirectory(), files);
       return files;
     }
   }
@@ -446,5 +446,14 @@ public class CodeGenerator {
    */
   static void setErr(PrintStream err) {
     CodeGenerator.err = err;
+  }
+
+  /**
+   * Gets the source directory.
+   *
+   * @return the source directory
+   */
+  File getSourceDirectory() {
+    return sourceDirectory;
   }
 }

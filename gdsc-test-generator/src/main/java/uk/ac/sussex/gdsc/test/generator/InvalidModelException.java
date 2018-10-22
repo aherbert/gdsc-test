@@ -30,7 +30,7 @@ package uk.ac.sussex.gdsc.test.generator;
 public class InvalidModelException extends Exception {
 
   /** The serial version UID. */
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L; // NOPMD
 
   /**
    * Instantiates a new illegal model exception.
