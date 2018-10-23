@@ -768,6 +768,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <module>gdsc-test-utils</module>
     <module>gdsc-test-junit5</module>
     <module>gdsc-test-rng</module>
+    <module>gdsc-test-examples</module>
     <!-- <module>gdsc-test-doc</module> uses profile gdsc-test-doc -->
   </modules>
 
