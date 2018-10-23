@@ -2,6 +2,7 @@
 
 import uk.ac.sussex.gdsc.test.api.function.<Float><Float>BiPredicate;
 
+import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -11,7 +12,10 @@ import java.util.function.Supplier;
  * @see EqualityUtils#<float>sAreAlmostEqual(<float>, <float>, double, <float>)
  */
 public class <Float><Float>AlmostEquals
-    implements <Float><Float>BiPredicate, Supplier\<String> {
+    implements <Float><Float>BiPredicate, Supplier\<String>, Serializable {
+
+  /** The serial version ID. */
+  private static final long serialVersionUID = 1L;
 
   /** The relative error. */
   private final double relativeError;
@@ -44,9 +48,8 @@ public class <Float><Float>AlmostEquals
    * @throws IllegalArgumentException If both tolerances are ignored (i.e. no
    *                                  equality test is performed)
    */
-  public <Float><Float>AlmostEquals(double relativeError, <float> absoluteError)
-      throws IllegalArgumentException {
-    EqualityUtils.<float>sCheckErrors(relativeError, absoluteError);
+  public <Float><Float>AlmostEquals(double relativeError, <float> absoluteError) {
+    EqualityUtils.<float>sValidateAlmostEqual(relativeError, absoluteError);
     this.relativeError = relativeError;
     this.absoluteError = absoluteError;
   }
@@ -72,6 +75,6 @@ public class <Float><Float>AlmostEquals
    */
   @Override
   public String get() {
-    return EqualityUtils.<float>sGetDescription(relativeError, absoluteError);
+    return EqualityUtils.<float>sGetDescriptionAlmostEqual(relativeError, absoluteError);
   }
 }

@@ -96,7 +96,7 @@ public class TestHelperTest {<types,Types:{type,Type |
   @Test
   public void testAlmostEqual<Float>s() {
     final double relativeError = 0.5;
-    final <float> absoluteError = 0;
+    final <float> absoluteError = 1;
     final <Float><Float>BiPredicate test = TestHelper.almostEqual<Float>s(relativeError,
         absoluteError);
     final <float>[] values = ApiTestUtils.get<Float>Values();
@@ -105,6 +105,23 @@ public class TestHelperTest {<types,Types:{type,Type |
         Assertions.assertEquals(EqualityUtils.<float>sAreAlmostEqual(value1, value2,
             relativeError, absoluteError), test.test(value1, value2),
             "Predicate does not compute almost equal");
+      \}
+    \}
+  \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
+<\n>
+  /**
+   * Test creates a predicate to compare {@code <number>\} values are within an absolute error.
+   */
+  @Test
+  public void testWithin<Number>s() {
+    final <numberAbsType> absoluteError = 1;
+    final <Number><Number>BiPredicate test = TestHelper.within<Number>s(absoluteError);
+    final <number>[] values = ApiTestUtils.get<Number>Values();
+    for (<number> value1 : values) {
+      for (<number> value2 : values) {
+        Assertions.assertEquals(EqualityUtils.<number>sAreWithin(value1, value2, absoluteError),
+            test.test(value1, value2),
+            "Predicate does not compute within");
       \}
     \}
   \}}>

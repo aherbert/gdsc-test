@@ -2,6 +2,7 @@
 
 import uk.ac.sussex.gdsc.test.api.function.<Type><Type>BiPredicate;
 
+import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -9,7 +10,11 @@ import java.util.function.Supplier;
  *
  * @see <Type><Type>BiPredicate#test(<type>, <type>)
  */
-public class <Type><Type>Equals implements <Type><Type>BiPredicate, Supplier\<String> {
+public class <Type><Type>Equals
+    implements <Type><Type>BiPredicate, Supplier\<String>, Serializable {
+
+  /** The serial version ID. */
+  private static final long serialVersionUID = 1L;
 
   /** A default instance. */
   private static final <Type><Type>Equals INSTANCE = new <Type><Type>Equals();

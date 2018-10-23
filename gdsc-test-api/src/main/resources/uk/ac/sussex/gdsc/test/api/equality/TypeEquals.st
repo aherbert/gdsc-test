@@ -2,6 +2,7 @@
 
 import uk.ac.sussex.gdsc.test.api.function.<Type>Predicate;
 
+import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -9,7 +10,11 @@ import java.util.function.Supplier;
  *
  * @see <Type>Predicate#test(<type>)
  */
-public class <Type>Equals implements <Type>Predicate, Supplier\<String> {
+public class <Type>Equals
+    implements <Type>Predicate, Supplier\<String>, Serializable {
+
+  /** The serial version ID. */
+  private static final long serialVersionUID = 1L;
 
   /** The reference value to test against. */
   private final <type> referenceValue;

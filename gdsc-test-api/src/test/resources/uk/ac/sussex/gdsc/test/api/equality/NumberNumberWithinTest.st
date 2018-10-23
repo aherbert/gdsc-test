@@ -1,0 +1,44 @@
+<package>
+
+import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Tests {@link <Number><Number>Within}.
+ */
+public class <Number><Number>WithinTest {
+
+  /**
+   * Test {@link <Number><Number>Within#test(<number>, <number>)}.
+   */
+  @Test
+  public void testTest() {
+    final <number>[] values = ApiTestUtils.get<Number>Values();
+    for (<errorType> absoluteError : new <errorType>[] {0, 1}) {
+      final <Number><Number>Within predicate = new <Number><Number>Within(absoluteError);
+      for (<number> value1 : values) {
+        for (<number> value2 : values) {
+          final boolean expected = EqualityUtils.<number>sTestWithin(value1, value2, absoluteError);
+          Assertions.assertEquals(expected, predicate.test(value1, value2),
+              () -> String.format("Does not compute EqualityUtils.<number>sTestWithin :"
+                  + " v1=%s, v2=%s, abs.error=%s", value1, value2, absoluteError));
+        }
+      }
+    }
+  }
+
+  /**
+   * Test {@link <Number><Number>Within#get() }.
+   */
+  @Test
+  public void testGet() {
+    final <errorType> absoluteError = <absError>;
+    final <Number><Number>Within predicate = new <Number><Number>Within(absoluteError);
+    for (String item : new String[] {"Abs", String.valueOf(absoluteError)}) {
+      Assertions.assertTrue(predicate.get().contains(item),
+          () -> "Missing \<" + item + ">: " + predicate.get());
+    }
+  }
+}

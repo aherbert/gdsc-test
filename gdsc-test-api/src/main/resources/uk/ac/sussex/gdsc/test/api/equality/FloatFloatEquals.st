@@ -2,6 +2,7 @@
 
 import uk.ac.sussex.gdsc.test.api.function.<Float><Float>BiPredicate;
 
+import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -9,7 +10,11 @@ import java.util.function.Supplier;
  *
  * @see <Float><Float>BiPredicate#test(<float>, <float>)
  */
-public class <Float><Float>Equals implements <Float><Float>BiPredicate, Supplier\<String> {
+public class <Float><Float>Equals
+    implements <Float><Float>BiPredicate, Supplier\<String>, Serializable {
+
+  /** The serial version ID. */
+  private static final long serialVersionUID = 1L;
 
   /** A default instance. */
   private static final <Float><Float>Equals INSTANCE = new <Float><Float>Equals();

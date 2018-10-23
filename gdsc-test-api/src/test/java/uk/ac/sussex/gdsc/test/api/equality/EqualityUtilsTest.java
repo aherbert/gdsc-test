@@ -30,123 +30,57 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("javadoc")
 public class EqualityUtilsTest {
 
-  // COPY FROM HERE
-
   @Test
   public void testFloatAreEqual() {
-    float[] values = {0, 1, 1.5f, (float) Math.PI, Float.NaN, Float.POSITIVE_INFINITY,
+    final float[] values = {0, 1, 1.5f, (float) Math.PI, Float.NaN, Float.POSITIVE_INFINITY,
         Float.NEGATIVE_INFINITY, Float.MAX_VALUE, Float.MIN_VALUE};
-    for (float v1 : values) {
-      for (float v2 : values) {
+    for (final float v1 : values) {
+      for (final float v2 : values) {
         Assertions.assertEquals(Float.compare(v1, v2) == 0, EqualityUtils.floatsAreEqual(v1, v2));
       }
     }
   }
 
   @Test
+  public void testDoubleAreEqual() {
+    final double[] values = {0, 1, 1.5, Math.PI, Double.NaN, Double.POSITIVE_INFINITY,
+        Double.NEGATIVE_INFINITY, Double.MAX_VALUE, Double.MIN_VALUE};
+    for (final double v1 : values) {
+      for (final double v2 : values) {
+        Assertions.assertEquals(Double.compare(v1, v2) == 0, EqualityUtils.doublesAreEqual(v1, v2));
+      }
+    }
+  }
+
+  // float AlmostEquals
+
+  @Test
   public void testFloatsAreAlmostEqualThrows() {
-    float expected = 0;
-    float actual = 0;
+    final float expected = 0;
+    final float actual = 0;
     EqualityUtils.floatsAreAlmostEqual(expected, actual, 0, 0);
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      float relativeError = -1;
-      float absoluteError = -1;
+      final float relativeError = -1;
+      final float absoluteError = -1;
       EqualityUtils.floatsAreAlmostEqual(expected, actual, relativeError, absoluteError);
     });
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      float relativeError = 2;
-      float absoluteError = 0;
+      final float relativeError = 2;
+      final float absoluteError = 0;
       EqualityUtils.floatsAreAlmostEqual(expected, actual, relativeError, absoluteError);
     });
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      float relativeError = 0;
-      float absoluteError = Float.POSITIVE_INFINITY;
+      final float relativeError = 0;
+      final float absoluteError = Float.POSITIVE_INFINITY;
       EqualityUtils.floatsAreAlmostEqual(expected, actual, relativeError, absoluteError);
     });
-  }
-
-  @Test
-  public void testFloatsAreAlmostEqual() {
-    // Test exact
-    double relativeError = 0;
-    float absoluteError = 0;
-
-    // Use a range of values
-    for (float value : new float[] {0, 1, (float) Math.PI, Float.MAX_VALUE, Float.MIN_VALUE}) {
-      for (int i = 0; i < 2; i++) {
-        value *= -1;
-        Assertions.assertTrue(
-            EqualityUtils.floatsAreAlmostEqual(value, value, relativeError, absoluteError));
-        Assertions.assertFalse(EqualityUtils.floatsAreAlmostEqual(value, Math.nextUp(value),
-            relativeError, absoluteError));
-        Assertions.assertFalse(EqualityUtils.floatsAreAlmostEqual(value, Math.nextDown(value),
-            relativeError, absoluteError));
-        Assertions.assertFalse(EqualityUtils.floatsAreAlmostEqual(Math.nextUp(value), value,
-            relativeError, absoluteError));
-        Assertions.assertFalse(EqualityUtils.floatsAreAlmostEqual(Math.nextDown(value), value,
-            relativeError, absoluteError));
-      }
-    }
-    // Special floats are not equal as they are not within a real delta.
-    for (float value : new float[] {Float.NaN, Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY}) {
-      Assertions.assertFalse(
-          EqualityUtils.floatsAreAlmostEqual(value, value, relativeError, absoluteError));
-    }
-
-    float expected = 0;
-    float actual = 0;
-
-    // Test the absolute error
-    expected = 1;
-    actual = 2;
-    relativeError = -1;
-    absoluteError = actual - expected;
-
-    // Order insensitive
-    Assertions.assertTrue(
-        EqualityUtils.floatsAreAlmostEqual(expected, actual, relativeError, absoluteError));
-    Assertions.assertTrue(
-        EqualityUtils.floatsAreAlmostEqual(actual, expected, relativeError, absoluteError));
-
-    // Make the delta smaller
-    float delta = Math.nextDown(absoluteError);
-    Assertions
-        .assertFalse(EqualityUtils.floatsAreAlmostEqual(expected, actual, relativeError, delta));
-    Assertions
-        .assertFalse(EqualityUtils.floatsAreAlmostEqual(actual, expected, relativeError, delta));
-
-    // Make the gap bigger
-    // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to float
-    // error.
-    // So instead get the next float above 1 and subtract from 2.
-    float expected2 = actual - Math.nextUp(absoluteError);
-    Assertions.assertFalse(
-        EqualityUtils.floatsAreAlmostEqual(expected2, actual, relativeError, absoluteError));
-    Assertions.assertFalse(
-        EqualityUtils.floatsAreAlmostEqual(actual, expected2, relativeError, absoluteError));
-
-    // Test the relative error
-    expected = 1;
-    actual = 2;
-    relativeError = 0.5;
-    absoluteError = 0;
-    Assertions.assertTrue(
-        EqualityUtils.floatsAreAlmostEqual(expected, actual, relativeError, absoluteError));
-    Assertions.assertTrue(
-        EqualityUtils.floatsAreAlmostEqual(actual, expected, relativeError, absoluteError));
-    Assertions.assertFalse(EqualityUtils.floatsAreAlmostEqual(expected, Math.nextUp(actual),
-        relativeError, absoluteError));
-    // Calling Math.nextDown(1) creates a value that still is within 1 of 2 due to float error.
-    // So instead get the next float above 1 and subtract from 2.
-    Assertions.assertFalse(EqualityUtils.floatsAreAlmostEqual(actual - Math.nextUp(1), actual,
-        relativeError, absoluteError));
   }
 
   @Test
   public void testFloatsAreAlmostEqualUsingNoError() {
-    float relativeError = 0;
-    float absoluteError = 0;
+    final float relativeError = 0;
+    final float absoluteError = 0;
 
     // Use a range of values
     for (float value : new float[] {0, 1, (float) Math.PI, Float.MAX_VALUE, Float.MIN_VALUE}) {
@@ -165,7 +99,8 @@ public class EqualityUtilsTest {
       }
     }
     // Special floats are not equal as they are not within a real delta.
-    for (float value : new float[] {Float.NaN, Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY}) {
+    for (final float value : new float[] {Float.NaN, Float.POSITIVE_INFINITY,
+        Float.NEGATIVE_INFINITY}) {
       Assertions.assertFalse(
           EqualityUtils.floatsAreAlmostEqual(value, value, relativeError, absoluteError));
     }
@@ -173,10 +108,10 @@ public class EqualityUtilsTest {
 
   @Test
   public void testFloatsAreAlmostEqualUsingAbsoluteError() {
-    float expected = 1;
-    float actual = 2;
-    float relativeError = -1;
-    float absoluteError = actual - expected;
+    final float expected = 1;
+    final float actual = 2;
+    final float relativeError = -1;
+    final float absoluteError = actual - expected;
 
     // Order insensitive
     Assertions.assertTrue(
@@ -185,7 +120,7 @@ public class EqualityUtilsTest {
         EqualityUtils.floatsAreAlmostEqual(actual, expected, relativeError, absoluteError));
 
     // Make the delta smaller
-    float delta = Math.nextDown(absoluteError);
+    final float delta = Math.nextDown(absoluteError);
     Assertions
         .assertFalse(EqualityUtils.floatsAreAlmostEqual(expected, actual, relativeError, delta));
     Assertions
@@ -195,7 +130,7 @@ public class EqualityUtilsTest {
     // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to float
     // error.
     // So instead get the next delta above and subtract from actual.
-    float expected2 = actual - Math.nextUp(absoluteError);
+    final float expected2 = actual - Math.nextUp(absoluteError);
     Assertions.assertFalse(
         EqualityUtils.floatsAreAlmostEqual(expected2, actual, relativeError, absoluteError));
     Assertions.assertFalse(
@@ -204,10 +139,10 @@ public class EqualityUtilsTest {
 
   @Test
   public void testFloatsAreAlmostEqualUsingRelativeError() {
-    float expected = 1;
-    float actual = 2;
-    double relativeError = 0.5;
-    float absoluteError = -1;
+    final float expected = 1;
+    final float actual = 2;
+    final double relativeError = 0.5;
+    final float absoluteError = -1;
 
     // Order insensitive
     Assertions.assertTrue(
@@ -216,7 +151,7 @@ public class EqualityUtilsTest {
         EqualityUtils.floatsAreAlmostEqual(actual, expected, relativeError, absoluteError));
 
     // Make the delta smaller
-    double delta = Math.nextDown(relativeError);
+    final double delta = Math.nextDown(relativeError);
     Assertions
         .assertFalse(EqualityUtils.floatsAreAlmostEqual(expected, actual, delta, absoluteError));
     Assertions
@@ -226,7 +161,7 @@ public class EqualityUtilsTest {
     // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to float
     // error.
     // So instead get the next delta above and subtract from actual.
-    float expected2 = actual - Math.nextUp(actual - expected);
+    final float expected2 = actual - Math.nextUp(actual - expected);
     Assertions.assertFalse(
         EqualityUtils.floatsAreAlmostEqual(expected2, actual, relativeError, absoluteError));
     Assertions.assertFalse(
@@ -234,32 +169,35 @@ public class EqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsGetDescription() {
+  public void testFloatsGetDescriptionAlmostEqual() {
     // These must be distinguishable as strings
-    Float[] values1 = {-1.1f, 0.0f, 1.1f};
-    Integer[] values2 = {-2, 0, 2};
-    for (Number v1 : values1) {
-      for (Number v2 : values2) {
-        testFloatsGetDescription(v1, v2);
+    final Float[] values1 = {-1.1f, 0.0f, 1.1f};
+    final Integer[] values2 = {-2, 0, 2};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testFloatsGetDescriptionAlmostEqual(v1, v2);
       }
     }
   }
 
-  private static void testFloatsGetDescription(Number relativeError, Number absoluteError) {
+  private static void testFloatsGetDescriptionAlmostEqual(Number relativeError,
+      Number absoluteError) {
 
-    double inputRelError = relativeError.doubleValue();
-    float inputAbsError = absoluteError.floatValue();
+    final double inputRelError = relativeError.doubleValue();
+    final float inputAbsError = absoluteError.floatValue();
 
     // The method assumes the errors must pass the validation in checkErrors(...)
     try {
-      EqualityUtils.floatsCheckErrors(inputRelError, inputAbsError);
-    } catch (IllegalArgumentException ex) {
+      EqualityUtils.floatsValidateAlmostEqual(inputRelError, inputAbsError);
+    } catch (final IllegalArgumentException ex) {
       return;
     }
 
     // The raw input
-    String result = EqualityUtils.floatsGetDescription(inputRelError, inputAbsError);
-    String msg = String.format("Rel.Error = %s, Abs.Error = %ss", relativeError, absoluteError);
+    final String result =
+        EqualityUtils.floatsGetDescriptionAlmostEqual(inputRelError, inputAbsError);
+    final String msg =
+        String.format("Rel.Error = %s, Abs.Error = %ss", relativeError, absoluteError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -273,14 +211,14 @@ public class EqualityUtilsTest {
     }
 
     // Get the expected values in the message
-    double relError = relativeError.doubleValue();
-    float absError = absoluteError.floatValue();
+    final double relError = relativeError.doubleValue();
+    final float absError = absoluteError.floatValue();
 
-    boolean hasAbs = absError >= 0;
-    boolean hasRel = relError > 0;
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
 
-    String relString = String.valueOf(relError);
-    String absString = String.valueOf(absError);
+    final String relString = String.valueOf(relError);
+    final String absString = (absError == 0) ? "0" : String.valueOf(absError);
 
     Assertions.assertEquals(hasRel, result.contains("Rel"), () -> msg + " Missing relative");
     Assertions.assertEquals(hasRel, result.contains(relString),
@@ -291,124 +229,35 @@ public class EqualityUtilsTest {
     Assertions.assertEquals(hasRel && hasAbs, result.contains("||"), () -> msg + " Missing ||");
   }
 
-  // COPY TO HERE
-
-  @Test
-  public void testDoubleAreEqual() {
-    double[] values = {0, 1, 1.5, Math.PI, Double.NaN, Double.POSITIVE_INFINITY,
-        Double.NEGATIVE_INFINITY, Double.MAX_VALUE, Double.MIN_VALUE};
-    for (double v1 : values) {
-      for (double v2 : values) {
-        Assertions.assertEquals(Double.compare(v1, v2) == 0, EqualityUtils.doublesAreEqual(v1, v2));
-      }
-    }
-  }
+  // double AlmostEquals
 
   @Test
   public void testDoublesAreAlmostEqualThrows() {
-    double expected = 0;
-    double actual = 0;
+    final double expected = 0;
+    final double actual = 0;
     EqualityUtils.doublesAreAlmostEqual(expected, actual, 0, 0);
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      double relativeError = -1;
-      double absoluteError = -1;
+      final double relativeError = -1;
+      final double absoluteError = -1;
       EqualityUtils.doublesAreAlmostEqual(expected, actual, relativeError, absoluteError);
     });
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      double relativeError = 2;
-      double absoluteError = 0;
+      final double relativeError = 2;
+      final double absoluteError = 0;
       EqualityUtils.doublesAreAlmostEqual(expected, actual, relativeError, absoluteError);
     });
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      double relativeError = 0;
-      double absoluteError = Double.POSITIVE_INFINITY;
+      final double relativeError = 0;
+      final double absoluteError = Double.POSITIVE_INFINITY;
       EqualityUtils.doublesAreAlmostEqual(expected, actual, relativeError, absoluteError);
     });
-  }
-
-  @Test
-  public void testDoublesAreAlmostEqual() {
-    // Test exact
-    double relativeError = 0;
-    double absoluteError = 0;
-
-    // Use a range of values
-    for (double value : new double[] {0, 1, Math.PI, Double.MAX_VALUE, Double.MIN_VALUE}) {
-      for (int i = 0; i < 2; i++) {
-        value *= -1;
-        Assertions.assertTrue(
-            EqualityUtils.doublesAreAlmostEqual(value, value, relativeError, absoluteError));
-        Assertions.assertFalse(EqualityUtils.doublesAreAlmostEqual(value, Math.nextUp(value),
-            relativeError, absoluteError));
-        Assertions.assertFalse(EqualityUtils.doublesAreAlmostEqual(value, Math.nextDown(value),
-            relativeError, absoluteError));
-        Assertions.assertFalse(EqualityUtils.doublesAreAlmostEqual(Math.nextUp(value), value,
-            relativeError, absoluteError));
-        Assertions.assertFalse(EqualityUtils.doublesAreAlmostEqual(Math.nextDown(value), value,
-            relativeError, absoluteError));
-      }
-    }
-    // Special doubles are not equal as they are not within a real delta.
-    for (double value : new double[] {Double.NaN, Double.POSITIVE_INFINITY,
-        Double.NEGATIVE_INFINITY}) {
-      Assertions.assertFalse(
-          EqualityUtils.doublesAreAlmostEqual(value, value, relativeError, absoluteError));
-    }
-
-    double expected = 0;
-    double actual = 0;
-
-    // Test the absolute error
-    expected = 1;
-    actual = 2;
-    relativeError = -1;
-    absoluteError = actual - expected;
-
-    // Order insensitive
-    Assertions.assertTrue(
-        EqualityUtils.doublesAreAlmostEqual(expected, actual, relativeError, absoluteError));
-    Assertions.assertTrue(
-        EqualityUtils.doublesAreAlmostEqual(actual, expected, relativeError, absoluteError));
-
-    // Make the delta smaller
-    double delta = Math.nextDown(absoluteError);
-    Assertions
-        .assertFalse(EqualityUtils.doublesAreAlmostEqual(expected, actual, relativeError, delta));
-    Assertions
-        .assertFalse(EqualityUtils.doublesAreAlmostEqual(actual, expected, relativeError, delta));
-
-    // Make the gap bigger
-    // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to float
-    // error.
-    // So instead get the next double above 1 and subtract from 2.
-    double expected2 = actual - Math.nextUp(absoluteError);
-    Assertions.assertFalse(
-        EqualityUtils.doublesAreAlmostEqual(expected2, actual, relativeError, absoluteError));
-    Assertions.assertFalse(
-        EqualityUtils.doublesAreAlmostEqual(actual, expected2, relativeError, absoluteError));
-
-    // Test the relative error
-    expected = 1;
-    actual = 2;
-    relativeError = 0.5;
-    absoluteError = 0;
-    Assertions.assertTrue(
-        EqualityUtils.doublesAreAlmostEqual(expected, actual, relativeError, absoluteError));
-    Assertions.assertTrue(
-        EqualityUtils.doublesAreAlmostEqual(actual, expected, relativeError, absoluteError));
-    Assertions.assertFalse(EqualityUtils.doublesAreAlmostEqual(expected, Math.nextUp(actual),
-        relativeError, absoluteError));
-    // Calling Math.nextDown(1) creates a value that still is within 1 of 2 due to float error.
-    // So instead get the next double above 1 and subtract from 2.
-    Assertions.assertFalse(EqualityUtils.doublesAreAlmostEqual(actual - Math.nextUp(1), actual,
-        relativeError, absoluteError));
   }
 
   @Test
   public void testDoublesAreAlmostEqualUsingNoError() {
-    double relativeError = 0;
-    double absoluteError = 0;
+    final double relativeError = 0;
+    final double absoluteError = 0;
 
     // Use a range of values
     for (double value : new double[] {0, 1, Math.PI, Double.MAX_VALUE, Double.MIN_VALUE}) {
@@ -427,7 +276,7 @@ public class EqualityUtilsTest {
       }
     }
     // Special doubles are not equal as they are not within a real delta.
-    for (double value : new double[] {Double.NaN, Double.POSITIVE_INFINITY,
+    for (final double value : new double[] {Double.NaN, Double.POSITIVE_INFINITY,
         Double.NEGATIVE_INFINITY}) {
       Assertions.assertFalse(
           EqualityUtils.doublesAreAlmostEqual(value, value, relativeError, absoluteError));
@@ -436,10 +285,10 @@ public class EqualityUtilsTest {
 
   @Test
   public void testDoublesAreAlmostEqualUsingAbsoluteError() {
-    double expected = 1;
-    double actual = 2;
-    double relativeError = -1;
-    double absoluteError = actual - expected;
+    final double expected = 1;
+    final double actual = 2;
+    final double relativeError = -1;
+    final double absoluteError = actual - expected;
 
     // Order insensitive
     Assertions.assertTrue(
@@ -448,7 +297,7 @@ public class EqualityUtilsTest {
         EqualityUtils.doublesAreAlmostEqual(actual, expected, relativeError, absoluteError));
 
     // Make the delta smaller
-    double delta = Math.nextDown(absoluteError);
+    final double delta = Math.nextDown(absoluteError);
     Assertions
         .assertFalse(EqualityUtils.doublesAreAlmostEqual(expected, actual, relativeError, delta));
     Assertions
@@ -458,7 +307,7 @@ public class EqualityUtilsTest {
     // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to float
     // error.
     // So instead get the next delta above and subtract from actual.
-    double expected2 = actual - Math.nextUp(absoluteError);
+    final double expected2 = actual - Math.nextUp(absoluteError);
     Assertions.assertFalse(
         EqualityUtils.doublesAreAlmostEqual(expected2, actual, relativeError, absoluteError));
     Assertions.assertFalse(
@@ -467,10 +316,10 @@ public class EqualityUtilsTest {
 
   @Test
   public void testDoublesAreAlmostEqualUsingRelativeError() {
-    double expected = 1;
-    double actual = 2;
-    double relativeError = 0.5;
-    double absoluteError = -1;
+    final double expected = 1;
+    final double actual = 2;
+    final double relativeError = 0.5;
+    final double absoluteError = -1;
 
     // Order insensitive
     Assertions.assertTrue(
@@ -479,7 +328,7 @@ public class EqualityUtilsTest {
         EqualityUtils.doublesAreAlmostEqual(actual, expected, relativeError, absoluteError));
 
     // Make the delta smaller
-    double delta = Math.nextDown(relativeError);
+    final double delta = Math.nextDown(relativeError);
     Assertions
         .assertFalse(EqualityUtils.doublesAreAlmostEqual(expected, actual, delta, absoluteError));
     Assertions
@@ -489,7 +338,7 @@ public class EqualityUtilsTest {
     // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to float
     // error.
     // So instead get the next delta above and subtract from actual.
-    double expected2 = actual - Math.nextUp(actual - expected);
+    final double expected2 = actual - Math.nextUp(actual - expected);
     Assertions.assertFalse(
         EqualityUtils.doublesAreAlmostEqual(expected2, actual, relativeError, absoluteError));
     Assertions.assertFalse(
@@ -497,32 +346,35 @@ public class EqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesGetDescription() {
+  public void testDoublesGetDescriptionAlmostEqual() {
     // These must be distinguishable as strings
-    Double[] values1 = {-1.1, 0.0, 1.1};
-    Integer[] values2 = {-2, 0, 2};
-    for (Number v1 : values1) {
-      for (Number v2 : values2) {
-        testDoublesGetDescription(v1, v2);
+    final Double[] values1 = {-1.1, 0.0, 1.1};
+    final Integer[] values2 = {-2, 0, 2};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testDoublesGetDescriptionAlmostEqual(v1, v2);
       }
     }
   }
 
-  private static void testDoublesGetDescription(Number relativeError, Number absoluteError) {
+  private static void testDoublesGetDescriptionAlmostEqual(Number relativeError,
+      Number absoluteError) {
 
-    double inputRelError = relativeError.doubleValue();
-    double inputAbsError = absoluteError.doubleValue();
+    final double inputRelError = relativeError.doubleValue();
+    final double inputAbsError = absoluteError.doubleValue();
 
     // The method assumes the errors must pass the validation in checkErrors(...)
     try {
-      EqualityUtils.doublesCheckErrors(inputRelError, inputAbsError);
-    } catch (IllegalArgumentException ex) {
+      EqualityUtils.doublesValidateAlmostEqual(inputRelError, inputAbsError);
+    } catch (final IllegalArgumentException ex) {
       return;
     }
 
     // The raw input
-    String result = EqualityUtils.doublesGetDescription(inputRelError, inputAbsError);
-    String msg = String.format("Rel.Error = %s, Abs.Error = %ss", relativeError, absoluteError);
+    final String result =
+        EqualityUtils.doublesGetDescriptionAlmostEqual(inputRelError, inputAbsError);
+    final String msg =
+        String.format("Rel.Error = %s, Abs.Error = %ss", relativeError, absoluteError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -536,14 +388,14 @@ public class EqualityUtilsTest {
     }
 
     // Get the expected values in the message
-    double relError = relativeError.doubleValue();
-    double absError = absoluteError.doubleValue();
+    final double relError = relativeError.doubleValue();
+    final double absError = absoluteError.doubleValue();
 
-    boolean hasAbs = absError >= 0;
-    boolean hasRel = relError > 0;
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
 
-    String relString = String.valueOf(relError);
-    String absString = String.valueOf(absError);
+    final String relString = String.valueOf(relError);
+    final String absString = (absError == 0) ? "0" : String.valueOf(absError);
 
     Assertions.assertEquals(hasRel, result.contains("Rel"), () -> msg + " Missing relative");
     Assertions.assertEquals(hasRel, result.contains(relString),
@@ -552,5 +404,530 @@ public class EqualityUtilsTest {
     Assertions.assertEquals(hasAbs, result.contains(absString),
         () -> msg + " Missing absolute value");
     Assertions.assertEquals(hasRel && hasAbs, result.contains("||"), () -> msg + " Missing ||");
+  }
+
+  // float Within
+
+  @Test
+  public void testFloatsAreWithinThrows() {
+    final float expected = 0;
+    final float actual = 0;
+    // OK
+    for (float absError : new float[] {-0f, 0, 1, (float) Math.PI, Float.MAX_VALUE}) {
+      EqualityUtils.floatsAreWithin(expected, actual, absError);
+    }
+    // Bad
+    for (float absError : new float[] {-1, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY,
+        Float.NaN}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.floatsAreWithin(expected, actual, absError);
+      });
+    }
+  }
+
+  @Test
+  public void testFloatsAreWithinUsingNoError() {
+    // Test exact
+    float absoluteError = 0;
+
+    // Use a range of values
+    for (float value : new float[] {0, 1, (float) Math.PI, Float.MAX_VALUE, Float.MIN_VALUE}) {
+      for (int i = 0; i < 2; i++) {
+        value *= -1;
+        Assertions.assertTrue(EqualityUtils.floatsAreWithin(value, value, absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.floatsAreWithin(value, Math.nextUp(value), absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.floatsAreWithin(value, Math.nextDown(value), absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.floatsAreWithin(Math.nextUp(value), value, absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.floatsAreWithin(Math.nextDown(value), value, absoluteError));
+      }
+    }
+    // Special floats are not equal as they are not within a real delta.
+    for (final float value : new float[] {Float.NaN, Float.POSITIVE_INFINITY,
+        Float.NEGATIVE_INFINITY}) {
+      Assertions.assertFalse(EqualityUtils.floatsAreWithin(value, value, absoluteError));
+    }
+  }
+
+  @Test
+  public void testFloatsAreWithinUsingAbsoluteError() {
+    final float expected = 1;
+    final float actual = 2;
+    final float absoluteError = actual - expected;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.floatsAreWithin(expected, actual, absoluteError));
+    Assertions.assertTrue(EqualityUtils.floatsAreWithin(actual, expected, absoluteError));
+
+    // Make the delta smaller
+    final float delta = Math.nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.floatsAreWithin(expected, actual, delta));
+    Assertions.assertFalse(EqualityUtils.floatsAreWithin(actual, expected, delta));
+
+    // Make the gap bigger
+    // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to float
+    // error.
+    // So instead get the next delta above and subtract from actual.
+    final float expected2 = actual - Math.nextUp(absoluteError);
+    Assertions.assertFalse(EqualityUtils.floatsAreWithin(expected2, actual, absoluteError));
+    Assertions.assertFalse(EqualityUtils.floatsAreWithin(actual, expected2, absoluteError));
+  }
+
+  @Test
+  public void testFloatsGetDescriptionWithin() {
+    // These must be distinguishable as strings
+    for (final float absError : new float[] {-0f, 0, 0.5f, 1, (float) Math.PI}) {
+      final String result = EqualityUtils.floatsGetDescriptionWithin(absError);
+      final String absString = (absError == 0) ? "0" : String.valueOf(absError);
+      Assertions.assertTrue(result.contains("Abs"), () -> "Missing 'Abs'");
+      Assertions.assertTrue(result.contains(absString), () -> "Missing absolute value");
+    }
+  }
+
+  // double Within
+
+  @Test
+  public void testDoublesAreWithinThrows() {
+    final double expected = 0;
+    final double actual = 0;
+    // OK
+    for (double absError : new double[] {-0.0, 0, 1, Math.PI, Double.MAX_VALUE}) {
+      EqualityUtils.doublesAreWithin(expected, actual, absError);
+    }
+    // Bad
+    for (double absError : new double[] {-1, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY,
+        Double.NaN}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.doublesAreWithin(expected, actual, absError);
+      });
+    }
+  }
+
+  @Test
+  public void testDoublesAreWithinUsingNoError() {
+    // Test exact
+    double absoluteError = 0;
+
+    // Use a range of values
+    for (double value : new double[] {0, 1, Math.PI, Double.MAX_VALUE, Double.MIN_VALUE}) {
+      for (int i = 0; i < 2; i++) {
+        value *= -1;
+        Assertions.assertTrue(EqualityUtils.doublesAreWithin(value, value, absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.doublesAreWithin(value, Math.nextUp(value), absoluteError));
+        Assertions.assertFalse(
+            EqualityUtils.doublesAreWithin(value, Math.nextDown(value), absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.doublesAreWithin(Math.nextUp(value), value, absoluteError));
+        Assertions.assertFalse(
+            EqualityUtils.doublesAreWithin(Math.nextDown(value), value, absoluteError));
+      }
+    }
+    // Special doubles are not equal as they are not within a real delta.
+    for (final double value : new double[] {Double.NaN, Double.POSITIVE_INFINITY,
+        Double.NEGATIVE_INFINITY}) {
+      Assertions.assertFalse(EqualityUtils.doublesAreWithin(value, value, absoluteError));
+    }
+  }
+
+  @Test
+  public void testDoublesAreWithinUsingAbsoluteError() {
+    final double expected = 1;
+    final double actual = 2;
+    final double absoluteError = actual - expected;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.doublesAreWithin(expected, actual, absoluteError));
+    Assertions.assertTrue(EqualityUtils.doublesAreWithin(actual, expected, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.doublesAreWithin(expected, actual, delta));
+    Assertions.assertFalse(EqualityUtils.doublesAreWithin(actual, expected, delta));
+
+    // Make the gap bigger
+    // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to float
+    // error.
+    // So instead get the next delta above and subtract from actual.
+    final double expected2 = actual - Math.nextUp(absoluteError);
+    Assertions.assertFalse(EqualityUtils.doublesAreWithin(expected2, actual, absoluteError));
+    Assertions.assertFalse(EqualityUtils.doublesAreWithin(actual, expected2, absoluteError));
+  }
+
+  @Test
+  public void testDoublesGetDescriptionWithin() {
+    // These must be distinguishable as strings
+    for (final double absError : new double[] {-0.0, 0, 0.5, 1, Math.PI}) {
+      final String result = EqualityUtils.doublesGetDescriptionWithin(absError);
+      final String absString = (absError == 0) ? "0" : String.valueOf(absError);
+      Assertions.assertTrue(result.contains("Abs"), () -> "Missing 'Abs'");
+      Assertions.assertTrue(result.contains(absString), () -> "Missing absolute value");
+    }
+  }
+
+  // long Within
+
+  @Test
+  public void testLongsAreWithinThrows() {
+    final long expected = 0;
+    final long actual = 0;
+    // OK
+    for (long absError : new long[] {0, 1, Long.MAX_VALUE}) {
+      EqualityUtils.longsAreWithin(expected, actual, absError);
+    }
+    // Bad
+    for (long absError : new long[] {-1, Long.MIN_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.longsAreWithin(expected, actual, absError);
+      });
+    }
+  }
+
+  @Test
+  public void testLongsAreWithinUsingNoError() {
+    // Test exact
+    long absoluteError = 0;
+
+    // Use a range of values
+    for (long value : new long[] {0, 1, Long.MAX_VALUE, Long.MIN_VALUE}) {
+      for (int i = 0; i < 2; i++) {
+        value *= -1;
+        Assertions.assertTrue(EqualityUtils.longsAreWithin(value, value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.longsAreWithin(value, value + 1, absoluteError));
+        Assertions.assertFalse(EqualityUtils.longsAreWithin(value, value - 1, absoluteError));
+        Assertions.assertFalse(EqualityUtils.longsAreWithin(value + 1, value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.longsAreWithin(value - 1, value, absoluteError));
+      }
+    }
+    // Special longs are not equal as they are not within a real delta.
+    Assertions.assertFalse(EqualityUtils.longsAreWithin(Long.MAX_VALUE, -1, absoluteError));
+    Assertions.assertFalse(EqualityUtils.longsAreWithin(Long.MIN_VALUE, 0, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.longsAreWithin(Long.MAX_VALUE, Long.MIN_VALUE, absoluteError));
+  }
+
+  @Test
+  public void testLongsAreWithinUsingLargestError() {
+    long absoluteError = Long.MAX_VALUE;
+    Assertions.assertTrue(EqualityUtils.longsAreWithin(Long.MAX_VALUE, 0, absoluteError));
+    // Check overflow
+    Assertions.assertFalse(EqualityUtils.longsAreWithin(Long.MAX_VALUE, -1, absoluteError));
+    Assertions.assertFalse(EqualityUtils.longsAreWithin(Long.MIN_VALUE, 0, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.longsAreWithin(Long.MAX_VALUE, Long.MIN_VALUE, absoluteError));
+  }
+
+  @Test
+  public void testLongsAreWithinUsingAbsoluteError() {
+    final long expected = 10;
+    final long actual = 20;
+    final long absoluteError = actual - expected;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.longsAreWithin(expected, actual, absoluteError));
+    Assertions.assertTrue(EqualityUtils.longsAreWithin(actual, expected, absoluteError));
+
+    // Make the delta smaller
+    final long delta = absoluteError - 1;
+    Assertions.assertFalse(EqualityUtils.longsAreWithin(expected, actual, delta));
+    Assertions.assertFalse(EqualityUtils.longsAreWithin(actual, expected, delta));
+
+    // Make the gap bigger
+    // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to long
+    // error.
+    // So instead get the next delta above and subtract from actual.
+    final long expected2 = expected - 1;
+    Assertions.assertFalse(EqualityUtils.longsAreWithin(expected2, actual, absoluteError));
+    Assertions.assertFalse(EqualityUtils.longsAreWithin(actual, expected2, absoluteError));
+  }
+
+  @Test
+  public void testLongsGetDescriptionWithin() {
+    // These must be distinguishable as strings
+    for (final long absError : new long[] {0, 1, Long.MAX_VALUE}) {
+      final String result = EqualityUtils.longsGetDescriptionWithin(absError);
+      final String absString = (absError == 0) ? "0" : String.valueOf(absError);
+      Assertions.assertTrue(result.contains("Abs"), () -> "Missing 'Abs'");
+      Assertions.assertTrue(result.contains(absString), () -> "Missing absolute value");
+    }
+  }
+
+  // int Within
+
+  @Test
+  public void testIntsAreWithinThrows() {
+    final int expected = 0;
+    final int actual = 0;
+    // OK
+    for (long absError : new long[] {0, 1, Integer.MAX_VALUE,
+        EqualityUtils.MAX_INT_ABS_ERROR - 1}) {
+      EqualityUtils.intsAreWithin(expected, actual, absError);
+    }
+    // Bad
+    for (long absError : new long[] {-1, Integer.MIN_VALUE, EqualityUtils.MAX_INT_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.intsAreWithin(expected, actual, absError);
+      });
+    }
+  }
+
+  @Test
+  public void testIntsAreWithinUsingNoError() {
+    // Test exact
+    long absoluteError = 0;
+
+    // Use a range of values
+    for (int value : new int[] {0, 1, Integer.MAX_VALUE, Integer.MIN_VALUE}) {
+      for (int i = 0; i < 2; i++) {
+        value *= -1;
+        Assertions.assertTrue(EqualityUtils.intsAreWithin(value, value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.intsAreWithin(value, value + 1, absoluteError));
+        Assertions.assertFalse(EqualityUtils.intsAreWithin(value, value - 1, absoluteError));
+        Assertions.assertFalse(EqualityUtils.intsAreWithin(value + 1, value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.intsAreWithin(value - 1, value, absoluteError));
+      }
+    }
+    // Test int overflow
+    Assertions.assertFalse(EqualityUtils.intsAreWithin(Integer.MAX_VALUE, -1, absoluteError));
+    Assertions.assertFalse(EqualityUtils.intsAreWithin(Integer.MIN_VALUE, 0, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.intsAreWithin(Integer.MAX_VALUE, Integer.MIN_VALUE, absoluteError));
+  }
+
+  @Test
+  public void testIntsAreWithinUsingLargestError() {
+    long absoluteError = EqualityUtils.MAX_INT_ABS_ERROR - 1;
+    // Check largest range
+    Assertions.assertTrue(
+        EqualityUtils.intsAreWithin(Integer.MAX_VALUE - 1, Integer.MIN_VALUE, absoluteError));
+    Assertions.assertTrue(
+        EqualityUtils.intsAreWithin(Integer.MAX_VALUE, Integer.MIN_VALUE + 1, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.intsAreWithin(Integer.MAX_VALUE, Integer.MIN_VALUE, absoluteError));
+  }
+
+  @Test
+  public void testIntsAreWithinUsingAbsoluteError() {
+    final int expected = 10;
+    final int actual = 20;
+    final long absoluteError = actual - expected;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.intsAreWithin(expected, actual, absoluteError));
+    Assertions.assertTrue(EqualityUtils.intsAreWithin(actual, expected, absoluteError));
+
+    // Make the delta smaller
+    final long delta = absoluteError - 1;
+    Assertions.assertFalse(EqualityUtils.intsAreWithin(expected, actual, delta));
+    Assertions.assertFalse(EqualityUtils.intsAreWithin(actual, expected, delta));
+
+    // Make the gap bigger
+    // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to int
+    // error.
+    // So instead get the next delta above and subtract from actual.
+    final int expected2 = expected - 1;
+    Assertions.assertFalse(EqualityUtils.intsAreWithin(expected2, actual, absoluteError));
+    Assertions.assertFalse(EqualityUtils.intsAreWithin(actual, expected2, absoluteError));
+  }
+
+  @Test
+  public void testIntsGetDescriptionWithin() {
+    // These must be distinguishable as strings
+    for (long absError : new long[] {0, 1, Integer.MAX_VALUE,
+        EqualityUtils.MAX_INT_ABS_ERROR - 1}) {
+      final String result = EqualityUtils.intsGetDescriptionWithin(absError);
+      final String absString = (absError == 0) ? "0" : String.valueOf(absError);
+      Assertions.assertTrue(result.contains("Abs"), () -> "Missing 'Abs'");
+      Assertions.assertTrue(result.contains(absString), () -> "Missing absolute value");
+    }
+  }
+
+  // short Within
+
+  @Test
+  public void testShortsAreWithinThrows() {
+    final short expected = 0;
+    final short actual = 0;
+    // OK
+    for (int absError : new int[] {0, 1, Short.MAX_VALUE, EqualityUtils.MAX_SHORT_ABS_ERROR - 1}) {
+      EqualityUtils.shortsAreWithin(expected, actual, absError);
+    }
+    // Bad
+    for (int absError : new int[] {-1, Short.MIN_VALUE, EqualityUtils.MAX_SHORT_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.shortsAreWithin(expected, actual, absError);
+      });
+    }
+  }
+
+  @Test
+  public void testShortsAreWithinUsingNoError() {
+    // Test exact
+    int absoluteError = 0;
+
+    // Use a range of values
+    for (short value : new short[] {0, 1, Short.MAX_VALUE, Short.MIN_VALUE}) {
+      for (short i = 0; i < 2; i++) {
+        value *= -1;
+        Assertions.assertTrue(EqualityUtils.shortsAreWithin(value, value, absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.shortsAreWithin(value, (short) (value + 1), absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.shortsAreWithin(value, (short) (value - 1), absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.shortsAreWithin((short) (value + 1), value, absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.shortsAreWithin((short) (value - 1), value, absoluteError));
+      }
+    }
+    // Test short overflow
+    Assertions
+        .assertFalse(EqualityUtils.shortsAreWithin(Short.MAX_VALUE, (short) -1, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.shortsAreWithin(Short.MIN_VALUE, (short) 0, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.shortsAreWithin(Short.MAX_VALUE, Short.MIN_VALUE, absoluteError));
+  }
+
+  @Test
+  public void testShortsAreWithinUsingLargestError() {
+    int absoluteError = EqualityUtils.MAX_SHORT_ABS_ERROR - 1;
+    // Check largest range
+    Assertions.assertTrue(EqualityUtils.shortsAreWithin((short) (Short.MAX_VALUE - 1),
+        Short.MIN_VALUE, absoluteError));
+    Assertions.assertTrue(EqualityUtils.shortsAreWithin(Short.MAX_VALUE,
+        (short) (Short.MIN_VALUE + 1), absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.shortsAreWithin(Short.MAX_VALUE, Short.MIN_VALUE, absoluteError));
+  }
+
+  @Test
+  public void testShortsAreWithinUsingAbsoluteError() {
+    final short expected = 10;
+    final short actual = 20;
+    final int absoluteError = actual - expected;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.shortsAreWithin(expected, actual, absoluteError));
+    Assertions.assertTrue(EqualityUtils.shortsAreWithin(actual, expected, absoluteError));
+
+    // Make the delta smaller
+    final int delta = absoluteError - 1;
+    Assertions.assertFalse(EqualityUtils.shortsAreWithin(expected, actual, delta));
+    Assertions.assertFalse(EqualityUtils.shortsAreWithin(actual, expected, delta));
+
+    // Make the gap bigger
+    // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to short
+    // error.
+    // So instead get the next delta above and subtract from actual.
+    final short expected2 = expected - 1;
+    Assertions.assertFalse(EqualityUtils.shortsAreWithin(expected2, actual, absoluteError));
+    Assertions.assertFalse(EqualityUtils.shortsAreWithin(actual, expected2, absoluteError));
+  }
+
+  @Test
+  public void testShortsGetDescriptionWithin() {
+    // These must be distinguishable as strings
+    for (int absError : new int[] {0, 1, Short.MAX_VALUE, EqualityUtils.MAX_SHORT_ABS_ERROR - 1}) {
+      final String result = EqualityUtils.shortsGetDescriptionWithin(absError);
+      final String absString = (absError == 0) ? "0" : String.valueOf(absError);
+      Assertions.assertTrue(result.contains("Abs"), () -> "Missing 'Abs'");
+      Assertions.assertTrue(result.contains(absString), () -> "Missing absolute value");
+    }
+  }
+
+  // byte Within
+
+  @Test
+  public void testBytesAreWithinThrows() {
+    final byte expected = 0;
+    final byte actual = 0;
+    // OK
+    for (int absError : new int[] {0, 1, Byte.MAX_VALUE, EqualityUtils.MAX_BYTE_ABS_ERROR - 1}) {
+      EqualityUtils.bytesAreWithin(expected, actual, absError);
+    }
+    // Bad
+    for (int absError : new int[] {-1, Byte.MIN_VALUE, EqualityUtils.MAX_BYTE_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.bytesAreWithin(expected, actual, absError);
+      });
+    }
+  }
+
+  @Test
+  public void testBytesAreWithinUsingNoError() {
+    // Test exact
+    int absoluteError = 0;
+
+    // Use a range of values
+    for (byte value : new byte[] {0, 1, Byte.MAX_VALUE, Byte.MIN_VALUE}) {
+      for (byte i = 0; i < 2; i++) {
+        value *= -1;
+        Assertions.assertTrue(EqualityUtils.bytesAreWithin(value, value, absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.bytesAreWithin(value, (byte) (value + 1), absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.bytesAreWithin(value, (byte) (value - 1), absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.bytesAreWithin((byte) (value + 1), value, absoluteError));
+        Assertions
+            .assertFalse(EqualityUtils.bytesAreWithin((byte) (value - 1), value, absoluteError));
+      }
+    }
+    // Test byte overflow
+    Assertions.assertFalse(EqualityUtils.bytesAreWithin(Byte.MAX_VALUE, (byte) -1, absoluteError));
+    Assertions.assertFalse(EqualityUtils.bytesAreWithin(Byte.MIN_VALUE, (byte) 0, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.bytesAreWithin(Byte.MAX_VALUE, Byte.MIN_VALUE, absoluteError));
+  }
+
+  @Test
+  public void testBytesAreWithinUsingLargestError() {
+    int absoluteError = EqualityUtils.MAX_BYTE_ABS_ERROR - 1;
+    // Check largest range
+    Assertions.assertTrue(
+        EqualityUtils.bytesAreWithin((byte) (Byte.MAX_VALUE - 1), Byte.MIN_VALUE, absoluteError));
+    Assertions.assertTrue(
+        EqualityUtils.bytesAreWithin(Byte.MAX_VALUE, (byte) (Byte.MIN_VALUE + 1), absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.bytesAreWithin(Byte.MAX_VALUE, Byte.MIN_VALUE, absoluteError));
+  }
+
+  @Test
+  public void testBytesAreWithinUsingAbsoluteError() {
+    final byte expected = 10;
+    final byte actual = 20;
+    final int absoluteError = actual - expected;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.bytesAreWithin(expected, actual, absoluteError));
+    Assertions.assertTrue(EqualityUtils.bytesAreWithin(actual, expected, absoluteError));
+
+    // Make the delta smaller
+    final int delta = absoluteError - 1;
+    Assertions.assertFalse(EqualityUtils.bytesAreWithin(expected, actual, delta));
+    Assertions.assertFalse(EqualityUtils.bytesAreWithin(actual, expected, delta));
+
+    // Make the gap bigger
+    // Calling Math.nextDown(expected) creates a value that still is within 1 of 2 due to byte
+    // error.
+    // So instead get the next delta above and subtract from actual.
+    final byte expected2 = expected - 1;
+    Assertions.assertFalse(EqualityUtils.bytesAreWithin(expected2, actual, absoluteError));
+    Assertions.assertFalse(EqualityUtils.bytesAreWithin(actual, expected2, absoluteError));
+  }
+
+  @Test
+  public void testBytesGetDescriptionWithin() {
+    // These must be distinguishable as strings
+    for (int absError : new int[] {0, 1, Byte.MAX_VALUE, EqualityUtils.MAX_BYTE_ABS_ERROR - 1}) {
+      final String result = EqualityUtils.bytesGetDescriptionWithin(absError);
+      final String absString = (absError == 0) ? "0" : String.valueOf(absError);
+      Assertions.assertTrue(result.contains("Abs"), () -> "Missing 'Abs'");
+      Assertions.assertTrue(result.contains(absString), () -> "Missing absolute value");
+    }
   }
 }

@@ -54,13 +54,13 @@ public class StringUtilsTest {
   public void testToString() {
     Assertions.assertNull(StringUtils.toString(null));
 
-    String string1 = "asdhjkfkas";
-    String string2 = "ahsfhkasdj";
+    final String string1 = "asdhjkfkas";
+    final String string2 = "ahsfhkasdj";
     Assertions.assertEquals(string1, StringUtils.toString(string1));
     Assertions.assertNotEquals(string1, StringUtils.toString(string2));
 
-    Supplier<String> supp1 = () -> string1;
-    Supplier<String> supp2 = () -> null;
+    final Supplier<String> supp1 = () -> string1;
+    final Supplier<String> supp2 = () -> null;
     Assertions.assertEquals(string1, StringUtils.toString(supp1));
     Assertions.assertNotEquals(string1, StringUtils.toString(supp2));
 
@@ -71,8 +71,8 @@ public class StringUtilsTest {
   public void testNegateToString() {
     Assertions.assertNull(StringUtils.negateToString(null));
 
-    String string1 = "15277512";
-    String result = StringUtils.negateToString(string1);
+    final String string1 = "15277512";
+    final String result = StringUtils.negateToString(string1);
     Assertions.assertTrue(result.contains(string1));
     Assertions.assertTrue(result.contains("!"));
   }
@@ -94,10 +94,10 @@ public class StringUtilsTest {
 
   private static void testCombinedToString(BiFunction<Object, Object, String> fun,
       String operator) {
-    String[] strings = {null, "aeydfbuhs", "njkads9767867"};
-    for (String string1 : strings) {
-      for (String string2 : strings) {
-        String result = fun.apply(string1, string2);
+    final String[] strings = {null, "aeydfbuhs", "njkads9767867"};
+    for (final String string1 : strings) {
+      for (final String string2 : strings) {
+        final String result = fun.apply(string1, string2);
         if (string1 == null && string2 == null) {
           Assertions.assertNull(result);
         } else {

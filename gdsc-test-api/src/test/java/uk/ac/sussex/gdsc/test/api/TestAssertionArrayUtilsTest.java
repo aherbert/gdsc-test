@@ -37,13 +37,13 @@ public class TestAssertionArrayUtilsTest {
     Assertions.assertEquals("null", TestAssertionArrayUtils.getClassName(null));
     Assertions.assertEquals("java.lang.Integer",
         TestAssertionArrayUtils.getClassName(new java.lang.Integer(0)));
-    Class<?> clazz = new java.lang.Integer(0).getClass();
+    final Class<?> clazz = new java.lang.Integer(0).getClass();
     Assertions.assertEquals("java.lang.Integer", TestAssertionArrayUtils.getClassName(clazz));
     @SuppressWarnings("serial")
-    Object anonymous = new java.io.Serializable() {
+    final Object anonymous = new java.io.Serializable() {
       // Do nothing
     };
-    String expected = this.getClass().getName() + "$1";
+    final String expected = this.getClass().getName() + "$1";
     Assertions.assertEquals(expected, TestAssertionArrayUtils.getClassName(anonymous));
     Assertions.assertEquals(expected, TestAssertionArrayUtils.getClassName(anonymous.getClass()));
   }

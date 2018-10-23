@@ -16,8 +16,8 @@ public class <Float><Float>AlmostEqualsTest {
   @Test
   public void testTest() {
     final <float>[] values = ApiTestUtils.get<Float>Values();
-    for (double relativeError : new double[] { -1, 0, 0.5}) {
-      for (<float> absoluteError : new <float>[] { -1, 0, 1}) {
+    for (double relativeError : new double[] {-1, 0, 0.5}) {
+      for (<float> absoluteError : new <float>[] {-1, 0, 1}) {
         if (relativeError \< 0 && absoluteError \< 0) {
           // Not a valid combination
           continue;
@@ -26,10 +26,10 @@ public class <Float><Float>AlmostEqualsTest {
             new <Float><Float>AlmostEquals(relativeError, absoluteError);
         for (<float> value1 : values) {
           for (<float> value2 : values) {
-            boolean expected = EqualityUtils.<float>sTestAlmostEqual(value1, value2,
+            final boolean expected = EqualityUtils.<float>sTestAlmostEqual(value1, value2,
                 relativeError, absoluteError);
             Assertions.assertEquals(expected, predicate.test(value1, value2),
-                () -> String.format("Does not compute EqualityUtils.testAlmostEqual :"
+                () -> String.format("Does not compute EqualityUtils.<float>sTestAlmostEqual :"
                     + " v1=%s, v2=%s, rel.error=%s, abs.error=%s",
                     value1, value2, relativeError, absoluteError));
           }

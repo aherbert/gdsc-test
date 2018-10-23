@@ -4,6 +4,7 @@
 import uk.ac.sussex.gdsc.test.api.equality.BooleanBooleanEquals;
 import uk.ac.sussex.gdsc.test.api.equality.BooleanEquals;
 import uk.ac.sussex.gdsc.test.api.equality.ByteByteEquals;
+import uk.ac.sussex.gdsc.test.api.equality.ByteByteWithin;
 import uk.ac.sussex.gdsc.test.api.equality.ByteEquals;
 import uk.ac.sussex.gdsc.test.api.equality.CharCharEquals;
 import uk.ac.sussex.gdsc.test.api.equality.CharEquals;
@@ -11,18 +12,23 @@ import uk.ac.sussex.gdsc.test.api.equality.DoubleCmp;
 import uk.ac.sussex.gdsc.test.api.equality.DoubleDoubleAlmostEquals;
 import uk.ac.sussex.gdsc.test.api.equality.DoubleDoubleCmp;
 import uk.ac.sussex.gdsc.test.api.equality.DoubleDoubleEquals;
+import uk.ac.sussex.gdsc.test.api.equality.DoubleDoubleWithin;
 import uk.ac.sussex.gdsc.test.api.equality.DoubleEquals;
 import uk.ac.sussex.gdsc.test.api.equality.FloatCmp;
 import uk.ac.sussex.gdsc.test.api.equality.FloatEquals;
 import uk.ac.sussex.gdsc.test.api.equality.FloatFloatAlmostEquals;
 import uk.ac.sussex.gdsc.test.api.equality.FloatFloatCmp;
 import uk.ac.sussex.gdsc.test.api.equality.FloatFloatEquals;
+import uk.ac.sussex.gdsc.test.api.equality.FloatFloatWithin;
 import uk.ac.sussex.gdsc.test.api.equality.IntEquals;
 import uk.ac.sussex.gdsc.test.api.equality.IntIntEquals;
+import uk.ac.sussex.gdsc.test.api.equality.IntIntWithin;
 import uk.ac.sussex.gdsc.test.api.equality.LongEquals;
 import uk.ac.sussex.gdsc.test.api.equality.LongLongEquals;
+import uk.ac.sussex.gdsc.test.api.equality.LongLongWithin;
 import uk.ac.sussex.gdsc.test.api.equality.ShortEquals;
 import uk.ac.sussex.gdsc.test.api.equality.ShortShortEquals;
+import uk.ac.sussex.gdsc.test.api.equality.ShortShortWithin;
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ByteByteBiPredicate;
@@ -123,5 +129,20 @@ public final class TestHelper {
   public static <Float><Float>BiPredicate almostEqual<Float>s(double relativeError,
       <float> absoluteError) {
     return new <Float><Float>AlmostEquals(relativeError, absoluteError);
+  \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
+<\n>
+  /**
+   * Creates a predicate to compare {@code <number>\} values using an absolute
+   * error tolerance.
+   *
+   * @param absoluteError The maximum absolute error between \<code>value1\</code>
+   *                      and \<code>value2\</code> for which both numbers are still
+   *                      considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
+   *         measurable difference between <number> values
+   */
+  public static <Number><Number>BiPredicate within<Number>s(<numberAbsType> absoluteError) {
+    return new <Number><Number>Within(absoluteError);
   \}}>
 }
