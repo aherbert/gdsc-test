@@ -29,6 +29,9 @@ Rearranging this allows an assertion of relative equality using a tolerance :mat
 
     |a-b| \leq \max(|a|, |b|) \times e
 
+It should be noted that the relative error and equality assertion are symmetric,
+i.e. they are identical if :math:`a` and :math:`b` are switched.
+
 Relative error can be expressed in Java as::
 
     boolean doublesAreEqualRelative(double a,
@@ -103,50 +106,68 @@ considered equal::
         return delta <= max * relativeError;
     }
 
-JUnit Support
--------------
+Test Support
+------------
 
-The GDSC Test library contains ``assertEqualsRelative`` and ``assertEqualsRelativeOrAbsolute``
-to complement the standard JUnit ``assertEquals`` function.
+The GDSC Test library contains predicates that test relative equality between
+two ``float`` or ``double`` values. These can be constructed using a helper
+class::
+
+    double relativeError = 1e-4;
+    double absoluteError = 0;
+    DoubleDoubleBiPredicate predicate = TestHelper.almostEqualDoubles(
+        relativeError, absoluteError);
+
+    predicate.test(9999.0, 10000.0); // true since 1/10000 <= 1e-4
+    predicate.test(999.0,  1000.0);  // false since 1/1000  > 1e-4
 
 This removes the need to use code such as::
 
     double expected, actual;
+    double relativeError = 1e-3;
+
     // equal within relative delta of expected
-    Assertions.assertEquals(expected, actual, expected * 1e-3);
+    Assertions.assertEquals(expected, actual, expected * relativeError);
 
 Replacing it with::
 
+    double expected, actual;
+    double relativeError = 1e-3;
+    DoubleDoubleBiPredicate predicate = TestHelper.almostEqualDoubles(
+        relativeError, 0);
+
     // equal within relative error
-    ExtraAssertions.assertEqualsRelative(expected, actual, 1e-3);
+    Assertions.assertTrue(predicate.test(expected, actual));
 
-The support extends to using arrays::
+In order to provide useful error messages for a ``true/false`` predicate the
+GDSC Test library contains a helper class for performing assertions. This can
+test on input primitives and primitive arrays using any predicate.
 
-    double[] expected, actual;
-    ExtraAssertions.assertArrayEqualsRelative(expected, actual, 1e-3);
+This allows the test for equality to be extended to arrays and nested arrays::
 
-and object arrays that are nested ``double[]`` or ``float[]`` primitive arrays::
+    DoubleDoubleBiPredicate predicate = TestHelper.almostEqualDoubles(
+        relativeError, 0);
 
+    // primitives
+    double expected = ...;
+    double actual = ...;
+    TestAssertions.assertTest(expected, actual, predicate);
+
+    // primitive arrays
+    double[] expected = ...;
+    double[] actual = ...;
+    TestAssertions.assertArrayTest(expected, actual, predicate);
+
+    // nested primitive arrays of matched dimension (e.g. x,y,z)
     Object[] expected = new double[x][y][z];
     Object[] actual = new double[x][y][z];
-    ExtraAssertions.assertArrayEqualsRelative(expected, actual, 1e-3);
+    TestAssertions.assertArrayTest(expected, actual, predicate);
 
 Note that a relative delta for arrays is not natively supported in JUnit
 without loop constructs::
 
     double[] expected, actual;
-    for (int i=0; i < expected.length; i++)
-        Assertions.assertEquals(expected[i], actual[i],
-                                expected[i] * 1e-3);
-
-JUnit 5
--------
-
-`JUnit 5 <https://junit.org/junit5/>`_ support is within the module ``gdsc-test-junit5``
-that contains the package ``uk.ac.sussex.gdsc.test.junit5``.
-
-JUnit 4
--------
-
-`JUnit 4 <https://junit.org/junit4/>`_ support is within the module ``gdsc-test-junit4``
-that contains the package ``uk.ac.sussex.gdsc.test.junit4``.
+    for (int i=0; i < expected.length; i++) {
+      Assertions.assertEquals(expected[i], actual[i],
+                              expected[i] * 1e-3);
+    }
