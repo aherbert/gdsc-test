@@ -15,6 +15,9 @@ import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsFinite;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsInfinite;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatClose;
@@ -22,6 +25,9 @@ import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsFinite;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsInfinite;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntWithin;
@@ -280,5 +286,15 @@ public final class TestHelper {
   public static <Type><Type>BiPredicate <op>(<Type>Predicate predicate1,
       <Type>Predicate predicate2) {
     return new <Type>Predicate<Op><Type>Predicate(predicate1, predicate2);
+  \}}>}><Floats,floats:{Float,float |<Specials:{Special |
+<\n>
+  /**
+   * Creates a predicate to test a {@code <float>\} value is <Special>.
+   *
+   * @return the predicate
+   * @see <Float>#is<Special>(<float>)
+   */
+  public static <Float>Predicate <float>Is<Special>() {
+    return <Float>Is<Special>.getInstance();
   \}}>}>
 }

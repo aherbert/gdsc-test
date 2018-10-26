@@ -198,7 +198,7 @@ public class TestHelperTest {<types,Types:{type,Type |
     final <type>[] values = ApiTestUtils.get<Type>Values();
     final <Type>Predicate predicate1 = new <Type>Equals(values[0]);
     final <Type>Predicate predicate2 = new <Type>Equals(values[1]);
-    <Type><Type>BiPredicate predicate = TestHelper.<op>(predicate1, predicate2);
+    final <Type><Type>BiPredicate predicate = TestHelper.<op>(predicate1, predicate2);
     Assertions.assertEquals(<Type>Predicate<Op><Type>Predicate.class, predicate.getClass());
     for (<type> value1 : values) {
       for (<type> value2 : values) {
@@ -209,6 +209,20 @@ public class TestHelperTest {<types,Types:{type,Type |
         // Do not test the description using get() as that is tested in the test
         // for <Type>Predicate<Op><Type>Predicate.
       \}
+    \}
+  \}}>}><Floats,floats:{Float,float |<Specials:{Special |
+<\n>
+  /**
+   * Test creates a predicate to test a {@code <float>\} value is <Special>.
+   */
+  @Test
+  public void test<Float>Is<Special>Predicate() {
+    final <float>[] values = ApiTestUtils.get<Float>Values();
+    final <Float>Predicate predicate = TestHelper.<float>Is<Special>();
+    for (<float> value : values) {
+      final boolean expected = <Float>.is<Special>(value);
+      final boolean actual = predicate.test(value);
+      Assertions.assertEquals(expected, actual, "Predicate does not compute <Float>.is<Special>");
     \}
   \}}>}>
 }
