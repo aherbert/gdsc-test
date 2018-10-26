@@ -114,22 +114,53 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testGetProperty() {
+  public void testGetPropertyAsInt() {
     final String key = "A long key that should be really, really unique";
     System.clearProperty(key);
-    final int iValue = -6765757;
-    Assertions.assertEquals(iValue, TestSettings.getProperty(key, iValue));
+    final int defaultValue = -6765757;
+    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
     System.setProperty(key, "xx");
-    Assertions.assertEquals(iValue, TestSettings.getProperty(key, iValue));
+    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
     System.setProperty(key, "1");
-    Assertions.assertEquals(1, TestSettings.getProperty(key, iValue));
+    Assertions.assertEquals(1, TestSettings.getProperty(key, defaultValue));
     System.clearProperty(key);
-    final long lValue = -6765757676567L;
-    Assertions.assertEquals(lValue, TestSettings.getProperty(key, lValue));
+  }
+
+  @Test
+  public void testGetPropertyAsLong() {
+    final String key = "A long key that should be really, really unique";
+    System.clearProperty(key);
+    final long defaultValue = -6765757676567L;
+    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
     System.setProperty(key, "xx");
-    Assertions.assertEquals(lValue, TestSettings.getProperty(key, lValue));
+    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
     System.setProperty(key, "1");
-    Assertions.assertEquals(1, TestSettings.getProperty(key, lValue));
+    Assertions.assertEquals(1, TestSettings.getProperty(key, defaultValue));
+    System.clearProperty(key);
+  }
+
+  @Test
+  public void testGetPropertyAsByteArray() {
+    final String key = "A long key that should be really, really unique";
+    System.clearProperty(key);
+    final byte[] defaultValue = new byte[] {1, 23, 4};
+    Assertions.assertArrayEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
+
+    // Ignore seeds with no information
+    for (String seed : new String[] {"", " ", "  ", "xx"}) {
+      System.setProperty(key, seed);
+      Assertions.assertArrayEquals(defaultValue, TestSettings.getProperty(key, defaultValue),
+          () -> "Seed is " + seed);
+    }
+
+    // Decode seeds with information, even if it is zero
+    for (String seed : new String[] {"0", "0000", "1", "1234567890abcdef"}) {
+      System.setProperty(key, seed);
+      final byte[] expected = HexUtils.decodeHex(seed);
+      Assertions.assertArrayEquals(expected, TestSettings.getProperty(key, defaultValue),
+          () -> "Seed is " + seed);
+    }
+    System.clearProperty(key);
   }
 
   @Test

@@ -85,7 +85,7 @@ public final class TestSettings {
 
   static {
     testComplexity = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
-    seed = HexUtils.decodeHex(System.getProperty(PROPERTY_RANDOM_SEED));
+    seed = getProperty(PROPERTY_RANDOM_SEED, NO_SEED);
     repeats = getProperty(PROPERTY_RANDOM_REPEATS, 1);
     // Ensure repeated tests run once. They should be disabled using other
     // mechanisms.
@@ -106,6 +106,24 @@ public final class TestSettings {
         return Integer.parseInt(text);
       } catch (final NumberFormatException ex) {
         // Ignore and return the default
+      }
+    }
+    return defaultValue;
+  }
+
+  /**
+   * Gets the system property or a default value.
+   *
+   * @param name the name
+   * @param defaultValue the default value
+   * @return the property
+   */
+  static byte[] getProperty(String name, byte[] defaultValue) {
+    final String text = System.getProperty(name);
+    if (text != null) {
+      final byte[] bytes = HexUtils.decodeHex(text);
+      if (!SeedUtils.nullOrEmpty(bytes)) {
+        return bytes;
       }
     }
     return defaultValue;
