@@ -29,10 +29,10 @@ public class <Float><Float>IsCloseTo
   /**
    * Create a predicate to test a {@code <float>} value is close to an expected value using a
    * relative and/or absolute error. The relative error between values {@code expected} and
-   * {@code actual} is relative to the magnitude of {@code expected}:
+   * {@code actual} is relative to the magnitude of {@code expected} and the test is:
    *
    * \<pre>
-   * relativeError = |expected-actual| / |expected|
+   * |expected-actual| \<= |expected| * relativeError
    * \</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected} and {@code actual}. The test is

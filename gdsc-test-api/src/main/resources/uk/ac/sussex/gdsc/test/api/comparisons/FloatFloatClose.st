@@ -28,10 +28,10 @@ public class <Float><Float>Close
   /**
    * Create a predicate to test two {@code <float>} values are close using a relative and/or
    * absolute error. The relative error between values {@code value1} and {@code value2} is
-   * defined as:
+   * relative to the largest magnitude of the two values and the test is:
    *
    * \<pre>
-   * relativeError = |value1-value2| / max(|value1|, |value2|)
+   * |value1-value2| \<= max(|value1|, |value2|) * relativeError
    * \</pre>
    *
    * \<p>The relative error is symmetric for {@code value1} and {@code value2}. The test is

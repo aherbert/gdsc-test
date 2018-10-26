@@ -598,14 +598,17 @@ public final class EqualityUtils {
   /**
    * Tests that two doubles are close using a relative and absolute error. The relative error
    * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
-   * two values:
+   * two values and the test is:
    *
    * <pre>
-   * relativeError = |value1-value2| / max(|value1|, |value2|)
+   * |value1-value2| <= max(|value1|, |value2|) * relativeError
    * </pre>
    *
-   * <p>The relative error is symmetric for {@code value1} and {@code value2}. The test is
-   * equivalent to testing convergence of two values.
+   * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
+   * convergence of two values.
+   *
+   * <p>If either value is NaN or Infinity this returns false as the distance between the
+   * values is Infinite or not valid.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For
@@ -631,14 +634,17 @@ public final class EqualityUtils {
   /**
    * Tests that two doubles are close using a relative and absolute error. The relative error
    * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
-   * two values:
+   * two values and the test is:
    *
    * <pre>
-   * relativeError = |value1-value2| / max(|value1|, |value2|)
+   * |value1-value2| <= max(|value1|, |value2|) * relativeError
    * </pre>
    *
-   * <p>The relative error is symmetric for {@code value1} and {@code value2}. The test is
-   * equivalent to testing convergence of two values.
+   * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
+   * convergence of two values.
+   *
+   * <p>If either value is NaN or Infinity this returns false as the distance between the
+   * values is Infinite or not valid.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Float#equals(Object)} and, {@link Float#compare(float, float)}. For
@@ -657,8 +663,8 @@ public final class EqualityUtils {
    *        <code>value2</code> for which both numbers are still considered equal. Ignored if set to
    *        negative.
    * @return true if close
-   * @throws IllegalArgumentException If the relative error is not below 2
-   * @throws IllegalArgumentException If the absolute error is not finite
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive finite
    */
   public static boolean areClose(float value1, float value2, double relativeError,
       float absoluteError) {
@@ -733,7 +739,8 @@ public final class EqualityUtils {
    * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
    * two values.
    *
-   * <p>If either value is NaN or Infinity this returns false.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the
+   * values is Infinite or not valid.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #doublesValidateClose(double, double)}.
@@ -754,8 +761,7 @@ public final class EqualityUtils {
     if (delta <= absoluteError) {
       return true;
     }
-    final double max = max(Math.abs(value1), Math.abs(value2));
-    return (delta / max <= relativeError);
+    return delta <= max(Math.abs(value1), Math.abs(value2)) * relativeError;
   }
 
   /**
@@ -763,7 +769,8 @@ public final class EqualityUtils {
    * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
    * two values.
    *
-   * <p>If either value is NaN or Infinity this returns false.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the
+   * values is Infinite or not valid.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #floatsValidateClose(double, float)}.
@@ -785,8 +792,7 @@ public final class EqualityUtils {
       return true;
     }
     // Compute using double precision
-    final double max = max(Math.abs(value1), Math.abs(value2));
-    return (delta / max <= relativeError);
+    return delta <= max(Math.abs(value1), Math.abs(value2)) * relativeError;
   }
 
   /**
@@ -961,15 +967,19 @@ public final class EqualityUtils {
 
   /**
    * Tests that a double is close to an expected value. The relative error between values
-   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}:
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
+   * test is:
    *
    * <pre>
-   * relativeError = |expected-actual| / |expected|
+   * |expected-actual| <= |expected| * relativeError
    * </pre>
    *
-   * <p>The relative error is asymmetric for {@code expected} and {@code actual}. The test is
-   * equivalent to testing testing {@code actual} falls within a relative and/or absolute range of
+   * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
+   * testing testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
+   *
+   * <p>If either value is NaN or Infinity this returns false as the distance between the
+   * values is Infinite or not valid.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For
@@ -995,15 +1005,19 @@ public final class EqualityUtils {
 
   /**
    * Tests that a float is close to an expected value. The relative error between values
-   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}:
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
+   * test is:
    *
    * <pre>
-   * relativeError = |expected-actual| / |expected|
+   * |expected-actual| <= |expected| * relativeError
    * </pre>
    *
-   * <p>The relative error is asymmetric for {@code expected} and {@code actual}. The test is
-   * equivalent to testing testing {@code actual} falls within a relative and/or absolute range of
+   * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
+   * testing testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
+   *
+   * <p>If either value is NaN or Infinity this returns false as the distance between the
+   * values is Infinite or not valid.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For
@@ -1060,7 +1074,8 @@ public final class EqualityUtils {
    * Tests a double value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
-   * <p>If either value is NaN or Infinity this returns false.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the
+   * values is Infinite or not valid.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #doublesValidateIsCloseTo(double, double)}.
@@ -1082,14 +1097,15 @@ public final class EqualityUtils {
     if (delta <= absoluteError) {
       return true;
     }
-    return (delta / Math.abs(expected) <= relativeError);
+    return delta <= Math.abs(expected) * relativeError;
   }
 
   /**
    * Tests a float value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
-   * <p>If either value is NaN or Infinity this returns false.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the
+   * values is Infinite or not valid.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #floatsValidateIsCloseTo(double, float)}.
@@ -1112,7 +1128,7 @@ public final class EqualityUtils {
       return true;
     }
     // Compute using double precision
-    return ((double) delta / Math.abs(expected) <= relativeError);
+    return delta <= Math.abs(expected) * relativeError;
   }
 
   //@formatter:off

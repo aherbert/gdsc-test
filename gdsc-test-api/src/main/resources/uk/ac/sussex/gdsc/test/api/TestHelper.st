@@ -142,11 +142,11 @@ public final class TestHelper {
 <\n>
   /**
    * Creates a predicate to test that {@code <float>\} values are close using a relative error.
-   * The relative error between values {@code value1\} and {@code value2\} is
-   * relative to the largest magnitude of the two values:
+   * The relative error between values {@code value1\} and {@code value2\} is relative to the
+   * largest magnitude of the two values and the test is:
    *
    * \<pre>
-   * relativeError = |value1-value2| / max(|value1|, |value2|)
+   * |value1-value2| \<= max(|value1|, |value2|) * relativeError
    * \</pre>
    *
    * \<p>The relative error is symmetric for {@code value1\} and {@code value2\}. The test is
@@ -172,10 +172,10 @@ public final class TestHelper {
   /**
    * Creates a predicate to test that {@code <float>\} values are close using a relative and/or
    * an absolute error. The relative error between values {@code value1\} and {@code value2\} is
-   * relative to the largest magnitude of the two values:
+   * relative to the largest magnitude of the two values and the test is:
    *
    * \<pre>
-   * relativeError = |value1-value2| / max(|value1|, |value2|)
+   * |value1-value2| \<= max(|value1|, |value2|) * relativeError
    * \</pre>
    *
    * \<p>The relative error is symmetric for {@code value1\} and {@code value2\}. The test is
@@ -201,12 +201,12 @@ public final class TestHelper {
 <\n>
   /**
    * Creates a predicate to test a {@code <float>\} value is close to an expected value using a
-   * relative error. The relative error between values
-   * {@code expected\} and {@code actual\} is relative to the magnitude of {@code expected\}:
+   * relative error. The relative error between values {@code expected\} and {@code actual\} is
+   * relative to the magnitude of {@code expected\} and the test is:
    *
    * \<pre>
-   * relativeError = |expected-actual| / |expected|
-   * \</pre>
+   * |expected-actual| \<= |expected| * relativeError
+   * \</pre>:
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
    * equivalent to testing testing {@code actual\} falls within a relative range of
@@ -235,12 +235,12 @@ public final class TestHelper {
 
   /**
    * Creates a predicate to test a {@code <float>\} value is close to an expected value using a
-   * relative and/or an absolute error. The relative error between values
-   * {@code expected\} and {@code actual\} is relative to the magnitude of {@code expected\}:
+   * relative and/or an absolute error. The relative error between values {@code expected\} and
+   * {@code actual\} is relative to the magnitude of {@code expected\} and the test is:
    *
    * \<pre>
-   * relativeError = |expected-actual| / |expected|
-   * \</pre>
+   * |expected-actual| \<= |expected| * relativeError
+   * \</pre>:
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
    * equivalent to testing testing {@code actual\} falls within a relative and/or absolute range of
