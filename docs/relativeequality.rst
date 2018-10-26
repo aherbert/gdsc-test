@@ -1,4 +1,4 @@
-.. index:: relative, equality
+.. index:: relative equality
 .. _relativeequality:
 
 Relative Equality
@@ -7,57 +7,80 @@ Relative Equality
 Definition
 ----------
 
-The GDSC Test library contains assertion functionality for relative equality between
-floating point numbers.
+The GDSC Test library contains assertion functionality for relative equality between numbers.
 
-The implementation of relative equality is based on convergence criteria for floating point
-numbers, i.e. express the difference :math:`\delta` between :math:`a` and :math:`b`:
+The implementation of relative equality expresses the difference :math:`\delta`
+between :math:`a` and :math:`b`:
 
 .. math::
 
     \delta = |a-b|
 
-as a relative error :math:`e`:
+relative to the magnitude of :math:`a` and/or :math:`b`.
+
+A **symmetric** relative error is:
 
 .. math::
 
     e = \frac { |a-b| } { \max(|a|, |b|) }
 
-Rearranging this allows an assertion of relative equality using a tolerance :math:`e`:
+This term is identical if :math:`a` and :math:`b` are switched.
+
+The equivalent **asymmetric** relative error :math:`e`: 
 
 .. math::
 
-    |a-b| \leq \max(|a|, |b|) \times e
+    e_a = \frac { |a-b| } { |a| }
 
-It should be noted that the relative error and equality assertion are symmetric,
-i.e. they are identical if :math:`a` and :math:`b` are switched.
+This is the distance that :math:`b` is from :math:`a`, relative to :math:`a`.
 
-Relative error can be expressed in Java as::
+Testing Relative Equality
+-------------------------
 
-    boolean doublesAreEqualRelative(double a,
-                                    double b,
-                                    double relativeError) {
-        double delta = Math.abs(a - b);
-        double max = Math.max(Math.abs(a), Math.abs(b));
-        return delta <= max * relativeError;
-    }
+A simple test for relative equality may check that the equality is below a maximum threshold
+:math:`e_{max}`. For example a **symmetric** test of relative equality can be:
 
-Value around zero
+.. math::
+
+    \frac { |a-b| } { \max(|a|, |b|) } \leq e_{max}
+
+Note that this will fail if both values are zero due to division by zero. It can be rearranged
+to avoid this:
+
+.. math::
+
+    |a-b| \leq \max(|a|, |b|) \times e_{max}
+
+The expression is a test that the distance between two values is less than an error, relative to
+the largest magnitude. This is a test for convergence of two values.
+
+The equivalent **asymmetric** test:
+
+.. math::
+
+    |a-b| \leq |a| \times e_{max}
+
+is a test that the distance between two values is less than an error, relative to :math:`a`. Since
+the test is asymmetric it can be used when :math:`a` is the known (expected) value and :math:`b`
+is an actual value to be tested, e.g. is the actual value close to the expected value using a
+relative error.
+
+Value Around Zero
 -----------------
 
-Note that relative equality uses the maximum of :math:`a` or :math:`b` to define the scale.
-This produces different results from:
+The relative equality uses the magnitude of the values to define the scale.
 
 .. math::
+
+    e &= \frac { |a-b| } { max(|a|,|b|) }
 
     e_a &= \frac { |a-b| } { |a| }
 
-    e_b &= \frac { |a-b| } { |b| }
+In the limit :math:`|a| = 0` then :math:`e_a = \infty` but :math:`e = 1`.
 
-as either :math:`a` or :math:`b` approach zero. In the limit :math:`|a| = 0` then
-:math:`e_a = \infty` but :math:`e = 1`.
+The **asymmetric** relative error is thus unbounded.
 
-The limit for the convergence relative error is `2` when :math:`a` and :math:`b` are
+The limit for the **symmetric** relative error is `2` when :math:`a` and :math:`b` are
 of equal magnitudes and opposite signs, e.g.
 
 .. math::
@@ -73,9 +96,11 @@ of equal magnitudes and opposite signs, e.g.
 This allows the relative error argument to be checked that it falls within the
 allowed range :math:`0 \leq e \leq 2`.
 
-Despite this smaller maximum range the relative error can still increase
-dramatically above an assertion level (e.g. :math:`10^{-3}`) as one
-of the test values approaches zero:
+Testing Close to Zero
+---------------------
+
+The relative error increases as one of the test values approaches zero. The following demonstrates
+this for the **symmetric** relative error:
 
 .. math::
 
@@ -92,82 +117,119 @@ of the test values approaches zero:
 The relative error :math:`e` will be large (:math:`0.999`) although
 the absolute difference :math:`\delta` will be small (:math:`0.00999`).
 
-This can be handled by adding a fixed delta below which the two values are
+This can be handled by allowing the :math:`\delta` to also be tested against a relative error
+threshold :math:`rel_{max}` or an absolute error threshold :math:`abs_{max}` :
+
+.. math::
+
+    |a-b| &\leq \max(|a|, |b|) \times rel_{max}
+
+    |a-b| &\leq abs_{max}
+
+adding a fixed delta below which the two values are
 considered equal::
 
-    boolean doublesAreEqualRelativeOrAbsolute(double a,
-                                              double b,
-                                              double relativeError,
-                                              double absoluteError) {
-        double delta = Math.abs(a - b);
-        if (delta <= absoluteError)
-            return true;
-        double max = Math.max(Math.abs(a), Math.abs(b));
-        return delta <= max * relativeError;
-    }
-
-Test Support
-------------
+Test Predicates
+---------------
 
 The GDSC Test library contains predicates that test relative equality between
-two ``float`` or ``double`` values. These can be constructed using a helper
-class::
+two values.
 
-    double relativeError = 1e-4;
-    double absoluteError = 0;
-    DoubleDoubleBiPredicate predicate = TestHelper.almostEqualDoubles(
-        relativeError, absoluteError);
+Support is provided for **symmetric** relative equality using the name **Close**
+which does not imply a direction. Support is provided for **asymmetric** relative equality
+using the name **IsCloseTo** which implies a direction.
 
-    predicate.test(9999.0, 10000.0); // true since 1/10000 <= 1e-4
-    predicate.test(999.0,  1000.0);  // false since 1/1000  > 1e-4
+These can be constructed using a helper class::
 
-This removes the need to use code such as::
+    double relativeError = 0.01;
 
-    double expected, actual;
-    double relativeError = 1e-3;
+    DoubleDoubleBiPredicate close = TestHelper.doublesClose(relativeError);
 
-    // equal within relative delta of expected
-    Assertions.assertEquals(expected, actual, expected * relativeError);
+    // The Close relative equality is symmetric
+    assert close.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
+    assert close.test(99, 100) : "Difference 1 should be <= 0.01 of 100";
 
-Replacing it with::
+    // The test identifies large relative error
+    assert !close.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
+    assert !close.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
 
-    double expected, actual;
-    double relativeError = 1e-3;
-    DoubleDoubleBiPredicate predicate = TestHelper.almostEqualDoubles(
-        relativeError, 0);
 
-    // equal within relative error
-    Assertions.assertTrue(predicate.test(expected, actual));
+    DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+
+    // The IsCloseTo relative equality is asymmetric
+    assert isCloseTo.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
+    assert !isCloseTo.test(99, 100) : "Difference 1 should not be <= 0.01 of 99";
+
+    // The test identifies large relative error
+    assert !isCloseTo.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
+    assert !isCloseTo.test(9, 10) : "Difference 1 should not be <= 0.01 of 9";
+
+Note that the predicates can be constructed using an absolute error
+tolerance which is combined with the relative equality test using an **Or** operator::
+
+    double relativeError = 0.01;
+    double absoluteError = 1;
+    DoubleDoubleBiPredicate close = TestHelper.doublesClose(relativeError, absoluteError);
+
+    // This would fail using relative error.
+    // The test passes using absolute error.
+    assert close.test(10, 9) : "Difference 1 should be <= 1";
+    assert close.test(9, 10) : "Difference 1 should be <= 1";
+
+Test Framework Support
+----------------------
+
+Testing relative equality within a test framework is supported.
+
+For example a test for floating-point relative equality in ``JUnit 5`` must adapt the test for
+absolute difference::
+
+    double relativeError = 0.01;
+    double expected = 100;
+    double actual = 99;
+
+    // equal within relative error of expected
+    Assertions.assertEquals(expected, actual, Math.abs(expected) * relativeError);
+
+This can be replaced with::
+
+    double relativeError = 0.01;
+    double expected = 100;
+    double actual = 99;
+
+    // equal within relative error of expected
+    DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+    Assertions.assertTrue(isCloseTo.test(expected, actual));
+
+This will identify errors but the error message is not helpful.
 
 In order to provide useful error messages for a ``true/false`` predicate the
-GDSC Test library contains a helper class for performing assertions. This can
-test on input primitives and primitive arrays using any predicate.
+GDSC Test library contains a helper class for performing assertions that will raise
+an ``AssertionError`` if the test is ``false``. The ``TestAssertions`` class is based on the
+``Assertions`` design ideas of ``JUnit 5``. It provides static assertion methods for
+pairs of all primitive types using any bi-valued test predicate to compare the two matched values.
+Arrays and nested arrays are supported using recursion.
 
 This allows the test for equality to be extended to arrays and nested arrays::
 
-    DoubleDoubleBiPredicate predicate = TestHelper.almostEqualDoubles(
-        relativeError, 0);
+    double relativeError = 0.01;
+    double expected = 100;
+    double actual = 99;
 
-    // primitives
-    double expected = ...;
-    double actual = ...;
-    TestAssertions.assertTest(expected, actual, predicate);
+    DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+
+    TestAssertions.assertTest(expected, actual, isCloseTo);
 
     // primitive arrays
-    double[] expected = ...;
-    double[] actual = ...;
-    TestAssertions.assertArrayTest(expected, actual, predicate);
+    double[] expectedArray = new double[] { expected };
+    double[] actualArray = new double[] { actual };
+    TestAssertions.assertArrayTest(expectedArray, actualArray, isCloseTo);
 
-    // nested primitive arrays of matched dimension (e.g. x,y,z)
-    Object[] expected = new double[x][y][z];
-    Object[] actual = new double[x][y][z];
-    TestAssertions.assertArrayTest(expected, actual, predicate);
+    // nested primitive arrays of matched dimension
+    Object[] expectedNestedArray = new double[][][] {{{ expected }}};
+    Object[] actualNestedArray = new double[][][] {{{ actual }}};
+    TestAssertions.assertArrayTest(expectedNestedArray, actualNestedArray, isCloseTo);
 
-Note that a relative delta for arrays is not natively supported in JUnit
-without loop constructs::
-
-    double[] expected, actual;
-    for (int i=0; i < expected.length; i++) {
-      Assertions.assertEquals(expected[i], actual[i],
-                              expected[i] * 1e-3);
-    }
+If the predicate test fails then the ``TestAssertions`` class will construct a message containing
+the values that failed. Additionally all the predicates provided by the GDSC Test library
+support a description that will be added to the ``AssertionError`` message.

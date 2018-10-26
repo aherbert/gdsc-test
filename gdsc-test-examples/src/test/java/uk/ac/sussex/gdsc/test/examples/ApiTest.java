@@ -24,13 +24,16 @@
 
 package uk.ac.sussex.gdsc.test.examples;
 
+import uk.ac.sussex.gdsc.test.api.TestAssertions;
 import uk.ac.sussex.gdsc.test.api.TestHelper;
 import uk.ac.sussex.gdsc.test.api.function.DoubleDoubleBiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.IntIntBiPredicate;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Contains demonstration code for the API.
+ * Contains demonstration code for the API package.
  *
  * <p>Code snippets from this class are used in the documentation, thus this class exists to ensure
  * the snippets are valid. Documentation should be updated appropriately when this class is updated.
@@ -43,15 +46,15 @@ public class ApiTest {
   @Test
   public void testClosePredicate() {
     double relativeError = 0.01;
-    DoubleDoubleBiPredicate predicate = TestHelper.doublesClose(relativeError);
+    DoubleDoubleBiPredicate close = TestHelper.doublesClose(relativeError);
 
     // The Close relative equality is symmetric
-    assert predicate.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
-    assert predicate.test(99, 100) : "Difference 1 should be <= 0.01 of 100";
+    assert close.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
+    assert close.test(99, 100) : "Difference 1 should be <= 0.01 of 100";
 
-    // The test identifies large relative error 
-    assert !predicate.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
-    assert !predicate.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
+    // The test identifies large relative error
+    assert !close.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
+    assert !close.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
   }
 
   /**
@@ -60,14 +63,78 @@ public class ApiTest {
   @Test
   public void testIsCloseToPredicate() {
     double relativeError = 0.01;
-    DoubleDoubleBiPredicate predicate = TestHelper.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
 
     // The IsCloseTo relative equality is asymmetric
-    assert predicate.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
-    assert !predicate.test(99, 100) : "Difference 1 should not be <= 0.01 of 99";
+    assert isCloseTo.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
+    assert !isCloseTo.test(99, 100) : "Difference 1 should not be <= 0.01 of 99";
 
-    // The test identifies large relative error 
-    assert !predicate.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
-    assert !predicate.test(9, 10) : "Difference 1 should not be <= 0.01 of 9";
+    // The test identifies large relative error
+    assert !isCloseTo.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
+    assert !isCloseTo.test(9, 10) : "Difference 1 should not be <= 0.01 of 9";
+  }
+
+  /**
+   * Test the Close predicate using absolute error.
+   */
+  @Test
+  public void testClosePredicateUsingAbsError() {
+    double relativeError = 0.01;
+    double absoluteError = 1;
+    DoubleDoubleBiPredicate close = TestHelper.doublesClose(relativeError, absoluteError);
+
+    // This would fail using relative error.
+    // The test passes using absolute error.
+    assert close.test(10, 9) : "Difference 1 should be <= 1";
+    assert close.test(9, 10) : "Difference 1 should be <= 1";
+  }
+
+  /**
+   * Test the IsCloseTo predicate within a test framework
+   */
+  @Test
+  public void testIsCloseToWithinFramework() {
+    double relativeError = 0.01;
+    double expected = 100;
+    double actual = 99;
+
+    // equal within relative error of expected
+    Assertions.assertEquals(expected, actual, Math.abs(expected) * relativeError);
+
+    // replace with predicate
+    DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+    Assertions.assertTrue(isCloseTo.test(expected, actual));
+  }
+
+  /**
+   * Test the IsCloseTo predicate with TestAssertions
+   */
+  @Test
+  public void testIsCloseToWithTestAssertions() {
+    double relativeError = 0.01;
+    double expected = 100;
+    double actual = 99;
+
+    DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+
+    TestAssertions.assertTest(expected, actual, isCloseTo);
+
+    // primitive arrays
+    double[] expectedArray = new double[] {expected};
+    double[] actualArray = new double[] {actual};
+    TestAssertions.assertArrayTest(expectedArray, actualArray, isCloseTo);
+
+    // nested primitive arrays of matched dimension
+    Object[] expectedNestedArray = new double[][][] {{{expected}}};
+    Object[] actualNestedArray = new double[][][] {{{actual}}};
+    TestAssertions.assertArrayTest(expectedNestedArray, actualNestedArray, isCloseTo);
+  }
+
+  @Test
+  public void testMatrixRecursion() {
+    IntIntBiPredicate equal = TestHelper.intsEqual();
+    Object[] expected = new int[4][5][6];
+    Object[] actual = new int[4][5][6];
+    TestAssertions.assertArrayTest(expected, actual, equal);
   }
 }
