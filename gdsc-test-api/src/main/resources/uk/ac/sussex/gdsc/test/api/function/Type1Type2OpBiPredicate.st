@@ -7,8 +7,9 @@ import java.util.function.BiPredicate;
 import java.util.function.Supplier;
 
 /**
- * Represents a logical {@code <Op>} of two predicates including their string representations using
- * {@link Supplier} for a {@link String}.
+ * Represents a logical {@code <Op>} of two predicates, each predicate testing the two input values.
+ *
+ * \<p>Supports a description {@link Supplier} for a {@link String}.
  *
  * @see BiPredicate
  * @since 1.0
@@ -33,6 +34,11 @@ public class <Type1><Type2><Op>BiPredicate
     this.predicate2 = Objects.requireNonNull(predicate2, "Predicate 2 is null");
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * \<p>Test the logical {@code <Op>} combination of the two predicates.
+   */
   @Override
   public boolean test(<type1> value1, <type2> value2) {
     return predicate1.test(value1, value2) <OP> predicate2.test(value1, value2);

@@ -102,6 +102,7 @@ final class TestAssertionArrayUtils {
       final Object actualElement = actual[i];
 
       if (expectedElement == actualElement) {
+        // This is the same object so skip
         continue;
       }
 
@@ -247,8 +248,13 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
   assertArrayTest((<type>[]) expected, (<type>[]) actual, (<Type><Type>BiPredicate) test,
       indexes, messageOrSupplier);
 }>    } else {
-      failNotMatchingArrayTypes(expected, actual);
+      throw new AssertionError(buildMatchingArrayTypesMessage(expected, actual));
     }
+  }
+
+  private static String buildMatchingArrayTypesMessage(Object expected, Object actual) {
+    return "Expected matching array types but was: \<"
+        + getClassName(expected) + "> and \<" + getClassName(actual) + ">";
   }
 
   /**
@@ -261,19 +267,8 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
    */
   private static void assertObjectArray(Object expected, Object actual) {
     if (!(actual instanceof Object[])) {
-      failNotMatchingArrayTypes(expected, actual);
+      throw new AssertionError(buildMatchingArrayTypesMessage(expected, actual));
     }
-  }
-
-  /**
-   * Fail due to the array types not matching.
-   *
-   * @param expected The expected value.
-   * @param actual The value to check against \<code>expected\</code>.
-   */
-  private static void failNotMatchingArrayTypes(Object expected, Object actual) {
-    throw new AssertionError("Expected matching array types but was: \<"
-        + getClassName(expected) + "> and \<" + getClassName(actual) + ">");
   }<types,Types:{type,Type |
 <\n>
   /**
@@ -286,7 +281,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
    */
   private static void assert<Type>Array(Object expected, Object actual) {
     if (!(actual instanceof <type>[])) {
-      failNotMatchingArrayTypes(expected, actual);
+      throw new AssertionError(buildMatchingArrayTypesMessage(expected, actual));
     \}
   \}
 

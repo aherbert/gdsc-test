@@ -24,7 +24,7 @@ public class <Float>Cmp
   private final <int> binaryReferenceValue;
 
   /**
-   * Create a new instance of this class.
+   * Create a predicate to test {@code <float>} equality.
    *
    * \<p>Equality to the reference value will use binary comparison of the values
    * converted using {@link <Float>#<float>To<Int>Bits(<float>)}.

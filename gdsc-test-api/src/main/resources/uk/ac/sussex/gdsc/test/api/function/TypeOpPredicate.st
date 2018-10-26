@@ -7,8 +7,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * Represents a logical {@code <Op>} of two predicates including their string representations using
- * {@link Supplier} for a {@link String}.
+ * Represents a logical {@code <Op>} of two predicates, each predicate testing the input value.
+ *
+ * \<p>Supports a description {@link Supplier} for a {@link String}.
  *
  * @see Predicate
  * @since 1.0
@@ -31,6 +32,11 @@ public class <Type><Op>Predicate implements <Type>Predicate, Supplier\<String> {
     this.predicate2 = Objects.requireNonNull(predicate2, "Predicate 2 is null");
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * \<p>Test the logical {@code <Op>} combination of the two predicates.
+   */
   @Override
   public boolean test(<type> value) {
     return predicate1.test(value) <OP> predicate2.test(value);

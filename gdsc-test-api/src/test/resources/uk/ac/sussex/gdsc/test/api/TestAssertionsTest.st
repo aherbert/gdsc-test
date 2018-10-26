@@ -105,14 +105,17 @@ public class TestAssertionsTest {
     list.add(new long[1][1]);
     list.add(new short[1][1]);
     list.add(new Object[1][1]);
+    list.add(new Object[1]);
 
     // The predicate does not matter
     PrimitiveBiPredicate predicate = new BadPredicate();
 
     // Test mismatched types
-    for (int i = 0; i \< list.size(); i++) {
-      Object[] value1 = list.get(i);
-      Object[] value2 = list.get((i + 1) % list.size());
+    int index2 = list.size() - 1;
+    for (int index1 = 0; index1 \< list.size(); index1++) {
+      Object[] value1 = list.get(index1);
+      Object[] value2 = list.get(index2);
+      index2 = index1;
       String message = Assertions.assertThrows(AssertionError.class, () -> {
         TestAssertions.assertArrayTest(value1, value2, predicate);
       }, "Does not throw with nested arrays with mismatched types").getMessage();

@@ -3,15 +3,15 @@
 import uk.ac.sussex.gdsc.test.api.function.<Number><Number>BiPredicate;
 
 import java.io.Serializable;
-import java.util.function.Supplier;
+<if(import1)>import <import1>;<\n><endif>import java.util.function.Supplier;
 
 /**
  * Tests {@code <number>} equality using an absolute error tolerance.
  *
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see EqualityUtils#<number>sAreWithin(<number>, <number>, <errorType>)
+ * @see EqualityUtils#areWithin(<number>, <number>, <errorType>)
  */
-public class <Number><Number>Within
+public class <Number><Number><Within>
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -21,16 +21,16 @@ public class <Number><Number>Within
   private final <errorType> absoluteError;
 
   /**
-   * Create a new instance of this class.
+   * Create a predicate to test two {@code <number>} values are equal within an absolute error.
    *
    * @param absoluteError The maximum absolute error between \<code>value1\</code>
    *                      and \<code>value2\</code> for which both numbers are still
-   *                      considered equal. Ignored if set to negative.
+   *                      considered equal.
    * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
    */
-  public <Number><Number>Within(<errorType> absoluteError) {
-    EqualityUtils.<number>sValidateWithin(absoluteError);
+  public <Number><Number><Within>(<errorType> absoluteError) {
+    EqualityUtils.<number>sValidateAbsoluteError(absoluteError);
     this.absoluteError = absoluteError;
   }
 

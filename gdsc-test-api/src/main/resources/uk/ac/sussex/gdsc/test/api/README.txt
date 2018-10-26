@@ -4,7 +4,11 @@
 # The substitution word is expected to be replaced with some other text in 
 # the context of the scope.
 #
-# The value is a space delimited list of substitutions
+# The value is a space delimited list of substitutions. Leading and trailing [] are removed from
+# each list token. This allows the empty string to be passed, e.g. 
+# key = [value1] [] value3
+# creates:
+# "value1" "" "value3"
 
 # classname scope
 #
@@ -27,7 +31,7 @@
 #
 # The 'class.' prefix is used to replace the substitution word with each 
 # the entry in the substitution list.
-# The substritution is done per output Java class and so
+# The substitution is done per output Java class and so
 # the number of elements must match the length of the first 'classname.' scope key.
 # This is not valid if a 'classname.' scope key is absent.
 # e.g. class.other = one two

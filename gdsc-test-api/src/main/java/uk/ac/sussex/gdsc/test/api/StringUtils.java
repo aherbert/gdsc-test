@@ -31,6 +31,9 @@ import java.util.function.Supplier;
  */
 public final class StringUtils {
 
+  /** The space ' ' character. */
+  private static final char SPACE_CHAR = ' ';
+
   /** The empty string. */
   public static final String EMPTY = "";
 
@@ -43,23 +46,38 @@ public final class StringUtils {
   private StringUtils() {}
 
   /**
-   * Checks if the message is not null or empty whitespace.
+   * Checks if the string is not null or empty whitespace.
    *
-   * @param message the message
+   * @param string the string
    * @return true, if is not empty
    */
-  public static boolean isNotEmpty(String message) {
-    return message != null && message.trim().length() > 0;
+  public static boolean isNotEmpty(String string) {
+    return string != null && hasNonWhiteSpace(string);
   }
 
   /**
-   * Checks if the message is null or empty whitespace.
+   * Checks if the string is null or empty whitespace.
    *
-   * @param message the message
+   * @param string the string
    * @return true, if null or empty
    */
-  public static boolean isNullOrEmpty(String message) {
-    return message == null || message.trim().length() == 0;
+  public static boolean isNullOrEmpty(String string) {
+    return string == null || !hasNonWhiteSpace(string);
+  }
+
+  /**
+   * Checks for non white space.
+   *
+   * @param string the string
+   * @return true, if successful
+   */
+  private static boolean hasNonWhiteSpace(String string) {
+    for (int i = 0; i < string.length(); i++) {
+      if (string.charAt(i) > SPACE_CHAR) {
+        return true;
+      }
+    }
+    return false;
   }
 
   //@formatter:off
@@ -181,12 +199,12 @@ public final class StringUtils {
   //@formatter:on
 
   /**
-   * Wrap the string with braces.
+   * Wrap the string with braces, or if empty return "(NA)".
    *
    * @param string the string
    * @return the wrapped string
    */
-  private static String wrap(String string) {
+  public static String wrap(String string) {
     return isNotEmpty(string) ? "(" + string + ")" : NA;
   }
 }

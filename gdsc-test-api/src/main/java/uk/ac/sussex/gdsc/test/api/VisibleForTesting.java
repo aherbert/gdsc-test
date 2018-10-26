@@ -30,7 +30,7 @@ package uk.ac.sussex.gdsc.test.api;
  *
  * <p>This idea originates from Google Guave. PMD will not flag package private members when using
  * the DefaultPackage rule if they are annotated with VisibleForTesting.
- * 
+ *
  * @see <a href="https://github.com/google/guava">Guava: Google Core Libraries for Java</a>
  * @see <a href="https://pmd.github.io/latest/pmd_rules_java_codestyle.html#defaultpackage">PMD Rule
  *      DefaultPackage</a>

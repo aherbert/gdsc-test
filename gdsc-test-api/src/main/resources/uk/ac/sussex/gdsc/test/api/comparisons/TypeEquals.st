@@ -1,32 +1,32 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.function.<Float>Predicate;
+import uk.ac.sussex.gdsc.test.api.function.<Type>Predicate;
 
 import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
- * Tests {@code <float>} equality to a reference value using the {@code == operator}.
+ * Tests {@code <type>} equality to a reference value using the {@code == operator}.
  *
- * @see <Float>Predicate#test(<float>)
+ * @see <Type>Predicate#test(<type>)
  */
-public class <Float>Equals
-    implements <Float>Predicate, Supplier\<String>, Serializable {
+public class <Type>Equals
+    implements <Type>Predicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
   private static final long serialVersionUID = 1L;
 
   /** The reference value to test against. */
-  private final <float> referenceValue;
+  private final <type> referenceValue;
 
   /**
-   * Create a new instance of this class.
+   * Create a predicate to test {@code <type>} equality.
    *
    * \<p>Equality to the reference value will use the {@code == operator}.
    *
    * @param referenceValue The reference value.
    */
-  public <Float>Equals(<float> referenceValue) {
+  public <Type>Equals(<type> referenceValue) {
     this.referenceValue = referenceValue;
   }
 
@@ -35,7 +35,7 @@ public class <Float>Equals
    *
    * @return The reference value
    */
-  public <float> getReferenceValue() {
+  public <type> getReferenceValue() {
     return referenceValue;
   }
 
@@ -44,17 +44,11 @@ public class <Float>Equals
    *
    * \<p>Tests that the value is equal to the reference value using the {@code ==} operator.
    *
-   * \<p>Equality imposed by this method is inconsistent with
-   * {@link <Float>#equals(Object)} and, {@link <Float>#compare(<float>, <float>)}.
-   *
-   * \<p>For example {@code -0} and {@code 0} are equal. {@code <Float>.NaN} and
-   * {@code <Float>.NaN} are not equal.
-   *
    * @return true if equal
    * @see #getReferenceValue()
    */
   @Override
-  public boolean test(<float> value) {
+  public boolean test(<type> value) {
     return value == referenceValue;
   }
 
@@ -65,6 +59,6 @@ public class <Float>Equals
    */
   @Override
   public String get() {
-    return "value == " + <Float>.toString(referenceValue);
+    return "value == " + <Class>.toString(referenceValue);
   }
 }
