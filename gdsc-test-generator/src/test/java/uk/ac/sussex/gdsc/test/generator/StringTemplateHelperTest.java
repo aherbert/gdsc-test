@@ -134,10 +134,43 @@ public class StringTemplateHelperTest {
 
     for (int i = 0; i < names.size(); i++) {
       final int nameIndex = i + 1;
-      Assertions.assertEquals(names.get(0), list.get(0).first,
+      Assertions.assertEquals(names.get(i), list.get(i).first,
           () -> String.format("Name %d is wrong", nameIndex));
 
-      Assertions.assertEquals(template, list.get(0).second,
+      Assertions.assertEquals(template, list.get(i).second,
+          () -> String.format("Output %d is wrong", nameIndex));
+    }
+  }
+
+  @Test
+  public void testGeneratorWithMultiClassnameSubstitution() throws InvalidModelException {
+    final Properties properties = new Properties();
+    final String packageName = "";
+    final String templateClassName = "MySize";
+    final String template = "Stuff";
+
+    properties.put("classname.My", "His Her");
+    properties.put("classname.Size", "Small Big");
+
+    final StringTemplateModel model =
+        StringTemplateModel.create(properties, packageName, templateClassName, template);
+
+    final List<String> names = StringTemplateHelper.listNames(model);
+
+    Assertions.assertEquals(2, names.size(), "Names size");
+    Assertions.assertEquals("HisSmall", names.get(0), "name 1 is wrong");
+    Assertions.assertEquals("HerBig", names.get(1), "name 2 is wrong");
+
+    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+
+    Assertions.assertEquals(names.size(), list.size());
+
+    for (int i = 0; i < names.size(); i++) {
+      final int nameIndex = i + 1;
+      Assertions.assertEquals(names.get(i), list.get(i).first,
+          () -> String.format("Name %d is wrong", nameIndex));
+
+      Assertions.assertEquals(template, list.get(i).second,
           () -> String.format("Output %d is wrong", nameIndex));
     }
   }
@@ -192,12 +225,45 @@ public class StringTemplateHelperTest {
 
     for (int i = 0; i < names.size(); i++) {
       final int nameIndex = i + 1;
-      Assertions.assertEquals(names.get(0), list.get(0).first,
+      Assertions.assertEquals(names.get(i), list.get(i).first,
           () -> String.format("Name %d is wrong", nameIndex));
     }
 
     Assertions.assertEquals("Male", list.get(0).second, "Output 1 is wrong");
     Assertions.assertEquals("Female", list.get(1).second, "Output 2 is wrong");
+  }
+
+  @Test
+  public void testGeneratorWithEmptyClassSubstitution() throws InvalidModelException {
+    final Properties properties = new Properties();
+    final String packageName = "";
+    final String templateClassName = "MyTemplate";
+    final String template = "<gender>";
+
+    properties.put("classname.My", "His Her");
+    properties.put("class.gender", "Male []");
+
+    final StringTemplateModel model =
+        StringTemplateModel.create(properties, packageName, templateClassName, template);
+
+    final List<String> names = StringTemplateHelper.listNames(model);
+
+    Assertions.assertEquals(2, names.size(), "Names size");
+    Assertions.assertEquals("HisTemplate", names.get(0), "name 1 is wrong");
+    Assertions.assertEquals("HerTemplate", names.get(1), "name 2 is wrong");
+
+    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+
+    Assertions.assertEquals(names.size(), list.size());
+
+    for (int i = 0; i < names.size(); i++) {
+      final int nameIndex = i + 1;
+      Assertions.assertEquals(names.get(i), list.get(i).first,
+          () -> String.format("Name %d is wrong", nameIndex));
+    }
+
+    Assertions.assertEquals("Male", list.get(0).second, "Output 1 is wrong");
+    Assertions.assertEquals("", list.get(1).second, "Output 2 is wrong");
   }
 
   @Test

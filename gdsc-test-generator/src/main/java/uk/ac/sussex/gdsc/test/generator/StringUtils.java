@@ -28,28 +28,62 @@ package uk.ac.sussex.gdsc.test.generator;
  * Contains string utility functions.
  */
 public final class StringUtils {
+
+  /** The space ' ' character. */
+  private static final char SPACE_CHAR = ' ';
+
   /**
    * Do not allow public construction.
    */
   private StringUtils() {}
 
   /**
-   * Checks if the message is not null or empty whitespace.
+   * Checks if the string is not null or empty whitespace.
    *
-   * @param message the message
+   * @param string the string
    * @return true, if is not empty
    */
-  public static boolean isNotEmpty(String message) {
-    return message != null && message.trim().length() > 0;
+  public static boolean isNotEmpty(String string) {
+    return string != null && hasNonWhiteSpace(string);
   }
 
   /**
-   * Checks if the message is null or empty whitespace.
+   * Checks if the string is null or empty whitespace.
    *
-   * @param message the message
+   * @param string the string
    * @return true, if null or empty
    */
-  public static boolean isNullOrEmpty(String message) {
-    return message == null || message.trim().length() == 0;
+  public static boolean isNullOrEmpty(String string) {
+    return string == null || !hasNonWhiteSpace(string);
+  }
+
+  /**
+   * Checks for non white space.
+   *
+   * @param string the string
+   * @return true, if successful
+   */
+  private static boolean hasNonWhiteSpace(String string) {
+    for (int i = 0; i < string.length(); i++) {
+      if (string.charAt(i) > SPACE_CHAR) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Trim brackets '[' and ']' from the first and last position in the string.
+   *
+   * @param string the string
+   * @return the string
+   */
+  public static String trimBrackets(String string) {
+    int len = string.length();
+    final int start = (len > 0 && string.charAt(0) == '[') ? 1 : 0;
+    if (start < len && (string.charAt(len - 1) == ']')) {
+      len--;
+    }
+    return ((start > 0) || (len < string.length())) ? string.substring(start, len) : string;
   }
 }

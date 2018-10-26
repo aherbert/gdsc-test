@@ -31,6 +31,7 @@ import uk.ac.sussex.gdsc.test.generator.StringTemplateModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -38,11 +39,11 @@ import java.util.Properties;
 public class StringTemplateModelTest {
 
   @Test
-  public void testConstructorUsingClassnameScope() throws InvalidModelException {
+  public void testCreateUsingClassnameScope() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
-    final String template = "<Other> = 1;";
+    final String template = "This does not matter";
 
     // OK
     properties.put("classname.My", "Your");
@@ -62,9 +63,9 @@ public class StringTemplateModelTest {
     final List<Pair<String, List<Object>>> classScope = model.getClassScope();
     final List<Pair<String, List<Object>>> templateScope = model.getTemplateScope();
 
-    Assertions.assertFalse(classNameScope.isEmpty());
-    Assertions.assertFalse(classScope.isEmpty());
-    Assertions.assertFalse(templateScope.isEmpty());
+    Assertions.assertEquals(1, classNameScope.size(), "Classname scope size");
+    Assertions.assertEquals(1, classScope.size(), "Class scope size");
+    Assertions.assertEquals(1, templateScope.size(), "Template scope size");
 
     // Check
     for (final Pair<String, List<String>> pair : classNameScope) {
@@ -84,11 +85,11 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testConstructorUsingTemplateScope() throws InvalidModelException {
+  public void testCreateUsingTemplateScope() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
-    final String template = "<Other> = 1;";
+    final String template = "This does not matter";
 
     // OK
     properties.put("template.Other", "value2");
@@ -106,9 +107,9 @@ public class StringTemplateModelTest {
     final List<Pair<String, List<Object>>> classScope = model.getClassScope();
     final List<Pair<String, List<Object>>> templateScope = model.getTemplateScope();
 
-    Assertions.assertTrue(classNameScope.isEmpty());
-    Assertions.assertTrue(classScope.isEmpty());
-    Assertions.assertFalse(templateScope.isEmpty());
+    Assertions.assertEquals(0, classNameScope.size(), "Classname scope size");
+    Assertions.assertEquals(0, classScope.size(), "Class scope size");
+    Assertions.assertEquals(1, templateScope.size(), "Template scope size");
 
     // Check
     for (final Pair<String, List<Object>> pair : templateScope) {
@@ -117,9 +118,54 @@ public class StringTemplateModelTest {
     }
   }
 
+  @Test
+  public void testCreateUsingBracketsSequence() throws InvalidModelException {
+    final Properties properties = new Properties();
+    final String packageName = "org.something";
+    final String templateClassName = "MyTemplate";
+    final String template = "<Other> = 1;";
+
+    // OK
+    properties.put("classname.My", "His Her Your");
+    properties.put("class.Anything", "value1 [] value3");
+    properties.put("template.Other", "[] value2");
+
+    final StringTemplateModel model =
+        StringTemplateModel.create(properties, packageName, templateClassName, template);
+
+    Assertions.assertEquals(packageName, model.getPackageName());
+    Assertions.assertEquals(templateClassName, model.getTemplateClassName());
+    Assertions.assertEquals(template, model.getTemplate());
+
+    Assertions.assertTrue(model.isRenamedClass(), "Is a renamed class");
+
+    final List<Pair<String, List<String>>> classNameScope = model.getClassNameScope();
+    final List<Pair<String, List<Object>>> classScope = model.getClassScope();
+    final List<Pair<String, List<Object>>> templateScope = model.getTemplateScope();
+
+    Assertions.assertEquals(1, classNameScope.size(), "Classname scope size");
+    Assertions.assertEquals(1, classScope.size(), "Class scope size");
+    Assertions.assertEquals(1, templateScope.size(), "Template scope size");
+
+    // Check
+    final Pair<String, List<String>> classNamePair = classNameScope.get(0);
+    Assertions.assertEquals("My", classNamePair.first, "Missing classname scope substitution");
+    Assertions.assertTrue(classNamePair.second.contains("Your"), "Missing classname scope value");
+
+    final Pair<String, List<Object>> classPair = classScope.get(0);
+    Assertions.assertEquals("Anything", classPair.first, "Missing class scope substitution");
+    Assertions.assertEquals(Arrays.asList("value1", "", "value3"), classPair.second,
+        "Missing class scope values");
+
+    final Pair<String, List<Object>> templatePair = templateScope.get(0);
+    Assertions.assertEquals("Other", templatePair.first, "Missing template scope substitution");
+    Assertions.assertEquals(Arrays.asList("", "value2"), templatePair.second,
+        "Missing template scope values");
+  }
+
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithNullPointers() {
+  public void testCreateThrowsWithNullPointers() {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
@@ -145,7 +191,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testConstructorThrowsWithBadClassName() {
+  public void testCreateThrowsWithBadClassName() {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "My.Template"; // Bad character
@@ -160,7 +206,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithBadPackageName() {
+  public void testCreateThrowsWithBadPackageName() {
     final Properties properties = new Properties();
     final String packageName = "org)something"; // Bad character
     final String templateClassName = "MyTemplate";
@@ -180,7 +226,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithInvalidScope() {
+  public void testCreateThrowsWithInvalidScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -199,7 +245,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithNoKey() {
+  public void testCreateThrowsWithNoKey() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -217,7 +263,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithNoScope() {
+  public void testCreateThrowsWithNoScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -236,7 +282,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithNoSubstritution() {
+  public void testCreateThrowsWithNoSubstritution() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -255,7 +301,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithReservedWordForSubstitution() {
+  public void testCreateThrowsWithReservedWordForSubstitution() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -274,7 +320,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithDuplicateSubstitution() {
+  public void testCreateThrowsWithDuplicateSubstitution() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -296,7 +342,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithDuplicateLowercaseClassnameSubstitution() {
+  public void testCreateThrowsWithDuplicateLowercaseClassnameSubstitution() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -318,8 +364,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithDuplicateClassnameSubstitution()
-      throws InvalidModelException {
+  public void testCreateThrowsWithDuplicateClassnameSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -345,7 +390,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithEmptyClassnameScopeValue() {
+  public void testCreateThrowsWithEmptyClassnameScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -365,7 +410,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithOnlyWhitespaceInClassnameScopeValue() {
+  public void testCreateThrowsWithOnlyWhitespaceInClassnameScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -385,7 +430,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithEmptyTemplateScopeValue() {
+  public void testCreateThrowsWithEmptyTemplateScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -405,7 +450,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithOnlyWhitespaceInTemplateScopeValue() {
+  public void testCreateThrowsWithOnlyWhitespaceInTemplateScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -425,7 +470,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithClassScopeAndNoClassnameScope() {
+  public void testCreateThrowsWithClassScopeAndNoClassnameScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -445,7 +490,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithClassScopeDifferentValueSizeToClassnameScope() {
+  public void testCreateThrowsWithClassScopeDifferentValueSizeToClassnameScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -465,7 +510,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsWithClassnameScopeDifferentValueSizeToClassnameScope() {
+  public void testCreateThrowsWithClassnameScopeDifferentValueSizeToClassnameScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -494,7 +539,7 @@ public class StringTemplateModelTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructorThrowsClassnameSubstitutionNotInClassName() {
+  public void testCreateThrowsClassnameSubstitutionNotInClassName() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";

@@ -81,7 +81,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <spotbugs.version>3.1.6</spotbugs.version>
     <checkstyle.version>8.13</checkstyle.version>
-    <pmd.version>6.7.0</pmd.version>
+    <pmd.version>6.8.0</pmd.version>
     <!-- Maven -->
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -758,7 +758,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     </repository>
     <site>
       <id>${project.artifactId}-site</id>
-      <url>file://${project.build.directory}/mvn-repo</url>
+      <url>file://${parent.dir}/mvn-repo</url>
     </site>
   </distributionManagement>
 

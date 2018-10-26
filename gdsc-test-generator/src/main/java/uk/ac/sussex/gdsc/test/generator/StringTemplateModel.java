@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 /**
  * Define the model for template substitutions using the StringTemplate library.
  */
-public class StringTemplateModel {
+public final class StringTemplateModel {
 
   /**
    * The scope of the template substitution.
@@ -54,7 +54,7 @@ public class StringTemplateModel {
      */
     CLASS,
     /** The substitution occurs at the template. */
-    TEMPLATE
+    TEMPLATE,
   }
 
   /** The regular expression to split the key into scope and pattern. */
@@ -391,10 +391,8 @@ public class StringTemplateModel {
     if (StringUtils.isNullOrEmpty(value)) {
       throw new InvalidModelException("Substitution value is empty for key: " + key);
     }
-    final String[] values = WHITESPACE_PATTERN.split(value);
-    if (values.length == 0) {
-      throw new InvalidModelException("Substitution value is only whitepsace for key: " + key);
-    }
+    final String[] values = WHITESPACE_PATTERN.split(value.trim());
+    removeBrackets(values);
     return Arrays.asList(values);
   }
 
@@ -411,12 +409,21 @@ public class StringTemplateModel {
     if (StringUtils.isNullOrEmpty(value)) {
       throw new InvalidModelException("Substitution value is empty for key: " + key);
     }
-    // Currently advanced splitting to mutliple value is not supported
-    final String[] values = WHITESPACE_PATTERN.split(value);
-    if (values.length == 0) {
-      throw new InvalidModelException("Substitution value is only whitepsace for key: " + key);
-    }
+    // Currently advanced splitting to multiple value is not supported
+    final String[] values = WHITESPACE_PATTERN.split(value.trim());
+    removeBrackets(values);
     return Arrays.asList((Object[]) values);
+  }
+
+  /**
+   * Replace the skip sequence in each substitution with the empty string.
+   *
+   * @param values the values
+   */
+  private static void removeBrackets(String[] values) {
+    for (int i = 0; i < values.length; i++) {
+      values[i] = StringUtils.trimBrackets(values[i]);
+    }
   }
 
   /**

@@ -48,4 +48,16 @@ public class StringUtilsTest {
     Assertions.assertTrue(StringUtils.isNullOrEmpty("\t"));
     Assertions.assertTrue(StringUtils.isNullOrEmpty(null));
   }
+
+  @Test
+  public void testTrimeBrackets() {
+    Assertions.assertEquals("", StringUtils.trimBrackets(""));
+    Assertions.assertEquals("", StringUtils.trimBrackets("["));
+    Assertions.assertEquals("", StringUtils.trimBrackets("]"));
+    Assertions.assertEquals("", StringUtils.trimBrackets("[]"));
+    Assertions.assertEquals("a", StringUtils.trimBrackets("a]"));
+    Assertions.assertEquals("a", StringUtils.trimBrackets("[a"));
+    Assertions.assertEquals("a", StringUtils.trimBrackets("a"));
+    Assertions.assertEquals("a", StringUtils.trimBrackets("[a]"));
+  }
 }

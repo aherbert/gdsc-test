@@ -122,6 +122,9 @@ public class RandomSeedTest {
           new RandomSeed(SeedUtils.makeByteArray(value), currentRepetition, totalRepetitions);
       Assertions.assertEquals(value, rs.getSeedAsLong(),
           "Single long converted to byte[] doesn't match");
+      // Test the cache of the value
+      Assertions.assertEquals(rs.getSeedAsLong(), rs.getSeedAsLong(),
+          "Seed as long value doesn't match itself");
       long value2 = value;
       value = rng.nextLong();
       rs = new RandomSeed(SeedUtils.makeByteArray(value, value2), currentRepetition,

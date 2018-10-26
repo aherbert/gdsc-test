@@ -34,7 +34,7 @@ import java.util.function.Supplier;
 public final class FunctionUtils {
 
   /** The default locale. */
-  private static final Locale locale = Locale.getDefault(Locale.Category.FORMAT);
+  private static final Locale DEFAULT_LOCALE = Locale.getDefault(Locale.Category.FORMAT);
 
   /**
    * Do not allow construction.
@@ -66,6 +66,6 @@ public final class FunctionUtils {
    * @see Locale#getDefault(Locale.Category)
    */
   public static Supplier<String> getSupplier(String format, Object... args) {
-    return () -> new Formatter(locale).format(format, args).toString();
+    return () -> new Formatter(DEFAULT_LOCALE).format(format, args).toString();
   }
 }

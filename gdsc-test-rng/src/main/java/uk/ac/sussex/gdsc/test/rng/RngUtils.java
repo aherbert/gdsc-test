@@ -1,7 +1,7 @@
 /*-
  * #%L
  * Genome Damage and Stability Centre Test RNG
- * 
+ *
  * Contains utilities for use with Commons RNG for random tests.
  * %%
  * Copyright (C) 2018 Alex Herbert
@@ -10,12 +10,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * A factory for creation of random number generators (RNG) that implement
  * {@link UniformRandomProvider}.
  */
-public final class RngFactory {
+public final class RngUtils {
 
   /** Store the seeds for the UniformRandomProvider. */
   private static final Map<Long, int[]> seedCache = new ConcurrentHashMap<>();
@@ -48,10 +48,8 @@ public final class RngFactory {
    */
   private static final int MWC_256_SEED_SIZE = 257;
 
-  /**
-   * Do not allow public construction.
-   */
-  private RngFactory() {}
+  /** Do not allow public construction. */
+  private RngUtils() {}
 
   /**
    * Gets the uniform random provider using the given seed.
@@ -92,7 +90,7 @@ public final class RngFactory {
 
     final int[] fullSeed = (cache)
         // Use the cache
-        ? seedCache.computeIfAbsent(longSeed, RngFactory::generateMwc256Seed)
+        ? seedCache.computeIfAbsent(longSeed, RngUtils::generateMwc256Seed)
         // Create a new seed
         : generateMwc256Seed(longSeed);
     return RandomSource.create(RandomSource.MWC_256, fullSeed);
@@ -131,7 +129,7 @@ public final class RngFactory {
   public static UniformRandomProvider create(long seed, boolean cache) {
     final int[] fullSeed = (cache)
         // Use the cache
-        ? seedCache.computeIfAbsent(seed, RngFactory::generateMwc256Seed)
+        ? seedCache.computeIfAbsent(seed, RngUtils::generateMwc256Seed)
         // Create a new seed
         : generateMwc256Seed(seed);
     return RandomSource.create(RandomSource.MWC_256, fullSeed);

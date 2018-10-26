@@ -75,6 +75,9 @@ public final class TestSettings {
   /** The fixed seed for uniform random generator. */
   private static byte[] seed;
 
+  /** The lock object used to synchronise when seed is updated. */
+  private static Object seedLock = new Object();
+
   /**
    * The number of repeats for tests using the seeded uniform random generator.
    */
@@ -82,7 +85,7 @@ public final class TestSettings {
 
   static {
     testComplexity = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
-    setSeed(HexUtils.decodeHex(System.getProperty(PROPERTY_RANDOM_SEED)));
+    seed = HexUtils.decodeHex(System.getProperty(PROPERTY_RANDOM_SEED));
     repeats = getProperty(PROPERTY_RANDOM_REPEATS, 1);
     // Ensure repeated tests run once. They should be disabled using other
     // mechanisms.
@@ -153,16 +156,10 @@ public final class TestSettings {
    * @param bytes the new seed
    */
   static void setSeed(byte[] bytes) {
-    setCurrentSeed((SeedUtils.nullOrEmpty(bytes)) ? NO_SEED : bytes.clone());
-  }
-
-  /**
-   * Sets the current seed.
-   *
-   * @param bytes the new current seed
-   */
-  private static synchronized void setCurrentSeed(byte[] bytes) {
-    seed = bytes;
+    final byte[] newSeed = (SeedUtils.nullOrEmpty(bytes)) ? NO_SEED : bytes.clone();
+    synchronized (seedLock) {
+      seed = newSeed;
+    }
   }
 
   /**
@@ -186,7 +183,7 @@ public final class TestSettings {
       final Logger logger = Logger.getLogger(TestSettings.class.getName());
       logger.log(Level.INFO,
           String.format("-D%s=%s", PROPERTY_RANDOM_SEED, HexUtils.encodeHexString(currentSeed)));
-      setCurrentSeed(currentSeed);
+      setSeed(currentSeed);
     }
     // Do not expose the internal seed by using a copy
     return currentSeed.clone();

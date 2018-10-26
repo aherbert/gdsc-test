@@ -1,7 +1,7 @@
 /*-
  * #%L
  * Genome Damage and Stability Centre Test Examples
- * 
+ *
  * Contains examples of the GDSC Test libraries.
  * %%
  * Copyright (C) 2018 Alex Herbert
@@ -10,12 +10,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -27,7 +27,6 @@ package uk.ac.sussex.gdsc.test.examples;
 import uk.ac.sussex.gdsc.test.api.TestHelper;
 import uk.ac.sussex.gdsc.test.api.function.DoubleDoubleBiPredicate;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,18 +38,36 @@ import org.junit.jupiter.api.Test;
 public class ApiTest {
 
   /**
-   * Test the relative equality predicate.
+   * Test the Close predicate.
    */
   @Test
-  public void testRelativeEqualityPredicate() {
-    double relativeError = 1e-4;
-    double absoluteError = 0;
-    DoubleDoubleBiPredicate predicate = TestHelper.almostEqualDoubles(relativeError, absoluteError);
+  public void testClosePredicate() {
+    double relativeError = 0.01;
+    DoubleDoubleBiPredicate predicate = TestHelper.doublesClose(relativeError);
 
-    predicate.test(99999.0, 100000.0); // true
-    predicate.test(9999.0, 10000.0); // false
+    // The Close relative equality is symmetric
+    assert predicate.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
+    assert predicate.test(99, 100) : "Difference 1 should be <= 0.01 of 100";
 
-    Assertions.assertTrue(predicate.test(9999.0, 10000.0));
-    Assertions.assertFalse(predicate.test(999.0, 1000.0));
+    // The test identifies large relative error 
+    assert !predicate.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
+    assert !predicate.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
+  }
+
+  /**
+   * Test the IscloseTo predicate.
+   */
+  @Test
+  public void testIsCloseToPredicate() {
+    double relativeError = 0.01;
+    DoubleDoubleBiPredicate predicate = TestHelper.doublesIsCloseTo(relativeError);
+
+    // The IsCloseTo relative equality is asymmetric
+    assert predicate.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
+    assert !predicate.test(99, 100) : "Difference 1 should not be <= 0.01 of 99";
+
+    // The test identifies large relative error 
+    assert !predicate.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
+    assert !predicate.test(9, 10) : "Difference 1 should not be <= 0.01 of 9";
   }
 }

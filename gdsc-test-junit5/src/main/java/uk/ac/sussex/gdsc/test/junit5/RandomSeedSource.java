@@ -44,6 +44,8 @@ import java.util.stream.Stream;
  */
 public class RandomSeedSource implements ArgumentsProvider {
 
+  private static final int ONE = 1;
+
   /**
    * A reference to the last seed sequence.
    *
@@ -80,7 +82,7 @@ public class RandomSeedSource implements ArgumentsProvider {
       // Reuse the seed for the first entry
       arguments[0] = Arguments.of(randomSeed);
 
-      if (repeats > 1) {
+      if (repeats > ONE) {
         // Generate new seeds using a byte scrambler.
         // This is expensive so the immutable seeds are cached.
         // In the common use case the seed and repeats are set by system properties

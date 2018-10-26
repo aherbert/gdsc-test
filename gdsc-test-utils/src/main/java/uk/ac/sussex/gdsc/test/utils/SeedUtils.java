@@ -273,7 +273,7 @@ public final class SeedUtils {
   public static long makeLong(byte... bytes) {
     long result = 0;
     if (bytes.length > 0) {
-      for (long value : makeLongArray(bytes)) {
+      for (final long value : makeLongArray(bytes)) {
         result ^= value;
       }
     }

@@ -73,7 +73,7 @@ public class CodeGeneratorTest {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try (PrintStream ps = new PrintStream(baos, true, "UTF-8")) {
       CodeGenerator.setErr(ps);
-      ExitCode result = CodeGenerator.run(getArgs("-l", "WARNING"));
+      final ExitCode result = CodeGenerator.run(getArgs("-l", "WARNING"));
       Assertions.assertEquals(ExitCode.BAD_PARAMETERS, result, "Exit code");
       final String message = new String(baos.toByteArray(), StandardCharsets.UTF_8);
       assertMessageContains(message, "Missing required parameters", "Reason for error");
@@ -96,7 +96,7 @@ public class CodeGeneratorTest {
     try (PrintStream ps = new PrintStream(baos, true, "UTF-8")) {
       CodeGenerator.setErr(ps);
       final String badParameter = "--some-flag";
-      ExitCode result =
+      final ExitCode result =
           CodeGenerator.run(getArgs(pathForSource, pathForTarget, badParameter, "-l", "WARNING"));
       Assertions.assertEquals(ExitCode.BAD_PARAMETERS, result, "Exit code");
       final String message = new String(baos.toByteArray(), StandardCharsets.UTF_8);

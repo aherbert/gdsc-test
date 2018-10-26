@@ -43,6 +43,9 @@ public final class StringTemplateHelper {
   /**
    * Generate the templates.
    *
+   * <p>This deliberately omits class scope substitutions from an output class if the substitution
+   * is the empty string.
+   *
    * @param model the model
    * @return the list of templates
    */
@@ -57,8 +60,8 @@ public final class StringTemplateHelper {
       // All the same size
       final int size = classNameSubstitutions.get(0).second.size();
       for (int i = 0; i < size; i++) {
-        // Clone
-        // ST st2 = new ST(st);
+        // This has to be a new version, not a copy as that maintains some references, i.e.
+        // Using a single ST and copying via 'ST st2 = new ST(st)' does not work.
         final ST st = createStringTemplate(model);
 
         String newName = name;
@@ -80,7 +83,7 @@ public final class StringTemplateHelper {
         // Do the class substitutions.
         // Each class scope key will have an entry for this class.
         for (final Pair<String, List<Object>> sub : classScopeSubstitutions) {
-          st.add(sub.first, sub.second.get(i));
+          addClassSubstitution(st, sub.first, sub.second.get(i));
         }
 
         // Build the output
@@ -92,6 +95,30 @@ public final class StringTemplateHelper {
     }
 
     return list;
+  }
+
+  /**
+   * Adds the class substitution. This skips empty strings allowing class substitutions to be
+   * skipped.
+   *
+   * @param st the string template
+   * @param name the name
+   * @param value the value
+   */
+  private static void addClassSubstitution(ST st, String name, Object value) {
+    if (!skipSubstitution(value)) {
+      st.add(name, value);
+    }
+  }
+
+  /**
+   * Test if the value of the substitution is the empty string.
+   *
+   * @param value the value
+   * @return true, if successful
+   */
+  static boolean skipSubstitution(Object value) {
+    return value instanceof String && ((String) value).length() == 0;
   }
 
   private static ST createStringTemplate(StringTemplateModel model) {
