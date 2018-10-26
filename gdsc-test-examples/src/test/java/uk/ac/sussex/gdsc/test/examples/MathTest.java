@@ -28,6 +28,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 /**
  * Tests Math operations that form the base for predicates.
  */
@@ -44,6 +46,7 @@ public class MathTest {
   public void testDoubleError() {
 
     // No test for operations involving NaN: they are always NaN
+    Assertions.assertTrue(Objects.equals(Double.NaN, Double.NaN), "NaN does not equal NaN");
 
     // -Infinity difference:
     // Always -Infinity or NaN
