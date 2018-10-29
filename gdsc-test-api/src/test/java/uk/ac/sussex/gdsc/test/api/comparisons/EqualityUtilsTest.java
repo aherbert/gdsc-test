@@ -35,6 +35,38 @@ public class EqualityUtilsTest {
   private static final BigInteger MAX_LONG_DELTA =
       BigInteger.valueOf(Long.MAX_VALUE).subtract(BigInteger.valueOf(Long.MIN_VALUE));
 
+  private static long nextUp(long value) {
+    return ++value;
+  }
+
+  private static int nextUp(int value) {
+    return ++value;
+  }
+
+  private static short nextUp(short value) {
+    return ++value;
+  }
+
+  private static byte nextUp(byte value) {
+    return ++value;
+  }
+
+  private static long nextDown(long value) {
+    return --value;
+  }
+
+  private static int nextDown(int value) {
+    return --value;
+  }
+
+  private static short nextDown(short value) {
+    return --value;
+  }
+
+  private static byte nextDown(byte value) {
+    return --value;
+  }
+
   /**
    * Assert the message contains the sub-string.
    *
@@ -279,13 +311,13 @@ public class EqualityUtilsTest {
       for (int i = 0; i < 2; i++) {
         value *= -1;
         Assertions.assertTrue(EqualityUtils.areWithin(value, value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, value + 1, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, value - 1, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value + 1, value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value - 1, value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextUp(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextDown(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextUp(value), value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextDown(value), value, absoluteError));
       }
     }
-    // Special longs are not equal as they are not within a real delta.
+    // Test overflow of longs
     Assertions.assertFalse(EqualityUtils.areWithin(Long.MAX_VALUE, -1, absoluteError));
     Assertions.assertFalse(EqualityUtils.areWithin(Long.MIN_VALUE, 0, absoluteError));
     Assertions.assertFalse(EqualityUtils.areWithin(Long.MAX_VALUE, Long.MIN_VALUE, absoluteError));
@@ -370,13 +402,13 @@ public class EqualityUtilsTest {
       for (int i = 0; i < 2; i++) {
         value *= -1;
         Assertions.assertTrue(EqualityUtils.areWithin(value, value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, value + 1, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, value - 1, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value + 1, value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value - 1, value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextUp(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextDown(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextUp(value), value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextDown(value), value, absoluteError));
       }
     }
-    // Special longs are not equal as they are not within a real delta.
+    // Test overflow of longs
     Assertions.assertFalse(EqualityUtils.areWithin(Long.MAX_VALUE, -1, absoluteError));
     Assertions.assertFalse(EqualityUtils.areWithin(Long.MIN_VALUE, 0, absoluteError));
     Assertions.assertFalse(EqualityUtils.areWithin(Long.MAX_VALUE, Long.MIN_VALUE, absoluteError));
@@ -454,10 +486,10 @@ public class EqualityUtilsTest {
       for (int i = 0; i < 2; i++) {
         value *= -1;
         Assertions.assertTrue(EqualityUtils.areWithin(value, value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, value + 1, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, value - 1, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value + 1, value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value - 1, value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextUp(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextDown(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextUp(value), value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextDown(value), value, absoluteError));
       }
     }
     // Test int overflow
@@ -541,10 +573,10 @@ public class EqualityUtilsTest {
       for (short i = 0; i < 2; i++) {
         value *= -1;
         Assertions.assertTrue(EqualityUtils.areWithin(value, value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, (short) (value + 1), absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, (short) (value - 1), absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin((short) (value + 1), value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin((short) (value - 1), value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextUp(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextDown(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextUp(value), value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextDown(value), value, absoluteError));
       }
     }
     // Test short overflow
@@ -627,10 +659,10 @@ public class EqualityUtilsTest {
       for (byte i = 0; i < 2; i++) {
         value *= -1;
         Assertions.assertTrue(EqualityUtils.areWithin(value, value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, (byte) (value + 1), absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin(value, (byte) (value - 1), absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin((byte) (value + 1), value, absoluteError));
-        Assertions.assertFalse(EqualityUtils.areWithin((byte) (value - 1), value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextUp(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(value, nextDown(value), absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextUp(value), value, absoluteError));
+        Assertions.assertFalse(EqualityUtils.areWithin(nextDown(value), value, absoluteError));
       }
     }
     // Test byte overflow
@@ -1001,6 +1033,564 @@ public class EqualityUtilsTest {
         absoluteError);
   }
 
+  // long Close
+
+  @Test
+  public void testLongsAreCloseThrows() {
+    final long expected = 0;
+    final long actual = 0;
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1, 2,
+        Double.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.areClose(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (long badAbsoluteError : new long[] {Long.MIN_VALUE, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.areClose(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  public void testLongsAreCloseUsingNoError() {
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    // Use a range of values
+    for (long value : new long[] {Long.MIN_VALUE, Long.MIN_VALUE + 1, -1, 0, 1, Long.MAX_VALUE - 1,
+        Long.MAX_VALUE}) {
+      Assertions.assertTrue(EqualityUtils.areClose(value, value, relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.areClose(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.areClose(value, nextDown(value), relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.areClose(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.areClose(nextDown(value), value, relativeError, absoluteError));
+    }
+    // Test overflow of longs
+    Assertions
+        .assertFalse(EqualityUtils.areClose(Long.MAX_VALUE, -1, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(Long.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.areClose(Long.MAX_VALUE, Long.MIN_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testLongsAreCloseUsingAbsoluteError() {
+    final long expected = 2;
+    final long actual = 1;
+    final double relativeError = 0;
+    final long absoluteError = expected - actual;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final long delta = nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.areClose(expected, actual, relativeError, delta));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected, relativeError, delta));
+
+    // Make the gap bigger
+    final long expected2 = nextUp(expected);
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testLongsAreCloseUsingRelativeError() {
+    final long expected = 2;
+    final long actual = 1;
+    final double relativeError = 0.5;
+    final long absoluteError = 0;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(EqualityUtils.areClose(expected, actual, delta, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected, delta, absoluteError));
+
+    // Make the gap bigger
+    final long expected2 = nextUp(expected);
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testLongsAreCloseUsingRelativeErrorAtMinValue() {
+    final long expected = Long.MIN_VALUE;
+    final long actual = expected + 1;
+    final double relativeError = 0.5 - 1e-3;
+    final long absoluteError = 0;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the gap bigger (so relative error is 0.5)
+    final long expected2 = expected / 2;
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testLongsGetDescriptionClose() {
+    // These must be distinguishable as strings
+    final Double[] values1 = {0.0, 1.1};
+    final Long[] values2 = {0L, 2L};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testLongsGetDescriptionClose(v1, v2);
+      }
+    }
+  }
+
+  private static void testLongsGetDescriptionClose(Number relativeError, Number absoluteError) {
+
+    final double inputRelError = relativeError.doubleValue();
+    final long inputAbsError = absoluteError.longValue();
+
+    try {
+      EqualityUtils.longsValidateClose(inputRelError, inputAbsError);
+    } catch (final IllegalArgumentException ex) {
+      return;
+    }
+
+    // The raw input
+    final String result = EqualityUtils.longsGetDescriptionClose(inputRelError, inputAbsError);
+
+    // Handle special case
+    if (inputRelError == 0) {
+      relativeError = -1;
+      if (inputAbsError < 0) {
+        absoluteError = 0;
+      }
+    }
+    if (absoluteError.longValue() == 0 && relativeError.doubleValue() > 0) {
+      absoluteError = -1;
+    }
+
+    // Get the expected values in the message
+    final double relError = relativeError.doubleValue();
+    final long absError = absoluteError.longValue();
+
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
+
+    final String relString = String.valueOf(relError);
+    final String absString = String.valueOf(absError);
+
+    assertMessageContains(hasRel, result, "|v1-v2|/max", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
+        absoluteError);
+  }
+
+  // int Close
+
+  @Test
+  public void testIntsAreCloseThrows() {
+    final int expected = 0;
+    final int actual = 0;
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1, 2,
+        Double.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.areClose(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (long badAbsoluteError : new long[] {Integer.MIN_VALUE, -1,
+        EqualityUtils.MAX_INT_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.areClose(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  public void testIntsAreCloseUsingNoError() {
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    // Use a range of values
+    for (int value : new int[] {Integer.MIN_VALUE, Integer.MIN_VALUE + 1, -1, 0, 1,
+        Integer.MAX_VALUE - 1, Integer.MAX_VALUE}) {
+      Assertions.assertTrue(EqualityUtils.areClose(value, value, relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.areClose(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.areClose(value, nextDown(value), relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.areClose(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.areClose(nextDown(value), value, relativeError, absoluteError));
+    }
+    // Test overflow of ints
+    Assertions
+        .assertFalse(EqualityUtils.areClose(Integer.MAX_VALUE, -1, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.areClose(Integer.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.areClose(Integer.MAX_VALUE, Integer.MIN_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testIntsAreCloseUsingAbsoluteError() {
+    final int expected = 2;
+    final int actual = 1;
+    final double relativeError = 0;
+    final long absoluteError = expected - actual;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final long delta = nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.areClose(expected, actual, relativeError, delta));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected, relativeError, delta));
+
+    // Make the gap bigger
+    final int expected2 = nextUp(expected);
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testIntsAreCloseUsingRelativeError() {
+    final int expected = 2;
+    final int actual = 1;
+    final double relativeError = 0.5;
+    final long absoluteError = 0;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(EqualityUtils.areClose(expected, actual, delta, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected, delta, absoluteError));
+
+    // Make the gap bigger
+    final int expected2 = nextUp(expected);
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testIntsAreCloseUsingRelativeErrorAtMinValue() {
+    final int expected = Integer.MIN_VALUE;
+    final int actual = expected + 1;
+    final double relativeError = 0.5 - 1e-3;
+    final long absoluteError = 0;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the gap bigger (so relative error is 0.5)
+    final int expected2 = expected / 2;
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testIntsGetDescriptionClose() {
+    // These must be distinguishable as strings
+    final Double[] values1 = {0.0, 1.1};
+    final Integer[] values2 = {0, 2};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testIntsGetDescriptionClose(v1, v2);
+      }
+    }
+  }
+
+  private static void testIntsGetDescriptionClose(Number relativeError, Number absoluteError) {
+
+    final double inputRelError = relativeError.doubleValue();
+    final int inputAbsError = absoluteError.intValue();
+
+    try {
+      EqualityUtils.intsValidateClose(inputRelError, inputAbsError);
+    } catch (final IllegalArgumentException ex) {
+      return;
+    }
+
+    // The raw input
+    final String result = EqualityUtils.intsGetDescriptionClose(inputRelError, inputAbsError);
+
+    // Handle special case
+    if (inputRelError == 0) {
+      relativeError = -1;
+      if (inputAbsError < 0) {
+        absoluteError = 0;
+      }
+    }
+    if (absoluteError.intValue() == 0 && relativeError.doubleValue() > 0) {
+      absoluteError = -1;
+    }
+
+    // Get the expected values in the message
+    final double relError = relativeError.doubleValue();
+    final int absError = absoluteError.intValue();
+
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
+
+    final String relString = String.valueOf(relError);
+    final String absString = String.valueOf(absError);
+
+    assertMessageContains(hasRel, result, "|v1-v2|/max", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
+        absoluteError);
+  }
+
+  // short Close
+
+  @Test
+  public void testShortsAreCloseThrows() {
+    final short expected = 0;
+    final short actual = 0;
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1, 2,
+        Double.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.areClose(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (int badAbsoluteError : new int[] {Short.MIN_VALUE, -1,
+        EqualityUtils.MAX_SHORT_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.areClose(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  public void testShortsAreCloseUsingNoError() {
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (short value : new short[] {Short.MIN_VALUE, Short.MIN_VALUE + 1, -1, 0, 1,
+        Short.MAX_VALUE - 1, Short.MAX_VALUE}) {
+      Assertions.assertTrue(EqualityUtils.areClose(value, value, relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.areClose(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.areClose(value, nextDown(value), relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.areClose(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.areClose(nextDown(value), value, relativeError, absoluteError));
+    }
+    // Test overflow of shorts
+    Assertions
+        .assertFalse(EqualityUtils.areClose(Short.MAX_VALUE, -1, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.areClose(Short.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.areClose(Short.MAX_VALUE, Short.MIN_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testShortsAreCloseUsingAbsoluteError() {
+    final short expected = 2;
+    final short actual = 1;
+    final double relativeError = 0;
+    final int absoluteError = expected - actual;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final int delta = nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.areClose(expected, actual, relativeError, delta));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected, relativeError, delta));
+
+    // Make the gap bigger
+    final short expected2 = nextUp(expected);
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testShortsAreCloseUsingRelativeError() {
+    final short expected = 2;
+    final short actual = 1;
+    final double relativeError = 0.5;
+    final int absoluteError = 0;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(EqualityUtils.areClose(expected, actual, delta, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected, delta, absoluteError));
+
+    // Make the gap bigger
+    final short expected2 = nextUp(expected);
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testShortsAreCloseUsingRelativeErrorAtMinValue() {
+    final short expected = Short.MIN_VALUE;
+    final short actual = expected + 1;
+    final double relativeError = 0.5 - 1e-3;
+    final int absoluteError = 0;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the gap bigger (so relative error is 0.5)
+    final short expected2 = expected / 2;
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  // byte Close
+
+  @Test
+  public void testBytesAreCloseThrows() {
+    final byte expected = 0;
+    final byte actual = 0;
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1, 2,
+        Double.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.areClose(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (int badAbsoluteError : new int[] {Byte.MIN_VALUE, -1, EqualityUtils.MAX_BYTE_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.areClose(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  public void testBytesAreCloseUsingNoError() {
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (byte value : new byte[] {Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1,
+        Byte.MAX_VALUE}) {
+      Assertions.assertTrue(EqualityUtils.areClose(value, value, relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.areClose(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.areClose(value, nextDown(value), relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.areClose(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.areClose(nextDown(value), value, relativeError, absoluteError));
+    }
+    // Test overflow of bytes
+    Assertions
+        .assertFalse(EqualityUtils.areClose(Byte.MAX_VALUE, -1, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(Byte.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.areClose(Byte.MAX_VALUE, Byte.MIN_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testBytesAreCloseUsingAbsoluteError() {
+    final byte expected = 2;
+    final byte actual = 1;
+    final double relativeError = 0;
+    final int absoluteError = expected - actual;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final int delta = nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.areClose(expected, actual, relativeError, delta));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected, relativeError, delta));
+
+    // Make the gap bigger
+    final byte expected2 = nextUp(expected);
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testBytesAreCloseUsingRelativeError() {
+    final byte expected = 2;
+    final byte actual = 1;
+    final double relativeError = 0.5;
+    final int absoluteError = 0;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(EqualityUtils.areClose(expected, actual, delta, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected, delta, absoluteError));
+
+    // Make the gap bigger
+    final byte expected2 = nextUp(expected);
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testBytesAreCloseUsingRelativeErrorAtMinValue() {
+    final byte expected = Byte.MIN_VALUE;
+    final byte actual = expected + 1;
+    final double relativeError = 0.49;
+    final int absoluteError = 0;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.areClose(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.areClose(actual, expected, relativeError, absoluteError));
+
+    // Make the gap bigger (so relative error is 0.5)
+    final byte expected2 = expected / 2;
+    Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
   // float IsCloseTo
 
   @Test
@@ -1010,7 +1600,10 @@ public class EqualityUtilsTest {
     final double relativeError = 0;
     final double absoluteError = 0;
 
-    for (float badRelativeError : new float[] {Float.NaN, Float.POSITIVE_INFINITY, -1}) {
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      EqualityUtils.isCloseTo(expected, actual, goodRelativeError, absoluteError);
+    }
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
       Assertions.assertThrows(IllegalArgumentException.class, () -> {
         EqualityUtils.isCloseTo(expected, actual, badRelativeError, absoluteError);
       });
@@ -1170,6 +1763,9 @@ public class EqualityUtilsTest {
     final double relativeError = 0;
     final double absoluteError = 0;
 
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      EqualityUtils.isCloseTo(expected, actual, goodRelativeError, absoluteError);
+    }
     for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
       Assertions.assertThrows(IllegalArgumentException.class, () -> {
         EqualityUtils.isCloseTo(expected, actual, badRelativeError, absoluteError);
@@ -1320,5 +1916,589 @@ public class EqualityUtilsTest {
         absoluteError);
     assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
         absoluteError);
+  }
+
+  // long IsCloseTo
+
+  @Test
+  public void testLongsIsCloseToThrows() {
+    final long expected = 0;
+    final long actual = 0;
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      EqualityUtils.isCloseTo(expected, actual, goodRelativeError, absoluteError);
+    }
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.isCloseTo(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (long badAbsoluteError : new long[] {Long.MIN_VALUE, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.isCloseTo(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  public void testLongsIsCloseToUsingNoError() {
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    // Use a range of values
+    for (long value : new long[] {Long.MIN_VALUE, Long.MIN_VALUE + 1, -1, 0, 1, Long.MAX_VALUE - 1,
+        Long.MAX_VALUE}) {
+      Assertions.assertTrue(EqualityUtils.isCloseTo(value, value, relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.isCloseTo(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.isCloseTo(value, nextDown(value), relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.isCloseTo(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.isCloseTo(nextDown(value), value, relativeError, absoluteError));
+    }
+    // Test overflow of longs
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(Long.MAX_VALUE, -1, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(Long.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.isCloseTo(Long.MAX_VALUE, Long.MIN_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testLongsIsCloseToUsingAbsoluteError() {
+    final long expected = 2;
+    final long actual = 1;
+    final double relativeError = 0;
+    final long absoluteError = expected - actual;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final long delta = nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.isCloseTo(expected, actual, relativeError, delta));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(actual, expected, relativeError, delta));
+
+    // Make the gap bigger
+    final long expected2 = nextUp(expected);
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testLongsIsCloseToUsingRelativeError() {
+    final long expected = 2;
+    final long actual = 1;
+    final double relativeError = 0.5;
+    final long absoluteError = 0;
+
+    // Order sensitive
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(EqualityUtils.isCloseTo(expected, actual, delta, absoluteError));
+
+    // Make the gap bigger
+    final long expected2 = nextUp(expected);
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testLongsIsCloseToUsingRelativeErrorAtMinValue() {
+    final long expected = Long.MIN_VALUE;
+    final long actual = expected + 1;
+    final double relativeError = 0.5;
+    final long absoluteError = 0;
+
+    // Both within the relative error of 0.5
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the gap bigger (so relative error is 1 or 0.5)
+    final long actual2 = expected / 2;
+    // Actual is within 0.5 of expected
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual2, relativeError, absoluteError));
+    // Expected is within 1.0 of actual
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(actual2, expected, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testLongsGetDescriptionIsCloseTo() {
+    // These must be distinguishable as strings
+    final Double[] values1 = {0.0, 1.1};
+    final Long[] values2 = {0L, 2L};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testLongsGetDescriptionIsCloseTo(v1, v2);
+      }
+    }
+  }
+
+  private static void testLongsGetDescriptionIsCloseTo(Number relativeError, Number absoluteError) {
+
+    final double inputRelError = relativeError.doubleValue();
+    final long inputAbsError = absoluteError.longValue();
+
+    try {
+      EqualityUtils.longsValidateIsCloseTo(inputRelError, inputAbsError);
+    } catch (final IllegalArgumentException ex) {
+      return;
+    }
+
+    // The raw input
+    final String result = EqualityUtils.longsGetDescriptionIsCloseTo(inputRelError, inputAbsError);
+
+    // Handle special case
+    if (inputRelError == 0) {
+      relativeError = -1;
+      if (inputAbsError < 0) {
+        absoluteError = 0;
+      }
+    }
+    if (absoluteError.longValue() == 0 && relativeError.doubleValue() > 0) {
+      absoluteError = -1;
+    }
+
+    // Get the expected values in the message
+    final double relError = relativeError.doubleValue();
+    final long absError = absoluteError.longValue();
+
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
+
+    final String relString = String.valueOf(relError);
+    final String absString = String.valueOf(absError);
+
+    assertMessageContains(hasRel, result, "|v1-v2|/|v1|", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
+        absoluteError);
+  }
+
+  // int IsCloseTo
+
+  @Test
+  public void testIntsIsCloseToThrows() {
+    final int expected = 0;
+    final int actual = 0;
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      EqualityUtils.isCloseTo(expected, actual, goodRelativeError, absoluteError);
+    }
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.isCloseTo(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (long badAbsoluteError : new long[] {Integer.MIN_VALUE, -1,
+        EqualityUtils.MAX_INT_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.isCloseTo(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  public void testIntsIsCloseToUsingNoError() {
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    // Use a range of values
+    for (int value : new int[] {Integer.MIN_VALUE, Integer.MIN_VALUE + 1, -1, 0, 1,
+        Integer.MAX_VALUE - 1, Integer.MAX_VALUE}) {
+      Assertions.assertTrue(EqualityUtils.isCloseTo(value, value, relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.isCloseTo(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.isCloseTo(value, nextDown(value), relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.isCloseTo(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.isCloseTo(nextDown(value), value, relativeError, absoluteError));
+    }
+    // Test overflow of ints
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(Integer.MAX_VALUE, -1, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(Integer.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(Integer.MAX_VALUE, Integer.MIN_VALUE,
+        relativeError, absoluteError));
+  }
+
+  @Test
+  public void testIntsIsCloseToUsingAbsoluteError() {
+    final int expected = 2;
+    final int actual = 1;
+    final double relativeError = 0;
+    final long absoluteError = expected - actual;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final long delta = nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.isCloseTo(expected, actual, relativeError, delta));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(actual, expected, relativeError, delta));
+
+    // Make the gap bigger
+    final int expected2 = nextUp(expected);
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testIntsIsCloseToUsingRelativeError() {
+    final int expected = 2;
+    final int actual = 1;
+    final double relativeError = 0.5;
+    final long absoluteError = 0;
+
+    // Order sensitive
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(EqualityUtils.isCloseTo(expected, actual, delta, absoluteError));
+
+    // Make the gap bigger
+    final int expected2 = nextUp(expected);
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testIntsIsCloseToUsingRelativeErrorAtMinValue() {
+    final int expected = Integer.MIN_VALUE;
+    final int actual = expected + 1;
+    final double relativeError = 0.5;
+    final long absoluteError = 0;
+
+    // Both within the relative error of 0.5
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the gap bigger (so relative error is 1 or 0.5)
+    final int actual2 = expected / 2;
+    // Actual is within 0.5 of expected
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual2, relativeError, absoluteError));
+    // Expected is within 1.0 of actual
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(actual2, expected, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testIntsGetDescriptionIsCloseTo() {
+    // These must be distinguishable as strings
+    final Double[] values1 = {0.0, 1.1};
+    final Integer[] values2 = {0, 2};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testIntsGetDescriptionIsCloseTo(v1, v2);
+      }
+    }
+  }
+
+  private static void testIntsGetDescriptionIsCloseTo(Number relativeError, Number absoluteError) {
+
+    final double inputRelError = relativeError.doubleValue();
+    final int inputAbsError = absoluteError.intValue();
+
+    try {
+      EqualityUtils.intsValidateIsCloseTo(inputRelError, inputAbsError);
+    } catch (final IllegalArgumentException ex) {
+      return;
+    }
+
+    // The raw input
+    final String result = EqualityUtils.intsGetDescriptionIsCloseTo(inputRelError, inputAbsError);
+
+    // Handle special case
+    if (inputRelError == 0) {
+      relativeError = -1;
+      if (inputAbsError < 0) {
+        absoluteError = 0;
+      }
+    }
+    if (absoluteError.intValue() == 0 && relativeError.doubleValue() > 0) {
+      absoluteError = -1;
+    }
+
+    // Get the expected values in the message
+    final double relError = relativeError.doubleValue();
+    final int absError = absoluteError.intValue();
+
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
+
+    final String relString = String.valueOf(relError);
+    final String absString = String.valueOf(absError);
+
+    assertMessageContains(hasRel, result, "|v1-v2|/|v1|", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
+        absoluteError);
+  }
+
+  // short IsCloseTo
+
+  @Test
+  public void testShortsIsCloseToThrows() {
+    final short expected = 0;
+    final short actual = 0;
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      EqualityUtils.isCloseTo(expected, actual, goodRelativeError, absoluteError);
+    }
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.isCloseTo(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (int badAbsoluteError : new int[] {Short.MIN_VALUE, -1,
+        EqualityUtils.MAX_SHORT_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.isCloseTo(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  public void testShortsIsCloseToUsingNoError() {
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (short value : new short[] {Short.MIN_VALUE, Short.MIN_VALUE + 1, -1, 0, 1,
+        Short.MAX_VALUE - 1, Short.MAX_VALUE}) {
+      Assertions.assertTrue(EqualityUtils.isCloseTo(value, value, relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.isCloseTo(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.isCloseTo(value, nextDown(value), relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.isCloseTo(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.isCloseTo(nextDown(value), value, relativeError, absoluteError));
+    }
+    // Test overflow of shorts
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(Short.MAX_VALUE, -1, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(Short.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.isCloseTo(Short.MAX_VALUE, Short.MIN_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testShortsIsCloseToUsingAbsoluteError() {
+    final short expected = 2;
+    final short actual = 1;
+    final double relativeError = 0;
+    final int absoluteError = expected - actual;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final int delta = nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.isCloseTo(expected, actual, relativeError, delta));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(actual, expected, relativeError, delta));
+
+    // Make the gap bigger
+    final short expected2 = nextUp(expected);
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testShortsIsCloseToUsingRelativeError() {
+    final short expected = 2;
+    final short actual = 1;
+    final double relativeError = 0.5;
+    final int absoluteError = 0;
+
+    // Order sensitive
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(EqualityUtils.isCloseTo(expected, actual, delta, absoluteError));
+
+    // Make the gap bigger
+    final short expected2 = nextUp(expected);
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testShortsIsCloseToUsingRelativeErrorAtMinValue() {
+    final short expected = Short.MIN_VALUE;
+    final short actual = expected + 1;
+    final double relativeError = 0.5;
+    final int absoluteError = 0;
+
+    // Both within the relative error of 0.5
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the gap bigger (so relative error is 1 or 0.5)
+    final short actual2 = expected / 2;
+    // Actual is within 0.5 of expected
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual2, relativeError, absoluteError));
+    // Expected is within 1.0 of actual
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(actual2, expected, relativeError, absoluteError));
+  }
+
+  // byte IsCloseTo
+
+  @Test
+  public void testBytesIsCloseToThrows() {
+    final byte expected = 0;
+    final byte actual = 0;
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      EqualityUtils.isCloseTo(expected, actual, goodRelativeError, absoluteError);
+    }
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.isCloseTo(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (int badAbsoluteError : new int[] {Byte.MIN_VALUE, -1, EqualityUtils.MAX_BYTE_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        EqualityUtils.isCloseTo(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  public void testBytesIsCloseToUsingNoError() {
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (byte value : new byte[] {Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1,
+        Byte.MAX_VALUE}) {
+      Assertions.assertTrue(EqualityUtils.isCloseTo(value, value, relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.isCloseTo(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.isCloseTo(value, nextDown(value), relativeError, absoluteError));
+      Assertions
+          .assertFalse(EqualityUtils.isCloseTo(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          EqualityUtils.isCloseTo(nextDown(value), value, relativeError, absoluteError));
+    }
+    // Test overflow of bytes
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(Byte.MAX_VALUE, -1, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(Byte.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions.assertFalse(
+        EqualityUtils.isCloseTo(Byte.MAX_VALUE, Byte.MIN_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testBytesIsCloseToUsingAbsoluteError() {
+    final byte expected = 2;
+    final byte actual = 1;
+    final double relativeError = 0;
+    final int absoluteError = expected - actual;
+
+    // Order insensitive
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final int delta = nextDown(absoluteError);
+    Assertions.assertFalse(EqualityUtils.isCloseTo(expected, actual, relativeError, delta));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(actual, expected, relativeError, delta));
+
+    // Make the gap bigger
+    final byte expected2 = nextUp(expected);
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testBytesIsCloseToUsingRelativeError() {
+    final byte expected = 2;
+    final byte actual = 1;
+    final double relativeError = 0.5;
+    final int absoluteError = 0;
+
+    // Order sensitive
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertFalse(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the delta smaller
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(EqualityUtils.isCloseTo(expected, actual, delta, absoluteError));
+
+    // Make the gap bigger
+    final byte expected2 = nextUp(expected);
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+  }
+
+  @Test
+  public void testBytesIsCloseToUsingRelativeErrorAtMinValue() {
+    final byte expected = Byte.MIN_VALUE;
+    final byte actual = expected + 1;
+    final double relativeError = 0.5;
+    final int absoluteError = 0;
+
+    // Both within the relative error of 0.5
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
+    Assertions.assertTrue(EqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+
+    // Make the gap bigger (so relative error is 1 or 0.5)
+    final byte actual2 = expected / 2;
+    // Actual is within 0.5 of expected
+    Assertions.assertTrue(EqualityUtils.isCloseTo(expected, actual2, relativeError, absoluteError));
+    // Expected is within 1.0 of actual
+    Assertions
+        .assertFalse(EqualityUtils.isCloseTo(actual2, expected, relativeError, absoluteError));
   }
 }

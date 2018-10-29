@@ -37,39 +37,43 @@ public final class EqualityUtils {
   private static final double IGNORE_DOUBLE_ABSOLUTE_ERROR = -1;
   /** Constant used to ignore the float absolute error. */
   private static final float IGNORE_FLOAT_ABSOLUTE_ERROR = -1;
-  /** Constant for the maximum relative error. */
+  /** Constant used to ignore the long absolute error. */
+  private static final long IGNORE_LONG_ABSOLUTE_ERROR = -1;
+  /** Constant used to ignore the int absolute error. */
+  private static final int IGNORE_INT_ABSOLUTE_ERROR = -1;
+  /** The maximum symmetric relative error. */
   private static final double MAX_RELATIVE_ERROR = 2;
   /**
-   * Constant for the maximum absolute error between two {@code long} values.
+   * The maximum absolute error between two {@code long} values.
    */
   public static final BigInteger MAX_LONG_ABS_ERROR =
       BigInteger.valueOf(Long.MAX_VALUE).subtract(BigInteger.valueOf(Long.MIN_VALUE));
   /**
-   * Constant for the maximum absolute error between two {@code int} values.
+   * The maximum absolute error between two {@code int} values.
    */
   public static final long MAX_INT_ABS_ERROR = 0xffffffffL;
   /**
-   * Constant for the maximum absolute error between two {@code short} values.
+   * The maximum absolute error between two {@code short} values.
    */
   public static final int MAX_SHORT_ABS_ERROR = 0xffff;
   /**
-   * Constant for the maximum absolute error between two {@code byte} values.
+   * The maximum absolute error between two {@code byte} values.
    */
   public static final int MAX_BYTE_ABS_ERROR = 0xff;
   /**
-   * Constant for the description of symmetric relative error {@code <=}.
+   * The description of symmetric relative error {@code <=}.
    */
   private static final String DESCRIPTION_REL_ERROR_LTE = "|v1-v2|/max(|v1|,|v2|) <= ";
   /**
-   * Constant for the description of asymmetric relative error {@code <=}.
+   * The description of asymmetric relative error {@code <=}.
    */
   private static final String DESCRIPTION_ASYM_REL_ERROR_LTE = "|v1-v2|/|v1| <= ";
   /**
-   * Constant for the description of absolute error {@code <=}.
+   * The description of absolute error {@code <=}.
    */
   private static final String DESCRIPTION_ABS_ERROR_LTE = "|v1-v2| <= ";
   /**
-   * Constant for the description of absolute error {@code == 0}.
+   * The description of absolute error {@code == 0}.
    */
   private static final String DESCRIPTION_ABS_ERROR_0 = "|v1-v2| == 0";
 
@@ -592,7 +596,7 @@ public final class EqualityUtils {
 
   ////////////////////////////////////////////////////////////////////////
   // Tests for equality using a symmetric relative and/or absolute error.
-  // Supports: double, float
+  // Supports: double, float, long, int, short, byte
   ////////////////////////////////////////////////////////////////////////
 
   /**
@@ -607,8 +611,8 @@ public final class EqualityUtils {
    * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
    * convergence of two values.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the
-   * values is Infinite or not valid.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For
@@ -632,9 +636,9 @@ public final class EqualityUtils {
   }
 
   /**
-   * Tests that two doubles are close using a relative and absolute error. The relative error
-   * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
-   * two values and the test is:
+   * Tests that two floats are close using a relative and absolute error. The relative error between
+   * values {@code value1} and {@code value2} is relative to the largest magnitude of the two values
+   * and the test is:
    *
    * <pre>
    * |value1-value2| <= max(|value1|, |value2|) * relativeError
@@ -643,8 +647,8 @@ public final class EqualityUtils {
    * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
    * convergence of two values.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the
-   * values is Infinite or not valid.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Float#equals(Object)} and, {@link Float#compare(float, float)}. For
@@ -657,11 +661,9 @@ public final class EqualityUtils {
    * @param value1 The first value.
    * @param value2 The second value.
    * @param relativeError The maximum relative error between <code>value1</code> and
-   *        <code>value2</code> for which both numbers are still considered equal. Ignored if set to
-   *        negative.
+   *        <code>value2</code> for which both numbers are still considered equal.
    * @param absoluteError The maximum absolute error between <code>value1</code> and
-   *        <code>value2</code> for which both numbers are still considered equal. Ignored if set to
-   *        negative.
+   *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if close
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    * @throws IllegalArgumentException If the absolute error is not positive finite
@@ -670,6 +672,129 @@ public final class EqualityUtils {
       float absoluteError) {
     floatsValidateClose(relativeError, absoluteError);
     return floatsTestClose(value1, value2, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that two longs are close using a relative and absolute error. The relative error between
+   * values {@code value1} and {@code value2} is relative to the largest magnitude of the two values
+   * and the test is:
+   *
+   * <pre>
+   * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * </pre>
+   *
+   * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
+   * convergence of two values.
+   *
+   * <p>Note: The relative error is a double since the relative error computation is performed in
+   * double precision.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive finite
+   */
+  public static boolean areClose(long value1, long value2, double relativeError,
+      long absoluteError) {
+    longsValidateClose(relativeError, absoluteError);
+    return longsTestClose(value1, value2, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that two ints are close using a relative and absolute error. The relative error between
+   * values {@code value1} and {@code value2} is relative to the largest magnitude of the two values
+   * and the test is:
+   *
+   * <pre>
+   * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * </pre>
+   *
+   * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
+   * convergence of two values.
+   *
+   * <p>Note: The relative error is a double since the relative error computation is performed in
+   * double precision.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive finite
+   */
+  public static boolean areClose(int value1, int value2, double relativeError, long absoluteError) {
+    intsValidateClose(relativeError, absoluteError);
+    return intsTestClose(value1, value2, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that two shorts are close using a relative and absolute error. The relative error between
+   * values {@code value1} and {@code value2} is relative to the largest magnitude of the two values
+   * and the test is:
+   *
+   * <pre>
+   * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * </pre>
+   *
+   * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
+   * convergence of two values.
+   *
+   * <p>Note: The relative error is a double since the relative error computation is performed in
+   * double precision.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive finite
+   */
+  public static boolean areClose(short value1, short value2, double relativeError,
+      int absoluteError) {
+    shortsValidateClose(relativeError, absoluteError);
+    return shortsTestClose(value1, value2, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that two bytes are close using a relative and absolute error. The relative error between
+   * values {@code value1} and {@code value2} is relative to the largest magnitude of the two values
+   * and the test is:
+   *
+   * <pre>
+   * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * </pre>
+   *
+   * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
+   * convergence of two values.
+   *
+   * <p>Note: The relative error is a double since the relative error computation is performed in
+   * double precision.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive finite
+   */
+  public static boolean areClose(byte value1, byte value2, double relativeError,
+      int absoluteError) {
+    bytesValidateClose(relativeError, absoluteError);
+    return bytesTestClose(value1, value2, relativeError, absoluteError);
   }
 
   /**
@@ -735,12 +860,64 @@ public final class EqualityUtils {
   }
 
   /**
+   * Check the errors allow a test of {@code long} equality using a symmetric relative error.
+   *
+   * @param relativeError The maximum relative error
+   * @param absoluteError The maximum absolute error
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive
+   */
+  static void longsValidateClose(double relativeError, long absoluteError) {
+    validateSymmetricRelativeError(relativeError);
+    longsValidateAbsoluteError(absoluteError);
+  }
+
+  /**
+   * Check the errors allow a test of {@code int} equality using a symmetric relative error.
+   *
+   * @param relativeError The maximum relative error
+   * @param absoluteError The maximum absolute error
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive
+   */
+  static void intsValidateClose(double relativeError, long absoluteError) {
+    validateSymmetricRelativeError(relativeError);
+    intsValidateAbsoluteError(absoluteError);
+  }
+
+  /**
+   * Check the errors allow a test of {@code short} equality using a symmetric relative error.
+   *
+   * @param relativeError The maximum relative error
+   * @param absoluteError The maximum absolute error
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive
+   */
+  static void shortsValidateClose(double relativeError, int absoluteError) {
+    validateSymmetricRelativeError(relativeError);
+    shortsValidateAbsoluteError(absoluteError);
+  }
+
+  /**
+   * Check the errors allow a test of {@code byte} equality using a symmetric relative error.
+   *
+   * @param relativeError The maximum relative error
+   * @param absoluteError The maximum absolute error
+   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException If the absolute error is not positive
+   */
+  static void bytesValidateClose(double relativeError, int absoluteError) {
+    validateSymmetricRelativeError(relativeError);
+    bytesValidateAbsoluteError(absoluteError);
+  }
+
+  /**
    * Tests that two doubles are close using a relative and/or absolute error. The relative error
    * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
    * two values.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the
-   * values is Infinite or not valid.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #doublesValidateClose(double, double)}.
@@ -769,8 +946,8 @@ public final class EqualityUtils {
    * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
    * two values.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the
-   * values is Infinite or not valid.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #floatsValidateClose(double, float)}.
@@ -817,13 +994,163 @@ public final class EqualityUtils {
     return (value1 >= value2) ? value1 : value2;
   }
 
+  /**
+   * Tests that two longs are close using a relative and/or absolute error. The relative error
+   * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
+   * two values.
+   *
+   * <p>It is assumed the errors have been validated with {@link #longsValidateClose(double, long)}.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   */
+  static boolean longsTestClose(long value1, long value2, double relativeError,
+      long absoluteError) {
+    final long delta = (value1 > value2) ? value1 - value2 : value2 - value1;
+    // Check delta for overflow. It should be positive.
+    if (delta < 0) {
+      return false;
+    }
+    if (delta <= absoluteError) {
+      return true;
+    }
+    // Compute using double precision the equivalent of:
+    // delta <= Math.max(Math.abs(value1), Math.abs(value2)) * relativeError.
+    // Note that Math.abs(long) will be negative for Long.MIN_VALUE so
+    // use negative abs instead which holds all magnitudes.
+    // This is then negated afterwards to achieve the absolute relative tolerance.
+    return delta <= 0.0 - (Math.min(negativeAbs(value1), negativeAbs(value2)) * relativeError);
+  }
+
+  /**
+   * Tests that two ints are close using a relative and/or absolute error. The relative error
+   * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
+   * two values.
+   *
+   * <p>It is assumed the errors have been validated with {@link #intsValidateClose(double, long)}.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   */
+  static boolean intsTestClose(int value1, int value2, double relativeError, long absoluteError) {
+    // Use long arithmetic
+    final long delta = (value1 > value2) ? (long) value1 - value2 : (long) value2 - value1;
+    if (delta <= absoluteError) {
+      return true;
+    }
+    // Compute using double precision the equivalent of:
+    // delta <= Math.max(Math.abs(value1), Math.abs(value2)) * relativeError.
+    // Note that Math.abs(int) will be negative for Integer.MIN_VALUE so
+    // use negative abs instead which holds all magnitudes.
+    // This is then negated afterwards to achieve the absolute relative tolerance.
+    return delta <= 0.0 - (Math.min(negativeAbs(value1), negativeAbs(value2)) * relativeError);
+  }
+
+  /**
+   * Tests that two shorts are close using a relative and/or absolute error. The relative error
+   * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
+   * two values.
+   *
+   * <p>It is assumed the errors have been validated with {@link #shortsValidateClose(double, int)}.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   */
+  static boolean shortsTestClose(short value1, short value2, double relativeError,
+      int absoluteError) {
+    return shortsOrBytesTestClose(value1, value2, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that two bytes are close using a relative and/or absolute error. The relative error
+   * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
+   * two values.
+   *
+   * <p>It is assumed the errors have been validated with {@link #bytesValidateClose(double, int)}.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   */
+  static boolean bytesTestClose(byte value1, byte value2, double relativeError, int absoluteError) {
+    return shortsOrBytesTestClose(value1, value2, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that two short/bytes are close using a relative and/or absolute error.
+   *
+   * <p>This is to be used when values are from byte or short primitives as no overflow issues are
+   * handled.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return true if close
+   */
+  private static boolean shortsOrBytesTestClose(int value1, int value2, double relativeError,
+      int absoluteError) {
+    final int delta = (value1 > value2) ? value1 - value2 : value2 - value1;
+    if (delta <= absoluteError) {
+      return true;
+    }
+    // Compute using double precision.
+    return delta <= Math.max(Math.abs(value1), Math.abs(value2)) * relativeError;
+  }
+
+  /**
+   * Return the negative of the absolute value.
+   *
+   * <p>This exists as the largest negative value for signed integers is bigger than the positive
+   * value.
+   *
+   * @param value the value
+   * @return the same magnitude as value but negative
+   */
+  private static long negativeAbs(long value) {
+    return (value <= 0) ? value : -value;
+  }
+
+  /**
+   * Return the negative of the absolute value.
+   *
+   * <p>This exists as the largest negative value for signed integers is bigger than the positive
+   * value.
+   *
+   * @param value the value
+   * @return the same magnitude as value but negative
+   */
+  private static int negativeAbs(int value) {
+    return (value <= 0) ? value : -value;
+  }
+
   //@formatter:off
   /**
-   * Get the description of the test that two doubles are close using a relative and
+   * Get the description of the test that two values are close using a relative and
    * absolute error. The relative error is symmetric for {@code value1} and {@code value2}.
    *
-   * <p>It is assumed the errors have been validated with
-   * {@link #doublesValidateClose(double, double)}.
+   * <p>It is assumed the errors have been validated (are positive and finite).
    *
    * <p>Note the special cases:
    *
@@ -842,16 +1169,15 @@ public final class EqualityUtils {
    */
   //@formatter:on
   static String doublesGetDescriptionClose(double relativeError, double absoluteError) {
-    return doublesGetDescriptionAreClose(DESCRIPTION_REL_ERROR_LTE, relativeError, absoluteError);
+    return doubleGetDescriptionAreClose(DESCRIPTION_REL_ERROR_LTE, relativeError, absoluteError);
   }
 
   //@formatter:off
   /**
-   * Get the description of the test that two doubles are close using a relative and/or
+   * Get the description of the test that two values are close using a relative and/or
    * absolute error. The relative error is symmetric for {@code value1} and {@code value2}.
    *
-   * <p>It is assumed the errors have been validated with
-   * {@link #floatsValidateClose(double, float)}.
+   * <p>It is assumed the errors have been validated (are positive and finite).
    *
    * <p>Note the special cases:
    *
@@ -873,8 +1199,62 @@ public final class EqualityUtils {
     return floatsGetDescriptionAreClose(DESCRIPTION_REL_ERROR_LTE, relativeError, absoluteError);
   }
 
+  //@formatter:off
   /**
-   * Get the description of the test that two floats are close using a relative and absolute error.
+   * Get the description of the test that two values are close using a relative and/or
+   * absolute error. The relative error is symmetric for {@code value1} and {@code value2}.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
+   *
+   * <p>Note the special cases:
+   *
+   * <ul>
+   * <li>When the relative error is zero this is equivalent to an absolute error of zero.
+   * The resulting description just contains the absolute error.
+   * <li>When the absolute error is zero and the relative error is above zero the resulting
+   * description just contains the relative error.
+   * </ul>
+   *
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return the description
+   */
+  //@formatter:on
+  static String longsGetDescriptionClose(double relativeError, long absoluteError) {
+    return longsGetDescriptionAreClose(DESCRIPTION_REL_ERROR_LTE, relativeError, absoluteError);
+  }
+
+  //@formatter:off
+  /**
+   * Get the description of the test that two values are close using a relative and/or
+   * absolute error. The relative error is symmetric for {@code value1} and {@code value2}.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
+   *
+   * <p>Note the special cases:
+   *
+   * <ul>
+   * <li>When the relative error is zero this is equivalent to an absolute error of zero.
+   * The resulting description just contains the absolute error.
+   * <li>When the absolute error is zero and the relative error is above zero the resulting
+   * description just contains the relative error.
+   * </ul>
+   *
+   * @param relativeError The maximum relative error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between <code>value1</code> and
+   *        <code>value2</code> for which both numbers are still considered equal.
+   * @return the description
+   */
+  //@formatter:on
+  static String intsGetDescriptionClose(double relativeError, int absoluteError) {
+    return intsDescriptionAreClose(DESCRIPTION_REL_ERROR_LTE, relativeError, absoluteError);
+  }
+
+  /**
+   * Get the description of the test that two values are close using a relative and absolute error.
    * The type of relative error is specified.
    *
    * @param relativeErrorPrefix the relative prefix
@@ -882,7 +1262,7 @@ public final class EqualityUtils {
    * @param absoluteError the absolute error
    * @return the description
    */
-  private static String doublesGetDescriptionAreClose(String relativeErrorPrefix,
+  private static String doubleGetDescriptionAreClose(String relativeErrorPrefix,
       double relativeError, double absoluteError) {
     // Assume both are >= 0
 
@@ -918,7 +1298,7 @@ public final class EqualityUtils {
   }
 
   /**
-   * Get the description of the test that two floats are close using a relative and/or absolute
+   * Get the description of the test that two values are close using a relative and/or absolute
    * error. The type of relative error is specified.
    *
    * @param relativeErrorPrefix the relative error prefix
@@ -936,6 +1316,92 @@ public final class EqualityUtils {
     // 2. An absolute error of 0 is not used if the relative error is >0
     final float testAbsoluteError =
         (absoluteError == 0 && testRelativeError > 0) ? IGNORE_FLOAT_ABSOLUTE_ERROR : absoluteError;
+
+    // Build the description
+    final StringBuilder sb = new StringBuilder();
+    if (testRelativeError > 0) {
+      // This is always <=
+      sb.append(relativeErrorPrefix).append(testRelativeError);
+    }
+    if (testAbsoluteError >= 0) {
+      // Add combined operator
+      if (sb.length() != 0) {
+        sb.append(" || ");
+      }
+      // This may be == or <=
+      if (testAbsoluteError == 0) {
+        sb.append(DESCRIPTION_ABS_ERROR_0);
+      } else {
+        sb.append(DESCRIPTION_ABS_ERROR_LTE);
+        sb.append(testAbsoluteError);
+      }
+    }
+
+    return sb.toString();
+  }
+
+  /**
+   * Get the description of the test that two values are close using a relative and/or absolute
+   * error. The type of relative error is specified.
+   *
+   * @param relativeErrorPrefix the relative error prefix
+   * @param relativeError the relative error
+   * @param absoluteError the absolute error
+   * @return the description
+   */
+  private static String longsGetDescriptionAreClose(String relativeErrorPrefix,
+      double relativeError, long absoluteError) {
+    // Assume both are >= 0
+
+    // Handle special cases where the test was actually equivalent to something different.
+    // 1. A relative error of 0 is the equivalent of absolute error 0, so is ignored
+    final double testRelativeError = (relativeError == 0) ? IGNORE_RELATIVE_ERROR : relativeError;
+    // 2. An absolute error of 0 is not used if the relative error is >0
+    final long testAbsoluteError =
+        (absoluteError == 0 && testRelativeError > 0) ? IGNORE_LONG_ABSOLUTE_ERROR : absoluteError;
+
+    // Build the description
+    final StringBuilder sb = new StringBuilder();
+    if (testRelativeError > 0) {
+      // This is always <=
+      sb.append(relativeErrorPrefix).append(testRelativeError);
+    }
+    if (testAbsoluteError >= 0) {
+      // Add combined operator
+      if (sb.length() != 0) {
+        sb.append(" || ");
+      }
+      // This may be == or <=
+      if (testAbsoluteError == 0) {
+        sb.append(DESCRIPTION_ABS_ERROR_0);
+      } else {
+        sb.append(DESCRIPTION_ABS_ERROR_LTE);
+        sb.append(testAbsoluteError);
+      }
+    }
+
+    return sb.toString();
+  }
+
+  /**
+   * Get the description of the test that two values are close using a relative and/or absolute
+   * error. The type of relative error is specified.
+   *
+   * @param relativeErrorPrefix the relative error prefix
+   * @param relativeError the relative error
+   * @param absoluteError the absolute error
+   * @return the description
+   */
+  private static String intsDescriptionAreClose(String relativeErrorPrefix, double relativeError,
+      int absoluteError) {
+    // Assume both are >= 0
+
+    // Handle special cases where the test was actually equivalent to something different.
+    // 1. A relative error of 0 is the equivalent of absolute error 0, so is ignored
+    final double testRelativeError = (relativeError == 0) ? IGNORE_RELATIVE_ERROR : relativeError;
+    // 2. An absolute error of 0 is not used if the relative error is >0
+    final int testAbsoluteError =
+        (absoluteError == 0 && testRelativeError > 0) ? IGNORE_INT_ABSOLUTE_ERROR : absoluteError;
 
     // Build the description
     final StringBuilder sb = new StringBuilder();
@@ -978,8 +1444,8 @@ public final class EqualityUtils {
    * testing testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the
-   * values is Infinite or not valid.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For
@@ -1016,8 +1482,8 @@ public final class EqualityUtils {
    * testing testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the
-   * values is Infinite or not valid.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For
@@ -1045,6 +1511,129 @@ public final class EqualityUtils {
   }
 
   /**
+   * Tests that a long is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
+   * test is:
+   *
+   * <pre>
+   * |expected-actual| <= |expected| * relativeError
+   * </pre>
+   *
+   * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
+   * testing testing {@code actual} falls within a relative and/or absolute range of
+   * {@code expected}.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive
+   */
+  public static boolean isCloseTo(long expected, long actual, double relativeError,
+      long absoluteError) {
+    longsValidateIsCloseTo(relativeError, absoluteError);
+    return longsTestIsCloseTo(expected, actual, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that an int is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
+   * test is:
+   *
+   * <pre>
+   * |expected-actual| <= |expected| * relativeError
+   * </pre>
+   *
+   * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
+   * testing testing {@code actual} falls within a relative and/or absolute range of
+   * {@code expected}.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   *         than the maximum difference between int primitives
+   */
+  public static boolean isCloseTo(int expected, int actual, double relativeError,
+      long absoluteError) {
+    intsValidateIsCloseTo(relativeError, absoluteError);
+    return intsTestIsCloseTo(expected, actual, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that an short is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
+   * test is:
+   *
+   * <pre>
+   * |expected-actual| <= |expected| * relativeError
+   * </pre>
+   *
+   * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
+   * testing testing {@code actual} falls within a relative and/or absolute range of
+   * {@code expected}.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   *         than the maximum difference between short primitives
+   */
+  public static boolean isCloseTo(short expected, short actual, double relativeError,
+      int absoluteError) {
+    shortsValidateIsCloseTo(relativeError, absoluteError);
+    return shortsTestIsCloseTo(expected, actual, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that an byte is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
+   * test is:
+   *
+   * <pre>
+   * |expected-actual| <= |expected| * relativeError
+   * </pre>
+   *
+   * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
+   * testing testing {@code actual} falls within a relative and/or absolute range of
+   * {@code expected}.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   *         than the maximum difference between byte primitives
+   */
+  public static boolean isCloseTo(byte expected, byte actual, double relativeError,
+      int absoluteError) {
+    bytesValidateIsCloseTo(relativeError, absoluteError);
+    return bytesTestIsCloseTo(expected, actual, relativeError, absoluteError);
+  }
+
+  /**
    * Check the errors allow a test of {@code double} equality using an asymmetric relative error.
    *
    * @param relativeError The maximum relative error
@@ -1063,7 +1652,7 @@ public final class EqualityUtils {
    * @param relativeError The maximum relative error
    * @param absoluteError The maximum absolute error
    * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive
    */
   static void floatsValidateIsCloseTo(double relativeError, float absoluteError) {
     validateAsymmetricRelativeError(relativeError);
@@ -1071,11 +1660,66 @@ public final class EqualityUtils {
   }
 
   /**
+   * Check the errors allow a test of {@code long} equality using an asymmetric relative error.
+   *
+   * @param relativeError The maximum relative error
+   * @param absoluteError The maximum absolute error
+   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive
+   */
+  static void longsValidateIsCloseTo(double relativeError, long absoluteError) {
+    validateAsymmetricRelativeError(relativeError);
+    longsValidateAbsoluteError(absoluteError);
+  }
+
+  /**
+   * Check the errors allow a test of {@code int} equality using an asymmetric relative error.
+   *
+   * @param relativeError The maximum relative error
+   * @param absoluteError The maximum absolute error
+   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   *         than the maximum difference between int primitives
+   */
+  static void intsValidateIsCloseTo(double relativeError, long absoluteError) {
+    validateAsymmetricRelativeError(relativeError);
+    intsValidateAbsoluteError(absoluteError);
+  }
+
+  /**
+   * Check the errors allow a test of {@code short} equality using an asymmetric relative error.
+   *
+   * @param relativeError The maximum relative error
+   * @param absoluteError The maximum absolute error
+   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   *         than the maximum difference between short primitives
+   */
+  static void shortsValidateIsCloseTo(double relativeError, int absoluteError) {
+    validateAsymmetricRelativeError(relativeError);
+    shortsValidateAbsoluteError(absoluteError);
+  }
+
+  /**
+   * Check the errors allow a test of {@code byte} equality using an asymmetric relative error.
+   *
+   * @param relativeError The maximum relative error
+   * @param absoluteError The maximum absolute error
+   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   *         than the maximum difference between byte primitives
+   */
+  static void bytesValidateIsCloseTo(double relativeError, int absoluteError) {
+    validateAsymmetricRelativeError(relativeError);
+    bytesValidateAbsoluteError(absoluteError);
+  }
+
+  /**
    * Tests a double value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the
-   * values is Infinite or not valid.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #doublesValidateIsCloseTo(double, double)}.
@@ -1104,8 +1748,8 @@ public final class EqualityUtils {
    * Tests a float value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the
-   * values is Infinite or not valid.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #floatsValidateIsCloseTo(double, float)}.
@@ -1131,13 +1775,141 @@ public final class EqualityUtils {
     return delta <= Math.abs(expected) * relativeError;
   }
 
-  //@formatter:off
   /**
-   * Get the description of the test that a double is close to an expected value using a relative
-   * and absolute error. The relative error is asymmetric for {@code value1} and {@code value2}.
+   * Tests a long value is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
    * <p>It is assumed the errors have been validated with
-   * {@link #doublesValidateIsCloseTo(double, double)}.
+   * {@link #longsValidateIsCloseTo(double, long)}.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   */
+  static boolean longsTestIsCloseTo(long expected, long actual, double relativeError,
+      long absoluteError) {
+    final long delta = (expected > actual) ? expected - actual : actual - expected;
+    // Check delta for overflow. It should be positive.
+    if (delta < 0) {
+      return false;
+    }
+    if (delta <= absoluteError) {
+      return true;
+    }
+    // Compute using double precision.
+    // Note that Math.abs(long) will be negative for Long.MIN_VALUE so abs
+    // is used after the conversion to double.
+    return delta <= Math.abs(expected * relativeError);
+  }
+
+  /**
+   * Tests an int value is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
+   *
+   * <p>It is assumed the errors have been validated with
+   * {@link #intsValidateIsCloseTo(double, long)}.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   */
+  static boolean intsTestIsCloseTo(int expected, int actual, double relativeError,
+      long absoluteError) {
+    // Use long arithmetic
+    final long delta = (expected > actual) ? (long) expected - actual : (long) actual - expected;
+    if (delta <= absoluteError) {
+      return true;
+    }
+    // Compute using double precision.
+    // Note that Math.abs(int) will be negative for Integer.MIN_VALUE so abs
+    // is used after the conversion to double.
+    return delta <= Math.abs(expected * relativeError);
+  }
+
+  /**
+   * Tests a short value is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
+   *
+   * <p>It is assumed the errors have been validated with
+   * {@link #shortsValidateIsCloseTo(double, int)}.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   */
+  static boolean shortsTestIsCloseTo(short expected, short actual, double relativeError,
+      int absoluteError) {
+    return shortsOrBytesTestIsCloseTo(expected, actual, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests a byte value is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
+   *
+   * <p>It is assumed the errors have been validated with
+   * {@link #bytesValidateIsCloseTo(double, int)}.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   */
+  static boolean bytesTestIsCloseTo(byte expected, byte actual, double relativeError,
+      int absoluteError) {
+    return shortsOrBytesTestIsCloseTo(expected, actual, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests a short/byte value is close to an expected value. The relative error between values
+   * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
+   *
+   * <p>This is to be used when values are from byte or short primitives as no overflow issues are
+   * handled.
+   *
+   * @param expected The expected value.
+   * @param actual The actual value.
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   */
+  private static boolean shortsOrBytesTestIsCloseTo(int expected, int actual, double relativeError,
+      int absoluteError) {
+    final int delta = (expected > actual) ? expected - actual : actual - expected;
+    if (delta <= absoluteError) {
+      return true;
+    }
+    // Compute using double precision.
+    return delta <= Math.abs(expected) * relativeError;
+  }
+
+  //@formatter:off
+  /**
+   * Get the description of the test that a value is close to an expected value using a relative
+   * and absolute error. The relative error is asymmetric for {@code value1} and {@code value2}.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
    *
    * <p>Note the special cases:
    *
@@ -1157,17 +1929,16 @@ public final class EqualityUtils {
    */
   //@formatter:on
   static String doublesGetDescriptionIsCloseTo(double relativeError, double absoluteError) {
-    return doublesGetDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError,
+    return doubleGetDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError,
         absoluteError);
   }
 
   //@formatter:off
   /**
-   * Get the description of the test that a float is close to an expected value using a relative
+   * Get the description of the test that a value is close to an expected value using a relative
    * and absolute error. The relative error is asymmetric for {@code value1} and {@code value2}.
    *
-   * <p>It is assumed the errors have been validated with
-   * {@link #floatsValidateIsCloseTo(double, float)}.
+   * <p>It is assumed the errors have been validated (are positive and finite).
    *
    * <p>Note the special cases:
    *
@@ -1189,5 +1960,62 @@ public final class EqualityUtils {
   static String floatsGetDescriptionIsCloseTo(double relativeError, float absoluteError) {
     return floatsGetDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError,
         absoluteError);
+  }
+
+  //@formatter:off
+  /**
+   * Get the description of the test that a value is close to an expected value using a relative
+   * and absolute error. The relative error is asymmetric for {@code value1} and {@code value2}.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
+   *
+   * <p>Note the special cases:
+   *
+   * <ul>
+   * <li>When the relative error is zero this is equivalent to an absolute error of zero.
+   * The resulting description just contains the absolute error.
+   * <li>When the absolute error is zero and the relative error is above zero the resulting
+   * description just contains the relative error.
+   * </ul>
+   *
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return the description
+   */
+  //@formatter:on
+  static String longsGetDescriptionIsCloseTo(double relativeError, long absoluteError) {
+    return longsGetDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError,
+        absoluteError);
+  }
+
+  //@formatter:off
+  /**
+   * Get the description of the test that a value is close to an expected value using a relative
+   * and absolute error. The relative error is asymmetric for {@code value1} and {@code value2}.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
+   *
+   * <p>Note the special cases:
+   *
+   * <ul>
+   * <li>When the relative error is zero this is equivalent to an absolute error of zero.
+   * The resulting description just contains the absolute error.
+   * <li>When the absolute error is zero and the relative error is above zero the resulting
+   * description just contains the relative error.
+   * </ul>
+   *
+   * @param relativeError The maximum error, relative to <code>expected</code>, between
+   *        <code>expected</code> and <code>actual</code> for which both numbers are still
+   *        considered equal.
+   * @param absoluteError The maximum absolute error between <code>expected</code> and
+   *        <code>actual</code> for which both numbers are still considered equal.
+   * @return the description
+   */
+  //@formatter:on
+  static String intsGetDescriptionIsCloseTo(double relativeError, int absoluteError) {
+    return intsDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError, absoluteError);
   }
 }
