@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 /**
@@ -28,10 +29,10 @@ package uk.ac.sussex.gdsc.test.utils;
  */
 @FunctionalInterface
 public interface TestCase {
-    /**
-     * Run the test assertion.
-     *
-     * @return pass/fail
-     */
-    public boolean test();
+  /**
+   * Run the test assertion.
+   *
+   * @return pass/fail
+   */
+  boolean test();
 }

@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre Test Utilities
+ * Genome Damage and Stability Centre Test RNG
  *
  * Contains utilities for use with Commons RNG for random tests.
  * %%
@@ -23,17 +23,15 @@
  */
 
 /**
- * Provides classes for working with the
- * <a href="https://commons.apache.org/proper/commons-rng/">Commons RNG</a>
- * library to add a source of randomness for tests.
- * <p>
- * The package contains:
- * </p>
- * <ul>
- * <li>A factory for generating a random provider
- * </ul>
+ * Provides classes for working with the <a
+ * href="https://commons.apache.org/proper/commons-rng/">Commons RNG</a> library to add a source of
+ * randomness for tests.
+ *
+ * <p>The package contains:
+ *
+ * <ul> <li>A factory for generating a random provider</li> </ul>
  *
  * @see <a href="https://commons.apache.org/proper/commons-rng/">Commons RNG</a>
- * @since 1.0.0
+ * @since 1.0
  */
 package uk.ac.sussex.gdsc.test.rng;

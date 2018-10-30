@@ -7,8 +7,7 @@
   <parent>
     <groupId>uk.ac.sussex.gdsc</groupId>
     <artifactId>gdsc-test-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>gdsc-test-junit5</artifactId>
@@ -19,6 +18,11 @@
 
 Contains utilities for use with JUnit 5.
 </description>
+
+  <properties>
+    <!-- Workaround to avoid duplicating config files. -->
+    <parent.dir>${basedir}/..</parent.dir>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -33,6 +37,11 @@ Contains utilities for use with JUnit 5.
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-rng-simple</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

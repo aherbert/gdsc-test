@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils.functions;
 
 import java.util.Formatter;
@@ -30,36 +31,41 @@ import java.util.function.Supplier;
 /**
  * Contains function utilities.
  */
-public class FunctionUtils {
+public final class FunctionUtils {
 
-    private static final Locale locale = Locale.getDefault(Locale.Category.FORMAT);
+  /** The default locale. */
+  private static final Locale DEFAULT_LOCALE = Locale.getDefault(Locale.Category.FORMAT);
 
-    /**
-     * Do not allow construction
-     */
-    private FunctionUtils() {
-        // Do nothing
-    }
+  /**
+   * Do not allow construction.
+   */
+  private FunctionUtils() {
+    // Do nothing
+  }
 
-    /**
-     * Get a supplier for the string using the format and arguments.
-     * <p>
-     * This can be used where it is not convenient to create a lambda function
-     * directly because the arguments are not effectively final.
-     * <p>
-     * Returns the equivalent of:
-     *
-     * <pre>
-     * <code>
-     * () -&gt; String.format(format, args);
-     * </code>
-     * </pre>
-     *
-     * @param format the format
-     * @param args   the arguments
-     * @return the supplier
-     */
-    public static final Supplier<String> getSupplier(String format, Object... args) {
-        return () -> new Formatter(locale).format(format, args).toString();
-    }
+  /**
+   * Get a supplier for the string using the format and arguments.
+   *
+   * <p>This can be used where it is not convenient to create a lambda function directly because the
+   * arguments are not effectively final.
+   *
+   * <p>Returns the equivalent of:
+   *
+   * <pre>
+   * <code>
+   * () -&gt; String.format(format, args);
+   * </code>
+   * </pre>
+   *
+   * <p>Uses the default locale. This is set once so any changes to the default locale will be
+   * ignored.
+   *
+   * @param format the format
+   * @param args the arguments
+   * @return the supplier
+   * @see Locale#getDefault(Locale.Category)
+   */
+  public static Supplier<String> getSupplier(String format, Object... args) {
+    return () -> new Formatter(DEFAULT_LOCALE).format(format, args).toString();
+  }
 }

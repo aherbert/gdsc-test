@@ -6,8 +6,7 @@
   <parent>
     <groupId>uk.ac.sussex.gdsc</groupId>
     <artifactId>gdsc-test-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>gdsc-test-doc</artifactId>
@@ -18,19 +17,26 @@
   <description>Genome Damage and Stability Centre Test Documentation</description>
 
   <properties>
+    <!-- Workaround to avoid duplicating config files. -->
+    <parent.dir>${basedir}/..</parent.dir>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
 
-  <!-- Deopend on all other modules -->
+  <!-- Depend on all other modules -->
   <dependencies>
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
-      <artifactId>gdsc-test-utils</artifactId>
+      <artifactId>gdsc-test-generator</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
-      <artifactId>gdsc-test-junit4</artifactId>
+      <artifactId>gdsc-test-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>uk.ac.sussex.gdsc</groupId>
+      <artifactId>gdsc-test-utils</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -52,6 +58,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${org.jacoco.version}</version>
         <executions>
           <execution>
             <id>report-aggregate</id>
@@ -85,11 +92,19 @@
             <configuration>
               <reportOutputDirectory>${project.build.directory}/apidocs</reportOutputDirectory>
               <includeDependencySources>true</includeDependencySources>
-              <doctitle>GDSC Test ${project.version} API</doctitle>
-              <windowtitle>GDSC Test ${project.version} API</windowtitle>
+              <doctitle>GDSC Test ${project.version}</doctitle>
+              <windowtitle>GDSC Test ${project.version}</windowtitle>
               <use>true</use>
               <version>false</version>
               <groups>
+                <group>
+                  <title>Test Generator Package</title>
+                  <packages>uk.ac.sussex.gdsc.test.generator*</packages>
+                </group>
+                <group>
+                  <title>Test API Package</title>
+                  <packages>uk.ac.sussex.gdsc.test.api*</packages>
+                </group>
                 <group>
                   <title>Utilities Package</title>
                   <packages>uk.ac.sussex.gdsc.test.utils*</packages>
@@ -97,10 +112,6 @@
                 <group>
                   <title>JUnit 5 Package</title>
                   <packages>uk.ac.sussex.gdsc.test.junit5*</packages>
-                </group>
-                <group>
-                  <title>JUnit4 Package</title>
-                  <packages>uk.ac.sussex.gdsc.test.junit4*</packages>
                 </group>
                 <group>
                   <title>RNG Package</title>

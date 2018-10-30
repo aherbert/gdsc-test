@@ -21,56 +21,57 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils.functions;
 
 import java.util.function.Supplier;
 
 /**
- * Supply a formatted message using the {@link String#format(String, Object...)}
- * function with an array of object arguments.
+ * Supply a formatted message using the {@link String#format(String, Object...)} function with an
+ * array of object arguments.
  */
 public class ObjectArrayFormatSupplier extends ArrayFormatSupplier {
 
-    private final Object[] values;
+  /** The values. */
+  private final Object[] values;
 
-    /**
-     * Constructs a new instance of this class.
-     *
-     * @param format the format (assumed to support the class {@link #getArgs()}
-     *               function)
-     * @param size   the size
-     * @throws IllegalArgumentException If the format is null or empty, or size if
-     *                                  not strictly positive
-     */
-    public ObjectArrayFormatSupplier(String format, int size) throws IllegalArgumentException {
-        super(format, size);
-        values = new Object[size];
-    }
+  /**
+   * Constructs a new instance of this class.
+   *
+   * @param format the format (assumed to support the class {@link #getArgs()} function)
+   * @param size the size
+   * @throws IllegalArgumentException If the format is null or empty, or size if not strictly
+   *         positive
+   */
+  public ObjectArrayFormatSupplier(String format, int size) throws IllegalArgumentException {
+    super(format, size);
+    values = new Object[size];
+  }
 
-    /**
-     * Sets the value.
-     *
-     * @param i     the index
-     * @param value the value
-     * @return the supplier
-     */
-    public Supplier<String> set(int i, Object value) {
-        values[i] = value;
-        return this;
-    }
+  /**
+   * Sets the value.
+   *
+   * @param index the index
+   * @param value the value
+   * @return the supplier
+   */
+  public Supplier<String> set(int index, Object value) {
+    values[index] = value;
+    return this;
+  }
 
-    /**
-     * Gets the value.
-     *
-     * @param i the index
-     * @return the value
-     */
-    public Object get(int i) {
-        return values[i];
-    }
+  /**
+   * Gets the value.
+   *
+   * @param index the index
+   * @return the value
+   */
+  public Object get(int index) {
+    return values[index];
+  }
 
-    @Override
-    public Object[] getArgs() {
-        return values;
-    }
+  @Override
+  public Object[] getArgs() {
+    return values.clone();
+  }
 }

@@ -21,6 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.function.Supplier;
@@ -29,99 +30,121 @@ import java.util.function.Supplier;
  * Class to store results of running a timing task.
  */
 public class TimingResult {
-    private final TimingTask task;
-    private final long[] times;
 
-    /**
-     * Instantiates a new timing result.
-     *
-     * @param task  the task
-     * @param times the times
-     */
-    public TimingResult(TimingTask task, long... times) {
-        this.task = task;
-        this.times = times;
-    }
+  /** The task. */
+  private final TimingTask task;
 
-    /**
-     * Instantiates a new timing result.
-     * <p>
-     * The result will be created with a dummy implementation of the
-     * {@link TimingTask} interface.
-     *
-     * @param name  the name
-     * @param times the times
-     */
-    public TimingResult(String name, long... times) {
-        this.task = new NamedTimingTask(name);
-        this.times = times;
-    }
+  /** The times. */
+  private final long[] times;
 
-    /**
-     * Instantiates a new timing result.
-     * <p>
-     * The result will be created with a dummy implementation of the
-     * {@link TimingTask} interface.
-     *
-     * @param name  the name
-     * @param times the times
-     */
-    public TimingResult(Supplier<String> name, long... times) {
-        this.task = new NamedTimingTask(name);
-        this.times = times;
-    }
+  /**
+   * Instantiates a new timing result.
+   *
+   * @param task the task
+   * @param times the times
+   */
+  public TimingResult(TimingTask task, long... times) {
+    this(task, times, true);
+  }
 
-    /**
-     * @return the task
-     */
-    public TimingTask getTask() {
-        return task;
-    }
+  /**
+   * Instantiates a new timing result.
+   *
+   * <p>This is package level constructor that optionally takes over the input times array.
+   *
+   * @param task the task
+   * @param times the times
+   * @param cloneArray the clone array
+   */
+  TimingResult(TimingTask task, long[] times, boolean cloneArray) {
+    this.task = task;
+    this.times = (cloneArray) ? times.clone() : times;
+  }
 
-    /**
-     * @return the times for running the timing task
-     */
-    public long[] getTimes() {
-        return times.clone();
-    }
+  /**
+   * Instantiates a new timing result.
+   *
+   * <p>The result will be created with a dummy implementation of the {@link TimingTask} interface.
+   *
+   * @param name the name
+   * @param times the times
+   */
+  public TimingResult(String name, long... times) {
+    this.task = new NamedTimingTask(name);
+    this.times = times.clone();
+  }
 
-    /**
-     * Gets the number of times
-     *
-     * @return the size
-     */
-    public int getSize() {
-        return times.length;
-    }
+  /**
+   * Instantiates a new timing result.
+   *
+   * <p>The result will be created with a dummy implementation of the {@link TimingTask} interface.
+   *
+   * @param name the name
+   * @param times the times
+   */
+  public TimingResult(Supplier<String> name, long... times) {
+    this.task = new NamedTimingTask(name);
+    this.times = times.clone();
+  }
 
-    /**
-     * Gets the min time.
-     *
-     * @return the min
-     */
-    public long getMin() {
-        if (times.length == 0)
-            return 0;
-        long min = Long.MAX_VALUE;
-        for (int i = times.length; i-- > 0;)
-            if (min > times[i]) {
-                min = times[i];
-            }
-        return min;
-    }
+  /**
+   * Gets the task.
+   *
+   * @return the task
+   */
+  public TimingTask getTask() {
+    return task;
+  }
 
-    /**
-     * Gets the mean time.
-     *
-     * @return the mean
-     */
-    public double getMean() {
-        if (times.length == 0)
-            return 0;
-        long sum = 0;
-        for (int i = times.length; i-- > 0;) {
-            sum += times[i];
-        }
-        return (double) sum / times.length;
+  /**
+   * Gets the times.
+   *
+   * @return the times for running the timing task
+   */
+  public long[] getTimes() {
+    return times.clone();
+  }
+
+  /**
+   * Gets the number of times.
+   *
+   * @return the size
+   */
+  public int getSize() {
+    return times.length;
+  }
+
+  /**
+   * Gets the min time.
+   *
+   * @return the min
+   */
+  public long getMin() {
+    if (times.length == 0) {
+      return 0;
     }
+    long min = Long.MAX_VALUE;
+    for (final long time : times) {
+      if (min > time) {
+        min = time;
+      }
+    }
+    return min;
+  }
+
+  /**
+   * Gets the mean time.
+   *
+   * @return the mean
+   */
+  public double getMean() {
+    if (times.length == 0) {
+      return 0;
+    }
+    long sum = 0;
+    for (final long time : times) {
+      sum += time;
+    }
+    return (double) sum / times.length;
+  }
 }

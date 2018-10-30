@@ -19,49 +19,96 @@ GDSC Test Documentation
 
 GDSC Test provides utility functionality for writing Java tests including:
 
-- Relative equality assertions
+- Predicate library for single- or bi-valued test predicates
+- Assertion utilities for asserting predicates
 - Dynamic messages implementing ``Supplier<String>``
-- Configurable random seed
+- Configurable random seed utilities
 
 Note: The GDSC Test library works for Java 1.8+.
 
 The code is hosted on `GitHub <https://github.com/aherbert/gdsc-test>`_.
 
-Relative Equality
+Predicate Library
 =================
 
-Support for relative equality is provided for `JUnit 4 <https://junit.org/junit4/>`_
-and `JUnit 5 <https://junit.org/junit5/>`_, for example::
+The GDSC predicate library is an extension of the ``java.util.function`` primitive predicates
+``DoublePredicate`` and ``LongPredicate`` to all java primitives. These are functional interfaces
+for single or bi-valued predicates providing the following::
 
-    import org.junit.jupiter.api.Test;
-    import uk.ac.sussex.gdsc.test.junit5.ExtraAssertions;
+    @FunctionalInterface
+    public interface TypePredicate {
+        boolean test(type value);
+        // default methods
+    }
+
+    @FunctionalInterface
+    public interface TypeTypeBiPredicate {
+        boolean test(type value1, type value2);
+        // default methods
+    }
+
+where ``<type>`` is one of: ``boolean``, ``byte``, ``char``, ``double``, ``float``, ``int``,
+``long`` and ``short`` (see `why all the primitives? <why.html>`_).
+
+The predicate functional interfaces provide:
+
+- The logical ``or``, ``and`` and ``xor`` operations with other predicates
+- Negation to an opposite test
+
+Standard predicates are provided to test equality and closeness within an absolute or relative
+error (see `Relative Equality <relativeequality.html>`_).
+
+Combined predicates exists to combine two single-valued predicates into a bi-valued predicate that
+tests each input value with a distinct predicate.
+
+Assertion Utilities
+===================
+
+Support for testing using a test framework is provided with a utility class that will test
+primitive value(s) using a single or bi-valued predicate. An ``AssertionError`` is generated when
+a test fails. For example a test for relative equality::
+
+    import uk.ac.sussex.gdsc.test.api.TestAssertions;
+    import uk.ac.sussex.gdsc.test.api.TestHelper;
 
     @Test
     public void testRelativeEquality() {
-        // Pass
-        ExtraAssertions.assertEqualsRelative(1000, 1001, 1e-3);
-        ExtraAssertions.assertEqualsRelativeOrAbsolute(1000, 1001,
-                                                       1e-6, 1);
-        // Fail
-        ExtraAssertions.assertEqualsRelative(1000, 1001, 1e-6);
+        double relativeError = 0.01;
+        double expected = 100;
+        double actual = 99;
+
+        DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+
+        TestAssertions.assertTest(expected, actual, isCloseTo);
     }
+
+All provided implementations of the ``TypePredicate`` or ``TypeTypeBiPredicate`` interface
+implement ``Supplier<String>`` to provide a text description of the predicate. This is used to
+format an error message for the failed test.
+
+Nested arrays are supported using recursion allowing testing of matrices::
+
+    IntIntBiPredicate equal = TestHelper.intsEqual();
+    Object[] expected = new int[4][5][6];
+    Object[] actual = new int[4][5][6];
+    TestAssertions.assertArrayTest(expected, actual, equal);
 
 Dynamic Messages
 ================
 
-Support for dynamic messages using ``Supplier<String>`` suppliers.
+Support is provided for dynamic messages using ``Supplier<String>`` suppliers.
 These store updatable arguments to pass to ``String.format(String, Object...)``
 for an error message, for example::
 
     import uk.ac.sussex.gdsc.test.utils.functions.IndexSupplier;
 
     final int dimensions = 2;
-    final IndexSupplier s = new IndexSupplier(dimensions);
-    System.out.println(s.get());
-    s.setMessagePrefix("Index: ");
-    s.set(0, 23); // Set index 0
-    s.set(1, 14); // Set index 1
-    System.out.println(s.get());
+    final IndexSupplier msg = new IndexSupplier(dimensions);
+    System.out.println(msg.get());
+    msg.setMessagePrefix("Index: ");
+    msg.set(0, 23); // Set index 0
+    msg.set(1, 14); // Set index 1
+    System.out.println(msg.get());
 
 Reports:
 
@@ -70,37 +117,62 @@ Reports:
     [0][0]
     Index: [23][14]
 
+All setters return the message as a ``Supplier<String>`` for testing within loops that require
+a message. For example using JUnit 5::
+
+    import uk.ac.sussex.gdsc.test.utils.functions.IndexSupplier;
+
+    int dimensions = 2;
+    IndexSupplier message = new IndexSupplier(dimensions);
+    message.setMessagePrefix("Index ");
+    message.setMessagePrefix(" is not zero");
+    int size = 5;
+    int[][] matrix = new int[size][size];
+    for (int i = 0; i < size; i++) {
+        message.set(0, i);
+        for (int j = 0; j < size; j++) {
+            // The message will supply "Index [i][j] is not zero" for the assertion
+            Assertions.assertTrue(matrix[i][j] == 0, message.set(1, j));
+        }
+    }
+
 Configurable Random Seed
 ========================
 
-Support for test randomness is provided using a single ``long`` seed::
+Support for test randomness is provided using a single ``byte[]`` seed::
 
     import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
-    long seed = TestSettings.getSeed();
+    byte[] seed = TestSettings.getSeed();
 
-If not set then the seed will be a randomly generated ``long``. This is logged
-using ``java.util.logging.Logger`` at the ``Level.INFO`` level so failed tests
-can be repeated by setting the seed using a Java property:
+A ``SeedUtils`` class is provided to convert the ``byte[]`` to ``int[]``, ``long[]`` or ``long``.
+
+The seed can be set using a Hex-encoded string property:
 
 .. code-block:: console
 
-    -Dgdsc.test.seed=12345
+    -Dgdsc.test.seed=123456789abcdf
 
-Support for seeded tests is provided using `JUnit 5 <https://junit.org/junit5/>`_::
+If not set then the seed will be randomly generated using ``java.security.SecureRandom`` and logged
+using the configurable ``java.util.logging.Logger``. This allows the generated seed to be used
+in tests and failed tests can be repeated by using the same seed.
 
+Extra support for seeded tests is provided for `JUnit 5 <https://junit.org/junit5/>`_ using a
+custom ``@SeededTest`` annotation::
+
+    import uk.ac.sussex.gdsc.test.junit5.RandomSeed;
     import uk.ac.sussex.gdsc.test.junit5.SeededTest;
 
     // A repeated parameterised test with run-time configurable seed
     // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
-        long seed = seed.getSeed();
+        long seed = seed.getSeedAsLong();
         // Do the test with a seeded random source ...
     }
 
-The ``@SeededTest`` is a ``@RepeatedTest`` and the number of repeats can be
-set using a Java property:
+The ``@SeededTest`` is a ``@RepeatedTest``. Each repeat will have a unique random seed. The number
+of repeats can be set using a Java property:
 
 .. code-block:: console
 
@@ -109,18 +181,23 @@ set using a Java property:
 An example implementation for test randomness is provided using
 `Commons RNG <https://commons.apache.org/rng/>`_, for example::
 
-    import org.apache.commons.rng.UniformRandomProvider;
-    import uk.ac.sussex.gdsc.test.junit5.SeededTest;
     import uk.ac.sussex.gdsc.test.junit5.RandomSeed;
-    import uk.ac.sussex.gdsc.test.rng.RNGFactory;
+    import uk.ac.sussex.gdsc.test.junit5.SeededTest;
+    import uk.ac.sussex.gdsc.test.rng.RngUtils;
+
+    import org.apache.commons.rng.UniformRandomProvider;
 
     // A repeated parameterised test with run-time configurable seed
     // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
-        UniformRandomProvider rng = RNGFactory.create(seed.getSeed());
+        UniformRandomProvider rng = RngUtils.create(seed.getSeedAsLong());
         // Do the test ...
     }
+
+The ``RngUtils`` implements caching of the initial state of the generator for fast provision
+of a repeatable source of test randomness.
+
 
 Modular Design
 ==============
@@ -131,10 +208,10 @@ functionality can be included as a project dependency.
 ================================= ===========
 Package                           Description
 ================================= ===========
+``uk.ac.sussex.gdsc.test.api``    Predicates and assertions
 ``uk.ac.sussex.gdsc.test.utils``  Utilities for error messages, logging and timing
-``uk.ac.sussex.gdsc.test.junit5`` JUnit5 assertions and assumptions
-``uk.ac.sussex.gdsc.test.junit4`` JUnit4 assertions and assumptions
-``uk.ac.sussex.gdsc.test.rng``    Uses Commons RNG as a random source
+``uk.ac.sussex.gdsc.test.junit5`` JUnit5 annotations
+``uk.ac.sussex.gdsc.test.rng``    Uses Commons RNG for a random source
 ================================= ===========
 
 Contents
@@ -145,6 +222,7 @@ Contents
     :maxdepth: 1
 
     installation.rst
+    why.rst
     relativeequality.rst
 
 Issues

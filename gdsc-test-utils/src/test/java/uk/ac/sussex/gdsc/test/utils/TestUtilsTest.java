@@ -21,63 +21,63 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package uk.ac.sussex.gdsc.test.utils;
 
-import java.util.function.Supplier;
+package uk.ac.sussex.gdsc.test.utils;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import uk.ac.sussex.gdsc.test.utils.TestUtils;
+import java.util.function.Supplier;
 
 @SuppressWarnings("javadoc")
 public class TestUtilsTest {
-    /** The supplied message. */
-    private final Supplier<String> messageSupplier = () -> {
-        return "Lambda message";
-    };
+  /** The supplied message. */
+  private final Supplier<String> messageSupplier = () -> {
+    return "Lambda message";
+  };
 
-    @Test
-    public void testWrapAssertionFailedErrorAppend() {
-        try {
-            TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(), messageSupplier);
-        } catch (AssertionError e) {
-            // Null is ignored
-            Assertions.assertEquals(e.getMessage(), messageSupplier.get());
-        }
-        try {
-            TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(""), messageSupplier);
-        } catch (AssertionError e) {
-            // Empty string is ignored
-            Assertions.assertEquals(e.getMessage(), messageSupplier.get());
-        }
-        try {
-            TestUtils.wrapAssertionFailedErrorAppend(new AssertionError("Something bad"), messageSupplier);
-        } catch (AssertionError e) {
-            // Empty string is ignored
-            Assertions.assertEquals(e.getMessage(), "Something bad " + messageSupplier.get());
-        }
+  @Test
+  public void testWrapAssertionFailedErrorAppend() {
+    try {
+      TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(), messageSupplier);
+    } catch (final AssertionError ex) {
+      // Null is ignored
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
+    try {
+      TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(""), messageSupplier);
+    } catch (final AssertionError ex) {
+      // Empty string is ignored
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
+    }
+    try {
+      TestUtils.wrapAssertionFailedErrorAppend(new AssertionError("Something bad"),
+          messageSupplier);
+    } catch (final AssertionError ex) {
+      // Empty string is ignored
+      Assertions.assertEquals(ex.getMessage(), "Something bad " + messageSupplier.get());
+    }
+  }
 
-    @Test
-    public void testWrapAssertionFailedError() {
-        try {
-            TestUtils.wrapAssertionFailedError(new AssertionError(), messageSupplier);
-        } catch (AssertionError e) {
-            // Null is ignored
-            Assertions.assertEquals(e.getMessage(), messageSupplier.get());
-        }
-        try {
-            TestUtils.wrapAssertionFailedError(new AssertionError(""), messageSupplier);
-        } catch (AssertionError e) {
-            // Empty string is ignored
-            Assertions.assertEquals(e.getMessage(), messageSupplier.get());
-        }
-        try {
-            TestUtils.wrapAssertionFailedError(new AssertionError("Something bad"), messageSupplier);
-        } catch (AssertionError e) {
-            // Empty string is ignored
-            Assertions.assertEquals(e.getMessage(), messageSupplier.get() + " Something bad");
-        }
+  @Test
+  public void testWrapAssertionFailedError() {
+    try {
+      TestUtils.wrapAssertionFailedError(new AssertionError(), messageSupplier);
+    } catch (final AssertionError ex) {
+      // Null is ignored
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
+    try {
+      TestUtils.wrapAssertionFailedError(new AssertionError(""), messageSupplier);
+    } catch (final AssertionError ex) {
+      // Empty string is ignored
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
+    }
+    try {
+      TestUtils.wrapAssertionFailedError(new AssertionError("Something bad"), messageSupplier);
+    } catch (final AssertionError ex) {
+      // Empty string is ignored
+      Assertions.assertEquals(ex.getMessage(), messageSupplier.get() + " Something bad");
+    }
+  }
 }

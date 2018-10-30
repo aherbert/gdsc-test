@@ -21,29 +21,29 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.junit5;
+
+import org.junit.jupiter.api.Tag;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.junit.jupiter.api.Tag;
-
 /**
- * {@code @RandomTag} is used to signal that the annotated method is a test
- * method that uses a variable random number generator. It is expected that the
- * method can be repeated with different results.
- * <p>
- * The annotation add a {@code "random"} {@link Tag}.
- * <p>
- * {@code @RandomTag} may also be used as a meta-annotation in order to create a
- * custom <em>composed annotation</em> that inherits the semantics of
- * {@code @RandomTag}.
+ * {@code @RandomTag} is used to signal that the annotated method is a test method that uses a
+ * variable random number generator. It is expected that the method can be repeated with different
+ * results.
+ *
+ * <p>The annotation add a {@code "random"} {@link Tag}.
+ *
+ * <p>{@code @RandomTag} may also be used as a meta-annotation in order to create a custom
+ * <em>composed annotation</em> that inherits the semantics of {@code @RandomTag}.
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Tag("random")
 public @interface RandomTag {
-    // Annotation
+  // Annotation
 }

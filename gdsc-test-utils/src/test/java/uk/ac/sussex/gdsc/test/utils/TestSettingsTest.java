@@ -21,71 +21,153 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
 package uk.ac.sussex.gdsc.test.utils;
 
 import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
-
-import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @SuppressWarnings("javadoc")
 public class TestSettingsTest {
-    private static Logger logger;
+  private static Logger logger;
 
-    @BeforeAll
-    public static void beforeAll() {
-        logger = Logger.getLogger(TestSettingsTest.class.getName());
+  @BeforeAll
+  public static void beforeAll() {
+    logger = Logger.getLogger(TestSettingsTest.class.getName());
+  }
+
+  @AfterAll
+  public static void afterAll() {
+    logger = null;
+  }
+
+  @Test
+  public void testGetSeed() {
+    // Disable logging the seed
+    final Logger logger = Logger.getLogger(TestSettings.class.getName());
+    Level level = logger.getLevel();
+    logger.setLevel(Level.OFF);
+
+    try {
+      // Check the seed is random if not set as a parameter
+      final byte[] seed = TestSettings.getSeed();
+      if (System.getProperty(TestSettings.PROPERTY_RANDOM_SEED) == null) {
+        Assertions.assertNotNull(seed, "Seed should be generated");
+      }
+      final byte[] seed2 = TestSettings.getSeed();
+      Assertions.assertArrayEquals(seed, seed2, "Seed should be constant");
+      Assertions.assertNotSame(seed, seed2, "Seed should be a new array");
+      logger.log(TEST_INFO,
+          () -> String.format("TestSettings Seed = %s", HexUtils.encodeHexString(seed)));
+
+      // Test setting the seed to null
+      TestSettings.setSeed(null);
+      final byte[] seed3 = TestSettings.getSeed();
+      Assertions.assertThrows(AssertionError.class, () -> {
+        Assertions.assertArrayEquals(seed, seed3);
+      }, "Seed should be different after setting to null");
+
+      // Test setting the seed to empty
+      TestSettings.setSeed(new byte[0]);
+      final byte[] seed4 = TestSettings.getSeed();
+      Assertions.assertThrows(AssertionError.class, () -> {
+        Assertions.assertArrayEquals(seed, seed4);
+      }, "Seed should be different after setting to empty");
+
+      // Test setting the seed to empty
+      byte[] zeroSeed = new byte[32];
+      TestSettings.setSeed(zeroSeed);
+      final byte[] seed5 = TestSettings.getSeed();
+      Assertions.assertArrayEquals(zeroSeed, seed5, "Zero filled seed is not supported");
+      Assertions.assertNotSame(zeroSeed, seed5, "Zero filled seed is copied by reference");
+
+      // Restore
+      TestSettings.setSeed(seed);
+
+    } finally {
+      logger.setLevel(level);
+    }
+  }
+
+  @Test
+  public void testGetRepeats() {
+    // Check the repeats is 1 if not set as a parameter
+    final int repeats = TestSettings.getRepeats();
+    if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_REPEATS, 0) == 0) {
+      Assertions.assertEquals(1, repeats);
+    }
+    logger.log(TEST_INFO, () -> String.format("TestSettings Repeats = %d", repeats));
+  }
+
+  @Test
+  public void testGetComplexity() {
+    // Currently no restrictions on complexity
+    final int complexity = TestSettings.getTestComplexity();
+    logger.log(TEST_INFO, () -> String.format("TestSettings Test Complexity = %d", complexity));
+  }
+
+  @Test
+  public void testGetPropertyAsInt() {
+    final String key = "A long key that should be really, really unique";
+    System.clearProperty(key);
+    final int defaultValue = -6765757;
+    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
+    System.setProperty(key, "xx");
+    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
+    System.setProperty(key, "1");
+    Assertions.assertEquals(1, TestSettings.getProperty(key, defaultValue));
+    System.clearProperty(key);
+  }
+
+  @Test
+  public void testGetPropertyAsLong() {
+    final String key = "A long key that should be really, really unique";
+    System.clearProperty(key);
+    final long defaultValue = -6765757676567L;
+    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
+    System.setProperty(key, "xx");
+    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
+    System.setProperty(key, "1");
+    Assertions.assertEquals(1, TestSettings.getProperty(key, defaultValue));
+    System.clearProperty(key);
+  }
+
+  @Test
+  public void testGetPropertyAsByteArray() {
+    final String key = "A long key that should be really, really unique";
+    System.clearProperty(key);
+    final byte[] defaultValue = new byte[] {1, 23, 4};
+    Assertions.assertArrayEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
+
+    // Ignore seeds with no information
+    for (String seed : new String[] {"", " ", "  ", "xx"}) {
+      System.setProperty(key, seed);
+      Assertions.assertArrayEquals(defaultValue, TestSettings.getProperty(key, defaultValue),
+          () -> "Seed is " + seed);
     }
 
-    @AfterAll
-    public static void afterAll() {
-        logger = null;
+    // Decode seeds with information, even if it is zero
+    for (String seed : new String[] {"0", "0000", "1", "1234567890abcdef"}) {
+      System.setProperty(key, seed);
+      final byte[] expected = HexUtils.decodeHex(seed);
+      Assertions.assertArrayEquals(expected, TestSettings.getProperty(key, defaultValue),
+          () -> "Seed is " + seed);
     }
+    System.clearProperty(key);
+  }
 
-    @Test
-    public void testGetSettings() {
-        // Check the seed is random if not set as a parameter
-        final long seed = TestSettings.getSeed();
-        if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_SEED, 0L) == 0)
-            Assertions.assertNotEquals(0, seed);
-        logger.log(TEST_INFO,() -> String.format("TestSettings Seed = %d", seed));
-        // Check the repeats is 1 if not set as a parameter
-        final int repeats = TestSettings.getRepeats();
-        if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_REPEATS, 0) == 0)
-            Assertions.assertEquals(1, repeats);
-        logger.log(TEST_INFO,() -> String.format("TestSettings Repeats = %d", repeats));
-        // Currently no restrictions on complexity
-        final int complexity = TestSettings.getTestComplexity();
-        logger.log(TEST_INFO,() -> String.format("TestSettings Test Complexity = %d", complexity));
+  @Test
+  public void testAllowTestComplexity() {
+    final int complexity = TestSettings.getTestComplexity();
+    for (final TestComplexity tc : TestComplexity.values()) {
+      Assertions.assertEquals(tc.getValue() <= complexity, TestSettings.allow(tc));
     }
-
-    @Test
-    public void testGetProperty() {
-        final String key = "A long key that should be really, really unique";
-        System.clearProperty(key);
-        final int iValue = -6765757;
-        Assertions.assertEquals(iValue, TestSettings.getProperty(key, iValue));
-        System.setProperty(key, "xx");
-        Assertions.assertEquals(iValue, TestSettings.getProperty(key, iValue));
-        System.setProperty(key, "1");
-        Assertions.assertEquals(1, TestSettings.getProperty(key, iValue));
-        System.clearProperty(key);
-        final long lValue = -6765757676567L;
-        Assertions.assertEquals(lValue, TestSettings.getProperty(key, lValue));
-        System.setProperty(key, "xx");
-        Assertions.assertEquals(lValue, TestSettings.getProperty(key, lValue));
-        System.setProperty(key, "1");
-        Assertions.assertEquals(1, TestSettings.getProperty(key, lValue));
-    }
-
-    @Test
-    public void testAllowTestComplexity() {
-        final int complexity = TestSettings.getTestComplexity();
-        for (final TestComplexity tc : TestComplexity.values())
-            Assertions.assertEquals(tc.getValue() <= complexity, TestSettings.allow(tc));
-    }
+  }
 }
