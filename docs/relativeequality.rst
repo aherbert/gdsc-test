@@ -26,7 +26,7 @@ A **symmetric** relative error is:
 
 This term is identical if :math:`a` and :math:`b` are switched.
 
-The equivalent **asymmetric** relative error :math:`e`: 
+The equivalent **asymmetric** relative error :math:`e` is: 
 
 .. math::
 
@@ -62,8 +62,8 @@ The equivalent **asymmetric** test:
 
 is a test that the distance between two values is less than an error, relative to :math:`a`. Since
 the test is asymmetric it can be used when :math:`a` is the known (expected) value and :math:`b`
-is an actual value to be tested, e.g. is the actual value close to the expected value using a
-relative error.
+is an actual value to be tested, i.e. test if the actual value is close to the expected value using
+a relative error.
 
 Value Around Zero
 -----------------
@@ -117,8 +117,8 @@ this for the **symmetric** relative error:
 The relative error :math:`e` will be large (:math:`0.999`) although
 the absolute difference :math:`\delta` will be small (:math:`0.00999`).
 
-This can be handled by allowing the :math:`\delta` to also be tested against a relative error
-threshold :math:`rel_{max}` or an absolute error threshold :math:`abs_{max}` :
+This can be handled by allowing the :math:`\delta` to be tested against a relative error
+threshold :math:`rel_{max}` **or** an absolute error threshold :math:`abs_{max}` :
 
 .. math::
 
@@ -126,16 +126,13 @@ threshold :math:`rel_{max}` or an absolute error threshold :math:`abs_{max}` :
 
     |a-b| &\leq abs_{max}
 
-adding a fixed delta below which the two values are
-considered equal::
-
 Test Predicates
 ---------------
 
 The GDSC Test library contains predicates that test relative equality between
 two values.
 
-Support is provided for **symmetric** relative equality using the name **Close**
+Support is provided for **symmetric** relative equality using the name **AreClose**
 which does not imply a direction. Support is provided for **asymmetric** relative equality
 using the name **IsCloseTo** which implies a direction.
 
@@ -143,15 +140,15 @@ These can be constructed using a helper class::
 
     double relativeError = 0.01;
 
-    DoubleDoubleBiPredicate close = TestHelper.doublesClose(relativeError);
+    DoubleDoubleBiPredicate areClose = TestHelper.doublesAreClose(relativeError);
 
-    // The Close relative equality is symmetric
-    assert close.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
-    assert close.test(99, 100) : "Difference 1 should be <= 0.01 of 100";
+    // The AreClose relative equality is symmetric
+    assert areClose.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
+    assert areClose.test(99, 100) : "Difference 1 should be <= 0.01 of 100";
 
     // The test identifies large relative error
-    assert !close.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
-    assert !close.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
+    assert !areClose.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
+    assert !areClose.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
 
 
     DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
@@ -169,19 +166,18 @@ tolerance which is combined with the relative equality test using an **Or** oper
 
     double relativeError = 0.01;
     double absoluteError = 1;
-    DoubleDoubleBiPredicate close = TestHelper.doublesClose(relativeError, absoluteError);
+    DoubleDoubleBiPredicate areClose = TestHelper.doublesAreClose(relativeError, absoluteError);
 
     // This would fail using relative error.
     // The test passes using absolute error.
-    assert close.test(10, 9) : "Difference 1 should be <= 1";
-    assert close.test(9, 10) : "Difference 1 should be <= 1";
+    assert areClose.test(10, 9) : "Difference 1 should be <= 1";
+    assert areClose.test(9, 10) : "Difference 1 should be <= 1";
 
 Test Framework Support
 ----------------------
 
-Testing relative equality within a test framework is supported.
-
-For example a test for floating-point relative equality in ``JUnit 5`` must adapt the test for
+Testing relative equality within a test framework is simplied using predicates. For example a
+test for floating-point relative equality in ``JUnit 5`` must adapt the test for
 absolute difference::
 
     double relativeError = 0.01;

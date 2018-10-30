@@ -85,8 +85,7 @@ public final class FloatEqualityUtils {
   /**
    * Tests that two floats are equal within an absolute error.
    *
-   * <p>It is assumed the errors have been validated with
-   * {@link #validateAbsoluteError(float)}.
+   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(float)}.
    *
    * <p>If either value is NaN this returns false.
    *
@@ -163,8 +162,7 @@ public final class FloatEqualityUtils {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
-   * <p>It is assumed the errors have been validated with
-   * {@link #validateAreClose(double, float)}.
+   * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, float)}.
    *
    * @param value1 The first value.
    * @param value2 The second value.
@@ -174,7 +172,8 @@ public final class FloatEqualityUtils {
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if close
    */
-  static boolean testAreClose(float value1, float value2, double relativeError, float absoluteError) {
+  static boolean testAreClose(float value1, float value2, double relativeError,
+      float absoluteError) {
     // Ignore NaNs. This is OK since if either number is a NaN the difference
     // will be NaN and we end up returning false.
     final float delta = Math.abs(value1 - value2);
@@ -257,8 +256,7 @@ public final class FloatEqualityUtils {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
-   * <p>It is assumed the errors have been validated with
-   * {@link #validateIsCloseTo(double, float)}.
+   * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, float)}.
    *
    * @param expected The expected value.
    * @param actual The actual value.

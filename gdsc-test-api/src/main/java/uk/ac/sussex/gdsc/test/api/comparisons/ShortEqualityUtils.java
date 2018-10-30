@@ -158,7 +158,8 @@ public final class ShortEqualityUtils {
    * @return true if close
    */
   static boolean testAreClose(short value1, short value2, double relativeError, int absoluteError) {
-    return NumberEqualityUtils.shortsOrBytestestAreClose(value1, value2, relativeError, absoluteError);
+    return NumberEqualityUtils.shortsOrBytestestAreClose(value1, value2, relativeError,
+        absoluteError);
   }
 
   /**

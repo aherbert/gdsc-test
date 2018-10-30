@@ -158,7 +158,8 @@ public final class ByteEqualityUtils {
    * @return true if close
    */
   static boolean testAreClose(byte value1, byte value2, double relativeError, int absoluteError) {
-    return NumberEqualityUtils.shortsOrBytestestAreClose(value1, value2, relativeError, absoluteError);
+    return NumberEqualityUtils.shortsOrBytestestAreClose(value1, value2, relativeError,
+        absoluteError);
   }
 
   /**

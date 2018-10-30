@@ -39,7 +39,7 @@ import org.apache.commons.rng.UniformRandomProvider;
 public class RngTest {
 
   /**
-   * Test the seeded test annotation
+   * Test the seeded test annotation.
    *
    * @param seed the seed
    */

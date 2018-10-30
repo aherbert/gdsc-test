@@ -58,7 +58,7 @@ public class UtilsTest {
       }
     }
   }
-  
+
   @Test
   public void testGetSeed() {
     byte[] seed = TestSettings.getSeed();

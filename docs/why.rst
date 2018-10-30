@@ -26,12 +26,12 @@ Java supports testing of primitives from ``java.util.function`` using::
         // Default methods
     }
 
-and ``LongPredicate`` for ``long`` primitive type.
+for the ``double`` primitive type and a similar ``LongPredicate`` for the ``long`` primitive type.
 
 The Java language can natively convert ``float`` to ``double`` and ``byte``, ``char``, ``int``,
 and ``short`` to ``long``. So the standard ``DoublePredicate`` and ``LongPredicate`` can be used
 to test all primitive types except ``boolean``. This can be supported with a simple cast to 1 or 0.
-Thus *Java predicates already supports testing single-valued primitives*.
+Thus *Java predicates already support testing single-valued primitives*.
 
 In the case of bi-valued predicates Java only provides ``BiPredicate<T, U>``::
 
@@ -83,8 +83,9 @@ The predicate library provides the following generic interfaces::
 where ``<type>`` is one of: ``boolean``, ``byte``, ``char``, ``double``, ``float``, ``int``,
 ``long`` and ``short``.
 
-They copy the functionality of Java's ``Predicate`` by supporting default methods for
-``negate`` and the logical combination using ``or`` and ``and`` but also add ``xor``.
+The predicates copy the functionality of Java's ``java.util.function.Predicate`` by supporting
+default methods for ``negate`` and the logical combination using ``or`` and ``and``
+but also add ``xor``.
 However in contrast to the Java version these default interface methods return concrete classes
 and not lambda expressions. This is to support a feature required for testing where classes
 implementing the interface also implement ``Supplier<String>`` to provide a description.
@@ -100,6 +101,6 @@ Code Generation
 ---------------
 
 Given that most predicates are very simple the GDSC predicate library is auto-generated from
-templates. This makes supporting all the primitives easier.
+templates.
 
 Generation uses the `String Template <http://www.stringtemplate.org/>`_ library.

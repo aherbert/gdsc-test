@@ -82,7 +82,7 @@ a test fails. For example a test for relative equality::
         TestAssertions.assertTest(expected, actual, isCloseTo);
     }
 
-All provided implementations of the ``TypePredicate`` and ``TypeTypeBiPredicate`` interface
+All provided implementations of the ``TypePredicate`` or ``TypeTypeBiPredicate`` interface
 implement ``Supplier<String>`` to provide a text description of the predicate. This is used to
 format an error message for the failed test.
 
@@ -171,8 +171,8 @@ custom ``@SeededTest`` annotation::
         // Do the test with a seeded random source ...
     }
 
-The ``@SeededTest`` is a ``@RepeatedTest`` and the number of repeats can be
-set using a Java property:
+The ``@SeededTest`` is a ``@RepeatedTest``. Each repeat will have a unique random seed. The number
+of repeats can be set using a Java property:
 
 .. code-block:: console
 

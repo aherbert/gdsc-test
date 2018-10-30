@@ -46,15 +46,15 @@ public class ApiTest {
   @Test
   public void testClosePredicate() {
     double relativeError = 0.01;
-    DoubleDoubleBiPredicate close = TestHelper.doublesClose(relativeError);
+    DoubleDoubleBiPredicate areClose = TestHelper.doublesAreClose(relativeError);
 
-    // The Close relative equality is symmetric
-    assert close.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
-    assert close.test(99, 100) : "Difference 1 should be <= 0.01 of 100";
+    // The AreClose relative equality is symmetric
+    assert areClose.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
+    assert areClose.test(99, 100) : "Difference 1 should be <= 0.01 of 100";
 
     // The test identifies large relative error
-    assert !close.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
-    assert !close.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
+    assert !areClose.test(10, 9) : "Difference 1 should not be <= 0.01 of 10";
+    assert !areClose.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
   }
 
   /**
@@ -81,16 +81,16 @@ public class ApiTest {
   public void testClosePredicateUsingAbsError() {
     double relativeError = 0.01;
     double absoluteError = 1;
-    DoubleDoubleBiPredicate close = TestHelper.doublesClose(relativeError, absoluteError);
+    DoubleDoubleBiPredicate areClose = TestHelper.doublesAreClose(relativeError, absoluteError);
 
     // This would fail using relative error.
     // The test passes using absolute error.
-    assert close.test(10, 9) : "Difference 1 should be <= 1";
-    assert close.test(9, 10) : "Difference 1 should be <= 1";
+    assert areClose.test(10, 9) : "Difference 1 should be <= 1";
+    assert areClose.test(9, 10) : "Difference 1 should be <= 1";
   }
 
   /**
-   * Test the IsCloseTo predicate within a test framework
+   * Test the IsCloseTo predicate within a test framework.
    */
   @Test
   public void testIsCloseToWithinFramework() {
@@ -107,7 +107,7 @@ public class ApiTest {
   }
 
   /**
-   * Test the IsCloseTo predicate with TestAssertions
+   * Test the IsCloseTo predicate with TestAssertions.
    */
   @Test
   public void testIsCloseToWithTestAssertions() {
@@ -130,6 +130,9 @@ public class ApiTest {
     TestAssertions.assertArrayTest(expectedNestedArray, actualNestedArray, isCloseTo);
   }
 
+  /**
+   * Test matrix recursion.
+   */
   @Test
   public void testMatrixRecursion() {
     IntIntBiPredicate equal = TestHelper.intsEqual();

@@ -85,8 +85,7 @@ public final class DoubleEqualityUtils {
   /**
    * Tests that two doubles are equal within an absolute error.
    *
-   * <p>It is assumed the errors have been validated with
-   * {@link #validateAbsoluteError(double)}.
+   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(double)}.
    *
    * <p>If either value is NaN this returns false.
    *
@@ -163,8 +162,7 @@ public final class DoubleEqualityUtils {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
-   * <p>It is assumed the errors have been validated with
-   * {@link #validateAreClose(double, double)}.
+   * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, double)}.
    *
    * @param value1 The first value.
    * @param value2 The second value.
