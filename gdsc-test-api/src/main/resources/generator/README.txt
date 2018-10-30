@@ -1,14 +1,17 @@
 # Entries in a properties file are key = value pairs.
 #
 # The key is split using the . character into a scope and substitution word.
-# The substitution word is expected to be replaced with some other text in 
+# The substitution word is expected to be replaced with some other text in
 # the context of the scope.
 #
-# The value is a space delimited list of substitutions. Leading and trailing [] are removed from
-# each list token. This allows the empty string to be passed, e.g. 
-# key = [value1] [] value3
-# creates:
-# "value1" "" "value3"
+# The value is a space delimited list of substitutions.
+# Optional field delimiter is ".
+# Special characters are escape using \\.
+# The string \\N is replaced with a null substitution.
+# This allows the empty, null or whitespace-only string to be passed, e.g.
+#   key = "" \\N " " value4
+# creates a list of:
+#   {"", null, " ", "value4"}
 
 # classname scope
 #

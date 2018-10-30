@@ -3,7 +3,9 @@
 <! Explicit imports (not templated) so the sort order is correct for Checkstyle !>
 import uk.ac.sussex.gdsc.test.api.comparisons.BooleanBooleanEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.BooleanEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharCharEquals;
@@ -29,14 +31,19 @@ import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsFinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsInfinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.LongLongBigWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortWithin;
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
@@ -78,8 +85,6 @@ import uk.ac.sussex.gdsc.test.api.function.ShortPredicateAndShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortPredicateOrShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortPredicateXorShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
-
-import java.math.BigInteger;
 
 /**
  * Helper class to create predicates for tests.
@@ -131,7 +136,7 @@ public final class TestHelper {
    */
   public static <Float><Float>BiPredicate <float>sCmp() {
     return <Float><Float>Cmp.getInstance();
-  \}}><numbers,Numbers,numberAbsTypes,Withins:{number,Number,numberAbsType,Within |
+  \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
 <\n>
   /**
    * Creates a predicate to test {@code <number>\} values are equal within an absolute error.
@@ -143,11 +148,11 @@ public final class TestHelper {
    *         measurable difference between <number> values
    */
   public static <Number><Number>BiPredicate <number>sWithin(<numberAbsType> absoluteError) {
-    return new <Number><Number><Within>(absoluteError);
-  \}}><floats,Floats,Ints:{float,Float,Int |
+    return new <Number><Number>Within(absoluteError);
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
 <\n>
   /**
-   * Creates a predicate to test that {@code <float>\} values are close using a relative error.
+   * Creates a predicate to test that {@code <number>\} values are close using a relative error.
    * The relative error between values {@code value1\} and {@code value2\} is relative to the
    * largest magnitude of the two values and the test is:
    *
@@ -157,26 +162,31 @@ public final class TestHelper {
    *
    * \<p>The relative error is symmetric for {@code value1\} and {@code value2\}. The test is
    * equivalent to testing convergence of two values.
+<if(javadocNaN)>
    *
-   * \<p>Note: If either value is {@link <Float>#NaN\} or infinite then there is no valid
+   * \<p>Note: If either value is {@link <Number>#NaN\} or infinite then there is no valid
    * difference to another value and the predicate will return false. This includes a test of
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
-   * with the exception of {@link <Float>#NaN\} or infinite values.
+   * with the exception of {@link <Number>#NaN\} or infinite values.
+<else>
+   *
+   * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
+<endif>
    *
    * @param relativeError The maximum relative error between \<code>value1\</code> and
    *        \<code>value2\</code> for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    */
-  public static <Float><Float>BiPredicate <float>sClose(double relativeError) {
-    return new <Float><Float>Close(relativeError, 0);
+  public static <Number><Number>BiPredicate <number>sClose(double relativeError) {
+    return new <Number><Number>Close(relativeError, 0);
   \}
 
   /**
-   * Creates a predicate to test that {@code <float>\} values are close using a relative and/or
+   * Creates a predicate to test that {@code <number>\} values are close using a relative and/or
    * an absolute error. The relative error between values {@code value1\} and {@code value2\} is
    * relative to the largest magnitude of the two values and the test is:
    *
@@ -186,11 +196,13 @@ public final class TestHelper {
    *
    * \<p>The relative error is symmetric for {@code value1\} and {@code value2\}. The test is
    * equivalent to testing convergence of two values.
+<if(javadocNaN)>
    *
-   * \<p>Note: If either value is {@link <Float>#NaN\} or infinite then there is no valid
+   * \<p>Note: If either value is {@link <Number>#NaN\} or infinite then there is no valid
    * difference to another value and the predicate will return false. This includes a test of
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
+<endif>
    *
    * @param relativeError The maximum relative error between \<code>value1\</code> and
    *        \<code>value2\</code> for which both numbers are still considered equal.
@@ -198,15 +210,17 @@ public final class TestHelper {
    *        \<code>value2\</code> for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is
+   *         \<code>>=\</code> than the maximum difference between \<code><number>\</code>
+   *         primitives
    */
-  public static <Float><Float>BiPredicate <float>sClose(double relativeError,
-      <float> absoluteError) {
-    return new <Float><Float>Close(relativeError, absoluteError);
-  \}}><floats,Floats,Ints:{float,Float,Int |
+  public static <Number><Number>BiPredicate <number>sClose(double relativeError,
+      <numberAbsType> absoluteError) {
+    return new <Number><Number>Close(relativeError, absoluteError);
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
 <\n>
   /**
-   * Creates a predicate to test a {@code <float>\} value is close to an expected value using a
+   * Creates a predicate to test a {@code <number>\} value is close to an expected value using a
    * relative error. The relative error between values {@code expected\} and {@code actual\} is
    * relative to the magnitude of {@code expected\} and the test is:
    *
@@ -218,16 +232,21 @@ public final class TestHelper {
    * equivalent to testing testing {@code actual\} falls within a relative range of
    * {@code expected\}.
    *
-   * \<p>The arguments for the method {@link <Float><Float>BiPredicate#test(<float>, <float>)\}
+   * \<p>The arguments for the method {@link <Number><Number>BiPredicate#test(<number>, <number>)\}
    * are {@code expected\} then {@code actual\}.
+<if(javadocNaN)>
    *
-   * \<p>Note: If either value is {@link <Float>#NaN\} or infinite then there is no valid
+   * \<p>Note: If either value is {@link <Number>#NaN\} or infinite then there is no valid
    * difference to another value and the predicate will return false. This includes a test of
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
-   * with the exception of {@link <Float>#NaN\} or infinite values.
+   * with the exception of {@link <Number>#NaN\} or infinite values.
+<else>
+   *
+   * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
+<endif>
    *
    * @param relativeError The maximum error, relative to \<code>expected\</code>, between
    *        \<code>expected\</code> and \<code>actual\</code> for which both numbers are still
@@ -235,12 +254,12 @@ public final class TestHelper {
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite
    */
-  public static <Float><Float>BiPredicate <float>sIsCloseTo(double relativeError) {
-    return new <Float><Float>IsCloseTo(relativeError, 0);
+  public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError) {
+    return new <Number><Number>IsCloseTo(relativeError, 0);
   \}
 
   /**
-   * Creates a predicate to test a {@code <float>\} value is close to an expected value using a
+   * Creates a predicate to test a {@code <number>\} value is close to an expected value using a
    * relative and/or an absolute error. The relative error between values {@code expected\} and
    * {@code actual\} is relative to the magnitude of {@code expected\} and the test is:
    *
@@ -252,13 +271,15 @@ public final class TestHelper {
    * equivalent to testing testing {@code actual\} falls within a relative and/or absolute range of
    * {@code expected\}.
    *
-   * \<p>The arguments for the method {@link <Float><Float>BiPredicate#test(<float>, <float>)\}
+   * \<p>The arguments for the method {@link <Number><Number>BiPredicate#test(<number>, <number>)\}
    * are {@code expected\} then {@code actual\}.
+<if(javadocNaN)>
    *
-   * \<p>Note: If either value is {@link <Float>#NaN\} or infinite then there is no valid
+   * \<p>Note: If either value is {@link <Number>#NaN\} or infinite then there is no valid
    * difference to another value and the predicate will return false. This includes a test of
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
+<endif>
    *
    * @param relativeError The maximum error, relative to \<code>expected\</code>, between
    *        \<code>expected\</code> and \<code>actual\</code> for which both numbers are still
@@ -267,11 +288,13 @@ public final class TestHelper {
    *        \<code>actual\</code> for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is
+   *         \<code>>=\</code> than the maximum difference between \<code><number>\</code>
+   *         primitives
    */
-  public static <Float><Float>BiPredicate <float>sIsCloseTo(double relativeError,
-      <float> absoluteError) {
-    return new <Float><Float>IsCloseTo(relativeError, absoluteError);
+  public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError,
+      <numberAbsType> absoluteError) {
+    return new <Number><Number>IsCloseTo(relativeError, absoluteError);
   \}}><Ops,ops:{Op,op |<types,Types:{type,Type |
 <\n>
   /**
