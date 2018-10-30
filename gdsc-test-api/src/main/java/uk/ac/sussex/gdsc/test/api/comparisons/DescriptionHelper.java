@@ -358,7 +358,7 @@ final class DescriptionHelper {
   static String getDescriptionIsCloseTo(double relativeError, int absoluteError) {
     return getDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError, absoluteError);
   }
-  
+
   /**
    * Get the description of the test that two values are close using a relative and absolute error.
    * The type of relative error is specified.

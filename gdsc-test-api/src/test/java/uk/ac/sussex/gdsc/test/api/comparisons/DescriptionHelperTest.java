@@ -74,7 +74,7 @@ public class DescriptionHelperTest {
       assertMessageContains(result, absString, "Absolute error");
     }
   }
-  
+
   @Test
   public void testDoublesGetDescriptionWithin() {
     // These must be distinguishable as strings
