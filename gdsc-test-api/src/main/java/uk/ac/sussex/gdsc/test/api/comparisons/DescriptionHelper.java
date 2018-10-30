@@ -269,8 +269,7 @@ final class DescriptionHelper {
    */
   //@formatter:on
   static String getDescriptionIsCloseTo(double relativeError, double absoluteError) {
-    return getDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError,
-        absoluteError);
+    return getDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError, absoluteError);
   }
 
   //@formatter:off
@@ -298,8 +297,7 @@ final class DescriptionHelper {
    */
   //@formatter:on
   static String getDescriptionIsCloseTo(double relativeError, float absoluteError) {
-    return getDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError,
-        absoluteError);
+    return getDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError, absoluteError);
   }
 
   //@formatter:off
@@ -327,8 +325,7 @@ final class DescriptionHelper {
    */
   //@formatter:on
   static String getDescriptionIsCloseTo(double relativeError, long absoluteError) {
-    return getDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError,
-        absoluteError);
+    return getDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError, absoluteError);
   }
 
   //@formatter:off
@@ -368,8 +365,8 @@ final class DescriptionHelper {
    * @param absoluteError the absolute error
    * @return the description
    */
-  private static String getDescriptionAreClose(String relativeErrorPrefix,
-      double relativeError, double absoluteError) {
+  private static String getDescriptionAreClose(String relativeErrorPrefix, double relativeError,
+      double absoluteError) {
     // Assume both are >= 0
 
     // Handle special cases where the test was actually equivalent to something different.
@@ -412,8 +409,8 @@ final class DescriptionHelper {
    * @param absoluteError the absolute error
    * @return the description
    */
-  private static String getDescriptionAreClose(String relativeErrorPrefix,
-      double relativeError, float absoluteError) {
+  private static String getDescriptionAreClose(String relativeErrorPrefix, double relativeError,
+      float absoluteError) {
     // Assume both are >= 0
 
     // Handle special cases where the test was actually equivalent to something different.
@@ -455,8 +452,8 @@ final class DescriptionHelper {
    * @param absoluteError the absolute error
    * @return the description
    */
-  private static String getDescriptionAreClose(String relativeErrorPrefix,
-      double relativeError, long absoluteError) {
+  private static String getDescriptionAreClose(String relativeErrorPrefix, double relativeError,
+      long absoluteError) {
     // Assume both are >= 0
 
     // Handle special cases where the test was actually equivalent to something different.

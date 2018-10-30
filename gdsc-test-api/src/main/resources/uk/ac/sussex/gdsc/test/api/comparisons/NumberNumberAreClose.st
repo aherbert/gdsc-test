@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
  * @see EqualityUtils#areClose(<number>, <number>, double, <number>)
  */
-public class <Number><Number>Close
+public class <Number><Number>AreClose
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -45,8 +45,8 @@ public class <Number><Number>Close
    * @throws IllegalArgumentException If the absolute error is not positive or is
    *         <code>>=</code> than the maximum difference between <number> primitives
    */
-  public <Number><Number>Close(double relativeError, <errorType> absoluteError) {
-    EqualityUtils.<number>sValidateClose(relativeError, absoluteError);
+  public <Number><Number>AreClose(double relativeError, <errorType> absoluteError) {
+    <Number>EqualityUtils.validateAreClose(relativeError, absoluteError);
     this.relativeError = relativeError;
     this.absoluteError = absoluteError;
   }
@@ -62,7 +62,7 @@ public class <Number><Number>Close
   @Override
   public boolean test(<number> value1, <number> value2) {
     // Errors have been checked so use the package level method
-    return EqualityUtils.<number>sTestClose(value1, value2, relativeError, absoluteError);
+    return <Number>EqualityUtils.testAreClose(value1, value2, relativeError, absoluteError);
   }
 
   /**

@@ -3,48 +3,48 @@
 <! Explicit imports (not templated) so the sort order is correct for Checkstyle !>
 import uk.ac.sussex.gdsc.test.api.comparisons.BooleanBooleanEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.BooleanEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharCharEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleCmp;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsFinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsInfinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsFinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsInfinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.IntIntClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.IntIntWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.LongLongClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.LongLongWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreWithin;
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicateAndBooleanPredicate;
@@ -147,8 +147,8 @@ public final class TestHelper {
    * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
    */
-  public static <Number><Number>BiPredicate <number>sWithin(<numberAbsType> absoluteError) {
-    return new <Number><Number>Within(absoluteError);
+  public static <Number><Number>BiPredicate <number>sAreWithin(<numberAbsType> absoluteError) {
+    return new <Number><Number>AreWithin(absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
 <\n>
   /**
@@ -181,8 +181,8 @@ public final class TestHelper {
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    */
-  public static <Number><Number>BiPredicate <number>sClose(double relativeError) {
-    return new <Number><Number>Close(relativeError, 0);
+  public static <Number><Number>BiPredicate <number>sAreClose(double relativeError) {
+    return new <Number><Number>AreClose(relativeError, 0);
   \}
 
   /**
@@ -214,9 +214,9 @@ public final class TestHelper {
    *         \<code>>=\</code> than the maximum difference between \<code><number>\</code>
    *         primitives
    */
-  public static <Number><Number>BiPredicate <number>sClose(double relativeError,
+  public static <Number><Number>BiPredicate <number>sAreClose(double relativeError,
       <numberAbsType> absoluteError) {
-    return new <Number><Number>Close(relativeError, absoluteError);
+    return new <Number><Number>AreClose(relativeError, absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
 <\n>
   /**

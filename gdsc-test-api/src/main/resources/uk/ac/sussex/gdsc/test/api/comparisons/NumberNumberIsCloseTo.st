@@ -49,7 +49,7 @@ public class <Number><Number>IsCloseTo
    *         <code>>=</code> than the maximum difference between <number> primitives
    */
   public <Number><Number>IsCloseTo(double relativeError, <errorType> absoluteError) {
-    EqualityUtils.<number>sValidateIsCloseTo(relativeError, absoluteError);
+    <Number>EqualityUtils.validateIsCloseTo(relativeError, absoluteError);
     this.relativeError = relativeError;
     this.absoluteError = absoluteError;
   }
@@ -65,7 +65,7 @@ public class <Number><Number>IsCloseTo
   @Override
   public boolean test(<number> expected, <number> actual) {
     // Errors have been checked so use the package level method
-    return EqualityUtils.<number>sTestIsCloseTo(expected, actual, relativeError, absoluteError);
+    return <Number>EqualityUtils.testIsCloseTo(expected, actual, relativeError, absoluteError);
   }
 
   /**

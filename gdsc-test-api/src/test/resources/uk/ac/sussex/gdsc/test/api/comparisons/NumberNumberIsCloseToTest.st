@@ -22,7 +22,7 @@ public class <Number><Number>IsCloseToTest {
             new <Number><Number>IsCloseTo(relativeError, absoluteError);
         for (<number> value1 : values) {
           for (<number> value2 : values) {
-            final boolean expected = EqualityUtils.<number>sTestIsCloseTo(value1, value2,
+            final boolean expected = <Number>EqualityUtils.testIsCloseTo(value1, value2,
                 relativeError, absoluteError);
             Assertions.assertEquals(expected, predicate.test(value1, value2),
                 () -> String.format("Does not compute EqualityUtils.<number>sTestIsCloseTo :"

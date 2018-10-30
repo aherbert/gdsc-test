@@ -2,13 +2,18 @@
 
 <! Explicit imports (not templated) so the sort order is correct for Checkstyle !>
 import uk.ac.sussex.gdsc.test.api.comparisons.BooleanEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteEqualityUtils;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEqualityUtils;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.EqualityUtils;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatEqualityUtils;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntEqualityUtils;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongEqualityUtils;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortEqualityUtils;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquals;
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
@@ -127,13 +132,13 @@ public class TestHelperTest {<types,Types:{type,Type |
    * absolute error.
    */
   @Test
-  public void testWithin<Number>Using<NumberAbsType>s() {
+  public void testAreWithin<Number>Using<NumberAbsType>s() {
     final <numberAbsType> absoluteError = 1;
-    final <Number><Number>BiPredicate test = TestHelper.<number>sWithin(absoluteError);
+    final <Number><Number>BiPredicate test = TestHelper.<number>sAreWithin(absoluteError);
     final <number>[] values = ApiTestUtils.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
-        Assertions.assertEquals(EqualityUtils.areWithin(value1, value2, absoluteError),
+        Assertions.assertEquals(<Number>EqualityUtils.areWithin(value1, value2, absoluteError),
             test.test(value1, value2),
             "Predicate does not compute within");
       \}
@@ -144,19 +149,19 @@ public class TestHelperTest {<types,Types:{type,Type |
    * Test creates a predicate to compare {@code <number>\} values are close.
    */
   @Test
-  public void testClose<Number>s() {
+  public void testAreClose<Number>s() {
     final double relativeError = 0.5;
     final <numberAbsType> absoluteError = 1;
-    final <Number><Number>BiPredicate test1 = TestHelper.<number>sClose(relativeError,
+    final <Number><Number>BiPredicate test1 = TestHelper.<number>sAreClose(relativeError,
         absoluteError);
-    final <Number><Number>BiPredicate test2 = TestHelper.<number>sClose(relativeError);
+    final <Number><Number>BiPredicate test2 = TestHelper.<number>sAreClose(relativeError);
     final <number>[] values = ApiTestUtils.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
-        Assertions.assertEquals(EqualityUtils.areClose(value1, value2,
+        Assertions.assertEquals(<Number>EqualityUtils.areClose(value1, value2,
             relativeError, absoluteError), test1.test(value1, value2),
             "Predicate does not compute Close with relative and absolute error");
-        Assertions.assertEquals(EqualityUtils.areClose(value1, value2,
+        Assertions.assertEquals(<Number>EqualityUtils.areClose(value1, value2,
             relativeError, 0), test2.test(value1, value2),
             "Predicate does not compute Close with relative error");
       \}
@@ -176,10 +181,10 @@ public class TestHelperTest {<types,Types:{type,Type |
     final <number>[] values = ApiTestUtils.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
-        Assertions.assertEquals(EqualityUtils.isCloseTo(value1, value2,
+        Assertions.assertEquals(<Number>EqualityUtils.isCloseTo(value1, value2,
             relativeError, absoluteError), test1.test(value1, value2),
             "Predicate does not compute IsCloseTo with relative and absolute error");
-        Assertions.assertEquals(EqualityUtils.isCloseTo(value1, value2,
+        Assertions.assertEquals(<Number>EqualityUtils.isCloseTo(value1, value2,
             relativeError, 0), test2.test(value1, value2),
             "Predicate does not compute IsCloseTo with relative error");
       \}
