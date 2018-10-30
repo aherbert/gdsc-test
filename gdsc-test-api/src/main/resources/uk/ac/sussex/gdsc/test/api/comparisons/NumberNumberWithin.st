@@ -54,6 +54,6 @@ public class <Number><Number><Within>
    */
   @Override
   public String get() {
-    return EqualityUtils.<number>sGetDescriptionWithin(absoluteError);
+    return DescriptionHelper.getDescriptionWithin(absoluteError);
   }
 }

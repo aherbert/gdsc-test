@@ -67,37 +67,6 @@ public class EqualityUtilsTest {
     return --value;
   }
 
-  /**
-   * Assert the message contains the sub-string.
-   *
-   * <p>If missing fails with a description of the sub-string.
-   *
-   * @param message the message
-   * @param subString the sub-string
-   * @param description the description
-   */
-  private static void assertMessageContains(String message, String subString, String description) {
-    Assertions.assertTrue(message.contains(subString),
-        () -> String.format("Message '%s' is missing '%s' (%s)", message, subString, description));
-  }
-
-  /**
-   * Assert the message contains the sub-string.
-   *
-   * <p>If missing fails with a description of the sub-string.
-   *
-   * @param expected the expected result of contains
-   * @param message the message
-   * @param subString the sub-string
-   * @param description the description
-   */
-  private static void assertMessageContains(boolean expected, String message, String subString,
-      String description, Number relativeError, Number absoluteError) {
-    Assertions.assertEquals(expected, message.contains(subString),
-        () -> String.format("Message '%s' is missing '%s' (%s. Rel.Error=%s, Abs.Error=%s)",
-            message, subString, description, relativeError, absoluteError));
-  }
-
   @Test
   public void testFloatAreEqual() {
     final float[] values = {0, 1, 1.5f, (float) Math.PI, Float.NaN, Float.POSITIVE_INFINITY,
@@ -186,18 +155,6 @@ public class EqualityUtilsTest {
     Assertions.assertFalse(EqualityUtils.areWithin(actual, expected2, absoluteError));
   }
 
-  @Test
-  public void testFloatsGetDescriptionWithin() {
-    // These must be distinguishable as strings
-    for (final float absError : new float[] {-0f, 0, 0.5f, 1, (float) Math.PI}) {
-      final String result = EqualityUtils.floatsGetDescriptionWithin(absError);
-      final String absString = (absError == 0) ? "0" : String.valueOf(absError);
-      assertMessageContains(result, "|v1-v2|", "Predicate description");
-      assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
-      assertMessageContains(result, absString, "Absolute error");
-    }
-  }
-
   // double Within
 
   @Test
@@ -262,18 +219,6 @@ public class EqualityUtilsTest {
     final double expected2 = actual - Math.nextUp(absoluteError);
     Assertions.assertFalse(EqualityUtils.areWithin(expected2, actual, absoluteError));
     Assertions.assertFalse(EqualityUtils.areWithin(actual, expected2, absoluteError));
-  }
-
-  @Test
-  public void testDoublesGetDescriptionWithin() {
-    // These must be distinguishable as strings
-    for (final double absError : new double[] {-0.0, 0, 0.5, 1, Math.PI}) {
-      final String result = EqualityUtils.doublesGetDescriptionWithin(absError);
-      final String absString = (absError == 0) ? "0" : String.valueOf(absError);
-      assertMessageContains(result, "|v1-v2|", "Predicate description");
-      assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
-      assertMessageContains(result, absString, "Absolute error");
-    }
   }
 
   // long Within using BigInteger
@@ -356,24 +301,6 @@ public class EqualityUtilsTest {
     Assertions.assertFalse(EqualityUtils.areWithin(actual, expected2, absoluteError));
   }
 
-  @Test
-  public void testLongsUsingBigIntegerGetDescriptionWithin() {
-    // These must be distinguishable as strings
-    for (BigInteger absError : new BigInteger[] {BigInteger.ZERO, BigInteger.ONE,
-        BigInteger.valueOf(Long.MAX_VALUE),
-        // Bigger than a long
-        BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE),
-        // Biggest allowed difference between longs
-        MAX_LONG_DELTA.subtract(BigInteger.ONE)}) {
-      final String result = EqualityUtils.longsGetDescriptionWithin(absError);
-      final String absString = String.valueOf(absError);
-      assertMessageContains(result, "|v1-v2|", "Predicate description");
-      assertMessageContains(result, (absError.signum() == 0) ? " == " : " <= ",
-          "Predicate description");
-      assertMessageContains(result, absString, "Absolute error");
-    }
-  }
-
   // long Within
 
   @Test
@@ -443,18 +370,6 @@ public class EqualityUtilsTest {
     final long expected2 = expected + 1;
     Assertions.assertFalse(EqualityUtils.areWithin(expected2, actual, absoluteError));
     Assertions.assertFalse(EqualityUtils.areWithin(actual, expected2, absoluteError));
-  }
-
-  @Test
-  public void testLongsGetDescriptionWithin() {
-    // These must be distinguishable as strings
-    for (final long absError : new long[] {0, 1, Long.MAX_VALUE}) {
-      final String result = EqualityUtils.longsGetDescriptionWithin(absError);
-      final String absString = String.valueOf(absError);
-      assertMessageContains(result, "|v1-v2|", "Predicate description");
-      assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
-      assertMessageContains(result, absString, "Absolute error");
-    }
   }
 
   // int Within
@@ -532,19 +447,6 @@ public class EqualityUtilsTest {
     Assertions.assertFalse(EqualityUtils.areWithin(actual, expected2, absoluteError));
   }
 
-  @Test
-  public void testIntsGetDescriptionWithin() {
-    // These must be distinguishable as strings
-    for (long absError : new long[] {0, 1, Integer.MAX_VALUE,
-        EqualityUtils.MAX_INT_ABS_ERROR - 1}) {
-      final String result = EqualityUtils.intsGetDescriptionWithin(absError);
-      final String absString = String.valueOf(absError);
-      assertMessageContains(result, "|v1-v2|", "Predicate description");
-      assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
-      assertMessageContains(result, absString, "Absolute error");
-    }
-  }
-
   // short Within
 
   @Test
@@ -619,18 +521,6 @@ public class EqualityUtilsTest {
     Assertions.assertFalse(EqualityUtils.areWithin(actual, expected2, absoluteError));
   }
 
-  @Test
-  public void testShortsGetDescriptionWithin() {
-    // These must be distinguishable as strings
-    for (int absError : new int[] {0, 1, Short.MAX_VALUE, EqualityUtils.MAX_SHORT_ABS_ERROR - 1}) {
-      final String result = EqualityUtils.shortsGetDescriptionWithin(absError);
-      final String absString = String.valueOf(absError);
-      assertMessageContains(result, "|v1-v2|", "Predicate description");
-      assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
-      assertMessageContains(result, absString, "Absolute error");
-    }
-  }
-
   // byte Within
 
   @Test
@@ -701,18 +591,6 @@ public class EqualityUtilsTest {
     final byte expected2 = expected + 1;
     Assertions.assertFalse(EqualityUtils.areWithin(expected2, actual, absoluteError));
     Assertions.assertFalse(EqualityUtils.areWithin(actual, expected2, absoluteError));
-  }
-
-  @Test
-  public void testBytesGetDescriptionWithin() {
-    // These must be distinguishable as strings
-    for (int absError : new int[] {0, 1, Byte.MAX_VALUE, EqualityUtils.MAX_BYTE_ABS_ERROR - 1}) {
-      final String result = EqualityUtils.bytesGetDescriptionWithin(absError);
-      final String absString = String.valueOf(absError);
-      assertMessageContains(result, "|v1-v2|", "Predicate description");
-      assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
-      assertMessageContains(result, absString, "Absolute error");
-    }
   }
 
   // float Close
@@ -814,66 +692,6 @@ public class EqualityUtilsTest {
     Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
   }
 
-  @Test
-  public void testFloatsGetDescriptionClose() {
-    // These must be distinguishable as strings
-    final Float[] values1 = {0.0f, 1.1f};
-    final Integer[] values2 = {0, 2};
-    for (final Number v1 : values1) {
-      for (final Number v2 : values2) {
-        testFloatsGetDescriptionClose(v1, v2);
-      }
-    }
-  }
-
-  private static void testFloatsGetDescriptionClose(Number relativeError, Number absoluteError) {
-
-    final double inputRelError = relativeError.doubleValue();
-    final float inputAbsError = absoluteError.floatValue();
-
-    // The method assumes the errors must pass the validation in checkErrors(...)
-    try {
-      EqualityUtils.floatsValidateClose(inputRelError, inputAbsError);
-    } catch (final IllegalArgumentException ex) {
-      return;
-    }
-
-    // The raw input
-    final String result = EqualityUtils.floatsGetDescriptionClose(inputRelError, inputAbsError);
-
-    // Handle special case
-    if (inputRelError == 0) {
-      relativeError = -1;
-      if (inputAbsError < 0) {
-        absoluteError = 0;
-      }
-    }
-    if (absoluteError.doubleValue() == 0 && relativeError.doubleValue() > 0) {
-      absoluteError = -1;
-    }
-
-    // Get the expected values in the message
-    final double relError = relativeError.doubleValue();
-    final float absError = absoluteError.floatValue();
-
-    final boolean hasAbs = absError >= 0;
-    final boolean hasRel = relError > 0;
-
-    final String relString = String.valueOf(relError);
-    final String absString = (absError == 0) ? "0" : String.valueOf(absError);
-
-    assertMessageContains(hasRel, result, "|v1-v2|/max", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
-        absoluteError);
-  }
-
   // double Close
 
   @Test
@@ -971,66 +789,6 @@ public class EqualityUtilsTest {
     final double expected2 = actual - Math.nextUp(expected - actual);
     Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
     Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
-  }
-
-  @Test
-  public void testDoublesGetDescriptionClose() {
-    // These must be distinguishable as strings
-    final Double[] values1 = {0.0, 1.1};
-    final Integer[] values2 = {0, 2};
-    for (final Number v1 : values1) {
-      for (final Number v2 : values2) {
-        testDoublesGetDescriptionClose(v1, v2);
-      }
-    }
-  }
-
-  private static void testDoublesGetDescriptionClose(Number relativeError, Number absoluteError) {
-
-    final double inputRelError = relativeError.doubleValue();
-    final double inputAbsError = absoluteError.doubleValue();
-
-    // The method assumes the errors must pass the validation in checkErrors(...)
-    try {
-      EqualityUtils.doublesValidateClose(inputRelError, inputAbsError);
-    } catch (final IllegalArgumentException ex) {
-      return;
-    }
-
-    // The raw input
-    final String result = EqualityUtils.doublesGetDescriptionClose(inputRelError, inputAbsError);
-
-    // Handle special case
-    if (inputRelError == 0) {
-      relativeError = -1;
-      if (inputAbsError < 0) {
-        absoluteError = 0;
-      }
-    }
-    if (absoluteError.doubleValue() == 0 && relativeError.doubleValue() > 0) {
-      absoluteError = -1;
-    }
-
-    // Get the expected values in the message
-    final double relError = relativeError.doubleValue();
-    final double absError = absoluteError.doubleValue();
-
-    final boolean hasAbs = absError >= 0;
-    final boolean hasRel = relError > 0;
-
-    final String relString = String.valueOf(relError);
-    final String absString = (absError == 0) ? "0" : String.valueOf(absError);
-
-    assertMessageContains(hasRel, result, "|v1-v2|/max", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
-        absoluteError);
   }
 
   // long Close
@@ -1142,65 +900,6 @@ public class EqualityUtilsTest {
     Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
   }
 
-  @Test
-  public void testLongsGetDescriptionClose() {
-    // These must be distinguishable as strings
-    final Double[] values1 = {0.0, 1.1};
-    final Long[] values2 = {0L, 2L};
-    for (final Number v1 : values1) {
-      for (final Number v2 : values2) {
-        testLongsGetDescriptionClose(v1, v2);
-      }
-    }
-  }
-
-  private static void testLongsGetDescriptionClose(Number relativeError, Number absoluteError) {
-
-    final double inputRelError = relativeError.doubleValue();
-    final long inputAbsError = absoluteError.longValue();
-
-    try {
-      EqualityUtils.longsValidateClose(inputRelError, inputAbsError);
-    } catch (final IllegalArgumentException ex) {
-      return;
-    }
-
-    // The raw input
-    final String result = EqualityUtils.longsGetDescriptionClose(inputRelError, inputAbsError);
-
-    // Handle special case
-    if (inputRelError == 0) {
-      relativeError = -1;
-      if (inputAbsError < 0) {
-        absoluteError = 0;
-      }
-    }
-    if (absoluteError.longValue() == 0 && relativeError.doubleValue() > 0) {
-      absoluteError = -1;
-    }
-
-    // Get the expected values in the message
-    final double relError = relativeError.doubleValue();
-    final long absError = absoluteError.longValue();
-
-    final boolean hasAbs = absError >= 0;
-    final boolean hasRel = relError > 0;
-
-    final String relString = String.valueOf(relError);
-    final String absString = String.valueOf(absError);
-
-    assertMessageContains(hasRel, result, "|v1-v2|/max", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
-        absoluteError);
-  }
-
   // int Close
 
   @Test
@@ -1310,65 +1009,6 @@ public class EqualityUtilsTest {
     final int expected2 = expected / 2;
     Assertions.assertFalse(EqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
     Assertions.assertFalse(EqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
-  }
-
-  @Test
-  public void testIntsGetDescriptionClose() {
-    // These must be distinguishable as strings
-    final Double[] values1 = {0.0, 1.1};
-    final Integer[] values2 = {0, 2};
-    for (final Number v1 : values1) {
-      for (final Number v2 : values2) {
-        testIntsGetDescriptionClose(v1, v2);
-      }
-    }
-  }
-
-  private static void testIntsGetDescriptionClose(Number relativeError, Number absoluteError) {
-
-    final double inputRelError = relativeError.doubleValue();
-    final int inputAbsError = absoluteError.intValue();
-
-    try {
-      EqualityUtils.intsValidateClose(inputRelError, inputAbsError);
-    } catch (final IllegalArgumentException ex) {
-      return;
-    }
-
-    // The raw input
-    final String result = EqualityUtils.intsGetDescriptionClose(inputRelError, inputAbsError);
-
-    // Handle special case
-    if (inputRelError == 0) {
-      relativeError = -1;
-      if (inputAbsError < 0) {
-        absoluteError = 0;
-      }
-    }
-    if (absoluteError.intValue() == 0 && relativeError.doubleValue() > 0) {
-      absoluteError = -1;
-    }
-
-    // Get the expected values in the message
-    final double relError = relativeError.doubleValue();
-    final int absError = absoluteError.intValue();
-
-    final boolean hasAbs = absError >= 0;
-    final boolean hasRel = relError > 0;
-
-    final String relString = String.valueOf(relError);
-    final String absString = String.valueOf(absError);
-
-    assertMessageContains(hasRel, result, "|v1-v2|/max", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
-        absoluteError);
   }
 
   // short Close
@@ -1693,67 +1333,6 @@ public class EqualityUtilsTest {
         .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
   }
 
-  @Test
-  public void testFloatsGetDescriptionIsCloseTo() {
-    // These must be distinguishable as strings
-    final Float[] values1 = {0.0f, 1.1f};
-    final Integer[] values2 = {0, 2};
-    for (final Number v1 : values1) {
-      for (final Number v2 : values2) {
-        testFloatsGetDescriptionIsCloseTo(v1, v2);
-      }
-    }
-  }
-
-  private static void testFloatsGetDescriptionIsCloseTo(Number relativeError,
-      Number absoluteError) {
-
-    final double inputRelError = relativeError.doubleValue();
-    final float inputAbsError = absoluteError.floatValue();
-
-    // The method assumes the errors must pass the validation in checkErrors(...)
-    try {
-      EqualityUtils.floatsValidateClose(inputRelError, inputAbsError);
-    } catch (final IllegalArgumentException ex) {
-      return;
-    }
-
-    // The raw input
-    final String result = EqualityUtils.floatsGetDescriptionIsCloseTo(inputRelError, inputAbsError);
-
-    // Handle special case
-    if (inputRelError == 0) {
-      relativeError = -1;
-      if (inputAbsError < 0) {
-        absoluteError = 0;
-      }
-    }
-    if (absoluteError.doubleValue() == 0 && relativeError.doubleValue() > 0) {
-      absoluteError = -1;
-    }
-
-    // Get the expected values in the message
-    final double relError = relativeError.doubleValue();
-    final float absError = absoluteError.floatValue();
-
-    final boolean hasAbs = absError >= 0;
-    final boolean hasRel = relError > 0;
-
-    final String relString = String.valueOf(relError);
-    final String absString = (absError == 0) ? "0" : String.valueOf(absError);
-
-    assertMessageContains(hasRel, result, "|v1-v2|/|v1|", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
-        absoluteError);
-  }
-
   // double Close
 
   @Test
@@ -1854,68 +1433,6 @@ public class EqualityUtilsTest {
     final double expected2 = actual - Math.nextUp(expected - actual);
     Assertions
         .assertFalse(EqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
-  }
-
-  @Test
-  public void testDoublesGetDescriptionIsCloseTo() {
-    // These must be distinguishable as strings
-    final Double[] values1 = {0.0, 1.1};
-    final Integer[] values2 = {0, 2};
-    for (final Number v1 : values1) {
-      for (final Number v2 : values2) {
-        testDoublesGetDescriptionIsCloseTo(v1, v2);
-      }
-    }
-  }
-
-  private static void testDoublesGetDescriptionIsCloseTo(Number relativeError,
-      Number absoluteError) {
-
-    final double inputRelError = relativeError.doubleValue();
-    final double inputAbsError = absoluteError.doubleValue();
-
-    // The method assumes the errors must pass the validation in checkErrors(...)
-    try {
-      EqualityUtils.doublesValidateClose(inputRelError, inputAbsError);
-    } catch (final IllegalArgumentException ex) {
-      return;
-    }
-
-    // The raw input
-    final String result =
-        EqualityUtils.doublesGetDescriptionIsCloseTo(inputRelError, inputAbsError);
-
-    // Handle special case
-    if (inputRelError == 0) {
-      relativeError = -1;
-      if (inputAbsError < 0) {
-        absoluteError = 0;
-      }
-    }
-    if (absoluteError.doubleValue() == 0 && relativeError.doubleValue() > 0) {
-      absoluteError = -1;
-    }
-
-    // Get the expected values in the message
-    final double relError = relativeError.doubleValue();
-    final double absError = absoluteError.doubleValue();
-
-    final boolean hasAbs = absError >= 0;
-    final boolean hasRel = relError > 0;
-
-    final String relString = String.valueOf(relError);
-    final String absString = (absError == 0) ? "0" : String.valueOf(absError);
-
-    assertMessageContains(hasRel, result, "|v1-v2|/|v1|", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
-        absoluteError);
   }
 
   // long IsCloseTo
@@ -2034,65 +1551,6 @@ public class EqualityUtilsTest {
         .assertFalse(EqualityUtils.isCloseTo(actual2, expected, relativeError, absoluteError));
   }
 
-  @Test
-  public void testLongsGetDescriptionIsCloseTo() {
-    // These must be distinguishable as strings
-    final Double[] values1 = {0.0, 1.1};
-    final Long[] values2 = {0L, 2L};
-    for (final Number v1 : values1) {
-      for (final Number v2 : values2) {
-        testLongsGetDescriptionIsCloseTo(v1, v2);
-      }
-    }
-  }
-
-  private static void testLongsGetDescriptionIsCloseTo(Number relativeError, Number absoluteError) {
-
-    final double inputRelError = relativeError.doubleValue();
-    final long inputAbsError = absoluteError.longValue();
-
-    try {
-      EqualityUtils.longsValidateIsCloseTo(inputRelError, inputAbsError);
-    } catch (final IllegalArgumentException ex) {
-      return;
-    }
-
-    // The raw input
-    final String result = EqualityUtils.longsGetDescriptionIsCloseTo(inputRelError, inputAbsError);
-
-    // Handle special case
-    if (inputRelError == 0) {
-      relativeError = -1;
-      if (inputAbsError < 0) {
-        absoluteError = 0;
-      }
-    }
-    if (absoluteError.longValue() == 0 && relativeError.doubleValue() > 0) {
-      absoluteError = -1;
-    }
-
-    // Get the expected values in the message
-    final double relError = relativeError.doubleValue();
-    final long absError = absoluteError.longValue();
-
-    final boolean hasAbs = absError >= 0;
-    final boolean hasRel = relError > 0;
-
-    final String relString = String.valueOf(relError);
-    final String absString = String.valueOf(absError);
-
-    assertMessageContains(hasRel, result, "|v1-v2|/|v1|", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
-        absoluteError);
-  }
-
   // int IsCloseTo
 
   @Test
@@ -2208,65 +1666,6 @@ public class EqualityUtilsTest {
     // Expected is within 1.0 of actual
     Assertions
         .assertFalse(EqualityUtils.isCloseTo(actual2, expected, relativeError, absoluteError));
-  }
-
-  @Test
-  public void testIntsGetDescriptionIsCloseTo() {
-    // These must be distinguishable as strings
-    final Double[] values1 = {0.0, 1.1};
-    final Integer[] values2 = {0, 2};
-    for (final Number v1 : values1) {
-      for (final Number v2 : values2) {
-        testIntsGetDescriptionIsCloseTo(v1, v2);
-      }
-    }
-  }
-
-  private static void testIntsGetDescriptionIsCloseTo(Number relativeError, Number absoluteError) {
-
-    final double inputRelError = relativeError.doubleValue();
-    final int inputAbsError = absoluteError.intValue();
-
-    try {
-      EqualityUtils.intsValidateIsCloseTo(inputRelError, inputAbsError);
-    } catch (final IllegalArgumentException ex) {
-      return;
-    }
-
-    // The raw input
-    final String result = EqualityUtils.intsGetDescriptionIsCloseTo(inputRelError, inputAbsError);
-
-    // Handle special case
-    if (inputRelError == 0) {
-      relativeError = -1;
-      if (inputAbsError < 0) {
-        absoluteError = 0;
-      }
-    }
-    if (absoluteError.intValue() == 0 && relativeError.doubleValue() > 0) {
-      absoluteError = -1;
-    }
-
-    // Get the expected values in the message
-    final double relError = relativeError.doubleValue();
-    final int absError = absoluteError.intValue();
-
-    final boolean hasAbs = absError >= 0;
-    final boolean hasRel = relError > 0;
-
-    final String relString = String.valueOf(relError);
-    final String absString = String.valueOf(absError);
-
-    assertMessageContains(hasRel, result, "|v1-v2|/|v1|", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
-        absoluteError);
-    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
-        absoluteError);
-    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
-        absoluteError);
   }
 
   // short IsCloseTo

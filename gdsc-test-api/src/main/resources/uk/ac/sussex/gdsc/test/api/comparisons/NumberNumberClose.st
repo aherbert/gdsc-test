@@ -1,21 +1,21 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.function.<Float><Float>BiPredicate;
+import uk.ac.sussex.gdsc.test.api.function.<Number><Number>BiPredicate;
 
 import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
- * Tests {@code <float>} equality using a relative and/or an absolute error tolerance.
+ * Tests {@code <number>} equality using a relative and/or an absolute error tolerance.
  *
  * \<p>The computed relative error is symmetric and the test is equivalent to testing convergence of
  * two values.
  *
- * @see <Float><Float>BiPredicate#test(<float>, <float>)
- * @see EqualityUtils#areClose(<float>, <float>, double, <float>)
+ * @see <Number><Number>BiPredicate#test(<number>, <number>)
+ * @see EqualityUtils#areClose(<number>, <number>, double, <number>)
  */
-public class <Float><Float>Close
-    implements <Float><Float>BiPredicate, Supplier\<String>, Serializable {
+public class <Number><Number>Close
+    implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
   private static final long serialVersionUID = 1L;
@@ -23,10 +23,10 @@ public class <Float><Float>Close
   /** The relative error. */
   private final double relativeError;
   /** The absolute error. */
-  private final <float> absoluteError;
+  private final <errorType> absoluteError;
 
   /**
-   * Create a predicate to test two {@code <float>} values are close using a relative and/or
+   * Create a predicate to test two {@code <number>} values are close using a relative and/or
    * absolute error. The relative error between values {@code value1} and {@code value2} is
    * relative to the largest magnitude of the two values and the test is:
    *
@@ -42,10 +42,11 @@ public class <Float><Float>Close
    * @param absoluteError The maximum absolute error between \<code>value1\</code> and
    *        \<code>value2\</code> for which both numbers are still considered equal.
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @throws IllegalArgumentException If the absolute error is not positive or is
+   *         <code>>=</code> than the maximum difference between <number> primitives
    */
-  public <Float><Float>Close(double relativeError, <float> absoluteError) {
-    EqualityUtils.<float>sValidateClose(relativeError, absoluteError);
+  public <Number><Number>Close(double relativeError, <errorType> absoluteError) {
+    EqualityUtils.<number>sValidateClose(relativeError, absoluteError);
     this.relativeError = relativeError;
     this.absoluteError = absoluteError;
   }
@@ -53,15 +54,15 @@ public class <Float><Float>Close
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that two <float>s are close using a relative and/or an absolute
+   * \<p>Tests that two <number>s are close using a relative and/or an absolute
    * error tolerance.
    *
    * @return true if close
    */
   @Override
-  public boolean test(<float> value1, <float> value2) {
+  public boolean test(<number> value1, <number> value2) {
     // Errors have been checked so use the package level method
-    return EqualityUtils.<float>sTestClose(value1, value2, relativeError, absoluteError);
+    return EqualityUtils.<number>sTestClose(value1, value2, relativeError, absoluteError);
   }
 
   /**
@@ -71,6 +72,6 @@ public class <Float><Float>Close
    */
   @Override
   public String get() {
-    return EqualityUtils.<float>sGetDescriptionClose(relativeError, absoluteError);
+    return DescriptionHelper.getDescriptionClose(relativeError, absoluteError);
   }
 }
