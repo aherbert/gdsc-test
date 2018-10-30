@@ -22,6 +22,10 @@ Generates Java classes for the GDSC Test project.
     <parent.dir>${basedir}/..</parent.dir>
     <uberjar.name>codegenerator</uberjar.name>
     <project.mainClass>uk.ac.sussex.gdsc.test.generator.CodeGenerator</project.mainClass>
+    <stringtemplate.version>4.0.2</stringtemplate.version>
+    <picocli.version>3.5.2</picocli.version>
+    <commons.io.version>2.6</commons.io.version>
+    <commons.csv.version>1.6</commons.csv.version>
   </properties>
 
   <dependencies>
@@ -29,23 +33,23 @@ Generates Java classes for the GDSC Test project.
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>stringtemplate</artifactId>
-      <version>4.0.2</version>
+      <version>${stringtemplate.version}</version>
     </dependency>
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
-      <version>3.5.2</version>
+      <version>${picocli.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.6</version>
+      <version>${commons.io.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-csv</artifactId>
-      <version>1.6</version>
+      <version>${commons.csv.version}</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
