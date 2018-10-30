@@ -86,14 +86,14 @@ public final class StringTemplateModel {
       "strlen", "reverse", "if", "else", "elseif", "endif", "delimiters", "package");
 
   /**
-   * The CSV format for parsing values. This is space (' ') delimited with optional '"' value
-   * encapsulators and option for the null string using "\\N".
+   * The CSV format for parsing values. This is space (' ') delimited with optional double-quote
+   * ('"') field quote character and options for the null string using "\\N".
    */
-  private static final CSVFormat csvFormat;
+  private static final CSVFormat CSV_FORMAT;
 
   static {
     // The default uses ',' and '"' for the optional field delimiter
-    csvFormat = CSVFormat.DEFAULT.withDelimiter(' ').withEscape('\\').withNullString("\\N");
+    CSV_FORMAT = CSVFormat.DEFAULT.withDelimiter(' ').withEscape('\\').withNullString("\\N");
   }
 
   /** The package name. */
@@ -403,7 +403,7 @@ public final class StringTemplateModel {
     }
     try (StringReader reader = new StringReader(value.trim())) {
       // Note: There should always be a record as value is not null
-      final List<CSVRecord> records = csvFormat.parse(reader).getRecords();
+      final List<CSVRecord> records = CSV_FORMAT.parse(reader).getRecords();
       final CSVRecord record = records.get(0);
       final List<String> values = new ArrayList<>(record.size());
       for (final String field : record) {

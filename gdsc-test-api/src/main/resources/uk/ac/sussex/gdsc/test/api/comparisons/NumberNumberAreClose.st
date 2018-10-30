@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * two values.
  *
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see EqualityUtils#areClose(<number>, <number>, double, <number>)
+ * @see <Number>EqualityUtils#areClose(<number>, <number>, double, <errorType>)
  */
 public class <Number><Number>AreClose
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {

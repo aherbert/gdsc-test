@@ -44,8 +44,6 @@ import java.util.stream.Stream;
  */
 public class RandomSeedSource implements ArgumentsProvider {
 
-  private static final int ONE = 1;
-
   /**
    * A reference to the last seed sequence.
    *
@@ -60,6 +58,8 @@ public class RandomSeedSource implements ArgumentsProvider {
    * <p>Package scope for testing.
    */
   static class SeedSequence {
+    /** The constant 1. */
+    private static final int ONE = 1;
 
     /** The random seed. */
     private final RandomSeed randomSeed;

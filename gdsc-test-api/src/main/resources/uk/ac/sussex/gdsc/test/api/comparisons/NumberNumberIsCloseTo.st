@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * {@code actual} falls within a relative and/or absolute range of {@code expected}.
  *
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see EqualityUtils#areClose(<number>, <number>, double, <number>)
+ * @see <Number>EqualityUtils#isCloseTo(<number>, <number>, double, <errorType>)
  */
 public class <Number><Number>IsCloseTo
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {

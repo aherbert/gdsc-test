@@ -106,9 +106,9 @@ public class ByteScrambler {
 
     // Create a digest for each block of the original seed
     messageDigest = new MessageDigest[blocks];
-    messageDigest[0] = md;
-    for (int i = 1; i < blocks; i++) {
-      // It must be cloneable to support staged computation
+    // It must be cloneable to support staged computation, so clone all positions
+    // including index 0.
+    for (int i = 0; i < blocks; i++) {
       messageDigest[i] = (MessageDigest) md.clone();
     }
   }

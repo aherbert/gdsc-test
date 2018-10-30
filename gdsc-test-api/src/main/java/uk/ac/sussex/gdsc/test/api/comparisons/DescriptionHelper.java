@@ -41,6 +41,8 @@ final class DescriptionHelper {
   private static final long IGNORE_LONG_ABSOLUTE_ERROR = -1;
   /** Constant used to ignore the int absolute error. */
   private static final int IGNORE_INT_ABSOLUTE_ERROR = -1;
+  /** The description string for joining two conditions using a logical 'or'. */
+  private static final String DESCRIPTION_OR = " || ";
   /**
    * The description of symmetric relative error {@code <=}.
    */
@@ -386,7 +388,7 @@ final class DescriptionHelper {
     if (testAbsoluteError >= 0) {
       // Add combined operator
       if (sb.length() != 0) {
-        sb.append(" || ");
+        sb.append(DESCRIPTION_OR);
       }
       // This may be == or <=
       if (testAbsoluteError == 0) {
@@ -429,7 +431,7 @@ final class DescriptionHelper {
     if (testAbsoluteError >= 0) {
       // Add combined operator
       if (sb.length() != 0) {
-        sb.append(" || ");
+        sb.append(DESCRIPTION_OR);
       }
       // This may be == or <=
       if (testAbsoluteError == 0) {
@@ -472,7 +474,7 @@ final class DescriptionHelper {
     if (testAbsoluteError >= 0) {
       // Add combined operator
       if (sb.length() != 0) {
-        sb.append(" || ");
+        sb.append(DESCRIPTION_OR);
       }
       // This may be == or <=
       if (testAbsoluteError == 0) {
@@ -515,7 +517,7 @@ final class DescriptionHelper {
     if (testAbsoluteError >= 0) {
       // Add combined operator
       if (sb.length() != 0) {
-        sb.append(" || ");
+        sb.append(DESCRIPTION_OR);
       }
       // This may be == or <=
       if (testAbsoluteError == 0) {

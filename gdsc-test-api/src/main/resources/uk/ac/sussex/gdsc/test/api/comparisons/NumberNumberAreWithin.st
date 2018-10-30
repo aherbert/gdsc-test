@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Tests {@code <number>} equality using an absolute error tolerance.
  *
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see EqualityUtils#areWithin(<number>, <number>, <errorType>)
+ * @see <Number>EqualityUtils#areWithin(<number>, <number>, <errorType>)
  */
 public class <Number><Number>Are<Within>
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
