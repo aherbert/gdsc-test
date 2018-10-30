@@ -24,6 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -66,9 +71,6 @@ public final class StringTemplateModel {
   /** The regular expression for a package name. */
   private static final String PACKAGE_REGEX = "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)*$";
 
-  /** The regular expression for whitespace. */
-  private static final String WHITESPACE_REGEX = "\\p{javaSpaceChar}{1,}";
-
   /** The compiled pattern to split the key into scope and pattern. */
   private static final Pattern SPLIT_PATTERN = Pattern.compile(SPLIT_REGEX);
 
@@ -78,13 +80,21 @@ public final class StringTemplateModel {
   /** The compiled pattern for a package name. */
   private static final Pattern PACKAGE_PATTERN = Pattern.compile(PACKAGE_REGEX);
 
-  /** The compiled pattern for whitespace. */
-  private static final Pattern WHITESPACE_PATTERN = Pattern.compile(WHITESPACE_REGEX);
-
   /** The list of reserved substitution words. */
   private static final List<String> RESERVED = Arrays.asList("true", "false", "import", "default",
       "key", "group", "implements", "first", "last", "rest", "trunc", "strip", "trim", "length",
       "strlen", "reverse", "if", "else", "elseif", "endif", "delimiters", "package");
+
+  /**
+   * The CSV format for parsing values. This is space (' ') delimited with optional '"' value
+   * encapsulators and option for the null string using "\\N".
+   */
+  private static final CSVFormat csvFormat;
+
+  static {
+    // The default uses ',' and '"' for the optional field delimiter
+    csvFormat = CSVFormat.DEFAULT.withDelimiter(' ').withEscape('\\').withNullString("\\N");
+  }
 
   /** The package name. */
   private final String packageName;
@@ -380,7 +390,7 @@ public final class StringTemplateModel {
   }
 
   /**
-   * Split the string value into a list using whitespace.
+   * Split the key value into a list using whitespace.
    *
    * @param key the key
    * @param value the value
@@ -391,9 +401,19 @@ public final class StringTemplateModel {
     if (StringUtils.isNullOrEmpty(value)) {
       throw new InvalidModelException("Substitution value is empty for key: " + key);
     }
-    final String[] values = WHITESPACE_PATTERN.split(value.trim());
-    removeBrackets(values);
-    return Arrays.asList(values);
+    try (StringReader reader = new StringReader(value.trim())) {
+      // Note: There should always be a record as value is not null
+      final List<CSVRecord> records = csvFormat.parse(reader).getRecords();
+      final CSVRecord record = records.get(0);
+      final List<String> values = new ArrayList<>(record.size());
+      for (final String field : record) {
+        values.add(field);
+      }
+      return values;
+    } catch (final IOException ex) {
+      // This should not happen with a non-null string
+      throw new InvalidModelException("Failed to read value: " + value, ex);
+    }
   }
 
   /**
@@ -406,24 +426,10 @@ public final class StringTemplateModel {
    */
   private static List<Object> splitValueToObject(String key, String value)
       throws InvalidModelException {
-    if (StringUtils.isNullOrEmpty(value)) {
-      throw new InvalidModelException("Substitution value is empty for key: " + key);
-    }
-    // Currently advanced splitting to multiple value is not supported
-    final String[] values = WHITESPACE_PATTERN.split(value.trim());
-    removeBrackets(values);
-    return Arrays.asList((Object[]) values);
-  }
-
-  /**
-   * Replace the skip sequence in each substitution with the empty string.
-   *
-   * @param values the values
-   */
-  private static void removeBrackets(String[] values) {
-    for (int i = 0; i < values.length; i++) {
-      values[i] = StringUtils.trimBrackets(values[i]);
-    }
+    // This currently just converts to a list of objects.
+    // Future StringTemplate support could split individual fields into lists,
+    // i.e. each Object is either a String or List<String>.
+    return new ArrayList<>(splitValue(key, value));
   }
 
   /**

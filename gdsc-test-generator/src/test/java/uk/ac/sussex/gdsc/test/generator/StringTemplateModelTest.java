@@ -119,7 +119,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateUsingBracketsSequence() throws InvalidModelException {
+  public void testCreateUsingSpecialValues() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
@@ -127,8 +127,8 @@ public class StringTemplateModelTest {
 
     // OK
     properties.put("classname.My", "His Her Your");
-    properties.put("class.Anything", "value1 [] value3");
-    properties.put("template.Other", "[] value2");
+    properties.put("class.Anything", "value1 \\N value3");
+    properties.put("template.Other", "\"\" value2 \\N \" \"");
 
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
@@ -154,12 +154,12 @@ public class StringTemplateModelTest {
 
     final Pair<String, List<Object>> classPair = classScope.get(0);
     Assertions.assertEquals("Anything", classPair.first, "Missing class scope substitution");
-    Assertions.assertEquals(Arrays.asList("value1", "", "value3"), classPair.second,
+    Assertions.assertEquals(Arrays.asList("value1", null, "value3"), classPair.second,
         "Missing class scope values");
 
     final Pair<String, List<Object>> templatePair = templateScope.get(0);
     Assertions.assertEquals("Other", templatePair.first, "Missing template scope substitution");
-    Assertions.assertEquals(Arrays.asList("", "value2"), templatePair.second,
+    Assertions.assertEquals(Arrays.asList("", "value2", null, " "), templatePair.second,
         "Missing template scope values");
   }
 

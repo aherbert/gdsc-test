@@ -241,7 +241,7 @@ public class StringTemplateHelperTest {
     final String template = "<gender>";
 
     properties.put("classname.My", "His Her");
-    properties.put("class.gender", "Male []");
+    properties.put("class.gender", "Male \"\"");
 
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
