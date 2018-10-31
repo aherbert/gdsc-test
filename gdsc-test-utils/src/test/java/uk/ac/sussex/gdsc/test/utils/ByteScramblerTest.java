@@ -174,6 +174,8 @@ public class ByteScramblerTest {
         MessageDigest.getInstance(NO_LENGTH).getClass());
     Assertions.assertEquals(NoCloneableMessageDigest.class,
         MessageDigest.getInstance(NO_CLONEABLE).getClass());
+    Assertions.assertEquals(OneTimeCloneableMessageDigest.class,
+        MessageDigest.getInstance(ONE_TIME_CLONEABLE).getClass());
   }
 
   @SuppressWarnings("unused")
