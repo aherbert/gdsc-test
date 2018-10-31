@@ -67,6 +67,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <license.licenseName>gpl_v3</license.licenseName>
     <license.copyrightOwners>Alex Herbert</license.copyrightOwners>
     <license.projectName>${project.description}</license.projectName>
+    <!-- Fix -->
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}</parent.dir>
     <!-- Versions -->
@@ -279,6 +280,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
             <!-- Set JUL Formatting -->
             <java.util.logging.SimpleFormatter.format><![CDATA[%4$-7s %2$s %5$s%6$s%n]]></java.util.logging.SimpleFormatter.format>
           </systemPropertyVariables>
+          <!-- Fix for OpenJDK 8 now validating class-path attributes in Jar manifests. See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=912333#63 -->
+          <useSystemClassLoader>false</useSystemClassLoader>
         </configuration>
         <dependencies>
           <dependency>
