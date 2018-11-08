@@ -1,7 +1,5 @@
 <package>
 
-import static java.util.stream.Collectors.joining;
-
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ByteByteBiPredicate;
@@ -21,6 +19,7 @@ import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
 
 import java.util.Deque;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Adds additional helper assertion utility functions.
@@ -85,7 +84,7 @@ final class TestAssertionUtils {
       return "";
     }
     final String indexesString =
-        indexes.stream().map(Object::toString).collect(joining("][", "[", "]"));
+        indexes.stream().map(Object::toString).collect(Collectors.joining("][", "[", "]"));
     return " at index " + indexesString;
   }<types,Types,Classes:{type,Type,Class |
 <\n>

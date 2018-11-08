@@ -24,7 +24,7 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
-import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
+import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -64,7 +64,7 @@ public class TestSettingsTest {
       final byte[] seed2 = TestSettings.getSeed();
       Assertions.assertArrayEquals(seed, seed2, "Seed should be constant");
       Assertions.assertNotSame(seed, seed2, "Seed should be a new array");
-      logger.log(TEST_INFO,
+      logger.log(TestLevel.TEST_INFO,
           () -> String.format("TestSettings Seed = %s", HexUtils.encodeHexString(seed)));
 
       // Test setting the seed to null
@@ -103,14 +103,15 @@ public class TestSettingsTest {
     if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_REPEATS, 0) == 0) {
       Assertions.assertEquals(1, repeats);
     }
-    logger.log(TEST_INFO, () -> String.format("TestSettings Repeats = %d", repeats));
+    logger.log(TestLevel.TEST_INFO, () -> String.format("TestSettings Repeats = %d", repeats));
   }
 
   @Test
   public void testGetComplexity() {
     // Currently no restrictions on complexity
     final int complexity = TestSettings.getTestComplexity();
-    logger.log(TEST_INFO, () -> String.format("TestSettings Test Complexity = %d", complexity));
+    logger.log(TestLevel.TEST_INFO,
+        () -> String.format("TestSettings Test Complexity = %d", complexity));
   }
 
   @Test

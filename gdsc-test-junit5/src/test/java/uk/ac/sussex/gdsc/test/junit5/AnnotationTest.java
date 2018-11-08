@@ -24,9 +24,8 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
-import static uk.ac.sussex.gdsc.test.utils.TestLog.TestLevel.TEST_INFO;
-
 import uk.ac.sussex.gdsc.test.utils.HexUtils;
+import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -75,20 +74,20 @@ public class AnnotationTest {
   @Test
   @EnabledIf("'CI' == systemEnvironment.get('ENV')")
   public void canAnnotateEnableIf(TestInfo info) {
-    logger.log(TEST_INFO, info.getTestMethod().get().getName());
+    logger.log(TestLevel.TEST_INFO, info.getTestMethod().get().getName());
   }
 
   @ParameterizedTest
   @ArgumentsSource(RandomSeedSource.class)
   public void canDynamicallyProvideSeedsFromRandomSeedSource(RandomSeed seed, TestInfo info) {
-    logger.log(TEST_INFO,
+    logger.log(TestLevel.TEST_INFO,
         () -> String.format("%s seed = %d (%d/%d)", info.getTestMethod().get().getName(),
             seed.getSeed(), seed.getCurrentRepetition(), seed.getTotalRepetitions()));
   }
 
   @SeededTest
   public void canAnnotateSeededTest(RandomSeed seed, TestInfo info) {
-    logger.log(TEST_INFO,
+    logger.log(TestLevel.TEST_INFO,
         () -> String.format("%s seed = %s (%d/%d)", info.getTestMethod().get().getName(),
             HexUtils.encodeHexString(seed.getSeed()), seed.getCurrentRepetition(),
             seed.getTotalRepetitions()));
