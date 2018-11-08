@@ -33,7 +33,7 @@ import java.util.logging.LogRecord;
 /**
  * Class used to log messages.
  */
-public final class TestLog {
+public final class TestLogUtils {
   /**
    * Extend {@link Level} to add levels for test logging.
    */
@@ -195,7 +195,7 @@ public final class TestLog {
   /**
    * Do not allow public construction.
    */
-  private TestLog() {}
+  private TestLogUtils() {}
 
   /**
    * Gets the code point (ClassName:MethodName:LineNumber) marking the position where this method
