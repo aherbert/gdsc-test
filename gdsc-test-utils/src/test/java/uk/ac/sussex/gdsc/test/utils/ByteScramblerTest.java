@@ -49,6 +49,9 @@ public class ByteScramblerTest {
   public static class ByteScramblerTestProvider extends Provider {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new byte scrambler test provider.
+     */
     public ByteScramblerTestProvider() {
       super("ByteScramblerTest", 1.0, "ByteScramblerTest Security Provider v1.0");
       put("MessageDigest." + NO_LENGTH,
@@ -74,10 +77,10 @@ public class ByteScramblerTest {
     }
 
     @Override
-    public void engineUpdate(byte b) {}
+    public void engineUpdate(byte value) {}
 
     @Override
-    public void engineUpdate(byte b[], int offset, int length) {}
+    public void engineUpdate(byte[] value, int offset, int length) {}
 
     @Override
     public void engineReset() {}
@@ -102,10 +105,10 @@ public class ByteScramblerTest {
     }
 
     @Override
-    public void engineUpdate(byte b) {}
+    public void engineUpdate(byte value) {}
 
     @Override
-    public void engineUpdate(byte b[], int offset, int length) {}
+    public void engineUpdate(byte[] value, int offset, int length) {}
 
     @Override
     public void engineReset() {}
@@ -132,10 +135,10 @@ public class ByteScramblerTest {
     }
 
     @Override
-    public void engineUpdate(byte b) {}
+    public void engineUpdate(byte value) {}
 
     @Override
-    public void engineUpdate(byte b[], int offset, int length) {}
+    public void engineUpdate(byte[] value, int offset, int length) {}
 
     @Override
     public void engineReset() {}

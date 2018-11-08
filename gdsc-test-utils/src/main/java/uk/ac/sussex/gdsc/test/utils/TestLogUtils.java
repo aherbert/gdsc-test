@@ -33,7 +33,7 @@ import java.util.logging.LogRecord;
 /**
  * Class used to log messages.
  */
-public class TestLog {
+public final class TestLog {
   /**
    * Extend {@link Level} to add levels for test logging.
    */
