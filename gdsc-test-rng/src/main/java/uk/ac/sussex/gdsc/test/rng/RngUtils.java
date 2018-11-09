@@ -27,7 +27,7 @@ package uk.ac.sussex.gdsc.test.rng;
 import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
-import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.rng.RestorableUniformRandomProvider;
 import org.apache.commons.rng.core.source64.SplitMix64;
 import org.apache.commons.rng.simple.RandomSource;
 
@@ -36,11 +36,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A factory for creation of random number generators (RNG) that implement
- * {@link UniformRandomProvider}.
+ * {@link RestorableUniformRandomProvider}.
  */
 public final class RngUtils {
 
-  /** Store the seeds for the UniformRandomProvider. */
+  /** Store the seeds for the RestorableUniformRandomProvider. */
   private static final Map<Long, int[]> seedCache = new ConcurrentHashMap<>();
 
   /**
@@ -62,7 +62,7 @@ public final class RngUtils {
    * @return the uniform random provider
    * @see #create(long, boolean)
    */
-  public static UniformRandomProvider create(byte[] seed) {
+  public static RestorableUniformRandomProvider create(byte[] seed) {
     return create(seed, true);
   }
 
@@ -79,7 +79,7 @@ public final class RngUtils {
    * @param cache Set to true to enable the cache
    * @return the uniform random provider
    */
-  public static UniformRandomProvider create(byte[] seed, boolean cache) {
+  public static RestorableUniformRandomProvider create(byte[] seed, boolean cache) {
     if (SeedUtils.nullOrEmpty(seed)) {
       return RandomSource.create(RandomSource.MWC_256);
     }
@@ -108,7 +108,7 @@ public final class RngUtils {
    * @return the uniform random provider
    * @see #create(long, boolean)
    */
-  public static UniformRandomProvider create(long seed) {
+  public static RestorableUniformRandomProvider create(long seed) {
     return create(seed, true);
   }
 
@@ -126,7 +126,7 @@ public final class RngUtils {
    * @param cache Set to true to enable the cache
    * @return the uniform random provider
    */
-  public static UniformRandomProvider create(long seed, boolean cache) {
+  public static RestorableUniformRandomProvider create(long seed, boolean cache) {
     final int[] fullSeed = (cache)
         // Use the cache
         ? seedCache.computeIfAbsent(seed, RngUtils::generateMwc256Seed)
@@ -162,7 +162,7 @@ public final class RngUtils {
    *
    * @return the uniform random provider
    */
-  public static UniformRandomProvider createWithFixedSeed() {
+  public static RestorableUniformRandomProvider createWithFixedSeed() {
     return create(TestSettings.getSeed());
   }
 }
