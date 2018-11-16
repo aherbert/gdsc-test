@@ -29,6 +29,8 @@ Contains a generic framework for test predicates.
       <groupId>uk.ac.sussex.gdsc</groupId>
       <artifactId>gdsc-test-generator</artifactId>
       <version>${project.version}</version>
+      <!-- Only needed for compilation -->
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -55,6 +57,7 @@ Contains a generic framework for test predicates.
               <goal>exec</goal>
             </goals>
             <configuration>
+              <classpathScope>compile</classpathScope>
               <executable>java</executable>
               <arguments>
                 <argument>-classpath</argument>
@@ -75,6 +78,7 @@ Contains a generic framework for test predicates.
               <goal>exec</goal>
             </goals>
             <configuration>
+              <classpathScope>compile</classpathScope>
               <executable>java</executable>
               <arguments>
                 <argument>-classpath</argument>
