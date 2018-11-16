@@ -353,14 +353,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <failOnViolation>false</failOnViolation>
           <printFailingErrors>false</printFailingErrors>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-              <goal>cpd-check</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
@@ -372,13 +364,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <effort>Default</effort>
           <excludeFilterFile>${parent.dir}/src/main/resources/spotbugs/spotbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
