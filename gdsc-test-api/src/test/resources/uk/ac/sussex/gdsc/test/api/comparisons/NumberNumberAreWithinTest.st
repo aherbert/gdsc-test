@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class <Number><Number>Are<Within>Test {
 
   /**
-   * Test {@link <Number><Number><Within>#test(<number>, <number>)}.
+   * Test {@link <Number><Number>Are<Within>#test(<number>, <number>)}.
    */
   @Test
   public void testTest() {
