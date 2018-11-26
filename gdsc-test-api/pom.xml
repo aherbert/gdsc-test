@@ -28,7 +28,7 @@ Contains a generic framework for test predicates.
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
       <artifactId>gdsc-test-generator</artifactId>
-      <version>${project.version}</version>
+      <version>1.0-SNAPSHOT</version>
       <!-- Only needed for compilation -->
       <scope>provided</scope>
     </dependency>
