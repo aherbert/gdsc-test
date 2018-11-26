@@ -17,7 +17,7 @@ public class <Type><Type>Equals
   private static final long serialVersionUID = 1L;
 
   /** A default instance. */
-  private static final <Type><Type>Equals INSTANCE = new <Type><Type>Equals();
+  public static final <Type><Type>Equals INSTANCE = new <Type><Type>Equals();
 
   /**
    * {@inheritDoc}
@@ -39,14 +39,5 @@ public class <Type><Type>Equals
   @Override
   public String get() {
     return "value1 == value2";
-  }
-
-  /**
-   * Gets an instance.
-   *
-   * @return an instance
-   */
-  public static <Type><Type>Equals getInstance() {
-    return INSTANCE;
   }
 }

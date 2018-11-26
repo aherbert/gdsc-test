@@ -15,7 +15,7 @@ public class <Float>Is<Special>Test {
    */
   @Test
   public void testTest() {
-    final <Float>Is<Special> predicate = <Float>Is<Special>.getInstance();
+    final <Float>Is<Special> predicate = <Float>Is<Special>.INSTANCE;
     final <float>[] values = ApiTestUtils.get<Float>Values();
     for (<float> value : values) {
       Assertions.assertEquals(<Float>.is<Special>(value), predicate.test(value),

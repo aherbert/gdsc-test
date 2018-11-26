@@ -114,7 +114,7 @@ public final class TestHelper {
    * @return the predicate
    */
   public static <Type><Type>BiPredicate <type>sEqual() {
-    return <Type><Type>Equals.getInstance();
+    return <Type><Type>Equals.INSTANCE;
   \}}><floats,Floats,Ints:{float,Float,Int |
 <\n>
   /**
@@ -135,7 +135,7 @@ public final class TestHelper {
    * @return the predicate
    */
   public static <Float><Float>BiPredicate <float>sCmp() {
-    return <Float><Float>Cmp.getInstance();
+    return <Float><Float>Cmp.INSTANCE;
   \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
 <\n>
   /**
@@ -318,6 +318,6 @@ public final class TestHelper {
    * @see <Float>#is<Special>(<float>)
    */
   public static <Float>Predicate <float>Is<Special>() {
-    return <Float>Is<Special>.getInstance();
+    return <Float>Is<Special>.INSTANCE;
   \}}>}>
 }

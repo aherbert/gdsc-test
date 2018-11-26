@@ -15,7 +15,7 @@ public class <Type><Type>EqualsTest {
    */
   @Test
   public void testTest() {
-    final <Type><Type>Equals predicate = <Type><Type>Equals.getInstance();
+    final <Type><Type>Equals predicate = <Type><Type>Equals.INSTANCE;
     final <type>[] values = ApiTestUtils.get<Type>Values();
     for (<type> value1 : values) {
       for (<type> value2 : values) {

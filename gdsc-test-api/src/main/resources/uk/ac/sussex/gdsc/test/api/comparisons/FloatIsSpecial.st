@@ -18,7 +18,7 @@ public class <Float>Is<Special>
   private static final long serialVersionUID = 1L;
 
   /** A default instance. */
-  private static final <Float>Is<Special> INSTANCE = new <Float>Is<Special>();
+  public static final <Float>Is<Special> INSTANCE = new <Float>Is<Special>();
 
   /**
    * {@inheritDoc}
@@ -41,14 +41,5 @@ public class <Float>Is<Special>
   @Override
   public String get() {
     return "value is <Special>";
-  }
-
-  /**
-   * Gets an instance.
-   *
-   * @return an instance
-   */
-  public static <Float>Is<Special> getInstance() {
-    return INSTANCE;
   }
 }
