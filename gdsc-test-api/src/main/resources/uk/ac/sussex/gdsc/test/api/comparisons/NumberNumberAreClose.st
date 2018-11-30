@@ -31,7 +31,9 @@ public class <Number><Number>AreClose
    * relative to the largest magnitude of the two values and the test is:
    *
    * \<pre>
+   * {@code
    * |value1-value2| \<= max(|value1|, |value2|) * relativeError
+   * \}
    * \</pre>
    *
    * \<p>The relative error is symmetric for {@code value1} and {@code value2}. The test is

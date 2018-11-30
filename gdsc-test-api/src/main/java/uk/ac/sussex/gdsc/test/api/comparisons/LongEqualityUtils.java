@@ -259,7 +259,9 @@ public final class LongEqualityUtils {
    * test is:
    *
    * <pre>
+   * {@code
    * |expected-actual| <= |expected| * relativeError
+   * }
    * </pre>
    *
    * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to

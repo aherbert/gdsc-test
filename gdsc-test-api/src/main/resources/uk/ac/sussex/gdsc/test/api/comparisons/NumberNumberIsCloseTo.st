@@ -32,7 +32,9 @@ public class <Number><Number>IsCloseTo
    * {@code actual} is relative to the magnitude of {@code expected} and the test is:
    *
    * \<pre>
+   * {@code
    * |expected-actual| \<= |expected| * relativeError
+   * \}
    * \</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected} and {@code actual}. The test is
