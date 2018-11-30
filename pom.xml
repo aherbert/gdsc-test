@@ -28,6 +28,11 @@ The GDSC Test package contains code for use with the JUnit test framework.
   </licenses>
 
   <inceptionYear>2018</inceptionYear>
+  <scm>
+    <connection>scm:git:http://github.com/aherbert/gdsc-test.git</connection>
+    <developerConnection>scm:git:https://github.com/aherbert/gdsc-test.git</developerConnection>
+    <url>https://github.com/aherbert/gdsc-test</url>
+  </scm>
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/aherbert/gdsc-test/issues</url>
@@ -36,11 +41,20 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <system>Travis CI</system>
     <url>https://travis-ci.com/aherbert/gdsc-test</url>
   </ciManagement>
-  <scm>
-    <connection>scm:git:http://github.com/aherbert/gdsc-test.git</connection>
-    <developerConnection>scm:git:https://github.com/aherbert/gdsc-test.git</developerConnection>
-    <url>https://github.com/aherbert/gdsc-test</url>
-  </scm>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <site>
+      <id>${project.artifactId}-site</id>
+      <url>file://${parent.dir}/mvn-repo</url>
+    </site>
+  </distributionManagement>
 
   <developers>
     <developer>
@@ -83,7 +97,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <spotbugs.version>3.1.6</spotbugs.version>
     <checkstyle.version>8.13</checkstyle.version>
     <pmd.version>6.8.0</pmd.version>
-    <!-- Maven -->
+    <!-- Maven plugins -->
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
@@ -95,13 +109,16 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
-    <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
     <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
     <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
     <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
     <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
     <maven-pmd-plugin.version>3.10.0</maven-pmd-plugin.version>
     <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
+    <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+    <maven-deploy-plugin.version>3.0.0</maven-deploy-plugin.version>
+    <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
+    <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
     <!-- JaCoCo Checks -->
     <org.jacoco.class.covered>0.96</org.jacoco.class.covered>
     <org.jacoco.instruction.covered>0.8</org.jacoco.instruction.covered>
@@ -256,6 +273,15 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <artifactId>maven-shade-plugin</artifactId>
           <version>${maven-shade-plugin.version}</version>
         </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${maven-deploy-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.sonatype.plugins</groupId>
+          <artifactId>nexus-staging-maven-plugin</artifactId>
+          <version>${nexus-staging-maven-plugin.version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -363,6 +389,19 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <threshold>Normal</threshold>
           <effort>Default</effort>
           <excludeFilterFile>${parent.dir}/src/main/resources/spotbugs/spotbugs-exclude-filter.xml</excludeFilterFile>
+        </configuration>
+      </plugin>
+      <!-- use of mvn release:prepeare release perform should use the nexus release profile -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>${maven-release-plugin.version}</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <goals>deploy</goals>
+          <!-- <goals>deploy nexus-staging:release</goals> -->
         </configuration>
       </plugin>
     </plugins>
@@ -490,21 +529,51 @@ The GDSC Test package contains code for use with the JUnit test framework.
 
   <profiles>
     <profile>
-      <id>ossrh</id>
+      <id>snapshot-release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <!-- Fail if not a SNAPSHOT -->
+                <id>is-snapshot</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>regex-property</goal>
+                </goals>
+                <configuration>
+                  <name>is.snapshot.version</name>
+                  <value>${project.version}</value>
+                  <regex>^.*-SNAPSHOT$</regex>
+                  <failIfNoMatch>true</failIfNoMatch>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <!-- Not required for snapshot -->
+              <skipStaging>true</skipStaging>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>release</id>
+      <!-- All settings for signing and ossrh should be in settings.xml -->
       <properties>
         <gpg.executable>gpg</gpg.executable>
         <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
-        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
-        <gpg.defaultKeyring>false</gpg.defaultKeyring>
-        <gpg.publicKeyring>${env.GPG_DIR}/pubring.gpg</gpg.publicKeyring>
-        <gpg.secretKeyring>${env.GPG_DIR}/secring.gpg</gpg.secretKeyring>
       </properties>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
       <build>
         <plugins>
           <plugin>
@@ -523,12 +592,12 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>${nexus-staging-maven-plugin.version}</version>
             <extensions>true</extensions>
             <configuration>
               <serverId>ossrh</serverId>
               <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <!-- The staged repo must be inspected and then released -->
+              <autoReleaseAfterClose>false</autoReleaseAfterClose>
             </configuration>
           </plugin>
         </plugins>
@@ -567,6 +636,13 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <id>gdsc-test-doc</id>
       <modules>
         <module>gdsc-test-doc</module>
+      </modules>
+    </profile>
+    <!-- Selectively run the project examples -->
+    <profile>
+      <id>gdsc-test-examples</id>
+      <modules>
+        <module>gdsc-test-examples</module>
       </modules>
     </profile>
     <profile>
@@ -735,29 +811,17 @@ The GDSC Test package contains code for use with the JUnit test framework.
     </profile>
   </profiles>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <site>
-      <id>${project.artifactId}-site</id>
-      <url>file://${parent.dir}/mvn-repo</url>
-    </site>
-  </distributionManagement>
-
   <modules>
     <module>gdsc-test-generator</module>
     <module>gdsc-test-api</module>
     <module>gdsc-test-utils</module>
     <module>gdsc-test-junit5</module>
     <module>gdsc-test-rng</module>
-    <module>gdsc-test-examples</module>
+    <!-- These are not deployed but cannot skip the nexus staging plugin as they are -->
+    <!-- the last modules in the build order. So selectively run them. -->
+    <!-- See: https://issues.sonatype.org/browse/NEXUS-9138 -->
     <!-- <module>gdsc-test-doc</module> uses profile gdsc-test-doc -->
+    <!-- <module>gdsc-test-examples</module> uses profile gdsc-test-examples -->
   </modules>
 
 </project>
