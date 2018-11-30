@@ -329,6 +329,10 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <failOnError>true</failOnError>
+          <failOnWarnings>true</failOnWarnings>
+        </configuration>
         <executions>
           <execution>
             <goals>

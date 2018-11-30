@@ -63,7 +63,7 @@ public final class LongEqualityUtils {
    * @param absoluteError The maximum absolute error between <code>value1</code> and
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if within the error
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between byte primitives
    */
   public static boolean areWithin(long value1, long value2, BigInteger absoluteError) {
@@ -95,7 +95,7 @@ public final class LongEqualityUtils {
    * Check the error is within the maximum difference between {@code long} primitives.
    *
    * @param absoluteError The maximum absolute error between two values
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between long primitives
    */
   static void validateAbsoluteError(BigInteger absoluteError) {
@@ -168,7 +168,9 @@ public final class LongEqualityUtils {
    * and the test is:
    *
    * <pre>
+   * {@code
    * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * }
    * </pre>
    *
    * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing

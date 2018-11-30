@@ -44,7 +44,7 @@ final class NumberEqualityUtils {
    *
    * @param absoluteError The absolute error between two values
    * @param maximumDifference the maximum difference
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference
    */
   static void validateAbsoluteError(long absoluteError, long maximumDifference) {
@@ -62,7 +62,7 @@ final class NumberEqualityUtils {
    *
    * @param absoluteError The absolute error between two values
    * @param maximumDifference the maximum difference
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference
    */
   static void validateAbsoluteError(int absoluteError, int maximumDifference) {

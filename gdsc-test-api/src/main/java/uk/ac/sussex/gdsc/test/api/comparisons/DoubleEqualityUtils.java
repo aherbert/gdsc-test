@@ -201,7 +201,9 @@ public final class DoubleEqualityUtils {
    * test is:
    *
    * <pre>
-   * |expected-actual| <= |expected| * relativeError
+   * {@code
+   * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * }
    * </pre>
    *
    * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to

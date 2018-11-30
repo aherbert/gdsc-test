@@ -46,7 +46,7 @@ public class <Number><Number>IsCloseTo
    *        \<code>actual\</code> for which both numbers are still considered equal.
    * @throws IllegalArgumentException If the relative error is not positive finite
    * @throws IllegalArgumentException If the absolute error is not positive or is
-   *         <code>>=</code> than the maximum difference between <number> primitives
+   *         {@code >=} than the maximum difference between <number> primitives
    */
   public <Number><Number>IsCloseTo(double relativeError, <errorType> absoluteError) {
     <Number>EqualityUtils.validateIsCloseTo(relativeError, absoluteError);

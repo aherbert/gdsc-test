@@ -211,7 +211,7 @@ public final class TestHelper {
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    * @throws IllegalArgumentException If the absolute error is not positive or is
-   *         \<code>>=\</code> than the maximum difference between \<code><number>\</code>
+   *         \<code>&lt;=\</code> than the maximum difference between \<code><number>\</code>
    *         primitives
    */
   public static <Number><Number>BiPredicate <number>sAreClose(double relativeError,
@@ -225,8 +225,10 @@ public final class TestHelper {
    * relative to the magnitude of {@code expected\} and the test is:
    *
    * \<pre>
+   * {@code
    * |expected-actual| \<= |expected| * relativeError
-   * \</pre>:
+   * \}
+   * \</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
    * equivalent to testing testing {@code actual\} falls within a relative range of
@@ -264,7 +266,9 @@ public final class TestHelper {
    * {@code actual\} is relative to the magnitude of {@code expected\} and the test is:
    *
    * \<pre>
+   * {@code
    * |expected-actual| \<= |expected| * relativeError
+   * \}
    * \</pre>:
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
@@ -289,7 +293,7 @@ public final class TestHelper {
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite
    * @throws IllegalArgumentException If the absolute error is not positive or is
-   *         \<code>>=\</code> than the maximum difference between \<code><number>\</code>
+   *         \<code>&lt;=\</code> than the maximum difference between \<code><number>\</code>
    *         primitives
    */
   public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError,

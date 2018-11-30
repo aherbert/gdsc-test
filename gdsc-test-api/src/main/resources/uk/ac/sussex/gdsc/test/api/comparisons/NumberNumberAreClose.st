@@ -43,7 +43,7 @@ public class <Number><Number>AreClose
    *        \<code>value2\</code> for which both numbers are still considered equal.
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    * @throws IllegalArgumentException If the absolute error is not positive or is
-   *         <code>>=</code> than the maximum difference between <number> primitives
+   *         {@code >=} than the maximum difference between <number> primitives
    */
   public <Number><Number>AreClose(double relativeError, <errorType> absoluteError) {
     <Number>EqualityUtils.validateAreClose(relativeError, absoluteError);

@@ -108,7 +108,9 @@ public final class FloatEqualityUtils {
    * and the test is:
    *
    * <pre>
+   * {@code
    * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * }
    * </pre>
    *
    * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing

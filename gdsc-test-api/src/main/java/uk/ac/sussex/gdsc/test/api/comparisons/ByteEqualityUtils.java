@@ -64,7 +64,7 @@ public final class ByteEqualityUtils {
    * @param absoluteError The maximum absolute error between <code>value1</code> and
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if within the tolerance
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between byte primitives
    */
   public static boolean areWithin(byte value1, byte value2, int absoluteError) {
@@ -76,7 +76,7 @@ public final class ByteEqualityUtils {
    * Check the error is within the maximum difference between {@code byte} primitives.
    *
    * @param absoluteError The maximum absolute error between two values
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between byte primitives
    */
   static void validateAbsoluteError(int absoluteError) {
@@ -104,7 +104,9 @@ public final class ByteEqualityUtils {
    * and the test is:
    *
    * <pre>
+   * {@code
    * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * }
    * </pre>
    *
    * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
@@ -184,7 +186,7 @@ public final class ByteEqualityUtils {
    *        <code>actual</code> for which both numbers are still considered equal.
    * @return true if actual is close to expected
    * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between byte primitives
    */
   public static boolean isCloseTo(byte expected, byte actual, double relativeError,
@@ -199,7 +201,7 @@ public final class ByteEqualityUtils {
    * @param relativeError The maximum relative error
    * @param absoluteError The maximum absolute error
    * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between byte primitives
    */
   static void validateIsCloseTo(double relativeError, int absoluteError) {

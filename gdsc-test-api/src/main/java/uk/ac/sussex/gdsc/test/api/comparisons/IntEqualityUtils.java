@@ -64,7 +64,7 @@ public final class IntEqualityUtils {
    * @param absoluteError The maximum absolute error between <code>value1</code> and
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if within the error
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between int primitives
    */
   public static boolean areWithin(int value1, int value2, long absoluteError) {
@@ -76,7 +76,7 @@ public final class IntEqualityUtils {
    * Check the error is within the maximum difference between {@code int} primitives.
    *
    * @param absoluteError The maximum absolute error between two values
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between int primitives
    */
   static void validateAbsoluteError(long absoluteError) {
@@ -106,7 +106,9 @@ public final class IntEqualityUtils {
    * and the test is:
    *
    * <pre>
+   * {@code
    * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * }
    * </pre>
    *
    * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
@@ -207,7 +209,7 @@ public final class IntEqualityUtils {
    *        <code>actual</code> for which both numbers are still considered equal.
    * @return true if actual is close to expected
    * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between int primitives
    */
   public static boolean isCloseTo(int expected, int actual, double relativeError,
@@ -222,7 +224,7 @@ public final class IntEqualityUtils {
    * @param relativeError The maximum relative error
    * @param absoluteError The maximum absolute error
    * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is <code>>=</code>
+   * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
    *         than the maximum difference between int primitives
    */
   static void validateIsCloseTo(double relativeError, long absoluteError) {
