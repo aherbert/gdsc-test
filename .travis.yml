@@ -7,7 +7,6 @@ cache:
   - "$HOME/.m2"
 env:
   global:
-  - DEPLOY_DIR="`pwd`/deploy"
   - secure: RiznXgF8lJKZwasVSiMSXknEsun1DZx+ASCt0LZyJTRhpgSfKVjCy2NqBL1/1lHUyT95MJxhUpc+PEyIbjYC5TIwM0kR/gbv4wgCEUYvD826bGNa2/ytb6O7hf5NmBFP0dN4gjCSO4Q2QwYHd+R+3aBGU5RXVZW2IwhLl61w5gZJccz31e8yLfL6KPD+oSOsHdAIpPD0xHdfgB/BvT/71SnyD8Dzx7MRYPH01nm8YUqFG5hmYrw9hoPNZsOKlIX+DzKBHDTZNP5fODhuHSZbpXDscstOTpDnGiKNMhnBDtEi1uwawkJ5DTInG7ZIKXXMWoYFrME0k0NVkm4R681gijkAs4imlReckFWP8tc9qCoYJ3mkBjjlBxzLCugOta+V5em4gCKGvOx35JQ88Y53WhfUVvZNRZ3ESeTFAcxq301BYkss03KMe9oZpht/4Ssa1gKK1mSKo8a+h0LV9NI+fJ0fzO6+boM4bd0KcfZTR0Ssw76oqvPCaSxfOOtq71HHaa9OkKZ7zCff7Cf6wKQf+bHCRIRTV+LgRNPmm4kb456oVAT9uKzHwC3bovklEI/0Q8LH5wcFx5KoonSPtdnJ9ptg3EtojX2Tl/g5Q7zc2CY8bbd37T10is1L1xXdLtppxnc+8qrsg8+KcajsnI2srgeHIw7tb5mbIxJ5eMEwSiM=
   - secure: UjsO2+xxJNFB1QlURKVcYhkYjdNX0Au/rLzi+NJc/Euobs80P8DPHdhRBDa9rIRrEOgy0XHIRc2E5C7S7vQsfGx1/+nJWKqWzyafvFJ6pYUX4IvtAKREmoVjzdadkp6aySMwryCmTE715KUg1yuvStoSOxrTIZj5PLg39AH1o4mjrMFpuwKVq2TKevJjZH+WlnhcMHxxUV4hBDNlKHxdh+ERSWsgSEc5Htw/NNTW4WcVazh9Pfgjd3VXABdXcu0v0R74gXqBCw2L0RkW07GqwU2r7BRifg26JhFOPINmMdxWb1GjINWy9dlB2uGyEHEawBpOlhhekDdSNDTCBr66qw9fHHIpVpNzPrKJII78ggpnSfrmsVB863xiIIJmBDr8S/2omWNiP0m6viIBsHybJTsNfk3zgTb+J5pOh/LucdKlrhcfjlwfstHaJlkW7NduNXCx1C5s+8hPOGBP8bKKEYbwYobvCh8kLvjhJPF7h5UMjgiapZWUWvduxSzpJXhRujmIFwc0sI+7NoserWL4KhrbgGnaOCzNnL+1SWgBObBO5yjXpQ7ZhzZ+7Ath19tlSww2o2l+irKGTSHsccTa4/NDQtLsepmWasjXveB67pUfik4h+5EbpwueD1W5rJwEfoULMo//YPCaloPMJs4RTM2pUjMTg2CaSuvHXde005g=
 script: mvn -B test -P gdsc-test-examples
@@ -17,7 +16,7 @@ deploy:
   provider: script
   script:
   - if grep --quiet '<version>.*SNAPSHOT</version>' pom.xml; then
-      mvn deploy -P snapshot-release --settings $DEPLOY_DIR/settings.xml -DskipTests=true;
+      mvn deploy -P snapshot-release --settings deploy/settings.xml -DskipTests=true;
     fi
   skip_cleanup: true
   on:
