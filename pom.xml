@@ -101,7 +101,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-    <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
     <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
     <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
@@ -171,33 +170,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
                 <directory>docs/_build</directory>
               </fileset>
             </filesets>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>${maven-assembly-plugin.version}</version>
-          <configuration>
-            <descriptorRefs>
-              <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
-            <archive>
-              <manifest>
-                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>${maven-jar-plugin.version}</version>
-          <configuration>
-            <archive>
-              <manifest>
-                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-              </manifest>
-            </archive>
           </configuration>
         </plugin>
         <plugin>
