@@ -397,7 +397,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </plugin>
       <!-- use of mvn release:prepeare release perform should use the nexus release profile -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>${maven-release-plugin.version}</version>
         <configuration>
@@ -427,7 +426,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
         </reportSets>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
         <version>${maven-changes-plugin.version}</version>
         <configuration>
@@ -498,7 +496,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </plugin>
       <plugin>
         <!-- NOTE: javadoc config must also be set under <build> -->
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <encoding>UTF-8</encoding>
@@ -524,7 +521,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
         </reportSets>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
         <version>${maven-jxr-plugin.version}</version>
       </plugin>
