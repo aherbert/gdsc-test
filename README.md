@@ -10,62 +10,76 @@ GDSC Test provides utility functionality for writing Java tests.
 
 Functionality includes:
 
-- Relative equality assertions
+- Predicate library for single- or bi-valued test predicates using Java primitives
+- Assertion utilities for asserting predicates
 - Dynamic messages implementing `Supplier<String>`
-- Configurable random seed
-
-[JUnit 5](https://junit.org/junit5/) relative equality example:
-
-```java
-import org.junit.jupiter.api.Test;
-import uk.ac.sussex.gdsc.test.junit5.ExtraAssertions;
-
-@Test
-public void testRelativeEquality() {
-    // Pass
-    ExtraAssertions.assertEqualsRelative(1000, 1001, 1e-3);
-    ExtraAssertions.assertEqualsRelativeOrAbsolute(1000, 1001,
-                                                   1e-6, 1);
-    // Fail
-    ExtraAssertions.assertEqualsRelative(1000, 1001, 1e-6);
-}
-```
-
-Dynamic messages example:
-
-```java
-import uk.ac.sussex.gdsc.test.utils.functions.IndexSupplier;
-
-final int dimensions = 2;
-final IndexSupplier s = new IndexSupplier(dimensions);
-System.out.println(s.get());
-s.setMessagePrefix("Index: ");
-s.set(0, 23); // Set index 0
-s.set(1, 14); // Set index 1
-System.out.println(s.get());
-```
-
-[JUnit 5](https://junit.org/junit5/) seeded test example:
-
-```java
-import uk.ac.sussex.gdsc.test.junit5.SeededTest;
-
-// A repeated parameterised test with run-time configurable seed and repeats
-@SeededTest
-public void testSomethingRandom(RandomSeed seed) {
-    long seed = seed.getSeed();
-    // Do the test with a seeded random source ...
-}
-```
-
-Configure the seed and repeats, e.g. for Maven:
-
-        mvn test -Dgdsc.test.seed=12345 -Dgdsc.test.repeats=5
+- Configurable random seed utilities
 
 Documentation
 -------------
 
 See the latest documentation on [ReadTheDocs](https://gdsc-test.readthedocs.io).
+
+Predicate Library
+-----------------
+
+The GDSC predicate library is an extension of the ``java.util.function``
+primitive predicates ``DoublePredicate`` and ``LongPredicate`` to all java
+primitives. These are functional interfaces for single or bi-valued predicates,
+for example for ``int`` primitives:
+
+```java
+@FunctionalInterface
+public interface IntPredicate {
+    boolean test(int value);
+    // default methods
+}
+
+@FunctionalInterface
+public interface IntIntBiPredicate {
+    boolean test(int value1, int value2);
+    // default methods
+}
+```
+Standard predicates are provided to test equality and closeness within an
+`absolute` or `relative` error for use in a testing framework.
+
+Assertion Utilities
+-------------------
+
+Support for testing using a test framework is provided with a utility class that
+will test primitive value(s) using a single or bi-valued predicate. An
+``AssertionError`` is generated when a test fails. For example a test for
+relative equality:
+
+```java
+import uk.ac.sussex.gdsc.test.api.TestAssertions;
+import uk.ac.sussex.gdsc.test.api.TestHelper;
+
+@Test
+public void testRelativeEquality() {
+    double relativeError = 0.01;
+    double expected = 100;
+    double actual = 99;
+
+    DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+
+    // This will pass as 99 is within (0.01*100) of 100
+    TestAssertions.assertTest(expected, actual, isCloseTo);
+}
+```
+
+All provided implementations of the ``TypePredicate`` or ``TypeTypeBiPredicate``
+interface implement ``Supplier<String>`` to provide a text description of the predicate. This is used to format an error message for the failed test.
+
+Nested arrays are supported using recursion allowing testing of matrices:
+
+```java
+IntIntBiPredicate equal = TestHelper.intsEqual();
+Object[] expected = new int[4][5][6];
+Object[] actual = new int[4][5][6];
+TestAssertions.assertArrayTest(expected, actual, equal);
+```
 
 Maven Installation
 ------------------
@@ -83,8 +97,8 @@ on it.
         cd gdsc-test
         mvn install
 
-    This will produce a gdsc-test-[package]-[VERSION].jar file in the local Maven
-    repository.
+This will produce a gdsc-test-[package]-[VERSION].jar file in the local Maven
+repository.
 
 
 # About #

@@ -19,7 +19,7 @@ GDSC Test Documentation
 
 GDSC Test provides utility functionality for writing Java tests including:
 
-- Predicate library for single- or bi-valued test predicates
+- Predicate library for single- or bi-valued test predicates using Java primitives
 - Assertion utilities for asserting predicates
 - Dynamic messages implementing ``Supplier<String>``
 - Configurable random seed utilities
@@ -79,6 +79,7 @@ a test fails. For example a test for relative equality::
 
         DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
 
+        // This will pass as 99 is within (0.01*100) of 100
         TestAssertions.assertTest(expected, actual, isCloseTo);
     }
 
