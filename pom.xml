@@ -254,6 +254,10 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <artifactId>nexus-staging-maven-plugin</artifactId>
           <version>${nexus-staging-maven-plugin.version}</version>
         </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin.version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
