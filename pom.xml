@@ -201,7 +201,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
               </manifest>
             </archive>
             <!-- Enable MathJax -->
-            <additionalparam><![CDATA[${doclint.javadoc.qualifier} ${allowscript.javadoc.qualifier} -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalparam>
+            <additionalOptions><![CDATA[${doclint.javadoc.qualifier} ${allowscript.javadoc.qualifier} -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalOptions>
           </configuration>
         </plugin>
         <plugin>
