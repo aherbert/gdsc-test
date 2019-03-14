@@ -88,8 +88,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <org.junit.jupiter.version>5.2.0</org.junit.jupiter.version>
     <org.junit.platform.version>1.2.0</org.junit.platform.version>
     <org.junit.version>4.12</org.junit.version>
-    <commons.rng.version>1.1</commons.rng.version>
-    <commons.codec.version>1.11</commons.codec.version>
+    <commons.rng.version>1.2</commons.rng.version>
+    <commons.codec.version>1.12</commons.codec.version>
     <org.jacoco.version>0.8.1</org.jacoco.version>
     <license-maven-plugin.version>1.16</license-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
@@ -201,7 +201,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
               </manifest>
             </archive>
             <!-- Enable MathJax -->
-            <additionalOptions><![CDATA[${doclint.javadoc.qualifier} ${allowscript.javadoc.qualifier} -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalOptions>
+            <additionalOptions><![CDATA[--allow-script-in-comments -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalOptions>
           </configuration>
         </plugin>
         <plugin>
@@ -484,7 +484,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
             </manifest>
           </archive>
           <!-- Enable MathJax -->
-          <additionalparam><![CDATA[${doclint.javadoc.qualifier} ${allowscript.javadoc.qualifier} -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalparam>
+          <additionalparam><![CDATA[--allow-script-in-comments -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalparam>
         </configuration>
         <reportSets>
           <reportSet>
