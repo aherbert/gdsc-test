@@ -25,9 +25,9 @@
 package uk.ac.sussex.gdsc.test.generator;
 
 import uk.ac.sussex.gdsc.test.generator.InvalidModelException;
-import uk.ac.sussex.gdsc.test.generator.Pair;
 import uk.ac.sussex.gdsc.test.generator.StringTemplateModel;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -69,18 +69,18 @@ public class StringTemplateModelTest {
 
     // Check
     for (final Pair<String, List<String>> pair : classNameScope) {
-      Assertions.assertEquals("My", pair.first, "Missing classname scope substitution");
-      Assertions.assertTrue(pair.second.contains("Your"), "Missing classname scope value");
+      Assertions.assertEquals("My", pair.getKey(), "Missing classname scope substitution");
+      Assertions.assertTrue(pair.getValue().contains("Your"), "Missing classname scope value");
     }
 
     for (final Pair<String, List<Object>> pair : classScope) {
-      Assertions.assertEquals("Anything", pair.first, "Missing class scope substitution");
-      Assertions.assertTrue(pair.second.contains("value1"), "Missing class scope value");
+      Assertions.assertEquals("Anything", pair.getKey(), "Missing class scope substitution");
+      Assertions.assertTrue(pair.getValue().contains("value1"), "Missing class scope value");
     }
 
     for (final Pair<String, List<Object>> pair : templateScope) {
-      Assertions.assertEquals("Other", pair.first, "Missing template scope substitution");
-      Assertions.assertTrue(pair.second.contains("value2"), "Missing template scope value");
+      Assertions.assertEquals("Other", pair.getKey(), "Missing template scope substitution");
+      Assertions.assertTrue(pair.getValue().contains("value2"), "Missing template scope value");
     }
   }
 
@@ -113,8 +113,8 @@ public class StringTemplateModelTest {
 
     // Check
     for (final Pair<String, List<Object>> pair : templateScope) {
-      Assertions.assertEquals("Other", pair.first, "Missing template scope substitution");
-      Assertions.assertTrue(pair.second.contains("value2"), "Missing template scope value");
+      Assertions.assertEquals("Other", pair.getKey(), "Missing template scope substitution");
+      Assertions.assertTrue(pair.getValue().contains("value2"), "Missing template scope value");
     }
   }
 
@@ -149,21 +149,21 @@ public class StringTemplateModelTest {
 
     // Check
     final Pair<String, List<String>> classNamePair = classNameScope.get(0);
-    Assertions.assertEquals("My", classNamePair.first, "Missing classname scope substitution");
-    Assertions.assertTrue(classNamePair.second.contains("Your"), "Missing classname scope value");
+    Assertions.assertEquals("My", classNamePair.getKey(), "Missing classname scope substitution");
+    Assertions.assertTrue(classNamePair.getValue().contains("Your"),
+        "Missing classname scope value");
 
     final Pair<String, List<Object>> classPair = classScope.get(0);
-    Assertions.assertEquals("Anything", classPair.first, "Missing class scope substitution");
-    Assertions.assertEquals(Arrays.asList("value1", null, "value3"), classPair.second,
+    Assertions.assertEquals("Anything", classPair.getKey(), "Missing class scope substitution");
+    Assertions.assertEquals(Arrays.asList("value1", null, "value3"), classPair.getValue(),
         "Missing class scope values");
 
     final Pair<String, List<Object>> templatePair = templateScope.get(0);
-    Assertions.assertEquals("Other", templatePair.first, "Missing template scope substitution");
-    Assertions.assertEquals(Arrays.asList("", "value2", null, " "), templatePair.second,
+    Assertions.assertEquals("Other", templatePair.getKey(), "Missing template scope substitution");
+    Assertions.assertEquals(Arrays.asList("", "value2", null, " "), templatePair.getValue(),
         "Missing template scope values");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithNullPointers() {
     final Properties properties = new Properties();
@@ -197,14 +197,12 @@ public class StringTemplateModelTest {
     final String templateClassName = "My.Template"; // Bad character
     final String template = "";
 
-    @SuppressWarnings("unused")
     final String message = Assertions.assertThrows(InvalidModelException.class, () -> {
       StringTemplateModel.create(properties, packageName, templateClassName, template);
     }).getMessage();
     assertMessageContains(message, "class name", "class name contains illegal characters");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithBadPackageName() {
     final Properties properties = new Properties();
@@ -224,7 +222,6 @@ public class StringTemplateModelTest {
   }
 
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithInvalidScope() {
     final Properties properties = new Properties();
@@ -243,7 +240,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "test", "the scope");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithNoKey() {
     final Properties properties = new Properties();
@@ -261,7 +257,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "key", "the fail reason was a bad key");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithNoScope() {
     final Properties properties = new Properties();
@@ -280,7 +275,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, key, "the key");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithNoSubstritution() {
     final Properties properties = new Properties();
@@ -299,7 +293,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, key, "the key");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithReservedWordForSubstitution() {
     final Properties properties = new Properties();
@@ -318,7 +311,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "true", "the substitution");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithDuplicateSubstitution() {
     final Properties properties = new Properties();
@@ -340,7 +332,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "Anything", "the substitution");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithDuplicateLowercaseClassnameSubstitution() {
     final Properties properties = new Properties();
@@ -362,7 +353,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "anything", "the substitution");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithDuplicateClassnameSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
@@ -388,7 +378,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "plate", "the substitution");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithEmptyClassnameScopeValue() {
     final Properties properties = new Properties();
@@ -408,7 +397,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "value", "the fail reason was a bad value");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithOnlyWhitespaceInClassnameScopeValue() {
     final Properties properties = new Properties();
@@ -428,7 +416,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "value", "the fail reason was a bad value");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithEmptyTemplateScopeValue() {
     final Properties properties = new Properties();
@@ -448,7 +435,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "value", "the fail reason was a bad value");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithOnlyWhitespaceInTemplateScopeValue() {
     final Properties properties = new Properties();
@@ -468,7 +454,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "value", "the fail reason was a bad value");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithClassScopeAndNoClassnameScope() {
     final Properties properties = new Properties();
@@ -488,7 +473,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "scope", "the fail reason was a bad scope");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithClassScopeDifferentValueSizeToClassnameScope() {
     final Properties properties = new Properties();
@@ -508,7 +492,6 @@ public class StringTemplateModelTest {
     assertMessageContains(message, "size", "the fail reason was a different size scope");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsWithClassnameScopeDifferentValueSizeToClassnameScope() {
     final Properties properties = new Properties();
@@ -537,7 +520,6 @@ public class StringTemplateModelTest {
         "the fail reason was a different size subsequent classname scope");
   }
 
-  @SuppressWarnings("unused")
   @Test
   public void testCreateThrowsClassnameSubstitutionNotInClassName() {
     final Properties properties = new Properties();

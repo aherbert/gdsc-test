@@ -26,6 +26,8 @@ package uk.ac.sussex.gdsc.test.generator;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -178,7 +180,7 @@ public final class StringTemplateModel {
     for (final String key : properties.stringPropertyNames()) {
       final Triple<SubstitutionScope, String, String> scope = splitKey(key, subs);
 
-      if (scope.first == SubstitutionScope.CLASSNAME) {
+      if (scope.getLeft() == SubstitutionScope.CLASSNAME) {
         classnameListSize = addClassnameScope(properties, templateClassName, classNameScope,
             classnameListSize, scope);
       } else {
@@ -191,7 +193,7 @@ public final class StringTemplateModel {
     final List<Pair<String, List<Object>>> classScope = new ArrayList<>();
     final List<Pair<String, List<Object>>> templateScope = new ArrayList<>();
     for (final Triple<SubstitutionScope, String, String> scope : scopes) {
-      switch (scope.first) {
+      switch (scope.getLeft()) {
         case CLASS:
           addClassScope(properties, classScope, classnameListSize, scope);
           break;
@@ -203,7 +205,7 @@ public final class StringTemplateModel {
         // SubstitutionScope.valueOf(String) which throws.
         // Leave in to catch future errors.
         default:
-          throw new InvalidModelException("Unknown scope: " + scope.first);
+          throw new InvalidModelException("Unknown scope: " + scope.getLeft());
       }
     }
 
@@ -259,7 +261,7 @@ public final class StringTemplateModel {
     final SubstitutionScope s = getSubstitutionScope(scope);
     final String sub = pair[1];
     validateSubstitution(s, sub, subs);
-    return new Triple<>(s, sub, key);
+    return Triple.of(s, sub, key);
   }
 
   /**
@@ -331,21 +333,21 @@ public final class StringTemplateModel {
       List<Pair<String, List<String>>> classNameScope, int classnameListSize,
       final Triple<SubstitutionScope, String, String> scope) throws InvalidModelException {
     // The substitution must match the template name
-    if (!templateClassName.contains(scope.second)) {
+    if (!templateClassName.contains(scope.getMiddle())) {
       throw new InvalidModelException(
           String.format("Template name <%s> does not contain the substitution key <%s> ",
-              templateClassName, scope.second));
+              templateClassName, scope.getMiddle()));
     }
     // The class scope is a list of single strings
-    final List<String> list = splitValue(scope.third, properties.getProperty(scope.third));
+    final List<String> list =
+        splitValue(scope.getRight(), properties.getProperty(scope.getRight()));
     if (classnameListSize != 0 && list.size() != classnameListSize) {
       throw new InvalidModelException(String.format(
           "Subsequent entry for scope <%s> has different size", SubstitutionScope.CLASSNAME));
     }
-    classNameScope.add(new Pair<>(scope.second, list));
+    classNameScope.add(Pair.of(scope.getMiddle(), list));
     return list.size();
   }
-
 
   /**
    * Adds the class scope.
@@ -363,16 +365,16 @@ public final class StringTemplateModel {
       // Not allowed when no classname scope element
       throw new InvalidModelException("Invalid scope : " + SubstitutionScope.CLASS);
     }
-    final List<Object> list = splitValueToObject(scope.third, properties.getProperty(scope.third));
+    final List<Object> list =
+        splitValueToObject(scope.getRight(), properties.getProperty(scope.getRight()));
     // Any class scope must match the classname scope list size
     if (list.size() != classnameListSize) {
       throw new InvalidModelException(
           String.format("Entry for scope <%s> has different size than <%s>",
               SubstitutionScope.CLASS, SubstitutionScope.CLASSNAME));
     }
-    classScope.add(new Pair<>(scope.second, list));
+    classScope.add(Pair.of(scope.getMiddle(), list));
   }
-
 
   /**
    * Adds the template scope.
@@ -385,8 +387,8 @@ public final class StringTemplateModel {
   private static void addTemplateScope(Properties properties,
       List<Pair<String, List<Object>>> templateScope,
       final Triple<SubstitutionScope, String, String> scope) throws InvalidModelException {
-    templateScope.add(new Pair<>(scope.second,
-        splitValueToObject(scope.third, properties.getProperty(scope.third))));
+    templateScope.add(Pair.of(scope.getMiddle(),
+        splitValueToObject(scope.getRight(), properties.getProperty(scope.getRight()))));
   }
 
   /**

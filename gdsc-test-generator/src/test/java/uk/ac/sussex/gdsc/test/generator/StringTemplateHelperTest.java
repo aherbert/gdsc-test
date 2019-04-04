@@ -25,10 +25,10 @@
 package uk.ac.sussex.gdsc.test.generator;
 
 import uk.ac.sussex.gdsc.test.generator.InvalidModelException;
-import uk.ac.sussex.gdsc.test.generator.Pair;
 import uk.ac.sussex.gdsc.test.generator.StringTemplateHelper;
 import uk.ac.sussex.gdsc.test.generator.StringTemplateModel;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -59,8 +59,8 @@ public class StringTemplateHelperTest {
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
-    Assertions.assertEquals(names.get(0), list.get(0).first, "Name is wrong");
-    Assertions.assertEquals("value = 1;", list.get(0).second, "Output is wrong");
+    Assertions.assertEquals(names.get(0), list.get(0).getKey(), "Name is wrong");
+    Assertions.assertEquals("value = 1;", list.get(0).getValue(), "Output is wrong");
   }
 
   @Test
@@ -82,8 +82,8 @@ public class StringTemplateHelperTest {
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
-    Assertions.assertEquals(names.get(0), list.get(0).first, "Name is wrong");
-    Assertions.assertEquals("", list.get(0).second, "Output is wrong");
+    Assertions.assertEquals(names.get(0), list.get(0).getKey(), "Name is wrong");
+    Assertions.assertEquals("", list.get(0).getValue(), "Output is wrong");
   }
 
   @Test
@@ -105,8 +105,8 @@ public class StringTemplateHelperTest {
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
-    Assertions.assertEquals(names.get(0), list.get(0).first, "Name is wrong");
-    Assertions.assertEquals(String.format("package %s;", packageName), list.get(0).second,
+    Assertions.assertEquals(names.get(0), list.get(0).getKey(), "Name is wrong");
+    Assertions.assertEquals(String.format("package %s;", packageName), list.get(0).getValue(),
         "Output is wrong");
   }
 
@@ -134,10 +134,10 @@ public class StringTemplateHelperTest {
 
     for (int i = 0; i < names.size(); i++) {
       final int nameIndex = i + 1;
-      Assertions.assertEquals(names.get(i), list.get(i).first,
+      Assertions.assertEquals(names.get(i), list.get(i).getKey(),
           () -> String.format("Name %d is wrong", nameIndex));
 
-      Assertions.assertEquals(template, list.get(i).second,
+      Assertions.assertEquals(template, list.get(i).getValue(),
           () -> String.format("Output %d is wrong", nameIndex));
     }
   }
@@ -167,10 +167,10 @@ public class StringTemplateHelperTest {
 
     for (int i = 0; i < names.size(); i++) {
       final int nameIndex = i + 1;
-      Assertions.assertEquals(names.get(i), list.get(i).first,
+      Assertions.assertEquals(names.get(i), list.get(i).getKey(),
           () -> String.format("Name %d is wrong", nameIndex));
 
-      Assertions.assertEquals(template, list.get(i).second,
+      Assertions.assertEquals(template, list.get(i).getValue(),
           () -> String.format("Output %d is wrong", nameIndex));
     }
   }
@@ -196,8 +196,8 @@ public class StringTemplateHelperTest {
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
-    Assertions.assertEquals(names.get(0), list.get(0).first, "Name is wrong");
-    Assertions.assertEquals("bar", list.get(0).second, "Output is wrong");
+    Assertions.assertEquals(names.get(0), list.get(0).getKey(), "Name is wrong");
+    Assertions.assertEquals("bar", list.get(0).getValue(), "Output is wrong");
   }
 
   @Test
@@ -225,12 +225,12 @@ public class StringTemplateHelperTest {
 
     for (int i = 0; i < names.size(); i++) {
       final int nameIndex = i + 1;
-      Assertions.assertEquals(names.get(i), list.get(i).first,
+      Assertions.assertEquals(names.get(i), list.get(i).getKey(),
           () -> String.format("Name %d is wrong", nameIndex));
     }
 
-    Assertions.assertEquals("Male", list.get(0).second, "Output 1 is wrong");
-    Assertions.assertEquals("Female", list.get(1).second, "Output 2 is wrong");
+    Assertions.assertEquals("Male", list.get(0).getValue(), "Output 1 is wrong");
+    Assertions.assertEquals("Female", list.get(1).getValue(), "Output 2 is wrong");
   }
 
   @Test
@@ -258,12 +258,12 @@ public class StringTemplateHelperTest {
 
     for (int i = 0; i < names.size(); i++) {
       final int nameIndex = i + 1;
-      Assertions.assertEquals(names.get(i), list.get(i).first,
+      Assertions.assertEquals(names.get(i), list.get(i).getKey(),
           () -> String.format("Name %d is wrong", nameIndex));
     }
 
-    Assertions.assertEquals("Male", list.get(0).second, "Output 1 is wrong");
-    Assertions.assertEquals("", list.get(1).second, "Output 2 is wrong");
+    Assertions.assertEquals("Male", list.get(0).getValue(), "Output 1 is wrong");
+    Assertions.assertEquals("", list.get(1).getValue(), "Output 2 is wrong");
   }
 
   @Test
@@ -288,9 +288,9 @@ public class StringTemplateHelperTest {
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
-    Assertions.assertEquals(names.get(0), list.get(0).first, "Name is wrong");
+    Assertions.assertEquals(names.get(0), list.get(0).getKey(), "Name is wrong");
     // Use the platform new line format string
     final String expected = String.format("package org.test;%nbill=flower;%nben=pot;%n");
-    Assertions.assertEquals(expected, list.get(0).second, "Output is wrong");
+    Assertions.assertEquals(expected, list.get(0).getValue(), "Output is wrong");
   }
 }

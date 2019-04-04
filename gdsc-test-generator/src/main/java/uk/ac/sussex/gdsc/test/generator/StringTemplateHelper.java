@@ -24,6 +24,7 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.stringtemplate.v4.ST;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public final class StringTemplateHelper {
       final List<Pair<String, List<String>>> classNameSubstitutions = model.getClassNameScope();
       final List<Pair<String, List<Object>>> classScopeSubstitutions = model.getClassScope();
       // All the same size
-      final int size = classNameSubstitutions.get(0).second.size();
+      final int size = classNameSubstitutions.get(0).getValue().size();
       for (int i = 0; i < size; i++) {
         // This has to be a new version, not a copy as that maintains some references, i.e.
         // Using a single ST and copying via 'ST st2 = new ST(st)' does not work.
@@ -67,8 +68,8 @@ public final class StringTemplateHelper {
         String newName = name;
         // Each classname scope key will have an entry for this class.
         for (final Pair<String, List<String>> sub : classNameSubstitutions) {
-          final String classNamePattern = sub.first;
-          final String classNameSub = sub.second.get(i);
+          final String classNamePattern = sub.getKey();
+          final String classNameSub = sub.getValue().get(i);
           // Perform the class name substitution
           newName = newName.replaceAll(classNamePattern, classNameSub);
           // Perform the class name substitution in the template
@@ -83,15 +84,15 @@ public final class StringTemplateHelper {
         // Do the class substitutions.
         // Each class scope key will have an entry for this class.
         for (final Pair<String, List<Object>> sub : classScopeSubstitutions) {
-          addClassSubstitution(st, sub.first, sub.second.get(i));
+          addClassSubstitution(st, sub.getKey(), sub.getValue().get(i));
         }
 
         // Build the output
-        list.add(new Pair<>(newName, st.render()));
+        list.add(Pair.of(newName, st.render()));
       }
     } else {
       // A single output file
-      list.add(new Pair<>(name, createStringTemplate(model).render()));
+      list.add(Pair.of(name, createStringTemplate(model).render()));
     }
 
     return list;
@@ -126,7 +127,7 @@ public final class StringTemplateHelper {
 
     // Do all template scope substitutions
     for (final Pair<String, List<Object>> sub : model.getTemplateScope()) {
-      st.add(sub.first, sub.second);
+      st.add(sub.getKey(), sub.getValue());
     }
     // Inject the package
     st.add("package", getPackageName(model.getPackageName()));
@@ -149,14 +150,14 @@ public final class StringTemplateHelper {
     if (model.isRenamedClass()) {
       final List<Pair<String, List<String>>> classNameSubstitutions = model.getClassNameScope();
       // All the same size
-      final int size = classNameSubstitutions.get(0).second.size();
+      final int size = classNameSubstitutions.get(0).getValue().size();
       for (int i = 0; i < size; i++) {
 
         String newName = name;
         // Each classname scope key will have an entry for this class.
         for (final Pair<String, List<String>> sub : classNameSubstitutions) {
-          final String classNamePattern = sub.first;
-          final String classNameSub = sub.second.get(i);
+          final String classNamePattern = sub.getKey();
+          final String classNameSub = sub.getValue().get(i);
           // Perform the class name substitution
           newName = newName.replaceAll(classNamePattern, classNameSub);
         }

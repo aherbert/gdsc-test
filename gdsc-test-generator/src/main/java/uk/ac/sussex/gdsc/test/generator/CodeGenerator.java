@@ -29,6 +29,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.HiddenFileFilter;
+import org.apache.commons.lang3.tuple.Pair;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -352,9 +353,9 @@ public class CodeGenerator {
     final List<Pair<String, String>> files = StringTemplateHelper.generate(model);
 
     for (final Pair<String, String> file : files) {
-      final File targetFile = getTargetFile(pathForTarget, file.first);
+      final File targetFile = getTargetFile(pathForTarget, file.getKey());
       logger.log(Level.INFO, targetFile.getPath());
-      FileUtils.write(targetFile, header + file.second, StandardCharsets.UTF_8);
+      FileUtils.write(targetFile, header + file.getValue(), StandardCharsets.UTF_8);
     }
   }
 
