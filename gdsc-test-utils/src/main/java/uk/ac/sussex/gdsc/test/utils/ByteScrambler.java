@@ -40,8 +40,8 @@ import java.util.Arrays;
  */
 public class ByteScrambler {
 
-  /** The MD5 digest algorithm. */
-  private static final String MD5_ALGORITHM = "MD5";
+  /** The default digest algorithm. */
+  private static final String DEFAULT_ALGORITHM = "SHA-256";
 
   /** The message digest. */
   private final MessageDigest[] messageDigest;
@@ -56,22 +56,22 @@ public class ByteScrambler {
   private final byte[] bytes;
 
   /**
-   * Instantiates a new byte scrambler using the MD5 algorithm.
+   * Instantiates a new byte scrambler using the SHA-256 algorithm.
    *
-   * <p>For convenience the checked exceptions are caught and re-thrown as unchecked. The MD5
+   * <p>For convenience the checked exceptions are caught and re-thrown as unchecked. The SHA-256
    * algorithm should be supported on any Java platform.
    *
    * @param seed the seed
    * @return the byte scrambler
-   * @throws IllegalArgumentException If the MD5 algorithm is not supported or the digest is not
+   * @throws IllegalArgumentException If the SHA-256 algorithm is not supported or the digest is not
    *         cloneable
    */
   public static ByteScrambler getByteScrambler(byte[] seed) {
     try {
-      return new ByteScrambler(seed, MD5_ALGORITHM);
+      return new ByteScrambler(seed, DEFAULT_ALGORITHM);
     } catch (NoSuchAlgorithmException | CloneNotSupportedException ex) {
       // This should not happen
-      throw new IllegalArgumentException("MD5 algorithm not supported", ex);
+      throw new IllegalArgumentException(DEFAULT_ALGORITHM + " algorithm not supported", ex);
     }
   }
 
