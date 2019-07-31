@@ -24,22 +24,13 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Class used for working with random seeds.
  */
 public final class SeedUtils {
-
-  /** The seed algorithm to use for SecureRandom. */
-  private static final String SEED_ALGORITHM = "NativePRNGNonBlocking";
-
-  /** The seed size in bytes. */
-  private static final int SEED_SIZE = 16;
-
   /**
    * Do not allow public construction.
    */
@@ -80,72 +71,31 @@ public final class SeedUtils {
   }
 
   /**
-   * Generate a 16 byte seed.
+   * Generate a secure byte seed. Uses {@link SecureRandom#nextBytes(byte[])}.
    *
-   * <p>The default is to use {@link SecureRandom} with the algorithm "NativePRNGNonBlocking".
-   *
+   * @param size the size
    * @return the seed
    */
-  public static byte[] generateSeed() {
-    return generateSeed(SEED_ALGORITHM);
+  public static byte[] generateSeed(int size) {
+    return generateSeed(size, true);
   }
 
   /**
-   * Generate a 16 byte seed.
+   * Generate a byte seed. Uses {@link SecureRandom#nextBytes(byte[])} for a secure seed; otherwise
+   * {@link ThreadLocalRandom#nextBytes(byte[])}.
    *
-   * <p>The default is to use {@link SecureRandom} with the specified algorithm.
-   *
-   * <p>If the algorithm is not supported then uses {@link #generateSimpleSeed()}.
-   *
-   * @param algorithm the algorithm
+   * @param size the size
+   * @param secure Set to true to create a secure seed
    * @return the seed
    */
-  public static byte[] generateSeed(String algorithm) {
-    try {
-      return SecureRandom.getInstance(algorithm).generateSeed(SEED_SIZE);
-    } catch (final NoSuchAlgorithmException ex) {
-      Logger.getLogger(SeedUtils.class.getName()).log(Level.WARNING,
-          () -> "Defaulting to a simple seed due to unsupported algorithm: " + ex.getMessage());
-      return generateSimpleSeed();
+  static byte[] generateSeed(int size, boolean secure) {
+    final byte[] seed = new byte[size];
+    if (secure) {
+      new SecureRandom().nextBytes(seed);
+    } else {
+      ThreadLocalRandom.current().nextBytes(seed);
     }
-  }
-
-  /**
-   * Generate a simple 16 byte seed using the current time and the system identity hashcode for the
-   * runtime.
-   *
-   * @return the seed
-   */
-  public static byte[] generateSimpleSeed() {
-    return generateSimpleSeed(System.currentTimeMillis());
-  }
-
-  /**
-   * Generate a simple 16 byte seed using the given time and the system identity hashcode for the
-   * runtime.
-   *
-   * @param time the time
-   * @return the seed
-   */
-  static byte[] generateSimpleSeed(long time) {
-    // Get a fallback seed.
-    // Seed generation copied from Commons RNG
-    // org.apache.commons.rng.simple.internal.SeedFactory
-    final int hash = System.identityHashCode(Runtime.getRuntime());
-    final long hashLong = createLong(hash, ~hash);
-    // Pack as bytes
-    return makeByteArray(time, hashLong);
-  }
-
-  /**
-   * Make a long from two integer values.
-   *
-   * @param v1 Number 1 (high order bits).
-   * @param v2 Number 2 (low order bits).
-   * @return a {@code long} value.
-   */
-  private static long createLong(int v1, int v2) {
-    return (((long) v1) << 32) | (v2 & 0xffffffffL);
+    return seed;
   }
 
   /**
@@ -247,7 +197,7 @@ public final class SeedUtils {
     int count = 0;
     int shift = Integer.SIZE;
     for (final byte bi : bytes) {
-      // Update the shift to set the position in the long to write the bits
+      // Update the shift to set the position in the int to write the bits
       shift -= Byte.SIZE;
       // Convert the byte to an int then shift
       values[count] |= ((bi & 0xFF) << shift);

@@ -55,31 +55,26 @@ public class SeedUtilsTest {
 
   @Test
   public void testGenerateSeed() {
-    final byte[] seed1 = SeedUtils.generateSeed();
-    final byte[] seed2 = SeedUtils.generateSeed();
-    testSeeds(seed1, seed2);
+    final int size = 17;
+    final byte[] seed1 = SeedUtils.generateSeed(size);
+    final byte[] seed2 = SeedUtils.generateSeed(size);
+    testSeeds(size, seed1, seed2);
   }
 
   @Test
-  public void testGenerateSimpleSeed() {
-    // Ensure the time is different
-    final byte[] seed1 = SeedUtils.generateSimpleSeed(System.currentTimeMillis() - 1000);
-    final byte[] seed2 = SeedUtils.generateSimpleSeed();
-    testSeeds(seed1, seed2);
+  public void testGenerateNonSecureSeed() {
+    final int size = 17;
+    final byte[] seed1 = SeedUtils.generateSeed(size, false);
+    final byte[] seed2 = SeedUtils.generateSeed(size, false);
+    testSeeds(size, seed1, seed2);
   }
 
-  private static void testSeeds(byte[] seed1, byte[] seed2) {
-    Assertions.assertEquals(16, seed1.length, "Seed 1 length");
-    Assertions.assertEquals(16, seed2.length, "Seed 2 length");
+  private static void testSeeds(int size, byte[] seed1, byte[] seed2) {
+    Assertions.assertEquals(size, seed1.length, "Seed 1 length");
+    Assertions.assertEquals(size, seed2.length, "Seed 2 length");
     Assertions.assertThrows(AssertionError.class, () -> {
       Assertions.assertArrayEquals(seed1, seed2);
     }, "Seeds should not be equal");
-  }
-
-  @Test
-  public void testGenerateSeedWithBadAlgorithm() {
-    final byte[] seed1 = SeedUtils.generateSeed("bad algorithm");
-    Assertions.assertEquals(16, seed1.length, "Seed 1 length");
   }
 
   @Test

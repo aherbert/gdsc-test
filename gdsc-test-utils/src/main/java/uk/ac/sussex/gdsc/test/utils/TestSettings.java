@@ -40,6 +40,9 @@ import java.util.logging.Logger;
  * <p>Test classes can then be coded to respond to this run-time configuration.
  */
 public final class TestSettings {
+  /** The seed size in bytes. */
+  private static final int DEFAULT_SEED_SIZE = 16;
+
   /**
    * The runtime property used for the test complexity level, e.g.
    *
@@ -196,7 +199,7 @@ public final class TestSettings {
   public static byte[] getSeed() {
     byte[] currentSeed = seed;
     if (currentSeed == null) {
-      currentSeed = SeedUtils.generateSeed();
+      currentSeed = SeedUtils.generateSeed(DEFAULT_SEED_SIZE);
       // Log the seed that is generated
       final Logger logger = Logger.getLogger(TestSettings.class.getName());
       logger.log(Level.INFO,
