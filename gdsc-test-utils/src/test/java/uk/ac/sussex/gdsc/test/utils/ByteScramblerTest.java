@@ -77,13 +77,19 @@ public class ByteScramblerTest {
     }
 
     @Override
-    public void engineUpdate(byte value) {}
+    public void engineUpdate(byte value) {
+      // Ignore
+    }
 
     @Override
-    public void engineUpdate(byte[] value, int offset, int length) {}
+    public void engineUpdate(byte[] value, int offset, int length) {
+      // Ignore
+    }
 
     @Override
-    public void engineReset() {}
+    public void engineReset() {
+      // Ignore
+    }
 
     @Override
     public byte[] engineDigest() {
@@ -105,13 +111,19 @@ public class ByteScramblerTest {
     }
 
     @Override
-    public void engineUpdate(byte value) {}
+    public void engineUpdate(byte value) {
+      // Ignore
+    }
 
     @Override
-    public void engineUpdate(byte[] value, int offset, int length) {}
+    public void engineUpdate(byte[] value, int offset, int length) {
+      // Ignore
+    }
 
     @Override
-    public void engineReset() {}
+    public void engineReset() {
+      // Ignore
+    }
 
     @Override
     public byte[] engineDigest() {
@@ -135,13 +147,19 @@ public class ByteScramblerTest {
     }
 
     @Override
-    public void engineUpdate(byte value) {}
+    public void engineUpdate(byte value) {
+      // Ignore
+    }
 
     @Override
-    public void engineUpdate(byte[] value, int offset, int length) {}
+    public void engineUpdate(byte[] value, int offset, int length) {
+      // Ignore
+    }
 
     @Override
-    public void engineReset() {}
+    public void engineReset() {
+      // Ignore
+    }
 
     @Override
     public byte[] engineDigest() {
