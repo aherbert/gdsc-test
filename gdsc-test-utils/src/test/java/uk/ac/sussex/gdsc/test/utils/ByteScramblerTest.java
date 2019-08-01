@@ -233,8 +233,8 @@ public class ByteScramblerTest {
   public void testScramble() {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
 
-    // Get a seed size that is not the block size of MD5 = 16 bytes
-    final byte[] bytes = new byte[16 + 1];
+    // Get a seed size that is not the block size of the default SHA-256 algorithm.
+    final byte[] bytes = new byte[17];
     rng.nextBytes(bytes);
     final ByteScrambler bs = ByteScrambler.getByteScrambler(bytes);
 
