@@ -165,7 +165,7 @@ public class TimingService {
    * @param out the output
    */
   public void report(PrintStream out) {
-    report(out, results.toArray(new TimingResult[results.size()]));
+    report(out, results.toArray(new TimingResult[0]));
   }
 
   /**
@@ -294,7 +294,7 @@ public class TimingService {
       return getReport(baos);
     } catch (final UnsupportedEncodingException ex) {
       // This should never happen since the encoding is a requirement of the JVM
-      throw new Error("UTF-8 is not supported!", ex);
+      throw new IllegalStateException("UTF-8 is not supported!", ex);
     }
   }
 

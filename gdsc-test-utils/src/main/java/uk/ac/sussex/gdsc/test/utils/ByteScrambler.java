@@ -139,7 +139,7 @@ public class ByteScrambler {
         md = (MessageDigest) messageDigest[i].clone();
       } catch (final CloneNotSupportedException ex) {
         // This should not happen as it has already been tested to be cloneable
-        throw new RuntimeException("Clone not supported", ex);
+        throw new IllegalStateException("Clone not supported", ex);
       }
 
       // Finalise the clone and copy to the current random bytes

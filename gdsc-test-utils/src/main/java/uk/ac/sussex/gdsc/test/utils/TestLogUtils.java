@@ -37,7 +37,7 @@ public final class TestLogUtils {
   /**
    * Extend {@link Level} to add levels for test logging.
    */
-  public static class TestLevel extends Level {
+  public static final class TestLevel extends Level {
     /**
      * Additional level for logging test failures.
      *
@@ -77,7 +77,7 @@ public final class TestLogUtils {
      * @param name Name
      * @param value Value
      */
-    public TestLevel(String name, int value) {
+    private TestLevel(String name, int value) {
       super(name, value);
     }
   }
