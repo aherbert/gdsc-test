@@ -71,21 +71,6 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetSameRandomWithSameSeedAndNoCache() {
-    final long seed = LONG_SEED + 1;
-    UniformRandomProvider rng = RngUtils.create(seed, false);
-    final double[] e = {rng.nextDouble(), rng.nextDouble()};
-    rng = RngUtils.create(seed, false);
-    final double[] o = {rng.nextDouble(), rng.nextDouble()};
-    Assertions.assertArrayEquals(e, o);
-
-    // Check verses cached version
-    rng = RngUtils.create(seed);
-    final double[] o2 = {rng.nextDouble(), rng.nextDouble()};
-    Assertions.assertArrayEquals(e, o2);
-  }
-
-  @Test
   public void canGetSameRandomWithSameByteSeed() {
     UniformRandomProvider rng = RngUtils.create(BYTE_SEED);
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
@@ -121,7 +106,7 @@ public class RngUtilsTest {
 
   @Test
   public void canGetDifferentRandomWithZeroLengthByteSeed() {
-    // The use of a null byte[] seed will create randomly seeded RNG
+    // The use of a zero length byte[] seed will create randomly seeded RNG
     final byte[] seed = new byte[0];
     UniformRandomProvider rng = RngUtils.create(seed);
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
@@ -133,27 +118,11 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetSameRandomWithSameByteSeedAndNoCache() {
-    final byte[] seed = BYTE_SEED.clone();
-    seed[0]++;
-    UniformRandomProvider rng = RngUtils.create(seed, false);
-    final double[] e = {rng.nextDouble(), rng.nextDouble()};
-    rng = RngUtils.create(seed, false);
-    final double[] o = {rng.nextDouble(), rng.nextDouble()};
-    Assertions.assertArrayEquals(e, o);
-
-    // Check verses cached version
-    rng = RngUtils.create(seed);
-    final double[] o2 = {rng.nextDouble(), rng.nextDouble()};
-    Assertions.assertArrayEquals(e, o2);
-  }
-
-  @Test
   public void canGetSameRandomWithFixedSeedMatchingConfiguredSeed() {
     final byte[] seed = TestSettings.getSeed();
     UniformRandomProvider rng = RngUtils.createWithFixedSeed();
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
-    rng = RngUtils.create(seed, true);
+    rng = RngUtils.create(seed);
     final double[] o = {rng.nextDouble(), rng.nextDouble()};
     Assertions.assertArrayEquals(e, o);
   }

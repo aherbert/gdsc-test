@@ -28,26 +28,15 @@ import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 import org.apache.commons.rng.RestorableUniformRandomProvider;
-import org.apache.commons.rng.core.source64.SplitMix64;
-import org.apache.commons.rng.simple.RandomSource;
+import org.apache.commons.rng.simple.internal.SeedFactory;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Arrays;
 
 /**
  * A factory for creation of random number generators (RNG) that implement
  * {@link RestorableUniformRandomProvider}.
  */
 public final class RngUtils {
-
-  /** Store the seeds for the RestorableUniformRandomProvider. */
-  private static final Map<Long, int[]> seedCache = new ConcurrentHashMap<>();
-
-  /**
-   * The size of the state array of {@link RandomSource#MWC_256}.
-   */
-  private static final int MWC_256_SEED_SIZE = 257;
-
   /** Do not allow public construction. */
   private RngUtils() {}
 
@@ -56,108 +45,56 @@ public final class RngUtils {
    *
    * <p>If the {@code seed} is null or empty then a random seed will be used.
    *
-   * <p>This makes use of a cache to improve construction performance.
-   *
    * @param seed the seed
    * @return the uniform random provider
-   * @see #create(long, boolean)
    */
   public static RestorableUniformRandomProvider create(byte[] seed) {
-    return create(seed, true);
-  }
-
-  /**
-   * Gets the uniform random provider using the given seed.
-   *
-   * <p>If the {@code seed} is null or empty then a random seed will be used.
-   *
-   * <p>This optionally makes use of a cache to improve construction performance by storing (and
-   * reusing) the full seed state of the provider for each input seed. Set {@code cache} to false to
-   * limit memory usage.
-   *
-   * @param seed the seed
-   * @param cache Set to true to enable the cache
-   * @return the uniform random provider
-   */
-  public static RestorableUniformRandomProvider create(byte[] seed, boolean cache) {
     if (SeedUtils.nullOrEmpty(seed)) {
-      return RandomSource.create(RandomSource.MWC_256);
+      return new PcgXshRr32(SeedFactory.createLong(), SeedFactory.createLong());
     }
 
-    // Currently the factory only supports limited functionality from the
-    // RNG library. Convert seed to a long.
-    final long longSeed = SeedUtils.makeLong(seed);
-
-    final int[] fullSeed = (cache)
-        // Use the cache
-        ? seedCache.computeIfAbsent(longSeed, RngUtils::generateMwc256Seed)
-        // Create a new seed
-        : generateMwc256Seed(longSeed);
-    return RandomSource.create(RandomSource.MWC_256, fullSeed);
+    // Currently the factory only supports limited functionality.
+    // Convert seed to a long array. This may be zero padded.
+    final long[] longSeed = Arrays.copyOf(SeedUtils.makeLongArray(seed), 2);
+    return new PcgXshRr32(longSeed[0], longSeed[1]);
   }
 
   /**
    * Gets the uniform random provider using the given seed.
    *
    * <p>Note: A value of {@code 0} for {@code seed} is valid. To obtain a randomly seeded provider
-   * use {@link #create(byte[])} using null as the seed.
-   *
-   * <p>This makes use of a cache to improve construction performance.
+   * use {@link #create(byte[])} passing null as the seed.
    *
    * @param seed the seed
    * @return the uniform random provider
-   * @see #create(long, boolean)
    */
   public static RestorableUniformRandomProvider create(long seed) {
-    return create(seed, true);
+    return new PcgXshRr32(seed, mix(seed));
   }
 
   /**
-   * Gets the uniform random provider using the given seed.
+   * Perform the 64-bit R-R-X-M-R-R-X-M-S-X (Rotate: Rotate; Xor; Multiply; Rotate: Rotate; Xor;
+   * Multiply; Shift; Xor) mix function of Pelle Evensen.
    *
-   * <p>Note: A value of {@code 0} for {@code seed} is valid. To obtain a randomly seeded provider
-   * use {@link #create(byte[])} using null as the seed.
-   *
-   * <p>This optionally makes use of a cache to improve construction performance by storing (and
-   * reusing) the full seed state of the provider for each input seed. Set {@code cache} to false to
-   * limit memory usage.
-   *
-   * @param seed the seed
-   * @param cache Set to true to enable the cache
-   * @return the uniform random provider
+   * @param value the input value
+   * @return the output value
+   * @see <a
+   *      href="http://mostlymangling.blogspot.com/2019/01/better-stronger-mixer-and-test-procedure.html">
+   *      Better, stronger mixer and a test procedure.</a>
    */
-  public static RestorableUniformRandomProvider create(long seed, boolean cache) {
-    final int[] fullSeed = (cache)
-        // Use the cache
-        ? seedCache.computeIfAbsent(seed, RngUtils::generateMwc256Seed)
-        // Create a new seed
-        : generateMwc256Seed(seed);
-    return RandomSource.create(RandomSource.MWC_256, fullSeed);
-  }
-
-  /**
-   * Generating a full length seed for the {@link RandomSource#MWC_256} algorithm.
-   *
-   * @param seed the seed
-   * @return the full length seed
-   */
-  private static int[] generateMwc256Seed(long seed) {
-    // This has been copied from org.apache.commons.rng.simple.internal.SeedFactory
-
-    // Generate a full length seed using another RNG
-    final SplitMix64 rng = new SplitMix64(seed);
-    final int[] array = new int[MWC_256_SEED_SIZE];
-    for (int i = 0; i < MWC_256_SEED_SIZE; i++) {
-      array[i] = rng.nextInt();
-    }
-    return array;
+  private static long mix(long value) {
+    long out = value ^ Long.rotateRight(value, 25) ^ Long.rotateRight(value, 50);
+    out *= 0xa24baed4963ee407L;
+    out ^= Long.rotateRight(out, 24) ^ Long.rotateRight(out, 49);
+    out *= 0x9fb21c651e98df25L;
+    return out ^ out >>> 28;
   }
 
   /**
    * Gets a uniform random provider with a fixed seed set using the system property
    * {@link TestSettings#PROPERTY_RANDOM_SEED}.
    *
-   * <p>Note: To obtain a randomly seeded provider use {@link #create(byte[])} using null as the
+   * <p>Note: To obtain a randomly seeded provider use {@link #create(byte[])} passing null as the
    * seed.
    *
    * @return the uniform random provider
