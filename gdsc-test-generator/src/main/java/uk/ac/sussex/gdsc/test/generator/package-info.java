@@ -23,7 +23,7 @@
  */
 
 /**
- * <p> Provides classes for generating Java code using the <a
+ * Provides classes for generating Java code using the <a
  * href="http://www.stringtemplate.org/">String Template</a> library.
  *
  * @see <a href="http://www.stringtemplate.org/">String Template</a>
