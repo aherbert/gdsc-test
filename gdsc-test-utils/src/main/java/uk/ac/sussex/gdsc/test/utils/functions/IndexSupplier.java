@@ -66,7 +66,7 @@ public class IndexSupplier implements Supplier<String> {
    * @param dimensions the dimensions
    * @throws IllegalArgumentException If the dimensions are not strictly positive
    */
-  public IndexSupplier(int dimensions) throws IllegalArgumentException {
+  public IndexSupplier(int dimensions) {
     if (dimensions <= 0) {
       throw new IllegalArgumentException(dimensions + " <= 0");
     }
@@ -82,7 +82,7 @@ public class IndexSupplier implements Supplier<String> {
    * @throws IllegalArgumentException If the dimensions are not strictly positive
    */
   public IndexSupplier(int dimensions, String messagePrefix, String messageSuffix)
-      throws IllegalArgumentException {
+      {
     this(dimensions);
     this.messagePrefix = messagePrefix;
     this.messageSuffix = messageSuffix;

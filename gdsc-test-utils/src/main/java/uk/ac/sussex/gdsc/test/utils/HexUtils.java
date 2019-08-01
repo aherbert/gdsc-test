@@ -50,17 +50,17 @@ public final class HexUtils {
     // Lower case is after upper case
     DECODE_TABLE = new byte['f' + 1];
     Arrays.fill(DECODE_TABLE, UNMAPPED);
-    for (int c = '0',
-        i = 0; c <= '9'; c++, i++) {
-      DECODE_TABLE[c] = (byte) i;
+    int value = 0;
+    for (int c = '0'; c <= '9'; c++) {
+      DECODE_TABLE[c] = (byte) value++;
     }
-    for (int c = 'A',
-        i = 10; c <= 'F'; c++, i++) {
-      DECODE_TABLE[c] = (byte) i;
+    value = 10;
+    for (int c = 'A'; c <= 'F'; c++) {
+      DECODE_TABLE[c] = (byte) value++;
     }
-    for (int c = 'a',
-        i = 10; c <= 'f'; c++, i++) {
-      DECODE_TABLE[c] = (byte) i;
+    value = 10;
+    for (int c = 'a'; c <= 'f'; c++) {
+      DECODE_TABLE[c] = (byte) value++;
     }
   }
 

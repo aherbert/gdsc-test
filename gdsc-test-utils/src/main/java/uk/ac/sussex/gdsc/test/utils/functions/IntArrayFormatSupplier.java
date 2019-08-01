@@ -46,7 +46,7 @@ public class IntArrayFormatSupplier extends ArrayFormatSupplier {
    * @throws IllegalArgumentException If the format is null or empty, or size if not strictly
    *         positive
    */
-  public IntArrayFormatSupplier(String format, int size) throws IllegalArgumentException {
+  public IntArrayFormatSupplier(String format, int size) {
     super(format, size);
     values = new int[size];
   }

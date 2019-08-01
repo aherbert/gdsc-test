@@ -186,9 +186,9 @@ public class TimingService {
       return;
     }
     final TimingResult[] r = new TimingResult[to - from];
-    for (int i = 0,
-        j = from; j < to; i++, j++) {
-      r[i] = results.get(j);
+    int index = 0;
+    for (int j = from; j < to; j++) {
+      r[index++] = results.get(j);
     }
     report(out, r);
   }

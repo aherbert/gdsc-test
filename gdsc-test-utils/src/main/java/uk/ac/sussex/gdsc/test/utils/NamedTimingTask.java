@@ -84,7 +84,7 @@ public class NamedTimingTask extends BaseTimingTask {
    * @see uk.ac.sussex.gdsc.test.utils.TimingTask#getData(int)
    */
   @Override
-  public Object getData(int index) throws IllegalStateException {
+  public Object getData(int index) {
     throw new IllegalStateException("This task has no data");
   }
 

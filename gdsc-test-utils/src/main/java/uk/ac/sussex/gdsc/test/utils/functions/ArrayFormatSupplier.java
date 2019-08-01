@@ -43,7 +43,7 @@ public abstract class ArrayFormatSupplier extends FormatSupplier {
    * @throws IllegalArgumentException If the format is null or empty, or size if not strictly
    *         positive
    */
-  public ArrayFormatSupplier(String format, int size) throws IllegalArgumentException {
+  public ArrayFormatSupplier(String format, int size) {
     super(format);
     if (size <= 0) {
       throw new IllegalArgumentException(size + " <= 0");

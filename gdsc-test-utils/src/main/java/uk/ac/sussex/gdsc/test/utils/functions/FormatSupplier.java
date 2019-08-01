@@ -42,7 +42,7 @@ public abstract class FormatSupplier implements Supplier<String> {
    * @param format the format
    * @throws IllegalArgumentException If the format is null or empty
    */
-  public FormatSupplier(String format) throws IllegalArgumentException {
+  public FormatSupplier(String format) {
     if (format == null || format.length() == 0) {
       throw new IllegalArgumentException("Format is null or empty");
     }

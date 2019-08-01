@@ -242,7 +242,7 @@ public final class TestLogUtils {
    * @return the stack trace element
    * @throws IllegalArgumentException If {@code count < 0}
    */
-  public static StackTraceElement getStackTraceElement(int count) throws IllegalArgumentException {
+  public static StackTraceElement getStackTraceElement(int count) {
     if (count < 0) {
       throw new IllegalArgumentException("Count must be positive: " + count);
     }

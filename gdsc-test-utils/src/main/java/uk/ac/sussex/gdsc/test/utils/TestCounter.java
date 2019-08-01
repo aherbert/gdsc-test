@@ -64,7 +64,7 @@ public class TestCounter {
    * @return the failure limit
    * @throws IllegalArgumentException if fraction is not in the range 0-1 or size is not positive
    */
-  public static int computeFailureLimit(int size, double fraction) throws IllegalArgumentException {
+  public static int computeFailureLimit(int size, double fraction) {
     if (size <= 0) {
       throw new IllegalArgumentException("Size must be strictly positive: " + size);
     }
@@ -104,7 +104,7 @@ public class TestCounter {
    * @param test the test
    * @throws AssertionError the assertion error if the failure limit has been exceeded
    */
-  public void run(TestAssertion test) throws AssertionError {
+  public void run(TestAssertion test) {
     run(0, test);
   }
 
@@ -116,7 +116,7 @@ public class TestCounter {
    * @throws IndexOutOfBoundsException If the test index is invalid
    * @throws AssertionError the assertion error if the failure limit has been exceeded
    */
-  public void run(int index, TestAssertion test) throws IndexOutOfBoundsException, AssertionError {
+  public void run(int index, TestAssertion test) {
     try {
       test.test();
     } catch (final AssertionError ex) {
@@ -134,7 +134,7 @@ public class TestCounter {
    * @param error the error (this will be called if the failure limit has been exceeded)
    * @throws AssertionError the assertion error if the failure limit has been exceeded
    */
-  public void run(TestCase test, TestAssertion error) throws AssertionError {
+  public void run(TestCase test, TestAssertion error) {
     run(0, test, error);
   }
 
@@ -147,8 +147,7 @@ public class TestCounter {
    * @throws IndexOutOfBoundsException If the test index is invalid
    * @throws AssertionError the assertion error if the failure limit has been exceeded
    */
-  public void run(int index, TestCase test, TestAssertion error)
-      throws IndexOutOfBoundsException, AssertionError {
+  public void run(int index, TestCase test, TestAssertion error) {
     if (!test.test()) {
       if (failures[index] >= failureLimit) {
         // This should throw

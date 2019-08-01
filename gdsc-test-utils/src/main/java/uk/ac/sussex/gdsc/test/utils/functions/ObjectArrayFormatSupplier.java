@@ -41,7 +41,7 @@ public class ObjectArrayFormatSupplier extends ArrayFormatSupplier {
    * @throws IllegalArgumentException If the format is null or empty, or size if not strictly
    *         positive
    */
-  public ObjectArrayFormatSupplier(String format, int size) throws IllegalArgumentException {
+  public ObjectArrayFormatSupplier(String format, int size) {
     super(format, size);
     values = new Object[size];
   }
