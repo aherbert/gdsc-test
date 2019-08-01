@@ -34,7 +34,7 @@ import java.util.Objects;
  *
  * <p>This class is immutable.
  */
-public class RandomSeed implements Serializable {
+public final class RandomSeed implements Serializable {
   /**
    * The serial version ID.
    */
@@ -64,8 +64,7 @@ public class RandomSeed implements Serializable {
    * @throws IllegalArgumentException If {@code totalRepitions < 1} or {@code currentRepetition < 1}
    *         or {@code currentRepetition > totalRepetitions}
    */
-  public RandomSeed(byte[] seed, int currentRepetition, int totalRepetitions)
-      throws IllegalArgumentException {
+  public RandomSeed(byte[] seed, int currentRepetition, int totalRepetitions) {
     this.seed = Objects.requireNonNull(seed, "The seed must not be null").clone();
     if (totalRepetitions <= 0) {
       throw new IllegalArgumentException("Total repetitions must be strictly positive");
@@ -164,12 +163,8 @@ public class RandomSeed implements Serializable {
     if (this == obj) {
       return true;
     }
-    // null check
-    if (obj == null) {
-      return false;
-    }
-    // type check and cast
-    if (getClass() != obj.getClass()) {
+    // null check and type check (this class is final so no sub-classes are possible)
+    if (!(obj instanceof RandomSeed)) {
       return false;
     }
     // field comparison
