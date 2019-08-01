@@ -131,7 +131,7 @@ public class IndexSupplier implements Supplier<String> {
    * @param value the index value
    * @return the supplier
    */
-  public Supplier<String> set(int index, int value) {
+  public IndexSupplier set(int index, int value) {
     indices[index] = value;
     return this;
   }
@@ -141,11 +141,13 @@ public class IndexSupplier implements Supplier<String> {
    *
    * @param prefix the prefix for each index value
    * @param suffix the suffix for each index value
+   * @return the supplier
    */
-  public void setFormat(String prefix, String suffix) {
+  public IndexSupplier setFormat(String prefix, String suffix) {
     this.prefix = prefix;
     this.suffix = suffix;
     this.delimiter = suffix + prefix;
+    return this;
   }
 
   /**
@@ -161,9 +163,11 @@ public class IndexSupplier implements Supplier<String> {
    * Sets the message prefix.
    *
    * @param messagePrefix the new message prefix
+   * @return the supplier
    */
-  public void setMessagePrefix(String messagePrefix) {
+  public IndexSupplier setMessagePrefix(String messagePrefix) {
     this.messagePrefix = messagePrefix;
+    return this;
   }
 
   /**
@@ -179,9 +183,11 @@ public class IndexSupplier implements Supplier<String> {
    * Sets the message suffix.
    *
    * @param messageSuffix the new message suffix
+   * @return the supplier
    */
-  public void setMessageSuffix(String messageSuffix) {
+  public IndexSupplier setMessageSuffix(String messageSuffix) {
     this.messageSuffix = messageSuffix;
+    return this;
   }
 
   /**

@@ -25,7 +25,6 @@
 package uk.ac.sussex.gdsc.test.utils.functions;
 
 import java.util.Arrays;
-import java.util.function.Supplier;
 
 /**
  * Supply a formatted message using the {@link String#format(String, Object...)} function with an
@@ -59,7 +58,7 @@ public class IntArrayFormatSupplier extends ArrayFormatSupplier {
    * @param value the value
    * @return the supplier
    */
-  public Supplier<String> set(int index, int value) {
+  public IntArrayFormatSupplier set(int index, int value) {
     values[index] = value;
     return this;
   }

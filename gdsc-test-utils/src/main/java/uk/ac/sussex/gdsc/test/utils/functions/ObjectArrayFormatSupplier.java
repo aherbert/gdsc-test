@@ -24,8 +24,6 @@
 
 package uk.ac.sussex.gdsc.test.utils.functions;
 
-import java.util.function.Supplier;
-
 /**
  * Supply a formatted message using the {@link String#format(String, Object...)} function with an
  * array of object arguments.
@@ -55,7 +53,7 @@ public class ObjectArrayFormatSupplier extends ArrayFormatSupplier {
    * @param value the value
    * @return the supplier
    */
-  public Supplier<String> set(int index, Object value) {
+  public ObjectArrayFormatSupplier set(int index, Object value) {
     values[index] = value;
     return this;
   }
