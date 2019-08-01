@@ -64,6 +64,9 @@
   </rule>
   <rule ref="category/java/errorprone.xml">
     <exclude name="BeanMembersShouldSerialize" />
+    <!-- This rule is known to be poor with Java 5 and later:
+      https://github.com/pmd/pmd/issues/873 -->
+    <exclude name="DataflowAnomalyAnalysis" />
   </rule>
   <rule ref="category/java/multithreading.xml">
     <exclude name="DoNotUseThreads" />
