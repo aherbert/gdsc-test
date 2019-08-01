@@ -81,8 +81,7 @@ public class IndexSupplier implements Supplier<String> {
    * @param messageSuffix the message suffix
    * @throws IllegalArgumentException If the dimensions are not strictly positive
    */
-  public IndexSupplier(int dimensions, String messagePrefix, String messageSuffix)
-      {
+  public IndexSupplier(int dimensions, String messagePrefix, String messageSuffix) {
     this(dimensions);
     this.messagePrefix = messagePrefix;
     this.messageSuffix = messageSuffix;
@@ -106,7 +105,7 @@ public class IndexSupplier implements Supplier<String> {
     if (messagePrefix != null && messagePrefix.length() > 0) {
       message.append(messagePrefix);
     }
-    message.append(Arrays.stream(indices).boxed().map(Object::toString)
+    message.append(Arrays.stream(indices).mapToObj(Integer::toString)
         .collect(Collectors.joining(delimiter, prefix, suffix)));
     if (messageSuffix != null && messageSuffix.length() > 0) {
       message.append(messageSuffix);
