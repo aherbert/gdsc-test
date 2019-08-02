@@ -50,13 +50,13 @@ public final class RngUtils {
    */
   public static RestorableUniformRandomProvider create(byte[] seed) {
     if (SeedUtils.nullOrEmpty(seed)) {
-      return new PcgXshRr32(SeedFactory.createLong(), SeedFactory.createLong());
+      return new PcgXshRs32(SeedFactory.createLong(), SeedFactory.createLong());
     }
 
     // Currently the factory only supports limited functionality.
     // Convert seed to a long array. This may be zero padded.
     final long[] longSeed = Arrays.copyOf(SeedUtils.makeLongArray(seed), 2);
-    return new PcgXshRr32(longSeed[0], longSeed[1]);
+    return new PcgXshRs32(longSeed[0], longSeed[1]);
   }
 
   /**
@@ -69,7 +69,7 @@ public final class RngUtils {
    * @return the uniform random provider
    */
   public static RestorableUniformRandomProvider create(long seed) {
-    return new PcgXshRr32(seed, mix(seed));
+    return new PcgXshRs32(seed, mix(seed));
   }
 
   /**

@@ -33,14 +33,23 @@ import org.apache.commons.rng.RestorableUniformRandomProvider;
 
 /**
  * Implement a Permuted Congruential Generator (PCG) using a 64-bit Linear Congruential Generator
- * (LCG) and the output XSH RR (Xor Shift; Random Rotate) transform function.
+ * (LCG) and the output XSH RS (Xor Shift; Random Shift) transform function.
  *
  * <p>This generator has 128-bits of state, outputs 32-bits per cycle and a period of
  * 2<sup>64</sup>.
  *
  * @see <a href="http://www.pcg-random.org/">PCG, A Family of Better Random Number Generators</a>
  */
-public final class PcgXshRr32 implements RestorableUniformRandomProvider {
+public final class PcgXshRs32 implements RestorableUniformRandomProvider {
+  /** The upper 32-bit mask for a long. */
+  private static final long UPPER = 0xffffffff00000000L;
+  /** The lower 32-bit mask for a long. */
+  private static final long LOWER = 0xffffffffL;
+  /** The upper 32-bit mask for a long right shifted 11-bits. */
+  private static final long UPPER_SHIFT_11 = UPPER >>> 11;
+  /** The lower 32-bit mask for a long right shifted 11-bits. */
+  private static final long LOWER_SHIFT_11 = LOWER >>> 11;
+
   /** The LCG multiplier. */
   private static final long MULTIPLIER = 6364136223846793005L;
 
@@ -58,7 +67,7 @@ public final class PcgXshRr32 implements RestorableUniformRandomProvider {
    *
    * @param seedState the seed for the state
    */
-  public PcgXshRr32(long seedState) {
+  public PcgXshRs32(long seedState) {
     this.increment = DEFAULT_INCREMENT;
     this.state = bump(seedState + increment);
   }
@@ -72,7 +81,7 @@ public final class PcgXshRr32 implements RestorableUniformRandomProvider {
    * @param seedState the seed for the state
    * @param seedIncrement the seed for the increment
    */
-  public PcgXshRr32(long seedState, long seedIncrement) {
+  public PcgXshRs32(long seedState, long seedIncrement) {
     this.increment = (seedIncrement << 1) | 1;
     this.state = bump(seedState + increment);
   }
@@ -129,8 +138,7 @@ public final class PcgXshRr32 implements RestorableUniformRandomProvider {
   public int nextInt() {
     final long x = state;
     state = bump(state);
-    final int count = (int) (x >>> 59);
-    return Integer.rotateRight((int) ((x ^ (x >>> 18)) >>> 27), count);
+    return (int) ((x ^ (x >>> 22)) >>> (22 + (int) (x >>> 61)));
   }
 
   @Override
@@ -155,7 +163,16 @@ public final class PcgXshRr32 implements RestorableUniformRandomProvider {
 
   @Override
   public long nextLong() {
-    return (((long) nextInt()) << 32) | (nextInt() & 0xffffffffL);
+    // Get two values from the LCG
+    final long x = state;
+    final long y = bump(state);
+    state = bump(y);
+    // Perform mix function.
+    // For a 32-bit output the x bits should be shifted down (22 + (int) (x >>> 61)).
+    // Leave in the upper bits by shift up 32 - (22 + (int) (x >>> 61))
+    final long upper = ((x ^ (x >>> 22)) << (10 - (int) (x >>> 61)));
+    final long lower = ((y ^ (y >>> 22)) >>> (22 + (int) (y >>> 61)));
+    return (upper & UPPER) | (lower & LOWER);
   }
 
   @Override
@@ -190,7 +207,16 @@ public final class PcgXshRr32 implements RestorableUniformRandomProvider {
 
   @Override
   public double nextDouble() {
-    return (nextLong() >>> 11) * 0x1.0p-53;
+    // Get two values from the LCG
+    final long x = state;
+    final long y = bump(state);
+    state = bump(y);
+    // Perform mix function as per nextLong() but righted shift 11 bits.
+    // The masks must be shifted 11-bits too. This saves 1 shift operation over
+    // calling (nextLong() >>> 11).
+    final long upper = ((x ^ (x >>> 22)) >>> (1 + (int) (x >>> 61)));
+    final long lower = ((y ^ (y >>> 22)) >>> (33 + (int) (y >>> 61)));
+    return ((upper & UPPER_SHIFT_11) | (lower & LOWER_SHIFT_11)) * 0x1.0p-53;
   }
 
   @Override
