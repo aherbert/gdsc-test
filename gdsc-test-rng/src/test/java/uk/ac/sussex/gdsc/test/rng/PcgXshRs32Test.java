@@ -1,10 +1,12 @@
 package uk.ac.sussex.gdsc.test.rng;
 
+import org.apache.commons.math3.stat.inference.ChiSquareTest;
 import org.apache.commons.rng.RandomProviderState;
 import org.apache.commons.rng.core.util.NumberFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("javadoc")
@@ -98,7 +100,7 @@ public class PcgXshRs32Test {
    */
   @Test
   public void testNextDoubleIs53BitProduct() {
-    final long seed = 67868L; //ThreadLocalRandom.current().nextLong();
+    final long seed = 67868L; // ThreadLocalRandom.current().nextLong();
     final PcgXshRs32 rng1 = new PcgXshRs32(seed);
     final PcgXshRs32 rng2 = new PcgXshRs32(seed);
     for (int i = 0; i < 200; i++) {
@@ -209,34 +211,74 @@ public class PcgXshRs32Test {
         + " (test will fail randomly about 1 in 100 times)");
   }
 
-  // No statistical tests for range methods
+  // Range methods uniformity tested using Chi-squared
 
   @Test
   public void testNextIntInRange() {
-    final long seed = ThreadLocalRandom.current().nextLong();
+    final long seed = -89656413479899763L;
     final PcgXshRs32 rng = new PcgXshRs32(seed);
     // A power of 2 and the worst case scenario for the rejection algorithm.
     // Rejection should occur almost 50% of the time so the test should hit all paths.
-    for (final int range : new int[] {256, (1 << 30) + 1}) {
-      for (int i = 0; i < 10; i++) {
-        final int value = rng.nextInt(range);
-        Assertions.assertTrue(value >= 0 && value < range);
-      }
+    assertNextIntInRange(rng, 16 * 16, 16);
+    assertNextIntInRange(rng, 17 * 17, 17);
+    assertNextIntInRange(rng, (1 << 30) + 16, 16);
+  }
+
+  /**
+   * Assert the nextInt(int) method is uniform. The bins must exactly divide into the limit.
+   *
+   * @param rng the rng
+   * @param limit the limit
+   * @param bins the bins
+   */
+  private static void assertNextIntInRange(PcgXshRs32 rng, int limit, int bins) {
+    Assertions.assertEquals(0, limit % bins, "Invalid test: limit/bins must be a whole number");
+
+    final long[] observed = new long[bins];
+    final int divisor = limit / bins;
+    final int samples = 10000;
+    for (int i = 0; i < 10000; i++) {
+      observed[rng.nextInt(limit) / divisor]++;
     }
+    final double[] expected = new double[bins];
+    Arrays.fill(expected, (double) samples / bins);
+    final ChiSquareTest test = new ChiSquareTest();
+    final double pvalue = test.chiSquareTest(expected, observed);
+    Assertions.assertFalse(pvalue < 0.01, "P-value = " + pvalue);
   }
 
   @Test
   public void testNextLongInRange() {
-    final long seed = ThreadLocalRandom.current().nextLong();
+    final long seed = 789542313489478946L;
     final PcgXshRs32 rng = new PcgXshRs32(seed);
     // A power of 2 and the worst case scenario for the rejection algorithm.
     // Rejection should occur almost 50% of the time so the test should hit all paths.
-    for (final long range : new long[] {256, (1L << 62) + 1}) {
-      for (int i = 0; i < 10; i++) {
-        final long value = rng.nextLong(range);
-        Assertions.assertTrue(value >= 0 && value < range);
-      }
+    assertNextLongInRange(rng, 16 * 16, 16);
+    assertNextLongInRange(rng, 17 * 17, 17);
+    assertNextLongInRange(rng, (1L << 62) + 16, 16);
+  }
+
+  /**
+   * Assert the nextLong(long) method is uniform. The bins must exactly divide into the limit.
+   *
+   * @param rng the rng
+   * @param limit the limit
+   * @param bins the bins
+   */
+  private static void assertNextLongInRange(PcgXshRs32 rng, long limit, int bins) {
+    Assertions.assertEquals(0, limit % bins, "Invalid test: limit/bins must be a whole number");
+
+    final long[] observed = new long[bins];
+    final long divisor = limit / bins;
+    final int samples = 10000;
+    for (int i = 0; i < 10000; i++) {
+      observed[(int) (rng.nextLong(limit) / divisor)]++;
     }
+    final double[] expected = new double[bins];
+    Arrays.fill(expected, (double) samples / bins);
+    final ChiSquareTest test = new ChiSquareTest();
+    final double pvalue = test.chiSquareTest(expected, observed);
+    Assertions.assertFalse(pvalue < 0.01, "P-value = " + pvalue);
   }
 
   private static void fill(PcgXshRs32 rng, int[] sequence) {
