@@ -32,6 +32,8 @@ import uk.ac.sussex.gdsc.test.api.function.IntIntBiPredicate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 /**
  * Contains demonstration code for the API package.
  *
@@ -139,5 +141,24 @@ public class ApiTest {
     Object[] expected = new int[4][5][6];
     Object[] actual = new int[4][5][6];
     TestAssertions.assertArrayTest(expected, actual, equal);
+  }
+
+  /**
+   * Test predicate conversion.
+   */
+  @Test
+  public void testPredicateConversion() {
+    final int answer = 42;
+    uk.ac.sussex.gdsc.test.api.function.IntPredicate isAnswer1 = v -> v == answer;
+    java.util.function.IntPredicate isAnswer2 = isAnswer1::test;
+    uk.ac.sussex.gdsc.test.api.function.IntPredicate isAnswer3 = isAnswer2::test;
+    for (final int value : new int[] {2, answer}) {
+      Assertions.assertEquals(isAnswer1.test(value), isAnswer2.test(value));
+      Assertions.assertEquals(isAnswer1.test(value), isAnswer3.test(value));
+    }
+
+    uk.ac.sussex.gdsc.test.api.function.IntPredicate isEven = v -> (v & 1) == 0;
+    long even = IntStream.of(1, 2, 3).filter(isEven::test).count();
+    Assertions.assertEquals(1, even);
   }
 }
