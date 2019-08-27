@@ -12,7 +12,7 @@ env:
   - secure: UjsO2+xxJNFB1QlURKVcYhkYjdNX0Au/rLzi+NJc/Euobs80P8DPHdhRBDa9rIRrEOgy0XHIRc2E5C7S7vQsfGx1/+nJWKqWzyafvFJ6pYUX4IvtAKREmoVjzdadkp6aySMwryCmTE715KUg1yuvStoSOxrTIZj5PLg39AH1o4mjrMFpuwKVq2TKevJjZH+WlnhcMHxxUV4hBDNlKHxdh+ERSWsgSEc5Htw/NNTW4WcVazh9Pfgjd3VXABdXcu0v0R74gXqBCw2L0RkW07GqwU2r7BRifg26JhFOPINmMdxWb1GjINWy9dlB2uGyEHEawBpOlhhekDdSNDTCBr66qw9fHHIpVpNzPrKJII78ggpnSfrmsVB863xiIIJmBDr8S/2omWNiP0m6viIBsHybJTsNfk3zgTb+J5pOh/LucdKlrhcfjlwfstHaJlkW7NduNXCx1C5s+8hPOGBP8bKKEYbwYobvCh8kLvjhJPF7h5UMjgiapZWUWvduxSzpJXhRujmIFwc0sI+7NoserWL4KhrbgGnaOCzNnL+1SWgBObBO5yjXpQ7ZhzZ+7Ath19tlSww2o2l+irKGTSHsccTa4/NDQtLsepmWasjXveB67pUfik4h+5EbpwueD1W5rJwEfoULMo//YPCaloPMJs4RTM2pUjMTg2CaSuvHXde005g=
 # Skip the installation step:
 install: true
-script: mvn -B test -P gdsc-test-examples
+script: mvn -B test -P gdsc-test-examples checkstyle:check spotbugs:check
 after_success:
 # process-sources is required to add the generated sources for coveralls to find the files
 - mvn process-sources jacoco:report coveralls:report
