@@ -28,9 +28,9 @@ import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 import org.apache.commons.rng.RestorableUniformRandomProvider;
-import org.apache.commons.rng.simple.internal.SeedFactory;
 
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * A factory for creation of random number generators (RNG) that implement
@@ -50,7 +50,8 @@ public final class RngUtils {
    */
   public static RestorableUniformRandomProvider create(byte[] seed) {
     if (SeedUtils.nullOrEmpty(seed)) {
-      return new PcgXshRs32(SeedFactory.createLong(), SeedFactory.createLong());
+      final ThreadLocalRandom rng = ThreadLocalRandom.current();
+      return new PcgXshRs32(rng.nextLong(), rng.nextLong());
     }
 
     // Currently the factory only supports limited functionality.

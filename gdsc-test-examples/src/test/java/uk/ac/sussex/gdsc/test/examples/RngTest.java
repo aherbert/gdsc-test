@@ -45,7 +45,7 @@ public class RngTest {
    */
   @SeededTest
   public void testSomethingRandom(RandomSeed seed) {
-    UniformRandomProvider rng = RngUtils.create(seed.getSeedAsLong());
+    UniformRandomProvider rng = RngUtils.create(seed.getSeed());
     // Do the test ...
   }
 }

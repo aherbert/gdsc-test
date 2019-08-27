@@ -180,7 +180,8 @@ of repeats can be set using a Java property:
     -Dgdsc.test.repeats=5
 
 An example implementation for test randomness is provided using
-`Commons RNG <https://commons.apache.org/rng/>`_, for example::
+`Apache Commons RNG <https://commons.apache.org/rng/>`_ client API ``UniformRandomProvider``,
+for example::
 
     import uk.ac.sussex.gdsc.test.junit5.RandomSeed;
     import uk.ac.sussex.gdsc.test.junit5.SeededTest;
@@ -192,12 +193,9 @@ An example implementation for test randomness is provided using
     // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
-        UniformRandomProvider rng = RngUtils.create(seed.getSeedAsLong());
+        UniformRandomProvider rng = RngUtils.create(seed.getSeed());
         // Do the test ...
     }
-
-The ``RngUtils`` implements caching of the initial state of the generator for fast provision
-of a repeatable source of test randomness.
 
 
 Modular Design
@@ -212,7 +210,7 @@ Package                           Description
 ``uk.ac.sussex.gdsc.test.api``    Predicates and assertions
 ``uk.ac.sussex.gdsc.test.utils``  Utilities for error messages, logging and timing
 ``uk.ac.sussex.gdsc.test.junit5`` JUnit5 annotations
-``uk.ac.sussex.gdsc.test.rng``    Uses Commons RNG for a random source
+``uk.ac.sussex.gdsc.test.rng``    Provides a configurable random source
 ================================= ===========
 
 Contents
