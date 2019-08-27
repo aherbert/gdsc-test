@@ -85,8 +85,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}</parent.dir>
     <!-- Versions -->
-    <org.junit.jupiter.version>5.4.1</org.junit.jupiter.version>
-    <org.junit.platform.version>1.2.0</org.junit.platform.version>
+    <org.junit.bom.version>5.4.2</org.junit.bom.version>
     <commons.rng.version>1.2</commons.rng.version>
     <commons.codec.version>1.12</commons.codec.version>
     <org.jacoco.version>0.8.3</org.jacoco.version>
@@ -129,9 +128,16 @@ The GDSC Test package contains code for use with the JUnit test framework.
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter</artifactId>
-        <version>${org.junit.jupiter.version}</version>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${org.junit.bom.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-rng-client-api</artifactId>
+        <version>${commons.rng.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -274,23 +280,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <!-- Fix for OpenJDK 8 now validating class-path attributes in Jar manifests. See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=912333#63 -->
           <useSystemClassLoader>false</useSystemClassLoader>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>${org.junit.platform.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${org.junit.jupiter.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>${org.junit.jupiter.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
