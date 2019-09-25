@@ -559,21 +559,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
     </profile>
     <profile>
       <id>eclipse</id>
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${org.junit.jupiter.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <version>${org.junit.platform.version}</version>
-            <scope>test</scope>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
       <dependencies>
         <dependency>
           <groupId>org.junit.jupiter</groupId>
