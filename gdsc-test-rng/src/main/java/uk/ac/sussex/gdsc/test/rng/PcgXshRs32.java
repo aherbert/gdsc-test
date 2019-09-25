@@ -49,6 +49,8 @@ public final class PcgXshRs32 implements RestorableUniformRandomProvider {
   private static final long UPPER_SHIFT_11 = UPPER >>> 11;
   /** The lower 32-bit mask for a long right shifted 11-bits. */
   private static final long LOWER_SHIFT_11 = LOWER >>> 11;
+  /** 2^32. */
+  private static final long POW_32 = 1L << 32;
 
   /** The LCG multiplier. */
   private static final long MULTIPLIER = 6364136223846793005L;
@@ -146,19 +148,19 @@ public final class PcgXshRs32 implements RestorableUniformRandomProvider {
     if (limit <= 0) {
       throw new IllegalArgumentException("Not positive: " + limit);
     }
-    final int nm1 = limit - 1;
-    if ((limit & nm1) == 0) {
-      // Power of 2
-      return nextInt() & nm1;
+    // Lemire (2019): Fast Random Integer Generation in an Interval
+    // https://arxiv.org/abs/1805.10941
+    long mult = (nextInt() & LOWER) * limit;
+    long left = mult & LOWER;
+    if (left < limit) {
+      // 2^32 % limit
+      final long t = POW_32 % limit;
+      while (left < t) {
+        mult = (nextInt() & LOWER) * limit;
+        left = mult & LOWER;
+      }
     }
-    int bits;
-    int val;
-    do {
-      bits = nextInt() >>> 1;
-      val = bits % limit;
-    } while (bits - val + nm1 < 0);
-
-    return val;
+    return (int) (mult >>> 32);
   }
 
   @Override
