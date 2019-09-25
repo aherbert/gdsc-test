@@ -224,7 +224,7 @@ public final class PcgXshRs32 implements RestorableUniformRandomProvider {
   @Override
   public RandomProviderState saveState() {
     // Transform increment when saving
-    return new PcgState(state, increment >> 1);
+    return new PcgState(state, increment >>> 1);
   }
 
   @Override
