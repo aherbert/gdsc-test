@@ -35,7 +35,7 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   /**
-   * Hit the edge case where the first seed state is zero but the second is not (i.e. a partial zero
+   * Hit the edge case where the one seed state is zero but the second is not (i.e. a partial zero
    * seed).
    */
   @Test
