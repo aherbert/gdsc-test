@@ -44,20 +44,21 @@ public final class RngUtils {
    * Gets the uniform random provider using the given seed.
    *
    * <p>If the {@code seed} is null or empty then a random seed will be used.
+   * This is generated using {@code ThreadLocalRandom.current().nextLong()}.
    *
    * @param seed the seed
    * @return the uniform random provider
+   * @see ThreadLocalRandom
    */
   public static RestorableUniformRandomProvider create(byte[] seed) {
     if (SeedUtils.nullOrEmpty(seed)) {
-      final ThreadLocalRandom rng = ThreadLocalRandom.current();
-      return new PcgXshRs32(rng.nextLong(), rng.nextLong());
+      return new XoRoShiRo128PlusPlus(ThreadLocalRandom.current().nextLong());
     }
 
     // Currently the factory only supports limited functionality.
     // Convert seed to a long array. This may be zero padded.
     final long[] longSeed = Arrays.copyOf(SeedUtils.makeLongArray(seed), 2);
-    return new PcgXshRs32(longSeed[0], longSeed[1]);
+    return new XoRoShiRo128PlusPlus(longSeed[0], longSeed[1]);
   }
 
   /**
@@ -70,23 +71,26 @@ public final class RngUtils {
    * @return the uniform random provider
    */
   public static RestorableUniformRandomProvider create(long seed) {
-    return new PcgXshRs32(seed, mix(seed));
+    return new XoRoShiRo128PlusPlus(seed);
   }
 
   /**
-   * Perform the 64-bit R-R-X-M-R-R-X-M-S-X (Rotate: Rotate; Xor; Multiply; Rotate: Rotate; Xor;
-   * Multiply; Shift; Xor) mix function of Pelle Evensen.
+   * Perform the 64-bit R-R-M-X-M-X (Rotate: Rotate; Multiply; Xor shift; Multiply; Xor shift) mix
+   * function of Pelle Evensen.
+   *
+   * <p>This mix procedure is a bijection (one-to-one mapping).
    *
    * @param value the input value
    * @return the output value
    * @see <a
-   *      href="http://mostlymangling.blogspot.com/2019/01/better-stronger-mixer-and-test-procedure.html">
-   *      Better, stronger mixer and a test procedure.</a>
+   *      href="https://mostlymangling.blogspot.com/2018/07/on-mixing-functions-in-fast-splittable.html">
+   *      On the mixing functions in "Fast Splittable Pseudorandom Number Generators", MurmurHash3
+   *      and David Stafford&#39;s improved variants on the MurmurHash3 finalizer.</a>
    */
-  private static long mix(long value) {
-    long out = value ^ Long.rotateRight(value, 25) ^ Long.rotateRight(value, 50);
-    out *= 0xa24baed4963ee407L;
-    out ^= Long.rotateRight(out, 24) ^ Long.rotateRight(out, 49);
+  static long rrmxmx(long value) {
+    long out = value ^ Long.rotateRight(value, 49) ^ Long.rotateRight(value, 24);
+    out *= 0x9fb21c651e98df25L;
+    out ^= out >>> 28;
     out *= 0x9fb21c651e98df25L;
     return out ^ out >>> 28;
   }
