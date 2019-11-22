@@ -29,9 +29,15 @@ public class XoRoShiRo128PlusPlusTest {
   public void testZeroSeed() {
     final XoRoShiRo128PlusPlus rng1 = new XoRoShiRo128PlusPlus(0);
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(0, 0);
+    boolean zeroOutput = true;
     for (int i = 0; i < 200; i++) {
-      Assertions.assertEquals(rng1.nextLong(), rng2.nextLong());
+      final long value = rng1.nextLong();
+      Assertions.assertEquals(value, rng2.nextLong());
+      if (value != 0) {
+        zeroOutput = false;
+      }
     }
+    Assertions.assertFalse(zeroOutput, "Zero seed should not create all zero output");
   }
 
   /**
