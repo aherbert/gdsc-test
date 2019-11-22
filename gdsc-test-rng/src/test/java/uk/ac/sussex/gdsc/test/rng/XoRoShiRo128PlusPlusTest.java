@@ -63,7 +63,7 @@ public class XoRoShiRo128PlusPlusTest {
     final XoRoShiRo128PlusPlus rng1 = new XoRoShiRo128PlusPlus(seed);
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(seed);
     for (int i = 0; i < 200; i++) {
-      final int expected = rng1.nextInt() >>> 32;
+      final int expected = (int) (rng1.nextLong() >>> 32);
       Assertions.assertEquals(expected, rng2.nextInt());
     }
   }
