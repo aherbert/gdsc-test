@@ -159,8 +159,9 @@ public final class SeedUtils {
    * @return the values
    */
   public static long[] makeLongArray(byte... bytes) {
-    // Size is rounded up to allow shorter byte arrays
-    final int size = (bytes.length + Long.BYTES - 1) / Long.BYTES;
+    // Size is rounded up to allow shorter byte arrays.
+    // Note: >>> 3 is equivalent to divide by 8 but overflow safe.
+    final int size = (bytes.length + Long.BYTES - 1) >>> 3;
     final long[] values = new long[size];
 
     int count = 0;
@@ -191,7 +192,8 @@ public final class SeedUtils {
    */
   public static int[] makeIntArray(byte... bytes) {
     // Size is rounded up to allow shorter byte arrays
-    final int size = (bytes.length + Integer.BYTES - 1) / Integer.BYTES;
+    // Note: >>> 2 is equivalent to divide by 4 but overflow safe.
+    final int size = (bytes.length + Integer.BYTES - 1) >>> 2;
     final int[] values = new int[size];
 
     int count = 0;
