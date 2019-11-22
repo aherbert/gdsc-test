@@ -31,7 +31,7 @@ import java.util.Arrays;
 /**
  * Class used for scrambling bytes.
  *
- * <p>This is done using the a {@link MessageDigest} algorithm to scramble consecutive n-bit blocks
+ * <p>This is done using a {@link MessageDigest} algorithm to scramble consecutive n-bit blocks
  * from a source seed.
  *
  * <p>Each block from the source seed is used to initialise a {@link MessageDigest}. Each call to
