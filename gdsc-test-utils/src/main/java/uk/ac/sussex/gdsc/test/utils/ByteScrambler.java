@@ -144,7 +144,7 @@ public class ByteScrambler {
 
       // Finalise the clone and copy to the current random bytes
       final byte[] digest = md.digest();
-      System.arraycopy(digest, 0, bytes, from, to - from);
+      System.arraycopy(digest, 0, bytes, from, length);
     }
 
     return Arrays.copyOf(bytes, seed.length);
