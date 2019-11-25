@@ -24,6 +24,8 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -31,8 +33,8 @@ import java.util.Arrays;
 /**
  * Class used for scrambling bytes.
  *
- * <p>This is done using a {@link MessageDigest} algorithm to scramble consecutive n-bit blocks
- * from a source seed.
+ * <p>This is done using a {@link MessageDigest} algorithm to scramble consecutive n-bit blocks from
+ * a source seed.
  *
  * <p>Each block from the source seed is used to initialise a {@link MessageDigest}. Each call to
  * scramble the seed will update the digest with bytes from a sequence. The current digest state
@@ -54,6 +56,118 @@ public class ByteScrambler {
 
   /** The output bytes. */
   private final byte[] bytes;
+
+  /**
+   * Class to scramble up to 16 bytes. The input seed bytes are used to construct a 128-bit counter.
+   * This is incremented using a golden ratio and the output is then mixed through the Stafford
+   * variant 13 64-bit mixer for upper and lower 64-bits. This is effectively a 128-bit
+   * SplittableRandom random number generator.
+   */
+  static class BitScrambler128 {
+    /**
+     * The golden ratio, phi, scaled to 64-bits and rounded to odd.
+     *
+     * <pre>
+     * phi = (sqrt(5) - 1) / 2) * 2^64
+     *     ~ 0.61803 * 2^64
+     *     = 11400714819323198485 (unsigned 64-bit integer)
+     * </pre>
+     */
+    private static final long GOLDEN_RATIO = 0x9e3779b97f4a7c15L;
+    /**
+     * The golden ratio, phi, scaled to 128-bits, truncated to the lower 64-bits and rounded to odd.
+     *
+     * <pre>
+     * phi = (sqrt(5) - 1) / 2) * 2^128
+     *     ~ 0.61803 * 2^128
+     *     = 210306068529402873165736369884012333108.06448599 (unsigned 128-bit integer)
+     *     = 0x9e3779b97f4a7c15f39cc0605cedc834
+     * </pre>
+     *
+     * <p>This is the next 64-bits of the same number as {@link #GOLDEN_RATIO}. This number has 26
+     * binary transitions (from 0 to 1 or vice versa) so satisfies the minimum of 24 transitions
+     * required for a SplittableRandom increment.
+     */
+    private static final long GOLDEN_RATIO_128_LOWER = 0xf39cc0605cedc835L;
+
+    /** The upper 128-bits of the counter. */
+    private long upper;
+    /** The lower 128-bits of the counter. */
+    private long lower;
+    /** Working area for the bytes. */
+    private byte[] bytes;
+
+    /**
+     * Create a new instance using the seed to initialise the 128-bit counter.
+     *
+     * <p>The seed is interpreted as a little endian 128-bit integer.
+     *
+     * @param seed the seed
+     */
+    BitScrambler128(byte[] seed) {
+      // Extract the state.
+      bytes = Arrays.copyOf(seed, 16);
+      final ByteBuffer bb = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
+      lower = bb.getLong();
+      upper = bb.getLong();
+    }
+
+    /**
+     * Return the next 128-bit number in the sequence.
+     *
+     * @return the byte[]
+     */
+    public byte[] next() {
+      // Add to the counter.
+      // This is done as if 64-bit unsigned integers.
+      // Thus negative numbers are >= 2^63.
+      final long r = lower + GOLDEN_RATIO_128_LOWER;
+      // Detect overflow using the method from Long::compareUnsigned(long, long)
+      if (r + Long.MIN_VALUE < lower + Long.MIN_VALUE) {
+        // Overflow
+        upper++;
+      }
+      lower = r;
+      upper += GOLDEN_RATIO;
+      // Mix and output
+      putLongB(0, stafford13(upper));
+      putLongB(8, stafford13(lower));
+      return bytes;
+    }
+
+    /**
+     * Perform variant 13 of David Stafford's 64-bit mix function.
+     *
+     * <p>This is ranked first of the top 14 Stafford mixers.
+     *
+     * @param value the input value
+     * @return the output value
+     * @see <a href="http://zimbry.blogspot.com/2011/09/better-bit-mixing-improving-on.html">Better
+     *      Bit Mixing - Improving on MurmurHash3&#39;s 64-bit Finalizer.</a>
+     */
+    static long stafford13(long value) {
+      value = (value ^ (value >>> 30)) * 0xbf58476d1ce4e5b9L;
+      value = (value ^ (value >>> 27)) * 0x94d049bb133111ebL;
+      return value ^ (value >>> 31);
+    }
+
+    /**
+     * Put a big-endian long into the working bytes array.
+     *
+     * @param index the index
+     * @param value the value
+     */
+    private void putLongB(int index, long value) {
+      bytes[index] = (byte) (value >> 56);
+      bytes[index + 1] = (byte) (value >> 48);
+      bytes[index + 2] = (byte) (value >> 40);
+      bytes[index + 3] = (byte) (value >> 32);
+      bytes[index + 4] = (byte) (value >> 24);
+      bytes[index + 5] = (byte) (value >> 16);
+      bytes[index + 6] = (byte) (value >> 8);
+      bytes[index + 7] = (byte) (value);
+    }
+  }
 
   /**
    * Instantiates a new byte scrambler using the SHA-256 algorithm.

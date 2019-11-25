@@ -24,17 +24,23 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import uk.ac.sussex.gdsc.test.utils.ByteScrambler.BitScrambler128;
+
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 import java.security.Security;
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("javadoc")
 public class ByteScramblerTest {
@@ -249,5 +255,28 @@ public class ByteScramblerTest {
     Assertions.assertFalse(Arrays.equals(bytes, next2),
         "Seed bytes and second scramble are the same");
     Assertions.assertFalse(Arrays.equals(next1, next2), "First and second scramble are the same");
+  }
+
+  @Test
+  public void testBitScrambler() {
+    final long startUpper = ThreadLocalRandom.current().nextLong();
+    final long startLower = ThreadLocalRandom.current().nextLong();
+    final String su = Long.toUnsignedString(startUpper);
+    final String sl = Long.toUnsignedString(startLower);
+    BigInteger count = new BigInteger(su).shiftLeft(64).add(new BigInteger(sl));
+    final BigInteger increment = new BigInteger("9e3779b97f4a7c15f39cc0605cedc835", 16);
+    final byte[] seed = ByteBuffer.allocate(16).order(ByteOrder.LITTLE_ENDIAN).putLong(startLower)
+        .putLong(startUpper).array();
+    final BitScrambler128 ss = new BitScrambler128(seed);
+    for (int i = 0; i < 50; i++) {
+      // Compute expected
+      count = count.add(increment);
+      final long lower = count.longValue();
+      final long upper = count.shiftRight(64).longValue();
+      final byte[] expected = ByteBuffer.allocate(16).putLong(BitScrambler128.stafford13(upper))
+          .putLong(BitScrambler128.stafford13(lower)).array();
+      final byte[] actual = ss.next();
+      Assertions.assertArrayEquals(expected, actual);
+    }
   }
 }
