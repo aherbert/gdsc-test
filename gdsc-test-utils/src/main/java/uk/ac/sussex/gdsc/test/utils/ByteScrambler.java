@@ -26,35 +26,27 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 /**
  * Class used for scrambling bytes.
  *
- * <p>This is done using a {@link MessageDigest} algorithm to scramble consecutive n-bit blocks from
- * a source seed.
+ * <p>This is done using an algorithm to scramble consecutive 128-bit blocks from a source seed.
  *
- * <p>Each block from the source seed is used to initialise a {@link MessageDigest}. Each call to
- * scramble the seed will update the digest with bytes from a sequence. The current digest state
+ * <p>Each block from the source seed is used to initialise a 128-bit counter. Each call to scramble
+ * the block will update the counter and scramble it with a mix function. This is done using a
+ * 128-bit version of a {@link java.util.SplittableRandom SplittableRandom}. The scrambled outputs
  * from each block are then concatenated to create the scrambled sequence.
  */
 public class ByteScrambler {
 
-  /** The default digest algorithm. */
-  private static final String DEFAULT_ALGORITHM = "SHA-256";
+  /** The bit scramblers. */
+  private final BitScrambler128[] bitScramblers;
 
-  /** The message digest. */
-  private final MessageDigest[] messageDigest;
+  /** The output length (in bytes). */
+  private final int outputLength;
 
-  /** The block size. */
-  private final int blockSize;
-
-  /** The seed bytes. */
-  private final byte[] seed;
-
-  /** The output bytes. */
+  /** The working output bytes. */
   private final byte[] bytes;
 
   /**
@@ -64,6 +56,9 @@ public class ByteScrambler {
    * SplittableRandom random number generator.
    */
   static class BitScrambler128 {
+    /** The size of bytes output by the scrambler. */
+    static final int BYTES = 16;
+
     /**
      * The golden ratio, phi, scaled to 64-bits and rounded to odd.
      *
@@ -74,14 +69,14 @@ public class ByteScrambler {
      * </pre>
      */
     private static final long GOLDEN_RATIO = 0x9e3779b97f4a7c15L;
+
     /**
      * The golden ratio, phi, scaled to 128-bits, truncated to the lower 64-bits and rounded to odd.
      *
      * <pre>
-     * phi = (sqrt(5) - 1) / 2) * 2^128
-     *     ~ 0.61803 * 2^128
-     *     = 210306068529402873165736369884012333108.06448599 (unsigned 128-bit integer)
-     *     = 0x9e3779b97f4a7c15f39cc0605cedc834
+     * phi ~ 0.61803 * 2^128
+     *     = 210306068529402873165736369884012333108.06448599
+     *     = 0x9e3779b97f4a7c15f39cc0605cedc834 (unsigned 128-bit integer)
      * </pre>
      *
      * <p>This is the next 64-bits of the same number as {@link #GOLDEN_RATIO}. This number has 26
@@ -90,12 +85,10 @@ public class ByteScrambler {
      */
     private static final long GOLDEN_RATIO_128_LOWER = 0xf39cc0605cedc835L;
 
-    /** The upper 128-bits of the counter. */
-    private long upper;
     /** The lower 128-bits of the counter. */
     private long lower;
-    /** Working area for the bytes. */
-    private byte[] bytes;
+    /** The upper 128-bits of the counter. */
+    private long upper;
 
     /**
      * Create a new instance using the seed to initialise the 128-bit counter.
@@ -106,18 +99,19 @@ public class ByteScrambler {
      */
     BitScrambler128(byte[] seed) {
       // Extract the state.
-      bytes = Arrays.copyOf(seed, 16);
+      final byte[] bytes = Arrays.copyOf(seed, BYTES);
       final ByteBuffer bb = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
       lower = bb.getLong();
       upper = bb.getLong();
     }
 
     /**
-     * Return the next 128-bit number in the sequence.
+     * Return the next 128-bit number in the sequence into the provided array.
      *
-     * @return the byte[]
+     * @param bytes the bytes
+     * @param index the index
      */
-    public byte[] next() {
+    void next(byte[] bytes, int index) {
       // Add to the counter.
       // This is done as if 64-bit unsigned integers.
       // Thus negative numbers are >= 2^63.
@@ -130,9 +124,8 @@ public class ByteScrambler {
       lower = r;
       upper += GOLDEN_RATIO;
       // Mix and output
-      putLongB(0, stafford13(upper));
-      putLongB(8, stafford13(lower));
-      return bytes;
+      putLongBigEndian(bytes, index, stafford13(upper));
+      putLongBigEndian(bytes, index + 8, stafford13(lower));
     }
 
     /**
@@ -154,10 +147,11 @@ public class ByteScrambler {
     /**
      * Put a big-endian long into the working bytes array.
      *
+     * @param bytes the bytes
      * @param index the index
      * @param value the value
      */
-    private void putLongB(int index, long value) {
+    private static void putLongBigEndian(byte[] bytes, int index, long value) {
       bytes[index] = (byte) (value >> 56);
       bytes[index + 1] = (byte) (value >> 48);
       bytes[index + 2] = (byte) (value >> 40);
@@ -170,60 +164,33 @@ public class ByteScrambler {
   }
 
   /**
-   * Instantiates a new byte scrambler using the SHA-256 algorithm.
-   *
-   * <p>For convenience the checked exceptions are caught and re-thrown as unchecked. The SHA-256
-   * algorithm should be supported on any Java platform.
+   * Instantiates a new byte scrambler.
    *
    * @param seed the seed
    * @return the byte scrambler
-   * @throws IllegalArgumentException If the SHA-256 algorithm is not supported or the digest is not
-   *         cloneable
    */
   public static ByteScrambler getByteScrambler(byte[] seed) {
-    try {
-      return new ByteScrambler(seed, DEFAULT_ALGORITHM);
-    } catch (NoSuchAlgorithmException | CloneNotSupportedException ex) {
-      // This should not happen
-      throw new IllegalArgumentException(DEFAULT_ALGORITHM + " algorithm not supported", ex);
-    }
+    return new ByteScrambler(seed);
   }
 
   /**
    * Instantiates a new byte scrambler.
    *
-   * <p>Note: The algorithm must support {@link MessageDigest#clone()} and
-   * {@link MessageDigest#getDigestLength()}.
-   *
    * @param seed the seed
-   * @param algorithm the algorithm
-   * @throws NoSuchAlgorithmException If the algorithm is not supported
-   * @throws CloneNotSupportedException If the digest is not cloneable
-   * @throws IllegalArgumentException If the algorithm digest length is unknown
    */
-  public ByteScrambler(byte[] seed, String algorithm)
-      throws NoSuchAlgorithmException, CloneNotSupportedException {
-    // Try and create the digest
-    final MessageDigest md = MessageDigest.getInstance(algorithm);
-
-    // Determine the blocksize
-    blockSize = md.getDigestLength();
-    if (blockSize == 0) {
-      throw new IllegalArgumentException("Unknown block size for algorithm: " + algorithm);
-    }
-    final int blocks = (seed.length + blockSize - 1) / blockSize;
+  private ByteScrambler(byte[] seed) {
+    final int blocks = (seed.length + BitScrambler128.BYTES - 1) / BitScrambler128.BYTES;
 
     // Copy the seed
-    this.seed = seed.clone();
-    // Working space for digest output
-    bytes = new byte[blocks * blockSize];
+    outputLength = seed.length;
+    bytes = Arrays.copyOf(seed, blocks * BitScrambler128.BYTES);
 
-    // Create a digest for each block of the original seed
-    messageDigest = new MessageDigest[blocks];
-    // It must be cloneable to support staged computation, so clone all positions
-    // including index 0.
+    // Create a scrambler for each block of the original seed
+    bitScramblers = new BitScrambler128[blocks];
     for (int i = 0; i < blocks; i++) {
-      messageDigest[i] = (MessageDigest) md.clone();
+      final int from = i * BitScrambler128.BYTES;
+      final int to = from + BitScrambler128.BYTES;
+      bitScramblers[i] = new BitScrambler128(Arrays.copyOfRange(bytes, from, to));
     }
   }
 
@@ -233,34 +200,9 @@ public class ByteScrambler {
    * @return the bytes
    */
   public byte[] scramble() {
-    // This changes all the bytes in the initial seed.
-    // The operation does not matter as the digest does the scrambling,
-    // it just needs to be fed (ideally) different bytes each round.
-    for (int i = 0; i < seed.length; i++) {
-      seed[i]++;
+    for (int i = 0; i < bitScramblers.length; i++) {
+      bitScramblers[i].next(bytes, i * BitScrambler128.BYTES);
     }
-
-    for (int i = 0; i < messageDigest.length; i++) {
-      // Update the digest
-      final int from = i * blockSize;
-      final int to = Math.min(seed.length, from + blockSize);
-      final int length = to - from;
-      messageDigest[i].update(seed, from, length);
-
-      // Clone the digest to allow the state to continue
-      MessageDigest md;
-      try {
-        md = (MessageDigest) messageDigest[i].clone();
-      } catch (final CloneNotSupportedException ex) {
-        // This should not happen as it has already been tested to be cloneable
-        throw new IllegalStateException("Clone not supported", ex);
-      }
-
-      // Finalise the clone and copy to the current random bytes
-      final byte[] digest = md.digest();
-      System.arraycopy(digest, 0, bytes, from, length);
-    }
-
-    return Arrays.copyOf(bytes, seed.length);
+    return Arrays.copyOf(bytes, outputLength);
   }
 }

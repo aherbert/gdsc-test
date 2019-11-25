@@ -26,220 +26,27 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import uk.ac.sussex.gdsc.test.utils.ByteScrambler.BitScrambler128;
 
+import org.apache.commons.math3.stat.inference.ChiSquareTest;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.Provider;
-import java.security.Security;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.DoubleStream;
 
 @SuppressWarnings("javadoc")
 public class ByteScramblerTest {
-
-  private static final String NO_LENGTH = "NoLength";
-  private static final String NO_CLONEABLE = "NoCloneable";
-  private static final String ONE_TIME_CLONEABLE = "OneTimeCloneable";
-
-  /**
-   * A simple provider of message digests for testing edge cases.
-   */
-  public static class ByteScramblerTestProvider extends Provider {
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Instantiates a new byte scrambler test provider.
-     */
-    public ByteScramblerTestProvider() {
-      super("ByteScramblerTest", 1.0, "ByteScramblerTest Security Provider v1.0");
-      put("MessageDigest." + NO_LENGTH,
-          "uk.ac.sussex.gdsc.test.utils.ByteScramblerTest$NoLengthMessageDigest");
-      put("MessageDigest." + NO_CLONEABLE,
-          "uk.ac.sussex.gdsc.test.utils.ByteScramblerTest$NoCloneableMessageDigest");
-      put("MessageDigest." + ONE_TIME_CLONEABLE,
-          "uk.ac.sussex.gdsc.test.utils.ByteScramblerTest$OneTimeCloneableMessageDigest");
-    }
-  }
-
-  /**
-   * A class that does not have a message length but is {@link Cloneable}.
-   */
-  public static class NoLengthMessageDigest extends MessageDigest implements Cloneable {
-    public NoLengthMessageDigest() {
-      super(NO_LENGTH);
-    }
-
-    @Override
-    protected int engineGetDigestLength() {
-      return 0;
-    }
-
-    @Override
-    public void engineUpdate(byte value) {
-      // Ignore
-    }
-
-    @Override
-    public void engineUpdate(byte[] value, int offset, int length) {
-      // Ignore
-    }
-
-    @Override
-    public void engineReset() {
-      // Ignore
-    }
-
-    @Override
-    public byte[] engineDigest() {
-      return new byte[0];
-    }
-  }
-
-  /**
-   * A class that has a message length but is not {@link Cloneable}.
-   */
-  public static class NoCloneableMessageDigest extends MessageDigest {
-    public NoCloneableMessageDigest() {
-      super(NO_CLONEABLE);
-    }
-
-    @Override
-    protected int engineGetDigestLength() {
-      return 4;
-    }
-
-    @Override
-    public void engineUpdate(byte value) {
-      // Ignore
-    }
-
-    @Override
-    public void engineUpdate(byte[] value, int offset, int length) {
-      // Ignore
-    }
-
-    @Override
-    public void engineReset() {
-      // Ignore
-    }
-
-    @Override
-    public byte[] engineDigest() {
-      return new byte[engineGetDigestLength()];
-    }
-  }
-
-  /**
-   * A class that has a message length but is only {@link Cloneable} once.
-   */
-  public static class OneTimeCloneableMessageDigest extends MessageDigest implements Cloneable {
-    int count = 0;
-
-    public OneTimeCloneableMessageDigest() {
-      super(ONE_TIME_CLONEABLE);
-    }
-
-    @Override
-    protected int engineGetDigestLength() {
-      return 4;
-    }
-
-    @Override
-    public void engineUpdate(byte value) {
-      // Ignore
-    }
-
-    @Override
-    public void engineUpdate(byte[] value, int offset, int length) {
-      // Ignore
-    }
-
-    @Override
-    public void engineReset() {
-      // Ignore
-    }
-
-    @Override
-    public byte[] engineDigest() {
-      return new byte[engineGetDigestLength()];
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-      // Only allow one clone
-      if (++count > 1) {
-        throw new CloneNotSupportedException();
-      }
-      return super.clone();
-    }
-  }
-
-  @BeforeAll
-  public static void initialise() {
-    Security.addProvider(new ByteScramblerTestProvider());
-  }
-
-  @SuppressWarnings("unused")
-  @Test
-  public void testConstructorThrowsWithBadAlgorithm() {
-    Assertions.assertThrows(NoSuchAlgorithmException.class, () -> {
-      new ByteScrambler(new byte[4], "Bad algorithm");
-    });
-  }
-
-  @Test
-  public void testCanProvideMessageDigest() throws NoSuchAlgorithmException {
-    Assertions.assertEquals(NoLengthMessageDigest.class,
-        MessageDigest.getInstance(NO_LENGTH).getClass());
-    Assertions.assertEquals(NoCloneableMessageDigest.class,
-        MessageDigest.getInstance(NO_CLONEABLE).getClass());
-    Assertions.assertEquals(OneTimeCloneableMessageDigest.class,
-        MessageDigest.getInstance(ONE_TIME_CLONEABLE).getClass());
-  }
-
-  @SuppressWarnings("unused")
-  @Test
-  public void testConstructorThrowsWithNoLengthAlgorithm() {
-    final String message = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new ByteScrambler(new byte[1], NO_LENGTH);
-    }).getMessage();
-    final String expected = "Unknown block size";
-    Assertions.assertTrue(message.contains(expected), "Missing: " + expected);
-  }
-
-  @SuppressWarnings("unused")
-  @Test
-  public void testConstructorThrowsWithNoCloneableAlgorithm() {
-    Assertions.assertThrows(CloneNotSupportedException.class, () -> {
-      new ByteScrambler(new byte[1], NO_CLONEABLE);
-    });
-  }
-
-  @Test
-  public void testScrambleThrowsWithIfCloneNotSupportedException()
-      throws NoSuchAlgorithmException, CloneNotSupportedException {
-    // Construction is OK
-    final ByteScrambler bs = new ByteScrambler(new byte[1], ONE_TIME_CLONEABLE);
-
-    // The first scramble should be the second clone
-    Assertions.assertThrows(RuntimeException.class, () -> {
-      bs.scramble();
-    });
-  }
 
   @Test
   public void testScramble() {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
 
-    // Get a seed size that is not the block size of the default SHA-256 algorithm.
+    // Get a seed size that is not the block size of the 128-bit scrambler
     final byte[] bytes = new byte[17];
     rng.nextBytes(bytes);
     final ByteScrambler bs = ByteScrambler.getByteScrambler(bytes);
@@ -268,6 +75,7 @@ public class ByteScramblerTest {
     final byte[] seed = ByteBuffer.allocate(16).order(ByteOrder.LITTLE_ENDIAN).putLong(startLower)
         .putLong(startUpper).array();
     final BitScrambler128 ss = new BitScrambler128(seed);
+    final byte[] actual = new byte[16];
     for (int i = 0; i < 50; i++) {
       // Compute expected
       count = count.add(increment);
@@ -275,8 +83,30 @@ public class ByteScramblerTest {
       final long upper = count.shiftRight(64).longValue();
       final byte[] expected = ByteBuffer.allocate(16).putLong(BitScrambler128.stafford13(upper))
           .putLong(BitScrambler128.stafford13(lower)).array();
-      final byte[] actual = ss.next();
+      ss.next(actual, 0);
       Assertions.assertArrayEquals(expected, actual);
     }
+  }
+
+  @Test
+  public void testBitScramblerIsUniform() {
+    // Fixed seed for test stability
+    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64, 68689L);
+    // Scramble some random bytes
+    final byte[] bytes = new byte[128];
+    rng.nextBytes(bytes);
+    final ByteScrambler bs = ByteScrambler.getByteScrambler(bytes);
+    final long[] histogram = new long[256];
+    for (int i = 0; i < 50; i++) {
+      // Compute observed frequencies
+      for (final byte bi : bs.scramble()) {
+        histogram[bi & 0xff]++;
+      }
+    }
+    // Do a chi-square test
+    final ChiSquareTest chiSq = new ChiSquareTest();
+    final double[] expected = DoubleStream.generate(() -> 1.0 / 256).limit(256).toArray();
+    final double pValue = chiSq.chiSquareTest(expected, histogram);
+    Assertions.assertFalse(pValue < 0.01);
   }
 }
