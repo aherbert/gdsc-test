@@ -93,7 +93,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <spotbugs.version>3.1.6</spotbugs.version>
-    <checkstyle.version>8.20</checkstyle.version>
+    <checkstyle.version>8.29</checkstyle.version>
     <pmd.version>6.17.0</pmd.version>
     <!-- Maven plugins -->
     <maven.compiler.source>1.8</maven.compiler.source>
