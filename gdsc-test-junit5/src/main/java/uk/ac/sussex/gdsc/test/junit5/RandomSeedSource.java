@@ -24,16 +24,14 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
-import uk.ac.sussex.gdsc.test.utils.ByteScrambler;
-import uk.ac.sussex.gdsc.test.utils.TestSettings;
-
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Stream;
+import uk.ac.sussex.gdsc.test.utils.ByteScrambler;
+import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 /**
  * Provides random seeds as a {@link RandomSeed} for use as an {@link ArgumentsSource}.

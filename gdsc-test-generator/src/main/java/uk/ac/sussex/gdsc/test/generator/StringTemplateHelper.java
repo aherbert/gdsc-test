@@ -24,12 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.stringtemplate.v4.ST;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import org.apache.commons.lang3.tuple.Pair;
+import org.stringtemplate.v4.ST;
 
 /**
  * Generate java source files from a template using the StringTemplate library.

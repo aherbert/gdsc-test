@@ -24,12 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.examples;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 import uk.ac.sussex.gdsc.test.utils.functions.IndexSupplier;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * Contains demonstration code for the Utils package.

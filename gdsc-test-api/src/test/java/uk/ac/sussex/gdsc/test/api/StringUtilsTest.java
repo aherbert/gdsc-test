@@ -24,11 +24,10 @@
 
 package uk.ac.sussex.gdsc.test.api;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
 public class StringUtilsTest {

@@ -24,22 +24,6 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
-import org.apache.commons.io.DirectoryWalker;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.apache.commons.io.filefilter.HiddenFileFilter;
-import org.apache.commons.lang3.tuple.Pair;
-
-import picocli.CommandLine;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.DefaultExceptionHandler;
-import picocli.CommandLine.ITypeConverter;
-import picocli.CommandLine.Option;
-import picocli.CommandLine.ParameterException;
-import picocli.CommandLine.Parameters;
-import picocli.CommandLine.ParseResult;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,6 +37,20 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import org.apache.commons.io.DirectoryWalker;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.HiddenFileFilter;
+import org.apache.commons.lang3.tuple.Pair;
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.DefaultExceptionHandler;
+import picocli.CommandLine.ITypeConverter;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Parameters;
+import picocli.CommandLine.ParseResult;
 
 /**
  * Provides functionality to scan a source directory tree and generate Java code into a target

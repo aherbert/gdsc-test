@@ -24,13 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.rng;
 
-import uk.ac.sussex.gdsc.test.utils.SeedUtils;
-import uk.ac.sussex.gdsc.test.utils.TestSettings;
-
-import org.apache.commons.rng.RestorableUniformRandomProvider;
-
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
+import org.apache.commons.rng.RestorableUniformRandomProvider;
+import uk.ac.sussex.gdsc.test.utils.SeedUtils;
+import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 /**
  * A factory for creation of random number generators (RNG) that implement

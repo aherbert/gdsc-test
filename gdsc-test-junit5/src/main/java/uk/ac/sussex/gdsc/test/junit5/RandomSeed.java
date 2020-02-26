@@ -24,10 +24,9 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
-import uk.ac.sussex.gdsc.test.utils.SeedUtils;
-
 import java.io.Serializable;
 import java.util.Objects;
+import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 
 /**
  * Provides random seeds for a repeated test.

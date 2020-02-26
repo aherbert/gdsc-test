@@ -24,10 +24,9 @@
 
 package uk.ac.sussex.gdsc.test.api.comparisons;
 
+import java.math.BigInteger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.math.BigInteger;
 
 @SuppressWarnings("javadoc")
 public class DescriptionHelperTest {

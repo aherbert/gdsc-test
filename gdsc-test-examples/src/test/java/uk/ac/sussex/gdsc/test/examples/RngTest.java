@@ -24,11 +24,10 @@
 
 package uk.ac.sussex.gdsc.test.examples;
 
+import org.apache.commons.rng.UniformRandomProvider;
 import uk.ac.sussex.gdsc.test.junit5.RandomSeed;
 import uk.ac.sussex.gdsc.test.junit5.SeededTest;
 import uk.ac.sussex.gdsc.test.rng.RngUtils;
-
-import org.apache.commons.rng.UniformRandomProvider;
 
 /**
  * Contains demonstration code for the RNG package.

@@ -24,12 +24,6 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
-import uk.ac.sussex.gdsc.test.generator.CodeGenerator.ExitCode;
-
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,6 +34,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import uk.ac.sussex.gdsc.test.generator.CodeGenerator.ExitCode;
 
 @SuppressWarnings("javadoc")
 public class CodeGeneratorTest {

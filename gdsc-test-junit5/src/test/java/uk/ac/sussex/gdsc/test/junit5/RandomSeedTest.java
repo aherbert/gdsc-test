@@ -24,13 +24,12 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
-import uk.ac.sussex.gdsc.test.utils.SeedUtils;
-
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
+import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 
 @SuppressWarnings("javadoc")
 public class RandomSeedTest {

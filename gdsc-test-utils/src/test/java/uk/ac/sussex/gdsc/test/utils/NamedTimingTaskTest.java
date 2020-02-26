@@ -24,10 +24,9 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import java.util.function.Supplier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.function.Supplier;
 
 @SuppressWarnings("javadoc")
 public class NamedTimingTaskTest {

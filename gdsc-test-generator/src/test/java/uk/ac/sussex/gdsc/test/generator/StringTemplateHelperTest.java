@@ -24,16 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
-import uk.ac.sussex.gdsc.test.generator.InvalidModelException;
-import uk.ac.sussex.gdsc.test.generator.StringTemplateHelper;
-import uk.ac.sussex.gdsc.test.generator.StringTemplateModel;
-
+import java.util.List;
+import java.util.Properties;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Properties;
 
 @SuppressWarnings("javadoc")
 public class StringTemplateHelperTest {

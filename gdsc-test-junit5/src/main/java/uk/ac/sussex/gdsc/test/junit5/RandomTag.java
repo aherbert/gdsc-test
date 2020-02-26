@@ -24,12 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
-import org.junit.jupiter.api.Tag;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.junit.jupiter.api.Tag;
 
 /**
  * {@code @RandomTag} is used to signal that the annotated method is a test method that uses a

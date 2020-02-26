@@ -24,11 +24,6 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -40,6 +35,10 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Pattern;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 /**
  * Define the model for template substitutions using the StringTemplate library.

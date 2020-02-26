@@ -24,12 +24,11 @@
 
 package uk.ac.sussex.gdsc.test.rng;
 
-import uk.ac.sussex.gdsc.test.utils.TestSettings;
-
 import org.apache.commons.rng.UniformRandomProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
+import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 @SuppressWarnings("javadoc")
 public class RngUtilsTest {

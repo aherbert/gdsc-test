@@ -24,11 +24,10 @@
 
 package uk.ac.sussex.gdsc.test.examples;
 
+import java.util.Objects;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import java.util.Objects;
 
 /**
  * Tests Math operations that form the base for predicates.

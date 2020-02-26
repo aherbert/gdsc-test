@@ -24,10 +24,9 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
-import uk.ac.sussex.gdsc.test.utils.TestCounter;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import uk.ac.sussex.gdsc.test.utils.TestCounter;
 
 /**
  * This tests the {@link TestCounter} can be used when JUnit 5 is the source of

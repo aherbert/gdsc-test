@@ -1,14 +1,13 @@
 package uk.ac.sussex.gdsc.test.rng;
 
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.math3.stat.inference.ChiSquareTest;
 import org.apache.commons.rng.RandomProviderState;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("javadoc")
 public class XoRoShiRo128PlusPlusTest {

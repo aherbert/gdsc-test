@@ -24,9 +24,7 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
-import uk.ac.sussex.gdsc.test.utils.HexUtils;
-import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
-
+import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -35,8 +33,8 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-
-import java.util.logging.Logger;
+import uk.ac.sussex.gdsc.test.utils.HexUtils;
+import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
 @SuppressWarnings("javadoc")
 public class AnnotationTest {

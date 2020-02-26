@@ -24,13 +24,12 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import java.util.Arrays;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 @SuppressWarnings("javadoc")
 public class HexUtilsTest {
@@ -71,7 +70,7 @@ public class HexUtilsTest {
   public void testDecode() {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
     final boolean toLowerCase = true;
-    /** Output Hex characters. */
+    // Output Hex characters.
     final char[] hexDigits =
         {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     for (int i = 1; i < 20; i++) {

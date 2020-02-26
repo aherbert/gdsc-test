@@ -24,8 +24,6 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
-import uk.ac.sussex.gdsc.test.generator.StringUtils;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
