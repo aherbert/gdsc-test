@@ -2,9 +2,9 @@
  * #%L
  * Genome Damage and Stability Centre Test Utilities
  *
- * Generates API classes for the GDSC Test project.
+ * Generates Java classes for the GDSC Test project.
  * %%
- * Copyright (C) 2018 Alex Herbert
+ * Copyright (C) 2018 - 2020 Alex Herbert
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as

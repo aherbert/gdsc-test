@@ -1,14 +1,10 @@
 /*-
  * #%L
- * Genome Damage and Stability Centre ImageJ Core Package
+ * Genome Damage and Stability Centre Test RNG
  *
- * Contains code used by:
- *
- * GDSC ImageJ Plugins - Microscopy image analysis
- *
- * GDSC SMLM ImageJ Plugins - Single molecule localisation microscopy (SMLM)
+ * Contains utilities for use with Commons RNG for random tests.
  * %%
- * Copyright (C) 2011 - 2019 Alex Herbert
+ * Copyright (C) 2018 - 2020 Alex Herbert
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
