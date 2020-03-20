@@ -51,4 +51,22 @@ Contains utilities for use with Commons RNG for random tests.
     </dependency>
   </dependencies>
 
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>net.revelc.code.formatter</groupId>
+          <artifactId>formatter-maven-plugin</artifactId>
+          <dependencies>
+            <dependency>
+              <groupId>uk.ac.sussex.gdsc</groupId>
+              <artifactId>gdsc-test-build-tools</artifactId>
+              <version>${project.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
 </project>

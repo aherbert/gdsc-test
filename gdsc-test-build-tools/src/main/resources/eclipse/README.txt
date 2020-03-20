@@ -1,7 +1,7 @@
 The GDSC Test code was developed using the Eclipse IDE:
 https://eclipse.org/
 
-The code can be built using Maven. See the README.md for details. However using 
+The code can be built using Maven. See the README.md for details. However using
 Eclipse is preferred for code development to provide a debugging environment.
 
 You will need the Maven and Git Eclipse plugins. The standard Eclipse IDE for
@@ -26,6 +26,18 @@ Eclipse Preferences : Java > Code Style > Formatter
 Eclipse Preferences : Java > Code Style > Clean Up
 
 Click 'Import...' to load the provided rules.
+
+Formatting with Maven
+---------------------
+
+To format:
+
+mvn formatter:format
+
+To check formatting:
+
+mvn formatter:validate
+
 
 Running the code
 ----------------

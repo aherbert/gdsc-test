@@ -256,8 +256,8 @@ public final class TestLogUtils {
    * @param count the count ({@code >=0})
    * @return the stack trace element
    */
-  private static StackTraceElement getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(
-      int count) {
+  private static StackTraceElement
+      getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(int count) {
     // Based on
     // https://stackoverflow.com/questions/17473148/dynamically-get-the-current-line-number/17473358
     int remaining = count;

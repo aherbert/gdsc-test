@@ -35,7 +35,7 @@ import java.util.function.Supplier;
 public class NamedTimingTask extends BaseTimingTask {
 
   /** Constant for no supplier. */
-  private static final Supplier<String> NO_SUPPLIER =  null;
+  private static final Supplier<String> NO_SUPPLIER = null;
 
   /** The name supplier. */
   private Supplier<String> nameSupplier;

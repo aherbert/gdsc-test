@@ -228,7 +228,7 @@ public final class XoRoShiRo128PlusPlus implements RestorableUniformRandomProvid
     final long state0;
 
     /** State 1 of the generator. */
-    final  long state1;
+    final long state1;
 
     /**
      * Create a new instance.

@@ -103,8 +103,7 @@ public class ShortEqualityUtilsTest {
     final int[] values = {0, 1, Integer.MAX_VALUE, Integer.MIN_VALUE};
     for (final int v1 : values) {
       for (final int v2 : values) {
-        Assertions.assertEquals(Integer.compare(v1, v2) == 0,
-            IntEqualityUtils.areEqual(v1, v2));
+        Assertions.assertEquals(Integer.compare(v1, v2) == 0, IntEqualityUtils.areEqual(v1, v2));
       }
     }
   }
@@ -431,8 +430,7 @@ public class ShortEqualityUtilsTest {
     final int expected = 0;
     final int actual = 0;
     // OK
-    for (long absError : new long[] {0, 1, Integer.MAX_VALUE,
-        IntEqualityUtils.MAX_ABS_ERROR - 1}) {
+    for (long absError : new long[] {0, 1, Integer.MAX_VALUE, IntEqualityUtils.MAX_ABS_ERROR - 1}) {
       IntEqualityUtils.areWithin(expected, actual, absError);
     }
     // Bad
@@ -454,11 +452,9 @@ public class ShortEqualityUtilsTest {
         value *= -1;
         Assertions.assertTrue(IntEqualityUtils.areWithin(value, value, absoluteError));
         Assertions.assertFalse(IntEqualityUtils.areWithin(value, nextUp(value), absoluteError));
-        Assertions
-            .assertFalse(IntEqualityUtils.areWithin(value, nextDown(value), absoluteError));
+        Assertions.assertFalse(IntEqualityUtils.areWithin(value, nextDown(value), absoluteError));
         Assertions.assertFalse(IntEqualityUtils.areWithin(nextUp(value), value, absoluteError));
-        Assertions
-            .assertFalse(IntEqualityUtils.areWithin(nextDown(value), value, absoluteError));
+        Assertions.assertFalse(IntEqualityUtils.areWithin(nextDown(value), value, absoluteError));
       }
     }
     // Test int overflow
@@ -1021,8 +1017,7 @@ public class ShortEqualityUtilsTest {
     // Use a range of values
     for (int value : new int[] {Integer.MIN_VALUE, Integer.MIN_VALUE + 1, -1, 0, 1,
         Integer.MAX_VALUE - 1, Integer.MAX_VALUE}) {
-      Assertions
-          .assertTrue(IntEqualityUtils.areClose(value, value, relativeError, absoluteError));
+      Assertions.assertTrue(IntEqualityUtils.areClose(value, value, relativeError, absoluteError));
       Assertions.assertFalse(
           IntEqualityUtils.areClose(value, nextUp(value), relativeError, absoluteError));
       Assertions.assertFalse(
@@ -1035,8 +1030,8 @@ public class ShortEqualityUtilsTest {
     // Test overflow of ints
     Assertions.assertFalse(
         IntEqualityUtils.areClose(Integer.MAX_VALUE, -1, relativeError, absoluteError));
-    Assertions.assertFalse(
-        IntEqualityUtils.areClose(Integer.MIN_VALUE, 0, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.areClose(Integer.MIN_VALUE, 0, relativeError, absoluteError));
     Assertions.assertFalse(IntEqualityUtils.areClose(Integer.MAX_VALUE, Integer.MIN_VALUE,
         relativeError, absoluteError));
   }
@@ -1061,10 +1056,10 @@ public class ShortEqualityUtilsTest {
 
     // Make the gap bigger
     final int expected2 = nextUp(expected);
-    Assertions.assertFalse(
-        IntEqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
-    Assertions.assertFalse(
-        IntEqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
   }
 
   @Test
@@ -1087,10 +1082,10 @@ public class ShortEqualityUtilsTest {
 
     // Make the gap bigger
     final int expected2 = nextUp(expected);
-    Assertions.assertFalse(
-        IntEqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
-    Assertions.assertFalse(
-        IntEqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
   }
 
   @Test
@@ -1108,10 +1103,10 @@ public class ShortEqualityUtilsTest {
 
     // Make the gap bigger (so relative error is 0.5)
     final int expected2 = expected / 2;
-    Assertions.assertFalse(
-        IntEqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
-    Assertions.assertFalse(
-        IntEqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.areClose(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.areClose(actual, expected2, relativeError, absoluteError));
   }
 
   // short Close
@@ -1732,8 +1727,7 @@ public class ShortEqualityUtilsTest {
     // Use a range of values
     for (int value : new int[] {Integer.MIN_VALUE, Integer.MIN_VALUE + 1, -1, 0, 1,
         Integer.MAX_VALUE - 1, Integer.MAX_VALUE}) {
-      Assertions
-          .assertTrue(IntEqualityUtils.isCloseTo(value, value, relativeError, absoluteError));
+      Assertions.assertTrue(IntEqualityUtils.isCloseTo(value, value, relativeError, absoluteError));
       Assertions.assertFalse(
           IntEqualityUtils.isCloseTo(value, nextUp(value), relativeError, absoluteError));
       Assertions.assertFalse(
@@ -1772,10 +1766,10 @@ public class ShortEqualityUtilsTest {
 
     // Make the gap bigger
     final int expected2 = nextUp(expected);
-    Assertions.assertFalse(
-        IntEqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
-    Assertions.assertFalse(
-        IntEqualityUtils.isCloseTo(actual, expected2, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.isCloseTo(actual, expected2, relativeError, absoluteError));
   }
 
   @Test
@@ -1788,8 +1782,8 @@ public class ShortEqualityUtilsTest {
     // Order sensitive
     Assertions
         .assertTrue(IntEqualityUtils.isCloseTo(expected, actual, relativeError, absoluteError));
-    Assertions.assertFalse(
-        IntEqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.isCloseTo(actual, expected, relativeError, absoluteError));
 
     // Make the delta smaller
     final double delta = Math.nextDown(relativeError);
@@ -1797,8 +1791,8 @@ public class ShortEqualityUtilsTest {
 
     // Make the gap bigger
     final int expected2 = nextUp(expected);
-    Assertions.assertFalse(
-        IntEqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.isCloseTo(expected2, actual, relativeError, absoluteError));
   }
 
   @Test
@@ -1817,11 +1811,11 @@ public class ShortEqualityUtilsTest {
     // Make the gap bigger (so relative error is 1 or 0.5)
     final int actual2 = expected / 2;
     // Actual is within 0.5 of expected
-    Assertions.assertTrue(
-        IntEqualityUtils.isCloseTo(expected, actual2, relativeError, absoluteError));
+    Assertions
+        .assertTrue(IntEqualityUtils.isCloseTo(expected, actual2, relativeError, absoluteError));
     // Expected is within 1.0 of actual
-    Assertions.assertFalse(
-        IntEqualityUtils.isCloseTo(actual2, expected, relativeError, absoluteError));
+    Assertions
+        .assertFalse(IntEqualityUtils.isCloseTo(actual2, expected, relativeError, absoluteError));
   }
 
   // short IsCloseTo

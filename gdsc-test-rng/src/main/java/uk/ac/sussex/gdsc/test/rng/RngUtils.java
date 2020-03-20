@@ -41,8 +41,8 @@ public final class RngUtils {
   /**
    * Gets the uniform random provider using the given seed.
    *
-   * <p>If the {@code seed} is null or empty then a random seed will be used.
-   * This is generated using {@code ThreadLocalRandom.current().nextLong()}.
+   * <p>If the {@code seed} is null or empty then a random seed will be used. This is generated
+   * using {@code ThreadLocalRandom.current().nextLong()}.
    *
    * @param seed the seed
    * @return the uniform random provider

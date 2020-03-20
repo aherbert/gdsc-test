@@ -411,8 +411,7 @@ public class DescriptionHelperTest {
     final double inputAbsError = absoluteError.doubleValue();
 
     // The raw input
-    final String result =
-        DescriptionHelper.getDescriptionIsCloseTo(inputRelError, inputAbsError);
+    final String result = DescriptionHelper.getDescriptionIsCloseTo(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {

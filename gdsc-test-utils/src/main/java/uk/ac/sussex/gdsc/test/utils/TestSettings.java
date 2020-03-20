@@ -52,8 +52,8 @@ public final class TestSettings {
    */
   public static final String PROPERTY_TEST_COMPLEXITY = "gdsc.test.level";
   /**
-   * The runtime property used to seed the uniform random generator. A seed is assumed to be
-   * a hex encoded {@code byte[]}, e.g.
+   * The runtime property used to seed the uniform random generator. A seed is assumed to be a hex
+   * encoded {@code byte[]}, e.g.
    *
    * <pre>
    * -Dgdsc.test.seed=123abc
