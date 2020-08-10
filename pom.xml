@@ -121,7 +121,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
     <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
-    <formatter-maven-plugin.version>2.11.0</formatter-maven-plugin.version>
+    <formatter-maven-plugin.version>2.12.1</formatter-maven-plugin.version>
     <!-- JaCoCo Checks -->
     <org.jacoco.class.covered>0.96</org.jacoco.class.covered>
     <org.jacoco.instruction.covered>0.8</org.jacoco.instruction.covered>

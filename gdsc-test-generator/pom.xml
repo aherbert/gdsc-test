@@ -70,6 +70,7 @@ Generates Java classes for the GDSC Test project.
         <plugin>
           <groupId>net.revelc.code.formatter</groupId>
           <artifactId>formatter-maven-plugin</artifactId>
+          <version>${formatter-maven-plugin.version}</version>
           <dependencies>
             <dependency>
               <groupId>uk.ac.sussex.gdsc</groupId>

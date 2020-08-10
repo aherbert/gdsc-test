@@ -52,6 +52,7 @@ Contains utilities for use with test frameworks.
         <plugin>
           <groupId>net.revelc.code.formatter</groupId>
           <artifactId>formatter-maven-plugin</artifactId>
+          <version>${formatter-maven-plugin.version}</version>
           <dependencies>
             <dependency>
               <groupId>uk.ac.sussex.gdsc</groupId>
