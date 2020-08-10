@@ -99,6 +99,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+    <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
     <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
     <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
@@ -262,6 +263,31 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <inherited>true</inherited>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven-enforcer-plugin.version}</version>
+        <configuration>
+          <rules>
+            <requireMavenVersion>
+              <version>3.3.9</version>
+            </requireMavenVersion>
+            <requireJavaVersion>
+              <version>${maven.compiler.target}</version>
+            </requireJavaVersion>
+          </rules>
+          <fail>true</fail>
+        </configuration>
+        <executions>
+          <execution>
+            <id>enforce-maven-3</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
         <version>${maven-source-plugin.version}</version>
