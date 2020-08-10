@@ -23,10 +23,10 @@ Generates Java classes for the GDSC Test project.
     <uberjar.name>codegenerator</uberjar.name>
     <project.mainClass>uk.ac.sussex.gdsc.test.generator.CodeGenerator</project.mainClass>
     <stringtemplate.version>4.0.2</stringtemplate.version>
-    <picocli.version>3.5.2</picocli.version>
-    <commons.io.version>2.6</commons.io.version>
-    <commons.csv.version>1.6</commons.csv.version>
-    <commons.lang3.version>3.8.1</commons.lang3.version>
+    <picocli.version>4.5.0</picocli.version>
+    <commons.io.version>2.7</commons.io.version>
+    <commons.csv.version>1.8</commons.csv.version>
+    <commons.lang3.version>3.11</commons.lang3.version>
   </properties>
 
   <dependencies>
