@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.condition.EnabledIf;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import uk.ac.sussex.gdsc.test.utils.HexUtils;
@@ -70,8 +70,8 @@ public class AnnotationTest {
   }
 
   @Test
-  @EnabledIf("'CI' == systemEnvironment.get('ENV')")
-  public void canAnnotateEnableIf(TestInfo info) {
+  @EnabledIfEnvironmentVariable(matches = "CI", named = "ENV")
+  public void canAnnotateEnableIfEnvironmentVariable(TestInfo info) {
     logger.log(TestLevel.TEST_INFO, info.getTestMethod().get().getName());
   }
 
