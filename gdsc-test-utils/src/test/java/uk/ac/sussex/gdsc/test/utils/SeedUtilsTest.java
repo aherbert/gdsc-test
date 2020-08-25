@@ -34,9 +34,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class SeedUtilsTest {
+class SeedUtilsTest {
   @Test
-  public void testZeroBytes() {
+  void testZeroBytes() {
     Assertions.assertTrue(SeedUtils.zeroBytes(null), "Null should be empty");
     Assertions.assertTrue(SeedUtils.zeroBytes(new byte[0]), "byte[0] should be empty");
     Assertions.assertTrue(SeedUtils.zeroBytes(new byte[10]), "byte[10] should be empty");
@@ -45,7 +45,7 @@ public class SeedUtilsTest {
   }
 
   @Test
-  public void testNullOrEmpty() {
+  void testNullOrEmpty() {
     Assertions.assertTrue(SeedUtils.nullOrEmpty(null), "Null should be null or empty");
     Assertions.assertTrue(SeedUtils.nullOrEmpty(new byte[0]), "byte[0] should be null or empty");
     Assertions.assertFalse(SeedUtils.nullOrEmpty(new byte[10]),
@@ -53,7 +53,7 @@ public class SeedUtilsTest {
   }
 
   @Test
-  public void testGenerateSeed() {
+  void testGenerateSeed() {
     final int size = 17;
     final byte[] seed1 = SeedUtils.generateSeed(size);
     final byte[] seed2 = SeedUtils.generateSeed(size);
@@ -61,7 +61,7 @@ public class SeedUtilsTest {
   }
 
   @Test
-  public void testGenerateNonSecureSeed() {
+  void testGenerateNonSecureSeed() {
     final int size = 17;
     final byte[] seed1 = SeedUtils.generateSeed(size, false);
     final byte[] seed2 = SeedUtils.generateSeed(size, false);
@@ -77,7 +77,7 @@ public class SeedUtilsTest {
   }
 
   @Test
-  public void testMakeByteArrayFromLong() throws IOException {
+  void testMakeByteArrayFromLong() throws IOException {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
     final int size = 5;
     final long[] values = new long[size];
@@ -100,7 +100,7 @@ public class SeedUtilsTest {
   }
 
   @Test
-  public void testMakeByteArrayFromInt() throws IOException {
+  void testMakeByteArrayFromInt() throws IOException {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
     final int size = 5;
     final int[] values = new int[size];
@@ -123,7 +123,7 @@ public class SeedUtilsTest {
   }
 
   @Test
-  public void testMakeLongArray() {
+  void testMakeLongArray() {
     // This test assumes that the method to make the byte array works.
     // It is tested verses the DataOutputStream in a separate test.
 
@@ -157,7 +157,7 @@ public class SeedUtilsTest {
   }
 
   @Test
-  public void testMakeIntArray() {
+  void testMakeIntArray() {
     // This test assumes that the method to make the byte array works.
     // It is tested verses the DataOutputStream in a separate test.
 
@@ -191,7 +191,7 @@ public class SeedUtilsTest {
   }
 
   @Test
-  public void testMakeLong() {
+  void testMakeLong() {
     Assertions.assertEquals(0L, SeedUtils.makeLong(), "No bytes should be zero");
 
     // Check it is most significant first

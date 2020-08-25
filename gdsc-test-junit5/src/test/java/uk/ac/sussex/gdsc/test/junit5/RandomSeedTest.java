@@ -32,10 +32,10 @@ import org.opentest4j.AssertionFailedError;
 import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 
 @SuppressWarnings("javadoc")
-public class RandomSeedTest {
+class RandomSeedTest {
   @SuppressWarnings("unused")
   @Test
-  public void testConstructor() {
+  void testConstructor() {
     final byte[] seed = {1, 2, 3, 4, 5};
     final int currentRepetition = 1678;
     final int totalRepetitions = 579797;
@@ -61,7 +61,7 @@ public class RandomSeedTest {
   }
 
   @Test
-  public void testEquals() {
+  void testEquals() {
     final byte[] seed = {1, 2, 3, 4, 5};
     final int currentRepetition = 1678;
     final int totalRepetitions = 579797;
@@ -92,7 +92,7 @@ public class RandomSeedTest {
   }
 
   @Test
-  public void testHashCode() {
+  void testHashCode() {
     final int currentRepetition = 1678;
     final int totalRepetitions = 579797;
 
@@ -109,7 +109,7 @@ public class RandomSeedTest {
   }
 
   @Test
-  public void testGetSeedAsLong() {
+  void testGetSeedAsLong() {
     final int currentRepetition = 1;
     final int totalRepetitions = 1;
 

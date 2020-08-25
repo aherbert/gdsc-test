@@ -28,9 +28,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class BaseTimingTaskTest {
+class BaseTimingTaskTest {
   @Test
-  public void canConstruct() {
+  void canConstruct() {
     final String name = "name";
     final TimingTask task = new BaseTimingTask(name) {
       @Override

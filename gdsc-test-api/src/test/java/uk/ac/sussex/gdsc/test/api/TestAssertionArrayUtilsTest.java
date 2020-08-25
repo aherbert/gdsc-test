@@ -31,9 +31,9 @@ import org.junit.jupiter.api.Test;
  * This class is used to hit coverage points not made by the {@link TestAssertionsTest}.
  */
 @SuppressWarnings("javadoc")
-public class TestAssertionArrayUtilsTest {
+class TestAssertionArrayUtilsTest {
   @Test
-  public void testGetClassName() {
+  void testGetClassName() {
     Assertions.assertEquals("null", TestAssertionArrayUtils.getClassName(null));
     Assertions.assertEquals("java.lang.Integer",
         TestAssertionArrayUtils.getClassName(new java.lang.Integer(0)));

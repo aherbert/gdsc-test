@@ -37,7 +37,7 @@ import uk.ac.sussex.gdsc.test.utils.HexUtils;
 import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
 @SuppressWarnings("javadoc")
-public class AnnotationTest {
+class AnnotationTest {
   private static Logger logger;
 
   @BeforeAll
@@ -52,39 +52,39 @@ public class AnnotationTest {
 
   @SpeedTag
   @Test
-  public void canAnnotateSpeedTest(TestInfo info) {
+  void canAnnotateSpeedTest(TestInfo info) {
     Assertions.assertTrue(info.getTags().contains("speed"));
   }
 
   @RandomTag
   @Test
-  public void canAnnotateRandomTest(TestInfo info) {
+  void canAnnotateRandomTest(TestInfo info) {
     Assertions.assertTrue(info.getTags().contains("random"));
   }
 
   @RandomSpeedTag
   @Test
-  public void canAnnotateRandomSpeedTest(TestInfo info) {
+  void canAnnotateRandomSpeedTest(TestInfo info) {
     Assertions.assertTrue(info.getTags().contains("speed"));
     Assertions.assertTrue(info.getTags().contains("random"));
   }
 
   @Test
   @EnabledIfEnvironmentVariable(matches = "CI", named = "ENV")
-  public void canAnnotateEnableIfEnvironmentVariable(TestInfo info) {
+  void canAnnotateEnableIfEnvironmentVariable(TestInfo info) {
     logger.log(TestLevel.TEST_INFO, info.getTestMethod().get().getName());
   }
 
   @ParameterizedTest
   @ArgumentsSource(RandomSeedSource.class)
-  public void canDynamicallyProvideSeedsFromRandomSeedSource(RandomSeed seed, TestInfo info) {
+  void canDynamicallyProvideSeedsFromRandomSeedSource(RandomSeed seed, TestInfo info) {
     logger.log(TestLevel.TEST_INFO,
         () -> String.format("%s seed = %d (%d/%d)", info.getTestMethod().get().getName(),
             seed.getSeed(), seed.getCurrentRepetition(), seed.getTotalRepetitions()));
   }
 
   @SeededTest
-  public void canAnnotateSeededTest(RandomSeed seed, TestInfo info) {
+  void canAnnotateSeededTest(RandomSeed seed, TestInfo info) {
     logger.log(TestLevel.TEST_INFO,
         () -> String.format("%s seed = %s (%d/%d)", info.getTestMethod().get().getName(),
             HexUtils.encodeHexString(seed.getSeed()), seed.getCurrentRepetition(),

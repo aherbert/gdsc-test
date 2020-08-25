@@ -30,9 +30,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class StringUtilsTest {
+class StringUtilsTest {
   @Test
-  public void testIsNotEmpty() {
+  void testIsNotEmpty() {
     Assertions.assertTrue(StringUtils.isNotEmpty("Not empty"));
     Assertions.assertFalse(StringUtils.isNotEmpty(""));
     Assertions.assertFalse(StringUtils.isNotEmpty(" "));
@@ -41,7 +41,7 @@ public class StringUtilsTest {
   }
 
   @Test
-  public void testNullOrEmpty() {
+  void testNullOrEmpty() {
     Assertions.assertFalse(StringUtils.isNullOrEmpty("Not empty"));
     Assertions.assertTrue(StringUtils.isNullOrEmpty(""));
     Assertions.assertTrue(StringUtils.isNullOrEmpty(" "));
@@ -50,7 +50,7 @@ public class StringUtilsTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     Assertions.assertNull(StringUtils.toString(null));
 
     final String string1 = "asdhjkfkas";
@@ -67,7 +67,7 @@ public class StringUtilsTest {
   }
 
   @Test
-  public void testNegateToString() {
+  void testNegateToString() {
     Assertions.assertNull(StringUtils.negateToString(null));
 
     final String string1 = "15277512";
@@ -77,17 +77,17 @@ public class StringUtilsTest {
   }
 
   @Test
-  public void testOrToString() {
+  void testOrToString() {
     testCombinedToString(StringUtils::orToString, "||");
   }
 
   @Test
-  public void testAndToString() {
+  void testAndToString() {
     testCombinedToString(StringUtils::andToString, "&&");
   }
 
   @Test
-  public void testXorToString() {
+  void testXorToString() {
     testCombinedToString(StringUtils::xorToString, "^");
   }
 

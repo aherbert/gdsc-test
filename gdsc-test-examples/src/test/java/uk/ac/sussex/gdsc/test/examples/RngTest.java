@@ -35,7 +35,7 @@ import uk.ac.sussex.gdsc.test.rng.RngUtils;
  * <p>Code snippets from this class are used in the documentation, thus this class exists to ensure
  * the snippets are valid. Documentation should be updated appropriately when this class is updated.
  */
-public class RngTest {
+class RngTest {
 
   /**
    * Test the seeded test annotation.
@@ -43,7 +43,7 @@ public class RngTest {
    * @param seed the seed
    */
   @SeededTest
-  public void testSomethingRandom(RandomSeed seed) {
+  void testSomethingRandom(RandomSeed seed) {
     UniformRandomProvider rng = RngUtils.create(seed.getSeed());
     // Do the test ...
   }

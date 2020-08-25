@@ -34,9 +34,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class XoRoShiRo128PlusPlusTest {
+class XoRoShiRo128PlusPlusTest {
   @Test
-  public void testNextLong() {
+  void testNextLong() {
     // Tested with respect to commons-rng implementation.
     final long seed0 = ThreadLocalRandom.current().nextLong();
     final long seed1 = seed0 + 627384217384238449L;
@@ -49,7 +49,7 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   @Test
-  public void testZeroSeed() {
+  void testZeroSeed() {
     final XoRoShiRo128PlusPlus rng1 = new XoRoShiRo128PlusPlus(0);
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(0, 0);
     boolean zeroOutput = true;
@@ -68,7 +68,7 @@ public class XoRoShiRo128PlusPlusTest {
    * seed).
    */
   @Test
-  public void testPartialZeroSeed() {
+  void testPartialZeroSeed() {
     final XoRoShiRo128PlusPlus rng1 = new XoRoShiRo128PlusPlus(0);
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(0, 1);
     Assertions.assertNotEquals(rng1.nextLong(), rng2.nextLong());
@@ -81,7 +81,7 @@ public class XoRoShiRo128PlusPlusTest {
    * Check the 32-bit int is the upper bits from the long.
    */
   @Test
-  public void testNextIntIsUpper64Bits() {
+  void testNextIntIsUpper64Bits() {
     final long seed = ThreadLocalRandom.current().nextLong();
     final XoRoShiRo128PlusPlus rng1 = new XoRoShiRo128PlusPlus(seed);
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(seed);
@@ -95,7 +95,7 @@ public class XoRoShiRo128PlusPlusTest {
    * Check the boolean is a sign test on the long value.
    */
   @Test
-  public void testNextBooleanIsSignTest() {
+  void testNextBooleanIsSignTest() {
     final long seed = ThreadLocalRandom.current().nextLong();
     final XoRoShiRo128PlusPlus rng1 = new XoRoShiRo128PlusPlus(seed);
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(seed);
@@ -108,7 +108,7 @@ public class XoRoShiRo128PlusPlusTest {
    * Check the float is the upper 24-bits from the int value multiplied by a constant.
    */
   @Test
-  public void testNextFloatIs24BitProduct() {
+  void testNextFloatIs24BitProduct() {
     final long seed = ThreadLocalRandom.current().nextLong();
     final XoRoShiRo128PlusPlus rng1 = new XoRoShiRo128PlusPlus(seed);
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(seed);
@@ -121,7 +121,7 @@ public class XoRoShiRo128PlusPlusTest {
    * Check the double is the upper 53-bits from the long value multiplied by a constant.
    */
   @Test
-  public void testNextDoubleIs53BitProduct() {
+  void testNextDoubleIs53BitProduct() {
     final long seed = ThreadLocalRandom.current().nextLong();
     final XoRoShiRo128PlusPlus rng1 = new XoRoShiRo128PlusPlus(seed);
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(seed);
@@ -134,7 +134,7 @@ public class XoRoShiRo128PlusPlusTest {
   // A fixed seed is used to avoid flaky tests.
 
   @Test
-  public void testNextInt() {
+  void testNextInt() {
     final long seed = 45649872123325L;
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(seed);
     int bitCount = 0;
@@ -147,7 +147,7 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   @Test
-  public void testNextDouble() {
+  void testNextDouble() {
     final long seed = -4567987432145468744L;
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(seed);
     int bitCount = 0;
@@ -160,7 +160,7 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   @Test
-  public void testNextBoolean() {
+  void testNextBoolean() {
     final long seed = 45679872136479L;
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(seed);
     int bitCount = 0;
@@ -175,7 +175,7 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   @Test
-  public void testNextFloat() {
+  void testNextFloat() {
     final long seed = 4564342345446344544L;
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(seed);
     int bitCount = 0;
@@ -188,7 +188,7 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   @Test
-  public void testNextBytes() {
+  void testNextBytes() {
     final long seed = -789153135486941564L;
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(seed);
     for (final int range : new int[] {16, 18}) {
@@ -236,7 +236,7 @@ public class XoRoShiRo128PlusPlusTest {
   // Range methods uniformity tested using Chi-squared
 
   @Test
-  public void testNextIntInRange() {
+  void testNextIntInRange() {
     final long seed = -89656413479899763L;
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(seed);
     // A power of 2 and the worst case scenario for the rejection algorithm.
@@ -270,7 +270,7 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   @Test
-  public void testNextLongInRange() {
+  void testNextLongInRange() {
     final long seed = 789542313489478946L;
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(seed);
     // A power of 2 and the worst case scenario for the rejection algorithm.
@@ -310,19 +310,19 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   @Test
-  public void testNextIntUsingZeroThrows() {
+  void testNextIntUsingZeroThrows() {
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(0);
     Assertions.assertThrows(IllegalArgumentException.class, () -> rng.nextInt(0));
   }
 
   @Test
-  public void testNextLongUsingZeroThrows() {
+  void testNextLongUsingZeroThrows() {
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(0);
     Assertions.assertThrows(IllegalArgumentException.class, () -> rng.nextLong(0));
   }
 
   @Test
-  public void testSaveAndRestoreState() {
+  void testSaveAndRestoreState() {
     final long seed = ThreadLocalRandom.current().nextLong();
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(seed);
     final RandomProviderState state = rng.saveState();
@@ -335,7 +335,7 @@ public class XoRoShiRo128PlusPlusTest {
   }
 
   @Test
-  public void testRestoreUsingBadStateThrows() {
+  void testRestoreUsingBadStateThrows() {
     final XoRoShiRo128PlusPlus rng = new XoRoShiRo128PlusPlus(0);
     final RandomProviderState state = null;
     Assertions.assertThrows(IllegalArgumentException.class, () -> rng.restoreState(state));

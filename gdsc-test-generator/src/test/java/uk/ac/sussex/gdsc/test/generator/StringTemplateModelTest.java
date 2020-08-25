@@ -32,10 +32,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class StringTemplateModelTest {
+class StringTemplateModelTest {
 
   @Test
-  public void testCreateUsingClassnameScope() throws InvalidModelException {
+  void testCreateUsingClassnameScope() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
@@ -81,7 +81,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateUsingTemplateScope() throws InvalidModelException {
+  void testCreateUsingTemplateScope() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
@@ -115,7 +115,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateUsingSpecialValues() throws InvalidModelException {
+  void testCreateUsingSpecialValues() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
@@ -161,7 +161,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithNullPointers() {
+  void testCreateThrowsWithNullPointers() {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
@@ -187,7 +187,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithBadClassName() {
+  void testCreateThrowsWithBadClassName() {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "My.Template"; // Bad character
@@ -200,7 +200,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithBadPackageName() {
+  void testCreateThrowsWithBadPackageName() {
     final Properties properties = new Properties();
     final String packageName = "org)something"; // Bad character
     final String templateClassName = "MyTemplate";
@@ -219,7 +219,7 @@ public class StringTemplateModelTest {
 
 
   @Test
-  public void testCreateThrowsWithInvalidScope() {
+  void testCreateThrowsWithInvalidScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -237,7 +237,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithNoKey() {
+  void testCreateThrowsWithNoKey() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -254,7 +254,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithNoScope() {
+  void testCreateThrowsWithNoScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -272,7 +272,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithNoSubstritution() {
+  void testCreateThrowsWithNoSubstritution() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -290,7 +290,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithReservedWordForSubstitution() {
+  void testCreateThrowsWithReservedWordForSubstitution() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -308,7 +308,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithDuplicateSubstitution() {
+  void testCreateThrowsWithDuplicateSubstitution() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -329,7 +329,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithDuplicateLowercaseClassnameSubstitution() {
+  void testCreateThrowsWithDuplicateLowercaseClassnameSubstitution() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -350,7 +350,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithDuplicateClassnameSubstitution() throws InvalidModelException {
+  void testCreateThrowsWithDuplicateClassnameSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -375,7 +375,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithEmptyClassnameScopeValue() {
+  void testCreateThrowsWithEmptyClassnameScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -394,7 +394,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithOnlyWhitespaceInClassnameScopeValue() {
+  void testCreateThrowsWithOnlyWhitespaceInClassnameScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -413,7 +413,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithEmptyTemplateScopeValue() {
+  void testCreateThrowsWithEmptyTemplateScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -432,7 +432,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithOnlyWhitespaceInTemplateScopeValue() {
+  void testCreateThrowsWithOnlyWhitespaceInTemplateScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -451,7 +451,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithClassScopeAndNoClassnameScope() {
+  void testCreateThrowsWithClassScopeAndNoClassnameScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -470,7 +470,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithClassScopeDifferentValueSizeToClassnameScope() {
+  void testCreateThrowsWithClassScopeDifferentValueSizeToClassnameScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -489,7 +489,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsWithClassnameScopeDifferentValueSizeToClassnameScope() {
+  void testCreateThrowsWithClassnameScopeDifferentValueSizeToClassnameScope() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -517,7 +517,7 @@ public class StringTemplateModelTest {
   }
 
   @Test
-  public void testCreateThrowsClassnameSubstitutionNotInClassName() {
+  void testCreateThrowsClassnameSubstitutionNotInClassName() {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";

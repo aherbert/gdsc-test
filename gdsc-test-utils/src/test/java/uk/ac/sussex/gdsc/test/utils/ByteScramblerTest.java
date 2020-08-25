@@ -38,10 +38,10 @@ import org.junit.jupiter.api.Test;
 import uk.ac.sussex.gdsc.test.utils.ByteScrambler.BitScrambler128;
 
 @SuppressWarnings("javadoc")
-public class ByteScramblerTest {
+class ByteScramblerTest {
 
   @Test
-  public void testScramble() {
+  void testScramble() {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
 
     // Get a seed size that is not the block size of the 128-bit scrambler
@@ -63,7 +63,7 @@ public class ByteScramblerTest {
   }
 
   @Test
-  public void testBitScrambler() {
+  void testBitScrambler() {
     final long startUpper = ThreadLocalRandom.current().nextLong();
     final long startLower = ThreadLocalRandom.current().nextLong();
     final String su = Long.toUnsignedString(startUpper);
@@ -87,7 +87,7 @@ public class ByteScramblerTest {
   }
 
   @Test
-  public void testBitScramblerIsUniform() {
+  void testBitScramblerIsUniform() {
     // Fixed seed for test stability
     final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64, 68689L);
     // Scramble some random bytes

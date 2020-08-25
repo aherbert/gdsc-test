@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests Math operations that form the base for predicates.
  */
-public class MathTest {
+class MathTest {
 
   /**
    * Test the extremes of math operations used in relative and absolute error.
@@ -42,7 +42,7 @@ public class MathTest {
    * anything.
    */
   @Test
-  public void testDoubleError() {
+  void testDoubleError() {
 
     // No test for operations involving NaN: they are always NaN
     Assertions.assertTrue(Objects.equals(Double.NaN, Double.NaN), "NaN does not equal NaN");
@@ -93,7 +93,7 @@ public class MathTest {
    */
   @Disabled("This is here for documentation")
   @Test
-  public void printDeltaTable() {
+  void printDeltaTable() {
 
     double[] values = new double[] {Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY,
         -Double.MAX_VALUE, -1, -Double.MIN_VALUE, -0, 0, Double.MIN_VALUE, 1, Double.MAX_VALUE};

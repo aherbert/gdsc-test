@@ -30,11 +30,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class IntArrayFormatSupplierTest {
+class IntArrayFormatSupplierTest {
 
   @SuppressWarnings("unused")
   @Test
-  public void testConstructer() {
+  void testConstructer() {
     final String format = "not-empty";
     final int size = 1;
 
@@ -58,7 +58,7 @@ public class IntArrayFormatSupplierTest {
   }
 
   @Test
-  public void test1DMessage() {
+  void test1DMessage() {
     final String format = "[%d]";
     final int size = 1;
 
@@ -78,7 +78,7 @@ public class IntArrayFormatSupplierTest {
   }
 
   @Test
-  public void test2DMessage() {
+  void test2DMessage() {
     final String format = "[%d][%d]";
     final int size = 2;
     final IntArrayFormatSupplier s = new IntArrayFormatSupplier(format, size);

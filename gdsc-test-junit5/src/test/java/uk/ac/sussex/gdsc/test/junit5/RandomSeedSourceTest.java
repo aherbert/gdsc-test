@@ -31,10 +31,10 @@ import uk.ac.sussex.gdsc.test.junit5.RandomSeedSource.SeedSequence;
 import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 
 @SuppressWarnings("javadoc")
-public class RandomSeedSourceTest {
+class RandomSeedSourceTest {
 
   @Test
-  public void testSeedSequenceMatches() {
+  void testSeedSequenceMatches() {
     // It doesn't matter what the initial seed is
     byte[] seed = {1, 2, 3, 4};
     int repeats = 1;
@@ -47,7 +47,7 @@ public class RandomSeedSourceTest {
   }
 
   @Test
-  public void testGetSeedSequenceWithSingleRepeat() {
+  void testGetSeedSequenceWithSingleRepeat() {
     // It doesn't matter what the initial seed is
     byte[] seed = SeedUtils.makeByteArray(System.currentTimeMillis());
     int repeats = 1;
@@ -94,7 +94,7 @@ public class RandomSeedSourceTest {
   }
 
   @Test
-  public void testGetSeedSequenceWithMultiRepeat() {
+  void testGetSeedSequenceWithMultiRepeat() {
     // It doesn't matter what the initial seed is
     byte[] seed = SeedUtils.makeByteArray(System.currentTimeMillis());
     int repeats = 2;

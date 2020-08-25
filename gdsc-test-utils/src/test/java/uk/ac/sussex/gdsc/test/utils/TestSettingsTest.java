@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
 @SuppressWarnings("javadoc")
-public class TestSettingsTest {
+class TestSettingsTest {
   private static Logger logger;
 
   @BeforeAll
@@ -47,7 +47,7 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testGetSeed() {
+  void testGetSeed() {
     // Disable logging the seed
     final Logger logger = Logger.getLogger(TestSettings.class.getName());
     Level level = logger.getLevel();
@@ -95,7 +95,7 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testGetRepeats() {
+  void testGetRepeats() {
     // Check the repeats is 1 if not set as a parameter
     final int repeats = TestSettings.getRepeats();
     if (TestSettings.getProperty(TestSettings.PROPERTY_RANDOM_REPEATS, 0) == 0) {
@@ -105,7 +105,7 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testGetComplexity() {
+  void testGetComplexity() {
     // Currently no restrictions on complexity
     final int complexity = TestSettings.getTestComplexity();
     logger.log(TestLevel.TEST_INFO,
@@ -113,7 +113,7 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testGetPropertyAsInt() {
+  void testGetPropertyAsInt() {
     final String key = "A long key that should be really, really unique";
     System.clearProperty(key);
     final int defaultValue = -6765757;
@@ -126,7 +126,7 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testGetPropertyAsLong() {
+  void testGetPropertyAsLong() {
     final String key = "A long key that should be really, really unique";
     System.clearProperty(key);
     final long defaultValue = -6765757676567L;
@@ -139,7 +139,7 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testGetPropertyAsByteArray() {
+  void testGetPropertyAsByteArray() {
     final String key = "A long key that should be really, really unique";
     System.clearProperty(key);
     final byte[] defaultValue = new byte[] {1, 23, 4};
@@ -163,7 +163,7 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void testAllowTestComplexity() {
+  void testAllowTestComplexity() {
     final int complexity = TestSettings.getTestComplexity();
     for (final TestComplexity tc : TestComplexity.values()) {
       Assertions.assertEquals(tc.getValue() <= complexity, TestSettings.allow(tc));

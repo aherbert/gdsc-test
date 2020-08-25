@@ -36,13 +36,13 @@ import uk.ac.sussex.gdsc.test.utils.functions.IndexSupplier;
  * <p>Code snippets from this class are used in the documentation, thus this class exists to ensure
  * the snippets are valid. Documentation should be updated appropriately when this class is updated.
  */
-public class UtilsTest {
+class UtilsTest {
 
   /**
    * Test the dynamic message.
    */
   @Test
-  public void testDynamicMessage() {
+  void testDynamicMessage() {
     int dimensions = 2;
     IndexSupplier message = new IndexSupplier(dimensions);
     message.setMessagePrefix("Index ");
@@ -59,7 +59,7 @@ public class UtilsTest {
   }
 
   @Test
-  public void testGetSeed() {
+  void testGetSeed() {
     byte[] seed = TestSettings.getSeed();
     long longSeed = SeedUtils.makeLong(seed);
   }

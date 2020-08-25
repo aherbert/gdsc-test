@@ -31,10 +31,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class StringTemplateHelperTest {
+class StringTemplateHelperTest {
 
   @Test
-  public void testGeneratorWithTemplateSubstitution() throws InvalidModelException {
+  void testGeneratorWithTemplateSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -59,7 +59,7 @@ public class StringTemplateHelperTest {
   }
 
   @Test
-  public void testGeneratorWithEmptyPackageSubstitution() throws InvalidModelException {
+  void testGeneratorWithEmptyPackageSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -82,7 +82,7 @@ public class StringTemplateHelperTest {
   }
 
   @Test
-  public void testGeneratorWithPackageSubstitution() throws InvalidModelException {
+  void testGeneratorWithPackageSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "org.something";
     final String templateClassName = "MyTemplate";
@@ -106,7 +106,7 @@ public class StringTemplateHelperTest {
   }
 
   @Test
-  public void testGeneratorWithClassnameSubstitution() throws InvalidModelException {
+  void testGeneratorWithClassnameSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -138,7 +138,7 @@ public class StringTemplateHelperTest {
   }
 
   @Test
-  public void testGeneratorWithMultiClassnameSubstitution() throws InvalidModelException {
+  void testGeneratorWithMultiClassnameSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MySize";
@@ -171,7 +171,7 @@ public class StringTemplateHelperTest {
   }
 
   @Test
-  public void testGeneratorWithLowercaseClassnameSubstitution() throws InvalidModelException {
+  void testGeneratorWithLowercaseClassnameSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "Myfoo";
@@ -196,7 +196,7 @@ public class StringTemplateHelperTest {
   }
 
   @Test
-  public void testGeneratorWithClassSubstitution() throws InvalidModelException {
+  void testGeneratorWithClassSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -229,7 +229,7 @@ public class StringTemplateHelperTest {
   }
 
   @Test
-  public void testGeneratorWithEmptyClassSubstitution() throws InvalidModelException {
+  void testGeneratorWithEmptyClassSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "";
     final String templateClassName = "MyTemplate";
@@ -262,7 +262,7 @@ public class StringTemplateHelperTest {
   }
 
   @Test
-  public void testGeneratorWithListTemplateSubstitution() throws InvalidModelException {
+  void testGeneratorWithListTemplateSubstitution() throws InvalidModelException {
     final Properties properties = new Properties();
     final String packageName = "org.test";
     final String templateClassName = "MyTemplate";

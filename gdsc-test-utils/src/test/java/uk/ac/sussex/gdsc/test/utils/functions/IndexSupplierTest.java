@@ -30,12 +30,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class IndexSupplierTest {
+class IndexSupplierTest {
   private final String messagePrefix = "prefix ";
   private final String messageSuffix = " suffix";
 
   @Test
-  public void testConstructer() {
+  void testConstructer() {
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
       @SuppressWarnings("unused")
       final IndexSupplier s = new IndexSupplier(0);
@@ -58,7 +58,7 @@ public class IndexSupplierTest {
   }
 
   @Test
-  public void testSetters() {
+  void testSetters() {
     final IndexSupplier is = new IndexSupplier(1);
     Assertions.assertEquals("[", is.getPrefix());
     Assertions.assertEquals("]", is.getSuffix());
@@ -87,7 +87,7 @@ public class IndexSupplierTest {
   }
 
   @Test
-  public void test1DMessage() {
+  void test1DMessage() {
     final IndexSupplier is = new IndexSupplier(1);
     Assertions.assertEquals("[0]", is.get());
     final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
@@ -122,7 +122,7 @@ public class IndexSupplierTest {
   }
 
   @Test
-  public void test2DMessage() {
+  void test2DMessage() {
     final IndexSupplier is = new IndexSupplier(2);
     Assertions.assertEquals("[0][0]", is.get());
     final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
@@ -144,7 +144,7 @@ public class IndexSupplierTest {
   }
 
   @Test
-  public void demoIndexSupplier() {
+  void demoIndexSupplier() {
     final int dimensions = 2;
     final IndexSupplier is = new IndexSupplier(dimensions);
     is.setMessagePrefix("Index count: ");

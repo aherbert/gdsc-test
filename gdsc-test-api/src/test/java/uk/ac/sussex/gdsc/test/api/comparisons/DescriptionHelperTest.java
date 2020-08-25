@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class DescriptionHelperTest {
+class DescriptionHelperTest {
 
   /**
    * Assert the message contains the sub-string.
@@ -63,7 +63,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testFloatsGetDescriptionWithin() {
+  void testFloatsGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (final float absError : new float[] {-0f, 0, 0.5f, 1, (float) Math.PI}) {
       final String result = DescriptionHelper.getDescriptionWithin(absError);
@@ -75,7 +75,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testDoublesGetDescriptionWithin() {
+  void testDoublesGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (final double absError : new double[] {-0.0, 0, 0.5, 1, Math.PI}) {
       final String result = DescriptionHelper.getDescriptionWithin(absError);
@@ -87,7 +87,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testBigIntegerGetDescriptionWithin() {
+  void testBigIntegerGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (BigInteger absError : new BigInteger[] {BigInteger.ZERO, BigInteger.ONE,
         BigInteger.valueOf(Long.MAX_VALUE),
@@ -103,7 +103,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testLongsGetDescriptionWithin() {
+  void testLongsGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (final long absError : new long[] {0, 1, Long.MAX_VALUE}) {
       final String result = DescriptionHelper.getDescriptionWithin(absError);
@@ -115,7 +115,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testIntsGetDescriptionWithin() {
+  void testIntsGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (int absError : new int[] {0, 1, Integer.MAX_VALUE}) {
       final String result = DescriptionHelper.getDescriptionWithin(absError);
@@ -127,7 +127,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testFloatsGetDescriptionClose() {
+  void testFloatsGetDescriptionClose() {
     // These must be distinguishable as strings
     final Float[] values1 = {0.0f, 1.1f};
     final Integer[] values2 = {0, 2};
@@ -180,7 +180,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testDoublesGetDescriptionClose() {
+  void testDoublesGetDescriptionClose() {
     // These must be distinguishable as strings
     final Double[] values1 = {0.0, 1.1};
     final Integer[] values2 = {0, 2};
@@ -233,7 +233,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testLongsGetDescriptionClose() {
+  void testLongsGetDescriptionClose() {
     // These must be distinguishable as strings
     final Double[] values1 = {0.0, 1.1};
     final Long[] values2 = {0L, 2L};
@@ -286,7 +286,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testIntsGetDescriptionClose() {
+  void testIntsGetDescriptionClose() {
     // These must be distinguishable as strings
     final Double[] values1 = {0.0, 1.1};
     final Integer[] values2 = {0, 2};
@@ -339,7 +339,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testFloatsGetDescriptionIsCloseTo() {
+  void testFloatsGetDescriptionIsCloseTo() {
     // These must be distinguishable as strings
     final Float[] values1 = {0.0f, 1.1f};
     final Integer[] values2 = {0, 2};
@@ -393,7 +393,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testDoublesGetDescriptionIsCloseTo() {
+  void testDoublesGetDescriptionIsCloseTo() {
     // These must be distinguishable as strings
     final Double[] values1 = {0.0, 1.1};
     final Integer[] values2 = {0, 2};
@@ -447,7 +447,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testLongsGetDescriptionIsCloseTo() {
+  void testLongsGetDescriptionIsCloseTo() {
     // These must be distinguishable as strings
     final Double[] values1 = {0.0, 1.1};
     final Long[] values2 = {0L, 2L};
@@ -500,7 +500,7 @@ public class DescriptionHelperTest {
   }
 
   @Test
-  public void testIntsGetDescriptionIsCloseTo() {
+  void testIntsGetDescriptionIsCloseTo() {
     // These must be distinguishable as strings
     final Double[] values1 = {0.0, 1.1};
     final Integer[] values2 = {0, 2};

@@ -28,9 +28,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class StringUtilsTest {
+class StringUtilsTest {
   @Test
-  public void testIsNotEmpty() {
+  void testIsNotEmpty() {
     Assertions.assertTrue(StringUtils.isNotEmpty("Not empty"));
     Assertions.assertFalse(StringUtils.isNotEmpty(""));
     Assertions.assertFalse(StringUtils.isNotEmpty(" "));
@@ -39,7 +39,7 @@ public class StringUtilsTest {
   }
 
   @Test
-  public void testNullOrEmpty() {
+  void testNullOrEmpty() {
     Assertions.assertFalse(StringUtils.isNullOrEmpty("Not empty"));
     Assertions.assertTrue(StringUtils.isNullOrEmpty(""));
     Assertions.assertTrue(StringUtils.isNullOrEmpty(" "));
@@ -48,7 +48,7 @@ public class StringUtilsTest {
   }
 
   @Test
-  public void testTrimeBrackets() {
+  void testTrimeBrackets() {
     Assertions.assertEquals("", StringUtils.trimBrackets(""));
     Assertions.assertEquals("", StringUtils.trimBrackets("["));
     Assertions.assertEquals("", StringUtils.trimBrackets("]"));

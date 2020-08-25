@@ -40,10 +40,10 @@ import org.junit.jupiter.api.Test;
 import uk.ac.sussex.gdsc.test.generator.CodeGenerator.ExitCode;
 
 @SuppressWarnings("javadoc")
-public class CodeGeneratorTest {
+class CodeGeneratorTest {
 
   @Test
-  public void testGetExitCodeForException() {
+  void testGetExitCodeForException() {
     Assertions.assertEquals(ExitCode.IO_ERROR,
         CodeGenerator.getExitCodeForException(new IOException()));
     Assertions.assertEquals(ExitCode.INVALID_MODEL,
@@ -53,7 +53,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testHelpOption() throws UnsupportedEncodingException {
+  void testHelpOption() throws UnsupportedEncodingException {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try (PrintStream ps = new PrintStream(baos, true, "UTF-8")) {
       CodeGenerator.setOut(ps);
@@ -67,7 +67,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testMissingSourceDirectoryParameter() throws UnsupportedEncodingException {
+  void testMissingSourceDirectoryParameter() throws UnsupportedEncodingException {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try (PrintStream ps = new PrintStream(baos, true, "UTF-8")) {
       CodeGenerator.setErr(ps);
@@ -81,7 +81,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testBadParameter() throws IOException {
+  void testBadParameter() throws IOException {
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
     final File rootFile = root.toFile();
     FileUtils.forceDeleteOnExit(rootFile);
@@ -106,7 +106,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testGeneration() throws IOException {
+  void testGeneration() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
     final File rootFile = root.toFile();
@@ -153,7 +153,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testFileHeader() throws IOException {
+  void testFileHeader() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
     final File rootFile = root.toFile();
@@ -201,7 +201,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testMissingSourceDirectory() throws IOException {
+  void testMissingSourceDirectory() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
     final File rootFile = root.toFile();
@@ -219,7 +219,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testMissingTemplates() throws IOException {
+  void testMissingTemplates() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
     final File rootFile = root.toFile();
@@ -238,7 +238,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testInvalidModel() throws IOException {
+  void testInvalidModel() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
     final File rootFile = root.toFile();
@@ -280,7 +280,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testMissingProperties() throws IOException {
+  void testMissingProperties() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
     final File rootFile = root.toFile();
@@ -319,7 +319,7 @@ public class CodeGeneratorTest {
   }
 
   @Test
-  public void testOverwrite() throws IOException {
+  void testOverwrite() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
     final File rootFile = root.toFile();

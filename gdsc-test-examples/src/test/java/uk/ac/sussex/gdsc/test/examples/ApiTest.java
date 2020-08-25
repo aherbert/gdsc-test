@@ -38,13 +38,13 @@ import uk.ac.sussex.gdsc.test.api.function.IntIntBiPredicate;
  * <p>Code snippets from this class are used in the documentation, thus this class exists to ensure
  * the snippets are valid. Documentation should be updated appropriately when this class is updated.
  */
-public class ApiTest {
+class ApiTest {
 
   /**
    * Test the Close predicate.
    */
   @Test
-  public void testClosePredicate() {
+  void testClosePredicate() {
     double relativeError = 0.01;
     DoubleDoubleBiPredicate areClose = TestHelper.doublesAreClose(relativeError);
 
@@ -61,7 +61,7 @@ public class ApiTest {
    * Test the IscloseTo predicate.
    */
   @Test
-  public void testIsCloseToPredicate() {
+  void testIsCloseToPredicate() {
     double relativeError = 0.01;
     DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
 
@@ -78,7 +78,7 @@ public class ApiTest {
    * Test the Close predicate using absolute error.
    */
   @Test
-  public void testClosePredicateUsingAbsError() {
+  void testClosePredicateUsingAbsError() {
     double relativeError = 0.01;
     double absoluteError = 1;
     DoubleDoubleBiPredicate areClose = TestHelper.doublesAreClose(relativeError, absoluteError);
@@ -93,7 +93,7 @@ public class ApiTest {
    * Test the IsCloseTo predicate within a test framework.
    */
   @Test
-  public void testIsCloseToWithinFramework() {
+  void testIsCloseToWithinFramework() {
     double relativeError = 0.01;
     double expected = 100;
     double actual = 99;
@@ -110,7 +110,7 @@ public class ApiTest {
    * Test the IsCloseTo predicate with TestAssertions.
    */
   @Test
-  public void testIsCloseToWithTestAssertions() {
+  void testIsCloseToWithTestAssertions() {
     double relativeError = 0.01;
     double expected = 100;
     double actual = 99;
@@ -134,7 +134,7 @@ public class ApiTest {
    * Test matrix recursion.
    */
   @Test
-  public void testMatrixRecursion() {
+  void testMatrixRecursion() {
     IntIntBiPredicate equal = TestHelper.intsEqual();
     Object[] expected = new int[4][5][6];
     Object[] actual = new int[4][5][6];
@@ -145,7 +145,7 @@ public class ApiTest {
    * Test predicate conversion.
    */
   @Test
-  public void testPredicateConversion() {
+  void testPredicateConversion() {
     final int answer = 42;
     uk.ac.sussex.gdsc.test.api.function.IntPredicate isAnswer1 = v -> v == answer;
     java.util.function.IntPredicate isAnswer2 = isAnswer1::test;

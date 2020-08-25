@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
 @SuppressWarnings("javadoc")
-public class TimingServiceTest {
+class TimingServiceTest {
   private static Logger logger;
 
   @BeforeAll
@@ -48,7 +48,7 @@ public class TimingServiceTest {
   }
 
   @Test
-  public void canConstruct() {
+  void canConstruct() {
     TimingService ts = new TimingService();
     Assertions.assertNotNull(ts);
     Assertions.assertFalse(0 == ts.getRuns());
@@ -100,7 +100,7 @@ public class TimingServiceTest {
   }
 
   @Test
-  public void canRunTasks() {
+  void canRunTasks() {
     final TimingService ts = new TimingService();
     final LoggingTimingTask tt1 = new LoggingTimingTask("task1");
     final LoggingTimingTask tt2 = new LoggingTimingTask("task2");
@@ -173,7 +173,7 @@ public class TimingServiceTest {
   }
 
   @Test
-  public void canCheckTasks() {
+  void canCheckTasks() {
     final TimingService ts = new TimingService();
     final LoggingTimingTask tt1 = new LoggingTimingTask("task1");
     final LoggingTimingTask tt2 = new LoggingTimingTask("task2");
@@ -201,7 +201,7 @@ public class TimingServiceTest {
   }
 
   @Test
-  public void canGetReport() {
+  void canGetReport() {
     final TimingService ts = new TimingService(2);
     Assertions.assertEquals("", ts.getReport());
     Assertions.assertEquals("", ts.getReport(false));
@@ -256,7 +256,7 @@ public class TimingServiceTest {
   }
 
   @Test
-  public void canReport() {
+  void canReport() {
     final TimingService ts = new TimingService(2);
     Assertions.assertEquals("", getReport(ts));
     Assertions.assertEquals("", getReport(ts, 1));
@@ -313,7 +313,7 @@ public class TimingServiceTest {
   }
 
   @Test
-  public void canReportUsingEmptyResults() {
+  void canReportUsingEmptyResults() {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try (PrintStream ps = new PrintStream(baos, true)) {
       TimingService.report(ps, (TimingResult[]) null);

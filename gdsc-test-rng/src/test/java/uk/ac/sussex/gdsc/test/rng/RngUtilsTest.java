@@ -31,7 +31,7 @@ import org.opentest4j.AssertionFailedError;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 @SuppressWarnings("javadoc")
-public class RngUtilsTest {
+class RngUtilsTest {
 
   /** The long seed. */
   private static final long LONG_SEED = 5656787697789L;
@@ -40,7 +40,7 @@ public class RngUtilsTest {
   private static final byte[] BYTE_SEED = {1, 2, 3, 4, 5, 6, 7, 8};
 
   @Test
-  public void canGetSameRandomWithSameSeed() {
+  void canGetSameRandomWithSameSeed() {
     UniformRandomProvider rng = RngUtils.create(LONG_SEED);
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
     rng = RngUtils.create(LONG_SEED);
@@ -49,7 +49,7 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetDifferentRandomWithDifferentSeed() {
+  void canGetDifferentRandomWithDifferentSeed() {
     UniformRandomProvider rng = RngUtils.create(LONG_SEED);
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
     rng = RngUtils.create(LONG_SEED * 2);
@@ -60,7 +60,7 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetSameRandomWithZeroSeed() {
+  void canGetSameRandomWithZeroSeed() {
     // Test zero is allowed as a random seed.
     UniformRandomProvider rng = RngUtils.create(0);
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
@@ -70,7 +70,7 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetSameRandomWithSameByteSeed() {
+  void canGetSameRandomWithSameByteSeed() {
     UniformRandomProvider rng = RngUtils.create(BYTE_SEED);
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
     rng = RngUtils.create(BYTE_SEED);
@@ -79,7 +79,7 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetDifferentRandomWithDifferentByteSeed() {
+  void canGetDifferentRandomWithDifferentByteSeed() {
     UniformRandomProvider rng = RngUtils.create(BYTE_SEED);
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
     final byte[] seed = BYTE_SEED.clone();
@@ -92,7 +92,7 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetDifferentRandomWithNullByteSeed() {
+  void canGetDifferentRandomWithNullByteSeed() {
     // The use of a null byte[] seed will create randomly seeded RNG
     UniformRandomProvider rng = RngUtils.create(null);
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
@@ -104,7 +104,7 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetDifferentRandomWithZeroLengthByteSeed() {
+  void canGetDifferentRandomWithZeroLengthByteSeed() {
     // The use of a zero length byte[] seed will create randomly seeded RNG
     final byte[] seed = new byte[0];
     UniformRandomProvider rng = RngUtils.create(seed);
@@ -117,7 +117,7 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void canGetSameRandomWithFixedSeedMatchingConfiguredSeed() {
+  void canGetSameRandomWithFixedSeedMatchingConfiguredSeed() {
     final byte[] seed = TestSettings.getSeed();
     UniformRandomProvider rng = RngUtils.createWithFixedSeed();
     final double[] e = {rng.nextDouble(), rng.nextDouble()};
@@ -127,7 +127,7 @@ public class RngUtilsTest {
   }
 
   @Test
-  public void testRxsmxsOutput() {
+  void testRxsmxsOutput() {
     // Code generated using the reference c code obtained from:
     // https://mostlymangling.blogspot.com/2018/07/on-mixing-functions-in-fast-splittable.html
     final long[] values =

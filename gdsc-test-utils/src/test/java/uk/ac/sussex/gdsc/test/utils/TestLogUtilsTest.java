@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
 import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
 @SuppressWarnings("javadoc")
-public class TestLogUtilsTest {
+class TestLogUtilsTest {
   private static Logger logger;
 
   @BeforeAll
@@ -55,7 +55,7 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void canGetStaceTraceElement() {
+  void canGetStaceTraceElement() {
     final StackTraceElement[] e = new Throwable().getStackTrace();
     final StackTraceElement o = TestLogUtils.getStackTraceElement();
     final StackTraceElement o2 = TestLogUtils.getStackTraceElement(1);
@@ -74,21 +74,21 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void getStaceTraceElementIsNullWhenNotLocated() {
+  void getStaceTraceElementIsNullWhenNotLocated() {
     final int size = new Throwable().getStackTrace().length;
     final StackTraceElement o = TestLogUtils.getStackTraceElement(size);
     Assertions.assertNull(o);
   }
 
   @Test
-  public void getStaceTraceElementThrowsWhenCountIsNegative() {
+  void getStaceTraceElementThrowsWhenCountIsNegative() {
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
       TestLogUtils.getStackTraceElement(-1);
     });
   }
 
   @Test
-  public void canGetCodePoint() {
+  void canGetCodePoint() {
     final StackTraceElement e = new Throwable().getStackTrace()[0];
     final String codePoint = TestLogUtils.getCodePoint();
     Assertions.assertNotNull(e);
@@ -102,7 +102,7 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void canGetRecord() {
+  void canGetRecord() {
     final StringBuilder sb = new StringBuilder("A StringBuilder passed as an object");
     for (final Level l : new Level[] {TestLevel.TEST_INFO, TestLevel.TEST_DEBUG}) {
       //@formatter:off
@@ -130,7 +130,7 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void canSerializeRecord() throws IOException, ClassNotFoundException {
+  void canSerializeRecord() throws IOException, ClassNotFoundException {
     final String format = "This is a supplier record: %d";
     final Object[] args = new Object[] {1};
     final String expected = String.format(format, args);
@@ -158,7 +158,7 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void canGetFailRecord() {
+  void canGetFailRecord() {
     //@formatter:off
     logger.log(check(TestLevel.TEST_FAILURE, TestLogUtils.getFailRecord("This is a failed record"), "This is a failed record"));
     logger.log(check(TestLevel.TEST_FAILURE, TestLogUtils.getFailRecord("This is a failed formatted record: %d", 1), String.format("This is a failed formatted record: %d", 1)));
@@ -178,7 +178,7 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void canGetTimingRecord() {
+  void canGetTimingRecord() {
     //@formatter:off
     // Default levels
     logger.log(check(TestLevel.TEST_INFO, TestLogUtils.getTimingRecord("slow", 123, "fast", 21), "slow", "fast", "123", "21"));
@@ -219,7 +219,7 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void canGetResultRecord() {
+  void canGetResultRecord() {
     //@formatter:off
     logger.log(TestLogUtils.getResultRecord(true, "This is a test passed record"));
     logger.log(TestLogUtils.getResultRecord(true, "This is a test passed formatted record: %d", 1));
@@ -248,7 +248,7 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void canLazyLoadRecordMessage() {
+  void canLazyLoadRecordMessage() {
     MessageSupplier message = new MessageSupplier();
 
     if (logger.isLoggable(TestLevel.TEST_FAILURE)) {
@@ -266,7 +266,7 @@ public class TestLogUtilsTest {
   }
 
   @Test
-  public void canParseTestLevel() {
+  void canParseTestLevel() {
     Assertions.assertEquals(TestLevel.TEST_FAILURE, Level.parse("TEST FAILURE"));
     Assertions.assertEquals(TestLevel.TEST_WARNING, Level.parse("TEST WARNING"));
     Assertions.assertEquals(TestLevel.TEST_INFO, Level.parse("TEST INFO"));

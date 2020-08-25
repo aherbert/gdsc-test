@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class ShortEqualityUtilsTest {
+class ShortEqualityUtilsTest {
 
   private static final BigInteger MAX_LONG_DELTA =
       BigInteger.valueOf(Long.MAX_VALUE).subtract(BigInteger.valueOf(Long.MIN_VALUE));
@@ -67,7 +67,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatAreEqual() {
+  void testFloatAreEqual() {
     final float[] values = {0, 1, 1.5f, (float) Math.PI, Float.NaN, Float.POSITIVE_INFINITY,
         Float.NEGATIVE_INFINITY, Float.MAX_VALUE, Float.MIN_VALUE};
     for (final float v1 : values) {
@@ -78,7 +78,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoubleAreEqual() {
+  void testDoubleAreEqual() {
     final double[] values = {0, 1, 1.5, Math.PI, Double.NaN, Double.POSITIVE_INFINITY,
         Double.NEGATIVE_INFINITY, Double.MAX_VALUE, Double.MIN_VALUE};
     for (final double v1 : values) {
@@ -89,7 +89,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongAreEqual() {
+  void testLongAreEqual() {
     final long[] values = {0, 1, Long.MAX_VALUE, Long.MIN_VALUE};
     for (final long v1 : values) {
       for (final long v2 : values) {
@@ -99,7 +99,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntegerAreEqual() {
+  void testIntegerAreEqual() {
     final int[] values = {0, 1, Integer.MAX_VALUE, Integer.MIN_VALUE};
     for (final int v1 : values) {
       for (final int v2 : values) {
@@ -109,7 +109,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortAreEqual() {
+  void testShortAreEqual() {
     final short[] values = {0, 1, Short.MAX_VALUE, Short.MIN_VALUE};
     for (final short v1 : values) {
       for (final short v2 : values) {
@@ -119,7 +119,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testByteAreEqual() {
+  void testByteAreEqual() {
     final byte[] values = {0, 1, Byte.MAX_VALUE, Byte.MIN_VALUE};
     for (final byte v1 : values) {
       for (final byte v2 : values) {
@@ -131,7 +131,7 @@ public class ShortEqualityUtilsTest {
   // float Within
 
   @Test
-  public void testFloatsAreWithinThrows() {
+  void testFloatsAreWithinThrows() {
     final float expected = 0;
     final float actual = 0;
     // OK
@@ -148,7 +148,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsAreWithinUsingNoError() {
+  void testFloatsAreWithinUsingNoError() {
     // Test exact
     float absoluteError = 0;
 
@@ -175,7 +175,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsAreWithinUsingAbsoluteError() {
+  void testFloatsAreWithinUsingAbsoluteError() {
     final float expected = 2;
     final float actual = 1;
     final float absoluteError = expected - actual;
@@ -201,7 +201,7 @@ public class ShortEqualityUtilsTest {
   // double Within
 
   @Test
-  public void testDoublesAreWithinThrows() {
+  void testDoublesAreWithinThrows() {
     final double expected = 0;
     final double actual = 0;
     // OK
@@ -218,7 +218,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesAreWithinUsingNoError() {
+  void testDoublesAreWithinUsingNoError() {
     // Test exact
     double absoluteError = 0;
 
@@ -245,7 +245,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesAreWithinUsingAbsoluteError() {
+  void testDoublesAreWithinUsingAbsoluteError() {
     final double expected = 2;
     final double actual = 1;
     final double absoluteError = expected - actual;
@@ -271,7 +271,7 @@ public class ShortEqualityUtilsTest {
   // long Within using BigInteger
 
   @Test
-  public void testLongsUsingBigIntegerAreWithinThrows() {
+  void testLongsUsingBigIntegerAreWithinThrows() {
     final long expected = 0;
     final long actual = 0;
 
@@ -294,7 +294,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsUsingBigIntegerAreWithinUsingNoError() {
+  void testLongsUsingBigIntegerAreWithinUsingNoError() {
     // Test exact
     BigInteger absoluteError = BigInteger.ZERO;
 
@@ -317,7 +317,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsUsingBigIntegerAreWithinUsingLargestError() {
+  void testLongsUsingBigIntegerAreWithinUsingLargestError() {
     BigInteger absoluteError = BigInteger.valueOf(Long.MAX_VALUE)
         .subtract(BigInteger.valueOf(Long.MIN_VALUE)).subtract(BigInteger.ONE);
     Assertions.assertTrue(LongEqualityUtils.areWithin(Long.MAX_VALUE, 0, absoluteError));
@@ -330,7 +330,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsUsingBigIntegerAreWithinUsingAbsoluteError() {
+  void testLongsUsingBigIntegerAreWithinUsingAbsoluteError() {
     final long expected = Long.MAX_VALUE - 1;
     final long actual = -20;
     BigInteger absoluteError = BigInteger.valueOf(expected).subtract(BigInteger.valueOf(actual));
@@ -353,7 +353,7 @@ public class ShortEqualityUtilsTest {
   // long Within
 
   @Test
-  public void testLongsAreWithinThrows() {
+  void testLongsAreWithinThrows() {
     final long expected = 0;
     final long actual = 0;
     // OK
@@ -369,7 +369,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsAreWithinUsingNoError() {
+  void testLongsAreWithinUsingNoError() {
     // Test exact
     long absoluteError = 0;
 
@@ -392,7 +392,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsAreWithinUsingLargestError() {
+  void testLongsAreWithinUsingLargestError() {
     long absoluteError = Long.MAX_VALUE;
     Assertions.assertTrue(LongEqualityUtils.areWithin(Long.MAX_VALUE, 0, absoluteError));
     // Check overflow
@@ -403,7 +403,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsAreWithinUsingAbsoluteError() {
+  void testLongsAreWithinUsingAbsoluteError() {
     final long expected = 20;
     final long actual = 10;
     final long absoluteError = expected - actual;
@@ -426,7 +426,7 @@ public class ShortEqualityUtilsTest {
   // int Within
 
   @Test
-  public void testIntsAreWithinThrows() {
+  void testIntsAreWithinThrows() {
     final int expected = 0;
     final int actual = 0;
     // OK
@@ -442,7 +442,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsAreWithinUsingNoError() {
+  void testIntsAreWithinUsingNoError() {
     // Test exact
     long absoluteError = 0;
 
@@ -465,7 +465,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsAreWithinUsingLargestError() {
+  void testIntsAreWithinUsingLargestError() {
     long absoluteError = IntEqualityUtils.MAX_ABS_ERROR - 1;
     // Check largest range
     Assertions.assertTrue(
@@ -477,7 +477,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsAreWithinUsingAbsoluteError() {
+  void testIntsAreWithinUsingAbsoluteError() {
     final int expected = 20;
     final int actual = 10;
     final long absoluteError = expected - actual;
@@ -500,7 +500,7 @@ public class ShortEqualityUtilsTest {
   // short Within
 
   @Test
-  public void testShortsAreWithinThrows() {
+  void testShortsAreWithinThrows() {
     final short expected = 0;
     final short actual = 0;
     // OK
@@ -516,7 +516,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsAreWithinUsingNoError() {
+  void testShortsAreWithinUsingNoError() {
     // Test exact
     int absoluteError = 0;
 
@@ -540,7 +540,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsAreWithinUsingLargestError() {
+  void testShortsAreWithinUsingLargestError() {
     int absoluteError = ShortEqualityUtils.MAX_ABS_ERROR - 1;
     // Check largest range
     Assertions.assertTrue(ShortEqualityUtils.areWithin((short) (Short.MAX_VALUE - 1),
@@ -552,7 +552,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsAreWithinUsingAbsoluteError() {
+  void testShortsAreWithinUsingAbsoluteError() {
     final short expected = 20;
     final short actual = 10;
     final int absoluteError = expected - actual;
@@ -575,7 +575,7 @@ public class ShortEqualityUtilsTest {
   // byte Within
 
   @Test
-  public void testBytesAreWithinThrows() {
+  void testBytesAreWithinThrows() {
     final byte expected = 0;
     final byte actual = 0;
     // OK
@@ -591,7 +591,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesAreWithinUsingNoError() {
+  void testBytesAreWithinUsingNoError() {
     // Test exact
     int absoluteError = 0;
 
@@ -614,7 +614,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesAreWithinUsingLargestError() {
+  void testBytesAreWithinUsingLargestError() {
     int absoluteError = ByteEqualityUtils.MAX_ABS_ERROR - 1;
     // Check largest range
     Assertions.assertTrue(
@@ -626,7 +626,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesAreWithinUsingAbsoluteError() {
+  void testBytesAreWithinUsingAbsoluteError() {
     final byte expected = 20;
     final byte actual = 10;
     final int absoluteError = expected - actual;
@@ -649,7 +649,7 @@ public class ShortEqualityUtilsTest {
   // float Close
 
   @Test
-  public void testFloatsAreCloseThrows() {
+  void testFloatsAreCloseThrows() {
     final float expected = 0;
     final float actual = 0;
     final double relativeError = 0;
@@ -669,7 +669,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsAreCloseUsingNoError() {
+  void testFloatsAreCloseUsingNoError() {
     final float relativeError = 0;
     final float absoluteError = 0;
 
@@ -698,7 +698,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsAreCloseUsingAbsoluteError() {
+  void testFloatsAreCloseUsingAbsoluteError() {
     final float expected = 2;
     final float actual = 1;
     final float relativeError = 0;
@@ -727,7 +727,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsAreCloseUsingRelativeError() {
+  void testFloatsAreCloseUsingRelativeError() {
     final float expected = 2;
     final float actual = 1;
     final double relativeError = 0.5;
@@ -758,7 +758,7 @@ public class ShortEqualityUtilsTest {
   // double Close
 
   @Test
-  public void testDoublesAreCloseThrows() {
+  void testDoublesAreCloseThrows() {
     final double expected = 0;
     final double actual = 0;
     final double relativeError = 0;
@@ -778,7 +778,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesAreCloseUsingNoError() {
+  void testDoublesAreCloseUsingNoError() {
     final double relativeError = 0;
     final double absoluteError = 0;
 
@@ -807,7 +807,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesAreCloseUsingAbsoluteError() {
+  void testDoublesAreCloseUsingAbsoluteError() {
     final double expected = 2;
     final double actual = 1;
     final double relativeError = 0;
@@ -836,7 +836,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesAreCloseUsingRelativeError() {
+  void testDoublesAreCloseUsingRelativeError() {
     final double expected = 2;
     final double actual = 1;
     final double relativeError = 0.5;
@@ -867,7 +867,7 @@ public class ShortEqualityUtilsTest {
   // long Close
 
   @Test
-  public void testLongsAreCloseThrows() {
+  void testLongsAreCloseThrows() {
     final long expected = 0;
     final long actual = 0;
     final double relativeError = 0;
@@ -887,7 +887,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsAreCloseUsingNoError() {
+  void testLongsAreCloseUsingNoError() {
     final double relativeError = 0;
     final long absoluteError = 0;
 
@@ -914,7 +914,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsAreCloseUsingAbsoluteError() {
+  void testLongsAreCloseUsingAbsoluteError() {
     final long expected = 2;
     final long actual = 1;
     final double relativeError = 0;
@@ -940,7 +940,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsAreCloseUsingRelativeError() {
+  void testLongsAreCloseUsingRelativeError() {
     final long expected = 2;
     final long actual = 1;
     final double relativeError = 0.5;
@@ -966,7 +966,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsAreCloseUsingRelativeErrorAtMinValue() {
+  void testLongsAreCloseUsingRelativeErrorAtMinValue() {
     final long expected = Long.MIN_VALUE;
     final long actual = expected + 1;
     final double relativeError = 0.5 - 1e-3;
@@ -989,7 +989,7 @@ public class ShortEqualityUtilsTest {
   // int Close
 
   @Test
-  public void testIntsAreCloseThrows() {
+  void testIntsAreCloseThrows() {
     final int expected = 0;
     final int actual = 0;
     final double relativeError = 0;
@@ -1010,7 +1010,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsAreCloseUsingNoError() {
+  void testIntsAreCloseUsingNoError() {
     final double relativeError = 0;
     final long absoluteError = 0;
 
@@ -1037,7 +1037,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsAreCloseUsingAbsoluteError() {
+  void testIntsAreCloseUsingAbsoluteError() {
     final int expected = 2;
     final int actual = 1;
     final double relativeError = 0;
@@ -1063,7 +1063,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsAreCloseUsingRelativeError() {
+  void testIntsAreCloseUsingRelativeError() {
     final int expected = 2;
     final int actual = 1;
     final double relativeError = 0.5;
@@ -1089,7 +1089,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsAreCloseUsingRelativeErrorAtMinValue() {
+  void testIntsAreCloseUsingRelativeErrorAtMinValue() {
     final int expected = Integer.MIN_VALUE;
     final int actual = expected + 1;
     final double relativeError = 0.5 - 1e-3;
@@ -1112,7 +1112,7 @@ public class ShortEqualityUtilsTest {
   // short Close
 
   @Test
-  public void testShortsAreCloseThrows() {
+  void testShortsAreCloseThrows() {
     final short expected = 0;
     final short actual = 0;
     final double relativeError = 0;
@@ -1132,7 +1132,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsAreCloseUsingNoError() {
+  void testShortsAreCloseUsingNoError() {
     final double relativeError = 0;
     final int absoluteError = 0;
 
@@ -1160,7 +1160,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsAreCloseUsingAbsoluteError() {
+  void testShortsAreCloseUsingAbsoluteError() {
     final short expected = 2;
     final short actual = 1;
     final double relativeError = 0;
@@ -1186,7 +1186,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsAreCloseUsingRelativeError() {
+  void testShortsAreCloseUsingRelativeError() {
     final short expected = 2;
     final short actual = 1;
     final double relativeError = 0.5;
@@ -1212,7 +1212,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsAreCloseUsingRelativeErrorAtMinValue() {
+  void testShortsAreCloseUsingRelativeErrorAtMinValue() {
     final short expected = Short.MIN_VALUE;
     final short actual = expected + 1;
     final double relativeError = 0.5 - 1e-3;
@@ -1235,7 +1235,7 @@ public class ShortEqualityUtilsTest {
   // byte Close
 
   @Test
-  public void testBytesAreCloseThrows() {
+  void testBytesAreCloseThrows() {
     final byte expected = 0;
     final byte actual = 0;
     final double relativeError = 0;
@@ -1255,7 +1255,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesAreCloseUsingNoError() {
+  void testBytesAreCloseUsingNoError() {
     final double relativeError = 0;
     final int absoluteError = 0;
 
@@ -1282,7 +1282,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesAreCloseUsingAbsoluteError() {
+  void testBytesAreCloseUsingAbsoluteError() {
     final byte expected = 2;
     final byte actual = 1;
     final double relativeError = 0;
@@ -1308,7 +1308,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesAreCloseUsingRelativeError() {
+  void testBytesAreCloseUsingRelativeError() {
     final byte expected = 2;
     final byte actual = 1;
     final double relativeError = 0.5;
@@ -1334,7 +1334,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesAreCloseUsingRelativeErrorAtMinValue() {
+  void testBytesAreCloseUsingRelativeErrorAtMinValue() {
     final byte expected = Byte.MIN_VALUE;
     final byte actual = expected + 1;
     final double relativeError = 0.49;
@@ -1357,7 +1357,7 @@ public class ShortEqualityUtilsTest {
   // float IsCloseTo
 
   @Test
-  public void testFloatsIsCloseToThrows() {
+  void testFloatsIsCloseToThrows() {
     final float expected = 0;
     final float actual = 0;
     final double relativeError = 0;
@@ -1379,7 +1379,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsIsCloseToUsingNoError() {
+  void testFloatsIsCloseToUsingNoError() {
     final float relativeError = 0;
     final float absoluteError = 0;
 
@@ -1408,7 +1408,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsIsCloseToUsingAbsoluteError() {
+  void testFloatsIsCloseToUsingAbsoluteError() {
     final float expected = 2;
     final float actual = 1;
     final float relativeError = 0;
@@ -1437,7 +1437,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testFloatsIsCloseToUsingRelativeError() {
+  void testFloatsIsCloseToUsingRelativeError() {
     final float expected = 2;
     final float actual = 1;
     final double relativeError = 0.5;
@@ -1465,7 +1465,7 @@ public class ShortEqualityUtilsTest {
   // double Close
 
   @Test
-  public void testDoublesIsCloseToThrows() {
+  void testDoublesIsCloseToThrows() {
     final double expected = 0;
     final double actual = 0;
     final double relativeError = 0;
@@ -1487,7 +1487,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesIsCloseToUsingNoError() {
+  void testDoublesIsCloseToUsingNoError() {
     final double relativeError = 0;
     final double absoluteError = 0;
 
@@ -1516,7 +1516,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesIsCloseToUsingAbsoluteError() {
+  void testDoublesIsCloseToUsingAbsoluteError() {
     final double expected = 2;
     final double actual = 1;
     final double relativeError = 0;
@@ -1545,7 +1545,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testDoublesIsCloseToUsingRelativeError() {
+  void testDoublesIsCloseToUsingRelativeError() {
     final double expected = 2;
     final double actual = 1;
     final double relativeError = 0.5;
@@ -1573,7 +1573,7 @@ public class ShortEqualityUtilsTest {
   // long IsCloseTo
 
   @Test
-  public void testLongsIsCloseToThrows() {
+  void testLongsIsCloseToThrows() {
     final long expected = 0;
     final long actual = 0;
     final double relativeError = 0;
@@ -1595,7 +1595,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsIsCloseToUsingNoError() {
+  void testLongsIsCloseToUsingNoError() {
     final double relativeError = 0;
     final long absoluteError = 0;
 
@@ -1623,7 +1623,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsIsCloseToUsingAbsoluteError() {
+  void testLongsIsCloseToUsingAbsoluteError() {
     final long expected = 2;
     final long actual = 1;
     final double relativeError = 0;
@@ -1649,7 +1649,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsIsCloseToUsingRelativeError() {
+  void testLongsIsCloseToUsingRelativeError() {
     final long expected = 2;
     final long actual = 1;
     final double relativeError = 0.5;
@@ -1672,7 +1672,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testLongsIsCloseToUsingRelativeErrorAtMinValue() {
+  void testLongsIsCloseToUsingRelativeErrorAtMinValue() {
     final long expected = Long.MIN_VALUE;
     final long actual = expected + 1;
     final double relativeError = 0.5;
@@ -1697,7 +1697,7 @@ public class ShortEqualityUtilsTest {
   // int IsCloseTo
 
   @Test
-  public void testIntsIsCloseToThrows() {
+  void testIntsIsCloseToThrows() {
     final int expected = 0;
     final int actual = 0;
     final double relativeError = 0;
@@ -1720,7 +1720,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsIsCloseToUsingNoError() {
+  void testIntsIsCloseToUsingNoError() {
     final double relativeError = 0;
     final long absoluteError = 0;
 
@@ -1747,7 +1747,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsIsCloseToUsingAbsoluteError() {
+  void testIntsIsCloseToUsingAbsoluteError() {
     final int expected = 2;
     final int actual = 1;
     final double relativeError = 0;
@@ -1773,7 +1773,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsIsCloseToUsingRelativeError() {
+  void testIntsIsCloseToUsingRelativeError() {
     final int expected = 2;
     final int actual = 1;
     final double relativeError = 0.5;
@@ -1796,7 +1796,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testIntsIsCloseToUsingRelativeErrorAtMinValue() {
+  void testIntsIsCloseToUsingRelativeErrorAtMinValue() {
     final int expected = Integer.MIN_VALUE;
     final int actual = expected + 1;
     final double relativeError = 0.5;
@@ -1821,7 +1821,7 @@ public class ShortEqualityUtilsTest {
   // short IsCloseTo
 
   @Test
-  public void testShortsIsCloseToThrows() {
+  void testShortsIsCloseToThrows() {
     final short expected = 0;
     final short actual = 0;
     final double relativeError = 0;
@@ -1843,7 +1843,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsIsCloseToUsingNoError() {
+  void testShortsIsCloseToUsingNoError() {
     final double relativeError = 0;
     final int absoluteError = 0;
 
@@ -1871,7 +1871,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsIsCloseToUsingAbsoluteError() {
+  void testShortsIsCloseToUsingAbsoluteError() {
     final short expected = 2;
     final short actual = 1;
     final double relativeError = 0;
@@ -1897,7 +1897,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsIsCloseToUsingRelativeError() {
+  void testShortsIsCloseToUsingRelativeError() {
     final short expected = 2;
     final short actual = 1;
     final double relativeError = 0.5;
@@ -1920,7 +1920,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testShortsIsCloseToUsingRelativeErrorAtMinValue() {
+  void testShortsIsCloseToUsingRelativeErrorAtMinValue() {
     final short expected = Short.MIN_VALUE;
     final short actual = expected + 1;
     final double relativeError = 0.5;
@@ -1945,7 +1945,7 @@ public class ShortEqualityUtilsTest {
   // byte IsCloseTo
 
   @Test
-  public void testBytesIsCloseToThrows() {
+  void testBytesIsCloseToThrows() {
     final byte expected = 0;
     final byte actual = 0;
     final double relativeError = 0;
@@ -1967,7 +1967,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesIsCloseToUsingNoError() {
+  void testBytesIsCloseToUsingNoError() {
     final double relativeError = 0;
     final int absoluteError = 0;
 
@@ -1995,7 +1995,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesIsCloseToUsingAbsoluteError() {
+  void testBytesIsCloseToUsingAbsoluteError() {
     final byte expected = 2;
     final byte actual = 1;
     final double relativeError = 0;
@@ -2021,7 +2021,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesIsCloseToUsingRelativeError() {
+  void testBytesIsCloseToUsingRelativeError() {
     final byte expected = 2;
     final byte actual = 1;
     final double relativeError = 0.5;
@@ -2044,7 +2044,7 @@ public class ShortEqualityUtilsTest {
   }
 
   @Test
-  public void testBytesIsCloseToUsingRelativeErrorAtMinValue() {
+  void testBytesIsCloseToUsingRelativeErrorAtMinValue() {
     final byte expected = Byte.MIN_VALUE;
     final byte actual = expected + 1;
     final double relativeError = 0.5;

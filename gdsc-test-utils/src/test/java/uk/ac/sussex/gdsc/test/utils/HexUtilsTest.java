@@ -32,17 +32,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class HexUtilsTest {
+class HexUtilsTest {
 
   @Test
-  public void testEncodeWithBadInput() {
+  void testEncodeWithBadInput() {
     final String empty = "";
     Assertions.assertEquals(empty, HexUtils.encodeHexString(null), "Null input");
     Assertions.assertEquals(empty, HexUtils.encodeHexString(new byte[0]), "Empty input");
   }
 
   @Test
-  public void testDecodeWithBadInput() {
+  void testDecodeWithBadInput() {
     final byte[] empty = new byte[0];
     Assertions.assertArrayEquals(empty, HexUtils.decodeHex(null), "Null input");
     Assertions.assertArrayEquals(empty, HexUtils.decodeHex(""), "Empty input");
@@ -52,7 +52,7 @@ public class HexUtilsTest {
   }
 
   @Test
-  public void testEncode() {
+  void testEncode() {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
     final boolean toLowerCase = true;
     for (int i = 1; i < 20; i++) {
@@ -67,7 +67,7 @@ public class HexUtilsTest {
   }
 
   @Test
-  public void testDecode() {
+  void testDecode() {
     final UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
     final boolean toLowerCase = true;
     // Output Hex characters.

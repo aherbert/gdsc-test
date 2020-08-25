@@ -29,14 +29,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-public class TestUtilsTest {
+class TestUtilsTest {
   /** The supplied message. */
   private final Supplier<String> messageSupplier = () -> {
     return "Lambda message";
   };
 
   @Test
-  public void testWrapAssertionFailedErrorAppend() {
+  void testWrapAssertionFailedErrorAppend() {
     try {
       TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(), messageSupplier);
     } catch (final AssertionError ex) {
@@ -59,7 +59,7 @@ public class TestUtilsTest {
   }
 
   @Test
-  public void testWrapAssertionFailedError() {
+  void testWrapAssertionFailedError() {
     try {
       TestUtils.wrapAssertionFailedError(new AssertionError(), messageSupplier);
     } catch (final AssertionError ex) {
