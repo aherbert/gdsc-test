@@ -90,4 +90,20 @@ class AnnotationTest {
             HexUtils.encodeHexString(seed.getSeed()), seed.getCurrentRepetition(),
             seed.getTotalRepetitions()));
   }
+
+  @Test
+  @DisabledIfHeadless
+  void canDisableIfHeadless(TestInfo info) {
+    logger.log(TestLevel.TEST_INFO, () -> String.format("%s: headless=%b",
+        info.getTestMethod().get().getName(), java.awt.GraphicsEnvironment.isHeadless()));
+    Assertions.assertFalse(java.awt.GraphicsEnvironment.isHeadless());
+  }
+
+  @Test
+  @EnabledIfHeadless
+  void canEnableIfHeadless(TestInfo info) {
+    logger.log(TestLevel.TEST_INFO, () -> String.format("%s: headless=%b",
+        info.getTestMethod().get().getName(), java.awt.GraphicsEnvironment.isHeadless()));
+    Assertions.assertTrue(java.awt.GraphicsEnvironment.isHeadless());
+  }
 }
