@@ -25,6 +25,7 @@
 package uk.ac.sussex.gdsc.test.rng;
 
 import java.util.Arrays;
+import java.util.SplittableRandom;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.rng.RestorableUniformRandomProvider;
 import uk.ac.sussex.gdsc.test.utils.SeedUtils;
@@ -50,7 +51,13 @@ public final class RngUtils {
    */
   public static RestorableUniformRandomProvider create(byte[] seed) {
     if (SeedUtils.nullOrEmpty(seed)) {
-      return new XoRoShiRo128PlusPlus(ThreadLocalRandom.current().nextLong());
+      // Require 128-bits of randomness. Both the JDK random generators are initialised
+      // with random bits and the sequences of the seeds are different. Using only 1
+      // with two calls would limit the maximum number of seeds to the RNG period which
+      // is 2^64 for each. Using both with should be able to get 2^128 seeds.
+      final long seed0 = ThreadLocalRandom.current().nextLong();
+      final long seed1 = new SplittableRandom().nextLong();
+      return new XoRoShiRo128PlusPlus(seed0, seed1);
     }
 
     // Currently the factory only supports limited functionality.
