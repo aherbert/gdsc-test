@@ -65,8 +65,8 @@ public final class XoRoShiRo128PlusPlus implements RestorableUniformRandomProvid
    * @param seed the seed for the state
    */
   public XoRoShiRo128PlusPlus(long seed) {
-    this.state0 = RngUtils.rrmxmx(seed);
-    this.state1 = RngUtils.rrmxmx(seed + GOLDEN_RATIO);
+    this.state0 = RngUtils.rrmxmx(seed + GOLDEN_RATIO);
+    this.state1 = RngUtils.rrmxmx(seed + 2 * GOLDEN_RATIO);
   }
 
   /**
@@ -83,7 +83,8 @@ public final class XoRoShiRo128PlusPlus implements RestorableUniformRandomProvid
     // Combine bits and check for zero seed
     if ((seed0 | seed1) == 0) {
       // Same result as single argument constructor with seed=0
-      this.state1 = RngUtils.rrmxmx(GOLDEN_RATIO);
+      this.state0 = RngUtils.rrmxmx(GOLDEN_RATIO);
+      this.state1 = RngUtils.rrmxmx(2 * GOLDEN_RATIO);
     } else {
       state0 = seed0;
       state1 = seed1;
