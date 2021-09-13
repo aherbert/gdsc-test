@@ -89,7 +89,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <!-- Versions -->
     <checkstyle.version>8.35</checkstyle.version>
     <commons.codec.version>1.14</commons.codec.version>
-    <commons.rng.version>1.3</commons.rng.version>
+    <commons.rng.version>1.4</commons.rng.version>
     <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <org.jacoco.version>0.8.5</org.jacoco.version>
