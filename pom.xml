@@ -320,7 +320,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <systemPropertyVariables>
             <!-- Set JUL Formatting -->
