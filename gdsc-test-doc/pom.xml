@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>gdsc-test-doc</artifactId>
-  <!-- do not set packaging to pom, because otherwise we will receive "Not executing Javadoc as the project is not a Java 
+  <!-- do not set packaging to pom, because otherwise we will receive "Not executing Javadoc as the project is not a Java
     classpath-capable package" -->
 
   <name>GDSC Test Documentation</name>

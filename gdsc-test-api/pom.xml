@@ -18,6 +18,7 @@ Contains a generic framework for test predicates.
 </description>
 
   <properties>
+    <gdsc.automatic.module.name>uk.ac.sussex.gdsc.test.api</gdsc.automatic.module.name>
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}/..</parent.dir>
     <generated.sources>${project.build.directory}/generated-sources/java</generated.sources>

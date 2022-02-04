@@ -20,6 +20,7 @@ Contains utilities for use with JUnit 5.
 </description>
 
   <properties>
+    <gdsc.automatic.module.name>uk.ac.sussex.gdsc.test.junit5</gdsc.automatic.module.name>
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}/..</parent.dir>
   </properties>

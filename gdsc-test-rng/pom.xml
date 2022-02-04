@@ -19,6 +19,7 @@ Contains utilities for use with Commons RNG for random tests.
 </description>
 
   <properties>
+    <gdsc.automatic.module.name>uk.ac.sussex.gdsc.test.rng</gdsc.automatic.module.name>
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}/..</parent.dir>
   </properties>

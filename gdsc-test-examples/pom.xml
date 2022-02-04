@@ -19,6 +19,7 @@ Contains examples of the GDSC Test libraries.
 </description>
 
   <properties>
+    <gdsc.automatic.module.name>uk.ac.sussex.gdsc.test.examples</gdsc.automatic.module.name>
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}/..</parent.dir>
     <maven.deploy.skip>true</maven.deploy.skip>

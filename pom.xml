@@ -83,6 +83,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <license.licenseName>gpl_v3</license.licenseName>
     <license.copyrightOwners>Alex Herbert</license.copyrightOwners>
     <license.projectName>${project.description}</license.projectName>
+    <gdsc.automatic.module.name>uk.ac.sussex.gdsc.test</gdsc.automatic.module.name>
     <!-- Fix -->
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}</parent.dir>
@@ -199,6 +200,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <version>${maven-javadoc-plugin.version}</version>
           <configuration>
             <source>${maven.compiler.source}</source>
+            <detectJavaApiLink>false</detectJavaApiLink>
             <encoding>UTF-8</encoding>
             <docencoding>UTF-8</docencoding>
             <linksource>true</linksource>
@@ -417,6 +419,17 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <releaseProfiles>release</releaseProfiles>
           <goals>deploy</goals>
           <!-- <goals>deploy nexus-staging:release</goals> -->
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <!-- Java 9 -->
+              <Automatic-Module-Name>${gdsc.automatic.module.name}</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
