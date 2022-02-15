@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class ShortEqualityUtilsTest {
+class EqualityUtilsTest {
 
   private static final BigInteger MAX_LONG_DELTA =
       BigInteger.valueOf(Long.MAX_VALUE).subtract(BigInteger.valueOf(Long.MIN_VALUE));
