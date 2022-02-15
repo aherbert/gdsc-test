@@ -28,10 +28,6 @@ package uk.ac.sussex.gdsc.test.api.comparisons;
  * Defines utilities for testing {@code double} equality.
  */
 public final class DoubleEqualityUtils {
-  /** Positive zero bits. */
-  private static final long POSITIVE_ZERO_BITS = Double.doubleToRawLongBits(+0.0);
-  /** Negative zero bits. */
-  private static final long NEGATIVE_ZERO_BITS = Double.doubleToRawLongBits(-0.0);
 
   /**
    * Do not allow public construction.
@@ -110,23 +106,24 @@ public final class DoubleEqualityUtils {
   static boolean testAreWithinUlp(double value1, double value2, int ulpError) {
     // Note: Ignore NaNs only when equal within ulp error
 
-    final long a = Double.doubleToRawLongBits(value1);
-    final long b = Double.doubleToRawLongBits(value2);
+    long a = Double.doubleToRawLongBits(value1);
+    long b = Double.doubleToRawLongBits(value2);
     if ((a ^ b) < 0) {
-      // Opposite signs. Count changes to zero.
-      long d1;
-      long d2;
-      if (a < b) {
-        d1 = a - NEGATIVE_ZERO_BITS;
-        d2 = b - POSITIVE_ZERO_BITS;
-      } else {
-        d1 = a - POSITIVE_ZERO_BITS;
-        d2 = b - NEGATIVE_ZERO_BITS;
-      }
-      return d1 <= ulpError && d2 <= (ulpError - d1) && !Double.isNaN(value1 - value2);
+      // Opposite signs. Count changes to zero, e.g.
+      // ulp = Double.doubleToRawLongBits(|value|) - Double.doubleToRawLongBits(0.0)
+      // Do this by removing the sign bit to get the ULP above positive zero.
+      a &= Long.MAX_VALUE;
+      b &= Long.MAX_VALUE;
+      // Note:
+      // If either value is NaN, the exponent bits are set to (2047L << 52) and the
+      // distance above 0.0 is always above an integer ULP error. So omit the test
+      // for NaN.
+      // Add the values and compare unsigned. Do this by adding 2^63 to both values.
+      // See Long.compareUnsigned.
+      return (a + b + Long.MIN_VALUE) <= (ulpError + Long.MIN_VALUE);
     }
-    // Same sign, no overflow possible.
-    return Math.abs(a - b) <= ulpError && !Double.isNaN(value1 - value2);
+    // Same sign, no overflow possible. Check for NaN last.
+    return Math.abs(a - b) <= ulpError && !Double.isNaN(value1 + value2);
   }
 
   /**

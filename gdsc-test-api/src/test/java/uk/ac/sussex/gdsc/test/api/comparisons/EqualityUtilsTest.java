@@ -190,12 +190,15 @@ class EqualityUtilsTest {
 
   @Test
   void testFloatsAreWithinUlpInfiniteCases() {
+    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, 0, true);
     assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.MAX_VALUE, 0, false);
     assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.MAX_VALUE, 1, true);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.POSITIVE_INFINITY, 0, true);
     assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, 0, false);
     assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, 1, true);
     assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.MAX_VALUE, Integer.MAX_VALUE, false);
     assertFloatsAreWithin(-Float.MAX_VALUE, Float.MAX_VALUE, Integer.MAX_VALUE, false);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Integer.MAX_VALUE, false);
   }
 
   @Test
@@ -302,12 +305,15 @@ class EqualityUtilsTest {
 
   @Test
   void testDoublesAreWithinUlpInfiniteCases() {
+    assertDoublesAreWithin(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, 0, true);
     assertDoublesAreWithin(Double.POSITIVE_INFINITY, Double.MAX_VALUE, 0, false);
     assertDoublesAreWithin(Double.POSITIVE_INFINITY, Double.MAX_VALUE, 1, true);
+    assertDoublesAreWithin(-Double.POSITIVE_INFINITY, -Double.POSITIVE_INFINITY, 0, true);
     assertDoublesAreWithin(-Double.POSITIVE_INFINITY, -Double.MAX_VALUE, 0, false);
     assertDoublesAreWithin(-Double.POSITIVE_INFINITY, -Double.MAX_VALUE, 1, true);
     assertDoublesAreWithin(-Double.POSITIVE_INFINITY, Double.MAX_VALUE, Integer.MAX_VALUE, false);
     assertDoublesAreWithin(-Double.MAX_VALUE, Double.MAX_VALUE, Integer.MAX_VALUE, false);
+    assertDoublesAreWithin(-Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Integer.MAX_VALUE, false);
   }
 
   @Test

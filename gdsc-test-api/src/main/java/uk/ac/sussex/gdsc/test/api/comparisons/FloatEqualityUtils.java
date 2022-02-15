@@ -28,10 +28,6 @@ package uk.ac.sussex.gdsc.test.api.comparisons;
  * Defines utilities for testing {@code float} equality.
  */
 public final class FloatEqualityUtils {
-  /** Positive zero bits. */
-  private static final int POSITIVE_ZERO_BITS = Float.floatToRawIntBits(+0.0f);
-  /** Negative zero bits. */
-  private static final int NEGATIVE_ZERO_BITS = Float.floatToRawIntBits(-0.0f);
 
   /**
    * Do not allow public construction.
@@ -110,23 +106,21 @@ public final class FloatEqualityUtils {
   static boolean testAreWithinUlp(float value1, float value2, int ulpError) {
     // Note: Ignore NaNs only when equal within ulp error
 
-    final int a = Float.floatToRawIntBits(value1);
-    final int b = Float.floatToRawIntBits(value2);
+    int a = Float.floatToRawIntBits(value1);
+    int b = Float.floatToRawIntBits(value2);
     if ((a ^ b) < 0) {
-      // Opposite signs. Count changes to zero.
-      int d1;
-      int d2;
-      if (a < b) {
-        d1 = a - NEGATIVE_ZERO_BITS;
-        d2 = b - POSITIVE_ZERO_BITS;
-      } else {
-        d1 = a - POSITIVE_ZERO_BITS;
-        d2 = b - NEGATIVE_ZERO_BITS;
-      }
-      return d1 <= ulpError && d2 <= (ulpError - d1) && !Float.isNaN(value1 - value2);
+      // Opposite signs. Count changes to zero, e.g.
+      // ulp = Float.floatToRawIntBits(|value|) - Float.floatToRawIntBits(0.0)
+      // Do this by removing the sign bit to get the ULP above positive zero.
+      a &= Integer.MAX_VALUE;
+      b &= Integer.MAX_VALUE;
+      // Add the values and compare unsigned. Do this by adding 2^31 to both values.
+      // See Integer.compareUnsigned. Check for NaN last.
+      return (a + b + Integer.MIN_VALUE) <= (ulpError + Integer.MIN_VALUE)
+          && !Float.isNaN(value1 + value2);
     }
-    // Same sign, no overflow possible
-    return Math.abs(a - b) <= ulpError && !Float.isNaN(value1 - value2);
+    // Same sign, no overflow possible. Check for NaN last.
+    return Math.abs(a - b) <= ulpError && !Float.isNaN(value1 + value2);
   }
 
   /**
