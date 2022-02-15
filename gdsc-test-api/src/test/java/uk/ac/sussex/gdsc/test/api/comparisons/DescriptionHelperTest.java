@@ -63,6 +63,18 @@ class DescriptionHelperTest {
   }
 
   @Test
+  void testGetDescriptionWithinUlp() {
+    // These must be distinguishable as strings
+    for (final int ulpError : new int[] {0, 1, 42, Integer.MAX_VALUE}) {
+      final String result = DescriptionHelper.getDescriptionWithinUlp(ulpError);
+      final String ulpString = String.valueOf(ulpError);
+      assertMessageContains(result, "ulp", "Predicate description");
+      assertMessageContains(result, (ulpError == 0) ? " == " : " <= ", "Predicate description");
+      assertMessageContains(result, ulpString, "ULP error");
+    }
+  }
+
+  @Test
   void testFloatsGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (final float absError : new float[] {-0f, 0, 0.5f, 1, (float) Math.PI}) {

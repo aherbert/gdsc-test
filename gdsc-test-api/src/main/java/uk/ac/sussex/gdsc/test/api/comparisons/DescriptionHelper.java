@@ -59,12 +59,33 @@ final class DescriptionHelper {
    * The description of absolute error {@code == 0}.
    */
   private static final String DESCRIPTION_ABS_ERROR_0 = "|v1-v2| == 0";
+  /**
+   * The description of ulp error {@code <=}.
+   */
+  private static final String DESCRIPTION_ULP_ERROR_LTE = "ulp <= ";
+  /**
+   * The description of ulp error {@code == 0}.
+   */
+  private static final String DESCRIPTION_ULP_ERROR_0 = "ulp == 0";
 
   /**
    * Do not allow public construction.
    */
   private DescriptionHelper() {
     // No constructor
+  }
+
+  /**
+   * Get the description of the test that two floating-point values are equal within a ULP error.
+   *
+   * <p>It is assumed the error has been validated (is positive).
+   *
+   * @param ulpError The maximum ULP error between <code>value1</code> and <code>value2</code> for
+   *        which both numbers are still considered equal.
+   * @return the description
+   */
+  static String getDescriptionWithinUlp(int ulpError) {
+    return (ulpError == 0) ? DESCRIPTION_ULP_ERROR_0 : DESCRIPTION_ULP_ERROR_LTE + ulpError;
   }
 
   /**
