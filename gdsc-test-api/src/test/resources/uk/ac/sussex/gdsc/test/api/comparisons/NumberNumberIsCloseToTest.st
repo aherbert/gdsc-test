@@ -25,7 +25,7 @@ public class <Number><Number>IsCloseToTest {
             final boolean expected = <Number>EqualityUtils.testIsCloseTo(value1, value2,
                 relativeError, absoluteError);
             Assertions.assertEquals(expected, predicate.test(value1, value2),
-                () -> String.format("Does not compute EqualityUtils.<number>sTestIsCloseTo :"
+                () -> String.format("Does not compute <Number>EqualityUtils.testIsCloseTo :"
                     + " v1=%s, v2=%s, rel.error=%s, abs.error=%s",
                     value1, value2, relativeError, absoluteError));
           }

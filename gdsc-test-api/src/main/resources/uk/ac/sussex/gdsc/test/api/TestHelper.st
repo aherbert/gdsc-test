@@ -13,6 +13,7 @@ import uk.ac.sussex.gdsc.test.api.comparisons.CharEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreWithinUlp;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleIsCloseTo;
@@ -24,6 +25,7 @@ import uk.ac.sussex.gdsc.test.api.comparisons.FloatCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreWithin;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreWithinUlp;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatCmp;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatIsCloseTo;
@@ -136,6 +138,18 @@ public final class TestHelper {
    */
   public static <Float><Float>BiPredicate <float>sCmp() {
     return <Float><Float>Cmp.INSTANCE;
+  \}}><floats,Floats:{float,Float |
+<\n>
+  /**
+   * Creates a predicate to test {@code <float>\} values are equal within a ULP error.
+   *
+   * @param ulpError The maximum ULP error between \<code>value1\</code> and
+   *        \<code>value2\</code> for which both numbers are still considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException If the ulp error is not positive
+   */
+  public static <Float><Float>BiPredicate <float>sAreWithinUlp(int ulpError) {
+    return new <Float><Float>AreWithinUlp(ulpError);
   \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
 <\n>
   /**

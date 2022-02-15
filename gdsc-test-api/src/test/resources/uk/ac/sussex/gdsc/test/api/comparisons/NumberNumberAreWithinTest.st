@@ -23,7 +23,7 @@ public class <Number><Number>Are<Within>Test {
         for (<number> value2 : values) {
           final boolean expected = <Number>EqualityUtils.testAreWithin(value1, value2, absoluteError);
           Assertions.assertEquals(expected, predicate.test(value1, value2),
-              () -> String.format("Does not compute EqualityUtils.<number>stestAreWithin :"
+              () -> String.format("Does not compute <Number>EqualityUtils.testAreWithin :"
                   + " v1=%s, v2=%s, abs.error=%s", value1, value2, absoluteError));
         }
       }

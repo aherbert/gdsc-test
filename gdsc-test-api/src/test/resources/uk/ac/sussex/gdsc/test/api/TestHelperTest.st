@@ -125,6 +125,23 @@ public class TestHelperTest {<types,Types:{type,Type |
             "Predicate does not compute <Float>.compare");
       \}
     \}
+  \}}><floats,Floats,ulpTypes:{float,Float,ulpType |
+<\n>
+  /**
+   * Test creates a predicate to compare {@code <float>\} values are within a ULP error.
+   */
+  @Test
+  public void testAreWithinUlpUsing<Float>s() {
+    final <ulpType> ulpError = 1;
+    final <Float><Float>BiPredicate test = TestHelper.<float>sAreWithinUlp(ulpError);
+    final <float>[] values = ApiTestUtils.get<Float>Values();
+    for (<float> value1 : values) {
+      for (<float> value2 : values) {
+        Assertions.assertEquals(<Float>EqualityUtils.areWithinUlp(value1, value2, ulpError),
+            test.test(value1, value2),
+            "Predicate does not compute withinUlp");
+      \}
+    \}
   \}}><numbers,Numbers,NumberAbsTypes,numberAbsTypes:{number,Number,NumberAbsType,numberAbsType |
 <\n>
   /**
