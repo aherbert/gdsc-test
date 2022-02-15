@@ -34,10 +34,10 @@ import org.junit.jupiter.api.Test;
 class TestAssertionArrayUtilsTest {
   @Test
   void testGetClassName() {
+    final Integer zero = Integer.valueOf(0);
     Assertions.assertEquals("null", TestAssertionArrayUtils.getClassName(null));
-    Assertions.assertEquals("java.lang.Integer",
-        TestAssertionArrayUtils.getClassName(new java.lang.Integer(0)));
-    final Class<?> clazz = new java.lang.Integer(0).getClass();
+    Assertions.assertEquals("java.lang.Integer", TestAssertionArrayUtils.getClassName(zero));
+    final Class<?> clazz = zero.getClass();
     Assertions.assertEquals("java.lang.Integer", TestAssertionArrayUtils.getClassName(clazz));
     @SuppressWarnings("serial")
     final Object anonymous = new java.io.Serializable() {
