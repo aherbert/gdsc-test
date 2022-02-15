@@ -124,9 +124,6 @@ public final class DoubleEqualityUtils {
    * example {@code -0} and {@code 0} are equal using an error of {@code 0}. {@code Double.NaN} and
    * {@code Double.NaN} are not equal.
    *
-   * <p>Note: The relative error is a double since the relative error computation is performed in
-   * double precision.
-   *
    * @param value1 The first value.
    * @param value2 The second value.
    * @param relativeError The maximum relative error between <code>value1</code> and
@@ -204,7 +201,7 @@ public final class DoubleEqualityUtils {
    *
    * <pre>
    * {@code
-   * |value1-value2| <= max(|value1|, |value2|) * relativeError
+   * |expected-actual| <= |expected| * relativeError
    * }
    * </pre>
    *
@@ -219,9 +216,6 @@ public final class DoubleEqualityUtils {
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For
    * example {@code -0} and {@code 0} are equal using an error of {@code 0}. {@code Double.NaN} and
    * {@code Double.NaN} are not equal.
-   *
-   * <p>Note: The relative error is a double since the relative error computation is performed in
-   * double precision.
    *
    * @param expected The expected value.
    * @param actual The actual value.
