@@ -95,7 +95,7 @@ public final class ByteEqualityUtils {
    * @return true if equal within an absolute error
    */
   static boolean testAreWithin(byte value1, byte value2, int absoluteError) {
-    return NumberEqualityUtils.shortOrBytestestAreWithin(value1, value2, absoluteError);
+    return NumberEqualityUtils.shortOrBytesTestAreWithin(value1, value2, absoluteError);
   }
 
   /**
@@ -160,7 +160,7 @@ public final class ByteEqualityUtils {
    * @return true if close
    */
   static boolean testAreClose(byte value1, byte value2, double relativeError, int absoluteError) {
-    return NumberEqualityUtils.shortsOrBytestestAreClose(value1, value2, relativeError,
+    return NumberEqualityUtils.shortsOrBytesTestAreClose(value1, value2, relativeError,
         absoluteError);
   }
 

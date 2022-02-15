@@ -132,7 +132,7 @@ final class NumberEqualityUtils {
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
-  static boolean shortOrBytestestAreWithin(int value1, int value2, int absoluteError) {
+  static boolean shortOrBytesTestAreWithin(int value1, int value2, int absoluteError) {
     final int delta = (value1 > value2) ? value1 - value2 : value2 - value1;
     return (delta <= absoluteError);
   }
@@ -155,7 +155,7 @@ final class NumberEqualityUtils {
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if close
    */
-  static boolean shortsOrBytestestAreClose(int value1, int value2, double relativeError,
+  static boolean shortsOrBytesTestAreClose(int value1, int value2, double relativeError,
       int absoluteError) {
     final int delta = (value1 > value2) ? value1 - value2 : value2 - value1;
     if (delta <= absoluteError) {
