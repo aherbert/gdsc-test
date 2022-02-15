@@ -235,7 +235,7 @@ public final class TestHelper {
    * \</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
-   * equivalent to testing testing {@code actual\} falls within a relative range of
+   * equivalent to testing {@code actual\} falls within a relative range of
    * {@code expected\}.
    *
    * \<p>The arguments for the method {@link <Number><Number>BiPredicate#test(<number>, <number>)\}
@@ -276,7 +276,7 @@ public final class TestHelper {
    * \</pre>:
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
-   * equivalent to testing testing {@code actual\} falls within a relative and/or absolute range of
+   * equivalent to testing {@code actual\} falls within a relative and/or absolute range of
    * {@code expected\}.
    *
    * \<p>The arguments for the method {@link <Number><Number>BiPredicate#test(<number>, <number>)\}

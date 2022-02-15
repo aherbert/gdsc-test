@@ -9,7 +9,7 @@ import java.util.function.Supplier;
  * Tests an {@code actual} {@code <number>} value is close to an {@code expected} value using a
  * relative and/or an absolute error tolerance.
  *
- * \<p>The computed relative error is asymmetric and the test is equivalent to testing testing
+ * \<p>The computed relative error is asymmetric and the test is equivalent to testing
  * {@code actual} falls within a relative and/or absolute range of {@code expected}.
  *
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
@@ -38,7 +38,7 @@ public class <Number><Number>IsCloseTo
    * \</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected} and {@code actual}. The test is
-   * equivalent to testing testing {@code actual} falls within a relative and/or absolute range of
+   * equivalent to testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
    * @param relativeError The maximum error, relative to \<code>expected\</code>, between
