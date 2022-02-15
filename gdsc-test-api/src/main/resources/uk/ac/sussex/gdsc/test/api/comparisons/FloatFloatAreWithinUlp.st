@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * representable numbers between the two values, where {@code N} is the ULP error tolerance.
  *
  * @see <Float><Float>BiPredicate#test(<float>, <float>)
- * @see <Float>EqualityUtils#areWithinUlp(<float>, <float>, <errorType>)
+ * @see <Float>EqualityUtils#areWithinUlp(<float>, <float>, <ulpType>)
  * @see \<a href="https://en.wikipedia.org/wiki/Unit_in_the_last_place">Unit in the last place\</a>
  */
 public class <Float><Float>AreWithinUlp
@@ -22,7 +22,7 @@ public class <Float><Float>AreWithinUlp
   private static final long serialVersionUID = 1L;
 
   /** The ulp error. */
-  private final <errorType> ulpError;
+  private final <ulpType> ulpError;
 
   /**
    * Create a predicate to test two {@code <float>} values are equal within a ULP error.
@@ -41,7 +41,7 @@ public class <Float><Float>AreWithinUlp
    *                 considered equal.
    * @throws IllegalArgumentException If the ULP error is not positive
    */
-  public <Float><Float>AreWithinUlp(<errorType> ulpError) {
+  public <Float><Float>AreWithinUlp(<ulpType> ulpError) {
     <Float>EqualityUtils.validateUlpError(ulpError);
     this.ulpError = ulpError;
   }

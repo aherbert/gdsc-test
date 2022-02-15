@@ -114,12 +114,12 @@ public final class DoubleEqualityUtils {
       // Do this by removing the sign bit to get the ULP above positive zero.
       a &= Long.MAX_VALUE;
       b &= Long.MAX_VALUE;
+      // Add the values and compare unsigned. Do this by adding 2^63 to both values.
+      // See Long.compareUnsigned.
       // Note:
       // If either value is NaN, the exponent bits are set to (2047L << 52) and the
       // distance above 0.0 is always above an integer ULP error. So omit the test
       // for NaN.
-      // Add the values and compare unsigned. Do this by adding 2^63 to both values.
-      // See Long.compareUnsigned.
       return (a + b + Long.MIN_VALUE) <= (ulpError + Long.MIN_VALUE);
     }
     // Same sign, no overflow possible. Check for NaN last.

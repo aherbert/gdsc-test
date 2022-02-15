@@ -16,7 +16,7 @@ public class <Float><Float>AreWithinUlpTest {
   @Test
   public void testTest() {
     final <float>[] values = ApiTestUtils.get<Float>Values();
-    for (<errorType> ulpError : new <errorType>[] {<errorValue>}) {
+    for (<ulpType> ulpError : new <ulpType>[] {<ulpValue>}) {
       final <Float><Float>AreWithinUlp predicate = new <Float><Float>AreWithinUlp(ulpError);
       for (<float> value1 : values) {
         for (<float> value2 : values) {
@@ -34,7 +34,7 @@ public class <Float><Float>AreWithinUlpTest {
    */
   @Test
   public void testGet() {
-    final <errorType> ulpError = <ulpError>;
+    final <ulpType> ulpError = <ulpError>;
     final <Float><Float>AreWithinUlp predicate = new <Float><Float>AreWithinUlp(ulpError);
     for (String item : new String[] {"ulp", String.valueOf(ulpError)}) {
       Assertions.assertTrue(predicate.get().contains(item),

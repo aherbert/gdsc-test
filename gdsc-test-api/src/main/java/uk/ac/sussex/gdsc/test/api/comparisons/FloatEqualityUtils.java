@@ -69,7 +69,7 @@ public final class FloatEqualityUtils {
    * @return true if within the error
    * @throws IllegalArgumentException If the ULP error is not positive
    */
-  public static boolean areWithinUlp(float value1, float value2, int ulpError) {
+  public static boolean areWithinUlp(float value1, float value2, short ulpError) {
     validateUlpError(ulpError);
     return testAreWithinUlp(value1, value2, ulpError);
   }
@@ -80,7 +80,7 @@ public final class FloatEqualityUtils {
    * @param ulpError The maximum ULP error between two values
    * @throws IllegalArgumentException If the ULP error is not positive
    */
-  static void validateUlpError(int ulpError) {
+  static void validateUlpError(short ulpError) {
     if (ulpError < 0) {
       throw new IllegalArgumentException("ULP error must be positive but was: " + ulpError);
     }
@@ -95,7 +95,7 @@ public final class FloatEqualityUtils {
    *
    * <p>If either value is NaN this returns false.
    *
-   * <p>It is assumed the errors have been validated with {@link #validateUlpError(int)}.
+   * <p>It is assumed the errors have been validated with {@link #validateUlpError(short)}.
    *
    * @param value1 The first value.
    * @param value2 The second value.
@@ -103,7 +103,7 @@ public final class FloatEqualityUtils {
    *        which both numbers are still considered equal.
    * @return true if equal within a ULP error
    */
-  static boolean testAreWithinUlp(float value1, float value2, int ulpError) {
+  static boolean testAreWithinUlp(float value1, float value2, short ulpError) {
     // Note: Ignore NaNs only when equal within ulp error
 
     int a = Float.floatToRawIntBits(value1);
@@ -115,9 +115,12 @@ public final class FloatEqualityUtils {
       a &= Integer.MAX_VALUE;
       b &= Integer.MAX_VALUE;
       // Add the values and compare unsigned. Do this by adding 2^31 to both values.
-      // See Integer.compareUnsigned. Check for NaN last.
-      return (a + b + Integer.MIN_VALUE) <= (ulpError + Integer.MIN_VALUE)
-          && !Float.isNaN(value1 + value2);
+      // See Integer.compareUnsigned.
+      // Note:
+      // If either value is NaN, the exponent bits are set to (255 << 24) and the
+      // distance above 0.0 is always above a short ULP error. So omit the test
+      // for NaN.
+      return (a + b + Integer.MIN_VALUE) <= (ulpError + Integer.MIN_VALUE);
     }
     // Same sign, no overflow possible. Check for NaN last.
     return Math.abs(a - b) <= ulpError && !Float.isNaN(value1 + value2);

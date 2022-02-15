@@ -135,11 +135,11 @@ class EqualityUtilsTest {
     final float expected = 0;
     final float actual = 0;
     // OK
-    for (int ulpError : new int[] {0, 1, 2, Integer.MAX_VALUE}) {
+    for (short ulpError : new short[] {0, 1, 2, Short.MAX_VALUE}) {
       FloatEqualityUtils.areWithinUlp(expected, actual, ulpError);
     }
     // Bad
-    for (int ulpError : new int[] {-1, -2, Integer.MIN_VALUE}) {
+    for (short ulpError : new short[] {-1, -2, Short.MIN_VALUE}) {
       Assertions.assertThrows(IllegalArgumentException.class, () -> {
         FloatEqualityUtils.areWithinUlp(expected, actual, ulpError);
       });
@@ -149,7 +149,7 @@ class EqualityUtilsTest {
   @Test
   void testFloatsAreWithinUlpUsingNoError() {
     // Test exact
-    int ulpError = 0;
+    short ulpError = 0;
 
     // Use a range of values
     for (float value : new float[] {1e-10f, 1, (float) Math.PI, Float.MAX_VALUE, Float.MIN_VALUE}) {
@@ -168,7 +168,7 @@ class EqualityUtilsTest {
 
   @Test
   void testFloatsAreWithinUlpUsingUlpError() {
-    final int ulpError = 3;
+    final short ulpError = 3;
     final float expected = 2;
     float actual1 = expected;
     float actual2 = expected;
@@ -190,15 +190,17 @@ class EqualityUtilsTest {
 
   @Test
   void testFloatsAreWithinUlpInfiniteCases() {
-    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, 0, true);
-    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.MAX_VALUE, 0, false);
-    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.MAX_VALUE, 1, true);
-    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.POSITIVE_INFINITY, 0, true);
-    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, 0, false);
-    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, 1, true);
-    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.MAX_VALUE, Integer.MAX_VALUE, false);
-    assertFloatsAreWithin(-Float.MAX_VALUE, Float.MAX_VALUE, Integer.MAX_VALUE, false);
-    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Integer.MAX_VALUE, false);
+    final short zero = 0;
+    final short one = 1;
+    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, zero, true);
+    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.MAX_VALUE, zero, false);
+    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.MAX_VALUE, one, true);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.POSITIVE_INFINITY, zero, true);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, zero, false);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, one, true);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.MAX_VALUE, Short.MAX_VALUE, false);
+    assertFloatsAreWithin(-Float.MAX_VALUE, Float.MAX_VALUE, Short.MAX_VALUE, false);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Short.MAX_VALUE, false);
   }
 
   @Test
@@ -208,7 +210,7 @@ class EqualityUtilsTest {
     // intBitsToFloat may or may not preserve NaN bit patterns.
     final float signedNaN =
         Float.intBitsToFloat(Integer.MIN_VALUE | Float.floatToRawIntBits(Float.NaN));
-    for (int ulpError : new int[] {0, 1, Integer.MAX_VALUE}) {
+    for (short ulpError : new short[] {0, 1, Short.MAX_VALUE}) {
       for (final float value : new float[] {Float.NaN, Float.POSITIVE_INFINITY, Float.MAX_VALUE, 42,
           0}) {
         assertFloatsAreWithin(value, Float.NaN, ulpError, false);
@@ -221,24 +223,28 @@ class EqualityUtilsTest {
 
   @Test
   void testFloatsAreWithinUlpZeroCases() {
-    assertFloatsAreWithin(-0.0f, 0.0f, 0, true);
-    assertFloatsAreWithin(-0.0f, Float.MIN_VALUE, 0, false);
-    assertFloatsAreWithin(-0.0f, Float.MIN_VALUE, 1, true);
-    assertFloatsAreWithin(-0.0f, 2 * Float.MIN_VALUE, 1, false);
-    assertFloatsAreWithin(-0.0f, 2 * Float.MIN_VALUE, 2, true);
-    assertFloatsAreWithin(-Float.MIN_VALUE, 2 * Float.MIN_VALUE, 2, false);
-    assertFloatsAreWithin(-Float.MIN_VALUE, 2 * Float.MIN_VALUE, 3, true);
+    final short zero = 0;
+    final short one = 1;
+    final short two = 2;
+    final short three = 3;
+    assertFloatsAreWithin(-0.0f, 0.0f, zero, true);
+    assertFloatsAreWithin(-0.0f, Float.MIN_VALUE, zero, false);
+    assertFloatsAreWithin(-0.0f, Float.MIN_VALUE, one, true);
+    assertFloatsAreWithin(-0.0f, 2 * Float.MIN_VALUE, one, false);
+    assertFloatsAreWithin(-0.0f, 2 * Float.MIN_VALUE, two, true);
+    assertFloatsAreWithin(-Float.MIN_VALUE, 2 * Float.MIN_VALUE, two, false);
+    assertFloatsAreWithin(-Float.MIN_VALUE, 2 * Float.MIN_VALUE, three, true);
     // Reverse sign
-    assertFloatsAreWithin(0.0f, -0.0f, 0, true);
-    assertFloatsAreWithin(0.0f, -Float.MIN_VALUE, 0, false);
-    assertFloatsAreWithin(0.0f, -Float.MIN_VALUE, 1, true);
-    assertFloatsAreWithin(0.0f, -2 * Float.MIN_VALUE, 1, false);
-    assertFloatsAreWithin(0.0f, -2 * Float.MIN_VALUE, 2, true);
-    assertFloatsAreWithin(Float.MIN_VALUE, -2 * Float.MIN_VALUE, 2, false);
-    assertFloatsAreWithin(Float.MIN_VALUE, -2 * Float.MIN_VALUE, 3, true);
+    assertFloatsAreWithin(0.0f, -0.0f, zero, true);
+    assertFloatsAreWithin(0.0f, -Float.MIN_VALUE, zero, false);
+    assertFloatsAreWithin(0.0f, -Float.MIN_VALUE, one, true);
+    assertFloatsAreWithin(0.0f, -2 * Float.MIN_VALUE, one, false);
+    assertFloatsAreWithin(0.0f, -2 * Float.MIN_VALUE, two, true);
+    assertFloatsAreWithin(Float.MIN_VALUE, -2 * Float.MIN_VALUE, two, false);
+    assertFloatsAreWithin(Float.MIN_VALUE, -2 * Float.MIN_VALUE, three, true);
   }
 
-  private static void assertFloatsAreWithin(float v1, float v2, int ulps, boolean expected) {
+  private static void assertFloatsAreWithin(float v1, float v2, short ulps, boolean expected) {
     Assertions.assertEquals(expected, FloatEqualityUtils.areWithinUlp(v1, v2, ulps));
     Assertions.assertEquals(expected, FloatEqualityUtils.areWithinUlp(v2, v1, ulps));
   }

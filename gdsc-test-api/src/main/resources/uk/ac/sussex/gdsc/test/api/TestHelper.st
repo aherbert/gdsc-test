@@ -138,7 +138,7 @@ public final class TestHelper {
    */
   public static <Float><Float>BiPredicate <float>sCmp() {
     return <Float><Float>Cmp.INSTANCE;
-  \}}><floats,Floats:{float,Float |
+  \}}><floats,Floats,ulpTypes:{float,Float,ulpType |
 <\n>
   /**
    * Creates a predicate to test {@code <float>\} values are equal within a ULP error.
@@ -148,7 +148,7 @@ public final class TestHelper {
    * @return the predicate
    * @throws IllegalArgumentException If the ulp error is not positive
    */
-  public static <Float><Float>BiPredicate <float>sAreWithinUlp(int ulpError) {
+  public static <Float><Float>BiPredicate <float>sAreWithinUlp(<ulpType> ulpError) {
     return new <Float><Float>AreWithinUlp(ulpError);
   \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
 <\n>
