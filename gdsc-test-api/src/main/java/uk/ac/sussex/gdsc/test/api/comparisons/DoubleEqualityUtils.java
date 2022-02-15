@@ -28,6 +28,10 @@ package uk.ac.sussex.gdsc.test.api.comparisons;
  * Defines utilities for testing {@code double} equality.
  */
 public final class DoubleEqualityUtils {
+  /** Positive zero bits. */
+  private static final long POSITIVE_ZERO_BITS = Double.doubleToRawLongBits(+0.0);
+  /** Negative zero bits. */
+  private static final long NEGATIVE_ZERO_BITS = Double.doubleToRawLongBits(-0.0);
 
   /**
    * Do not allow public construction.
@@ -42,7 +46,7 @@ public final class DoubleEqualityUtils {
    * <p>Equality imposed by this method is consistent with {@link Double#equals(Object)} and,
    * {@link Double#compare(double, double)}.
    *
-   * <p>For example {@code -0} and {@code 0} are not equal. {@code Double.NaN} and
+   * <p>For example {@code -0.0} and {@code 0.0} are not equal. {@code Double.NaN} and
    * {@code Double.NaN} are equal.
    *
    * @param value1 The first value.
@@ -54,7 +58,82 @@ public final class DoubleEqualityUtils {
   }
 
   /**
+   * Tests that two doubles are equal within a ULP error.
+   *
+   * <p>This method counts the number of changes in the unit of least precision to adjust one value
+   * to the other value. The values are considered equal if {@code count <= ulpError}. The sign of
+   * zero is ignored, hence the method considers {@code -0.0} and {@code 0.0} to be equal.
+   *
+   * <p>If either value is NaN this returns false.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param ulpError The maximum ULP error between <code>value1</code> and <code>value2</code> for
+   *        which both numbers are still considered equal.
+   * @return true if within the error
+   * @throws IllegalArgumentException If the ULP error is not positive
+   */
+  public static boolean areWithinUlp(double value1, double value2, int ulpError) {
+    validateUlpError(ulpError);
+    return testAreWithinUlp(value1, value2, ulpError);
+  }
+
+  /**
+   * Check the error is positive.
+   *
+   * @param ulpError The maximum ULP error between two values
+   * @throws IllegalArgumentException If the ULP error is not positive
+   */
+  static void validateUlpError(int ulpError) {
+    if (ulpError < 0) {
+      throw new IllegalArgumentException("ULP error must be positive but was: " + ulpError);
+    }
+  }
+
+  /**
+   * Tests that two doubles are equal within a ULP error.
+   *
+   * <p>This method counts the number of changes in the unit of least precision to adjust one value
+   * to the other value. The values are considered equal if {@code count <= ulpError}. The sign of
+   * zero is ignored, hence the method considers {@code -0.0} and {@code 0.0} to be equal.
+   *
+   * <p>If either value is NaN this returns false.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateUlpError(int)}.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param ulpError The maximum ULP error between <code>value1</code> and <code>value2</code> for
+   *        which both numbers are still considered equal.
+   * @return true if equal within a ULP error
+   */
+  static boolean testAreWithinUlp(double value1, double value2, int ulpError) {
+    // Note: Ignore NaNs only when equal within ulp error
+
+    final long a = Double.doubleToRawLongBits(value1);
+    final long b = Double.doubleToRawLongBits(value2);
+    if ((a ^ b) < 0) {
+      // Opposite signs. Count changes to zero.
+      long d1;
+      long d2;
+      if (a < b) {
+        d1 = a - NEGATIVE_ZERO_BITS;
+        d2 = b - POSITIVE_ZERO_BITS;
+      } else {
+        d1 = a - POSITIVE_ZERO_BITS;
+        d2 = b - NEGATIVE_ZERO_BITS;
+      }
+      return d1 <= ulpError && d2 <= (ulpError - d1) && !Double.isNaN(value1 - value2);
+    }
+    // Same sign, no overflow possible.
+    return Math.abs(a - b) <= ulpError && !Double.isNaN(value1 - value2);
+  }
+
+  /**
    * Tests that two doubles are equal within an absolute error.
+   *
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * @param value1 The first value.
    * @param value2 The second value.
@@ -85,9 +164,10 @@ public final class DoubleEqualityUtils {
   /**
    * Tests that two doubles are equal within an absolute error.
    *
-   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(double)}.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
-   * <p>If either value is NaN this returns false.
+   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(double)}.
    *
    * @param value1 The first value.
    * @param value2 The second value.
@@ -251,11 +331,11 @@ public final class DoubleEqualityUtils {
    * Tests a double value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
-   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
-   * Infinite or not valid.
-   *
    * <p>It is assumed the errors have been validated with
    * {@link #validateIsCloseTo(double, double)}.
+   *
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * @param expected The expected value.
    * @param actual The actual value.

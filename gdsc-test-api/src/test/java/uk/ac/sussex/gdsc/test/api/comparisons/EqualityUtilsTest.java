@@ -128,6 +128,230 @@ class EqualityUtilsTest {
     }
   }
 
+  // float WithinUlp
+
+  @Test
+  void testFloatsAreWithinUlpThrows() {
+    final float expected = 0;
+    final float actual = 0;
+    // OK
+    for (int ulpError : new int[] {0, 1, 2, Integer.MAX_VALUE}) {
+      FloatEqualityUtils.areWithinUlp(expected, actual, ulpError);
+    }
+    // Bad
+    for (int ulpError : new int[] {-1, -2, Integer.MIN_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        FloatEqualityUtils.areWithinUlp(expected, actual, ulpError);
+      });
+    }
+  }
+
+  @Test
+  void testFloatsAreWithinUlpUsingNoError() {
+    // Test exact
+    int ulpError = 0;
+
+    // Use a range of values
+    for (float value : new float[] {1e-10f, 1, (float) Math.PI, Float.MAX_VALUE, Float.MIN_VALUE}) {
+      for (int i = 0; i < 2; i++) {
+        value *= -1;
+        Assertions.assertTrue(FloatEqualityUtils.areWithinUlp(value, value, ulpError));
+        assertFloatsAreWithin(value, Math.nextUp(value), ulpError, false);
+        assertFloatsAreWithin(value, Math.nextDown(value), ulpError, false);
+        assertFloatsAreWithin(-value, Math.nextUp(-value), ulpError, false);
+        assertFloatsAreWithin(-value, Math.nextDown(-value), ulpError, false);
+      }
+    }
+    // Special case for zero
+    assertFloatsAreWithin(-0.0f, 0.0f, ulpError, true);
+  }
+
+  @Test
+  void testFloatsAreWithinUlpUsingUlpError() {
+    final int ulpError = 3;
+    final float expected = 2;
+    float actual1 = expected;
+    float actual2 = expected;
+    for (int i = 0; i < ulpError; i++) {
+      actual1 = Math.nextDown(actual1);
+      actual2 = Math.nextUp(actual2);
+      assertFloatsAreWithin(expected, actual1, ulpError, true);
+      assertFloatsAreWithin(expected, actual2, ulpError, true);
+    }
+
+    // Gap too big
+    for (int i = 0; i < ulpError; i++) {
+      actual1 = Math.nextDown(actual1);
+      actual2 = Math.nextUp(actual2);
+      assertFloatsAreWithin(expected, actual1, ulpError, false);
+      assertFloatsAreWithin(expected, actual2, ulpError, false);
+    }
+  }
+
+  @Test
+  void testFloatsAreWithinUlpInfiniteCases() {
+    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.MAX_VALUE, 0, false);
+    assertFloatsAreWithin(Float.POSITIVE_INFINITY, Float.MAX_VALUE, 1, true);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, 0, false);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, 1, true);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.MAX_VALUE, Integer.MAX_VALUE, false);
+    assertFloatsAreWithin(-Float.MAX_VALUE, Float.MAX_VALUE, Integer.MAX_VALUE, false);
+  }
+
+  @Test
+  void testFloatsAreWithinUlpNaNCases() {
+    // Attempt to put a sign bit into a NaN to hit edge cases.
+    // This may not be supported depending on the JDK and the result of
+    // intBitsToFloat may or may not preserve NaN bit patterns.
+    final float signedNaN =
+        Float.intBitsToFloat(Integer.MIN_VALUE | Float.floatToRawIntBits(Float.NaN));
+    for (int ulpError : new int[] {0, 1, Integer.MAX_VALUE}) {
+      for (final float value : new float[] {Float.NaN, Float.POSITIVE_INFINITY, Float.MAX_VALUE, 42,
+          0}) {
+        assertFloatsAreWithin(value, Float.NaN, ulpError, false);
+        assertFloatsAreWithin(-value, Float.NaN, ulpError, false);
+        assertFloatsAreWithin(-value, signedNaN, ulpError, false);
+        assertFloatsAreWithin(value, signedNaN, ulpError, false);
+      }
+    }
+  }
+
+  @Test
+  void testFloatsAreWithinUlpZeroCases() {
+    assertFloatsAreWithin(-0.0f, 0.0f, 0, true);
+    assertFloatsAreWithin(-0.0f, Float.MIN_VALUE, 0, false);
+    assertFloatsAreWithin(-0.0f, Float.MIN_VALUE, 1, true);
+    assertFloatsAreWithin(-0.0f, 2 * Float.MIN_VALUE, 1, false);
+    assertFloatsAreWithin(-0.0f, 2 * Float.MIN_VALUE, 2, true);
+    assertFloatsAreWithin(-Float.MIN_VALUE, 2 * Float.MIN_VALUE, 2, false);
+    assertFloatsAreWithin(-Float.MIN_VALUE, 2 * Float.MIN_VALUE, 3, true);
+    // Reverse sign
+    assertFloatsAreWithin(0.0f, -0.0f, 0, true);
+    assertFloatsAreWithin(0.0f, -Float.MIN_VALUE, 0, false);
+    assertFloatsAreWithin(0.0f, -Float.MIN_VALUE, 1, true);
+    assertFloatsAreWithin(0.0f, -2 * Float.MIN_VALUE, 1, false);
+    assertFloatsAreWithin(0.0f, -2 * Float.MIN_VALUE, 2, true);
+    assertFloatsAreWithin(Float.MIN_VALUE, -2 * Float.MIN_VALUE, 2, false);
+    assertFloatsAreWithin(Float.MIN_VALUE, -2 * Float.MIN_VALUE, 3, true);
+  }
+
+  private static void assertFloatsAreWithin(float v1, float v2, int ulps, boolean expected) {
+    Assertions.assertEquals(expected, FloatEqualityUtils.areWithinUlp(v1, v2, ulps));
+    Assertions.assertEquals(expected, FloatEqualityUtils.areWithinUlp(v2, v1, ulps));
+  }
+
+  // double WithinUlp
+
+  @Test
+  void testDoublesAreWithinUlpThrows() {
+    final double expected = 0;
+    final double actual = 0;
+    // OK
+    for (int ulpError : new int[] {0, 1, 2, Integer.MAX_VALUE}) {
+      DoubleEqualityUtils.areWithinUlp(expected, actual, ulpError);
+    }
+    // Bad
+    for (int ulpError : new int[] {-1, -2, Integer.MIN_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        DoubleEqualityUtils.areWithinUlp(expected, actual, ulpError);
+      });
+    }
+  }
+
+  @Test
+  void testDoublesAreWithinUlpUsingNoError() {
+    // Test exact
+    int ulpError = 0;
+
+    // Use a range of values
+    for (double value : new double[] {1e-10, 1, Math.PI, Double.MAX_VALUE, Double.MIN_VALUE}) {
+      for (int i = 0; i < 2; i++) {
+        value *= -1;
+        Assertions.assertTrue(DoubleEqualityUtils.areWithinUlp(value, value, ulpError));
+        assertDoublesAreWithin(value, Math.nextUp(value), ulpError, false);
+        assertDoublesAreWithin(value, Math.nextDown(value), ulpError, false);
+        assertDoublesAreWithin(-value, Math.nextUp(-value), ulpError, false);
+        assertDoublesAreWithin(-value, Math.nextDown(-value), ulpError, false);
+      }
+    }
+    // Special case for zero
+    assertDoublesAreWithin(-0.0, 0.0, ulpError, true);
+  }
+
+  @Test
+  void testDoublesAreWithinUlpUsingUlpError() {
+    final int ulpError = 3;
+    final double expected = 2;
+    double actual1 = expected;
+    double actual2 = expected;
+    for (int i = 0; i < ulpError; i++) {
+      actual1 = Math.nextDown(actual1);
+      actual2 = Math.nextUp(actual2);
+      assertDoublesAreWithin(expected, actual1, ulpError, true);
+      assertDoublesAreWithin(expected, actual2, ulpError, true);
+    }
+
+    // Gap too big
+    for (int i = 0; i < ulpError; i++) {
+      actual1 = Math.nextDown(actual1);
+      actual2 = Math.nextUp(actual2);
+      assertDoublesAreWithin(expected, actual1, ulpError, false);
+      assertDoublesAreWithin(expected, actual2, ulpError, false);
+    }
+  }
+
+  @Test
+  void testDoublesAreWithinUlpInfiniteCases() {
+    assertDoublesAreWithin(Double.POSITIVE_INFINITY, Double.MAX_VALUE, 0, false);
+    assertDoublesAreWithin(Double.POSITIVE_INFINITY, Double.MAX_VALUE, 1, true);
+    assertDoublesAreWithin(-Double.POSITIVE_INFINITY, -Double.MAX_VALUE, 0, false);
+    assertDoublesAreWithin(-Double.POSITIVE_INFINITY, -Double.MAX_VALUE, 1, true);
+    assertDoublesAreWithin(-Double.POSITIVE_INFINITY, Double.MAX_VALUE, Integer.MAX_VALUE, false);
+    assertDoublesAreWithin(-Double.MAX_VALUE, Double.MAX_VALUE, Integer.MAX_VALUE, false);
+  }
+
+  @Test
+  void testDoublesAreWithinUlpNaNCases() {
+    // Attempt to put a sign bit into a NaN to hit edge cases.
+    // This may not be supported depending on the JDK and the result of
+    // intBitsToFloat may or may not preserve NaN bit patterns.
+    final double signedNaN =
+        Double.longBitsToDouble(Integer.MIN_VALUE | Double.doubleToRawLongBits(Double.NaN));
+    for (int ulpError : new int[] {0, 1, Integer.MAX_VALUE}) {
+      for (final double value : new double[] {Double.NaN, Double.POSITIVE_INFINITY,
+          Double.MAX_VALUE, 42, 0}) {
+        assertDoublesAreWithin(value, Double.NaN, ulpError, false);
+        assertDoublesAreWithin(-value, Double.NaN, ulpError, false);
+        assertDoublesAreWithin(-value, signedNaN, ulpError, false);
+        assertDoublesAreWithin(value, signedNaN, ulpError, false);
+      }
+    }
+  }
+
+  @Test
+  void testDoublesAreWithinUlpZeroCases() {
+    assertDoublesAreWithin(-0.0, 0.0, 0, true);
+    assertDoublesAreWithin(-0.0, Double.MIN_VALUE, 0, false);
+    assertDoublesAreWithin(-0.0, Double.MIN_VALUE, 1, true);
+    assertDoublesAreWithin(-0.0, 2 * Double.MIN_VALUE, 1, false);
+    assertDoublesAreWithin(-0.0, 2 * Double.MIN_VALUE, 2, true);
+    assertDoublesAreWithin(-Double.MIN_VALUE, 2 * Double.MIN_VALUE, 2, false);
+    assertDoublesAreWithin(-Double.MIN_VALUE, 2 * Double.MIN_VALUE, 3, true);
+    // Reverse sign
+    assertDoublesAreWithin(0.0, -0.0, 0, true);
+    assertDoublesAreWithin(0.0, -Double.MIN_VALUE, 0, false);
+    assertDoublesAreWithin(0.0, -Double.MIN_VALUE, 1, true);
+    assertDoublesAreWithin(0.0, -2 * Double.MIN_VALUE, 1, false);
+    assertDoublesAreWithin(0.0, -2 * Double.MIN_VALUE, 2, true);
+    assertDoublesAreWithin(Double.MIN_VALUE, -2 * Double.MIN_VALUE, 2, false);
+    assertDoublesAreWithin(Double.MIN_VALUE, -2 * Double.MIN_VALUE, 3, true);
+  }
+
+  private static void assertDoublesAreWithin(double v1, double v2, int ulps, boolean expected) {
+    Assertions.assertEquals(expected, DoubleEqualityUtils.areWithinUlp(v1, v2, ulps));
+    Assertions.assertEquals(expected, DoubleEqualityUtils.areWithinUlp(v2, v1, ulps));
+  }
+
   // float Within
 
   @Test

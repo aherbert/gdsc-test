@@ -28,6 +28,10 @@ package uk.ac.sussex.gdsc.test.api.comparisons;
  * Defines utilities for testing {@code float} equality.
  */
 public final class FloatEqualityUtils {
+  /** Positive zero bits. */
+  private static final int POSITIVE_ZERO_BITS = Float.floatToRawIntBits(+0.0f);
+  /** Negative zero bits. */
+  private static final int NEGATIVE_ZERO_BITS = Float.floatToRawIntBits(-0.0f);
 
   /**
    * Do not allow public construction.
@@ -42,8 +46,8 @@ public final class FloatEqualityUtils {
    * <p>Equality imposed by this method is consistent with {@link Float#equals(Object)} and,
    * {@link Float#compare(float, float)}.
    *
-   * <p>For example {@code -0} and {@code 0} are not equal. {@code Float.NaN} and {@code Float.NaN}
-   * are equal.
+   * <p>For example {@code -0.0f} and {@code 0.0f} are not equal. {@code Float.NaN} and
+   * {@code Float.NaN} are equal.
    *
    * @param value1 The first value.
    * @param value2 The second value.
@@ -54,7 +58,82 @@ public final class FloatEqualityUtils {
   }
 
   /**
+   * Tests that two floats are equal within a ULP error.
+   *
+   * <p>This method counts the number of changes in the unit of least precision to adjust one value
+   * to the other value. The values are considered equal if {@code count <= ulpError}. The sign of
+   * zero is ignored, hence the method considers {@code -0.0f} and {@code 0.0f} to be equal.
+   *
+   * <p>If either value is NaN this returns false.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param ulpError The maximum ULP error between <code>value1</code> and <code>value2</code> for
+   *        which both numbers are still considered equal.
+   * @return true if within the error
+   * @throws IllegalArgumentException If the ULP error is not positive
+   */
+  public static boolean areWithinUlp(float value1, float value2, int ulpError) {
+    validateUlpError(ulpError);
+    return testAreWithinUlp(value1, value2, ulpError);
+  }
+
+  /**
+   * Check the error is positive.
+   *
+   * @param ulpError The maximum ULP error between two values
+   * @throws IllegalArgumentException If the ULP error is not positive
+   */
+  static void validateUlpError(int ulpError) {
+    if (ulpError < 0) {
+      throw new IllegalArgumentException("ULP error must be positive but was: " + ulpError);
+    }
+  }
+
+  /**
+   * Tests that two floats are equal within a ULP error.
+   *
+   * <p>This method counts the number of changes in the unit of least precision to adjust one value
+   * to the other value. The values are considered equal if {@code count <= ulpError}. The sign of
+   * zero is ignored, hence the method considers {@code -0.0f} and {@code 0.0f} to be equal.
+   *
+   * <p>If either value is NaN this returns false.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateUlpError(int)}.
+   *
+   * @param value1 The first value.
+   * @param value2 The second value.
+   * @param ulpError The maximum ULP error between <code>value1</code> and <code>value2</code> for
+   *        which both numbers are still considered equal.
+   * @return true if equal within a ULP error
+   */
+  static boolean testAreWithinUlp(float value1, float value2, int ulpError) {
+    // Note: Ignore NaNs only when equal within ulp error
+
+    final int a = Float.floatToRawIntBits(value1);
+    final int b = Float.floatToRawIntBits(value2);
+    if ((a ^ b) < 0) {
+      // Opposite signs. Count changes to zero.
+      int d1;
+      int d2;
+      if (a < b) {
+        d1 = a - NEGATIVE_ZERO_BITS;
+        d2 = b - POSITIVE_ZERO_BITS;
+      } else {
+        d1 = a - POSITIVE_ZERO_BITS;
+        d2 = b - NEGATIVE_ZERO_BITS;
+      }
+      return d1 <= ulpError && d2 <= (ulpError - d1) && !Float.isNaN(value1 - value2);
+    }
+    // Same sign, no overflow possible
+    return Math.abs(a - b) <= ulpError && !Float.isNaN(value1 - value2);
+  }
+
+  /**
    * Tests that two floats are equal within an absolute error.
+   *
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
    * @param value1 The first value.
    * @param value2 The second value.
@@ -85,9 +164,10 @@ public final class FloatEqualityUtils {
   /**
    * Tests that two floats are equal within an absolute error.
    *
-   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(float)}.
+   * <p>If either value is NaN or Infinity this returns false as the distance between the values is
+   * Infinite or not valid.
    *
-   * <p>If either value is NaN this returns false.
+   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(float)}.
    *
    * @param value1 The first value.
    * @param value2 The second value.
@@ -257,10 +337,10 @@ public final class FloatEqualityUtils {
    * Tests a float value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
+   * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, float)}.
+   *
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
-   *
-   * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, float)}.
    *
    * @param expected The expected value.
    * @param actual The actual value.
