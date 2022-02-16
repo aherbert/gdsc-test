@@ -4,7 +4,23 @@
 Why all the primitives?
 =======================
 
-Short answer: To provide **bi-valued predicates for primitives** for use in testing.
+Short answer: To provide **bi-valued predicates for primitives** for use in testing, in particular
+testing relative equality of nested arrays::
+
+    @Test
+    void testNestedArrays() {
+        DoubleDoubleBiPredicate equal = TestHelper.doublesAreClose(1e-3);
+        double[][] expected = {
+            {1, 2, 30},
+            {4, 5, 6},
+        };
+        double[][] actual = {
+            {1, 2, 30.01},
+            {4.0001, 5, 6},
+        };
+        TestAssertions.assertArrayTest(expected, actual, equal);
+    }
+
 
 Java Predicates
 ---------------
@@ -64,7 +80,7 @@ testing. By providing predicates for all primitives it ensures:
 - The test can assume a range for the value and natural behaviour
 - ``boolean`` is supported
 
-An example is that differences for ``int`` require using ``long`` to prevent overflow and
+An example is that the maximum difference between ``int`` values requires using ``long`` to prevent overflow and
 ``long`` differences require using ``BigInteger``.
 
 The predicate library provides the following generic interfaces::
@@ -88,15 +104,15 @@ The predicates copy the functionality of Java's ``java.util.function.Predicate``
 default methods for ``negate`` and the logical combination using ``or`` and ``and``
 but also add ``xor``.
 However in contrast to the Java version these default interface methods return concrete classes
-and not lambda expressions. This is to support a feature required for testing where classes
+and not lambda expressions. This is to support a feature useful for testing where classes
 implementing the interface also implement ``Supplier<String>`` to provide a description.
 Thus logical combination predicates can provide a logical combination of the description of
 their composed predicates.
 
 Note that the library duplicates ``DoublePredicate``, ``IntPredicate`` and ``LongPredicate``.
 The GDSC Test versions do not extend their respective Java versions. This avoids a confusing API
-where predicates do not function identically due to argument types to default methods either
-accepting ``java.util.function`` predicates or GDSC Test predicates.
+where predicates do not function identically due to argument types to default methods
+(``or`` and ``and``) either accepting ``java.util.function`` predicates or GDSC Test predicates.
 
 Since these are functional interfaces it is easy to convert between the two using a method
 reference to the ``test`` method::

@@ -56,7 +56,9 @@ The predicate functional interfaces provide:
 - Negation to an opposite test
 
 Standard predicates are provided to test equality and closeness within an absolute or relative
-error (see `Relative Equality <relativeequality.html>`_).
+error (see `Relative Equality <relativeequality.html>`_). Floating-point numbers can be compared
+with a units in the last place (`ULP <https://en.wikipedia.org/wiki/Unit_in_the_last_place>`_)
+tolerance.
 
 Combined predicates exists to combine two single-valued predicates into a bi-valued predicate that
 tests each input value with a distinct predicate.
@@ -82,6 +84,24 @@ a test fails. For example a test for relative equality::
         // This will pass as 99 is within (0.01*100) of 100
         TestAssertions.assertTest(expected, actual, isCloseTo);
     }
+
+A test for equality with units in the last place (ULP)::
+
+    import uk.ac.sussex.gdsc.test.api.TestAssertions;
+    import uk.ac.sussex.gdsc.test.api.TestHelper;
+
+    @Test
+    public void testUlpEquality() {
+        int ulpError = 1;
+        double expected = 100;
+        double actual = Math.nextUp(expected);
+
+        DoubleDoubleBiPredicate areWithinUlp = TestHelper.doublesAreWithinUlp(ulpError);
+
+        TestAssertions.assertTest(expected, actual, areWithinUlp);
+        TestAssertions.assertTest(expected, Math.nextUp(actual), areWithinUlp.negate());
+    }
+
 
 All provided implementations of the ``TypePredicate`` or ``TypeTypeBiPredicate`` interface
 implement ``Supplier<String>`` to provide a text description of the predicate. This is used to
@@ -126,14 +146,17 @@ a message. For example using JUnit 5::
     int dimensions = 2;
     IndexSupplier message = new IndexSupplier(dimensions);
     message.setMessagePrefix("Index ");
-    message.setMessagePrefix(" is not zero");
+    // The message will supply "Index [i][j]" for the assertion, e.g.
+    message.set(0, 42);
+    Assertions.assertEquals("Index [42][3]", message.set(1, 3).get());
+
     int size = 5;
     int[][] matrix = new int[size][size];
     for (int i = 0; i < size; i++) {
         message.set(0, i);
         for (int j = 0; j < size; j++) {
-            // The message will supply "Index [i][j] is not zero" for the assertion
-            Assertions.assertTrue(matrix[i][j] == 0, message.set(1, j));
+            // The message will supply "Index [i][j]" for the assertion
+            Assertions.assertEquals(0, matrix[i][j], message.set(1, j));
         }
     }
 
@@ -155,8 +178,8 @@ The seed can be set using a Hex-encoded string property:
     -Dgdsc.test.seed=123456789abcdf
 
 If not set then the seed will be randomly generated using ``java.security.SecureRandom`` and logged
-using the configurable ``java.util.logging.Logger``. This allows the generated seed to be used
-in tests and failed tests can be repeated by using the same seed.
+using the configurable ``java.util.logging.Logger``. This allows failed tests to be repeated by
+re-using the generated seed that triggered a test failure.
 
 Extra support for seeded tests is provided for `JUnit 5 <https://junit.org/junit5/>`_ using a
 custom ``@SeededTest`` annotation::
@@ -201,7 +224,7 @@ for example::
 Modular Design
 ==============
 
-GDSC Test is separated into different packages so that only the desired
+GDSC Test is separated into different packages so that the desired
 functionality can be included as a project dependency.
 
 ================================= ===========

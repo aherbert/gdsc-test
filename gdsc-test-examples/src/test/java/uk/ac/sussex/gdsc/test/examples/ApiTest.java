@@ -131,6 +131,21 @@ class ApiTest {
   }
 
   /**
+   * Test the AreWithinUlp predicate with TestAssertions.
+   */
+  @Test
+  void testAreWithinUlpWithTestAssertions() {
+    int ulpError = 1;
+    double expected = 100;
+    double actual = Math.nextUp(expected);
+
+    DoubleDoubleBiPredicate areWithinUlp = TestHelper.doublesAreWithinUlp(ulpError);
+
+    TestAssertions.assertTest(expected, actual, areWithinUlp);
+    TestAssertions.assertTest(expected, Math.nextUp(actual), areWithinUlp.negate());
+  }
+
+  /**
    * Test matrix recursion.
    */
   @Test
@@ -138,6 +153,23 @@ class ApiTest {
     IntIntBiPredicate equal = TestHelper.intsEqual();
     Object[] expected = new int[4][5][6];
     Object[] actual = new int[4][5][6];
+    TestAssertions.assertArrayTest(expected, actual, equal);
+  }
+
+  /**
+   * Test nested arrays.
+   */
+  @Test
+  void testNestedArrays() {
+    DoubleDoubleBiPredicate equal = TestHelper.doublesAreClose(1e-3);
+    double[][] expected = {
+        {1, 2, 30},
+        {4, 5, 6},
+    };
+    double[][] actual = {
+        {1, 2, 30.01},
+        {4.0001, 5, 6},
+    };
     TestAssertions.assertArrayTest(expected, actual, equal);
   }
 

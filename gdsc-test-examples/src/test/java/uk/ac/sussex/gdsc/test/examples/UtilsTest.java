@@ -46,14 +46,17 @@ class UtilsTest {
     int dimensions = 2;
     IndexSupplier message = new IndexSupplier(dimensions);
     message.setMessagePrefix("Index ");
-    message.setMessagePrefix(" is not zero");
+    // The message will supply "Index [i][j]" for the assertion, e.g.
+    message.set(0, 42);
+    Assertions.assertEquals("Index [42][3]", message.set(1, 3).get());
+
     int size = 5;
     int[][] matrix = new int[size][size];
     for (int i = 0; i < size; i++) {
       message.set(0, i);
       for (int j = 0; j < size; j++) {
-        // The message will supply "Index [i][j] is not zero" for the assertion
-        Assertions.assertTrue(matrix[i][j] == 0, message.set(1, j));
+        // The message will supply "Index [i][j]" for the assertion
+        Assertions.assertEquals(0, matrix[i][j], message.set(1, j));
       }
     }
   }
