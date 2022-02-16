@@ -179,7 +179,7 @@ public class ByteScrambler {
    * @param seed the seed
    */
   private ByteScrambler(byte[] seed) {
-    final int blocks = (seed.length + BitScrambler128.BYTES - 1) / BitScrambler128.BYTES;
+    final int blocks = (int) (((long) seed.length + BitScrambler128.BYTES - 1) / BitScrambler128.BYTES);
 
     // Copy the seed
     outputLength = seed.length;
