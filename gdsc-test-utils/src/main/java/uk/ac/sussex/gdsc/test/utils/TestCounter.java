@@ -28,8 +28,8 @@ package uk.ac.sussex.gdsc.test.utils;
  * Runs test assertions and counts any thrown {@link AssertionError}s. If the limit is exceeded then
  * the last generated error is thrown.
  *
- * <p>Use this class to fail tests that accumulate too many errors during random repeats, e.g. &gt;5
- * out of 100.
+ * <p>Use this class to fail tests that accumulate too many errors during random repeats,
+ * e.g. {@code > 5} out of {@code 100}.
  *
  * <p>The class can be used with lambda functions, e.g.
  *
@@ -68,7 +68,7 @@ public class TestCounter {
     if (size <= 0) {
       throw new IllegalArgumentException("Size must be strictly positive: " + size);
     }
-    if (fraction < 0 || fraction > 1) {
+    if (!(fraction >= 0 && fraction <= 1)) {
       throw new IllegalArgumentException("Fraction must be in the range 0-1");
     }
     return (int) Math.floor(size * fraction);

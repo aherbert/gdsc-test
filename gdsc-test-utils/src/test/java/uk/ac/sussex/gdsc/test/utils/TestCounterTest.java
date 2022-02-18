@@ -45,6 +45,9 @@ class TestCounterTest {
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
       TestCounter.computeFailureLimit(size, 1.1);
     });
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      TestCounter.computeFailureLimit(size, Double.NaN);
+    });
   }
 
   @Test
