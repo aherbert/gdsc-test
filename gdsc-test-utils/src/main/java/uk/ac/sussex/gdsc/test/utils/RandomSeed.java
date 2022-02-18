@@ -22,18 +22,19 @@
  * #L%
  */
 
-package uk.ac.sussex.gdsc.test.junit5;
+package uk.ac.sussex.gdsc.test.utils;
 
 import java.io.Serializable;
 import java.util.Objects;
-import uk.ac.sussex.gdsc.test.utils.SeedUtils;
+import java.util.function.LongSupplier;
+import java.util.function.Supplier;
 
 /**
- * Provides random seeds for a repeated test.
+ * Provides random seeds for a test.
  *
  * <p>This class is immutable.
  */
-public final class RandomSeed implements Serializable {
+public final class RandomSeed implements Serializable, Supplier<byte[]>, LongSupplier {
   /**
    * The serial version ID.
    */
@@ -41,12 +42,6 @@ public final class RandomSeed implements Serializable {
 
   /** The seed. */
   private final byte[] seed;
-
-  /** The current repetition. */
-  private final int currentRepetition;
-
-  /** The total repetitions. */
-  private final int totalRepetitions;
 
   /** The hash code. */
   private int hash;
@@ -58,24 +53,19 @@ public final class RandomSeed implements Serializable {
    * Creates a new random seed.
    *
    * @param seed the seed
-   * @param currentRepetition the current repetition
-   * @param totalRepetitions the total repetitions
-   * @throws IllegalArgumentException If {@code totalRepitions < 1} or {@code currentRepetition < 1}
-   *         or {@code currentRepetition > totalRepetitions}
    */
-  public RandomSeed(byte[] seed, int currentRepetition, int totalRepetitions) {
+  private RandomSeed(byte[] seed) {
     this.seed = Objects.requireNonNull(seed, "The seed must not be null").clone();
-    if (totalRepetitions <= 0) {
-      throw new IllegalArgumentException("Total repetitions must be strictly positive");
-    }
-    if (currentRepetition <= 0) {
-      throw new IllegalArgumentException("Current repetition must be strictly positive");
-    }
-    if (currentRepetition > totalRepetitions) {
-      throw new IllegalArgumentException("Current repetition is above total repetitions");
-    }
-    this.currentRepetition = currentRepetition;
-    this.totalRepetitions = totalRepetitions;
+  }
+
+  /**
+   * Creates a new random seed.
+   *
+   * @param seed the seed
+   * @return the random seed
+   */
+  public static RandomSeed of(byte[] seed) {
+    return new RandomSeed(seed);
   }
 
   /**
@@ -83,7 +73,8 @@ public final class RandomSeed implements Serializable {
    *
    * @return the seed
    */
-  public byte[] getSeed() {
+  @Override
+  public byte[] get() {
     return seed.clone();
   }
 
@@ -94,31 +85,14 @@ public final class RandomSeed implements Serializable {
    *
    * @return the seed as a long
    */
-  public long getSeedAsLong() {
+  @Override
+  public long getAsLong() {
     long result = seedAsLong;
     if (result == 0) {
       result = SeedUtils.makeLong(seed);
       seedAsLong = result;
     }
     return result;
-  }
-
-  /**
-   * Gets the current repetition.
-   *
-   * @return the current repetition
-   */
-  public int getCurrentRepetition() {
-    return currentRepetition;
-  }
-
-  /**
-   * Gets the total repetitions.
-   *
-   * @return the total repetitions
-   */
-  public int getTotalRepetitions() {
-    return totalRepetitions;
   }
 
   /**
@@ -151,8 +125,7 @@ public final class RandomSeed implements Serializable {
    *
    * <p>Indicates whether some other object is "equal to" this one.
    *
-   * <p>Equality is computed using the components of the seed that contribute to randomness. The
-   * repetition counts are ignored.
+   * <p>Equality is computed using the seed bytes.
    *
    * @see java.lang.Object#equals(java.lang.Object)
    */
@@ -167,26 +140,22 @@ public final class RandomSeed implements Serializable {
       return false;
     }
     // field comparison
-    return equalBytes((RandomSeed) obj);
+    return equalBytes(seed, ((RandomSeed) obj).seed);
   }
 
   /**
    * Check equality using only the seed bytes.
-   *
-   * @param otherSeed the other seed
-   * @return true, if successful
-   */
-  public boolean equalBytes(RandomSeed otherSeed) {
-    return equalBytes(otherSeed.seed);
-  }
-
-  /**
-   * Check equality using only the seed bytes.
+   * 
+   * <p>Note: This random seed will not have a null array. If the argument bytes are null then this
+   * is equal only if the random seed bytes are zero length.
    *
    * @param bytes the bytes
    * @return true, if successful
    */
   public boolean equalBytes(byte[] bytes) {
+    if (bytes == null) {
+      return seed.length == 0;
+    }
     return equalBytes(seed, bytes);
   }
 

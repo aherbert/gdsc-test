@@ -31,6 +31,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import uk.ac.sussex.gdsc.test.utils.ByteScrambler;
+import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 /**
@@ -62,6 +63,9 @@ public class RandomSeedSource implements ArgumentsProvider {
     /** The random seed. */
     private final RandomSeed randomSeed;
 
+    /** The number of repeats. */
+    private final int repeats;
+
     /** The arguments. */
     private final Arguments[] arguments;
 
@@ -73,7 +77,8 @@ public class RandomSeedSource implements ArgumentsProvider {
      */
     SeedSequence(byte[] seed, int repeats) {
       // Store the seed
-      this.randomSeed = new RandomSeed(seed, 1, repeats);
+      this.randomSeed = RandomSeed.of(seed);
+      this.repeats = repeats;
 
       // Create the sequence of random seeds for an arguments source
       arguments = new Arguments[repeats];
@@ -87,7 +92,7 @@ public class RandomSeedSource implements ArgumentsProvider {
         // and never changed so the generation occurs only once.
         final ByteScrambler scrambler = ByteScrambler.getByteScrambler(seed);
         for (int i = 1; i < repeats; i++) {
-          arguments[i] = Arguments.of(new RandomSeed(scrambler.scramble(), i + 1, repeats));
+          arguments[i] = Arguments.of(RandomSeed.of(scrambler.scramble()));
         }
       }
     }
@@ -100,10 +105,7 @@ public class RandomSeedSource implements ArgumentsProvider {
      * @return true if a match
      */
     boolean matches(byte[] seed, int repeats) {
-      if (randomSeed.getTotalRepetitions() != repeats) {
-        return false;
-      }
-      return randomSeed.equalBytes(seed);
+      return this.repeats == repeats && randomSeed.equalBytes(seed);
     }
 
     /**

@@ -31,6 +31,7 @@ import java.lang.annotation.Target;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 
 /**
  * {@code @SeededTest} is used to signal that the annotated method is a

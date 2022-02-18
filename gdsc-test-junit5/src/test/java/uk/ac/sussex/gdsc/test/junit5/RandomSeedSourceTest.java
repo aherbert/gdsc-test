@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 import uk.ac.sussex.gdsc.test.junit5.RandomSeedSource.SeedSequence;
+import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 import uk.ac.sussex.gdsc.test.utils.SeedUtils;
 
 @SuppressWarnings("javadoc")
@@ -68,13 +69,10 @@ class RandomSeedSourceTest {
   }
 
   private static void checkArguments(Arguments[] arguments, byte[] seed, int repeats) {
+    Assertions.assertEquals(repeats, arguments.length, "Number of arguments");
+
     RandomSeed randomSeed = getRandomSeed(arguments, 0);
-    Assertions.assertArrayEquals(seed, randomSeed.getSeed(),
-        "Initial random seed bytes are different");
-    Assertions.assertEquals(1, randomSeed.getCurrentRepetition(),
-        "Initial random seed current repetition");
-    Assertions.assertEquals(repeats, randomSeed.getTotalRepetitions(),
-        "Initial random seed total repetitions");
+    Assertions.assertArrayEquals(seed, randomSeed.get(), "Initial random seed bytes are different");
 
     // Check the rest
     for (int i = 1; i < arguments.length; i++) {
@@ -82,10 +80,6 @@ class RandomSeedSourceTest {
       randomSeed = getRandomSeed(arguments, i);
       Assertions.assertFalse(randomSeed.equalBytes(seed),
           () -> repetition + " random seed bytes are the same");
-      Assertions.assertEquals(repetition, randomSeed.getCurrentRepetition(),
-          () -> repetition + " random seed current repetition");
-      Assertions.assertEquals(repeats, randomSeed.getTotalRepetitions(),
-          () -> repetition + " random seed total repetitions");
     }
   }
 

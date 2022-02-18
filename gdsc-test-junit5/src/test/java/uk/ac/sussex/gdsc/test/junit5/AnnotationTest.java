@@ -34,6 +34,7 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import uk.ac.sussex.gdsc.test.utils.HexUtils;
+import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
 @SuppressWarnings("javadoc")
@@ -78,17 +79,14 @@ class AnnotationTest {
   @ParameterizedTest
   @ArgumentsSource(RandomSeedSource.class)
   void canDynamicallyProvideSeedsFromRandomSeedSource(RandomSeed seed, TestInfo info) {
-    logger.log(TestLevel.TEST_INFO,
-        () -> String.format("%s seed = %d (%d/%d)", info.getTestMethod().get().getName(),
-            seed.getSeed(), seed.getCurrentRepetition(), seed.getTotalRepetitions()));
+    logger.log(TestLevel.TEST_INFO, () -> String.format("%s seed = %d",
+        info.getTestMethod().get().getName(), seed.getAsLong()));
   }
 
   @SeededTest
   void canAnnotateSeededTest(RandomSeed seed, TestInfo info) {
-    logger.log(TestLevel.TEST_INFO,
-        () -> String.format("%s seed = %s (%d/%d)", info.getTestMethod().get().getName(),
-            HexUtils.encodeHexString(seed.getSeed()), seed.getCurrentRepetition(),
-            seed.getTotalRepetitions()));
+    logger.log(TestLevel.TEST_INFO, () -> String.format("%s seed = %s",
+        info.getTestMethod().get().getName(), HexUtils.encodeHexString(seed.get())));
   }
 
   @Test
