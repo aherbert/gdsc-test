@@ -42,8 +42,8 @@ import org.apache.commons.rng.RandomProviderState;
  * <p>Memory footprint is 256 bits and the period is 2<sup>64</sup> 2<sup>128</sup>-1.
  *
  * @see <a href="https://prng.di.unimi.it/">xorshiro / xoroshiro generators</a>
- * @see <a href="https://dl.acm.org/doi/10.1145/3460772">Blackman & Vigna (2021) ACM Trans. Math.
- *      Soft 47, 1-32</a>
+ * @see <a href="https://dl.acm.org/doi/10.1145/3460772">Blackman &amp; Vigna (2021) ACM Trans.
+ *      Math. Soft 47, 1-32</a>
  */
 public final class L64X128MixRandom extends LongUniformRandomProvider {
   /** LCG multiplier. Note: (M % 8) = 5. */
