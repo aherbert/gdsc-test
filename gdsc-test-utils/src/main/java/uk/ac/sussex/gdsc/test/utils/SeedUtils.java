@@ -170,7 +170,7 @@ public final class SeedUtils {
       // Update the shift to set the position in the long to write the bits
       shift -= Byte.SIZE;
       // Convert the byte to a long then shift
-      values[count] |= ((bi & 0xFFL) << shift);
+      values[count] |= ((bi & 0xffL) << shift);
       if (shift == 0) {
         shift = Long.SIZE;
         count++;
@@ -202,7 +202,7 @@ public final class SeedUtils {
       // Update the shift to set the position in the int to write the bits
       shift -= Byte.SIZE;
       // Convert the byte to an int then shift
-      values[count] |= ((bi & 0xFF) << shift);
+      values[count] |= ((bi & 0xff) << shift);
       if (shift == 0) {
         shift = Integer.SIZE;
         count++;
