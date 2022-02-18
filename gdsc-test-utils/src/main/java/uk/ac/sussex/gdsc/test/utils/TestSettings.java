@@ -215,7 +215,6 @@ public final class TestSettings {
    *
    * <p>This is set using the system property {@value #PROPERTY_RANDOM_REPEATS}.
    *
-   *
    * <p>The returned value is {@code >= 1} even when the system property is not set.
    *
    * @return the repeats
@@ -228,7 +227,8 @@ public final class TestSettings {
    * Check if testing is allowed at the given complexity.
    *
    * @param complexity the test complexity
-   * @return true, if successful
+   * @return true if the test complexity is equal or below the system level threshold
+   * @see #getTestComplexity()
    */
   public static boolean allow(TestComplexity complexity) {
     return complexity.getValue() <= testComplexity;

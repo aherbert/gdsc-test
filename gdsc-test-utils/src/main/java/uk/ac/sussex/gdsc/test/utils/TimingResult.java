@@ -115,9 +115,9 @@ public class TimingResult {
   }
 
   /**
-   * Gets the min time.
+   * Gets the minimum time. Returns 0 if there are no times.
    *
-   * @return the min
+   * @return the minimum time
    */
   public long getMin() {
     if (times.length == 0) {
@@ -133,9 +133,9 @@ public class TimingResult {
   }
 
   /**
-   * Gets the mean time.
+   * Gets the mean time. Returns 0 if there are no times.
    *
-   * @return the mean
+   * @return the mean time.
    */
   public double getMean() {
     if (times.length == 0) {
