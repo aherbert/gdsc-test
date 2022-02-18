@@ -25,9 +25,12 @@
 package uk.ac.sussex.gdsc.test.rng;
 
 import java.util.SplittableRandom;
+import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.opentest4j.AssertionFailedError;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
@@ -36,9 +39,6 @@ class RngUtilsTest {
 
   /** The long seed. */
   private static final long LONG_SEED = 5656787697789L;
-
-  /** The long seed. */
-  private static final byte[] BYTE_SEED = {1, 2, 3, 4, 5, 6, 7, 8};
 
   @Test
   void canGetSameRandomWithSameSeed() {
@@ -70,22 +70,27 @@ class RngUtilsTest {
     Assertions.assertArrayEquals(e, o);
   }
 
-  @Test
-  void canGetSameRandomWithSameByteSeed() {
-    UniformRandomProvider rng = RngUtils.create(BYTE_SEED);
+  @ParameterizedTest
+  @ValueSource(ints = {16, 32})
+  void canGetSameRandomWithSameByteSeed(int n) {
+    final byte[] bytes = new byte[n];
+    ThreadLocalRandom.current().nextBytes(bytes);
+    UniformRandomProvider rng = RngUtils.create(bytes);
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    rng = RngUtils.create(BYTE_SEED);
+    rng = RngUtils.create(bytes);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertArrayEquals(e, o);
   }
 
-  @Test
-  void canGetDifferentRandomWithDifferentByteSeed() {
-    UniformRandomProvider rng = RngUtils.create(BYTE_SEED);
+  @ParameterizedTest
+  @ValueSource(ints = {16, 32})
+  void canGetDifferentRandomWithDifferentByteSeed(int n) {
+    final byte[] bytes = new byte[n];
+    ThreadLocalRandom.current().nextBytes(bytes);
+    UniformRandomProvider rng = RngUtils.create(bytes);
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    final byte[] seed = BYTE_SEED.clone();
-    seed[0]++;
-    rng = RngUtils.create(seed);
+    ThreadLocalRandom.current().nextBytes(bytes);
+    rng = RngUtils.create(bytes);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
