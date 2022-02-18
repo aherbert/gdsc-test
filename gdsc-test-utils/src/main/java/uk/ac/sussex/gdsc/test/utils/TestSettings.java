@@ -74,13 +74,13 @@ public final class TestSettings {
   private static final byte[] NO_SEED = null;
 
   /** The allowed test complexity. */
-  private static int testComplexity;
+  private static final int testComplexity;
 
   /** The fixed seed for uniform random generator. */
   private static byte[] seed;
 
   /** The lock object used to synchronise when seed is updated. */
-  private static Object seedLock = new Object();
+  private static final Object seedLock = new Object();
 
   /**
    * The number of repeats for tests using the seeded uniform random generator.
@@ -90,10 +90,9 @@ public final class TestSettings {
   static {
     testComplexity = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
     seed = getProperty(PROPERTY_RANDOM_SEED, NO_SEED);
-    repeats = getProperty(PROPERTY_RANDOM_REPEATS, 1);
     // Ensure repeated tests run once. They should be disabled using other
     // mechanisms.
-    repeats = Math.max(1, repeats);
+    repeats = Math.max(1, getProperty(PROPERTY_RANDOM_REPEATS, 1));
   }
 
   /**
