@@ -29,52 +29,36 @@ package uk.ac.sussex.gdsc.test.utils;
  */
 public enum TestComplexity {
   /** No complexity. */
-  NONE {
-    @Override
-    public int getValue() {
-      return 0;
-    }
-  },
+  NONE(0),
   /** Low complexity. */
-  LOW {
-    @Override
-    public int getValue() {
-      return 1;
-    }
-  },
+  LOW(1000),
   /** Medium complexity. */
-  MEDIUM {
-    @Override
-    public int getValue() {
-      return 2;
-    }
-  },
+  MEDIUM(2000),
   /** High complexity. */
-  HIGH {
-    @Override
-    public int getValue() {
-      return 3;
-    }
-  },
+  HIGH(3000),
   /** Very high complexity. */
-  VERY_HIGH {
-    @Override
-    public int getValue() {
-      return 4;
-    }
-  },
+  VERY_HIGH(4000),
   /** Maximum. Used to run any test that checks complexity settings */
-  MAXIMUM {
-    @Override
-    public int getValue() {
-      return Integer.MAX_VALUE;
-    }
-  };
+  MAXIMUM(Integer.MAX_VALUE);
+
+  /** The value. */
+  private final int value;
+
+  /**
+   * Create a new test complexity.
+   *
+   * @param value the value
+   */
+  TestComplexity(int value) {
+    this.value = value;
+  }
 
   /**
    * Gets the value.
    *
    * @return the value
    */
-  public abstract int getValue();
+  public int getValue() {
+    return value;
+  }
 }
