@@ -29,4 +29,6 @@
 
 <suppressions>
   <suppress checks="LineLength" files="uk.ac.sussex.gdsc.test.utils.TestLogUtilsTest.java" />
+  <suppress checks="MemberName" files="uk.ac.sussex.gdsc.test.rng.L64X128MixRandom.java" />
+  <suppress checks="OverloadMethodsDeclarationOrder" files="uk.ac.sussex.gdsc.test.rng.BaseLongUniformRandomProviderTest.java" />
 </suppressions>
