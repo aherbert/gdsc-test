@@ -33,6 +33,16 @@ import java.util.List;
 
 /**
  * Class to run timing tasks.
+ *
+ * <h2>Note</h2>
+ *
+ * <p>The service provides the functionality to run tasks, verify the results and report on the time
+ * for repeat execution. This timing service is not suitable for detailed performance analysis.
+ * Benchmarking should be done using suitable benchmarking and profiling tools, for example the
+ * Java Microbenchmark Harness (JMH).
+ *
+ * @see <a href="https://openjdk.java.net/projects/code-tools/jmh/">Java Microbenchmark Harness
+ *      (JMH)</a>
  */
 public class TimingService {
   /**
@@ -78,14 +88,14 @@ public class TimingService {
   }
 
   /**
-   * Instantiates a new timing service.
+   * Create a new timing service with the default number of runs.
    */
   public TimingService() {
     this(5);
   }
 
   /**
-   * Instantiates a new timing service.
+   * Create a new timing service with the specified number of runs.
    *
    * @param runs the number of timing runs
    */
@@ -125,7 +135,7 @@ public class TimingService {
    * Execute the timing task.
    *
    * @param task the task
-   * @param check Set to true to validate result with the check method
+   * @param check set to true to validate result with the check method
    * @return the timing result
    */
   public TimingResult execute(TimingTask task, boolean check) {
@@ -156,7 +166,7 @@ public class TimingService {
   }
 
   /**
-   * Report the timimg results to the output.
+   * Report the timing results to the output.
    *
    * @param out the output
    */
@@ -165,7 +175,7 @@ public class TimingService {
   }
 
   /**
-   * Report the last N timimg results to the output.
+   * Report the last N timing results to the output.
    *
    * @param out the output
    * @param lastN the last N
@@ -190,7 +200,7 @@ public class TimingService {
   }
 
   /**
-   * Report the timimg results to the output.
+   * Report the timing results to the output.
    *
    * @param out the output
    * @param results the results
@@ -298,17 +308,13 @@ public class TimingService {
     final String text = new String(baos.toByteArray(), StandardCharsets.UTF_8);
     // Remove the new line at the end
     final int i = text.lastIndexOf(NEW_LINE);
-    // assert i == text.length() - newLine.length() : "New-line not at the end of
-    // the string";
     return (i < 0) ? text : text.substring(0, i);
   }
 
   private static long min(long[] mins) {
     long min = mins[0];
     for (int i = 1; i < mins.length; i++) {
-      if (min > mins[i]) {
-        min = mins[i];
-      }
+      min = Math.min(min, mins[i]);
     }
     return min;
   }
@@ -316,9 +322,7 @@ public class TimingService {
   private static double min(double[] mins) {
     double min = mins[0];
     for (int i = 1; i < mins.length; i++) {
-      if (min > mins[i]) {
-        min = mins[i];
-      }
+      min = Math.min(min, mins[i]);
     }
     return min;
   }
