@@ -35,7 +35,7 @@ import org.apache.commons.rng.RandomProviderState;
  * <p>This generator uses a 64-bit LCG; a 128-bit xoroshiro128 XBG; and a mix function based on the
  * MurmurHash3 mixer with constants optimised by Doug Lea. This generator is implemented as
  * algorithm "L64X128MixRandom" in JDK 17 and the source is provided in the paper:
- * 
+ *
  * <blockquote>Blackman and Vigna (2021) Scrambled Linear Psuedorandom Number Generators. ACM
  * Transactions on Mathematical Software, vol 47, pp 1–32.</blockquote>
  *
@@ -98,7 +98,7 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
 
   /**
    * Create a new instance setting the state using the provided seed.
-   * 
+   *
    * <p>Note: This generator is invalid with all-zero bits in the state of the XBG generator. If
    * both seeds are zero the state is populated using the seeded LCG.
    *
