@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  * for tests run using <a href="https://maven.apache.org/">Maven</a>:
  *
  * <pre>
- * mvn test -Dgdsc.test.level=2 -Dgdsc.test.seed=12345 -Dgdsc.test.repeats=5
+ * mvn test -Dgdsc.test.level=2000 -Dgdsc.test.seed=12345 -Dgdsc.test.repeats=5
  * </pre>
  *
  * <p>Test classes can then be coded to respond to this run-time configuration.
