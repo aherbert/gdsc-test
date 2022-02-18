@@ -41,7 +41,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  */
 @SuppressWarnings("javadoc")
 class LongUniformRandomProviderTest {
-  private final static int N = 1000;
+  private static final int N = 1000;
 
   /**
    * Creates two RNGs. The first is the Commons RNG implementation.
