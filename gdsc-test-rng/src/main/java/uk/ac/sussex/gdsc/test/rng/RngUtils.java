@@ -36,6 +36,17 @@ import uk.ac.sussex.gdsc.test.utils.TestSettings;
  * {@link RestorableUniformRandomProvider}.
  */
 public final class RngUtils {
+  /**
+   * The golden ratio, phi, scaled to 64-bits and rounded to odd.
+   *
+   * <pre>
+   * phi = (sqrt(5) - 1) / 2) * 2^64
+   *     ~ 0.61803 * 2^64
+   *     = 11400714819323198485 (unsigned 64-bit integer)
+   * </pre>
+   */
+  static final long GOLDEN_RATIO = 0x9e3779b97f4a7c15L;
+
   /** Do not allow public construction. */
   private RngUtils() {}
 
@@ -98,6 +109,22 @@ public final class RngUtils {
     out ^= out >>> 28;
     out *= 0x9fb21c651e98df25L;
     return out ^ out >>> 28;
+  }
+
+  /**
+   * Perform variant 13 of David Stafford's 64-bit mix function.
+   *
+   * <p>This is ranked first of the top 14 Stafford mixers.
+   *
+   * @param x the input value
+   * @return the output value
+   * @see <a href="http://zimbry.blogspot.com/2011/09/better-bit-mixing-improving-on.html">Better
+   *      Bit Mixing - Improving on MurmurHash3&#39;s 64-bit Finalizer.</a>
+   */
+  static long stafford13(long x) {
+    x = (x ^ (x >>> 30)) * 0xbf58476d1ce4e5b9L;
+    x = (x ^ (x >>> 27)) * 0x94d049bb133111ebL;
+    return x ^ (x >>> 31);
   }
 
   /**
