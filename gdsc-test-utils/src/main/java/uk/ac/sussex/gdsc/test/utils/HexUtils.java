@@ -64,9 +64,7 @@ public final class HexUtils {
     }
   }
 
-  /**
-   * Do not allow public construction.
-   */
+  /** No instances. */
   private HexUtils() {}
 
   /**
@@ -88,8 +86,8 @@ public final class HexUtils {
     // Two hex characters per byte
     final char[] chars = new char[l * 2];
     for (int i = 0; i < l; i++) {
-      chars[2 * i] = HEX_DIGITS[(0xF0 & bytes[i]) >>> 4];
-      chars[2 * i + 1] = HEX_DIGITS[0x0F & bytes[i]];
+      chars[2 * i] = HEX_DIGITS[(bytes[i] & 0xf0) >>> 4];
+      chars[2 * i + 1] = HEX_DIGITS[bytes[i] & 0xf];
     }
     return chars;
   }
@@ -116,7 +114,7 @@ public final class HexUtils {
    * <p>If the sequence is an odd length then the final hex character is assumed to be '0'.
    *
    * @param string the string
-   * @return the byte[]
+   * @return the bytes
    */
   public static byte[] decodeHex(CharSequence string) {
     // Safe for null input
