@@ -118,7 +118,7 @@ public final class TestLogUtils {
     private Object[] args;
 
     /**
-     * Instantiates a new test log record.
+     * Creates a new test log record.
      *
      * @param level the level
      * @param message the message
@@ -129,7 +129,7 @@ public final class TestLogUtils {
     }
 
     /**
-     * Instantiates a new test log record.
+     * Creates a new test log record.
      *
      * @param level the level
      * @param format the format
@@ -142,7 +142,7 @@ public final class TestLogUtils {
     }
 
     /**
-     * Instantiates a new test log record.
+     * Creates a new test log record.
      *
      * @param level the level
      * @param thrown a throwable associated with the log event

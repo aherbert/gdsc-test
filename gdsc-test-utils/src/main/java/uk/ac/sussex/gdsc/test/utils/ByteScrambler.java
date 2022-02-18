@@ -164,7 +164,7 @@ public class ByteScrambler {
   }
 
   /**
-   * Instantiates a new byte scrambler.
+   * Creates a new byte scrambler.
    *
    * @param seed the seed
    * @return the byte scrambler
@@ -174,7 +174,7 @@ public class ByteScrambler {
   }
 
   /**
-   * Instantiates a new byte scrambler.
+   * Creates a new byte scrambler.
    *
    * @param seed the seed
    */

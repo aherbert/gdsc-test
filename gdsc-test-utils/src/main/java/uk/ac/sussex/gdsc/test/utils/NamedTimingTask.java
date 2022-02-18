@@ -32,7 +32,7 @@ import java.util.function.Supplier;
  * <p>This class is used for reporting and has no effect when passed to
  * {@link TimingService#execute(TimingTask)}.
  */
-public class NamedTimingTask extends BaseTimingTask {
+class NamedTimingTask extends BaseTimingTask {
 
   /** Constant for no supplier. */
   private static final Supplier<String> NO_SUPPLIER = null;
@@ -41,7 +41,7 @@ public class NamedTimingTask extends BaseTimingTask {
   private Supplier<String> nameSupplier;
 
   /**
-   * Instantiates a new named timing task.
+   * Creates a new named timing task.
    *
    * @param name the name
    */
@@ -50,7 +50,7 @@ public class NamedTimingTask extends BaseTimingTask {
   }
 
   /**
-   * Instantiates a new named timing task.
+   * Creates a new named timing task.
    *
    * @param name the name
    */
@@ -78,8 +78,6 @@ public class NamedTimingTask extends BaseTimingTask {
   /**
    * This should not be called as the task has no data.
    *
-   * @param index the index
-   * @return the data
    * @throws IllegalStateException If the method is called
    * @see uk.ac.sussex.gdsc.test.utils.TimingTask#getData(int)
    */
@@ -91,8 +89,6 @@ public class NamedTimingTask extends BaseTimingTask {
   /**
    * This should not be called as the task has no data.
    *
-   * @param data the data
-   * @return the data
    * @throws IllegalStateException If the method is called
    * @see uk.ac.sussex.gdsc.test.utils.TimingTask#run(java.lang.Object)
    */

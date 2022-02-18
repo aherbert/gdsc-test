@@ -33,7 +33,7 @@ public class InvalidModelException extends Exception {
   private static final long serialVersionUID = 1L; // NOPMD
 
   /**
-   * Instantiates a new illegal model exception.
+   * Creates a new illegal model exception.
    *
    * @param message the message
    */
@@ -42,7 +42,7 @@ public class InvalidModelException extends Exception {
   }
 
   /**
-   * Instantiates a new illegal model exception.
+   * Creates a new illegal model exception.
    *
    * @param message the message
    * @param cause the cause

@@ -121,7 +121,7 @@ public final class StringTemplateModel {
   private final List<Pair<String, List<Object>>> templateScope;
 
   /**
-   * Instantiates a new string template model.
+   * Creates a new string template model.
    *
    * @param packageName the package name
    * @param templateClassName the template class name

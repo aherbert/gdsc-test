@@ -38,7 +38,7 @@ public class TimingResult {
   private final long[] times;
 
   /**
-   * Instantiates a new timing result.
+   * Creates a new timing result.
    *
    * @param task the task
    * @param times the times
@@ -48,7 +48,7 @@ public class TimingResult {
   }
 
   /**
-   * Instantiates a new timing result.
+   * Creates a new timing result.
    *
    * <p>This is package level constructor that optionally takes over the input times array.
    *
@@ -62,7 +62,7 @@ public class TimingResult {
   }
 
   /**
-   * Instantiates a new timing result.
+   * Creates a new timing result.
    *
    * <p>The result will be created with a dummy implementation of the {@link TimingTask} interface.
    *
@@ -75,7 +75,7 @@ public class TimingResult {
   }
 
   /**
-   * Instantiates a new timing result.
+   * Creates a new timing result.
    *
    * <p>The result will be created with a dummy implementation of the {@link TimingTask} interface.
    *

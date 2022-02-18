@@ -137,7 +137,7 @@ public class CodeGenerator {
     final List<File> files = new ArrayList<>();
 
     /**
-     * Instantiates a new source directory walker.
+     * Creates a new source directory walker.
      */
     SourceDirectoryWalker() {
       super(HiddenFileFilter.VISIBLE, FileFilterUtils.suffixFileFilter(".st"), -1);

@@ -75,7 +75,7 @@ public class TestCounter {
   }
 
   /**
-   * Instantiates a new fail counter.
+   * Creates a new fail counter.
    *
    * @param failureLimit the failure limit that will generate an AssertionError to be thrown
    */
@@ -84,7 +84,7 @@ public class TestCounter {
   }
 
   /**
-   * Instantiates a new fail counter.
+   * Creates a new fail counter.
    *
    * @param failureLimit the failure limit that will generate an {@link AssertionError} to be thrown
    * @param size the number of different tests to be address by index in

@@ -55,7 +55,7 @@ public final class RandomSeed implements Serializable {
   private long seedAsLong;
 
   /**
-   * Instantiates a new random seed.
+   * Creates a new random seed.
    *
    * @param seed the seed
    * @param currentRepetition the current repetition

@@ -32,7 +32,7 @@ public abstract class BaseTimingTask implements TimingTask {
   protected String name;
 
   /**
-   * Instantiates a new base timing task.
+   * Creates a new base timing task.
    *
    * @param name the name
    */
