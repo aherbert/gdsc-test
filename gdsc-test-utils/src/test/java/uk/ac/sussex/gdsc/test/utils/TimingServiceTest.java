@@ -26,6 +26,7 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -49,11 +50,11 @@ class TimingServiceTest {
 
   @Test
   void canConstruct() {
-    TimingService ts = new TimingService();
+    TimingService<Object, Object> ts = new TimingService<>();
     Assertions.assertNotNull(ts);
     Assertions.assertFalse(0 == ts.getRuns());
     Assertions.assertEquals(0, ts.getSize());
-    ts = new TimingService(10);
+    ts = new TimingService<>(10);
     Assertions.assertNotNull(ts);
     Assertions.assertEquals(10, ts.getRuns());
     Assertions.assertEquals(0, ts.getSize());
@@ -316,13 +317,13 @@ class TimingServiceTest {
   void canReportUsingEmptyResults() {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try (PrintStream ps = new PrintStream(baos, true)) {
-      TimingService.report(ps, (TimingResult[]) null);
+      TimingService.report(ps, null);
       ps.close();
       Assertions.assertEquals("", new String(baos.toByteArray()));
     }
     baos = new ByteArrayOutputStream();
     try (PrintStream ps = new PrintStream(baos, true)) {
-      TimingService.report(ps, new TimingResult[0]);
+      TimingService.report(ps, new ArrayList<>());
       ps.close();
       Assertions.assertEquals("", new String(baos.toByteArray()));
     }

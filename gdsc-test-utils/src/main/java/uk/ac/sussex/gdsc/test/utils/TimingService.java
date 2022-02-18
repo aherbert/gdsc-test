@@ -38,13 +38,15 @@ import java.util.List;
  *
  * <p>The service provides the functionality to run tasks, verify the results and report on the time
  * for repeat execution. This timing service is not suitable for detailed performance analysis.
- * Benchmarking should be done using suitable benchmarking and profiling tools, for example the
- * Java Microbenchmark Harness (JMH).
+ * Benchmarking should be done using suitable benchmarking and profiling tools, for example the Java
+ * Microbenchmark Harness (JMH).
  *
+ * @param <D> type of the data
+ * @param <R> type of the result
  * @see <a href="https://openjdk.java.net/projects/code-tools/jmh/">Java Microbenchmark Harness
  *      (JMH)</a>
  */
-public class TimingService {
+public class TimingService<D, R> {
   /**
    * The new line used in the report. Equal to {@code System.getProperty("line.separator")}.
    */
@@ -54,7 +56,7 @@ public class TimingService {
   private int runs;
 
   /** The results. */
-  private final List<TimingResult> results = new ArrayList<>();
+  private final List<TimingResult<D, R>> results = new ArrayList<>();
 
   /**
    * Gets the number of timing results.
@@ -80,7 +82,7 @@ public class TimingService {
    * @param index The index
    * @return the timing result
    */
-  public TimingResult get(int index) {
+  public TimingResult<D, R> get(int index) {
     if (index < 0) {
       return results.get(results.size() + index);
     }
@@ -127,7 +129,7 @@ public class TimingService {
    * @param task the task
    * @return the timing result
    */
-  public TimingResult execute(TimingTask task) {
+  public TimingResult<D, R> execute(TimingTask<D, R> task) {
     return execute(task, false);
   }
 
@@ -138,7 +140,8 @@ public class TimingService {
    * @param check set to true to validate result with the check method
    * @return the timing result
    */
-  public TimingResult execute(TimingTask task, boolean check) {
+  @SuppressWarnings("unchecked")
+  public TimingResult<D, R> execute(TimingTask<D, R> task, boolean check) {
     final int size = task.getSize();
     final long[] times = new long[runs];
 
@@ -151,16 +154,16 @@ public class TimingService {
       }
       final long start = System.nanoTime();
       for (int i = 0; i < size; i++) {
-        result[i] = task.run(data[i]);
+        result[i] = task.run((D) data[i]);
       }
       times[run] = System.nanoTime() - start;
     }
     if (check) {
       for (int i = 0; i < size; i++) {
-        task.check(i, result[i]);
+        task.check(i, (R) result[i]);
       }
     }
-    final TimingResult r = new TimingResult(task, times, false);
+    final TimingResult<D, R> r = new TimingResult<>(task, times, false);
     results.add(r);
     return r;
   }
@@ -171,7 +174,7 @@ public class TimingService {
    * @param out the output
    */
   public void report(PrintStream out) {
-    report(out, results.toArray(new TimingResult[0]));
+    report(out, results);
   }
 
   /**
@@ -191,37 +194,37 @@ public class TimingService {
       report(out);
       return;
     }
-    final TimingResult[] r = new TimingResult[to - from];
-    int index = 0;
-    for (int j = from; j < to; j++) {
-      r[index++] = results.get(j);
-    }
-    report(out, r);
+    report(out, results.subList(from, to));
   }
 
   /**
    * Report the timing results to the output.
    *
+   * @param <D> type of the data
+   * @param <R> type of the result
    * @param out the output
    * @param results the results
    */
-  public static void report(PrintStream out, TimingResult... results) {
-    if (results == null || results.length == 0) {
+  public static <D, R> void report(PrintStream out, List<TimingResult<D, R>> results) {
+    if (results == null || results.isEmpty()) {
       return;
     }
 
-    final double[] avs = new double[results.length];
-    final long[] mins = new long[results.length];
+    final int size = results.size();
+    final double[] avs = new double[size];
+    final long[] mins = new long[size];
 
     int width = 0;
-    for (int i = 0; i < results.length; i++) {
-      final int l = results[i].getTask().getName().length();
+    int i = 0;
+    for (final TimingResult<?, ?> r : results) {
+      final int l = r.getTask().getName().length();
       if (width < l) {
         width = l;
       }
 
-      mins[i] = results[i].getMin();
-      avs[i] = results[i].getMean();
+      mins[i] = r.getMin();
+      avs[i] = r.getMean();
+      i++;
     }
     final String format =
         String.format("%%-%ds : %%15d (%%8.3f)%%c: %%15f (%%8.3f)%%c" + NEW_LINE, width);
@@ -230,13 +233,14 @@ public class TimingService {
     final long min = min(mins);
     final double av = min(avs);
 
-    for (int i = 0; i < results.length; i++) {
+    i = 0;
+    for (final TimingResult<?, ?> r : results) {
       // Results relative to the first result
       // Mark the fastest
       final char mc = (mins[i] == min) ? '*' : ' ';
       final char ac = (avs[i] == av) ? '*' : ' ';
-      out.printf(format, results[i].getTask().getName(), mins[i], (double) mins[i] / mins[0], mc,
-          avs[i], avs[i] / avs[0], ac);
+      out.printf(format, r.getTask().getName(), mins[i], (double) mins[i] / mins[0], mc, avs[i],
+          avs[i] / avs[0], ac);
     }
   }
 
@@ -362,12 +366,14 @@ public class TimingService {
   /**
    * Run the task and call the check method on the results.
    *
+   * @param <D> type of the data
+   * @param <R> type of the result
    * @param task the task
    */
-  public static void check(TimingTask task) {
+  public static <D, R> void check(TimingTask<D, R> task) {
     final int size = task.getSize();
     for (int i = 0; i < size; i++) {
-      final Object result = task.run(task.getData(i));
+      final R result = task.run(task.getData(i));
       task.check(i, result);
     }
   }

@@ -26,8 +26,11 @@ package uk.ac.sussex.gdsc.test.utils;
 
 /**
  * Defines a task to run.
+ *
+ * @param <D> type of the data
+ * @param <R> type of the result
  */
-public interface TimingTask {
+public interface TimingTask<D, R> {
   /**
    * Gets the number of tasks.
    *
@@ -44,7 +47,7 @@ public interface TimingTask {
    * @param index the task index
    * @return the data
    */
-  Object getData(int index);
+  D getData(int index);
 
   /**
    * Run the task.
@@ -52,7 +55,7 @@ public interface TimingTask {
    * @param data the task data
    * @return the result
    */
-  Object run(Object data);
+  R run(D data);
 
   /**
    * The task name.
@@ -67,5 +70,5 @@ public interface TimingTask {
    * @param index the task index
    * @param result the result
    */
-  void check(int index, Object result);
+  void check(int index, R result);
 }

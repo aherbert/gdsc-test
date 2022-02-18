@@ -28,11 +28,14 @@ import java.util.function.Supplier;
 
 /**
  * Class to store results of running a timing task.
+ *
+ * @param <D> type of the data
+ * @param <R> type of the result
  */
-public class TimingResult {
+public class TimingResult<D, R> {
 
   /** The task. */
-  private final TimingTask task;
+  private final TimingTask<D, R> task;
 
   /** The times. */
   private final long[] times;
@@ -43,7 +46,7 @@ public class TimingResult {
    * @param task the task
    * @param times the times
    */
-  public TimingResult(TimingTask task, long... times) {
+  public TimingResult(TimingTask<D, R> task, long... times) {
     this(task, times, true);
   }
 
@@ -56,7 +59,7 @@ public class TimingResult {
    * @param times the times
    * @param cloneArray the clone array
    */
-  TimingResult(TimingTask task, long[] times, boolean cloneArray) {
+  TimingResult(TimingTask<D, R> task, long[] times, boolean cloneArray) {
     this.task = task;
     this.times = (cloneArray) ? times.clone() : times;
   }
@@ -70,7 +73,7 @@ public class TimingResult {
    * @param times the times
    */
   public TimingResult(String name, long... times) {
-    this.task = new NamedTimingTask(name);
+    this.task = new NamedTimingTask<>(name);
     this.times = times.clone();
   }
 
@@ -83,7 +86,7 @@ public class TimingResult {
    * @param times the times
    */
   public TimingResult(Supplier<String> name, long... times) {
-    this.task = new NamedTimingTask(name);
+    this.task = new NamedTimingTask<>(name);
     this.times = times.clone();
   }
 
@@ -92,7 +95,7 @@ public class TimingResult {
    *
    * @return the task
    */
-  public TimingTask getTask() {
+  public TimingTask<D, R> getTask() {
     return task;
   }
 

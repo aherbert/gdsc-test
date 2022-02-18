@@ -33,7 +33,7 @@ class NamedTimingTaskTest {
   @Test
   void canConstruct() {
     final String name = "name";
-    final TimingTask task = new NamedTimingTask(name);
+    final TimingTask<Integer, Double> task = new NamedTimingTask<>(name);
     Assertions.assertEquals(name, task.getName());
     Assertions.assertEquals(0, task.getSize());
     Assertions.assertThrows(IllegalStateException.class, () -> {
@@ -43,7 +43,7 @@ class NamedTimingTaskTest {
       task.run(null);
     });
     final Supplier<String> supplier = () -> String.format("Name = %s", "this");
-    final TimingTask task2 = new NamedTimingTask(supplier);
+    final TimingTask<Integer, Double> task2 = new NamedTimingTask<>(supplier);
     Assertions.assertEquals(supplier.get(), task2.getName());
     Assertions.assertEquals(0, task2.getSize());
     Assertions.assertThrows(IllegalStateException.class, () -> {

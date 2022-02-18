@@ -32,19 +32,19 @@ class BaseTimingTaskTest {
   @Test
   void canConstruct() {
     final String name = "name";
-    final TimingTask task = new BaseTimingTask(name) {
+    final TimingTask<Integer, Double> task = new BaseTimingTask<Integer, Double>(name) {
       @Override
       public int getSize() {
         return 0;
       }
 
       @Override
-      public Object getData(int index) {
+      public Integer getData(int index) {
         return null;
       }
 
       @Override
-      public Object run(Object data) {
+      public Double run(Integer data) {
         return null;
       }
     };

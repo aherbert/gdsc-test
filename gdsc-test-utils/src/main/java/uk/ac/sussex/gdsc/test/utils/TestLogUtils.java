@@ -550,7 +550,7 @@ public final class TestLogUtils {
    * @param fast the fast task
    * @return the log record
    */
-  public static LogRecord getTimingRecord(TimingResult slow, TimingResult fast) {
+  public static LogRecord getTimingRecord(TimingResult<?, ?> slow, TimingResult<?, ?> fast) {
     return getTimingRecord(slow, fast, false);
   }
 
@@ -573,7 +573,8 @@ public final class TestLogUtils {
    * @param useMin Set to true to use the min execution time (the default is mean)
    * @return the record
    */
-  public static LogRecord getTimingRecord(TimingResult slow, TimingResult fast, boolean useMin) {
+  public static LogRecord getTimingRecord(TimingResult<?, ?> slow, TimingResult<?, ?> fast,
+      boolean useMin) {
     final String slowName = slow.getTask().getName();
     final double slowTime = (useMin) ? slow.getMin() : slow.getMean();
     final String fastName = fast.getTask().getName();
@@ -684,7 +685,7 @@ public final class TestLogUtils {
    * @param fast the fast task
    * @return the log record
    */
-  public static LogRecord getStageTimingRecord(TimingResult slow, TimingResult fast) {
+  public static LogRecord getStageTimingRecord(TimingResult<?, ?> slow, TimingResult<?, ?> fast) {
     return getStageTimingRecord(slow, fast, false);
   }
 
@@ -707,7 +708,7 @@ public final class TestLogUtils {
    * @param useMin Set to true to use the min execution time (the default is mean)
    * @return the record
    */
-  public static LogRecord getStageTimingRecord(TimingResult slow, TimingResult fast,
+  public static LogRecord getStageTimingRecord(TimingResult<?, ?> slow, TimingResult<?, ?> fast,
       boolean useMin) {
     final String slowName = slow.getTask().getName();
     final double slowTime = (useMin) ? slow.getMin() : slow.getMean();

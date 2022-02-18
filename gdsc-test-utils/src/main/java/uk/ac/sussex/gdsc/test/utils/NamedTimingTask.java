@@ -31,8 +31,11 @@ import java.util.function.Supplier;
  *
  * <p>This class is used for reporting and has no effect when passed to
  * {@link TimingService#execute(TimingTask)}.
+ *
+ * @param <D> type of the data
+ * @param <R> type of the result
  */
-class NamedTimingTask extends BaseTimingTask {
+class NamedTimingTask<D, R> extends BaseTimingTask<D, R> {
 
   /** Constant for no supplier. */
   private static final Supplier<String> NO_SUPPLIER = null;
@@ -82,7 +85,7 @@ class NamedTimingTask extends BaseTimingTask {
    * @see uk.ac.sussex.gdsc.test.utils.TimingTask#getData(int)
    */
   @Override
-  public Object getData(int index) {
+  public D getData(int index) {
     throw new IllegalStateException("This task has no data");
   }
 
@@ -93,7 +96,7 @@ class NamedTimingTask extends BaseTimingTask {
    * @see uk.ac.sussex.gdsc.test.utils.TimingTask#run(java.lang.Object)
    */
   @Override
-  public Object run(Object data) {
+  public R run(Object data) {
     throw new IllegalStateException("This task has no data");
   }
 }

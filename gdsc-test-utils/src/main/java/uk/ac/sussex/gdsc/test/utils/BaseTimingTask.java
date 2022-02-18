@@ -26,8 +26,11 @@ package uk.ac.sussex.gdsc.test.utils;
 
 /**
  * Defines a task to run.
+ *
+ * @param <D> type of the data
+ * @param <R> type of the result
  */
-public abstract class BaseTimingTask implements TimingTask {
+public abstract class BaseTimingTask<D, R> implements TimingTask<D, R> {
   /** The name of the task. */
   protected String name;
 
