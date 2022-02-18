@@ -37,16 +37,16 @@ import uk.ac.sussex.gdsc.test.utils.AssertionErrorCounter;
 class AssertionErrorCounterTest {
   @ParameterizedTest
   @CsvSource({
-    "1, 0, true",
-    "1, 1, false",
-    "1, 1, true",
-    "1, 2, false",
-    "1, 2, true",
-    "2, 0, true",
-    "2, 1, false",
-    "2, 1, true",
-    "2, 2, false",
-    "2, 2, true",
+      "1, 0, true",
+      "1, 1, false",
+      "1, 1, true",
+      "1, 2, false",
+      "1, 2, true",
+      "2, 0, true",
+      "2, 1, false",
+      "2, 1, true",
+      "2, 2, false",
+      "2, 2, true",
   })
   void runTestAssert(int size, int limit, boolean exceed) {
     final AssertionErrorCounter fc = new AssertionErrorCounter(limit, size);

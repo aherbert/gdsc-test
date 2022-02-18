@@ -30,7 +30,7 @@ package uk.ac.sussex.gdsc.test.utils;
  *
  * <p>Use this class to fail tests that accumulate too many errors during random repeats, e.g.
  * {@code > 5} out of {@code 100}.
- * 
+ *
  * <p>The counter can count failures for tests identified by index allowing suppression of failures
  * in multiple tests execute in parallel. If any single test index exceeds the limit then the
  * assertion error will be thrown.

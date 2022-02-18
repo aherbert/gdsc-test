@@ -145,7 +145,7 @@ public final class RandomSeed implements Serializable, Supplier<byte[]>, LongSup
 
   /**
    * Check equality using only the seed bytes.
-   * 
+   *
    * <p>Note: This random seed will not have a null array. If the argument bytes are null then this
    * is equal only if the random seed bytes are zero length.
    *
