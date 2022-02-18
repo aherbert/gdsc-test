@@ -25,14 +25,16 @@
 package uk.ac.sussex.gdsc.test.utils;
 
 /**
- * Simple interface for any test assertion.
+ * Simple interface for any block of code that may throw an {@link AssertionError}.
+ *
+ * <p>This interface is expected to operate by side-effects.
  */
 @FunctionalInterface
 public interface TestAssertion {
   /**
    * Run the test assertion.
    *
-   * @throws AssertionError If the test fails
+   * @throws AssertionError If the assertion fails
    */
   void test() throws AssertionError;
 }

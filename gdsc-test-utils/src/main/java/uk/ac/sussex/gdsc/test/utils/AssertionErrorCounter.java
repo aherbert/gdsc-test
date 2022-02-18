@@ -26,26 +26,35 @@ package uk.ac.sussex.gdsc.test.utils;
 
 /**
  * Runs test assertions and counts any thrown {@link AssertionError}s. If the limit is exceeded then
- * the last generated error is thrown.
+ * the last generated error is thrown. Any other runtime exception will not be suppressed.
  *
- * <p>Use this class to fail tests that accumulate too many errors during random repeats,
- * e.g. {@code > 5} out of {@code 100}.
+ * <p>Use this class to fail tests that accumulate too many errors during random repeats, e.g.
+ * {@code > 5} out of {@code 100}.
+ * 
+ * <p>The counter can count failures for tests identified by index allowing suppression of failures
+ * in multiple tests execute in parallel. If any single test index exceeds the limit then the
+ * assertion error will be thrown.
  *
  * <p>The class can be used with lambda functions, e.g.
  *
  * <pre>
- * TestCounter c = new TestCounter(3);
+ * TestCounter c = new TestCounter(2);
  * c.run(() -&gt; {
- *   Assert.fail();
+ *   assert 1 == 0;
  * });
  * c.run(() -&gt; {
- *   return false;
- * }, () -&gt; {
- *   Assert.fail();
+ *   assert 1 == 1;
+ * });
+ * c.run(() -&gt; {
+ *   assert 1 == 2;
+ * });
+ * // Throws an assertion error
+ * c.run(() -&gt; {
+ *   assert 1 == 3;
  * });
  * </pre>
  */
-public class TestCounter {
+public class AssertionErrorCounter {
   /** The failure limit. */
   private final int failureLimit;
 
@@ -75,22 +84,22 @@ public class TestCounter {
   }
 
   /**
-   * Creates a new fail counter.
+   * Creates a new counter.
    *
    * @param failureLimit the failure limit that will generate an AssertionError to be thrown
    */
-  public TestCounter(int failureLimit) {
+  public AssertionErrorCounter(int failureLimit) {
     this(failureLimit, 1);
   }
 
   /**
-   * Creates a new fail counter.
+   * Creates a new counter with a specified number of different tests to monitor.
    *
    * @param failureLimit the failure limit that will generate an {@link AssertionError} to be thrown
-   * @param size the number of different tests to be address by index in
+   * @param size the number of different tests to be addressed by index in
    *        {@link #run(int, TestAssertion)}
    */
-  public TestCounter(int failureLimit, int size) {
+  public AssertionErrorCounter(int failureLimit, int size) {
     this.failureLimit = failureLimit;
     if (size <= 0) {
       throw new IllegalArgumentException("Size must be strictly positive: " + size);
@@ -105,7 +114,7 @@ public class TestCounter {
    * @throws AssertionError the assertion error if the failure limit has been exceeded
    */
   public void run(TestAssertion test) {
-    run(0, test);
+    runTest(0, test);
   }
 
   /**
@@ -113,47 +122,29 @@ public class TestCounter {
    *
    * @param index the test index
    * @param test the test
-   * @throws IndexOutOfBoundsException If the test index is invalid
+   * @throws IllegalArgumentException If the test index is invalid
    * @throws AssertionError the assertion error if the failure limit has been exceeded
    */
   public void run(int index, TestAssertion test) {
+    if (index < 0 || index >= failures.length) {
+      throw new IllegalArgumentException("Invalid index : " + index + " / " + failures.length);
+    }
+    runTest(index, test);
+  }
+
+  /**
+   * Run the test.
+   *
+   * @param index the test index
+   * @param test the test
+   * @throws AssertionError the assertion error if the failure limit has been exceeded
+   */
+  private void runTest(int index, TestAssertion test) {
     try {
       test.test();
     } catch (final AssertionError ex) {
       if (failures[index] >= failureLimit) {
         throw ex;
-      }
-      failures[index]++;
-    }
-  }
-
-  /**
-   * Run the test (assuming test index 0).
-   *
-   * @param test the test
-   * @param error the error (this will be called if the failure limit has been exceeded)
-   * @throws AssertionError the assertion error if the failure limit has been exceeded
-   */
-  public void run(TestCase test, TestAssertion error) {
-    run(0, test, error);
-  }
-
-  /**
-   * Run the test.
-   *
-   * @param index the test index
-   * @param test the test
-   * @param error the error (this will be called if the failure limit has been exceeded)
-   * @throws IndexOutOfBoundsException If the test index is invalid
-   * @throws AssertionError the assertion error if the failure limit has been exceeded
-   */
-  public void run(int index, TestCase test, TestAssertion error) {
-    if (!test.test()) {
-      if (failures[index] >= failureLimit) {
-        // This should throw
-        error.test();
-        // In case it doesn't then throw a default error
-        throw new AssertionError();
       }
       failures[index]++;
     }
