@@ -41,7 +41,7 @@ class XoRoShiRo128PlusPlusTest {
     final long seed0 = ThreadLocalRandom.current().nextLong();
     final long seed1 = seed0 + 627384217384238449L;
     final UniformRandomProvider rng1 =
-        RandomSource.create(RandomSource.XO_RO_SHI_RO_128_PP, new long[] {seed0, seed1});
+        RandomSource.XO_RO_SHI_RO_128_PP.create(new long[] {seed0, seed1});
     final XoRoShiRo128PlusPlus rng2 = new XoRoShiRo128PlusPlus(seed0, seed1);
     for (int i = 0; i < 200; i++) {
       Assertions.assertEquals(rng1.nextLong(), rng2.nextLong());
