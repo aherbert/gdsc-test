@@ -40,11 +40,6 @@ public abstract class BaseTimingTask implements TimingTask {
     this.name = name;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see gdsc.core.test.TimingTask#getName()
-   */
   @Override
   public String getName() {
     return name;
@@ -55,8 +50,6 @@ public abstract class BaseTimingTask implements TimingTask {
    *
    * <p>This base class does nothing so that extending classes can override if necessary to validate
    * results.
-   *
-   * @see uk.ac.sussex.gdsc.test.utils.TimingTask#check(int, java.lang.Object)
    */
   @Override
   public void check(int index, Object result) {
