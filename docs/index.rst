@@ -161,14 +161,14 @@ in tests and failed tests can be repeated by using the same seed.
 Extra support for seeded tests is provided for `JUnit 5 <https://junit.org/junit5/>`_ using a
 custom ``@SeededTest`` annotation::
 
-    import uk.ac.sussex.gdsc.test.junit5.RandomSeed;
     import uk.ac.sussex.gdsc.test.junit5.SeededTest;
+    import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 
     // A repeated parameterised test with run-time configurable seed
     // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
-        long seed = seed.getSeedAsLong();
+        long seed = seed.getAsLong();
         // Do the test with a seeded random source ...
     }
 
@@ -183,9 +183,9 @@ An example implementation for test randomness is provided using
 `Apache Commons RNG <https://commons.apache.org/rng/>`_ client API ``UniformRandomProvider``,
 for example::
 
-    import uk.ac.sussex.gdsc.test.junit5.RandomSeed;
     import uk.ac.sussex.gdsc.test.junit5.SeededTest;
     import uk.ac.sussex.gdsc.test.rng.RngUtils;
+    import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 
     import org.apache.commons.rng.UniformRandomProvider;
 
@@ -193,7 +193,7 @@ for example::
     // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
-        UniformRandomProvider rng = RngUtils.create(seed.getSeed());
+        UniformRandomProvider rng = RngUtils.create(seed.get());
         // Do the test ...
     }
 
