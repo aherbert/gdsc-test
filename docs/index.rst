@@ -168,7 +168,7 @@ custom ``@SeededTest`` annotation::
     // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
-        long seed = seed.getAsLong();
+        long value = seed.getAsLong();
         // Do the test with a seeded random source ...
     }
 
