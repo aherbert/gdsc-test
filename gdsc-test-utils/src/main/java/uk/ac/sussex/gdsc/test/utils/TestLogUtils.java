@@ -256,8 +256,8 @@ public final class TestLogUtils {
    * @param count the count ({@code >=0})
    * @return the stack trace element
    */
-  private static StackTraceElement getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(
-      int count) {
+  private static StackTraceElement
+      getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(int count) {
     // Based on
     // https://stackoverflow.com/questions/17473148/dynamically-get-the-current-line-number/17473358
     int remaining = count;
@@ -387,9 +387,15 @@ public final class TestLogUtils {
   }
 
   /**
-   * Gets the record to log the test result. <ul> <li>If true the record will be created at the
-   * {@link TestLevel#TEST_INFO} level. <li>If false the record will be created at the
-   * {@link TestLevel#TEST_FAILURE} level. </ul>
+   * Gets the record to log the test result.
+   *
+   * <ul>
+   *
+   * <li>If true the record will be created at the {@link TestLevel#TEST_INFO} level.
+   *
+   * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
+   *
+   * </ul>
    *
    * <p>This is a helper method for tests that may not always pass so they are easily traced in the
    * log.
