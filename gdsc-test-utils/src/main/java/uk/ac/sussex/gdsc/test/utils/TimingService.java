@@ -241,6 +241,7 @@ public class TimingService<D, R> {
       final char ac = (avs[i] == av) ? '*' : ' ';
       out.printf(format, r.getTask().getName(), mins[i], (double) mins[i] / mins[0], mc, avs[i],
           avs[i] / avs[0], ac);
+      i++;
     }
   }
 
