@@ -55,7 +55,7 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
   private long s;
   /** State 0 of the XBG generator (x0 and x1 are never both zero). */
   private long x0;
-  /** State 2 of the XBG generator (x0 and x1 are never both zero). */
+  /** State 1 of the XBG generator (x0 and x1 are never both zero). */
   private long x1;
 
   /**
