@@ -200,7 +200,8 @@ class EqualityUtilsTest {
     assertFloatsAreWithin(-Float.POSITIVE_INFINITY, -Float.MAX_VALUE, one, true);
     assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.MAX_VALUE, Short.MAX_VALUE, false);
     assertFloatsAreWithin(-Float.MAX_VALUE, Float.MAX_VALUE, Short.MAX_VALUE, false);
-    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Short.MAX_VALUE, false);
+    assertFloatsAreWithin(-Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Short.MAX_VALUE,
+        false);
   }
 
   @Test
@@ -319,7 +320,8 @@ class EqualityUtilsTest {
     assertDoublesAreWithin(-Double.POSITIVE_INFINITY, -Double.MAX_VALUE, 1, true);
     assertDoublesAreWithin(-Double.POSITIVE_INFINITY, Double.MAX_VALUE, Integer.MAX_VALUE, false);
     assertDoublesAreWithin(-Double.MAX_VALUE, Double.MAX_VALUE, Integer.MAX_VALUE, false);
-    assertDoublesAreWithin(-Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Integer.MAX_VALUE, false);
+    assertDoublesAreWithin(-Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Integer.MAX_VALUE,
+        false);
   }
 
   @Test
