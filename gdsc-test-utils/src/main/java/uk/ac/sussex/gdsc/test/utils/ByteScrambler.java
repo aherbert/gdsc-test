@@ -31,12 +31,8 @@ import java.util.Arrays;
 /**
  * Class used for scrambling bytes.
  *
- * <p>This is done using an algorithm to scramble consecutive 128-bit blocks from a source seed.
- *
- * <p>Each block from the source seed is used to initialise a 128-bit counter. Each call to scramble
- * the block will update the counter and scramble it with a mix function. This is done using a
- * 128-bit version of a {@link java.util.SplittableRandom SplittableRandom}. The scrambled outputs
- * from each block are then concatenated to create the scrambled sequence.
+ * <p>This is done using an algorithm to scramble consecutive 128-bit blocks from a source seed. The
+ * scrambled outputs from each block are then concatenated to create the scrambled sequence.
  */
 public class ByteScrambler {
 
@@ -52,8 +48,14 @@ public class ByteScrambler {
   /**
    * Class to scramble up to 16 bytes. The input seed bytes are used to construct a 128-bit counter.
    * This is incremented using a golden ratio and the output is then mixed through the Stafford
-   * variant 13 64-bit mixer for upper and lower 64-bits. This is effectively a 128-bit
-   * SplittableRandom random number generator.
+   * variant 13 64-bit mixer for upper and lower 64-bits.
+   *
+   * <p>This is similar to a SplittableRandom random number generator which uses a 64-bit counter
+   * and the same mix function. The difference is the mix function does not cascade bits over the
+   * entire 128-bits of the Weyl sequence; the upper and lower do not influence each other during
+   * mixing. This could be updated with a different mix function, for example the 128-bit mix
+   * function from the <a href="https://en.wikipedia.org/wiki/Permuted_congruential_generator">PCG
+   * family</a> of RNGs (see XSL-RR-RR).
    */
   static class BitScrambler128 {
     /** The size of bytes output by the scrambler. */
@@ -179,7 +181,8 @@ public class ByteScrambler {
    * @param seed the seed
    */
   private ByteScrambler(byte[] seed) {
-    final int blocks = (int) (((long) seed.length + BitScrambler128.BYTES - 1) / BitScrambler128.BYTES);
+    final int blocks =
+        (int) (((long) seed.length + BitScrambler128.BYTES - 1) / BitScrambler128.BYTES);
 
     // Copy the seed
     outputLength = seed.length;
