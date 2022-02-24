@@ -31,7 +31,8 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 /**
- * Class used to log messages.
+ * Class used to generate {@link LogRecord}s to record test results.
+ * Records can be writtin using a {@link java.util.logging.Logger}.
  */
 public final class TestLogUtils {
   /**
@@ -539,57 +540,6 @@ public final class TestLogUtils {
   }
 
   /**
-   * Get the record to log the result of two timing tasks. A test is made to determine if the fast
-   * has a lower time than the slow.
-   *
-   * <ul>
-   *
-   * <li>If true the record will be created at the {@link TestLevel#TEST_INFO} level.
-   *
-   * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
-   *
-   * </ul>
-   *
-   * <p>This is a helper method for speed tests that may not always pass.
-   *
-   * @param slow the slow task
-   * @param fast the fast task
-   * @return the log record
-   */
-  public static LogRecord getTimingRecord(TimingResult<?, ?> slow, TimingResult<?, ?> fast) {
-    return getTimingRecord(slow, fast, false);
-  }
-
-  /**
-   * Get the record to log the result of two timing tasks. A test is made to determine if the fast
-   * has a lower time than the slow.
-   *
-   * <ul>
-   *
-   * <li>If true the record will be created at the {@link TestLevel#TEST_INFO} level.
-   *
-   * <li>If false the record will be created at the {@link TestLevel#TEST_FAILURE} level.
-   *
-   * </ul>
-   *
-   * <p>This is a helper method for speed tests that may not always pass.
-   *
-   * @param slow the slow task
-   * @param fast the fast task
-   * @param useMin Set to true to use the min execution time (the default is mean)
-   * @return the record
-   */
-  public static LogRecord getTimingRecord(TimingResult<?, ?> slow, TimingResult<?, ?> fast,
-      boolean useMin) {
-    final String slowName = slow.getTask().getName();
-    final double slowTime = (useMin) ? slow.getMin() : slow.getMean();
-    final String fastName = fast.getTask().getName();
-    final double fastTime = (useMin) ? fast.getMin() : fast.getMean();
-    return getTimingRecord(slowName, slowTime, fastName, fastTime, TestLevel.TEST_INFO,
-        TestLevel.TEST_FAILURE);
-  }
-
-  /**
    * Get the record to log the result of two tasks. A test is made to determine if the fast has a
    * lower time than the slow.
    *
@@ -601,7 +551,7 @@ public final class TestLogUtils {
    *
    * </ul>
    *
-   * <p>This is a helper method for speed tests that may not always pass.
+   * <p>This is a helper method for timing tests that may not always pass.
    *
    * @param slowName the slow task name
    * @param slowTime the slow task time
@@ -627,7 +577,7 @@ public final class TestLogUtils {
    *
    * </ul>
    *
-   * <p>This is a helper method for speed tests that may not always pass.
+   * <p>This is a helper method for timing tests that may not always pass.
    *
    * @param slowName the slow task name
    * @param slowTime the slow task time
@@ -656,7 +606,7 @@ public final class TestLogUtils {
    *
    * </ul>
    *
-   * <p>This is a helper method for speed tests that may not always pass.
+   * <p>This is a helper method for timing tests that may not always pass.
    *
    * @param slowName the slow task name
    * @param slowTime the slow task time
@@ -674,57 +624,6 @@ public final class TestLogUtils {
   }
 
   /**
-   * Get the record to log the intermediate stage result of two timing tasks. A test is made to
-   * determine if the fast has a lower time than the slow.
-   *
-   * <ul>
-   *
-   * <li>If true the record will be created at the {@link TestLevel#TEST_INFO} level.
-   *
-   * <li>If false the record will be created at the {@link TestLevel#TEST_WARNING} level.
-   *
-   * </ul>
-   *
-   * <p>This is a helper method for speed tests that may not always pass.
-   *
-   * @param slow the slow task
-   * @param fast the fast task
-   * @return the log record
-   */
-  public static LogRecord getStageTimingRecord(TimingResult<?, ?> slow, TimingResult<?, ?> fast) {
-    return getStageTimingRecord(slow, fast, false);
-  }
-
-  /**
-   * Get the record to log the intermediate stage result of two timing tasks. A test is made to
-   * determine if the fast has a lower time than the slow.
-   *
-   * <ul>
-   *
-   * <li>If true the record will be created at the {@link TestLevel#TEST_INFO} level.
-   *
-   * <li>If false the record will be created at the {@link TestLevel#TEST_WARNING} level.
-   *
-   * </ul>
-   *
-   * <p>This is a helper method for speed tests that may not always pass.
-   *
-   * @param slow the slow task
-   * @param fast the fast task
-   * @param useMin Set to true to use the min execution time (the default is mean)
-   * @return the record
-   */
-  public static LogRecord getStageTimingRecord(TimingResult<?, ?> slow, TimingResult<?, ?> fast,
-      boolean useMin) {
-    final String slowName = slow.getTask().getName();
-    final double slowTime = (useMin) ? slow.getMin() : slow.getMean();
-    final String fastName = fast.getTask().getName();
-    final double fastTime = (useMin) ? fast.getMin() : fast.getMean();
-    return getTimingRecord(slowName, slowTime, fastName, fastTime, TestLevel.TEST_INFO,
-        TestLevel.TEST_WARNING);
-  }
-
-  /**
    * Get the record to log the result of two tasks. A test is made to determine if the fast has a
    * lower time than the slow.
    *
@@ -736,7 +635,7 @@ public final class TestLogUtils {
    *
    * </ul>
    *
-   * <p>This is a helper method for speed tests that may not always pass.
+   * <p>This is a helper method for timing tests that may not always pass.
    *
    * @param slowName the slow task name
    * @param slowTime the slow task time

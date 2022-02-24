@@ -194,17 +194,6 @@ class TestLogUtilsTest {
     logger.log(check(Level.FINER, TestLogUtils.getTimingRecord("slow", 123., "fast", 21., Level.FINER, Level.WARNING), "slow", "fast", "123.", "21."));
     logger.log(check(Level.WARNING, TestLogUtils.getTimingRecord("slow", 7., "fast", 21., Level.FINER, Level.WARNING), "slow", "fast", "7.", "21."));
 
-    // Using the TimingResult
-    final TimingResult fast = new TimingResult("Fast", new long[] { 100 });
-    final TimingResult slow = new TimingResult("Slow", new long[] { 1000 });
-    final TimingResult slowFast = new TimingResult("SlowFast", new long[] { 100, 10000 });
-
-    logger.log(check(TestLevel.TEST_INFO, TestLogUtils.getTimingRecord(slow, fast)));
-    logger.log(check(TestLevel.TEST_INFO, TestLogUtils.getTimingRecord(slow, slowFast, true)));
-    logger.log(check(TestLevel.TEST_FAILURE, TestLogUtils.getTimingRecord(slow, slowFast, false)));
-    logger.log(check(TestLevel.TEST_INFO, TestLogUtils.getStageTimingRecord(slow, fast)));
-    logger.log(check(TestLevel.TEST_INFO, TestLogUtils.getStageTimingRecord(slow, slowFast, true)));
-    logger.log(check(TestLevel.TEST_WARNING, TestLogUtils.getStageTimingRecord(slow, slowFast, false)));
     //@formatter:on
   }
 
