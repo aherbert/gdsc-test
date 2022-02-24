@@ -64,7 +64,7 @@ class IntArrayFormatSupplierTest {
 
     final IntArrayFormatSupplier s = new IntArrayFormatSupplier(format, size);
     Assertions.assertEquals(String.format(format, 0), s.get());
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     for (int i = 0; i < 5; i++) {
       final int next = rng.nextInt(10);
       s.set(0, next);
@@ -83,7 +83,7 @@ class IntArrayFormatSupplierTest {
     final int size = 2;
     final IntArrayFormatSupplier s = new IntArrayFormatSupplier(format, size);
     Assertions.assertEquals(String.format(format, 0, 0), s.get());
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     for (int i = 0; i < 3; i++) {
       final int nexti = rng.nextInt(10);
       s.set(0, nexti);

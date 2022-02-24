@@ -53,7 +53,7 @@ class HexUtilsTest {
 
   @Test
   void testEncode() {
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     final boolean toLowerCase = true;
     for (int i = 1; i < 20; i++) {
       final byte[] bytes = new byte[i];
@@ -68,7 +68,7 @@ class HexUtilsTest {
 
   @Test
   void testDecode() {
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.MWC_256);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     final boolean toLowerCase = true;
     // Output Hex characters.
     final char[] hexDigits =

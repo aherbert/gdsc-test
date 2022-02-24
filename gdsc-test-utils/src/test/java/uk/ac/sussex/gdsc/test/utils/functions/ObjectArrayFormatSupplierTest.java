@@ -69,7 +69,7 @@ class ObjectArrayFormatSupplierTest {
 
     final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, size);
     Assertions.assertEquals(String.format(format, nullString), s.get());
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
 
     for (int i = 0; i < 5; i++) {
       final String next = next(rng);
@@ -89,7 +89,7 @@ class ObjectArrayFormatSupplierTest {
     final int size = 2;
     final ObjectArrayFormatSupplier s = new ObjectArrayFormatSupplier(format, size);
     Assertions.assertEquals(String.format(format, nullString, nullString), s.get());
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     for (int i = 0; i < 3; i++) {
       final String nexti = next(rng);
       s.set(0, nexti);

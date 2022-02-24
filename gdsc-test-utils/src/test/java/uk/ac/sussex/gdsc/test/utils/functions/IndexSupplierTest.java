@@ -90,7 +90,7 @@ class IndexSupplierTest {
   void test1DMessage() {
     final IndexSupplier is = new IndexSupplier(1);
     Assertions.assertEquals("[0]", is.get());
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     for (int i = 0; i < 5; i++) {
       final int next = rng.nextInt(10);
       is.set(0, next);
@@ -125,7 +125,7 @@ class IndexSupplierTest {
   void test2DMessage() {
     final IndexSupplier is = new IndexSupplier(2);
     Assertions.assertEquals("[0][0]", is.get());
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     for (int i = 0; i < 3; i++) {
       final int nexti = rng.nextInt(10);
       is.set(0, nexti);

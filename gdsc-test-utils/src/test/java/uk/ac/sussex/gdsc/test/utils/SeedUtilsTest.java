@@ -78,7 +78,7 @@ class SeedUtilsTest {
 
   @Test
   void testMakeByteArrayFromLong() throws IOException {
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     final int size = 5;
     final long[] values = new long[size];
     for (int i = 0; i < size; i++) {
@@ -101,7 +101,7 @@ class SeedUtilsTest {
 
   @Test
   void testMakeByteArrayFromInt() throws IOException {
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     final int size = 5;
     final int[] values = new int[size];
     for (int i = 0; i < size; i++) {
@@ -127,7 +127,7 @@ class SeedUtilsTest {
     // This test assumes that the method to make the byte array works.
     // It is tested verses the DataOutputStream in a separate test.
 
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     final int size = 5;
     final long[] values = new long[size];
     for (int i = 0; i < size; i++) {
@@ -161,7 +161,7 @@ class SeedUtilsTest {
     // This test assumes that the method to make the byte array works.
     // It is tested verses the DataOutputStream in a separate test.
 
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     final int size = 5;
     final int[] values = new int[size];
     for (int i = 0; i < size; i++) {

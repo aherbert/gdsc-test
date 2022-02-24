@@ -109,7 +109,7 @@ class RandomSeedTest {
   @Test
   void testgetAsLong() {
     // The long value should be the same a long converted to a byte array
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     long value = rng.nextLong();
     for (int i = 0; i < 5; i++) {
       RandomSeed rs = RandomSeed.of(SeedUtils.makeByteArray(value));

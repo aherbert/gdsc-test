@@ -42,7 +42,7 @@ class ByteScramblerTest {
 
   @Test
   void testScramble() {
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
 
     // Get a seed size that is not the block size of the 128-bit scrambler
     final byte[] bytes = new byte[17];
@@ -89,7 +89,7 @@ class ByteScramblerTest {
   @Test
   void testBitScramblerIsUniform() {
     // Fixed seed for test stability
-    final UniformRandomProvider rng = RandomSource.create(RandomSource.SPLIT_MIX_64, 68689L);
+    final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create(68689L);
     // Scramble some random bytes
     final byte[] bytes = new byte[128];
     rng.nextBytes(bytes);
