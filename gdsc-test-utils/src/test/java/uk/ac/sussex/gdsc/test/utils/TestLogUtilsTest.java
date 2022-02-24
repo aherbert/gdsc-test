@@ -55,53 +55,6 @@ class TestLogUtilsTest {
   }
 
   @Test
-  void canGetStaceTraceElement() {
-    final StackTraceElement[] e = new Throwable().getStackTrace();
-    final StackTraceElement o = TestLogUtils.getStackTraceElement();
-    final StackTraceElement o2 = TestLogUtils.getStackTraceElement(1);
-    Assertions.assertNotNull(e);
-    Assertions.assertNotNull(o);
-    Assertions.assertEquals(e[0].getClassName(), o.getClassName());
-    Assertions.assertEquals(e[0].getMethodName(), o.getMethodName());
-    Assertions.assertEquals(e[0].getLineNumber() + 1, o.getLineNumber());
-    logger.log(TestLevel.TEST_INFO,
-        () -> String.format("%s:%s:%d", o.getClassName(), o.getMethodName(), o.getLineNumber()));
-
-    Assertions.assertNotNull(o2);
-    Assertions.assertEquals(e[1].getClassName(), o2.getClassName());
-    Assertions.assertEquals(e[1].getMethodName(), o2.getMethodName());
-    Assertions.assertEquals(e[1].getLineNumber(), o2.getLineNumber());
-  }
-
-  @Test
-  void getStaceTraceElementIsNullWhenNotLocated() {
-    final int size = new Throwable().getStackTrace().length;
-    final StackTraceElement o = TestLogUtils.getStackTraceElement(size);
-    Assertions.assertNull(o);
-  }
-
-  @Test
-  void getStaceTraceElementThrowsWhenCountIsNegative() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      TestLogUtils.getStackTraceElement(-1);
-    });
-  }
-
-  @Test
-  void canGetCodePoint() {
-    final StackTraceElement e = new Throwable().getStackTrace()[0];
-    final String codePoint = TestLogUtils.getCodePoint();
-    Assertions.assertNotNull(e);
-    Assertions.assertNotNull(codePoint);
-    final String[] o = codePoint.split(":");
-    Assertions.assertEquals(e.getClassName(), o[0]);
-    Assertions.assertEquals(e.getMethodName(), o[1]);
-    Assertions.assertEquals(e.getLineNumber() + 1, Integer.parseInt(o[2]));
-    logger.log(TestLevel.TEST_INFO, codePoint);
-    Assertions.assertEquals("", TestLogUtils.getCodePoint(null));
-  }
-
-  @Test
   void canGetRecord() {
     final StringBuilder sb = new StringBuilder("A StringBuilder passed as an object");
     for (final Level l : new Level[] {TestLevel.TEST_INFO, TestLevel.TEST_DEBUG}) {
