@@ -1,9 +1,8 @@
 <package>
 
+import java.util.function.Supplier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.function.Supplier;
 
 /**
  * Tests the logical combination of {@link <Type1>Predicate\} and {@link <Type2>Predicate\}.

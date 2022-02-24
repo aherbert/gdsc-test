@@ -19,11 +19,10 @@ import uk.ac.sussex.gdsc.test.api.function.PrimitivePredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.function.Supplier;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link TestAssertions}.

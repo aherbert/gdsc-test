@@ -2,10 +2,10 @@
 
 import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
 
+<if(import1)>import <import1>;<endif>
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-<if(import1)>import <import1>;<\n><\n><endif>
 /**
  * Tests {@link <Number><Number>Are<Within>}.
  */

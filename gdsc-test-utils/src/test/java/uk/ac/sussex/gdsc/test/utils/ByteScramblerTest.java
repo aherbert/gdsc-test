@@ -24,6 +24,8 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import uk.ac.sussex.gdsc.test.utils.ByteScrambler.BitScrambler128;
+
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -35,7 +37,6 @@ import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import uk.ac.sussex.gdsc.test.utils.ByteScrambler.BitScrambler128;
 
 @SuppressWarnings("javadoc")
 class ByteScramblerTest {

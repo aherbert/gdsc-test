@@ -34,7 +34,7 @@ public class <Float><Float>AreWithinUlp
    * \<p>The test is equivalent to testing there are {@code (ulpError - 1)} or fewer
    * representable numbers between the two values.
    *
-   * <p>NaN values are ignored and the test returns false.
+   * \<p>NaN values are ignored and the test returns false.
    *
    * @param ulpError The maximum ULP error between \<code>value1\</code>
    *                 and \<code>value2\</code> for which both numbers are still
