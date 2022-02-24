@@ -29,7 +29,7 @@ package uk.ac.sussex.gdsc.test.utils;
  * information on the caller. This will be inefficient and should be used for debugging only, for
  * example calls to obtain the code point can be inserted into any method and logged to determine
  * the parts of code that is being executed:
- * 
+ *
  * <pre>
  * void testMethod() {
  *   System.out.println(CallStackUtils.getCodePoint());
