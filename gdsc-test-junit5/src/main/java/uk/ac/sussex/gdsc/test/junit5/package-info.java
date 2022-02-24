@@ -27,7 +27,11 @@
  *
  * <p>The package contains:
  *
- * <ul> <li>Annotations for test repeats with run-time configurable random seed</li> </ul>
+ * <ul>
+ *
+ * <li>Annotations for test repeats with run-time configurable random seed</li>
+ *
+ * </ul>
  *
  * <p>The package is configured using java runtime arguments (see
  * {@link uk.ac.sussex.gdsc.test.utils.TestSettings}).

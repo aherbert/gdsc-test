@@ -23,7 +23,7 @@
  */
 
 /**
- * Provides data structures for comparisons including relative and absolute equality.
+ * Provides comparisons including relative and absolute equality.
  *
  * @since 1.0
  */
