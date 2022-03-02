@@ -46,51 +46,72 @@ public class ByteScrambler {
   private final byte[] bytes;
 
   /**
-   * Class to scramble up to 16 bytes. The input seed bytes are used to construct a 128-bit counter.
-   * This is incremented using a golden ratio and the output is then mixed through the Stafford
-   * variant 13 64-bit mixer for upper and lower 64-bits.
+   * Class to scramble up to 16 bytes. This is based on SpookyHash V2.
    *
-   * <p>This is similar to a SplittableRandom random number generator which uses a 64-bit counter
-   * and the same mix function. The difference is the mix function does not cascade bits over the
-   * entire 128-bits of the Weyl sequence; the upper and lower do not influence each other during
-   * mixing. This could be updated with a different mix function, for example the 128-bit mix
-   * function from the <a href="https://en.wikipedia.org/wiki/Permuted_congruential_generator">PCG
-   * family</a> of RNGs (see XSL-RR-RR).
+   * <p>The input entropy is from additive constants used to increment a Weyl sequence from a start
+   * point based on the input seed. The increments are those used in the sequences for JDK 17s
+   * RandomGenerator classes. The golden ratio is also used in SplittableRandom and
+   * ThreadLocalRandom. Note: These could be any constants that satisfy the properties of the
+   * increment in SplittableRandom (or the sc_const value from SpookyHash): odd and a random mix of
+   * 0 and 1 bits. The number of bit transitions can be counted using:
+   *
+   * <pre>
+   * {@code
+   * Long.bitCount(z ^ (z >> 1))
+   * }
+   * </pre>
+   *
+   * @see <a href="http://www.burtleburtle.net/bob/hash/spooky.html">SpookyHash</a>
    */
   static class BitScrambler128 {
     /** The size of bytes output by the scrambler. */
     static final int BYTES = 16;
 
-    /**
-     * The golden ratio, phi, scaled to 64-bits and rounded to odd.
-     *
-     * <pre>
-     * phi = (sqrt(5) - 1) / 2) * 2^64
-     *     ~ 0.61803 * 2^64
-     *     = 11400714819323198485 (unsigned 64-bit integer)
-     * </pre>
-     */
+    // Golden ratio:
+    // new BigDecimal(5).sqrt(new MathContext(100)).subtract(BigDecimal.ONE)
+    // .divide(BigDecimal.valueOf(2), new MathContext(100)).multiply(
+    // new BigDecimal(0x1.0p128)).toBigInteger().toString(16)
+    // 9e3779b97f4a7c15f39cc0605cedc834
+
+    // Silver ratio:
+    // new BigDecimal(2).sqrt(new MathContext(100)).subtract(BigDecimal.ONE)
+    // .multiply(new BigDecimal(0x1.0p128)).toBigInteger().toString(16)
+    // 6a09e667f3bcc908b2fb1366ea957d3e
+
+    /** The first 64-bits of the fractional part of the golden ratio. */
     private static final long GOLDEN_RATIO = 0x9e3779b97f4a7c15L;
 
-    /**
-     * The golden ratio, phi, scaled to 128-bits, truncated to the lower 64-bits and rounded to odd.
-     *
-     * <pre>
-     * phi ~ 0.61803 * 2^128
-     *     = 210306068529402873165736369884012333108.06448599
-     *     = 0x9e3779b97f4a7c15f39cc0605cedc834 (unsigned 128-bit integer)
-     * </pre>
-     *
-     * <p>This is the next 64-bits of the same number as {@link #GOLDEN_RATIO}. This number has 26
-     * binary transitions (from 0 to 1 or vice versa) so satisfies the minimum of 24 transitions
-     * required for a SplittableRandom increment.
-     */
+    /** The second 64-bits of the fractional part of the golden ratio, rounded to odd. */
     private static final long GOLDEN_RATIO_128_LOWER = 0xf39cc0605cedc835L;
 
-    /** The lower 128-bits of the counter. */
-    private long lower;
-    /** The upper 128-bits of the counter. */
-    private long upper;
+    /** The first 64-bits of the fractional part of the silver ratio, rounded to odd. */
+    private static final long SILVER_RATIO = 0x6a09e667f3bcc909L;
+
+    /** The second 64-bits of the fractional part of the silver ratio, rounded to odd. */
+    private static final long SILVER_RATIO_128_LOWER = 0xb2fb1366ea957d3fL;
+
+    /**
+     * SpookyHashV2 constant 'sc_const': a constant which: is not zero; is odd; is a
+     * not-very-regular mix of 1's and 0's; does not need any other special mathematical properties.
+     */
+    private static final long SC_CONST = 0xdeadbeefdeadbeefL;
+
+    /** Spooky hash state. */
+    private long a;
+    /** Spooky hash state. */
+    private long b;
+    /** Spooky hash state. */
+    private long c = SC_CONST;
+    /** Spooky hash state. */
+    private long d = SC_CONST;
+    /** Entropy sequence. */
+    private long s0;
+    /** Entropy sequence. */
+    private long s1;
+    /** Entropy sequence. */
+    private long s2;
+    /** Entropy sequence. */
+    private long s3;
 
     /**
      * Create a new instance using the seed to initialise the 128-bit counter.
@@ -103,8 +124,13 @@ public class ByteScrambler {
       // Extract the state.
       final byte[] bytes = Arrays.copyOf(seed, BYTES);
       final ByteBuffer bb = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
-      lower = bb.getLong();
-      upper = bb.getLong();
+      a = bb.getLong();
+      b = bb.getLong();
+      // Initialise entropy sequence. This is arbitrary.
+      s0 = ~a;
+      s1 = ~b;
+      s2 = a ^ b;
+      s3 = a + b;
     }
 
     /**
@@ -114,36 +140,56 @@ public class ByteScrambler {
      * @param index the index
      */
     void next(byte[] bytes, int index) {
-      // Add to the counter.
-      // This is done as if 64-bit unsigned integers.
-      // Thus negative numbers are >= 2^63.
-      final long r = lower + GOLDEN_RATIO_128_LOWER;
-      // Detect overflow using the method from Long::compareUnsigned(long, long)
-      if (r + Long.MIN_VALUE < lower + Long.MIN_VALUE) {
-        // Overflow
-        upper++;
-      }
-      lower = r;
-      upper += GOLDEN_RATIO;
-      // Mix and output
-      putLongBigEndian(bytes, index, stafford13(upper));
-      putLongBigEndian(bytes, index + 8, stafford13(lower));
-    }
+      // Input 32 bytes of entropy; half before ShortMix, half after
+      long h0 = a;
+      long h1 = b;
+      long h2 = c + (s2 += GOLDEN_RATIO);
+      long h3 = d + (s3 += GOLDEN_RATIO_128_LOWER);
 
-    /**
-     * Perform variant 13 of David Stafford's 64-bit mix function.
-     *
-     * <p>This is ranked first of the top 14 Stafford mixers.
-     *
-     * @param value the input value
-     * @return the output value
-     * @see <a href="http://zimbry.blogspot.com/2011/09/better-bit-mixing-improving-on.html">Better
-     *      Bit Mixing - Improving on MurmurHash3&#39;s 64-bit Finalizer.</a>
-     */
-    static long stafford13(long value) {
-      value = (value ^ (value >>> 30)) * 0xbf58476d1ce4e5b9L;
-      value = (value ^ (value >>> 27)) * 0x94d049bb133111ebL;
-      return value ^ (value >>> 31);
+      // @formatter:off
+      // ShortMix
+      h2 = Long.rotateLeft(h2, 50);  h2 += h3;  h0 ^= h2;
+      h3 = Long.rotateLeft(h3, 52);  h3 += h0;  h1 ^= h3;
+      h0 = Long.rotateLeft(h0, 30);  h0 += h1;  h2 ^= h0;
+      h1 = Long.rotateLeft(h1, 41);  h1 += h2;  h3 ^= h1;
+      h2 = Long.rotateLeft(h2, 54);  h2 += h3;  h0 ^= h2;
+      h3 = Long.rotateLeft(h3, 48);  h3 += h0;  h1 ^= h3;
+      h0 = Long.rotateLeft(h0, 38);  h0 += h1;  h2 ^= h0;
+      h1 = Long.rotateLeft(h1, 37);  h1 += h2;  h3 ^= h1;
+      h2 = Long.rotateLeft(h2, 62);  h2 += h3;  h0 ^= h2;
+      h3 = Long.rotateLeft(h3, 34);  h3 += h0;  h1 ^= h3;
+      h0 = Long.rotateLeft(h0, 5);   h0 += h1;  h2 ^= h0;
+      h1 = Long.rotateLeft(h1, 36);  h1 += h2;  h3 ^= h1;
+      // @formatter:on
+
+      h0 += s0 += SILVER_RATIO;
+      h1 += s1 += SILVER_RATIO_128_LOWER;
+
+      // Save state
+      a = h0;
+      b = h1;
+      c = h2;
+      d = h3;
+
+      // Output 128-bit hash
+
+      // @formatter:off
+      // ShortEnd
+      h3 ^= h2;  h2 = Long.rotateLeft(h2, 15);  h3 += h2;
+      h0 ^= h3;  h3 = Long.rotateLeft(h3, 52);  h0 += h3;
+      h1 ^= h0;  h0 = Long.rotateLeft(h0, 26);  h1 += h0;
+      h2 ^= h1;  h1 = Long.rotateLeft(h1, 51);  h2 += h1;
+      h3 ^= h2;  h2 = Long.rotateLeft(h2, 28);  h3 += h2;
+      h0 ^= h3;  h3 = Long.rotateLeft(h3, 9);   h0 += h3;
+      h1 ^= h0;  h0 = Long.rotateLeft(h0, 47);  h1 += h0;
+      h2 ^= h1;  h1 = Long.rotateLeft(h1, 54);  h2 += h1;
+      h3 ^= h2;  h2 = Long.rotateLeft(h2, 32);  h3 += h2;
+      h0 ^= h3;  h3 = Long.rotateLeft(h3, 25);  h0 += h3;
+      h1 ^= h0;  h0 = Long.rotateLeft(h0, 63);  h1 += h0;
+      // @formatter:on
+
+      putLongBigEndian(bytes, index, h1);
+      putLongBigEndian(bytes, index + 8, h2);
     }
 
     /**
