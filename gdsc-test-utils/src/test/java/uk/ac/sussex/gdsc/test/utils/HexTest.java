@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class HexUtilsTest {
+class HexTest {
 
   @Test
   void testEncodeWithBadInput() {
