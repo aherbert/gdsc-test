@@ -28,7 +28,7 @@
   "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 
 <suppressions>
-  <suppress checks="LineLength" files="uk.ac.sussex.gdsc.test.utils.TestLogUtilsTest.java" />
+  <suppress checks="LineLength" files="uk.ac.sussex.gdsc.test.utils.TestLoggingTest.java" />
   <suppress checks="MemberName" files="uk.ac.sussex.gdsc.test.rng.L64X128MixRandom.java" />
   <suppress checks="OverloadMethodsDeclarationOrder" files="uk.ac.sussex.gdsc.test.rng.BaseLongUniformRandomProviderTest.java" />
   <suppress checks="MemberName" files="uk.ac.sussex.gdsc.test.utils.ByteScrambler.java" />

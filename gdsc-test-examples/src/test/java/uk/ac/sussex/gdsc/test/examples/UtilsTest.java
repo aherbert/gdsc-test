@@ -26,7 +26,7 @@ package uk.ac.sussex.gdsc.test.examples;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import uk.ac.sussex.gdsc.test.utils.SeedUtils;
+import uk.ac.sussex.gdsc.test.utils.RandomSeeds;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 import uk.ac.sussex.gdsc.test.utils.functions.IndexSupplier;
 
@@ -64,6 +64,6 @@ class UtilsTest {
   @Test
   void testGetSeed() {
     byte[] seed = TestSettings.getSeed();
-    long longSeed = SeedUtils.makeLong(seed);
+    long longSeed = RandomSeeds.makeLong(seed);
   }
 }

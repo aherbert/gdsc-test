@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 import uk.ac.sussex.gdsc.test.junit5.RandomSeedSource.SeedSequence;
 import uk.ac.sussex.gdsc.test.utils.RandomSeed;
-import uk.ac.sussex.gdsc.test.utils.SeedUtils;
+import uk.ac.sussex.gdsc.test.utils.RandomSeeds;
 
 @SuppressWarnings("javadoc")
 class RandomSeedSourceTest {
@@ -50,7 +50,7 @@ class RandomSeedSourceTest {
   @Test
   void testGetSeedSequenceWithSingleRepeat() {
     // It doesn't matter what the initial seed is
-    byte[] seed = SeedUtils.makeByteArray(System.currentTimeMillis());
+    byte[] seed = RandomSeeds.makeByteArray(System.currentTimeMillis());
     int repeats = 1;
     SeedSequence sequence = RandomSeedSource.getSeedSequence(seed, repeats);
 
@@ -90,7 +90,7 @@ class RandomSeedSourceTest {
   @Test
   void testGetSeedSequenceWithMultiRepeat() {
     // It doesn't matter what the initial seed is
-    byte[] seed = SeedUtils.makeByteArray(System.currentTimeMillis());
+    byte[] seed = RandomSeeds.makeByteArray(System.currentTimeMillis());
     int repeats = 2;
     SeedSequence sequence = RandomSeedSource.getSeedSequence(seed, repeats);
 

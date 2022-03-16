@@ -125,7 +125,7 @@ public final class TestSettings {
     final String text = System.getProperty(name);
     if (text != null) {
       final byte[] bytes = Hex.decode(text);
-      if (!SeedUtils.nullOrEmpty(bytes)) {
+      if (!RandomSeeds.nullOrEmpty(bytes)) {
         return bytes;
       }
     }
@@ -177,7 +177,7 @@ public final class TestSettings {
    * @param bytes the new seed
    */
   static void setSeed(byte[] bytes) {
-    final byte[] newSeed = (SeedUtils.nullOrEmpty(bytes)) ? NO_SEED : bytes.clone();
+    final byte[] newSeed = (RandomSeeds.nullOrEmpty(bytes)) ? NO_SEED : bytes.clone();
     synchronized (seedLock) {
       seed = newSeed;
     }
@@ -199,7 +199,7 @@ public final class TestSettings {
   public static byte[] getSeed() {
     byte[] currentSeed = seed;
     if (currentSeed == null) {
-      currentSeed = SeedUtils.generateSeed(DEFAULT_SEED_SIZE);
+      currentSeed = RandomSeeds.generateSeed(DEFAULT_SEED_SIZE);
       // Log the seed that is generated
       final Logger logger = Logger.getLogger(TestSettings.class.getName());
       logger.log(Level.INFO,

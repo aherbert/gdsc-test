@@ -112,7 +112,7 @@ class RandomSeedTest {
     final UniformRandomProvider rng = RandomSource.SPLIT_MIX_64.create();
     long value = rng.nextLong();
     for (int i = 0; i < 5; i++) {
-      RandomSeed rs = RandomSeed.of(SeedUtils.makeByteArray(value));
+      RandomSeed rs = RandomSeed.of(RandomSeeds.makeByteArray(value));
       Assertions.assertEquals(value, rs.getAsLong(),
           "Single long converted to byte[] doesn't match");
       // Test the cache of the value
@@ -120,7 +120,7 @@ class RandomSeedTest {
           "Seed as long value doesn't match itself");
       long value2 = value;
       value = rng.nextLong();
-      rs = RandomSeed.of(SeedUtils.makeByteArray(value, value2));
+      rs = RandomSeed.of(RandomSeeds.makeByteArray(value, value2));
       Assertions.assertNotEquals(value, rs.getAsLong(),
           "Two longs converted to byte[] matches the first long value");
     }

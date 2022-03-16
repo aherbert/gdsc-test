@@ -24,7 +24,7 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
-import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
+import uk.ac.sussex.gdsc.test.utils.TestLogging.TestLevel;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

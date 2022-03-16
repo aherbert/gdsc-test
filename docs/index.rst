@@ -169,7 +169,7 @@ Support for test randomness is provided using a single ``byte[]`` seed::
 
     byte[] seed = TestSettings.getSeed();
 
-A ``SeedUtils`` class is provided to convert the ``byte[]`` to ``int[]``, ``long[]`` or ``long``.
+A ``RandomSeeds`` class is provided to convert the ``byte[]`` to ``int[]``, ``long[]`` or ``long``.
 
 The seed can be set using a Hex-encoded string property:
 

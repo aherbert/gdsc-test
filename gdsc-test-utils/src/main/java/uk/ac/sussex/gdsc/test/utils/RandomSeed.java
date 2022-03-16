@@ -89,7 +89,7 @@ public final class RandomSeed implements Serializable, Supplier<byte[]>, LongSup
   public long getAsLong() {
     long result = seedAsLong;
     if (result == 0) {
-      result = SeedUtils.makeLong(seed);
+      result = RandomSeeds.makeLong(seed);
       seedAsLong = result;
     }
     return result;

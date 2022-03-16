@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.SplittableRandom;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.rng.RestorableUniformRandomProvider;
-import uk.ac.sussex.gdsc.test.utils.SeedUtils;
+import uk.ac.sussex.gdsc.test.utils.RandomSeeds;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 /**
@@ -61,7 +61,7 @@ public final class RngFactory {
    * @see ThreadLocalRandom
    */
   public static RestorableUniformRandomProvider create(byte[] seed) {
-    if (SeedUtils.nullOrEmpty(seed)) {
+    if (RandomSeeds.nullOrEmpty(seed)) {
       // Require 128-bits of randomness. Both the JDK random generators are initialised
       // with random bits and the sequences of the seeds are different. Using only 1
       // with two calls would limit the maximum number of seeds to the RNG period which
@@ -74,10 +74,10 @@ public final class RngFactory {
     // Currently the factory only supports limited functionality.
     // Convert seed to a long array. This may be zero padded.
     if (seed.length > 2 * Long.BYTES) {
-      final long[] longSeed = Arrays.copyOf(SeedUtils.makeLongArray(seed), 4);
+      final long[] longSeed = Arrays.copyOf(RandomSeeds.makeLongArray(seed), 4);
       return new L64X128MixRandom(longSeed[0], longSeed[1], longSeed[2], longSeed[3]);
     }
-    final long[] longSeed = Arrays.copyOf(SeedUtils.makeLongArray(seed), 2);
+    final long[] longSeed = Arrays.copyOf(RandomSeeds.makeLongArray(seed), 2);
     return new XoRoShiRo128PlusPlus(longSeed[0], longSeed[1]);
   }
 

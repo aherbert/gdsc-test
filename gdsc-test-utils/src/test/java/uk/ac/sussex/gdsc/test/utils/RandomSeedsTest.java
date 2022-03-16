@@ -34,37 +34,37 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class SeedUtilsTest {
+class RandomSeedsTest {
   @Test
   void testZeroBytes() {
-    Assertions.assertTrue(SeedUtils.zeroBytes(null), "Null should be empty");
-    Assertions.assertTrue(SeedUtils.zeroBytes(new byte[0]), "byte[0] should be empty");
-    Assertions.assertTrue(SeedUtils.zeroBytes(new byte[10]), "byte[10] should be empty");
-    Assertions.assertFalse(SeedUtils.zeroBytes(new byte[] {1, 2, 3}),
+    Assertions.assertTrue(RandomSeeds.zeroBytes(null), "Null should be empty");
+    Assertions.assertTrue(RandomSeeds.zeroBytes(new byte[0]), "byte[0] should be empty");
+    Assertions.assertTrue(RandomSeeds.zeroBytes(new byte[10]), "byte[10] should be empty");
+    Assertions.assertFalse(RandomSeeds.zeroBytes(new byte[] {1, 2, 3}),
         "filled byte[] should not be empty");
   }
 
   @Test
   void testNullOrEmpty() {
-    Assertions.assertTrue(SeedUtils.nullOrEmpty(null), "Null should be null or empty");
-    Assertions.assertTrue(SeedUtils.nullOrEmpty(new byte[0]), "byte[0] should be null or empty");
-    Assertions.assertFalse(SeedUtils.nullOrEmpty(new byte[10]),
+    Assertions.assertTrue(RandomSeeds.nullOrEmpty(null), "Null should be null or empty");
+    Assertions.assertTrue(RandomSeeds.nullOrEmpty(new byte[0]), "byte[0] should be null or empty");
+    Assertions.assertFalse(RandomSeeds.nullOrEmpty(new byte[10]),
         "byte[10] should be not null or empty");
   }
 
   @Test
   void testGenerateSeed() {
     final int size = 17;
-    final byte[] seed1 = SeedUtils.generateSeed(size);
-    final byte[] seed2 = SeedUtils.generateSeed(size);
+    final byte[] seed1 = RandomSeeds.generateSeed(size);
+    final byte[] seed2 = RandomSeeds.generateSeed(size);
     testSeeds(size, seed1, seed2);
   }
 
   @Test
   void testGenerateNonSecureSeed() {
     final int size = 17;
-    final byte[] seed1 = SeedUtils.generateSeed(size, false);
-    final byte[] seed2 = SeedUtils.generateSeed(size, false);
+    final byte[] seed1 = RandomSeeds.generateSeed(size, false);
+    final byte[] seed2 = RandomSeeds.generateSeed(size, false);
     testSeeds(size, seed1, seed2);
   }
 
@@ -94,7 +94,7 @@ class SeedUtilsTest {
     }
 
     final byte[] expected = baos.toByteArray();
-    final byte[] actual = SeedUtils.makeByteArray(values);
+    final byte[] actual = RandomSeeds.makeByteArray(values);
 
     Assertions.assertArrayEquals(expected, actual);
   }
@@ -117,7 +117,7 @@ class SeedUtilsTest {
     }
 
     final byte[] expected = baos.toByteArray();
-    final byte[] actual = SeedUtils.makeByteArray(values);
+    final byte[] actual = RandomSeeds.makeByteArray(values);
 
     Assertions.assertArrayEquals(expected, actual);
   }
@@ -134,8 +134,8 @@ class SeedUtilsTest {
       values[i] = rng.nextLong();
     }
 
-    byte[] bytes = SeedUtils.makeByteArray(values);
-    long[] actual = SeedUtils.makeLongArray(bytes);
+    byte[] bytes = RandomSeeds.makeByteArray(values);
+    long[] actual = RandomSeeds.makeLongArray(bytes);
 
     Assertions.assertArrayEquals(values, actual, "Full size array is different");
 
@@ -149,7 +149,7 @@ class SeedUtilsTest {
       mask <<= Byte.SIZE;
       values[end] &= mask;
 
-      actual = SeedUtils.makeLongArray(bytes);
+      actual = RandomSeeds.makeLongArray(bytes);
       final int nBytes = i;
       Assertions.assertArrayEquals(values, actual,
           () -> nBytes + " byte trucated array is different");
@@ -168,8 +168,8 @@ class SeedUtilsTest {
       values[i] = rng.nextInt();
     }
 
-    byte[] bytes = SeedUtils.makeByteArray(values);
-    int[] actual = SeedUtils.makeIntArray(bytes);
+    byte[] bytes = RandomSeeds.makeByteArray(values);
+    int[] actual = RandomSeeds.makeIntArray(bytes);
 
     Assertions.assertArrayEquals(values, actual, "Full size array is different");
 
@@ -183,7 +183,7 @@ class SeedUtilsTest {
       mask <<= Byte.SIZE;
       values[end] &= mask;
 
-      actual = SeedUtils.makeIntArray(bytes);
+      actual = RandomSeeds.makeIntArray(bytes);
       final int nBytes = i;
       Assertions.assertArrayEquals(values, actual,
           () -> nBytes + " byte trucated array is different");
@@ -192,24 +192,24 @@ class SeedUtilsTest {
 
   @Test
   void testMakeLong() {
-    Assertions.assertEquals(0L, SeedUtils.makeLong(), "No bytes should be zero");
+    Assertions.assertEquals(0L, RandomSeeds.makeLong(), "No bytes should be zero");
 
     // Check it is most significant first
     final byte allBits = (byte) 0xFF;
     final byte zeroBits = 0;
     long expected = 0xFF00000000000000L;
 
-    Assertions.assertEquals(expected, SeedUtils.makeLong(allBits), "1 byte input (0xFF)");
-    Assertions.assertEquals(expected, SeedUtils.makeLong(allBits, zeroBits),
+    Assertions.assertEquals(expected, RandomSeeds.makeLong(allBits), "1 byte input (0xFF)");
+    Assertions.assertEquals(expected, RandomSeeds.makeLong(allBits, zeroBits),
         "2 byte input (0xFF00)");
 
     expected >>>= Byte.SIZE;
-    Assertions.assertEquals(expected, SeedUtils.makeLong(zeroBits, allBits),
+    Assertions.assertEquals(expected, RandomSeeds.makeLong(zeroBits, allBits),
         "2 byte input (0x00FF)");
 
     // Test a full size long (8 bytes)
     expected = 0xFFL;
-    Assertions.assertEquals(expected, SeedUtils.makeLong(zeroBits, zeroBits, zeroBits, zeroBits,
+    Assertions.assertEquals(expected, RandomSeeds.makeLong(zeroBits, zeroBits, zeroBits, zeroBits,
         zeroBits, zeroBits, zeroBits, allBits), "8 byte input (0x00000000000000FF)");
   }
 }

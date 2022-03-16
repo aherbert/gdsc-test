@@ -34,7 +34,7 @@ import java.util.logging.LogRecord;
  * Class used to generate {@link LogRecord}s to record test results.
  * Records can be writtin using a {@link java.util.logging.Logger}.
  */
-public final class TestLogUtils {
+public final class TestLogging {
   /**
    * Extend {@link Level} to add levels for test logging.
    */
@@ -196,7 +196,7 @@ public final class TestLogUtils {
   /**
    * Do not allow public construction.
    */
-  private TestLogUtils() {}
+  private TestLogging() {}
 
   ////////////////////////////////////////////////////
   // Helper functionality for using java.util.logging

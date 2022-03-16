@@ -30,11 +30,11 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Class used for working with random seeds.
  */
-public final class SeedUtils {
+public final class RandomSeeds {
   /**
    * Do not allow public construction.
    */
-  private SeedUtils() {}
+  private RandomSeeds() {}
 
   /**
    * Check if the bytes contain only zeros (no information).
@@ -64,7 +64,7 @@ public final class SeedUtils {
    *
    * @param bytes the bytes
    * @return true if null or empty
-   * @see SeedUtils#zeroBytes(byte[])
+   * @see RandomSeeds#zeroBytes(byte[])
    */
   public static boolean nullOrEmpty(byte[] bytes) {
     return (bytes == null || bytes.length == 0);
@@ -164,17 +164,12 @@ public final class SeedUtils {
     final int size = (bytes.length + Long.BYTES - 1) >>> 3;
     final long[] values = new long[size];
 
-    int count = 0;
     int shift = Long.SIZE;
-    for (final byte bi : bytes) {
+    for (int i = 0; i < bytes.length; i++) {
       // Update the shift to set the position in the long to write the bits
       shift -= Byte.SIZE;
-      // Convert the byte to a long then shift
-      values[count] |= ((bi & 0xffL) << shift);
-      if (shift == 0) {
-        shift = Long.SIZE;
-        count++;
-      }
+      // Convert the byte to an int then shift % 64
+      values[i >> 3] |= ((bytes[i] & 0xffL) << (shift & 0x3f));
     }
 
     return values;
@@ -196,17 +191,12 @@ public final class SeedUtils {
     final int size = (bytes.length + Integer.BYTES - 1) >>> 2;
     final int[] values = new int[size];
 
-    int count = 0;
     int shift = Integer.SIZE;
-    for (final byte bi : bytes) {
+    for (int i = 0; i < bytes.length; i++) {
       // Update the shift to set the position in the int to write the bits
       shift -= Byte.SIZE;
-      // Convert the byte to an int then shift
-      values[count] |= ((bi & 0xff) << shift);
-      if (shift == 0) {
-        shift = Integer.SIZE;
-        count++;
-      }
+      // Convert the byte to an int then shift % 32
+      values[i >> 2] |= ((bytes[i] & 0xff) << (shift & 0x1f));
     }
 
     return values;
