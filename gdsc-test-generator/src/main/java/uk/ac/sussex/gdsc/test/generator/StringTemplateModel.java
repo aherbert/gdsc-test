@@ -36,6 +36,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Pattern;
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
@@ -402,9 +403,9 @@ public final class StringTemplateModel {
     if (Strings.isNullOrEmpty(value)) {
       throw new InvalidModelException("Substitution value is empty for key: " + key);
     }
-    try (StringReader reader = new StringReader(value.trim())) {
+    try (CSVParser parser = CSV_FORMAT.parse(new StringReader(value.trim()))) {
       // Note: There should always be a record as value is not null
-      final List<CSVRecord> records = CSV_FORMAT.parse(reader).getRecords();
+      final List<CSVRecord> records = parser.getRecords();
       final CSVRecord record = records.get(0);
       final List<String> values = new ArrayList<>(record.size());
       for (final String field : record) {
