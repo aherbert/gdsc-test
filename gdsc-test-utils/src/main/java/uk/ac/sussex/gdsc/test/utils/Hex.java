@@ -84,7 +84,7 @@ public final class Hex {
     }
     final int l = bytes.length;
     // Two hex characters per byte
-    final char[] chars = new char[l * 2];
+    final char[] chars = new char[l << 1];
     for (int i = 0; i < l; i++) {
       chars[2 * i] = HEX_DIGITS[(bytes[i] & 0xf0) >>> 4];
       chars[2 * i + 1] = HEX_DIGITS[bytes[i] & 0xf];
@@ -134,10 +134,9 @@ public final class Hex {
     }
 
     // Convert: Two hex characters per byte
-    final int length = hexNumber.length / 2;
+    final int length = hexNumber.length >> 1;
     // Allow extra odd characters.
-    final boolean odd = hexNumber.length % 2 == 1;
-    final byte[] decoded = new byte[length + ((odd) ? 1 : 0)];
+    final byte[] decoded = new byte[length + (hexNumber.length & 0x1)];
     // Process pairs
     for (int i = 0; i < length; i++) {
       byte hexPair = hexNumber[2 * i];
@@ -147,7 +146,7 @@ public final class Hex {
     }
 
     // Handle final odd character
-    if (odd) {
+    if ((hexNumber.length & 0x1) == 1) {
       decoded[decoded.length - 1] = (byte) (hexNumber[hexNumber.length - 1] << 4);
     }
 
