@@ -359,12 +359,12 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
       Object messageOrSupplier) {
     if (expected == null) {
       throw new AssertionError(
-          TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier))
+          TestAssertionUtils.buildPrefix(Strings.toString(messageOrSupplier))
               + "expected array was \<null>" + TestAssertionUtils.formatIndexes(indexes));
     }
     if (actual == null) {
       throw new AssertionError(
-          TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier))
+          TestAssertionUtils.buildPrefix(Strings.toString(messageOrSupplier))
               + "actual array was \<null>" + TestAssertionUtils.formatIndexes(indexes));
     }
   }
@@ -374,7 +374,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
       Object messageOrSupplier) {
     if (value == null) {
       throw new AssertionError(
-          TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier))
+          TestAssertionUtils.buildPrefix(Strings.toString(messageOrSupplier))
               + "value array was \<null>" + TestAssertionUtils.formatIndexes(indexes));
     }
   }
@@ -384,7 +384,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
       Object messageOrSupplier) {
     if (expected != actual) {
       final String prefix = TestAssertionUtils.buildPrefix(
-          StringUtils.toString(messageOrSupplier));
+          Strings.toString(messageOrSupplier));
       final String message = "array lengths differ" + TestAssertionUtils.formatIndexes(indexes)
           + ", expected: \<" + expected + "> but was: \<" + actual + ">";
       throw new AssertionError(prefix + message);
@@ -423,7 +423,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
 <\n>
   private static String failArraysMessage(<type> expected, <type> actual,
       <Type><Type>BiPredicate test, Deque\<Integer> indexes, Object messageOrSupplier) {
-    final String prefix = TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier));
+    final String prefix = TestAssertionUtils.buildPrefix(Strings.toString(messageOrSupplier));
     final String message = buildContentsDifferMessage(indexes,
         TestAssertionUtils.formatValues(expected, actual, test));
     return prefix + message;
@@ -431,7 +431,7 @@ static void assertArrayTest(<type>[] value, <Type>Predicate test,
   <\n>
   private static String failArrayMessage(<type> value, <Type>Predicate test,
       Deque\<Integer> indexes, Object messageOrSupplier) {
-    final String prefix = TestAssertionUtils.buildPrefix(StringUtils.toString(messageOrSupplier));
+    final String prefix = TestAssertionUtils.buildPrefix(Strings.toString(messageOrSupplier));
     final String message = buildContentsFailMessage(indexes,
         TestAssertionUtils.formatValue(value, test));
     return prefix + message;

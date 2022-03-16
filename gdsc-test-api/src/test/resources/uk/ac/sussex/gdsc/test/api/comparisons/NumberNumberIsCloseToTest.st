@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+import uk.ac.sussex.gdsc.test.api.ApiTests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,17 +15,17 @@ public class <Number><Number>IsCloseToTest {
    */
   @Test
   public void testTest() {
-    final <number>[] values = ApiTestUtils.get<Number>Values();
+    final <number>[] values = ApiTests.get<Number>Values();
     for (double relativeError : new double[] {0, 0.5}) {
       for (<errorType> absoluteError : new <errorType>[] {0, 1}) {
         final <Number><Number>IsCloseTo predicate =
             new <Number><Number>IsCloseTo(relativeError, absoluteError);
         for (<number> value1 : values) {
           for (<number> value2 : values) {
-            final boolean expected = <Number>EqualityUtils.testIsCloseTo(value1, value2,
+            final boolean expected = <Number>Equality.testIsCloseTo(value1, value2,
                 relativeError, absoluteError);
             Assertions.assertEquals(expected, predicate.test(value1, value2),
-                () -> String.format("Does not compute <Number>EqualityUtils.testIsCloseTo :"
+                () -> String.format("Does not compute <Number>Equality.testIsCloseTo :"
                     + " v1=%s, v2=%s, rel.error=%s, abs.error=%s",
                     value1, value2, relativeError, absoluteError));
           }

@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * {@code actual} falls within a relative and/or absolute range of {@code expected}.
  *
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see <Number>EqualityUtils#isCloseTo(<number>, <number>, double, <errorType>)
+ * @see <Number>Equality#isCloseTo(<number>, <number>, double, <errorType>)
  */
 public class <Number><Number>IsCloseTo
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
@@ -51,7 +51,7 @@ public class <Number><Number>IsCloseTo
    *         {@code >=} than the maximum difference between <number> primitives
    */
   public <Number><Number>IsCloseTo(double relativeError, <errorType> absoluteError) {
-    <Number>EqualityUtils.validateIsCloseTo(relativeError, absoluteError);
+    <Number>Equality.validateIsCloseTo(relativeError, absoluteError);
     this.relativeError = relativeError;
     this.absoluteError = absoluteError;
   }
@@ -67,7 +67,7 @@ public class <Number><Number>IsCloseTo
   @Override
   public boolean test(<number> expected, <number> actual) {
     // Errors have been checked so use the package level method
-    return <Number>EqualityUtils.testIsCloseTo(expected, actual, relativeError, absoluteError);
+    return <Number>Equality.testIsCloseTo(expected, actual, relativeError, absoluteError);
   }
 
   /**
@@ -77,6 +77,6 @@ public class <Number><Number>IsCloseTo
    */
   @Override
   public String get() {
-    return DescriptionHelper.getDescriptionIsCloseTo(relativeError, absoluteError);
+    return Descriptions.getDescriptionIsCloseTo(relativeError, absoluteError);
   }
 }

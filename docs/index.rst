@@ -71,7 +71,7 @@ primitive value(s) using a single or bi-valued predicate. An ``AssertionError`` 
 a test fails. For example a test for relative equality::
 
     import uk.ac.sussex.gdsc.test.api.TestAssertions;
-    import uk.ac.sussex.gdsc.test.api.TestHelper;
+    import uk.ac.sussex.gdsc.test.api.Predicates;
 
     @Test
     public void testRelativeEquality() {
@@ -79,7 +79,7 @@ a test fails. For example a test for relative equality::
         double expected = 100;
         double actual = 99;
 
-        DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+        DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
 
         // This will pass as 99 is within (0.01*100) of 100
         TestAssertions.assertTest(expected, actual, isCloseTo);
@@ -88,7 +88,7 @@ a test fails. For example a test for relative equality::
 A test for equality with units in the last place (ULP)::
 
     import uk.ac.sussex.gdsc.test.api.TestAssertions;
-    import uk.ac.sussex.gdsc.test.api.TestHelper;
+    import uk.ac.sussex.gdsc.test.api.Predicates;
 
     @Test
     public void testUlpEquality() {
@@ -96,7 +96,7 @@ A test for equality with units in the last place (ULP)::
         double expected = 100;
         double actual = Math.nextUp(expected);
 
-        DoubleDoubleBiPredicate areWithinUlp = TestHelper.doublesAreWithinUlp(ulpError);
+        DoubleDoubleBiPredicate areWithinUlp = Predicates.doublesAreWithinUlp(ulpError);
 
         TestAssertions.assertTest(expected, actual, areWithinUlp);
         TestAssertions.assertTest(expected, Math.nextUp(actual), areWithinUlp.negate());
@@ -109,7 +109,7 @@ format an error message for the failed test.
 
 Nested arrays are supported using recursion allowing testing of matrices::
 
-    IntIntBiPredicate equal = TestHelper.intsEqual();
+    IntIntBiPredicate equal = Predicates.intsEqual();
     Object[] expected = new int[4][5][6];
     Object[] actual = new int[4][5][6];
     TestAssertions.assertArrayTest(expected, actual, equal);

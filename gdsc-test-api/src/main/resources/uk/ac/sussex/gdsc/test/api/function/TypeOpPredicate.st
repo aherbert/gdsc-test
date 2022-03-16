@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.StringUtils;
+import uk.ac.sussex.gdsc.test.api.Strings;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -49,6 +49,6 @@ public class <Type><Op>Predicate implements <Type>Predicate, Supplier\<String> {
    */
   @Override
   public String get() {
-    return StringUtils.<op>ToString(predicate1, predicate2);
+    return Strings.<op>ToString(predicate1, predicate2);
   }
 }

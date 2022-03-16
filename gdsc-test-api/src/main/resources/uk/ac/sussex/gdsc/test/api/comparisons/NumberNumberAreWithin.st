@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Tests {@code <number>} equality using an absolute error tolerance.
  *
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see <Number>EqualityUtils#areWithin(<number>, <number>, <errorType>)
+ * @see <Number>Equality#areWithin(<number>, <number>, <errorType>)
  */
 public class <Number><Number>Are<Within>
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
@@ -30,7 +30,7 @@ public class <Number><Number>Are<Within>
    *         measurable difference between <number> values
    */
   public <Number><Number>Are<Within>(<errorType> absoluteError) {
-    <Number>EqualityUtils.validateAbsoluteError(absoluteError);
+    <Number>Equality.validateAbsoluteError(absoluteError);
     this.absoluteError = absoluteError;
   }
 
@@ -44,7 +44,7 @@ public class <Number><Number>Are<Within>
   @Override
   public boolean test(<number> value1, <number> value2) {
     // Errors have been checked so use the package level method
-    return <Number>EqualityUtils.testAreWithin(value1, value2, absoluteError);
+    return <Number>Equality.testAreWithin(value1, value2, absoluteError);
   }
 
   /**
@@ -54,6 +54,6 @@ public class <Number><Number>Are<Within>
    */
   @Override
   public String get() {
-    return DescriptionHelper.getDescriptionWithin(absoluteError);
+    return Descriptions.getDescriptionWithin(absoluteError);
   }
 }

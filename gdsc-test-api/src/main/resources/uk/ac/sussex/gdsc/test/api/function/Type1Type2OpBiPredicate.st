@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.StringUtils;
+import uk.ac.sussex.gdsc.test.api.Strings;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -51,6 +51,6 @@ public class <Type1><Type2><Op>BiPredicate
    */
   @Override
   public String get() {
-    return StringUtils.<op>ToString(predicate1, predicate2);
+    return Strings.<op>ToString(predicate1, predicate2);
   }
 }

@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.StringUtils;
+import uk.ac.sussex.gdsc.test.api.Strings;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -45,6 +45,6 @@ public class <Type>NegatePredicate implements <Type>Predicate, Supplier\<String>
    */
   @Override
   public String get() {
-    return StringUtils.negateToString(predicate);
+    return Strings.negateToString(predicate);
   }
 }

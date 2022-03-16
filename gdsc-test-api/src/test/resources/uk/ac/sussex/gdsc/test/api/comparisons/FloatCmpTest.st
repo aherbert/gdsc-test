@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+import uk.ac.sussex.gdsc.test.api.ApiTests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class <Float>CmpTest {
    */
   @Test
   public void testTest() {
-    final <float>[] values = ApiTestUtils.get<Float>Values();
+    final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
       final <Float>Cmp predicate = new <Float>Cmp(value1);
       Assertions.assertEquals(value1, predicate.getReferenceValue(),
@@ -33,7 +33,7 @@ public class <Float>CmpTest {
    */
   @Test
   public void testGet() {
-    final <float>[] values = ApiTestUtils.get<Float>Values();
+    final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value : values) {
       final <Float>Cmp predicate = new <Float>Cmp(value);
       Assertions.assertTrue(predicate.get().contains("cmp"), "Description missing cmp");

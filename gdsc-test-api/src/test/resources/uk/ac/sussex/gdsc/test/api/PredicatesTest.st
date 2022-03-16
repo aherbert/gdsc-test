@@ -2,18 +2,18 @@
 
 <! Explicit imports (not templated) so the sort order is correct for Checkstyle !>
 import uk.ac.sussex.gdsc.test.api.comparisons.BooleanEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.ByteEqualityUtils;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEqualityUtils;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatEqualityUtils;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.IntEqualityUtils;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.LongEqualityUtils;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.ShortEqualityUtils;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquals;
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
@@ -60,9 +60,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link TestHelper}.
+ * Tests {@link Predicates}.
  */
-public class TestHelperTest {<types,Types:{type,Type |
+public class PredicatesTest {<types,Types:{type,Type |
 <\n>
   /**
    * Test creates a predicate to compare a {@code <type>\} value to the reference value using the
@@ -70,9 +70,9 @@ public class TestHelperTest {<types,Types:{type,Type |
    */
   @Test
   public void testEquals<Type>() {
-    final <type>[] values = ApiTestUtils.get<Type>Values();
+    final <type>[] values = ApiTests.get<Type>Values();
     for (<type> value1 : values) {
-      final <Type>Predicate test = TestHelper.<type>Equals(value1);
+      final <Type>Predicate test = Predicates.<type>Equals(value1);
       for (<type> value2 : values) {
         Assertions.assertEquals(value1 == value2, test.test(value2),
             "Predicate does not compute ==");
@@ -86,8 +86,8 @@ public class TestHelperTest {<types,Types:{type,Type |
    */
   @Test
   public void testEqual<Type>s() {
-    final <Type><Type>BiPredicate test = TestHelper.<type>sEqual();
-    final <type>[] values = ApiTestUtils.get<Type>Values();
+    final <Type><Type>BiPredicate test = Predicates.<type>sEqual();
+    final <type>[] values = ApiTests.get<Type>Values();
     for (<type> value1 : values) {
       for (<type> value2 : values) {
         Assertions.assertEquals(value1 == value2, test.test(value1, value2),
@@ -102,9 +102,9 @@ public class TestHelperTest {<types,Types:{type,Type |
    */
   @Test
   public void testCmp<Float>() {
-    final <float>[] values = ApiTestUtils.get<Float>Values();
+    final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
-      final <Float>Predicate test = TestHelper.<float>Cmp(value1);
+      final <Float>Predicate test = Predicates.<float>Cmp(value1);
       for (<float> value2 : values) {
         Assertions.assertEquals(<Float>.compare(value1, value2) == 0, test.test(value2),
             "Predicate does not compute <Float>.compare");
@@ -117,8 +117,8 @@ public class TestHelperTest {<types,Types:{type,Type |
    */
   @Test
   public void testCmp<Float>s() {
-    final <Float><Float>BiPredicate test = TestHelper.<float>sCmp();
-    final <float>[] values = ApiTestUtils.get<Float>Values();
+    final <Float><Float>BiPredicate test = Predicates.<float>sCmp();
+    final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {
         Assertions.assertEquals(<Float>.compare(value1, value2) == 0, test.test(value1, value2),
@@ -133,11 +133,11 @@ public class TestHelperTest {<types,Types:{type,Type |
   @Test
   public void testAreWithinUlpUsing<Float>s() {
     final <ulpType> ulpError = 1;
-    final <Float><Float>BiPredicate test = TestHelper.<float>sAreWithinUlp(ulpError);
-    final <float>[] values = ApiTestUtils.get<Float>Values();
+    final <Float><Float>BiPredicate test = Predicates.<float>sAreWithinUlp(ulpError);
+    final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {
-        Assertions.assertEquals(<Float>EqualityUtils.areWithinUlp(value1, value2, ulpError),
+        Assertions.assertEquals(<Float>Equality.areWithinUlp(value1, value2, ulpError),
             test.test(value1, value2),
             "Predicate does not compute withinUlp");
       \}
@@ -151,11 +151,11 @@ public class TestHelperTest {<types,Types:{type,Type |
   @Test
   public void testAreWithin<Number>Using<NumberAbsType>s() {
     final <numberAbsType> absoluteError = 1;
-    final <Number><Number>BiPredicate test = TestHelper.<number>sAreWithin(absoluteError);
-    final <number>[] values = ApiTestUtils.get<Number>Values();
+    final <Number><Number>BiPredicate test = Predicates.<number>sAreWithin(absoluteError);
+    final <number>[] values = ApiTests.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
-        Assertions.assertEquals(<Number>EqualityUtils.areWithin(value1, value2, absoluteError),
+        Assertions.assertEquals(<Number>Equality.areWithin(value1, value2, absoluteError),
             test.test(value1, value2),
             "Predicate does not compute within");
       \}
@@ -169,16 +169,16 @@ public class TestHelperTest {<types,Types:{type,Type |
   public void testAreClose<Number>s() {
     final double relativeError = 0.5;
     final <numberAbsType> absoluteError = 1;
-    final <Number><Number>BiPredicate test1 = TestHelper.<number>sAreClose(relativeError,
+    final <Number><Number>BiPredicate test1 = Predicates.<number>sAreClose(relativeError,
         absoluteError);
-    final <Number><Number>BiPredicate test2 = TestHelper.<number>sAreClose(relativeError);
-    final <number>[] values = ApiTestUtils.get<Number>Values();
+    final <Number><Number>BiPredicate test2 = Predicates.<number>sAreClose(relativeError);
+    final <number>[] values = ApiTests.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
-        Assertions.assertEquals(<Number>EqualityUtils.areClose(value1, value2,
+        Assertions.assertEquals(<Number>Equality.areClose(value1, value2,
             relativeError, absoluteError), test1.test(value1, value2),
             "Predicate does not compute Close with relative and absolute error");
-        Assertions.assertEquals(<Number>EqualityUtils.areClose(value1, value2,
+        Assertions.assertEquals(<Number>Equality.areClose(value1, value2,
             relativeError, 0), test2.test(value1, value2),
             "Predicate does not compute Close with relative error");
       \}
@@ -192,16 +192,16 @@ public class TestHelperTest {<types,Types:{type,Type |
   public void testIsCloseTo<Number>s() {
     final double relativeError = 0.5;
     final <numberAbsType> absoluteError = 1;
-    final <Number><Number>BiPredicate test1 = TestHelper.<number>sIsCloseTo(relativeError,
+    final <Number><Number>BiPredicate test1 = Predicates.<number>sIsCloseTo(relativeError,
         absoluteError);
-    final <Number><Number>BiPredicate test2 = TestHelper.<number>sIsCloseTo(relativeError);
-    final <number>[] values = ApiTestUtils.get<Number>Values();
+    final <Number><Number>BiPredicate test2 = Predicates.<number>sIsCloseTo(relativeError);
+    final <number>[] values = ApiTests.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
-        Assertions.assertEquals(<Number>EqualityUtils.isCloseTo(value1, value2,
+        Assertions.assertEquals(<Number>Equality.isCloseTo(value1, value2,
             relativeError, absoluteError), test1.test(value1, value2),
             "Predicate does not compute IsCloseTo with relative and absolute error");
-        Assertions.assertEquals(<Number>EqualityUtils.isCloseTo(value1, value2,
+        Assertions.assertEquals(<Number>Equality.isCloseTo(value1, value2,
             relativeError, 0), test2.test(value1, value2),
             "Predicate does not compute IsCloseTo with relative error");
       \}
@@ -214,10 +214,10 @@ public class TestHelperTest {<types,Types:{type,Type |
    */
   @Test
   public void test<Op><Type>Predicate<Type>Predicate() {
-    final <type>[] values = ApiTestUtils.get<Type>Values();
+    final <type>[] values = ApiTests.get<Type>Values();
     final <Type>Predicate predicate1 = new <Type>Equals(values[0]);
     final <Type>Predicate predicate2 = new <Type>Equals(values[1]);
-    final <Type><Type>BiPredicate predicate = TestHelper.<op>(predicate1, predicate2);
+    final <Type><Type>BiPredicate predicate = Predicates.<op>(predicate1, predicate2);
     Assertions.assertEquals(<Type>Predicate<Op><Type>Predicate.class, predicate.getClass());
     for (<type> value1 : values) {
       for (<type> value2 : values) {
@@ -236,8 +236,8 @@ public class TestHelperTest {<types,Types:{type,Type |
    */
   @Test
   public void test<Float>Is<Special>Predicate() {
-    final <float>[] values = ApiTestUtils.get<Float>Values();
-    final <Float>Predicate predicate = TestHelper.<float>Is<Special>();
+    final <float>[] values = ApiTests.get<Float>Values();
+    final <Float>Predicate predicate = Predicates.<float>Is<Special>();
     for (<float> value : values) {
       final boolean expected = <Float>.is<Special>(value);
       final boolean actual = predicate.test(value);

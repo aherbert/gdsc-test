@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.StringUtils;
+import uk.ac.sussex.gdsc.test.api.Strings;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -55,8 +55,8 @@ public class <Type1>Predicate<Op><Type2>Predicate
    */
   @Override
   public String get() {
-    final String p1 = "p(v1)=" + StringUtils.wrap(StringUtils.toString(predicate1));
-    final String p2 = "p(v2)=" + StringUtils.wrap(StringUtils.toString(predicate2));
-    return StringUtils.<op>ToString(p1, p2);
+    final String p1 = "p(v1)=" + Strings.wrap(Strings.toString(predicate1));
+    final String p2 = "p(v2)=" + Strings.wrap(Strings.toString(predicate2));
+    return Strings.<op>ToString(p1, p2);
   }
 }

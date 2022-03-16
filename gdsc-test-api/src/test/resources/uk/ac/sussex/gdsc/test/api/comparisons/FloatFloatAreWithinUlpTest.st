@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+import uk.ac.sussex.gdsc.test.api.ApiTests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,14 +15,14 @@ public class <Float><Float>AreWithinUlpTest {
    */
   @Test
   public void testTest() {
-    final <float>[] values = ApiTestUtils.get<Float>Values();
+    final <float>[] values = ApiTests.get<Float>Values();
     for (<ulpType> ulpError : new <ulpType>[] {<ulpValue>}) {
       final <Float><Float>AreWithinUlp predicate = new <Float><Float>AreWithinUlp(ulpError);
       for (<float> value1 : values) {
         for (<float> value2 : values) {
-          final boolean expected = <Float>EqualityUtils.testAreWithinUlp(value1, value2, ulpError);
+          final boolean expected = <Float>Equality.testAreWithinUlp(value1, value2, ulpError);
           Assertions.assertEquals(expected, predicate.test(value1, value2),
-              () -> String.format("Does not compute <Float>EqualityUtils.testAreWithinUlp :"
+              () -> String.format("Does not compute <Float>Equality.testAreWithinUlp :"
                   + " v1=%s, v2=%s, ulp.error=%s", value1, value2, ulpError));
         }
       }

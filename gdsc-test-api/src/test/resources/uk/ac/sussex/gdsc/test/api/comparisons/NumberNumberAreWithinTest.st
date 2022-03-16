@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+import uk.ac.sussex.gdsc.test.api.ApiTests;
 
 <if(import1)>import <import1>;<endif>
 import org.junit.jupiter.api.Assertions;
@@ -16,14 +16,14 @@ public class <Number><Number>Are<Within>Test {
    */
   @Test
   public void testTest() {
-    final <number>[] values = ApiTestUtils.get<Number>Values();
+    final <number>[] values = ApiTests.get<Number>Values();
     for (<errorType> absoluteError : new <errorType>[] {<errorValue>}) {
       final <Number><Number>Are<Within> predicate = new <Number><Number>Are<Within>(absoluteError);
       for (<number> value1 : values) {
         for (<number> value2 : values) {
-          final boolean expected = <Number>EqualityUtils.testAreWithin(value1, value2, absoluteError);
+          final boolean expected = <Number>Equality.testAreWithin(value1, value2, absoluteError);
           Assertions.assertEquals(expected, predicate.test(value1, value2),
-              () -> String.format("Does not compute <Number>EqualityUtils.testAreWithin :"
+              () -> String.format("Does not compute <Number>Equality.testAreWithin :"
                   + " v1=%s, v2=%s, abs.error=%s", value1, value2, absoluteError));
         }
       }

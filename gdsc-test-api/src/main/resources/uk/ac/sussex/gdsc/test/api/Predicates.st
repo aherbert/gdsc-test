@@ -89,14 +89,14 @@ import uk.ac.sussex.gdsc.test.api.function.ShortPredicateXorShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
 
 /**
- * Helper class to create predicates for tests.
+ * Create predicates for tests.
  */
-public final class TestHelper {
+public final class Predicates {
 
   /**
    * Do not allow public construction.
    */
-  private TestHelper() {}
+  private Predicates() {}
 <types,Types:{type,Type |
 <\n>
   /**

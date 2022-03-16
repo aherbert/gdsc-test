@@ -27,12 +27,12 @@ package uk.ac.sussex.gdsc.test.api.comparisons;
 /**
  * Defines utilities for testing {@code double} equality.
  */
-public final class DoubleEqualityUtils {
+public final class DoubleEquality {
 
   /**
    * Do not allow public construction.
    */
-  private DoubleEqualityUtils() {
+  private DoubleEquality() {
     // No constructor
   }
 
@@ -226,7 +226,7 @@ public final class DoubleEqualityUtils {
    * @throws IllegalArgumentException If the absolute error is not positive finite
    */
   static void validateAreClose(double relativeError, double absoluteError) {
-    NumberEqualityUtils.validateSymmetricRelativeError(relativeError);
+    NumberEquality.validateSymmetricRelativeError(relativeError);
     validateAbsoluteError(absoluteError);
   }
 
@@ -320,7 +320,7 @@ public final class DoubleEqualityUtils {
    * @throws IllegalArgumentException If the absolute error is not positive
    */
   static void validateIsCloseTo(double relativeError, double absoluteError) {
-    NumberEqualityUtils.validateAsymmetricRelativeError(relativeError);
+    NumberEquality.validateAsymmetricRelativeError(relativeError);
     validateAbsoluteError(absoluteError);
   }
 

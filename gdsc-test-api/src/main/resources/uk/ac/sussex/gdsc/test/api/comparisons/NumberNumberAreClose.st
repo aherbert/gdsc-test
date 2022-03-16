@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * two values.
  *
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see <Number>EqualityUtils#areClose(<number>, <number>, double, <errorType>)
+ * @see <Number>Equality#areClose(<number>, <number>, double, <errorType>)
  */
 public class <Number><Number>AreClose
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
@@ -48,7 +48,7 @@ public class <Number><Number>AreClose
    *         {@code >=} than the maximum difference between <number> primitives
    */
   public <Number><Number>AreClose(double relativeError, <errorType> absoluteError) {
-    <Number>EqualityUtils.validateAreClose(relativeError, absoluteError);
+    <Number>Equality.validateAreClose(relativeError, absoluteError);
     this.relativeError = relativeError;
     this.absoluteError = absoluteError;
   }
@@ -64,7 +64,7 @@ public class <Number><Number>AreClose
   @Override
   public boolean test(<number> value1, <number> value2) {
     // Errors have been checked so use the package level method
-    return <Number>EqualityUtils.testAreClose(value1, value2, relativeError, absoluteError);
+    return <Number>Equality.testAreClose(value1, value2, relativeError, absoluteError);
   }
 
   /**
@@ -74,6 +74,6 @@ public class <Number><Number>AreClose
    */
   @Override
   public String get() {
-    return DescriptionHelper.getDescriptionClose(relativeError, absoluteError);
+    return Descriptions.getDescriptionClose(relativeError, absoluteError);
   }
 }

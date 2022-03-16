@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class DescriptionHelperTest {
+class DescriptionsTest {
 
   /**
    * Assert the message contains the sub-string.
@@ -66,7 +66,7 @@ class DescriptionHelperTest {
   void testGetDescriptionWithinUlp() {
     // These must be distinguishable as strings
     for (final int ulpError : new int[] {0, 1, 42, Integer.MAX_VALUE}) {
-      final String result = DescriptionHelper.getDescriptionWithinUlp(ulpError);
+      final String result = Descriptions.getDescriptionWithinUlp(ulpError);
       final String ulpString = String.valueOf(ulpError);
       assertMessageContains(result, "ulp", "Predicate description");
       assertMessageContains(result, (ulpError == 0) ? " == " : " <= ", "Predicate description");
@@ -78,7 +78,7 @@ class DescriptionHelperTest {
   void testFloatsGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (final float absError : new float[] {-0f, 0, 0.5f, 1, (float) Math.PI}) {
-      final String result = DescriptionHelper.getDescriptionWithin(absError);
+      final String result = Descriptions.getDescriptionWithin(absError);
       final String absString = (absError == 0) ? "0" : String.valueOf(absError);
       assertMessageContains(result, "|v1-v2|", "Predicate description");
       assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
@@ -90,7 +90,7 @@ class DescriptionHelperTest {
   void testDoublesGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (final double absError : new double[] {-0.0, 0, 0.5, 1, Math.PI}) {
-      final String result = DescriptionHelper.getDescriptionWithin(absError);
+      final String result = Descriptions.getDescriptionWithin(absError);
       final String absString = (absError == 0) ? "0" : String.valueOf(absError);
       assertMessageContains(result, "|v1-v2|", "Predicate description");
       assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
@@ -105,7 +105,7 @@ class DescriptionHelperTest {
         BigInteger.valueOf(Long.MAX_VALUE),
         // Bigger than a long
         BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE)}) {
-      final String result = DescriptionHelper.getDescriptionWithin(absError);
+      final String result = Descriptions.getDescriptionWithin(absError);
       final String absString = String.valueOf(absError);
       assertMessageContains(result, "|v1-v2|", "Predicate description");
       assertMessageContains(result, (absError.signum() == 0) ? " == " : " <= ",
@@ -118,7 +118,7 @@ class DescriptionHelperTest {
   void testLongsGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (final long absError : new long[] {0, 1, Long.MAX_VALUE}) {
-      final String result = DescriptionHelper.getDescriptionWithin(absError);
+      final String result = Descriptions.getDescriptionWithin(absError);
       final String absString = String.valueOf(absError);
       assertMessageContains(result, "|v1-v2|", "Predicate description");
       assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
@@ -130,7 +130,7 @@ class DescriptionHelperTest {
   void testIntsGetDescriptionWithin() {
     // These must be distinguishable as strings
     for (int absError : new int[] {0, 1, Integer.MAX_VALUE}) {
-      final String result = DescriptionHelper.getDescriptionWithin(absError);
+      final String result = Descriptions.getDescriptionWithin(absError);
       final String absString = String.valueOf(absError);
       assertMessageContains(result, "|v1-v2|", "Predicate description");
       assertMessageContains(result, (absError == 0) ? " == " : " <= ", "Predicate description");
@@ -156,7 +156,7 @@ class DescriptionHelperTest {
     final float inputAbsError = absoluteError.floatValue();
 
     // The raw input
-    final String result = DescriptionHelper.getDescriptionClose(inputRelError, inputAbsError);
+    final String result = Descriptions.getDescriptionClose(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -209,7 +209,7 @@ class DescriptionHelperTest {
     final double inputAbsError = absoluteError.doubleValue();
 
     // The raw input
-    final String result = DescriptionHelper.getDescriptionClose(inputRelError, inputAbsError);
+    final String result = Descriptions.getDescriptionClose(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -262,7 +262,7 @@ class DescriptionHelperTest {
     final long inputAbsError = absoluteError.longValue();
 
     // The raw input
-    final String result = DescriptionHelper.getDescriptionClose(inputRelError, inputAbsError);
+    final String result = Descriptions.getDescriptionClose(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -315,7 +315,7 @@ class DescriptionHelperTest {
     final int inputAbsError = absoluteError.intValue();
 
     // The raw input
-    final String result = DescriptionHelper.getDescriptionClose(inputRelError, inputAbsError);
+    final String result = Descriptions.getDescriptionClose(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -369,7 +369,7 @@ class DescriptionHelperTest {
     final float inputAbsError = absoluteError.floatValue();
 
     // The raw input
-    final String result = DescriptionHelper.getDescriptionIsCloseTo(inputRelError, inputAbsError);
+    final String result = Descriptions.getDescriptionIsCloseTo(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -423,7 +423,7 @@ class DescriptionHelperTest {
     final double inputAbsError = absoluteError.doubleValue();
 
     // The raw input
-    final String result = DescriptionHelper.getDescriptionIsCloseTo(inputRelError, inputAbsError);
+    final String result = Descriptions.getDescriptionIsCloseTo(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -476,7 +476,7 @@ class DescriptionHelperTest {
     final long inputAbsError = absoluteError.longValue();
 
     // The raw input
-    final String result = DescriptionHelper.getDescriptionIsCloseTo(inputRelError, inputAbsError);
+    final String result = Descriptions.getDescriptionIsCloseTo(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {
@@ -529,7 +529,7 @@ class DescriptionHelperTest {
     final int inputAbsError = absoluteError.intValue();
 
     // The raw input
-    final String result = DescriptionHelper.getDescriptionIsCloseTo(inputRelError, inputAbsError);
+    final String result = Descriptions.getDescriptionIsCloseTo(inputRelError, inputAbsError);
 
     // Handle special case
     if (inputRelError == 0) {

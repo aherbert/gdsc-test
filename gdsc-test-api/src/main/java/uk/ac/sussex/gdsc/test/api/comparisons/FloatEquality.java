@@ -27,12 +27,12 @@ package uk.ac.sussex.gdsc.test.api.comparisons;
 /**
  * Defines utilities for testing {@code float} equality.
  */
-public final class FloatEqualityUtils {
+public final class FloatEquality {
 
   /**
    * Do not allow public construction.
    */
-  private FloatEqualityUtils() {
+  private FloatEquality() {
     // No constructor
   }
 
@@ -229,7 +229,7 @@ public final class FloatEqualityUtils {
    * @throws IllegalArgumentException If the absolute error is not positive finite
    */
   static void validateAreClose(double relativeError, float absoluteError) {
-    NumberEqualityUtils.validateSymmetricRelativeError(relativeError);
+    NumberEquality.validateSymmetricRelativeError(relativeError);
     validateAbsoluteError(absoluteError);
   }
 
@@ -326,7 +326,7 @@ public final class FloatEqualityUtils {
    * @throws IllegalArgumentException If the absolute error is not positive
    */
   static void validateIsCloseTo(double relativeError, float absoluteError) {
-    NumberEqualityUtils.validateAsymmetricRelativeError(relativeError);
+    NumberEquality.validateAsymmetricRelativeError(relativeError);
     validateAbsoluteError(absoluteError);
   }
 

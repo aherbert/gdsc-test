@@ -25,38 +25,38 @@
 package uk.ac.sussex.gdsc.test.api.comparisons;
 
 /**
- * Defines utilities for testing {@code short} equality.
+ * Defines utilities for testing {@code byte} equality.
  */
-public final class ShortEqualityUtils {
+public final class ByteEquality {
 
   /**
-   * The maximum absolute error between two {@code short} values.
+   * The maximum absolute error between two {@code byte} values.
    */
-  public static final int MAX_ABS_ERROR = 0xffff;
+  public static final int MAX_ABS_ERROR = 0xff;
 
   /**
    * Do not allow public construction.
    */
-  private ShortEqualityUtils() {
+  private ByteEquality() {
     // No constructor
   }
 
   /**
-   * Tests that two shorts are equal.
+   * Tests that two bytes are equal.
    *
    * @param value1 The first value.
    * @param value2 The second value.
    * @return true if equal
    */
-  public static boolean areEqual(short value1, short value2) {
+  public static boolean areEqual(byte value1, byte value2) {
     return value1 == value2;
   }
 
   /**
-   * Tests that two shorts are equal within an absolute error.
+   * Tests that two bytes are equal within an absolute error.
    *
    * <p>This test uses {@code int} arithmetic. If the absolute error is equal or above the maximum
-   * difference between two {@code short} values then it is not a valid test and an exception is
+   * difference between two {@code byte} values then it is not a valid test and an exception is
    * raised.
    *
    * @param value1 The first value.
@@ -65,26 +65,26 @@ public final class ShortEqualityUtils {
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if within the tolerance
    * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
-   *         than the maximum difference between short primitives
+   *         than the maximum difference between byte primitives
    */
-  public static boolean areWithin(short value1, short value2, int absoluteError) {
+  public static boolean areWithin(byte value1, byte value2, int absoluteError) {
     validateAbsoluteError(absoluteError);
     return testAreWithin(value1, value2, absoluteError);
   }
 
   /**
-   * Check the error is within the maximum difference between {@code short} primitives.
+   * Check the error is within the maximum difference between {@code byte} primitives.
    *
    * @param absoluteError The maximum absolute error between two values
    * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
-   *         than the maximum difference between short primitives
+   *         than the maximum difference between byte primitives
    */
   static void validateAbsoluteError(int absoluteError) {
-    NumberEqualityUtils.validateAbsoluteError(absoluteError, MAX_ABS_ERROR);
+    NumberEquality.validateAbsoluteError(absoluteError, MAX_ABS_ERROR);
   }
 
   /**
-   * Tests that two shorts are equal within an absolute error.
+   * Tests that two bytes are equal within an absolute error.
    *
    * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(int)}.
    *
@@ -94,12 +94,12 @@ public final class ShortEqualityUtils {
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
-  static boolean testAreWithin(short value1, short value2, int absoluteError) {
-    return NumberEqualityUtils.shortOrBytesTestAreWithin(value1, value2, absoluteError);
+  static boolean testAreWithin(byte value1, byte value2, int absoluteError) {
+    return NumberEquality.shortOrBytesTestAreWithin(value1, value2, absoluteError);
   }
 
   /**
-   * Tests that two shorts are close using a relative and absolute error. The relative error between
+   * Tests that two bytes are close using a relative and absolute error. The relative error between
    * values {@code value1} and {@code value2} is relative to the largest magnitude of the two values
    * and the test is:
    *
@@ -125,14 +125,14 @@ public final class ShortEqualityUtils {
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    * @throws IllegalArgumentException If the absolute error is not positive finite
    */
-  public static boolean areClose(short value1, short value2, double relativeError,
+  public static boolean areClose(byte value1, byte value2, double relativeError,
       int absoluteError) {
     validateAreClose(relativeError, absoluteError);
     return testAreClose(value1, value2, relativeError, absoluteError);
   }
 
   /**
-   * Check the errors allow a test of {@code short} equality using a symmetric relative error.
+   * Check the errors allow a test of {@code byte} equality using a symmetric relative error.
    *
    * @param relativeError The maximum relative error
    * @param absoluteError The maximum absolute error
@@ -140,12 +140,12 @@ public final class ShortEqualityUtils {
    * @throws IllegalArgumentException If the absolute error is not positive
    */
   static void validateAreClose(double relativeError, int absoluteError) {
-    NumberEqualityUtils.validateSymmetricRelativeError(relativeError);
+    NumberEquality.validateSymmetricRelativeError(relativeError);
     validateAbsoluteError(absoluteError);
   }
 
   /**
-   * Tests that two shorts are close using a relative and/or absolute error. The relative error
+   * Tests that two bytes are close using a relative and/or absolute error. The relative error
    * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
    * two values.
    *
@@ -159,13 +159,13 @@ public final class ShortEqualityUtils {
    *        <code>value2</code> for which both numbers are still considered equal.
    * @return true if close
    */
-  static boolean testAreClose(short value1, short value2, double relativeError, int absoluteError) {
-    return NumberEqualityUtils.shortsOrBytesTestAreClose(value1, value2, relativeError,
+  static boolean testAreClose(byte value1, byte value2, double relativeError, int absoluteError) {
+    return NumberEquality.shortsOrBytesTestAreClose(value1, value2, relativeError,
         absoluteError);
   }
 
   /**
-   * Tests that an short is close to an expected value. The relative error between values
+   * Tests that an byte is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
    * test is:
    *
@@ -189,30 +189,30 @@ public final class ShortEqualityUtils {
    * @return true if actual is close to expected
    * @throws IllegalArgumentException If the relative error is not positive finite
    * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
-   *         than the maximum difference between short primitives
+   *         than the maximum difference between byte primitives
    */
-  public static boolean isCloseTo(short expected, short actual, double relativeError,
+  public static boolean isCloseTo(byte expected, byte actual, double relativeError,
       int absoluteError) {
     validateIsCloseTo(relativeError, absoluteError);
     return testIsCloseTo(expected, actual, relativeError, absoluteError);
   }
 
   /**
-   * Check the errors allow a test of {@code short} equality using an asymmetric relative error.
+   * Check the errors allow a test of {@code byte} equality using an asymmetric relative error.
    *
    * @param relativeError The maximum relative error
    * @param absoluteError The maximum absolute error
    * @throws IllegalArgumentException If the relative error is not positive finite
    * @throws IllegalArgumentException If the absolute error is not positive or is <code>&lt;=</code>
-   *         than the maximum difference between short primitives
+   *         than the maximum difference between byte primitives
    */
   static void validateIsCloseTo(double relativeError, int absoluteError) {
-    NumberEqualityUtils.validateAsymmetricRelativeError(relativeError);
+    NumberEquality.validateAsymmetricRelativeError(relativeError);
     validateAbsoluteError(absoluteError);
   }
 
   /**
-   * Tests a short value is close to an expected value. The relative error between values
+   * Tests a byte value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
    * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, int)}.
@@ -226,9 +226,9 @@ public final class ShortEqualityUtils {
    *        <code>actual</code> for which both numbers are still considered equal.
    * @return true if actual is close to expected
    */
-  static boolean testIsCloseTo(short expected, short actual, double relativeError,
+  static boolean testIsCloseTo(byte expected, byte actual, double relativeError,
       int absoluteError) {
-    return NumberEqualityUtils.shortsOrBytesTestIsCloseTo(expected, actual, relativeError,
+    return NumberEquality.shortsOrBytesTestIsCloseTo(expected, actual, relativeError,
         absoluteError);
   }
 }

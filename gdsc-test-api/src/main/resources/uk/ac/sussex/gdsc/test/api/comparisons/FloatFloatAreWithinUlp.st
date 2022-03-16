@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * representable numbers between the two values, where {@code N} is the ULP error tolerance.
  *
  * @see <Float><Float>BiPredicate#test(<float>, <float>)
- * @see <Float>EqualityUtils#areWithinUlp(<float>, <float>, <ulpType>)
+ * @see <Float>Equality#areWithinUlp(<float>, <float>, <ulpType>)
  * @see \<a href="https://en.wikipedia.org/wiki/Unit_in_the_last_place">Unit in the last place\</a>
  */
 public class <Float><Float>AreWithinUlp
@@ -42,7 +42,7 @@ public class <Float><Float>AreWithinUlp
    * @throws IllegalArgumentException If the ULP error is not positive
    */
   public <Float><Float>AreWithinUlp(<ulpType> ulpError) {
-    <Float>EqualityUtils.validateUlpError(ulpError);
+    <Float>Equality.validateUlpError(ulpError);
     this.ulpError = ulpError;
   }
 
@@ -56,7 +56,7 @@ public class <Float><Float>AreWithinUlp
   @Override
   public boolean test(<float> value1, <float> value2) {
     // Errors have been checked so use the package level method
-    return <Float>EqualityUtils.testAreWithinUlp(value1, value2, ulpError);
+    return <Float>Equality.testAreWithinUlp(value1, value2, ulpError);
   }
 
   /**
@@ -66,6 +66,6 @@ public class <Float><Float>AreWithinUlp
    */
   @Override
   public String get() {
-    return DescriptionHelper.getDescriptionWithinUlp(ulpError);
+    return Descriptions.getDescriptionWithinUlp(ulpError);
   }
 }

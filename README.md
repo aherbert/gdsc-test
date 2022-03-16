@@ -54,7 +54,7 @@ relative equality:
 
 ```java
 import uk.ac.sussex.gdsc.test.api.TestAssertions;
-import uk.ac.sussex.gdsc.test.api.TestHelper;
+import uk.ac.sussex.gdsc.test.api.Predicates;
 
 @Test
 public void testRelativeEquality() {
@@ -62,7 +62,7 @@ public void testRelativeEquality() {
     double expected = 100;
     double actual = 99;
 
-    DoubleDoubleBiPredicate isCloseTo = TestHelper.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
 
     // This will pass as 99 is within (0.01*100) of 100
     TestAssertions.assertTest(expected, actual, isCloseTo);
@@ -75,7 +75,7 @@ interface implement ``Supplier<String>`` to provide a text description of the pr
 Nested arrays are supported using recursion allowing testing of matrices:
 
 ```java
-IntIntBiPredicate equal = TestHelper.intsEqual();
+IntIntBiPredicate equal = Predicates.intsEqual();
 Object[] expected = new int[4][5][6];
 Object[] actual = new int[4][5][6];
 TestAssertions.assertArrayTest(expected, actual, equal);

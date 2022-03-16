@@ -29,7 +29,7 @@ import java.math.BigInteger;
 /**
  * Defines utilities for describing comparison predicates.
  */
-final class DescriptionHelper {
+final class Descriptions {
 
   /** Constant used to ignore the relative error. */
   private static final double IGNORE_RELATIVE_ERROR = -1;
@@ -71,7 +71,7 @@ final class DescriptionHelper {
   /**
    * Do not allow public construction.
    */
-  private DescriptionHelper() {
+  private Descriptions() {
     // No constructor
   }
 

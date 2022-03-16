@@ -27,7 +27,7 @@ package uk.ac.sussex.gdsc.test.api.comparisons;
 /**
  * Defines utilities for testing numeric equality.
  */
-final class NumberEqualityUtils {
+final class NumberEquality {
 
   /** The maximum symmetric relative error. */
   private static final double MAX_RELATIVE_ERROR = 2;
@@ -35,7 +35,7 @@ final class NumberEqualityUtils {
   /**
    * Do not allow public construction.
    */
-  private NumberEqualityUtils() {
+  private NumberEquality() {
     // No constructor
   }
 

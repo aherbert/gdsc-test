@@ -30,65 +30,65 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class StringUtilsTest {
+class StringsTest {
   @Test
   void testIsNotEmpty() {
-    Assertions.assertTrue(StringUtils.isNotEmpty("Not empty"));
-    Assertions.assertFalse(StringUtils.isNotEmpty(""));
-    Assertions.assertFalse(StringUtils.isNotEmpty(" "));
-    Assertions.assertFalse(StringUtils.isNotEmpty("\t"));
-    Assertions.assertFalse(StringUtils.isNotEmpty(null));
+    Assertions.assertTrue(Strings.isNotEmpty("Not empty"));
+    Assertions.assertFalse(Strings.isNotEmpty(""));
+    Assertions.assertFalse(Strings.isNotEmpty(" "));
+    Assertions.assertFalse(Strings.isNotEmpty("\t"));
+    Assertions.assertFalse(Strings.isNotEmpty(null));
   }
 
   @Test
   void testNullOrEmpty() {
-    Assertions.assertFalse(StringUtils.isNullOrEmpty("Not empty"));
-    Assertions.assertTrue(StringUtils.isNullOrEmpty(""));
-    Assertions.assertTrue(StringUtils.isNullOrEmpty(" "));
-    Assertions.assertTrue(StringUtils.isNullOrEmpty("\t"));
-    Assertions.assertTrue(StringUtils.isNullOrEmpty(null));
+    Assertions.assertFalse(Strings.isNullOrEmpty("Not empty"));
+    Assertions.assertTrue(Strings.isNullOrEmpty(""));
+    Assertions.assertTrue(Strings.isNullOrEmpty(" "));
+    Assertions.assertTrue(Strings.isNullOrEmpty("\t"));
+    Assertions.assertTrue(Strings.isNullOrEmpty(null));
   }
 
   @Test
   void testToString() {
-    Assertions.assertNull(StringUtils.toString(null));
+    Assertions.assertNull(Strings.toString(null));
 
     final String string1 = "asdhjkfkas";
     final String string2 = "ahsfhkasdj";
-    Assertions.assertEquals(string1, StringUtils.toString(string1));
-    Assertions.assertNotEquals(string1, StringUtils.toString(string2));
+    Assertions.assertEquals(string1, Strings.toString(string1));
+    Assertions.assertNotEquals(string1, Strings.toString(string2));
 
     final Supplier<String> supp1 = () -> string1;
     final Supplier<String> supp2 = () -> null;
-    Assertions.assertEquals(string1, StringUtils.toString(supp1));
-    Assertions.assertNotEquals(string1, StringUtils.toString(supp2));
+    Assertions.assertEquals(string1, Strings.toString(supp1));
+    Assertions.assertNotEquals(string1, Strings.toString(supp2));
 
-    Assertions.assertNull(StringUtils.toString(supp2));
+    Assertions.assertNull(Strings.toString(supp2));
   }
 
   @Test
   void testNegateToString() {
-    Assertions.assertNull(StringUtils.negateToString(null));
+    Assertions.assertNull(Strings.negateToString(null));
 
     final String string1 = "15277512";
-    final String result = StringUtils.negateToString(string1);
+    final String result = Strings.negateToString(string1);
     Assertions.assertTrue(result.contains(string1));
     Assertions.assertTrue(result.contains("!"));
   }
 
   @Test
   void testOrToString() {
-    testCombinedToString(StringUtils::orToString, "||");
+    testCombinedToString(Strings::orToString, "||");
   }
 
   @Test
   void testAndToString() {
-    testCombinedToString(StringUtils::andToString, "&&");
+    testCombinedToString(Strings::andToString, "&&");
   }
 
   @Test
   void testXorToString() {
-    testCombinedToString(StringUtils::xorToString, "^");
+    testCombinedToString(Strings::xorToString, "^");
   }
 
   private static void testCombinedToString(BiFunction<Object, Object, String> fun,
@@ -111,7 +111,7 @@ class StringUtilsTest {
           } else {
             na = true;
           }
-          Assertions.assertEquals(na, result.contains(StringUtils.NA));
+          Assertions.assertEquals(na, result.contains(Strings.NA));
           Assertions.assertTrue(result.contains(operator));
         }
       }

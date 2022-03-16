@@ -70,7 +70,7 @@ final class TestAssertionUtils {
    * @return the prefix
    */
   static String buildPrefix(String message) {
-    return (StringUtils.isNotEmpty(message) ? message + " ==> " : "");
+    return (Strings.isNotEmpty(message) ? message + " ==> " : "");
   }
 
   /**
@@ -217,8 +217,8 @@ final class TestAssertionUtils {
   \}}>
 
   private static void appendPredicate(final StringBuilder msg, final Object predicate) {
-    final String description = StringUtils.toString(predicate);
-    if (StringUtils.isNotEmpty(description)) {
+    final String description = Strings.toString(predicate);
+    if (Strings.isNotEmpty(description)) {
       msg.append(". ").append(description);
     }
   }

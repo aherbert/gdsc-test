@@ -29,7 +29,7 @@ import java.util.function.Supplier;
 /**
  * Defines {@link String} utilities.
  */
-public final class StringUtils {
+public final class Strings {
 
   /** The space ' ' character. */
   private static final char SPACE_CHAR = ' ';
@@ -43,7 +43,7 @@ public final class StringUtils {
   /**
    * Do not allow public construction.
    */
-  private StringUtils() {}
+  private Strings() {}
 
   /**
    * Checks if the string is not null or empty whitespace.

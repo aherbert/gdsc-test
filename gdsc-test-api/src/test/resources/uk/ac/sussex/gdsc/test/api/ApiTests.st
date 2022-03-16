@@ -3,7 +3,7 @@
 /**
  * Contains constants for the tests.
  */
-public final class ApiTestUtils {
+public final class ApiTests {
 
   /** The boolean test values. */
   private static final boolean[] booleanValues = {<booleanValues:{v|<\n>      <v>,}>
@@ -38,7 +38,7 @@ public final class ApiTestUtils {
   \};
 
   /** Do not allow public construction. */
-  private ApiTestUtils() {
+  private ApiTests() {
     // No construction
   }<types,Types:{type,Type |
 <\n>

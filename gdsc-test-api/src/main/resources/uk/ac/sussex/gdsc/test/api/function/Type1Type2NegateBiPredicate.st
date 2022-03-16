@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.StringUtils;
+import uk.ac.sussex.gdsc.test.api.Strings;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -46,6 +46,6 @@ public class <Type1><Type2>NegateBiPredicate
    */
   @Override
   public String get() {
-    return StringUtils.negateToString(predicate);
+    return Strings.negateToString(predicate);
   }
 }

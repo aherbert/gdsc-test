@@ -1,6 +1,6 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.ApiTestUtils;
+import uk.ac.sussex.gdsc.test.api.ApiTests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class <Float>Is<Special>Test {
   @Test
   public void testTest() {
     final <Float>Is<Special> predicate = <Float>Is<Special>.INSTANCE;
-    final <float>[] values = ApiTestUtils.get<Float>Values();
+    final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value : values) {
       Assertions.assertEquals(<Float>.is<Special>(value), predicate.test(value),
           "Predicate does not compute <Float>.is<Special>");
