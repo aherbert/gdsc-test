@@ -36,14 +36,15 @@ import org.apache.commons.rng.RandomProviderState;
  * MurmurHash3 mixer with constants optimised by Doug Lea. This generator is implemented as
  * algorithm "L64X128MixRandom" in JDK 17 and the source is provided in the paper:
  *
- * <blockquote>Blackman and Vigna (2021) Scrambled Linear Psuedorandom Number Generators. ACM
- * Transactions on Mathematical Software, vol 47, pp 1–32.</blockquote>
+ * <blockquote>Steele and Vigna (2021) LXM: better splittable pseudorandom number generators
+ * (and almost as fast). Proceedings of the ACM on Programming Languages, Volume 5,
+ * Article 148, pp 1–31.</blockquote>
  *
  * <p>Memory footprint is 256 bits and the period is 2<sup>64</sup> 2<sup>128</sup>-1.
  *
  * @see <a href="https://prng.di.unimi.it/">xorshiro / xoroshiro generators</a>
- * @see <a href="https://dl.acm.org/doi/10.1145/3460772">Blackman &amp; Vigna (2021) ACM Trans.
- *      Math. Soft 47, 1-32</a>
+ * @see <a href="https://doi.org/10.1145/3485525">Steele &amp; Vigna (2021) Proc. ACM Programming
+ *      Languages 5, 1-31</a>
  */
 public final class L64X128MixRandom extends LongUniformRandomProvider {
   /** LCG multiplier. Note: (M % 8) = 5. */
@@ -124,7 +125,7 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
 
   @Override
   public long nextLong() {
-    // See Blackman and Vigna (2021), figure 1.
+    // See Steele and Vigna (2021), figure 1.
     // Combining operation
     long z = s + x0;
     // Mixing function (lea64)
