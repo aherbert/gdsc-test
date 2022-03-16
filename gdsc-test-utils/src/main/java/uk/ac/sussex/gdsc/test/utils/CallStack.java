@@ -32,20 +32,20 @@ package uk.ac.sussex.gdsc.test.utils;
  *
  * <pre>
  * void testMethod() {
- *   System.out.println(CallStackUtils.getCodePoint());
+ *   System.out.println(CallStack.getCodePoint());
  *   // Do something
- *   System.out.println(CallStackUtils.getCodePoint());
+ *   System.out.println(CallStack.getCodePoint());
  *   // Do something
- *   System.out.println(CallStackUtils.getCodePoint());
+ *   System.out.println(CallStack.getCodePoint());
  * }
  * </pre>
  */
-public final class CallStackUtils {
+public final class CallStack {
 
   /**
    * Do not allow public construction.
    */
-  private CallStackUtils() {}
+  private CallStack() {}
 
   /**
    * Gets the code point (ClassName:MethodName:LineNumber) marking the position where this method

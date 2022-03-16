@@ -29,7 +29,7 @@ import java.util.Arrays;
 /**
  * Contains utility functions for Hexidecimal (Hex) numbers.
  */
-public final class HexUtils {
+public final class Hex {
 
   /** The empty string. */
   private static final char[] EMPTY_CHARS = new char[0];
@@ -65,7 +65,7 @@ public final class HexUtils {
   }
 
   /** No instances. */
-  private HexUtils() {}
+  private Hex() {}
 
   /**
    * Encode the bytes as hex characters.
@@ -77,7 +77,7 @@ public final class HexUtils {
    * @param bytes the bytes
    * @return the hex characters
    */
-  public static char[] encodeHex(byte[] bytes) {
+  public static char[] encode(byte[] bytes) {
     // Safe for null input
     if (bytes == null || bytes.length == 0) {
       return EMPTY_CHARS;
@@ -102,8 +102,8 @@ public final class HexUtils {
    * @param bytes the bytes
    * @return the hex string
    */
-  public static String encodeHexString(byte[] bytes) {
-    return new String(encodeHex(bytes));
+  public static String encodeAsString(byte[] bytes) {
+    return new String(encode(bytes));
   }
 
   /**
@@ -116,7 +116,7 @@ public final class HexUtils {
    * @param string the string
    * @return the bytes
    */
-  public static byte[] decodeHex(CharSequence string) {
+  public static byte[] decode(CharSequence string) {
     // Safe for null input
     if (string == null || string.length() == 0) {
       return EMPTY_BYTES;

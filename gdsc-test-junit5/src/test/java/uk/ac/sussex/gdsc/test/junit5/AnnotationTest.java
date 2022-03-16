@@ -33,7 +33,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import uk.ac.sussex.gdsc.test.utils.HexUtils;
+import uk.ac.sussex.gdsc.test.utils.Hex;
 import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 import uk.ac.sussex.gdsc.test.utils.TestLogUtils.TestLevel;
 
@@ -86,7 +86,7 @@ class AnnotationTest {
   @SeededTest
   void canAnnotateSeededTest(RandomSeed seed, TestInfo info) {
     logger.log(TestLevel.TEST_INFO, () -> String.format("%s seed = %s",
-        info.getTestMethod().get().getName(), HexUtils.encodeHexString(seed.get())));
+        info.getTestMethod().get().getName(), Hex.encodeAsString(seed.get())));
   }
 
   @Test

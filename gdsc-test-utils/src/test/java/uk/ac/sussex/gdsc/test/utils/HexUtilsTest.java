@@ -25,7 +25,6 @@
 package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.Arrays;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
@@ -37,17 +36,17 @@ class HexUtilsTest {
   @Test
   void testEncodeWithBadInput() {
     final String empty = "";
-    Assertions.assertEquals(empty, HexUtils.encodeHexString(null), "Null input");
-    Assertions.assertEquals(empty, HexUtils.encodeHexString(new byte[0]), "Empty input");
+    Assertions.assertEquals(empty, Hex.encodeAsString(null), "Null input");
+    Assertions.assertEquals(empty, Hex.encodeAsString(new byte[0]), "Empty input");
   }
 
   @Test
   void testDecodeWithBadInput() {
     final byte[] empty = new byte[0];
-    Assertions.assertArrayEquals(empty, HexUtils.decodeHex(null), "Null input");
-    Assertions.assertArrayEquals(empty, HexUtils.decodeHex(""), "Empty input");
-    Assertions.assertArrayEquals(empty, HexUtils.decodeHex("j"), "Bad single chaarcter");
-    Assertions.assertArrayEquals(empty, HexUtils.decodeHex("abcsfp678"),
+    Assertions.assertArrayEquals(empty, Hex.decode(null), "Null input");
+    Assertions.assertArrayEquals(empty, Hex.decode(""), "Empty input");
+    Assertions.assertArrayEquals(empty, Hex.decode("j"), "Bad single chaarcter");
+    Assertions.assertArrayEquals(empty, Hex.decode("abcsfp678"),
         "Bad single character in larger string");
   }
 
@@ -59,8 +58,9 @@ class HexUtilsTest {
       final byte[] bytes = new byte[i];
       for (int j = 0; j < 5; j++) {
         rng.nextBytes(bytes);
-        final String expected = Hex.encodeHexString(bytes, toLowerCase);
-        final String actual = HexUtils.encodeHexString(bytes);
+        final String expected =
+            org.apache.commons.codec.binary.Hex.encodeHexString(bytes, toLowerCase);
+        final String actual = Hex.encodeAsString(bytes);
         Assertions.assertEquals(expected, actual, "Bad encoding");
       }
     }
@@ -77,17 +77,17 @@ class HexUtilsTest {
       final byte[] bytes = new byte[i];
       for (int j = 0; j < 5; j++) {
         rng.nextBytes(bytes);
-        final String hex = Hex.encodeHexString(bytes, toLowerCase);
-        final byte[] actual = HexUtils.decodeHex(hex);
+        final String hex = org.apache.commons.codec.binary.Hex.encodeHexString(bytes, toLowerCase);
+        final byte[] actual = Hex.decode(hex);
         Assertions.assertArrayEquals(bytes, actual, "Bad decoding");
 
         // Test with odd length string. It should be the same as if it had a '0' on the end.
         final StringBuilder sb = new StringBuilder(hex);
         sb.append(hexDigits[rng.nextInt(16)]);
 
-        final byte[] padded = HexUtils.decodeHex(sb);
+        final byte[] padded = Hex.decode(sb);
         sb.append('0');
-        final byte[] unpadded = HexUtils.decodeHex(sb);
+        final byte[] unpadded = Hex.decode(sb);
         Assertions.assertArrayEquals(padded, unpadded, "Bad padding");
 
         // Check against original

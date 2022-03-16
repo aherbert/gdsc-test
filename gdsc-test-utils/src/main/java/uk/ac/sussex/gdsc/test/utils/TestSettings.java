@@ -124,7 +124,7 @@ public final class TestSettings {
   static byte[] getProperty(String name, byte[] defaultValue) {
     final String text = System.getProperty(name);
     if (text != null) {
-      final byte[] bytes = HexUtils.decodeHex(text);
+      final byte[] bytes = Hex.decode(text);
       if (!SeedUtils.nullOrEmpty(bytes)) {
         return bytes;
       }
@@ -203,7 +203,7 @@ public final class TestSettings {
       // Log the seed that is generated
       final Logger logger = Logger.getLogger(TestSettings.class.getName());
       logger.log(Level.INFO,
-          String.format("-D%s=%s", PROPERTY_RANDOM_SEED, HexUtils.encodeHexString(currentSeed)));
+          String.format("-D%s=%s", PROPERTY_RANDOM_SEED, Hex.encodeAsString(currentSeed)));
       setSeed(currentSeed);
     }
     // Do not expose the internal seed by using a copy

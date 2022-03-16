@@ -64,7 +64,7 @@ class TestSettingsTest {
       Assertions.assertArrayEquals(seed, seed2, "Seed should be constant");
       Assertions.assertNotSame(seed, seed2, "Seed should be a new array");
       logger.log(TestLevel.TEST_INFO,
-          () -> String.format("TestSettings Seed = %s", HexUtils.encodeHexString(seed)));
+          () -> String.format("TestSettings Seed = %s", Hex.encodeAsString(seed)));
 
       // Test setting the seed to null
       TestSettings.setSeed(null);
@@ -156,7 +156,7 @@ class TestSettingsTest {
     // Decode seeds with information, even if it is zero
     for (String seed : new String[] {"0", "0000", "1", "1234567890abcdef"}) {
       System.setProperty(key, seed);
-      final byte[] expected = HexUtils.decodeHex(seed);
+      final byte[] expected = Hex.decode(seed);
       Assertions.assertArrayEquals(expected, TestSettings.getProperty(key, defaultValue),
           () -> "Seed is " + seed);
     }

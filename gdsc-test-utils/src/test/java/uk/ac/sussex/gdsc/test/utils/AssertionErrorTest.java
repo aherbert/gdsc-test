@@ -29,28 +29,28 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class TestUtilsTest {
+class AssertionErrorTest {
   /** The supplied message. */
   private final Supplier<String> messageSupplier = () -> {
     return "Lambda message";
   };
 
   @Test
-  void testWrapAssertionFailedErrorAppend() {
+  void testAppendMessage() {
     try {
-      TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(), messageSupplier);
+      AssertionErrors.appendMessage(new AssertionError(), messageSupplier);
     } catch (final AssertionError ex) {
       // Null is ignored
       Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
-      TestUtils.wrapAssertionFailedErrorAppend(new AssertionError(""), messageSupplier);
+      AssertionErrors.appendMessage(new AssertionError(""), messageSupplier);
     } catch (final AssertionError ex) {
       // Empty string is ignored
       Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
-      TestUtils.wrapAssertionFailedErrorAppend(new AssertionError("Something bad"),
+      AssertionErrors.appendMessage(new AssertionError("Something bad"),
           messageSupplier);
     } catch (final AssertionError ex) {
       // Empty string is ignored
@@ -59,21 +59,21 @@ class TestUtilsTest {
   }
 
   @Test
-  void testWrapAssertionFailedError() {
+  void testPrependMessage() {
     try {
-      TestUtils.wrapAssertionFailedError(new AssertionError(), messageSupplier);
+      AssertionErrors.prependMessage(new AssertionError(), messageSupplier);
     } catch (final AssertionError ex) {
       // Null is ignored
       Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
-      TestUtils.wrapAssertionFailedError(new AssertionError(""), messageSupplier);
+      AssertionErrors.prependMessage(new AssertionError(""), messageSupplier);
     } catch (final AssertionError ex) {
       // Empty string is ignored
       Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
-      TestUtils.wrapAssertionFailedError(new AssertionError("Something bad"), messageSupplier);
+      AssertionErrors.prependMessage(new AssertionError("Something bad"), messageSupplier);
     } catch (final AssertionError ex) {
       // Empty string is ignored
       Assertions.assertEquals(ex.getMessage(), messageSupplier.get() + " Something bad");

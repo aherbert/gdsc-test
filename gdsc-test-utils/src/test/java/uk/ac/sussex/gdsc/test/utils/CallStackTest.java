@@ -33,12 +33,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class CallStackUtilsTest {
+class CallStackTest {
   private static Logger logger;
 
   @BeforeAll
   public static void beforeAll() {
-    logger = Logger.getLogger(CallStackUtilsTest.class.getName());
+    logger = Logger.getLogger(CallStackTest.class.getName());
   }
 
   @AfterAll
@@ -49,8 +49,8 @@ class CallStackUtilsTest {
   @Test
   void canGetStaceTraceElement() {
     final StackTraceElement[] e = new Throwable().getStackTrace();
-    final StackTraceElement o = CallStackUtils.getStackTraceElement();
-    final StackTraceElement o2 = CallStackUtils.getStackTraceElement(1);
+    final StackTraceElement o = CallStack.getStackTraceElement();
+    final StackTraceElement o2 = CallStack.getStackTraceElement(1);
     Assertions.assertNotNull(e);
     Assertions.assertNotNull(o);
     Assertions.assertEquals(e[0].getClassName(), o.getClassName());
@@ -68,21 +68,21 @@ class CallStackUtilsTest {
   @Test
   void getStaceTraceElementIsNullWhenNotLocated() {
     final int size = new Throwable().getStackTrace().length;
-    final StackTraceElement o = CallStackUtils.getStackTraceElement(size);
+    final StackTraceElement o = CallStack.getStackTraceElement(size);
     Assertions.assertNull(o);
   }
 
   @Test
   void getStaceTraceElementThrowsWhenCountIsNegative() {
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      CallStackUtils.getStackTraceElement(-1);
+      CallStack.getStackTraceElement(-1);
     });
   }
 
   @Test
   void canGetCodePoint() {
     final StackTraceElement e = new Throwable().getStackTrace()[0];
-    final String codePoint = CallStackUtils.getCodePoint();
+    final String codePoint = CallStack.getCodePoint();
     Assertions.assertNotNull(e);
     Assertions.assertNotNull(codePoint);
     final String[] o = codePoint.split(":");
@@ -90,6 +90,6 @@ class CallStackUtilsTest {
     Assertions.assertEquals(e.getMethodName(), o[1]);
     Assertions.assertEquals(e.getLineNumber() + 1, Integer.parseInt(o[2]));
     logger.log(TestLevel.TEST_INFO, codePoint);
-    Assertions.assertEquals("", CallStackUtils.getCodePoint(null));
+    Assertions.assertEquals("", CallStack.getCodePoint(null));
   }
 }

@@ -27,13 +27,13 @@ package uk.ac.sussex.gdsc.test.utils;
 import java.util.function.Supplier;
 
 /**
- * Contains test utility functions.
+ * Contains utility functions for {@link AssertionError}.
  */
-public final class TestUtils {
+public final class AssertionErrors {
   /**
    * Do not allow public construction.
    */
-  private TestUtils() {}
+  private AssertionErrors() {}
 
   /**
    * Wraps an assertion error with a new error that has a formatted message appended to the input
@@ -43,8 +43,8 @@ public final class TestUtils {
    * @param messageSupplier The message supplier.
    * @throws AssertionError The wrapped assertion error.
    */
-  public static void wrapAssertionFailedErrorAppend(AssertionError error,
-      Supplier<String> messageSupplier) throws AssertionError {
+  public static void appendMessage(AssertionError error, Supplier<String> messageSupplier)
+      throws AssertionError {
     final String msg = error.getMessage();
     if (msg == null || msg.length() == 0) {
       throw new AssertionError(messageSupplier.get(), error);
@@ -60,8 +60,8 @@ public final class TestUtils {
    * @param messageSupplier The message supplier.
    * @throws AssertionError The wrapped assertion error.
    */
-  public static void wrapAssertionFailedError(AssertionError error,
-      Supplier<String> messageSupplier) throws AssertionError {
+  public static void prependMessage(AssertionError error, Supplier<String> messageSupplier)
+      throws AssertionError {
     final String msg = error.getMessage();
     if (msg == null || msg.length() == 0) {
       throw new AssertionError(messageSupplier.get(), error);
