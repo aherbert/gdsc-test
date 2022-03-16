@@ -66,13 +66,13 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
    */
   public L64X128MixRandom(long seed) {
     // Mix in irregular bit spacing will improve simple seeds, e.g. 0, 1, 2.
-    seed ^= RngUtils.GOLDEN_RATIO;
+    seed ^= RngFactory.GOLDEN_RATIO;
     // Must be odd
-    this.a = RngUtils.rrmxmx(seed) | 1;
+    this.a = RngFactory.rrmxmx(seed) | 1;
     this.s = seed;
     // Will output 0 only once.
-    this.x0 = RngUtils.stafford13(s + RngUtils.GOLDEN_RATIO);
-    this.x1 = RngUtils.stafford13(s + 2 * RngUtils.GOLDEN_RATIO);
+    this.x0 = RngFactory.stafford13(s + RngFactory.GOLDEN_RATIO);
+    this.x1 = RngFactory.stafford13(s + 2 * RngFactory.GOLDEN_RATIO);
   }
 
   /**
@@ -87,14 +87,14 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
    */
   public L64X128MixRandom(long seed0, long seed1) {
     // Mix in irregular bit spacing will improve simple seeds, e.g. 0, 1, 2.
-    seed0 ^= RngUtils.GOLDEN_RATIO;
-    seed1 ^= RngUtils.GOLDEN_RATIO;
+    seed0 ^= RngFactory.GOLDEN_RATIO;
+    seed1 ^= RngFactory.GOLDEN_RATIO;
     // Must be odd
-    this.a = RngUtils.rrmxmx(seed0) | 1;
+    this.a = RngFactory.rrmxmx(seed0) | 1;
     this.s = seed1;
     // Will output 0 only once.
-    this.x0 = RngUtils.stafford13(s + RngUtils.GOLDEN_RATIO);
-    this.x1 = RngUtils.stafford13(s + 2 * RngUtils.GOLDEN_RATIO);
+    this.x0 = RngFactory.stafford13(s + RngFactory.GOLDEN_RATIO);
+    this.x1 = RngFactory.stafford13(s + 2 * RngFactory.GOLDEN_RATIO);
   }
 
   /**
@@ -115,8 +115,8 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
     // Combine bits and check for zero seed
     if ((x0 | x1) == 0) {
       // Will output 0 only once.
-      this.x0 = RngUtils.stafford13(s + RngUtils.GOLDEN_RATIO);
-      this.x1 = RngUtils.stafford13(s + 2 * RngUtils.GOLDEN_RATIO);
+      this.x0 = RngFactory.stafford13(s + RngFactory.GOLDEN_RATIO);
+      this.x1 = RngFactory.stafford13(s + 2 * RngFactory.GOLDEN_RATIO);
     } else {
       this.x0 = x0;
       this.x1 = x1;

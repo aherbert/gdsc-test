@@ -33,12 +33,12 @@ import org.stringtemplate.v4.ST;
 /**
  * Generate java source files from a template using the StringTemplate library.
  */
-public final class StringTemplateHelper {
+final class StringTemplates {
 
   /**
-   * No public construction.
+   * No construction.
    */
-  private StringTemplateHelper() {}
+  private StringTemplates() {}
 
   /**
    * Generate the templates.
@@ -49,7 +49,7 @@ public final class StringTemplateHelper {
    * @param model the model
    * @return the list of templates
    */
-  public static List<Pair<String, String>> generate(StringTemplateModel model) {
+  static List<Pair<String, String>> generate(StringTemplateModel model) {
 
     final List<Pair<String, String>> list = new ArrayList<>();
 
@@ -134,7 +134,7 @@ public final class StringTemplateHelper {
   }
 
   private static Object getPackageName(String packageName) {
-    return StringUtils.isNotEmpty(packageName) ? "package " + packageName + ";" : "";
+    return Strings.isNotEmpty(packageName) ? "package " + packageName + ";" : "";
   }
 
   /**
@@ -143,7 +143,7 @@ public final class StringTemplateHelper {
    * @param model the model
    * @return the list
    */
-  public static List<String> listNames(StringTemplateModel model) {
+  static List<String> listNames(StringTemplateModel model) {
     final List<String> list = new ArrayList<>();
     final String name = model.getTemplateClassName();
     if (model.isRenamedClass()) {

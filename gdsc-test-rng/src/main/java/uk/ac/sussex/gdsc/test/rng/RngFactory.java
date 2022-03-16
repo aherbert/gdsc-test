@@ -35,7 +35,7 @@ import uk.ac.sussex.gdsc.test.utils.TestSettings;
  * A factory for creation of random number generators (RNG) that implement
  * {@link RestorableUniformRandomProvider}.
  */
-public final class RngUtils {
+public final class RngFactory {
   /**
    * The golden ratio, phi, scaled to 64-bits and rounded to odd.
    *
@@ -48,7 +48,7 @@ public final class RngUtils {
   static final long GOLDEN_RATIO = 0x9e3779b97f4a7c15L;
 
   /** Do not allow public construction. */
-  private RngUtils() {}
+  private RngFactory() {}
 
   /**
    * Gets the uniform random provider using the given seed.

@@ -26,7 +26,7 @@ package uk.ac.sussex.gdsc.test.examples;
 
 import org.apache.commons.rng.UniformRandomProvider;
 import uk.ac.sussex.gdsc.test.junit5.SeededTest;
-import uk.ac.sussex.gdsc.test.rng.RngUtils;
+import uk.ac.sussex.gdsc.test.rng.RngFactory;
 import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 
 /**
@@ -55,7 +55,7 @@ class RngTest {
    */
   @SeededTest
   void testSomethingRandom2(RandomSeed seed) {
-    UniformRandomProvider rng = RngUtils.create(seed.get());
+    UniformRandomProvider rng = RngFactory.create(seed.get());
     // Do the test ...
   }
 }

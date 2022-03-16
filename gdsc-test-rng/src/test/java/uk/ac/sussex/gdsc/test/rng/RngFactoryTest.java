@@ -35,25 +35,25 @@ import org.opentest4j.AssertionFailedError;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
 
 @SuppressWarnings("javadoc")
-class RngUtilsTest {
+class RngFactoryTest {
 
   /** The long seed. */
   private static final long LONG_SEED = 5656787697789L;
 
   @Test
   void canGetSameRandomWithSameSeed() {
-    UniformRandomProvider rng = RngUtils.create(LONG_SEED);
+    UniformRandomProvider rng = RngFactory.create(LONG_SEED);
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    rng = RngUtils.create(LONG_SEED);
+    rng = RngFactory.create(LONG_SEED);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertArrayEquals(e, o);
   }
 
   @Test
   void canGetDifferentRandomWithDifferentSeed() {
-    UniformRandomProvider rng = RngUtils.create(LONG_SEED);
+    UniformRandomProvider rng = RngFactory.create(LONG_SEED);
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    rng = RngUtils.create(LONG_SEED * 2);
+    rng = RngFactory.create(LONG_SEED * 2);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
@@ -63,9 +63,9 @@ class RngUtilsTest {
   @Test
   void canGetSameRandomWithZeroSeed() {
     // Test zero is allowed as a random seed.
-    UniformRandomProvider rng = RngUtils.create(0);
+    UniformRandomProvider rng = RngFactory.create(0);
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    rng = RngUtils.create(0);
+    rng = RngFactory.create(0);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertArrayEquals(e, o);
   }
@@ -75,9 +75,9 @@ class RngUtilsTest {
   void canGetSameRandomWithSameByteSeed(int n) {
     final byte[] bytes = new byte[n];
     ThreadLocalRandom.current().nextBytes(bytes);
-    UniformRandomProvider rng = RngUtils.create(bytes);
+    UniformRandomProvider rng = RngFactory.create(bytes);
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    rng = RngUtils.create(bytes);
+    rng = RngFactory.create(bytes);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertArrayEquals(e, o);
   }
@@ -87,10 +87,10 @@ class RngUtilsTest {
   void canGetDifferentRandomWithDifferentByteSeed(int n) {
     final byte[] bytes = new byte[n];
     ThreadLocalRandom.current().nextBytes(bytes);
-    UniformRandomProvider rng = RngUtils.create(bytes);
+    UniformRandomProvider rng = RngFactory.create(bytes);
     final long[] e = {rng.nextLong(), rng.nextLong()};
     ThreadLocalRandom.current().nextBytes(bytes);
-    rng = RngUtils.create(bytes);
+    rng = RngFactory.create(bytes);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
@@ -100,9 +100,9 @@ class RngUtilsTest {
   @Test
   void canGetDifferentRandomWithNullByteSeed() {
     // The use of a null byte[] seed will create randomly seeded RNG
-    UniformRandomProvider rng = RngUtils.create(null);
+    UniformRandomProvider rng = RngFactory.create(null);
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    rng = RngUtils.create(null);
+    rng = RngFactory.create(null);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
@@ -113,9 +113,9 @@ class RngUtilsTest {
   void canGetDifferentRandomWithZeroLengthByteSeed() {
     // The use of a zero length byte[] seed will create randomly seeded RNG
     final byte[] seed = new byte[0];
-    UniformRandomProvider rng = RngUtils.create(seed);
+    UniformRandomProvider rng = RngFactory.create(seed);
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    rng = RngUtils.create(seed);
+    rng = RngFactory.create(seed);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertThrows(AssertionFailedError.class, () -> {
       Assertions.assertArrayEquals(e, o);
@@ -125,9 +125,9 @@ class RngUtilsTest {
   @Test
   void canGetSameRandomWithFixedSeedMatchingConfiguredSeed() {
     final byte[] seed = TestSettings.getSeed();
-    UniformRandomProvider rng = RngUtils.createWithFixedSeed();
+    UniformRandomProvider rng = RngFactory.createWithFixedSeed();
     final long[] e = {rng.nextLong(), rng.nextLong()};
-    rng = RngUtils.create(seed);
+    rng = RngFactory.create(seed);
     final long[] o = {rng.nextLong(), rng.nextLong()};
     Assertions.assertArrayEquals(e, o);
   }
@@ -150,17 +150,17 @@ class RngUtilsTest {
     long state = 0x012de1babb3c4104L;
     final long increment = 0xc8161b4202294965L;
     for (int i = 0; i < values.length; i++) {
-      Assertions.assertEquals(values[i], RngUtils.rrmxmx(state += increment));
+      Assertions.assertEquals(values[i], RngFactory.rrmxmx(state += increment));
     }
   }
 
   @Test
   void testStafford13Output() {
     long state = 0x012de1babb3c4104L;
-    final long increment = RngUtils.GOLDEN_RATIO;
+    final long increment = RngFactory.GOLDEN_RATIO;
     SplittableRandom rng = new SplittableRandom(state);
     for (int i = 0; i < 50; i++) {
-      Assertions.assertEquals(rng.nextLong(), RngUtils.stafford13(state += increment));
+      Assertions.assertEquals(rng.nextLong(), RngFactory.stafford13(state += increment));
     }
   }
 }

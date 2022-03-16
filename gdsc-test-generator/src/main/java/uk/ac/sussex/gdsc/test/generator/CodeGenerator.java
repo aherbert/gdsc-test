@@ -348,7 +348,7 @@ public class CodeGenerator {
     }
 
     // Build sources
-    final List<Pair<String, String>> files = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> files = StringTemplates.generate(model);
 
     for (final Pair<String, String> file : files) {
       final File targetFile = getTargetFile(pathForTarget, file.getKey());
@@ -390,7 +390,7 @@ public class CodeGenerator {
     }
     // Check all template output files exist and are newer than the source files.
     final long timestamp = Math.max(stFile.lastModified(), propsFile.lastModified());
-    for (final String name : StringTemplateHelper.listNames(model)) {
+    for (final String name : StringTemplates.listNames(model)) {
       final File targetFile = getTargetFile(pathForTarget, name);
       if (!FileUtils.isFileNewer(targetFile, timestamp)) {
         // Target file missing or not newer than the source files

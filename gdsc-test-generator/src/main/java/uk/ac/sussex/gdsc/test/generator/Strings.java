@@ -27,15 +27,15 @@ package uk.ac.sussex.gdsc.test.generator;
 /**
  * Contains string utility functions.
  */
-public final class StringUtils {
+final class Strings {
 
   /** The space ' ' character. */
   private static final char SPACE_CHAR = ' ';
 
   /**
-   * Do not allow public construction.
+   * Do not allow construction.
    */
-  private StringUtils() {}
+  private Strings() {}
 
   /**
    * Checks if the string is not null or empty whitespace.
@@ -43,7 +43,7 @@ public final class StringUtils {
    * @param string the string
    * @return true, if is not empty
    */
-  public static boolean isNotEmpty(String string) {
+  static boolean isNotEmpty(String string) {
     return string != null && hasNonWhiteSpace(string);
   }
 
@@ -53,7 +53,7 @@ public final class StringUtils {
    * @param string the string
    * @return true, if null or empty
    */
-  public static boolean isNullOrEmpty(String string) {
+  static boolean isNullOrEmpty(String string) {
     return string == null || !hasNonWhiteSpace(string);
   }
 
@@ -78,7 +78,7 @@ public final class StringUtils {
    * @param string the string
    * @return the string
    */
-  public static String trimBrackets(String string) {
+  static String trimBrackets(String string) {
     int len = string.length();
     final int start = (len > 0 && string.charAt(0) == '[') ? 1 : 0;
     if (start < len && (string.charAt(len - 1) == ']')) {

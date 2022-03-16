@@ -252,7 +252,7 @@ public final class StringTemplateModel {
     // Note: Trailing empty strings are not included in the resulting array
     // so the second item must not be empty.
     final String[] pair = SPLIT_PATTERN.split(key);
-    if (pair.length != 2 || StringUtils.isNullOrEmpty(pair[0])) {
+    if (pair.length != 2 || Strings.isNullOrEmpty(pair[0])) {
       throw new InvalidModelException(
           String.format("Failed to split key using [%s] character. Key=%s", SPLIT_REGEX, key));
     }
@@ -399,7 +399,7 @@ public final class StringTemplateModel {
    * @throws InvalidModelException If the value is empty
    */
   private static List<String> splitValue(String key, String value) throws InvalidModelException {
-    if (StringUtils.isNullOrEmpty(value)) {
+    if (Strings.isNullOrEmpty(value)) {
       throw new InvalidModelException("Substitution value is empty for key: " + key);
     }
     try (StringReader reader = new StringReader(value.trim())) {

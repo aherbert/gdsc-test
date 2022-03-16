@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class StringTemplateHelperTest {
+class StringTemplatesTest {
 
   @Test
   void testGeneratorWithTemplateSubstitution() throws InvalidModelException {
@@ -45,12 +45,12 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(1, names.size(), "Names size");
     Assertions.assertEquals(templateClassName, names.get(0), "Template name");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
@@ -68,12 +68,12 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(1, names.size(), "Names size");
     Assertions.assertEquals(templateClassName, names.get(0), "Template name");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
@@ -91,12 +91,12 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(1, names.size(), "Names size");
     Assertions.assertEquals(templateClassName, names.get(0), "Template name");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
@@ -117,13 +117,13 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(2, names.size(), "Names size");
     Assertions.assertEquals("HisTemplate", names.get(0), "name 1 is wrong");
     Assertions.assertEquals("HerTemplate", names.get(1), "name 2 is wrong");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size());
 
@@ -150,13 +150,13 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(2, names.size(), "Names size");
     Assertions.assertEquals("HisSmall", names.get(0), "name 1 is wrong");
     Assertions.assertEquals("HerBig", names.get(1), "name 2 is wrong");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size());
 
@@ -182,12 +182,12 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(1, names.size(), "Names size");
     Assertions.assertEquals("Mybar", names.get(0), "Template name");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 
@@ -208,13 +208,13 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(2, names.size(), "Names size");
     Assertions.assertEquals("HisTemplate", names.get(0), "name 1 is wrong");
     Assertions.assertEquals("HerTemplate", names.get(1), "name 2 is wrong");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size());
 
@@ -241,13 +241,13 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(2, names.size(), "Names size");
     Assertions.assertEquals("HisTemplate", names.get(0), "name 1 is wrong");
     Assertions.assertEquals("HerTemplate", names.get(1), "name 2 is wrong");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size());
 
@@ -274,12 +274,12 @@ class StringTemplateHelperTest {
     final StringTemplateModel model =
         StringTemplateModel.create(properties, packageName, templateClassName, template);
 
-    final List<String> names = StringTemplateHelper.listNames(model);
+    final List<String> names = StringTemplates.listNames(model);
 
     Assertions.assertEquals(1, names.size(), "Names size");
     Assertions.assertEquals(templateClassName, names.get(0), "Template name");
 
-    final List<Pair<String, String>> list = StringTemplateHelper.generate(model);
+    final List<Pair<String, String>> list = StringTemplates.generate(model);
 
     Assertions.assertEquals(names.size(), list.size(), "List size mismatch to names size");
 

@@ -50,8 +50,8 @@ public final class XoRoShiRo128PlusPlus extends LongUniformRandomProvider {
    * @param seed the seed for the state
    */
   public XoRoShiRo128PlusPlus(long seed) {
-    this.state0 = RngUtils.rrmxmx(seed + RngUtils.GOLDEN_RATIO);
-    this.state1 = RngUtils.rrmxmx(seed + 2 * RngUtils.GOLDEN_RATIO);
+    this.state0 = RngFactory.rrmxmx(seed + RngFactory.GOLDEN_RATIO);
+    this.state1 = RngFactory.rrmxmx(seed + 2 * RngFactory.GOLDEN_RATIO);
   }
 
   /**
@@ -68,8 +68,8 @@ public final class XoRoShiRo128PlusPlus extends LongUniformRandomProvider {
     // Combine bits and check for zero seed
     if ((seed0 | seed1) == 0) {
       // Same result as single argument constructor with seed=0
-      this.state0 = RngUtils.rrmxmx(RngUtils.GOLDEN_RATIO);
-      this.state1 = RngUtils.rrmxmx(2 * RngUtils.GOLDEN_RATIO);
+      this.state0 = RngFactory.rrmxmx(RngFactory.GOLDEN_RATIO);
+      this.state1 = RngFactory.rrmxmx(2 * RngFactory.GOLDEN_RATIO);
     } else {
       state0 = seed0;
       state1 = seed1;
