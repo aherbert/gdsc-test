@@ -42,6 +42,8 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
 
   @Override
   public void nextBytes(byte[] bytes, int start, int len) {
+    // Note: No range checks: e.g. Objects.checkFromIndexSize
+
     int index = start;
 
     // Index of first insertion plus multiple of 8 part of length
@@ -65,14 +67,8 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
 
     // Fill in the remaining bytes.
     if (index < indexLimit) {
-      long random = nextLong();
-      for (;;) {
+      for (long random = nextLong(); index < indexLimit; random >>>= 8) {
         bytes[index++] = (byte) random;
-        if (index < indexLimit) {
-          random >>>= 8;
-        } else {
-          break;
-        }
       }
     }
   }
