@@ -45,7 +45,7 @@ class HexTest {
     final byte[] empty = new byte[0];
     Assertions.assertArrayEquals(empty, Hex.decode(null), "Null input");
     Assertions.assertArrayEquals(empty, Hex.decode(""), "Empty input");
-    Assertions.assertArrayEquals(empty, Hex.decode("j"), "Bad single chaarcter");
+    Assertions.assertArrayEquals(empty, Hex.decode("j"), "Bad single character");
     Assertions.assertArrayEquals(empty, Hex.decode("abcsfp678"),
         "Bad single character in larger string");
   }

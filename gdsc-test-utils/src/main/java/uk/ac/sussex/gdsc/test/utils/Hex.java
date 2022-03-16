@@ -38,7 +38,9 @@ public final class Hex {
   /** Output Hex characters. */
   private static final char[] HEX_DIGITS =
       {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-  /** The byte used to indicate the character is unmapped. */
+  /** The byte used to indicate the character is unmapped.
+   * No ASCII character is above 127 so this can use -1.
+   * Bad characters can be identified with a sign test. */
   private static final byte UNMAPPED = (byte) -1;
 
   /**
@@ -79,15 +81,15 @@ public final class Hex {
    */
   public static char[] encode(byte[] bytes) {
     // Safe for null input
-    if (bytes == null || bytes.length == 0) {
+    int len;
+    if (bytes == null || (len = bytes.length) == 0) {
       return EMPTY_CHARS;
     }
-    final int l = bytes.length;
     // Two hex characters per byte
-    final char[] chars = new char[l << 1];
-    for (int i = 0; i < l; i++) {
-      chars[2 * i] = HEX_DIGITS[(bytes[i] & 0xf0) >>> 4];
-      chars[2 * i + 1] = HEX_DIGITS[bytes[i] & 0xf];
+    final char[] chars = new char[len << 1];
+    for (int i = 0; i < len; i++) {
+      chars[i << 1] = HEX_DIGITS[(bytes[i] & 0xf0) >>> 4];
+      chars[(i << 1) + 1] = HEX_DIGITS[bytes[i] & 0xf];
     }
     return chars;
   }
@@ -118,36 +120,34 @@ public final class Hex {
    */
   public static byte[] decode(CharSequence string) {
     // Safe for null input
-    if (string == null || string.length() == 0) {
+    int len;
+    if (string == null || (len = string.length()) == 0) {
       return EMPTY_BYTES;
     }
 
-    // Check for hex byte representation for each character
-    final byte[] hexNumber = new byte[string.length()];
-    for (int i = 0; i < hexNumber.length; i++) {
-      final byte ch = mapToHexNumber(string.charAt(i));
-      if (ch == UNMAPPED) {
+    // Convert: Two hex characters per byte
+    final int length = len >> 1;
+    // Allow extra odd characters.
+    final byte[] decoded = new byte[length + (len & 0x1)];
+    // Process pairs
+    for (int i = 0; i < length; i++) {
+      final int ch1 = mapToHexNumber(string.charAt(i << 1));
+      final int ch2 = mapToHexNumber(string.charAt((i << 1) + 1));
+      if ((ch1 | ch2) < 0) {
         // Not valid so return empty
         return EMPTY_BYTES;
       }
-      hexNumber[i] = ch;
-    }
 
-    // Convert: Two hex characters per byte
-    final int length = hexNumber.length >> 1;
-    // Allow extra odd characters.
-    final byte[] decoded = new byte[length + (hexNumber.length & 0x1)];
-    // Process pairs
-    for (int i = 0; i < length; i++) {
-      byte hexPair = hexNumber[2 * i];
-      hexPair <<= 4; // Shift to upper 4 bits
-      hexPair |= hexNumber[2 * i + 1]; // Combined lower bits
-      decoded[i] = hexPair;
+      decoded[i] = (byte) ((ch1 << 4) | ch2);
     }
 
     // Handle final odd character
-    if ((hexNumber.length & 0x1) == 1) {
-      decoded[decoded.length - 1] = (byte) (hexNumber[hexNumber.length - 1] << 4);
+    if ((len & 0x1) == 1) {
+      final int ch1 = mapToHexNumber(string.charAt(len - 1));
+      if (ch1 < 0) {
+        return EMPTY_BYTES;
+      }
+      decoded[decoded.length - 1] = (byte) (ch1 << 4);
     }
 
     return decoded;
