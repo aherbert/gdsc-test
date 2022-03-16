@@ -87,7 +87,7 @@ public final class Hex {
     }
     // Two hex characters per byte
     final char[] chars = new char[len << 1];
-    for (int i = 0; i < len; i++) {
+    for (int i = len; i-- != 0; ) {
       chars[i << 1] = HEX_DIGITS[(bytes[i] & 0xf0) >>> 4];
       chars[(i << 1) + 1] = HEX_DIGITS[bytes[i] & 0xf];
     }
@@ -129,25 +129,24 @@ public final class Hex {
     final int length = len >> 1;
     // Allow extra odd characters.
     final byte[] decoded = new byte[length + (len & 0x1)];
-    // Process pairs
-    for (int i = 0; i < length; i++) {
-      final int ch1 = mapToHexNumber(string.charAt(i << 1));
-      final int ch2 = mapToHexNumber(string.charAt((i << 1) + 1));
-      if ((ch1 | ch2) < 0) {
-        // Not valid so return empty
-        return EMPTY_BYTES;
-      }
-
-      decoded[i] = (byte) ((ch1 << 4) | ch2);
-    }
-
     // Handle final odd character
     if ((len & 0x1) == 1) {
       final int ch1 = mapToHexNumber(string.charAt(len - 1));
       if (ch1 < 0) {
         return EMPTY_BYTES;
       }
-      decoded[decoded.length - 1] = (byte) (ch1 << 4);
+      decoded[length] = (byte) (ch1 << 4);
+    }
+
+    // Process pairs
+    for (int i = length; i-- != 0; ) {
+      final int ch1 = mapToHexNumber(string.charAt(i << 1));
+      final int ch2 = mapToHexNumber(string.charAt((i << 1) + 1));
+      if ((ch1 | ch2) < 0) {
+        // Not valid so return empty
+        return EMPTY_BYTES;
+      }
+      decoded[i] = (byte) ((ch1 << 4) | ch2);
     }
 
     return decoded;
