@@ -22,6 +22,8 @@
 
 package uk.ac.sussex.gdsc.test.generator;
 
+import uk.ac.sussex.gdsc.test.generator.CodeGenerator.ExitCode;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,7 +37,6 @@ import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import uk.ac.sussex.gdsc.test.generator.CodeGenerator.ExitCode;
 
 @SuppressWarnings("javadoc")
 class CodeGeneratorTest {

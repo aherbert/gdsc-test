@@ -22,10 +22,11 @@
 
 package uk.ac.sussex.gdsc.test.junit5;
 
+import uk.ac.sussex.gdsc.test.junit5.RandomSeedSource.SeedSequence;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
-import uk.ac.sussex.gdsc.test.junit5.RandomSeedSource.SeedSequence;
 import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 import uk.ac.sussex.gdsc.test.utils.RandomSeeds;
 
