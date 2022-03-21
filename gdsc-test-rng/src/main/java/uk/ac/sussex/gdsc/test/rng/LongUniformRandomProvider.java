@@ -133,12 +133,27 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
     return (nextLong() >>> 11) * 0x1.0p-53;
   }
 
+  /**
+   * Gets the state size in bytes. This is the number of bytes required to save the state
+   * to a {@link ByteBuffer}.
+   *
+   * @return the state size
+   */
+  abstract int getStateSize();
+
   @Override
   public RandomProviderState saveState() {
     final ByteBuffer bb = ByteBuffer.allocate(getStateSize());
     saveState(bb);
     return new RngState(bb.array());
   }
+
+  /**
+   * Save state to the byte buffer. The buffer byte order is big endian.
+   *
+   * @param bb the byte buffer
+   */
+  abstract void saveState(ByteBuffer bb);
 
   @Override
   public void restoreState(RandomProviderState state) {
@@ -150,21 +165,6 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
       throw new IllegalArgumentException("Incompatible state");
     }
   }
-
-  /**
-   * Gets the state size in bytes. This is the number of bytes required to save the state
-   * to a {@link ByteBuffer}.
-   *
-   * @return the state size
-   */
-  abstract int getStateSize();
-
-  /**
-   * Save state to the byte buffer. The buffer byte order is big endian.
-   *
-   * @param bb the byte buffer
-   */
-  abstract void saveState(ByteBuffer bb);
 
   /**
    * Restore state from the byte buffer. The buffer byte order is big endian.
