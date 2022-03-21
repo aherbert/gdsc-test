@@ -24,7 +24,7 @@
 
 package uk.ac.sussex.gdsc.test.rng;
 
-import org.apache.commons.rng.RandomProviderState;
+import java.nio.ByteBuffer;
 
 /**
  * A fast all-purpose 64-bit generator.
@@ -145,44 +145,21 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
   }
 
   @Override
-  public RandomProviderState saveState() {
-    return new RngState(s, x0, x1);
+  int getStateSize() {
+    return 3 * Long.BYTES;
   }
 
   @Override
-  public void restoreState(RandomProviderState state) {
-    if (state instanceof RngState) {
-      final RngState rngState = (RngState) state;
-      this.s = rngState.s;
-      this.x0 = rngState.x0;
-      this.x1 = rngState.x1;
-    } else {
-      throw new IllegalArgumentException("Incompatible state");
-    }
+  void saveState(ByteBuffer bb) {
+    bb.putLong(s);
+    bb.putLong(x0);
+    bb.putLong(x1);
   }
 
-  /**
-   * The state of the generator.
-   */
-  private static class RngState implements RandomProviderState {
-    /** State of the LCG generator. */
-    final long s;
-    /** State 0 of the XBG generator. */
-    final long x0;
-    /** State 1 of the XBG generator. */
-    final long x1;
-
-    /**
-     * Create a new instance.
-     *
-     * @param s state s
-     * @param x0 state x0
-     * @param x1 state x1
-     */
-    RngState(long s, long x0, long x1) {
-      this.s = s;
-      this.x0 = x0;
-      this.x1 = x1;
-    }
+  @Override
+  void restoreState(ByteBuffer bb) {
+    s = bb.getLong();
+    x0 = bb.getLong();
+    x1 = bb.getLong();
   }
 }

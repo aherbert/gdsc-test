@@ -24,9 +24,9 @@
 
 package uk.ac.sussex.gdsc.test.rng;
 
+import java.nio.ByteBuffer;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.LongSupplier;
-import org.apache.commons.rng.RandomProviderState;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.core.source32.IntProvider;
 import org.apache.commons.rng.simple.RandomSource;
@@ -57,19 +57,11 @@ class LongUniformRandomProviderTest {
         RandomSource.XO_RO_SHI_RO_128_PP.create(new long[] {seed0, seed1});
     final UniformRandomProvider rng2 =
         RandomSource.XO_RO_SHI_RO_128_PP.create(new long[] {seed0, seed1});
-    final LongUniformRandomProvider rng = new LongUniformRandomProvider() {
+    final LongUniformRandomProvider rng = new NoStateLongUniformRandomProvider() {
       @Override
       public long nextLong() {
         return rng2.nextLong();
       }
-
-      @Override
-      public RandomProviderState saveState() {
-        return null;
-      }
-
-      @Override
-      public void restoreState(RandomProviderState state) {}
     };
     return new UniformRandomProvider[] {rng1, rng};
   }
@@ -143,19 +135,11 @@ class LongUniformRandomProviderTest {
   @ParameterizedTest
   @ValueSource(ints = {0, -1, -13})
   void testNextIntInRangeThrows(int n) {
-    final LongUniformRandomProvider rng = new LongUniformRandomProvider() {
+    final LongUniformRandomProvider rng = new NoStateLongUniformRandomProvider() {
       @Override
       public long nextLong() {
         return 42;
       }
-
-      @Override
-      public RandomProviderState saveState() {
-        return null;
-      }
-
-      @Override
-      public void restoreState(RandomProviderState state) {}
     };
     Assertions.assertThrows(IllegalArgumentException.class, () -> rng.nextInt(n));
   }
@@ -177,19 +161,11 @@ class LongUniformRandomProviderTest {
   @ParameterizedTest
   @ValueSource(ints = {0, -1, -13})
   void testNextLongInRangeThrows(int n) {
-    final LongUniformRandomProvider rng = new LongUniformRandomProvider() {
+    final LongUniformRandomProvider rng = new NoStateLongUniformRandomProvider() {
       @Override
       public long nextLong() {
         return 42;
       }
-
-      @Override
-      public RandomProviderState saveState() {
-        return null;
-      }
-
-      @Override
-      public void restoreState(RandomProviderState state) {}
     };
     Assertions.assertThrows(IllegalArgumentException.class, () -> rng.nextInt(n));
   }
@@ -221,6 +197,21 @@ class LongUniformRandomProviderTest {
     final UniformRandomProvider rng2 = rngs[1];
     for (int i = 0; i < N; i++) {
       Assertions.assertEquals(rng1.nextDouble(), rng2.nextDouble());
+    }
+  }
+
+  private abstract static class NoStateLongUniformRandomProvider extends LongUniformRandomProvider {
+    @Override
+    int getStateSize() {
+      return 0;
+    }
+
+    @Override
+    void saveState(ByteBuffer bb) {
+    }
+
+    @Override
+    void restoreState(ByteBuffer bb) {
     }
   }
 }

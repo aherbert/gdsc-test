@@ -24,6 +24,8 @@
 
 package uk.ac.sussex.gdsc.test.rng;
 
+import java.nio.ByteBuffer;
+import org.apache.commons.rng.RandomProviderState;
 import org.apache.commons.rng.RestorableUniformRandomProvider;
 
 /**
@@ -131,5 +133,62 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
   @Override
   public double nextDouble() {
     return (nextLong() >>> 11) * 0x1.0p-53;
+  }
+
+  @Override
+  public RandomProviderState saveState() {
+    final ByteBuffer bb = ByteBuffer.allocate(getStateSize());
+    saveState(bb);
+    return new RngState(bb.array());
+  }
+
+  @Override
+  public void restoreState(RandomProviderState state) {
+    if (state instanceof RngState) {
+      final RngState rngState = (RngState) state;
+      final ByteBuffer bb = ByteBuffer.wrap(rngState.state);
+      restoreState(bb);
+    } else {
+      throw new IllegalArgumentException("Incompatible state");
+    }
+  }
+
+  /**
+   * Gets the state size in bytes. This is the number of bytes required to save the state
+   * to a {@link ByteBuffer}.
+   *
+   * @return the state size
+   */
+  abstract int getStateSize();
+
+  /**
+   * Save state to the byte buffer. The buffer byte order is big endian.
+   *
+   * @param bb the byte buffer
+   */
+  abstract void saveState(ByteBuffer bb);
+
+  /**
+   * Restore state from the byte buffer. The buffer byte order is big endian.
+   *
+   * @param bb the byte buffer
+   */
+  abstract void restoreState(ByteBuffer bb);
+
+  /**
+   * The state of the generator.
+   */
+  private static class RngState implements RandomProviderState {
+    /** State of the generator. */
+    final byte[] state;
+
+    /**
+     * Create a new instance.
+     *
+     * @param state the state
+     */
+    RngState(byte[] state) {
+      this.state = state;
+    }
   }
 }

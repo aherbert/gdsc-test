@@ -24,7 +24,7 @@
 
 package uk.ac.sussex.gdsc.test.rng;
 
-import org.apache.commons.rng.RandomProviderState;
+import java.nio.ByteBuffer;
 
 /**
  * A fast all-purpose 64-bit generator.
@@ -90,40 +90,19 @@ public final class XoRoShiRo128PlusPlus extends LongUniformRandomProvider {
   }
 
   @Override
-  public RandomProviderState saveState() {
-    return new RngState(state0, state1);
+  int getStateSize() {
+    return 2 * Long.BYTES;
   }
 
   @Override
-  public void restoreState(RandomProviderState state) {
-    if (state instanceof RngState) {
-      final RngState rngState = (RngState) state;
-      this.state0 = rngState.state0;
-      this.state1 = rngState.state1;
-    } else {
-      throw new IllegalArgumentException("Incompatible state");
-    }
+  void saveState(ByteBuffer bb) {
+    bb.putLong(state0);
+    bb.putLong(state1);
   }
 
-  /**
-   * The state of the generator.
-   */
-  private static class RngState implements RandomProviderState {
-    /** State 0 of the generator. */
-    final long state0;
-
-    /** State 1 of the generator. */
-    final long state1;
-
-    /**
-     * Create a new instance.
-     *
-     * @param state0 state 0 of the generator.
-     * @param state1 state 1 of the generator.
-     */
-    RngState(long state0, long state1) {
-      this.state0 = state0;
-      this.state1 = state1;
-    }
+  @Override
+  void restoreState(ByteBuffer bb) {
+    state0 = bb.getLong();
+    state1 = bb.getLong();
   }
 }
