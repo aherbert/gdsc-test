@@ -13,9 +13,9 @@ GDSC Test Documentation
     :target: https://gdsc-test.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
-    :target: https://www.gnu.org/licenses/gpl-3.0
-    :alt: License: GPL v3
+.. image:: https://img.shields.io/badge/License-Apache%20v2-blue.svg
+    :target: https://www.apache.org/licenses/LICENSE-2.0
+    :alt: License: Apache 2.0
 
 GDSC Test provides utility functionality for writing Java tests including:
 

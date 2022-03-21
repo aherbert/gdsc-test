@@ -21,8 +21,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
 
   <licenses>
     <license>
-      <name>GNU General Public License (GPL) version 3.0</name>
-      <url>http://www.gnu.org/licenses/gpl.txt</url>
+      <name>Apache License version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>manual</distribution>
     </license>
   </licenses>
@@ -80,7 +80,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyy/MM/dd HH:mm</maven.build.timestamp.format>
     <build.date>${maven.build.timestamp}</build.date>
-    <license.licenseName>gpl_v3</license.licenseName>
+    <license.licenseName>apache_v2</license.licenseName>
     <license.copyrightOwners>Alex Herbert</license.copyrightOwners>
     <license.projectName>${project.description}</license.projectName>
     <gdsc.automatic.module.name>uk.ac.sussex.gdsc.test</gdsc.automatic.module.name>

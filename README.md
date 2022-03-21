@@ -6,7 +6,7 @@ GDSC Test provides utility functionality for writing Java tests.
 [![Build Status](https://travis-ci.com/aherbert/gdsc-test.svg?branch=master)](https://travis-ci.com/aherbert/gdsc-test)
 [![Coverage Status](https://coveralls.io/repos/github/aherbert/gdsc-test/badge.svg?branch=master)](https://coveralls.io/github/aherbert/gdsc-test?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/gdsc-test/badge/?version=latest)](https://gdsc-test.readthedocs.io/en/latest/?badge=latest)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%20v2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Functionality includes:
 
