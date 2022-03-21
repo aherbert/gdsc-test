@@ -84,7 +84,7 @@ public class TestAssertionsTest {
     String message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(value1, predicate);
     }, "Does not throw with nested Object[] array").getMessage();
-    assertMessageContains(message, "Expected primitive array", "the failure reason");
+    assertMessageContains(message, "Non-array type", "the failure reason");
   }
 
   /**
@@ -118,7 +118,13 @@ public class TestAssertionsTest {
       String message = Assertions.assertThrows(AssertionError.class, () -> {
         TestAssertions.assertArrayTest(value1, value2, predicate);
       }, "Does not throw with nested arrays with mismatched types").getMessage();
-      assertMessageContains(message, "Expected matching array types", "the failure reason");
+      if (value1[0] == null) {
+        // First element is not an array
+        assertMessageContains(message, "Non-array type", "the failure reason");
+      } else {
+        // Second element mismatch
+        assertMessageContains(message, "Invalid type", "the failure reason");
+      }
     }
   }<Types,types,dummyValues1,dummyValues2:{Type,type,dummyValue1,dummyValue2 |
 <\n>
