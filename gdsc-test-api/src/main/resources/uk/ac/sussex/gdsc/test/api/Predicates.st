@@ -10,23 +10,23 @@ import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharCharEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleCmp;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreWithinUlp;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleCmp;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsFinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsInfinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsNaN;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatCmp;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreWithin;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreWithinUlp;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatCmp;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsFinite;
@@ -126,8 +126,8 @@ public final class Predicates {
    * @param referenceValue the reference value
    * @return the predicate
    */
-  public static <Float>Predicate <float>Cmp(<float> referenceValue) {
-    return new <Float>Cmp(referenceValue);
+  public static <Float>Predicate <float>BinaryEqual(<float> referenceValue) {
+    return new <Float>BinaryEqual(referenceValue);
   \}}><floats,Floats,Ints:{float,Float,Int |
 <\n>
   /**
@@ -136,8 +136,8 @@ public final class Predicates {
    *
    * @return the predicate
    */
-  public static <Float><Float>BiPredicate <float>sCmp() {
-    return <Float><Float>Cmp.INSTANCE;
+  public static <Float><Float>BiPredicate <float>sBinaryEqual() {
+    return <Float><Float>BinaryEqual.INSTANCE;
   \}}><floats,Floats,ulpTypes:{float,Float,ulpType |
 <\n>
   /**

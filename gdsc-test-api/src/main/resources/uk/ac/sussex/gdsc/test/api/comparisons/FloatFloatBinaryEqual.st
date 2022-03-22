@@ -11,14 +11,14 @@ import java.util.function.Supplier;
  *
  * @see <Float><Float>BiPredicate#test(<float>, <float>)
  */
-public class <Float><Float>Cmp
+public class <Float><Float>BinaryEqual
     implements <Float><Float>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
   private static final long serialVersionUID = 1L;
 
   /** A default instance. */
-  public static final <Float><Float>Cmp INSTANCE = new <Float><Float>Cmp();
+  public static final <Float><Float>BinaryEqual INSTANCE = new <Float><Float>BinaryEqual();
 
   /**
    * {@inheritDoc}
@@ -26,7 +26,8 @@ public class <Float><Float>Cmp
    * \<p>Tests that two <float>s are equal using binary comparison of two values
    * converted using {@link <Float>#<float>To<Int>Bits(<float>)}.
    *
-   * \<p>Equality imposed by this method is consistent with
+   * \<p>Equality
+   *  imposed by this method is consistent with
    * {@link <Float>#equals(Object)} and, {@link <Float>#compare(<float>, <float>)}.
    *
    * \<p>For example {@code -0} and {@code 0} are not equal. {@code <Float>.NaN} and

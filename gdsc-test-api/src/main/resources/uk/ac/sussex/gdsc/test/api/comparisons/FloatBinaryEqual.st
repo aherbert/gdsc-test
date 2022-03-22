@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  *
  * @see <Float>Predicate#test(<float>)
  */
-public class <Float>Cmp
+public class <Float>BinaryEqual
     implements <Float>Predicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -31,7 +31,7 @@ public class <Float>Cmp
    *
    * @param referenceValue The reference value.
    */
-  public <Float>Cmp(<float> referenceValue) {
+  public <Float>BinaryEqual(<float> referenceValue) {
     this.referenceValue = referenceValue;
     binaryReferenceValue = <Float>.<float>To<Int>Bits(referenceValue);
   }

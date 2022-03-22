@@ -101,10 +101,10 @@ public class PredicatesTest {<types,Types:{type,Type |
    * binary comparison.
    */
   @Test
-  public void testCmp<Float>() {
+  public void testBinaryEqual<Float>() {
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
-      final <Float>Predicate test = Predicates.<float>Cmp(value1);
+      final <Float>Predicate test = Predicates.<float>BinaryEqual(value1);
       for (<float> value2 : values) {
         Assertions.assertEquals(<Float>.compare(value1, value2) == 0, test.test(value2),
             "Predicate does not compute <Float>.compare");
@@ -116,8 +116,8 @@ public class PredicatesTest {<types,Types:{type,Type |
    * Test creates a predicate to compare {@code <float>\} values using binary comparison.
    */
   @Test
-  public void testCmp<Float>s() {
-    final <Float><Float>BiPredicate test = Predicates.<float>sCmp();
+  public void testBinaryEqual<Float>s() {
+    final <Float><Float>BiPredicate test = Predicates.<float>sBinaryEqual();
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {

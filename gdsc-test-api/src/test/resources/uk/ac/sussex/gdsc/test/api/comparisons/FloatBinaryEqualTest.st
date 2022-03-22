@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link <Float>Cmp}.
+ * Tests {@link <Float>BinaryEqual}.
  */
-public class <Float>CmpTest {
+public class <Float>BinaryEqualTest {
 
   /**
-   * Test {@link <Float>Cmp#test(<float>)}.
+   * Test {@link <Float>BinaryEqual#test(<float>)}.
    */
   @Test
   public void testTest() {
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
-      final <Float>Cmp predicate = new <Float>Cmp(value1);
+      final <Float>BinaryEqual predicate = new <Float>BinaryEqual(value1);
       Assertions.assertEquals(value1, predicate.getReferenceValue(),
           "Predicate has incorrect reference value");
       for (<float> value2 : values) {
@@ -29,13 +29,13 @@ public class <Float>CmpTest {
   }
 
   /**
-   * Test {@link <Float>Cmp#get() }.
+   * Test {@link <Float>BinaryEqual#get() }.
    */
   @Test
   public void testGet() {
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value : values) {
-      final <Float>Cmp predicate = new <Float>Cmp(value);
+      final <Float>BinaryEqual predicate = new <Float>BinaryEqual(value);
       Assertions.assertTrue(predicate.get().contains("cmp"), "Description missing cmp");
       final String stringValue = String.valueOf(value);
       Assertions.assertTrue(predicate.get().contains(stringValue),

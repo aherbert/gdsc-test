@@ -6,16 +6,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link <Float><Float>Cmp}.
+ * Tests {@link <Float><Float>BinaryEqual}.
  */
-public class <Float><Float>CmpTest {
+public class <Float><Float>BinaryEqualTest {
 
   /**
-   * Test {@link <Float><Float>Cmp#test(<float>, <float>)}.
+   * Test {@link <Float><Float>BinaryEqual#test(<float>, <float>)}.
    */
   @Test
   public void testTest() {
-    final <Float><Float>Cmp predicate = <Float><Float>Cmp.INSTANCE;
+    final <Float><Float>BinaryEqual predicate = <Float><Float>BinaryEqual.INSTANCE;
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {
@@ -27,11 +27,11 @@ public class <Float><Float>CmpTest {
   }
 
   /**
-   * Test {@link <Float><Float>Cmp#get() }.
+   * Test {@link <Float><Float>BinaryEqual#get() }.
    */
   @Test
   public void testGet() {
-    final <Float><Float>Cmp predicate = new <Float><Float>Cmp();
+    final <Float><Float>BinaryEqual predicate = new <Float><Float>BinaryEqual();
     Assertions.assertTrue(predicate.get().contains("cmp"), "Description missing ==");
   }
 }
