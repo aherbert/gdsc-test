@@ -9,7 +9,7 @@ testing relative equality of nested arrays::
 
     @Test
     void testNestedArrays() {
-        DoubleDoubleBiPredicate equal = Predicates.doublesAreClose(1e-3);
+        DoubleDoubleBiPredicate equal = Predicates.doublesAreRelativelyClose(1e-3);
         double[][] expected = {
             {1, 2, 30},
             {4, 5, 6},
@@ -42,7 +42,7 @@ Java supports testing of primitives from ``java.util.function`` using::
         // Default methods
     }
 
-for the ``double`` primitive type and a similar ``IntPredicate`` and ``LongPredicate`` for the 
+for the ``double`` primitive type and a similar ``IntPredicate`` and ``LongPredicate`` for the
 ``int`` and ``long`` primitive types.
 
 The Java language can natively convert ``float`` to ``double`` and ``byte``, ``char``, and ``short``

@@ -79,10 +79,10 @@ a test fails. For example a test for relative equality::
         double expected = 100;
         double actual = 99;
 
-        DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
+        DoubleDoubleBiPredicate areClose = Predicates.doublesAreRelativelyClose(relativeError);
 
         // This will pass as 99 is within (0.01*100) of 100
-        TestAssertions.assertTest(expected, actual, isCloseTo);
+        TestAssertions.assertTest(expected, actual, areClose);
     }
 
 A test for equality with units in the last place (ULP)::
@@ -96,10 +96,10 @@ A test for equality with units in the last place (ULP)::
         double expected = 100;
         double actual = Math.nextUp(expected);
 
-        DoubleDoubleBiPredicate areWithinUlp = Predicates.doublesAreWithinUlp(ulpError);
+        DoubleDoubleBiPredicate areClose = Predicates.doublesAreUlpClose(ulpError);
 
-        TestAssertions.assertTest(expected, actual, areWithinUlp);
-        TestAssertions.assertTest(expected, Math.nextUp(actual), areWithinUlp.negate());
+        TestAssertions.assertTest(expected, actual, areClose);
+        TestAssertions.assertTest(expected, Math.nextUp(actual), areClose.negate());
     }
 
 
@@ -109,7 +109,7 @@ format an error message for the failed test.
 
 Nested arrays are supported using recursion allowing testing of matrices::
 
-    IntIntBiPredicate equal = Predicates.intsEqual();
+    IntIntBiPredicate equal = Predicates.intsAreEqual();
     Object[] expected = new int[4][5][6];
     Object[] actual = new int[4][5][6];
     TestAssertions.assertArrayTest(expected, actual, equal);

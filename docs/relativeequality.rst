@@ -132,15 +132,15 @@ Test Predicates
 The GDSC Test library contains predicates that test relative equality between
 two values.
 
-Support is provided for **symmetric** relative equality using the name **AreClose**
+Support is provided for **symmetric** relative equality using the name **AreRelativelyClose**
 which does not imply a direction. Support is provided for **asymmetric** relative equality
-using the name **IsCloseTo** which implies a direction.
+using the name **BIsRelativelyCloseToA** which implies a direction.
 
 These can be constructed using a helper class::
 
     double relativeError = 0.01;
 
-    DoubleDoubleBiPredicate areClose = Predicates.doublesAreClose(relativeError);
+    DoubleDoubleBiPredicate areClose = Predicates.doublesAreRelativelyClose(relativeError);
 
     // The AreClose relative equality is symmetric
     assert areClose.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
@@ -151,9 +151,9 @@ These can be constructed using a helper class::
     assert !areClose.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
 
 
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesBIsRelativelyCloseToA(relativeError);
 
-    // The IsCloseTo relative equality is asymmetric
+    // The IsRelativelyCloseTo relative equality is asymmetric
     assert isCloseTo.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
     assert !isCloseTo.test(99, 100) : "Difference 1 should not be <= 0.01 of 99";
 
@@ -176,7 +176,7 @@ tolerance which is combined with the relative equality test using an **Or** oper
 Test Framework Support
 ----------------------
 
-Testing relative equality within a test framework is simplied using predicates. For example a
+Testing relative equality within a test framework is simplified using predicates. For example a
 test for floating-point relative equality in ``JUnit 5`` must adapt the test for
 absolute difference::
 
@@ -194,7 +194,7 @@ This can be replaced with::
     double actual = 99;
 
     // equal within relative error of expected
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesBIsRelativelyCloseToA(relativeError);
     Assertions.assertTrue(isCloseTo.test(expected, actual));
 
 This will identify errors but the error message is not helpful.
@@ -212,19 +212,19 @@ This allows the test for equality to be extended to arrays and nested arrays::
     double expected = 100;
     double actual = 99;
 
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate areClose = Predicates.doublesAreRelativelyClose(relativeError);
 
-    TestAssertions.assertTest(expected, actual, isCloseTo);
+    TestAssertions.assertTest(expected, actual, areClose);
 
     // primitive arrays
     double[] expectedArray = new double[] { expected };
     double[] actualArray = new double[] { actual };
-    TestAssertions.assertArrayTest(expectedArray, actualArray, isCloseTo);
+    TestAssertions.assertArrayTest(expectedArray, actualArray, areClose);
 
     // nested primitive arrays of matched dimension
     Object[] expectedNestedArray = new double[][][] {{{ expected }}};
     Object[] actualNestedArray = new double[][][] {{{ actual }}};
-    TestAssertions.assertArrayTest(expectedNestedArray, actualNestedArray, isCloseTo);
+    TestAssertions.assertArrayTest(expectedNestedArray, actualNestedArray, areClose);
 
 If the predicate test fails then the ``TestAssertions`` class will construct a message containing
 the values that failed. Additionally all the predicates provided by the GDSC Test library

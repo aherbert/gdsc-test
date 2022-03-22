@@ -39,12 +39,12 @@ import uk.ac.sussex.gdsc.test.api.function.IntIntBiPredicate;
 class ApiTest {
 
   /**
-   * Test the Close predicate.
+   * Test the AreRelativelyClose predicate.
    */
   @Test
-  void testClosePredicate() {
+  void testAreRelativelyClosePredicate() {
     double relativeError = 0.01;
-    DoubleDoubleBiPredicate areClose = Predicates.doublesAreClose(relativeError);
+    DoubleDoubleBiPredicate areClose = Predicates.doublesAreRelativelyClose(relativeError);
 
     // The AreClose relative equality is symmetric
     assert areClose.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
@@ -56,14 +56,14 @@ class ApiTest {
   }
 
   /**
-   * Test the IscloseTo predicate.
+   * Test the BIsRelativelyCloseToA predicate.
    */
   @Test
-  void testIsCloseToPredicate() {
+  void testBIsRelativelyCloseToAPredicate() {
     double relativeError = 0.01;
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesBIsRelativelyCloseToA(relativeError);
 
-    // The IsCloseTo relative equality is asymmetric
+    // The IsRelativelyCloseTo relative equality is asymmetric
     assert isCloseTo.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
     assert !isCloseTo.test(99, 100) : "Difference 1 should not be <= 0.01 of 99";
 
@@ -73,7 +73,7 @@ class ApiTest {
   }
 
   /**
-   * Test the Close predicate using absolute error.
+   * Test the AreClose predicate using absolute error.
    */
   @Test
   void testClosePredicateUsingAbsError() {
@@ -88,7 +88,7 @@ class ApiTest {
   }
 
   /**
-   * Test the IsCloseTo predicate within a test framework.
+   * Test the BIsRelativelyCloseToA predicate within a test framework.
    */
   @Test
   void testIsCloseToWithinFramework() {
@@ -100,12 +100,12 @@ class ApiTest {
     Assertions.assertEquals(expected, actual, Math.abs(expected) * relativeError);
 
     // replace with predicate
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesBIsRelativelyCloseToA(relativeError);
     Assertions.assertTrue(isCloseTo.test(expected, actual));
   }
 
   /**
-   * Test the IsCloseTo predicate with TestAssertions.
+   * Test the AreRelativelyClose predicate with TestAssertions.
    */
   @Test
   void testIsCloseToWithTestAssertions() {
@@ -113,23 +113,23 @@ class ApiTest {
     double expected = 100;
     double actual = 99;
 
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate areClose = Predicates.doublesAreRelativelyClose(relativeError);
 
-    TestAssertions.assertTest(expected, actual, isCloseTo);
+    TestAssertions.assertTest(expected, actual, areClose);
 
     // primitive arrays
     double[] expectedArray = new double[] {expected};
     double[] actualArray = new double[] {actual};
-    TestAssertions.assertArrayTest(expectedArray, actualArray, isCloseTo);
+    TestAssertions.assertArrayTest(expectedArray, actualArray, areClose);
 
     // nested primitive arrays of matched dimension
     Object[] expectedNestedArray = new double[][][] {{{expected}}};
     Object[] actualNestedArray = new double[][][] {{{actual}}};
-    TestAssertions.assertArrayTest(expectedNestedArray, actualNestedArray, isCloseTo);
+    TestAssertions.assertArrayTest(expectedNestedArray, actualNestedArray, areClose);
   }
 
   /**
-   * Test the AreWithinUlp predicate with TestAssertions.
+   * Test the AreUlpClose predicate with TestAssertions.
    */
   @Test
   void testAreWithinUlpWithTestAssertions() {
@@ -137,10 +137,10 @@ class ApiTest {
     double expected = 100;
     double actual = Math.nextUp(expected);
 
-    DoubleDoubleBiPredicate areWithinUlp = Predicates.doublesAreWithinUlp(ulpError);
+    DoubleDoubleBiPredicate areClose = Predicates.doublesAreUlpClose(ulpError);
 
-    TestAssertions.assertTest(expected, actual, areWithinUlp);
-    TestAssertions.assertTest(expected, Math.nextUp(actual), areWithinUlp.negate());
+    TestAssertions.assertTest(expected, actual, areClose);
+    TestAssertions.assertTest(expected, Math.nextUp(actual), areClose.negate());
   }
 
   /**
@@ -148,7 +148,7 @@ class ApiTest {
    */
   @Test
   void testMatrixRecursion() {
-    IntIntBiPredicate equal = Predicates.intsEqual();
+    IntIntBiPredicate equal = Predicates.intsAreEqual();
     Object[] expected = new int[4][5][6];
     Object[] actual = new int[4][5][6];
     TestAssertions.assertArrayTest(expected, actual, equal);
@@ -159,7 +159,7 @@ class ApiTest {
    */
   @Test
   void testNestedArrays() {
-    DoubleDoubleBiPredicate equal = Predicates.doublesAreClose(1e-3);
+    DoubleDoubleBiPredicate equal = Predicates.doublesAreRelativelyClose(1e-3);
     double[][] expected = {
         {1, 2, 30},
         {4, 5, 6},

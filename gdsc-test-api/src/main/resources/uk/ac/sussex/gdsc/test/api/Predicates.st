@@ -106,7 +106,7 @@ public final class Predicates {
    * @param referenceValue the reference value
    * @return the predicate
    */
-  public static <Type>Predicate <type>Equals(<type> referenceValue) {
+  public static <Type>Predicate <type>IsEqualTo(<type> referenceValue) {
     return new <Type>Equals(referenceValue);
   \}}><types,Types:{type,Type |
 <\n>
@@ -115,7 +115,7 @@ public final class Predicates {
    *
    * @return the predicate
    */
-  public static <Type><Type>BiPredicate <type>sEqual() {
+  public static <Type><Type>BiPredicate <type>sAreEqual() {
     return <Type><Type>Equals.INSTANCE;
   \}}><floats,Floats,Ints:{float,Float,Int |
 <\n>
@@ -126,7 +126,7 @@ public final class Predicates {
    * @param referenceValue the reference value
    * @return the predicate
    */
-  public static <Float>Predicate <float>BinaryEqual(<float> referenceValue) {
+  public static <Float>Predicate <float>IsBinaryEqualTo(<float> referenceValue) {
     return new <Float>BinaryEqual(referenceValue);
   \}}><floats,Floats,Ints:{float,Float,Int |
 <\n>
@@ -136,7 +136,7 @@ public final class Predicates {
    *
    * @return the predicate
    */
-  public static <Float><Float>BiPredicate <float>sBinaryEqual() {
+  public static <Float><Float>BiPredicate <float>sAreBinaryEqual() {
     return <Float><Float>BinaryEqual.INSTANCE;
   \}}><floats,Floats,ulpTypes:{float,Float,ulpType |
 <\n>
@@ -148,7 +148,7 @@ public final class Predicates {
    * @return the predicate
    * @throws IllegalArgumentException If the ulp error is not positive
    */
-  public static <Float><Float>BiPredicate <float>sAreWithinUlp(<ulpType> ulpError) {
+  public static <Float><Float>BiPredicate <float>sAreUlpClose(<ulpType> ulpError) {
     return new <Float><Float>AreWithinUlp(ulpError);
   \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
 <\n>
@@ -161,7 +161,7 @@ public final class Predicates {
    * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
    */
-  public static <Number><Number>BiPredicate <number>sAreWithin(<numberAbsType> absoluteError) {
+  public static <Number><Number>BiPredicate <number>sAreAbsolutelyClose(<numberAbsType> absoluteError) {
     return new <Number><Number>AreWithin(absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
 <\n>
@@ -186,7 +186,8 @@ public final class Predicates {
    * is a test of the measured distance between two finite values.
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
-   * with the exception of {@link <Number>#NaN\} or infinite values.
+   * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
+   * include the special case of {@code -0.0 == 0.0\}.
 <else>
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
@@ -197,7 +198,7 @@ public final class Predicates {
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    */
-  public static <Number><Number>BiPredicate <number>sAreClose(double relativeError) {
+  public static <Number><Number>BiPredicate <number>sAreRelativelyClose(double relativeError) {
     return new <Number><Number>AreClose(relativeError, 0);
   \}
 
@@ -238,9 +239,10 @@ public final class Predicates {
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
 <\n>
   /**
-   * Creates a predicate to test a {@code <number>\} value is close to an expected value using a
-   * relative error. The relative error between values {@code expected\} and {@code actual\} is
-   * relative to the magnitude of {@code expected\} and the test is:
+   * Creates a predicate to test a {@code <number>\} value {@code B\} is close to an expected
+   * value {@code A\} using a relative error. The relative error between values
+   * {@code expected\} and {@code actual\} is relative to the magnitude of {@code expected\}
+   * and the test is:
    *
    * \<pre>
    * {@code
@@ -262,7 +264,8 @@ public final class Predicates {
    * is a test of the measured distance between two finite values.
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
-   * with the exception of {@link <Number>#NaN\} or infinite values.
+   * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
+   * include the special case of {@code -0.0 == 0.0\}.
 <else>
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
@@ -274,14 +277,15 @@ public final class Predicates {
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite
    */
-  public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError) {
+  public static <Number><Number>BiPredicate <number>sBIsRelativelyCloseToA(double relativeError) {
     return new <Number><Number>IsCloseTo(relativeError, 0);
   \}
 
   /**
-   * Creates a predicate to test a {@code <number>\} value is close to an expected value using a
-   * relative and/or an absolute error. The relative error between values {@code expected\} and
-   * {@code actual\} is relative to the magnitude of {@code expected\} and the test is:
+   * Creates a predicate to test a {@code <number>\} value {@code B\} is close to an expected
+   * value {@code A\} using a relative and/or absolute error. The relative error between values
+   * {@code expected\} and {@code actual\} is relative to the magnitude of {@code expected\}
+   * and the test is:
    *
    * \<pre>
    * {@code
@@ -314,7 +318,7 @@ public final class Predicates {
    *         \<code>&lt;=\</code> than the maximum difference between \<code><number>\</code>
    *         primitives
    */
-  public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError,
+  public static <Number><Number>BiPredicate <number>sBIsCloseToA(double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number><Number>IsCloseTo(relativeError, absoluteError);
   \}}><Ops,ops:{Op,op |<types,Types:{type,Type |

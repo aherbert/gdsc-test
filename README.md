@@ -28,7 +28,7 @@ primitive predicates ``DoublePredicate`` and ``LongPredicate`` to all java
 primitives. These are functional interfaces for single or bi-valued predicates,
 for example for ``int`` primitives:
 
-```java
+```Java
 @FunctionalInterface
 public interface IntPredicate {
     boolean test(int value);
@@ -52,7 +52,7 @@ will test primitive value(s) using a single or bi-valued predicate. An
 ``AssertionError`` is generated when a test fails. For example a test for
 relative equality:
 
-```java
+```Java
 import uk.ac.sussex.gdsc.test.api.TestAssertions;
 import uk.ac.sussex.gdsc.test.api.Predicates;
 
@@ -62,10 +62,10 @@ public void testRelativeEquality() {
     double expected = 100;
     double actual = 99;
 
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsCloseTo(relativeError);
+    DoubleDoubleBiPredicate areClose = Predicates.doublesAreRelativelyClose(relativeError);
 
     // This will pass as 99 is within (0.01*100) of 100
-    TestAssertions.assertTest(expected, actual, isCloseTo);
+    TestAssertions.assertTest(expected, actual, areClose);
 }
 ```
 
@@ -74,8 +74,8 @@ interface implement ``Supplier<String>`` to provide a text description of the pr
 
 Nested arrays are supported using recursion allowing testing of matrices:
 
-```java
-IntIntBiPredicate equal = Predicates.intsEqual();
+```Java
+IntIntBiPredicate equal = Predicates.intsAreEqual();
 Object[] expected = new int[4][5][6];
 Object[] actual = new int[4][5][6];
 TestAssertions.assertArrayTest(expected, actual, equal);

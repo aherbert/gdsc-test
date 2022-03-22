@@ -69,10 +69,10 @@ public class PredicatesTest {<types,Types:{type,Type |
    * {@code ==\} operator.
    */
   @Test
-  public void testEquals<Type>() {
+  public void testIsEqualTo<Type>() {
     final <type>[] values = ApiTests.get<Type>Values();
     for (<type> value1 : values) {
-      final <Type>Predicate test = Predicates.<type>Equals(value1);
+      final <Type>Predicate test = Predicates.<type>IsEqualTo(value1);
       for (<type> value2 : values) {
         Assertions.assertEquals(value1 == value2, test.test(value2),
             "Predicate does not compute ==");
@@ -85,8 +85,8 @@ public class PredicatesTest {<types,Types:{type,Type |
    * {@code ==\} operator.
    */
   @Test
-  public void testEqual<Type>s() {
-    final <Type><Type>BiPredicate test = Predicates.<type>sEqual();
+  public void testAreEqual<Type>s() {
+    final <Type><Type>BiPredicate test = Predicates.<type>sAreEqual();
     final <type>[] values = ApiTests.get<Type>Values();
     for (<type> value1 : values) {
       for (<type> value2 : values) {
@@ -101,10 +101,10 @@ public class PredicatesTest {<types,Types:{type,Type |
    * binary comparison.
    */
   @Test
-  public void testBinaryEqual<Float>() {
+  public void testIsBinaryEqualTo<Float>() {
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
-      final <Float>Predicate test = Predicates.<float>BinaryEqual(value1);
+      final <Float>Predicate test = Predicates.<float>IsBinaryEqualTo(value1);
       for (<float> value2 : values) {
         Assertions.assertEquals(<Float>.compare(value1, value2) == 0, test.test(value2),
             "Predicate does not compute <Float>.compare");
@@ -116,8 +116,8 @@ public class PredicatesTest {<types,Types:{type,Type |
    * Test creates a predicate to compare {@code <float>\} values using binary comparison.
    */
   @Test
-  public void testBinaryEqual<Float>s() {
-    final <Float><Float>BiPredicate test = Predicates.<float>sBinaryEqual();
+  public void testAreBinaryEqual<Float>s() {
+    final <Float><Float>BiPredicate test = Predicates.<float>sAreBinaryEqual();
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {
@@ -131,9 +131,9 @@ public class PredicatesTest {<types,Types:{type,Type |
    * Test creates a predicate to compare {@code <float>\} values are within a ULP error.
    */
   @Test
-  public void testAreWithinUlpUsing<Float>s() {
+  public void testAreUlpCloseUsing<Float>s() {
     final <ulpType> ulpError = 1;
-    final <Float><Float>BiPredicate test = Predicates.<float>sAreWithinUlp(ulpError);
+    final <Float><Float>BiPredicate test = Predicates.<float>sAreUlpClose(ulpError);
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value1 : values) {
       for (<float> value2 : values) {
@@ -149,9 +149,9 @@ public class PredicatesTest {<types,Types:{type,Type |
    * absolute error.
    */
   @Test
-  public void testAreWithin<Number>Using<NumberAbsType>s() {
+  public void testAreAbsolutelyClose<Number>Using<NumberAbsType>s() {
     final <numberAbsType> absoluteError = 1;
-    final <Number><Number>BiPredicate test = Predicates.<number>sAreWithin(absoluteError);
+    final <Number><Number>BiPredicate test = Predicates.<number>sAreAbsolutelyClose(absoluteError);
     final <number>[] values = ApiTests.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
@@ -166,12 +166,12 @@ public class PredicatesTest {<types,Types:{type,Type |
    * Test creates a predicate to compare {@code <number>\} values are close.
    */
   @Test
-  public void testAreClose<Number>s() {
+  public void testAreRelativelyClose<Number>s() {
     final double relativeError = 0.5;
     final <numberAbsType> absoluteError = 1;
     final <Number><Number>BiPredicate test1 = Predicates.<number>sAreClose(relativeError,
         absoluteError);
-    final <Number><Number>BiPredicate test2 = Predicates.<number>sAreClose(relativeError);
+    final <Number><Number>BiPredicate test2 = Predicates.<number>sAreRelativelyClose(relativeError);
     final <number>[] values = ApiTests.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
@@ -189,12 +189,13 @@ public class PredicatesTest {<types,Types:{type,Type |
    * Test creates a predicate to compare a {@code <number>\} value is close to an expected value.
    */
   @Test
-  public void testIsCloseTo<Number>s() {
+  public void testBIsRelativelyCloseToA<Number>s() {
     final double relativeError = 0.5;
     final <numberAbsType> absoluteError = 1;
-    final <Number><Number>BiPredicate test1 = Predicates.<number>sIsCloseTo(relativeError,
+    final <Number><Number>BiPredicate test1 = Predicates.<number>sBIsCloseToA(relativeError,
         absoluteError);
-    final <Number><Number>BiPredicate test2 = Predicates.<number>sIsCloseTo(relativeError);
+    final <Number><Number>BiPredicate test2 = Predicates.<number>sBIsRelativelyCloseToA(
+        relativeError);
     final <number>[] values = ApiTests.get<Number>Values();
     for (<number> value1 : values) {
       for (<number> value2 : values) {
