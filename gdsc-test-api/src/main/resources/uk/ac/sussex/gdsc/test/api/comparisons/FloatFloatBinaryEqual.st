@@ -47,6 +47,6 @@ public class <Float><Float>BinaryEqual
    */
   @Override
   public String get() {
-    return "value1 cmp value2";
+    return "value1 is value2";
   }
 }

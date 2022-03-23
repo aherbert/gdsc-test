@@ -36,7 +36,7 @@ public class <Float>BinaryEqualTest {
     final <float>[] values = ApiTests.get<Float>Values();
     for (<float> value : values) {
       final <Float>BinaryEqual predicate = new <Float>BinaryEqual(value);
-      Assertions.assertTrue(predicate.get().contains("cmp"), "Description missing cmp");
+      Assertions.assertTrue(predicate.get().contains("is"), "Description missing 'is'");
       final String stringValue = String.valueOf(value);
       Assertions.assertTrue(predicate.get().contains(stringValue),
           () -> "Description missing " + stringValue);

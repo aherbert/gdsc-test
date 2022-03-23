@@ -74,6 +74,6 @@ public class <Float>BinaryEqual
    */
   @Override
   public String get() {
-    return "value cmp " + <Float>.toString(referenceValue);
+    return "value is " + <Float>.toString(referenceValue);
   }
 }

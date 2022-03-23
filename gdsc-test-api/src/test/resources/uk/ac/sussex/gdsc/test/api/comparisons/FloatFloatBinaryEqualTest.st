@@ -32,6 +32,6 @@ public class <Float><Float>BinaryEqualTest {
   @Test
   public void testGet() {
     final <Float><Float>BinaryEqual predicate = new <Float><Float>BinaryEqual();
-    Assertions.assertTrue(predicate.get().contains("cmp"), "Description missing ==");
+    Assertions.assertTrue(predicate.get().contains("is"), "Description missing 'is'");
   }
 }
