@@ -74,6 +74,20 @@ final class Descriptions {
   }
 
   /**
+   * Gets the description for the reference value. This is to be used as a prefix
+   * for a two argument predicate description using values {@code v1} and {@code v2}.
+   * <pre>
+   * "v1=" + value + ". "
+   * </pre>
+   *
+   * @param value The string representing the reference value.
+   * @return the description
+   */
+  static String getReferenceDescription(String value) {
+    return "v1=" + value + ". ";
+  }
+
+  /**
    * Get the description of the test that two floating-point values are equal within a ULP error.
    *
    * <p>It is assumed the error has been validated (is positive).

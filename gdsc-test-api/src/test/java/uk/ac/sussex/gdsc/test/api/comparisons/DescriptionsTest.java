@@ -61,6 +61,14 @@ class DescriptionsTest {
   }
 
   @Test
+  void testGetReferenceDescription() {
+    Assertions.assertEquals("v1=. ", Descriptions.getReferenceDescription(""));
+    Assertions.assertEquals("v1=null. ", Descriptions.getReferenceDescription(null));
+    Assertions.assertEquals("v1=1.23. ", Descriptions.getReferenceDescription("1.23"));
+    Assertions.assertEquals("v1=42. ", Descriptions.getReferenceDescription("42"));
+  }
+
+  @Test
   void testGetDescriptionWithinUlp() {
     // These must be distinguishable as strings
     for (final int ulpError : new int[] {0, 1, 42, Integer.MAX_VALUE}) {
