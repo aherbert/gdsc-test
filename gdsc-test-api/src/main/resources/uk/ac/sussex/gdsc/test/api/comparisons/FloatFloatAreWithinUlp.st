@@ -36,8 +36,8 @@ public class <Float><Float>AreWithinUlp
    *
    * \<p>NaN values are ignored and the test returns false.
    *
-   * @param ulpError The maximum ULP error between \<code>value1\</code>
-   *                 and \<code>value2\</code> for which both numbers are still
+   * @param ulpError The maximum ULP error between {@code value1}
+   *                 and {@code value2} for which both numbers are still
    *                 considered equal.
    * @throws IllegalArgumentException If the ULP error is not positive
    */

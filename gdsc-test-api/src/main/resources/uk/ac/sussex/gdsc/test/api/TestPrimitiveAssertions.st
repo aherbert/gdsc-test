@@ -40,7 +40,7 @@ final class TestPrimitiveAssertions {
    * \<p>Fails with the supplied failure {@code message\}.
    *
    * @param expected The expected value.
-   * @param actual The value to check against \<code>expected\</code>.
+   * @param actual The value to check against {@code expected\}.
    * @param test The test.
    * @param message The message.
    */
@@ -59,7 +59,7 @@ final class TestPrimitiveAssertions {
    * {@code messageSupplier\}.
    *
    * @param expected The expected value.
-   * @param actual The value to check against \<code>expected\</code>.
+   * @param actual The value to check against {@code expected\}.
    * @param test The test.
    * @param messageSupplier The message supplier.
    */

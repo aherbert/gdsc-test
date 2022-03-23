@@ -143,8 +143,8 @@ public final class Predicates {
   /**
    * Creates a predicate to test {@code <float>\} values are equal within a ULP error.
    *
-   * @param ulpError The maximum ULP error between \<code>value1\</code> and
-   *        \<code>value2\</code> for which both numbers are still considered equal.
+   * @param ulpError The maximum ULP error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the ulp error is not positive
    */
@@ -155,8 +155,8 @@ public final class Predicates {
   /**
    * Creates a predicate to test {@code <number>\} values are equal within an absolute error.
    *
-   * @param absoluteError The maximum absolute error between \<code>value1\</code> and
-   *        \<code>value2\</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
@@ -193,8 +193,8 @@ public final class Predicates {
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
 <endif>
    *
-   * @param relativeError The maximum relative error between \<code>value1\</code> and
-   *        \<code>value2\</code> for which both numbers are still considered equal.
+   * @param relativeError The maximum relative error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    */
@@ -223,14 +223,14 @@ public final class Predicates {
    * is a test of the measured distance between two finite values.
 <endif>
    *
-   * @param relativeError The maximum relative error between \<code>value1\</code> and
-   *        \<code>value2\</code> for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between \<code>value1\</code> and
-   *        \<code>value2\</code> for which both numbers are still considered equal.
+   * @param relativeError The maximum relative error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    * @throws IllegalArgumentException If the absolute error is not positive or is
-   *         \<code>&lt;=\</code> than the maximum difference between \<code><number>\</code>
+   *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
    */
   public static <Number><Number>BiPredicate <number>sAreClose(double relativeError,
@@ -271,8 +271,8 @@ public final class Predicates {
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
 <endif>
    *
-   * @param relativeError The maximum error, relative to \<code>expected\</code>, between
-   *        \<code>expected\</code> and \<code>actual\</code> for which both numbers are still
+   * @param relativeError The maximum error, relative to {@code expected\}, between
+   *        {@code expected\} and {@code actual\} for which both numbers are still
    *        considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite
@@ -307,15 +307,15 @@ public final class Predicates {
    * is a test of the measured distance between two finite values.
 <endif>
    *
-   * @param relativeError The maximum error, relative to \<code>expected\</code>, between
-   *        \<code>expected\</code> and \<code>actual\</code> for which both numbers are still
+   * @param relativeError The maximum error, relative to {@code expected\}, between
+   *        {@code expected\} and {@code actual\} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between \<code>expected\</code> and
-   *        \<code>actual\</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between {@code expected\} and
+   *        {@code actual\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite
    * @throws IllegalArgumentException If the absolute error is not positive or is
-   *         \<code>&lt;=\</code> than the maximum difference between \<code><number>\</code>
+   *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
    */
   public static <Number><Number>BiPredicate <number>sBIsCloseToA(double relativeError,

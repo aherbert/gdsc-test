@@ -23,8 +23,8 @@ public class <Number><Number>Are<Within>
   /**
    * Create a predicate to test two {@code <number>} values are equal within an absolute error.
    *
-   * @param absoluteError The maximum absolute error between \<code>value1\</code>
-   *                      and \<code>value2\</code> for which both numbers are still
+   * @param absoluteError The maximum absolute error between {@code value1}
+   *                      and {@code value2} for which both numbers are still
    *                      considered equal.
    * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
    *         measurable difference between <number> values

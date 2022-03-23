@@ -39,10 +39,10 @@ public class <Number><Number>AreClose
    * \<p>The relative error is symmetric for {@code value1} and {@code value2}. The test is
    * equivalent to testing convergence of two values.
    *
-   * @param relativeError The maximum relative error between \<code>value1\</code> and
-   *        \<code>value2\</code> for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between \<code>value1\</code> and
-   *        \<code>value2\</code> for which both numbers are still considered equal.
+   * @param relativeError The maximum relative error between {@code value1} and
+   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between {@code value1} and
+   *        {@code value2} for which both numbers are still considered equal.
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
    * @throws IllegalArgumentException If the absolute error is not positive or is
    *         {@code >=} than the maximum difference between <number> primitives

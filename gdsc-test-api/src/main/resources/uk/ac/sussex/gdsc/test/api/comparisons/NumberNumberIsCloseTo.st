@@ -41,11 +41,11 @@ public class <Number><Number>IsCloseTo
    * equivalent to testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
-   * @param relativeError The maximum error, relative to \<code>expected\</code>, between
-   *        \<code>expected\</code> and \<code>actual\</code> for which both numbers are still
+   * @param relativeError The maximum error, relative to {@code expected}, between
+   *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between \<code>expected\</code> and
-   *        \<code>actual\</code> for which both numbers are still considered equal.
+   * @param absoluteError The maximum absolute error between {@code expected} and
+   *        {@code actual} for which both numbers are still considered equal.
    * @throws IllegalArgumentException If the relative error is not positive finite
    * @throws IllegalArgumentException If the absolute error is not positive or is
    *         {@code >=} than the maximum difference between <number> primitives
