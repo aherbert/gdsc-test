@@ -23,6 +23,14 @@ public class <Type><Type>Equals
    * {@inheritDoc}
    *
    * \<p>Tests that two <type>s are equal using the {@code ==} operator.
+<if(javadocFloat)>
+   *
+   * \<p>Equality imposed by this method is inconsistent with
+   * {@link <Float>#equals(Object)} and, {@link <Float>#compare(<float>, <float>)}.
+   *
+   * \<p>For example {@code -0} and {@code 0} are equal. {@code <Float>.NaN} and
+   * {@code <Float>.NaN} are not equal.
+<endif>
    *
    * @return true if equal
    */

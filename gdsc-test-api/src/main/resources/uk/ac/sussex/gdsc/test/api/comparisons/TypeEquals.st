@@ -43,6 +43,14 @@ public class <Type>Equals
    * {@inheritDoc}
    *
    * \<p>Tests that the value is equal to the reference value using the {@code ==} operator.
+<if(javadocFloat)>
+   *
+   * \<p>Equality imposed by this method is inconsistent with
+   * {@link <Class>#equals(Object)} and, {@link <Class>#compare(<type>, <type>)}.
+   *
+   * \<p>For example {@code -0} and {@code 0} are equal. {@code <Class>.NaN} and
+   * {@code <Class>.NaN} are not equal.
+<endif>
    *
    * @return true if equal
    * @see #getReferenceValue()
