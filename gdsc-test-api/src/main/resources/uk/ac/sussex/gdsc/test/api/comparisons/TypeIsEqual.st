@@ -46,10 +46,10 @@ public class <Type>IsEqual
 <if(javadocFloat)>
    *
    * \<p>Equality imposed by this method is inconsistent with
-   * {@link <Class>#equals(Object)} and, {@link <Class>#compare(<type>, <type>)}.
+   * {@link <Type>#equals(Object)} and, {@link <Type>#compare(<type>, <type>)}.
    *
-   * \<p>For example {@code -0} and {@code 0} are equal. {@code <Class>.NaN} and
-   * {@code <Class>.NaN} are not equal.
+   * \<p>For example {@code -<zero>} and {@code <zero>} are equal. {@code <Type>.NaN} and
+   * {@code <Type>.NaN} are not equal.
 <endif>
    *
    * @return true if equal

@@ -28,8 +28,8 @@ public class <Type><Type>AreEqual
    * \<p>Equality imposed by this method is inconsistent with
    * {@link <Type>#equals(Object)} and, {@link <Type>#compare(<type>, <type>)}.
    *
-   * \<p>For example {@code -0} and {@code 0} are equal. {@code <Float>.NaN} and
-   * {@code <Float>.NaN} are not equal.
+   * \<p>For example {@code -<zero>} and {@code <zero>} are equal. {@code <Type>.NaN} and
+   * {@code <Type>.NaN} are not equal.
 <endif>
    *
    * @return true if equal
