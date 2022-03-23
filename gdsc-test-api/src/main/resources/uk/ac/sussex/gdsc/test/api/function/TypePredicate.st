@@ -1,11 +1,9 @@
 <package>
 
-import java.util.function.Predicate;
-
 /**
  * Represents a predicate (boolean-valued function) of one {@code <type>}-valued
  * argument. This is a {@code <type>}-consuming primitive type specialisation of
- * {@link Predicate}.
+ * {@link java.util.function.Predicate Predicate}.
  *
  * \<p>This is a {@link FunctionalInterface} whose functional method is
  * {@link #test(<type>)}.
@@ -14,7 +12,7 @@ import java.util.function.Predicate;
  * to consume <type> and add functionality including {@code xor} and inheritance of
  * the marker interface {@link PrimitivePredicate}.
  *
- * @see Predicate
+ * @see java.util.function.Predicate
  * @since 1.0
  */
 @FunctionalInterface

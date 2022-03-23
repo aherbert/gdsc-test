@@ -3,7 +3,6 @@
 import uk.ac.sussex.gdsc.test.api.Strings;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -11,7 +10,7 @@ import java.util.function.Supplier;
  *
  * \<p>Supports a description {@link Supplier} for a {@link String}.
  *
- * @see Predicate
+ * @see java.util.function.Predicate
  * @since 1.0
  */
 public class <Type><Op>Predicate implements <Type>Predicate, Supplier\<String> {

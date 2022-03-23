@@ -1,17 +1,16 @@
 <package>
 
-import java.util.function.BiPredicate;
-
 /**
  * Represents a predicate (boolean-valued function) of two primitive-valued  arguments. This is a
- * {@code <type1>},{@code <type2>}-consuming primitive type specialisation of {@link BiPredicate}.
+ * {@code <type1>},{@code <type2>}-consuming primitive type specialisation of
+ * {@link java.util.function.BiPredicate BiPredicate}.
  *
  * \<p>This is a {@link FunctionalInterface} whose functional method is
  * {@link #test(<type1>, <type2>)}.
  *
  * \<p>Note: This implementation adds {@code xor} functionality.
  *
- * @see BiPredicate
+ * @see java.util.function.BiPredicate
  * @see PrimitiveBiPredicate
  * @since 1.0
  */

@@ -3,14 +3,13 @@
 import uk.ac.sussex.gdsc.test.api.Strings;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
  * Represents a negation of a predicate including the string representation using {@link Supplier}
  * for a {@link String}.
  *
- * @see Predicate
+ * @see java.util.function.Predicate
  * @since 1.0
  */
 public class <Type>NegatePredicate implements <Type>Predicate, Supplier\<String> {
