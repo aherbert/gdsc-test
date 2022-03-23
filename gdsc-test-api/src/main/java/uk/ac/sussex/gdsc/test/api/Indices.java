@@ -102,18 +102,6 @@ final class Indices {
   }
 
   /**
-   * Replace the top element in the stack.
-   *
-   * @param v the value
-   */
-  void replace(int v) {
-    final int s = size - 1;
-    if (s >= 0) {
-      elements[s] = v;
-    }
-  }
-
-  /**
    * Append the string representation to the given StringBuilder.
    *
    * @param sb the StringBuilder

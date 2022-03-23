@@ -84,7 +84,5 @@ class IndicesTest {
     Assertions.assertEquals("[1][3]", i.toString());
     i.pop();
     Assertions.assertEquals("[1]", i.toString());
-    i.replace(43);
-    Assertions.assertEquals("[43]", i.toString());
   }
 }
