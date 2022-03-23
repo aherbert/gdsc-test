@@ -18,7 +18,7 @@ public class <Type>EqualsTest {
     final <type>[] values = ApiTests.get<Type>Values();
     for (final <type> value1 : values) {
       final <Type>Equals predicate = new <Type>Equals(value1);
-      Assertions.assertEquals(value1, predicate.getReferenceValue(),
+      Assertions.assertEquals(value1, predicate.getReference(),
           "Predicate has incorrect reference value");
       for (final <type> value2 : values) {
         Assertions.assertEquals(value1 == value2, predicate.test(value2),

@@ -18,10 +18,10 @@ public class <Float>BinaryEqual
   private static final long serialVersionUID = 1L;
 
   /** The reference value to test against. */
-  private final <float> referenceValue;
+  private final <float> reference;
 
   /** The binary form of the reference value to test against. */
-  private final <int> binaryReferenceValue;
+  private final <int> binaryReference;
 
   /**
    * Create a predicate to test {@code <float>} equality.
@@ -29,11 +29,11 @@ public class <Float>BinaryEqual
    * \<p>Equality to the reference value will use binary comparison of the values
    * converted using {@link <Float>#<float>To<Int>Bits(<float>)}.
    *
-   * @param referenceValue The reference value.
+   * @param reference The reference value.
    */
-  public <Float>BinaryEqual(<float> referenceValue) {
-    this.referenceValue = referenceValue;
-    binaryReferenceValue = <Float>.<float>To<Int>Bits(referenceValue);
+  public <Float>BinaryEqual(<float> reference) {
+    this.reference = reference;
+    binaryReference = <Float>.<float>To<Int>Bits(reference);
   }
 
   /**
@@ -43,8 +43,8 @@ public class <Float>BinaryEqual
    *
    * @return The reference value
    */
-  public <float> getReferenceValue() {
-    return referenceValue;
+  public <float> getReference() {
+    return reference;
   }
 
   /**
@@ -60,11 +60,11 @@ public class <Float>BinaryEqual
    * {@code <Float>.NaN} are equal.
    *
    * @return true if equal
-   * @see #getReferenceValue()
+   * @see #getReference()
    */
   @Override
   public boolean test(<float> value) {
-    return <Float>.<float>To<Int>Bits(value) == binaryReferenceValue;
+    return <Float>.<float>To<Int>Bits(value) == binaryReference;
   }
 
   /**
@@ -74,6 +74,6 @@ public class <Float>BinaryEqual
    */
   @Override
   public String get() {
-    return "value is " + <Float>.toString(referenceValue);
+    return "value is " + <Float>.toString(reference);
   }
 }

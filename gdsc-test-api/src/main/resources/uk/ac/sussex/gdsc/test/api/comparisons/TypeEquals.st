@@ -17,17 +17,17 @@ public class <Type>Equals
   private static final long serialVersionUID = 1L;
 
   /** The reference value to test against. */
-  private final <type> referenceValue;
+  private final <type> reference;
 
   /**
    * Create a predicate to test {@code <type>} equality.
    *
    * \<p>Equality to the reference value will use the {@code == operator}.
    *
-   * @param referenceValue The reference value.
+   * @param reference The reference value.
    */
-  public <Type>Equals(<type> referenceValue) {
-    this.referenceValue = referenceValue;
+  public <Type>Equals(<type> reference) {
+    this.reference = reference;
   }
 
   /**
@@ -35,8 +35,8 @@ public class <Type>Equals
    *
    * @return The reference value
    */
-  public <type> getReferenceValue() {
-    return referenceValue;
+  public <type> getReference() {
+    return reference;
   }
 
   /**
@@ -53,11 +53,11 @@ public class <Type>Equals
 <endif>
    *
    * @return true if equal
-   * @see #getReferenceValue()
+   * @see #getReference()
    */
   @Override
   public boolean test(<type> value) {
-    return value == referenceValue;
+    return value == reference;
   }
 
   /**
@@ -67,6 +67,6 @@ public class <Type>Equals
    */
   @Override
   public String get() {
-    return "value == " + <Class>.toString(referenceValue);
+    return "value == " + <Class>.toString(reference);
   }
 }

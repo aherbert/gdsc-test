@@ -18,7 +18,7 @@ public class <Float>BinaryEqualTest {
     final <float>[] values = ApiTests.get<Float>Values();
     for (final <float> value1 : values) {
       final <Float>BinaryEqual predicate = new <Float>BinaryEqual(value1);
-      Assertions.assertEquals(value1, predicate.getReferenceValue(),
+      Assertions.assertEquals(value1, predicate.getReference(),
           "Predicate has incorrect reference value");
       for (<float> value2 : values) {
         Assertions.assertEquals(<Float>.compare(value1, value2) == 0,
