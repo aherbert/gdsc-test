@@ -69,14 +69,14 @@ public class AssertionErrorCounter {
    * @param size the number of repeats
    * @param fraction the fraction of repeats that fail that will trigger an error
    * @return the failure limit
-   * @throws IllegalArgumentException if fraction is not in the range 0-1 or size is not positive
+   * @throws IllegalArgumentException if fraction is not in the range [0, 1] or size is not positive
    */
   public static int computeFailureLimit(int size, double fraction) {
     if (size <= 0) {
       throw new IllegalArgumentException("Size must be strictly positive: " + size);
     }
     if (!(fraction >= 0 && fraction <= 1)) {
-      throw new IllegalArgumentException("Fraction must be in the range 0-1");
+      throw new IllegalArgumentException("Fraction must be in the range [0, 1]");
     }
     return (int) Math.floor(size * fraction);
   }
