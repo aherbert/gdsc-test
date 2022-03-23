@@ -384,9 +384,6 @@ public final class Predicates {
    * \<p>The relative error is asymmetric for {@code reference\} and {@code value\}. The test is
    * equivalent to testing {@code value\} falls within a relative range of
    * {@code reference\}.
-   *
-   * \<p>The arguments for the method {@link <Number><Number>BiPredicate#test(<number>, <number>)\}
-   * are {@code reference\} then {@code value\}.
 <if(javadocNaN)>
    *
    * \<p>Note: If either value is {@link <Number>#NaN\} or infinite then there is no valid
@@ -429,9 +426,6 @@ public final class Predicates {
    * \<p>The relative error is asymmetric for {@code reference\} and {@code value\}. The test is
    * equivalent to testing {@code value\} falls within a relative and/or absolute range of
    * {@code reference\}.
-   *
-   * \<p>The arguments for the method {@link <Number><Number>BiPredicate#test(<number>, <number>)\}
-   * are {@code reference\} then {@code value\}.
 <if(javadocNaN)>
    *
    * \<p>Note: If either value is {@link <Number>#NaN\} or infinite then there is no valid
