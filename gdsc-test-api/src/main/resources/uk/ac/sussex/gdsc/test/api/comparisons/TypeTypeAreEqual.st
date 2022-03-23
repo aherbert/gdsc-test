@@ -26,7 +26,7 @@ public class <Type><Type>AreEqual
 <if(javadocFloat)>
    *
    * \<p>Equality imposed by this method is inconsistent with
-   * {@link <Float>#equals(Object)} and, {@link <Float>#compare(<float>, <float>)}.
+   * {@link <Type>#equals(Object)} and, {@link <Type>#compare(<type>, <type>)}.
    *
    * \<p>For example {@code -0} and {@code 0} are equal. {@code <Float>.NaN} and
    * {@code <Float>.NaN} are not equal.
