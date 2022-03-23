@@ -134,7 +134,7 @@ two values.
 
 Support is provided for **symmetric** relative equality using the name **AreRelativelyClose**
 which does not imply a direction. Support is provided for **asymmetric** relative equality
-using the name **BIsRelativelyCloseToA** which implies a direction.
+using the name **IsRelativelyCloseTo** which implies a direction.
 
 These can be constructed using a helper class::
 
@@ -151,7 +151,7 @@ These can be constructed using a helper class::
     assert !areClose.test(9, 10) : "Difference 1 should not be <= 0.01 of 10";
 
 
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesBIsRelativelyCloseToA(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsRelativelyCloseTo(relativeError);
 
     // The IsRelativelyCloseTo relative equality is asymmetric
     assert isCloseTo.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
@@ -194,7 +194,7 @@ This can be replaced with::
     double actual = 99;
 
     // equal within relative error of expected
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesBIsRelativelyCloseToA(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsRelativelyCloseTo(relativeError);
     Assertions.assertTrue(isCloseTo.test(expected, actual));
 
 This will identify errors but the error message is not helpful.

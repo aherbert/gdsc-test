@@ -101,7 +101,7 @@ public class PredicatesTest {<types,Types:{type,Type |
    * binary comparison.
    */
   @Test
-  public void testIsBinaryEqualTo<Float>() {
+  public void testIsBinaryEqual<Float>() {
     final <float>[] values = ApiTests.get<Float>Values();
     for (final <float> value1 : values) {
       final <Float>Predicate test = Predicates.<float>IsBinaryEqual(value1);
@@ -132,7 +132,7 @@ public class PredicatesTest {<types,Types:{type,Type |
    * within a ULP error.
    */
   @Test
-  public void testIsUlpCloseToUsing<Float>s() {
+  public void testIsUlpCloseToUsing<Float>() {
     final <ulpType> ulpError = 1;
     final <float>[] values = ApiTests.get<Float>Values();
     for (final <float> value1 : values) {
@@ -167,7 +167,7 @@ public class PredicatesTest {<types,Types:{type,Type |
    * absolute error.
    */
   @Test
-  public void testIsAbsolutelyClose<Number>Using<NumberAbsType>s() {
+  public void testIsAbsolutelyClose<Number>Using<NumberAbsType>() {
     final <numberAbsType> absoluteError = 1;
     final <number>[] values = ApiTests.get<Number>Values();
     for (final <number> value1 : values) {
@@ -185,7 +185,7 @@ public class PredicatesTest {<types,Types:{type,Type |
    * absolute error.
    */
   @Test
-  public void testAreAbsolutelyClose<Number>Using<NumberAbsType>s() {
+  public void testAreAbsolutelyClose<Number>sUsing<NumberAbsType>() {
     final <numberAbsType> absoluteError = 1;
     final <Number><Number>BiPredicate test = Predicates.<number>sAreAbsolutelyClose(absoluteError);
     final <number>[] values = ApiTests.get<Number>Values();
@@ -202,7 +202,7 @@ public class PredicatesTest {<types,Types:{type,Type |
    * Test creates a predicate to compare {@code <number>\} values are close.
    */
   @Test
-  public void testIsRelativelyClose<Number>s() {
+  public void testIsRelativelyClose<Number>() {
     final double relativeError = 0.5;
     final <numberAbsType> absoluteError = 1;
     final <number>[] values = ApiTests.get<Number>Values();
@@ -249,7 +249,7 @@ public class PredicatesTest {<types,Types:{type,Type |
    * Test creates a predicate to compare a {@code <number>\} value is close to an expected value.
    */
   @Test
-  public void testIsRelativelyCloseTo<Number>s() {
+  public void testIsRelativelyCloseTo<Number>() {
     final double relativeError = 0.5;
     final <numberAbsType> absoluteError = 1;
     final <number>[] values = ApiTests.get<Number>Values();
@@ -273,12 +273,12 @@ public class PredicatesTest {<types,Types:{type,Type |
    * Test creates a predicate to compare a {@code <number>\} value is close to an expected value.
    */
   @Test
-  public void testBIsRelativelyCloseToA<Number>s() {
+  public void testIsRelativelyCloseTo<Number>s() {
     final double relativeError = 0.5;
     final <numberAbsType> absoluteError = 1;
-    final <Number><Number>BiPredicate test1 = Predicates.<number>sBIsCloseToA(relativeError,
+    final <Number><Number>BiPredicate test1 = Predicates.<number>sIsCloseTo(relativeError,
         absoluteError);
-    final <Number><Number>BiPredicate test2 = Predicates.<number>sBIsRelativelyCloseToA(
+    final <Number><Number>BiPredicate test2 = Predicates.<number>sIsRelativelyCloseTo(
         relativeError);
     final <number>[] values = ApiTests.get<Number>Values();
     for (final <number> value1 : values) {

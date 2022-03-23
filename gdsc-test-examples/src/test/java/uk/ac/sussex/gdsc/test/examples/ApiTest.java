@@ -56,12 +56,12 @@ class ApiTest {
   }
 
   /**
-   * Test the BIsRelativelyCloseToA predicate.
+   * Test the IsRelativelyCloseTo predicate.
    */
   @Test
-  void testBIsRelativelyCloseToAPredicate() {
+  void testIsRelativelyCloseToPredicate() {
     double relativeError = 0.01;
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesBIsRelativelyCloseToA(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsRelativelyCloseTo(relativeError);
 
     // The IsRelativelyCloseTo relative equality is asymmetric
     assert isCloseTo.test(100, 99) : "Difference 1 should be <= 0.01 of 100";
@@ -88,7 +88,7 @@ class ApiTest {
   }
 
   /**
-   * Test the BIsRelativelyCloseToA predicate within a test framework.
+   * Test the IsRelativelyCloseTo predicate within a test framework.
    */
   @Test
   void testIsCloseToWithinFramework() {
@@ -100,7 +100,7 @@ class ApiTest {
     Assertions.assertEquals(expected, actual, Math.abs(expected) * relativeError);
 
     // replace with predicate
-    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesBIsRelativelyCloseToA(relativeError);
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsRelativelyCloseTo(relativeError);
     Assertions.assertTrue(isCloseTo.test(expected, actual));
   }
 

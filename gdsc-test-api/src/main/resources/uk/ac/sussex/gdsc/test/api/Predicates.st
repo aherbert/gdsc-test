@@ -496,7 +496,7 @@ public final class Predicates {
    * @return the predicate
    * @throws IllegalArgumentException If the relative error is not positive finite
    */
-  public static <Number><Number>BiPredicate <number>sBIsRelativelyCloseToA(double relativeError) {
+  public static <Number><Number>BiPredicate <number>sIsRelativelyCloseTo(double relativeError) {
     return new <Number><Number>IsCloseTo(relativeError, 0);
   \}
 
@@ -537,7 +537,7 @@ public final class Predicates {
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
    */
-  public static <Number><Number>BiPredicate <number>sBIsCloseToA(double relativeError,
+  public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number><Number>IsCloseTo(relativeError, absoluteError);
   \}}><Ops,ops:{Op,op |<types,Types:{type,Type |
