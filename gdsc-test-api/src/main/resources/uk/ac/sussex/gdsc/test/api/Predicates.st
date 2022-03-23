@@ -1,71 +1,71 @@
 <package>
 
 <! Explicit imports (not templated) so the sort order is correct for Checkstyle !>
-import uk.ac.sussex.gdsc.test.api.comparisons.BooleanBooleanEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.BooleanEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.BooleanBooleanAreEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.BooleanIsEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreClose;
-import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreWithin;
-import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.CharCharEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.CharEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleBinaryEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.CharCharAreEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.CharIsEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreClose;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreWithin;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreWithinUlp;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleBinaryEqual;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreUlpClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsFinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsInfinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsUlpClose;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatBinaryEqual;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreClose;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreWithin;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreWithinUlp;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatBinaryEqual;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreUlpClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsFinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsInfinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsUlpClose;
-import uk.ac.sussex.gdsc.test.api.comparisons.IntEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreClose;
-import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreWithin;
-import uk.ac.sussex.gdsc.test.api.comparisons.IntIntEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.LongEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongIsEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreClose;
-import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreWithin;
-import uk.ac.sussex.gdsc.test.api.comparisons.LongLongEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongIsCloseTo;
-import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquals;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreClose;
-import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreWithin;
-import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
@@ -127,7 +127,7 @@ public final class Predicates {
    * @return the predicate
    */
   public static <Type>Predicate <type>IsEqualTo(<type> reference) {
-    return new <Type>Equals(reference);
+    return new <Type>IsEqual(reference);
   \}}><types,Types:{type,Type |
 <\n>
   /**
@@ -136,7 +136,7 @@ public final class Predicates {
    * @return the predicate
    */
   public static <Type><Type>BiPredicate <type>sAreEqual() {
-    return <Type><Type>Equals.INSTANCE;
+    return <Type><Type>AreEqual.INSTANCE;
   \}}><floats,Floats,Ints:{float,Float,Int |
 <\n>
   /**
@@ -148,7 +148,7 @@ public final class Predicates {
    * @return the predicate
    */
   public static <Float>Predicate <float>IsBinaryEqual(<float> reference) {
-    return new <Float>BinaryEqual(reference);
+    return new <Float>IsBinaryEqual(reference);
   \}}><floats,Floats,Ints:{float,Float,Int |
 <\n>
   /**
@@ -158,7 +158,7 @@ public final class Predicates {
    * @return the predicate
    */
   public static <Float><Float>BiPredicate <float>sAreBinaryEqual() {
-    return <Float><Float>BinaryEqual.INSTANCE;
+    return <Float><Float>AreBinaryEqual.INSTANCE;
   \}}><floats,Floats,ulpTypes:{float,Float,ulpType |
 <\n>
   /**
@@ -185,7 +185,7 @@ public final class Predicates {
    * @throws IllegalArgumentException If the ulp error is not positive
    */
   public static <Float><Float>BiPredicate <float>sAreUlpClose(<ulpType> ulpError) {
-    return new <Float><Float>AreWithinUlp(ulpError);
+    return new <Float><Float>AreUlpClose(ulpError);
   \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
 <\n>
   /**
@@ -215,7 +215,7 @@ public final class Predicates {
    */
   public static <Number><Number>BiPredicate <number>sAreAbsolutelyClose(
       <numberAbsType> absoluteError) {
-    return new <Number><Number>AreWithin(absoluteError);
+    return new <Number><Number>AreAbsolutelyClose(absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
 <\n>
   /**

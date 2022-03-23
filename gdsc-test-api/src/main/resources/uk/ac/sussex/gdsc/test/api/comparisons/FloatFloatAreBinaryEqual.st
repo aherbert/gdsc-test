@@ -11,14 +11,15 @@ import java.util.function.Supplier;
  *
  * @see <Float><Float>BiPredicate#test(<float>, <float>)
  */
-public class <Float><Float>BinaryEqual
+public class <Float><Float>AreBinaryEqual
     implements <Float><Float>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
   private static final long serialVersionUID = 1L;
 
   /** A default instance. */
-  public static final <Float><Float>BinaryEqual INSTANCE = new <Float><Float>BinaryEqual();
+  public static final <Float><Float>AreBinaryEqual INSTANCE =
+      new <Float><Float>AreBinaryEqual();
 
   /**
    * {@inheritDoc}

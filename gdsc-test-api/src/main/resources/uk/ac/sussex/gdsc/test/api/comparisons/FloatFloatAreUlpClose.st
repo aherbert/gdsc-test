@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  * @see <Float>Equality#areWithinUlp(<float>, <float>, <ulpType>)
  * @see \<a href="https://en.wikipedia.org/wiki/Unit_in_the_last_place">Unit in the last place\</a>
  */
-public class <Float><Float>AreWithinUlp
+public class <Float><Float>AreUlpClose
     implements <Float><Float>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -41,7 +41,7 @@ public class <Float><Float>AreWithinUlp
    *                 considered equal.
    * @throws IllegalArgumentException If the ULP error is not positive
    */
-  public <Float><Float>AreWithinUlp(<ulpType> ulpError) {
+  public <Float><Float>AreUlpClose(<ulpType> ulpError) {
     <Float>Equality.validateUlpError(ulpError);
     this.ulpError = ulpError;
   }

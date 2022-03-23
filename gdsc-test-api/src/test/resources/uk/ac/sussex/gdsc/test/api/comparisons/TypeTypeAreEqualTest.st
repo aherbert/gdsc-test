@@ -6,16 +6,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link <Type><Type>Equals}.
+ * Tests {@link <Type><Type>AreEqual}.
  */
-public class <Type><Type>EqualsTest {
+public class <Type><Type>AreEqualTest {
 
   /**
-   * Test {@link <Type><Type>Equals#test(<type>, <type>)}.
+   * Test {@link <Type><Type>AreEqual#test(<type>, <type>)}.
    */
   @Test
   public void testTest() {
-    final <Type><Type>Equals predicate = <Type><Type>Equals.INSTANCE;
+    final <Type><Type>AreEqual predicate = <Type><Type>AreEqual.INSTANCE;
     final <type>[] values = ApiTests.get<Type>Values();
     for (final <type> value1 : values) {
       for (final <type> value2 : values) {
@@ -26,11 +26,11 @@ public class <Type><Type>EqualsTest {
   }
 
   /**
-   * Test {@link <Type><Type>Equals#get() }.
+   * Test {@link <Type><Type>AreEqual#get() }.
    */
   @Test
   public void testGet() {
-    final <Type><Type>Equals predicate = new <Type><Type>Equals();
+    final <Type><Type>AreEqual predicate = new <Type><Type>AreEqual();
     Assertions.assertTrue(predicate.get().contains("=="), "Description missing ==");
   }
 }

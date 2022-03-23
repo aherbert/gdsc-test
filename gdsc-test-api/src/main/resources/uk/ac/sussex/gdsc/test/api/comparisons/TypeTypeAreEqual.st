@@ -10,14 +10,14 @@ import java.util.function.Supplier;
  *
  * @see <Type><Type>BiPredicate#test(<type>, <type>)
  */
-public class <Type><Type>Equals
+public class <Type><Type>AreEqual
     implements <Type><Type>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
   private static final long serialVersionUID = 1L;
 
   /** A default instance. */
-  public static final <Type><Type>Equals INSTANCE = new <Type><Type>Equals();
+  public static final <Type><Type>AreEqual INSTANCE = new <Type><Type>AreEqual();
 
   /**
    * {@inheritDoc}

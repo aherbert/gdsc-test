@@ -1,20 +1,20 @@
 <package>
 
 <! Explicit imports (not templated) so the sort order is correct for Checkstyle !>
-import uk.ac.sussex.gdsc.test.api.comparisons.BooleanEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.BooleanIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquality;
-import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquals;
-import uk.ac.sussex.gdsc.test.api.comparisons.CharEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.CharIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquality;
-import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquality;
-import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntEquality;
-import uk.ac.sussex.gdsc.test.api.comparisons.IntEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongEquality;
-import uk.ac.sussex.gdsc.test.api.comparisons.LongEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquality;
-import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquals;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsEqual;
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicateAndBooleanPredicate;
@@ -300,8 +300,8 @@ public class PredicatesTest {<types,Types:{type,Type |
   @Test
   public void test<Op><Type>Predicate<Type>Predicate() {
     final <type>[] values = ApiTests.get<Type>Values();
-    final <Type>Predicate predicate1 = new <Type>Equals(values[0]);
-    final <Type>Predicate predicate2 = new <Type>Equals(values[1]);
+    final <Type>Predicate predicate1 = new <Type>IsEqual(values[0]);
+    final <Type>Predicate predicate2 = new <Type>IsEqual(values[1]);
     final <Type><Type>BiPredicate predicate = Predicates.<op>(predicate1, predicate2);
     Assertions.assertEquals(<Type>Predicate<Op><Type>Predicate.class, predicate.getClass());
     for (final <type> value1 : values) {

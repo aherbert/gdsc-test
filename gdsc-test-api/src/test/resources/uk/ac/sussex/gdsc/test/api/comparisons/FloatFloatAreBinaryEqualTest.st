@@ -6,16 +6,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link <Float><Float>BinaryEqual}.
+ * Tests {@link <Float><Float>AreBinaryEqual}.
  */
-public class <Float><Float>BinaryEqualTest {
+public class <Float><Float>AreBinaryEqualTest {
 
   /**
-   * Test {@link <Float><Float>BinaryEqual#test(<float>, <float>)}.
+   * Test {@link <Float><Float>AreBinaryEqual#test(<float>, <float>)}.
    */
   @Test
   public void testTest() {
-    final <Float><Float>BinaryEqual predicate = <Float><Float>BinaryEqual.INSTANCE;
+    final <Float><Float>AreBinaryEqual predicate = <Float><Float>AreBinaryEqual.INSTANCE;
     final <float>[] values = ApiTests.get<Float>Values();
     for (final <float> value1 : values) {
       for (final <float> value2 : values) {
@@ -27,11 +27,11 @@ public class <Float><Float>BinaryEqualTest {
   }
 
   /**
-   * Test {@link <Float><Float>BinaryEqual#get() }.
+   * Test {@link <Float><Float>AreBinaryEqual#get() }.
    */
   @Test
   public void testGet() {
-    final <Float><Float>BinaryEqual predicate = new <Float><Float>BinaryEqual();
+    final <Float><Float>AreBinaryEqual predicate = new <Float><Float>AreBinaryEqual();
     Assertions.assertTrue(predicate.get().contains("is"), "Description missing 'is'");
   }
 }

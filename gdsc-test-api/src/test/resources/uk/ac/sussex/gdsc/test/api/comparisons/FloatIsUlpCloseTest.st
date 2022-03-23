@@ -24,7 +24,7 @@ public class <Float>IsUlpCloseTest {
         for (<float> value2 : values) {
           final boolean expected = <Float>Equality.testAreWithinUlp(value1, value2, ulpError);
           Assertions.assertEquals(expected, predicate.test(value2),
-              () -> String.format("Does not compute <Float>Equality.testAreWithinUlp :"
+              () -> String.format("Does not compute <Float>Equality.testAreUlpClose :"
                   + " v1=%s, v2=%s, ulp.error=%s", value1, value2, ulpError));
         }
       }

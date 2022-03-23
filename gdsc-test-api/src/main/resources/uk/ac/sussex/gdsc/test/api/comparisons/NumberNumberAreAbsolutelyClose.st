@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @see <Number><Number>BiPredicate#test(<number>, <number>)
  * @see <Number>Equality#areWithin(<number>, <number>, <errorType>)
  */
-public class <Number><Number>Are<Within>
+public class <Number><Number>Are<Absolutely>Close
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -29,7 +29,7 @@ public class <Number><Number>Are<Within>
    * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
    */
-  public <Number><Number>Are<Within>(<errorType> absoluteError) {
+  public <Number><Number>Are<Absolutely>Close(<errorType> absoluteError) {
     <Number>Equality.validateAbsoluteError(absoluteError);
     this.absoluteError = absoluteError;
   }

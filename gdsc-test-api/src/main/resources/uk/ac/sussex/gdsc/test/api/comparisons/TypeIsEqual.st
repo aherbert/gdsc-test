@@ -10,7 +10,7 @@ import java.util.function.Supplier;
  *
  * @see <Type>Predicate#test(<type>)
  */
-public class <Type>Equals
+public class <Type>IsEqual
     implements <Type>Predicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -26,7 +26,7 @@ public class <Type>Equals
    *
    * @param reference The reference value.
    */
-  public <Type>Equals(<type> reference) {
+  public <Type>IsEqual(<type> reference) {
     this.reference = reference;
   }
 
