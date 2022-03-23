@@ -16,7 +16,7 @@ public class <Float>BinaryEqualTest {
   @Test
   public void testTest() {
     final <float>[] values = ApiTests.get<Float>Values();
-    for (<float> value1 : values) {
+    for (final <float> value1 : values) {
       final <Float>BinaryEqual predicate = new <Float>BinaryEqual(value1);
       Assertions.assertEquals(value1, predicate.getReferenceValue(),
           "Predicate has incorrect reference value");
@@ -34,11 +34,12 @@ public class <Float>BinaryEqualTest {
   @Test
   public void testGet() {
     final <float>[] values = ApiTests.get<Float>Values();
-    for (<float> value : values) {
+    for (final <float> value : values) {
       final <Float>BinaryEqual predicate = new <Float>BinaryEqual(value);
-      Assertions.assertTrue(predicate.get().contains("is"), "Description missing 'is'");
+      final String s = predicate.get();
+      Assertions.assertTrue(s.contains("is"), "Description missing 'is'");
       final String stringValue = String.valueOf(value);
-      Assertions.assertTrue(predicate.get().contains(stringValue),
+      Assertions.assertTrue(s.contains(stringValue),
           () -> "Description missing " + stringValue);
     }
   }

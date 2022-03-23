@@ -16,11 +16,11 @@ public class <Type>EqualsTest {
   @Test
   public void testTest() {
     final <type>[] values = ApiTests.get<Type>Values();
-    for (<type> value1 : values) {
+    for (final <type> value1 : values) {
       final <Type>Equals predicate = new <Type>Equals(value1);
       Assertions.assertEquals(value1, predicate.getReferenceValue(),
           "Predicate has incorrect reference value");
-      for (<type> value2 : values) {
+      for (final <type> value2 : values) {
         Assertions.assertEquals(value1 == value2, predicate.test(value2),
             "Predicate does not compute ==");
       }
@@ -33,11 +33,12 @@ public class <Type>EqualsTest {
   @Test
   public void testGet() {
     final <type>[] values = ApiTests.get<Type>Values();
-    for (<type> value : values) {
+    for (final <type> value : values) {
       final <Type>Equals predicate = new <Type>Equals(value);
-      Assertions.assertTrue(predicate.get().contains("=="), "Description missing ==");
+      final String s = predicate.get();
+      Assertions.assertTrue(s.contains("=="), "Description missing ==");
       final String stringValue = String.valueOf(value);
-      Assertions.assertTrue(predicate.get().contains(stringValue),
+      Assertions.assertTrue(s.contains(stringValue),
           () -> "Description missing " + stringValue);
     }
   }

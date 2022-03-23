@@ -17,8 +17,8 @@ public class <Type><Type>EqualsTest {
   public void testTest() {
     final <Type><Type>Equals predicate = <Type><Type>Equals.INSTANCE;
     final <type>[] values = ApiTests.get<Type>Values();
-    for (<type> value1 : values) {
-      for (<type> value2 : values) {
+    for (final <type> value1 : values) {
+      for (final <type> value2 : values) {
         Assertions.assertEquals(value1 == value2, predicate.test(value1, value2),
             "Predicate does not compute ==");
       }

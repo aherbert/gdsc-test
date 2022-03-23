@@ -16,10 +16,10 @@ public class <Float><Float>AreWithinUlpTest {
   @Test
   public void testTest() {
     final <float>[] values = ApiTests.get<Float>Values();
-    for (<ulpType> ulpError : new <ulpType>[] {<ulpValue>}) {
+    for (final <ulpType> ulpError : new <ulpType>[] {<ulpValue>}) {
       final <Float><Float>AreWithinUlp predicate = new <Float><Float>AreWithinUlp(ulpError);
-      for (<float> value1 : values) {
-        for (<float> value2 : values) {
+      for (final <float> value1 : values) {
+        for (final <float> value2 : values) {
           final boolean expected = <Float>Equality.testAreWithinUlp(value1, value2, ulpError);
           Assertions.assertEquals(expected, predicate.test(value1, value2),
               () -> String.format("Does not compute <Float>Equality.testAreWithinUlp :"
@@ -36,9 +36,9 @@ public class <Float><Float>AreWithinUlpTest {
   public void testGet() {
     final <ulpType> ulpError = <ulpError>;
     final <Float><Float>AreWithinUlp predicate = new <Float><Float>AreWithinUlp(ulpError);
-    for (String item : new String[] {"ulp", String.valueOf(ulpError)}) {
-      Assertions.assertTrue(predicate.get().contains(item),
-          () -> "Missing \<" + item + ">: " + predicate.get());
+    final String s = predicate.get();
+    for (final String item : new String[] {"ulp", String.valueOf(ulpError)}) {
+      Assertions.assertTrue(s.contains(item), () -> "Missing \<" + item + ">: " + s);
     }
   }
 }

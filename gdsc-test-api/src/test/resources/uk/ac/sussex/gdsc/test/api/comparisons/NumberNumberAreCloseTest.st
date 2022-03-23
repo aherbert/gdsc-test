@@ -16,12 +16,12 @@ public class <Number><Number>AreCloseTest {
   @Test
   public void testTest() {
     final <number>[] values = ApiTests.get<Number>Values();
-    for (double relativeError : new double[] {0, 0.5}) {
-      for (<errorType> absoluteError : new <errorType>[] {0, 1}) {
+    for (final double relativeError : new double[] {0, 0.5}) {
+      for (final <errorType> absoluteError : new <errorType>[] {0, 1}) {
         final <Number><Number>AreClose predicate =
             new <Number><Number>AreClose(relativeError, absoluteError);
-        for (<number> value1 : values) {
-          for (<number> value2 : values) {
+        for (final <number> value1 : values) {
+          for (final <number> value2 : values) {
             final boolean expected = <Number>Equality.testAreClose(value1, value2,
                 relativeError, absoluteError);
             Assertions.assertEquals(expected, predicate.test(value1, value2),
@@ -43,10 +43,10 @@ public class <Number><Number>AreCloseTest {
     final <errorType> absoluteError = <absError>;
     final <Number><Number>AreClose predicate =
         new <Number><Number>AreClose(relativeError, absoluteError);
-    for (String item : new String[] {"||", String.valueOf(relativeError),
+    final String s = predicate.get();
+    for (final String item : new String[] {"||", String.valueOf(relativeError),
         String.valueOf(absoluteError), "|v1-v2|/max", "|v1-v2| "}) {
-      Assertions.assertTrue(predicate.get().contains(item),
-          () -> "Missing \<" + item + ">: " + predicate.get());
+      Assertions.assertTrue(s.contains(item), () -> "Missing \<" + item + ">: " + s);
     }
   }
 }

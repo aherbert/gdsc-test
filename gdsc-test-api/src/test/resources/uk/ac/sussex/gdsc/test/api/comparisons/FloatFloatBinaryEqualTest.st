@@ -17,8 +17,8 @@ public class <Float><Float>BinaryEqualTest {
   public void testTest() {
     final <Float><Float>BinaryEqual predicate = <Float><Float>BinaryEqual.INSTANCE;
     final <float>[] values = ApiTests.get<Float>Values();
-    for (<float> value1 : values) {
-      for (<float> value2 : values) {
+    for (final <float> value1 : values) {
+      for (final <float> value2 : values) {
         Assertions.assertEquals(<Float>.compare(value1, value2) == 0,
             predicate.test(value1, value2),
             "Predicate does not compute <Float>.compare");
