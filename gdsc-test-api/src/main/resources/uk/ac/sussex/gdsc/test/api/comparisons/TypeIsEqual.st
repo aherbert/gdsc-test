@@ -20,9 +20,10 @@ public class <Type>IsEqual
   private final <type> reference;
 
   /**
-   * Create a predicate to test {@code <type>} equality.
+   * Create a predicate to test <an> {@code <type>} value is equal to a {@code reference} value using
+   * {@code <type>} equality.
    *
-   * \<p>Equality to the reference value will use the {@code == operator}.
+   * \<p>Equality to the {@code reference} value will use the {@code == operator}.
    *
    * @param reference The reference value.
    */
@@ -42,7 +43,7 @@ public class <Type>IsEqual
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that the value is equal to the reference value using the {@code ==} operator.
+   * \<p>Tests that the {@code value} is equal to the reference value using the {@code ==} operator.
 <if(javadocFloat)>
    *
    * \<p>Equality imposed by this method is inconsistent with

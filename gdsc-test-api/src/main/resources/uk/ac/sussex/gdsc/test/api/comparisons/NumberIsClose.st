@@ -28,15 +28,14 @@ public class <Number>IsClose
   private final <errorType> absoluteError;
 
   /**
-   * Create a predicate to test {@code <number>} values are close using a relative and/or
-   * absolute error to a reference value. The relative error between values {@code reference}
+   * Create a predicate to test <an> {@code <number>} value is close to a {@code reference} value
+   * using a relative and/or absolute error. The relative error between values {@code reference}
    * and {@code value} is relative to the largest magnitude of the two values and the test is:
    *
    * \<pre>
    * {@code
-   * |reference-value| \<= max(|reference|, |value|) * relativeError
-   * \}
-   * \</pre>
+   * |reference - value| \<= max(|reference|, |value|) * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is symmetric for {@code reference} and {@code value}. The test is
    * equivalent to testing convergence on the reference value.
@@ -70,7 +69,7 @@ public class <Number>IsClose
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that {@code value} is close to the reference using a relative and/or an absolute
+   * \<p>Tests that the {@code value} is close to the reference using a relative and/or an absolute
    * error tolerance.
    *
    * @return true if close

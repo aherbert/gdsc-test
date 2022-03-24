@@ -24,9 +24,10 @@ public class <Float>IsBinaryEqual
   private final <int> binaryReference;
 
   /**
-   * Create a predicate to test {@code <float>} equality.
+   * Create a predicate to test a {@code <float>} value is close to a {@code reference} value using
+   * binary equality.
    *
-   * \<p>Equality to the reference value will use binary comparison of the values
+   * \<p>Equality to the {@code reference} value will use binary comparison of the values
    * converted using {@link <Float>#<float>To<Int>Bits(<float>)}.
    *
    * @param reference The reference value.
@@ -50,13 +51,13 @@ public class <Float>IsBinaryEqual
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that the value is equal to the reference value using binary comparison of the values
-   * converted using {@link <Float>#<float>To<Int>Bits(<float>)}.
+   * \<p>Tests that the {@code value} is equal to the reference value using binary comparison of
+   * the values converted using {@link <Float>#<float>To<Int>Bits(<float>)}.
    *
    * \<p>Equality imposed by this method is consistent with
    * {@link <Float>#equals(Object)} and, {@link <Float>#compare(<float>, <float>)}.
    *
-   * \<p>For example {@code -0} and {@code 0} are not equal. {@code <Float>.NaN} and
+   * \<p>For example {@code -<zero>} and {@code <zero>} are not equal. {@code <Float>.NaN} and
    * {@code <Float>.NaN} are equal.
    *
    * @return true if equal

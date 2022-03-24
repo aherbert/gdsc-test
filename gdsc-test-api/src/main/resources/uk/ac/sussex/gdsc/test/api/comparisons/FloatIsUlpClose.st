@@ -29,8 +29,8 @@ public class <Float>IsUlpClose
   private final <ulpType> ulpError;
 
   /**
-   * Create a predicate to test {@code <float>} values are equal within a ULP error
-   * to a reference value.
+   * Create a predicate to test a {@code <float>} value is close to a {@code reference} value using
+   * a ULP error.
    *
    * \<p>The number of changes in the unit of least precision to adjust one value
    * to the other value are counted and the test is {@code count \<= ulpError}. The sign of

@@ -24,14 +24,13 @@ public class <Float><Float>AreBinaryEqual
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that two <float>s are equal using binary comparison of two values
+   * \<p>Tests that two {@code <float>} values are equal using binary comparison of the values
    * converted using {@link <Float>#<float>To<Int>Bits(<float>)}.
    *
-   * \<p>Equality
-   *  imposed by this method is consistent with
+   * \<p>Equality imposed by this method is consistent with
    * {@link <Float>#equals(Object)} and, {@link <Float>#compare(<float>, <float>)}.
    *
-   * \<p>For example {@code -0} and {@code 0} are not equal. {@code <Float>.NaN} and
+   * \<p>For example {@code -<zero>} and {@code <zero>} are not equal. {@code <Float>.NaN} and
    * {@code <Float>.NaN} are equal.
    *
    * @return true if equal

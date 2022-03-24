@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
- * Tests a {@code <float>} is <Special>.
+ * Tests a {@code <float>} is <lowerSpecial>.
  *
  * @see <Float>Predicate#test(<float>)
  * @see <Float>#is<Special>(<float>)
@@ -23,9 +23,9 @@ public class <Float>Is<Special>
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that the value is <Special>.
+   * \<p>Tests that the {@code value} is <lowerSpecial>.
    *
-   * @return true if <Special>
+   * @return true if <lowerSpecial>
    * @see <Float>#is<Special>(<float>)
    */
   @Override

@@ -22,7 +22,7 @@ public class <Type><Type>AreEqual
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that two <type>s are equal using the {@code ==} operator.
+   * \<p>Tests that two {@code <type>} values are equal using the {@code ==} operator.
 <if(javadocFloat)>
    *
    * \<p>Equality imposed by this method is inconsistent with

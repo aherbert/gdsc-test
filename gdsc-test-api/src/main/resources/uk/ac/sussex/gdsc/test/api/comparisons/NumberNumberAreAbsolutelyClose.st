@@ -21,7 +21,7 @@ public class <Number><Number>Are<Absolutely>Close
   private final <errorType> absoluteError;
 
   /**
-   * Create a predicate to test two {@code <number>} values are equal within an absolute error.
+   * Create a predicate to test two {@code <number>} values are close using an absolute error.
    *
    * @param absoluteError The maximum absolute error between {@code value1}
    *                      and {@code value2} for which both numbers are still

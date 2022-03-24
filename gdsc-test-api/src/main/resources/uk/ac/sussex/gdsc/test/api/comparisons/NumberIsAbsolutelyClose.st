@@ -23,8 +23,8 @@ public class <Number>Is<Absolutely>Close
   private final <errorType> absoluteError;
 
   /**
-   * Create a predicate to test {@code <number>} values are equal within an absolute error
-   * to a reference value.
+   * Create a predicate to test <an> {@code <number>} value is close to a {@code reference} value using
+   * an absolute error.
    *
    * @param reference The reference value.
    * @param absoluteError The maximum absolute error between {@code reference}
@@ -51,7 +51,7 @@ public class <Number>Is<Absolutely>Close
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that the <number> is close to the reference using an absolute error tolerance.
+   * \<p>Tests that the {@code value} is close to the reference using an absolute error tolerance.
    *
    * @return true if close
    */

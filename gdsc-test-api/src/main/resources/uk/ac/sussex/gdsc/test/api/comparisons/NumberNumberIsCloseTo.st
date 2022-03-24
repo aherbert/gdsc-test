@@ -27,15 +27,14 @@ public class <Number><Number>IsCloseTo
   private final <errorType> absoluteError;
 
   /**
-   * Create a predicate to test a {@code <number>} value is close to an expected value using a
-   * relative and/or absolute error. The relative error between values {@code expected} and
+   * Create a predicate to test <an> {@code <number> value} is close to an {@code expected} value
+   * using a relative and/or absolute error. The relative error between values {@code expected} and
    * {@code actual} is relative to the magnitude of {@code expected} and the test is:
    *
    * \<pre>
    * {@code
-   * |expected-actual| \<= |expected| * relativeError
-   * \}
-   * \</pre>
+   * |expected - actual| \<= |expected| * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected} and {@code actual}. The test is
    * equivalent to testing {@code actual} falls within a relative and/or absolute range of

@@ -117,10 +117,10 @@ public final class Predicates {
    * Do not allow public construction.
    */
   private Predicates() {}
-<types,Types:{type,Type |
+<types,Types,tan:{type,Type,an |
 <\n>
   /**
-   * Creates a predicate to test a {@code <type>\} value is equal to the {@code reference\} value
+   * Creates a predicate to test <an> {@code <type>\} value is equal to the {@code reference\} value
    * using the {@code ==\} operator.
    *
    * @param reference The reference value.
@@ -131,7 +131,8 @@ public final class Predicates {
   \}}><types,Types:{type,Type |
 <\n>
   /**
-   * Creates a predicate to test {@code <type>\} values are equal using the {@code ==\} operator.
+   * Creates a predicate to test two {@code <type>\} values are equal using the {@code ==\}
+   * operator.
    *
    * @return the predicate
    */
@@ -141,8 +142,7 @@ public final class Predicates {
 <\n>
   /**
    * Creates a predicate to test a {@code <float>\} value is equal to the {@code reference\} value
-   * using binary comparison of the values converted using
-   * {@link <Float>#<float>To<Int>Bits(<float>)\}.
+   * using binary comparison of the values converted using {@link <Float>#<float>To<Int>Bits(<float>)\}.
    *
    * @param reference The reference value.
    * @return the predicate
@@ -152,8 +152,8 @@ public final class Predicates {
   \}}><floats,Floats,Ints:{float,Float,Int |
 <\n>
   /**
-   * Creates a predicate to test {@code <float>\} values are equal using binary comparison of the
-   * values converted using {@link <Float>#<float>To<Int>Bits(<float>)\}.
+   * Creates a predicate to test two {@code <float>\} values are equal using binary comparison
+   * of the values converted using {@link <Float>#<float>To<Int>Bits(<float>)\}.
    *
    * @return the predicate
    */
@@ -162,7 +162,7 @@ public final class Predicates {
   \}}><floats,Floats,ulpTypes:{float,Float,ulpType |
 <\n>
   /**
-   * Creates a predicate to test a {@code <float>\} value is close to the {@code reference\} value
+   * Creates a predicate to test a {@code <float>\} value is close to a {@code reference\} value
    * using a ULP error.
    *
    * @param reference The reference value.
@@ -177,7 +177,7 @@ public final class Predicates {
   \}}><floats,Floats,ulpTypes:{float,Float,ulpType |
 <\n>
   /**
-   * Creates a predicate to test {@code <float>\} values are close using a ULP error.
+   * Creates a predicate to test two {@code <float>\} values are close using a ULP error.
    *
    * @param ulpError The maximum ULP error between {@code value1\} and
    *        {@code value2\} for which both numbers are still considered equal.
@@ -186,10 +186,10 @@ public final class Predicates {
    */
   public static <Float><Float>BiPredicate <float>sAreUlpClose(<ulpType> ulpError) {
     return new <Float><Float>AreUlpClose(ulpError);
-  \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
+  \}}><numbers,Numbers,numberAbsTypes,an:{number,Number,numberAbsType,an |
 <\n>
   /**
-   * Creates a predicate to test a {@code <number>\} value is close to the {@code reference\} value
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
    * using an absolute error.
    *
    * @param reference The reference value.
@@ -205,7 +205,7 @@ public final class Predicates {
   \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
 <\n>
   /**
-   * Creates a predicate to test {@code <number>\} values are close using an absolute error.
+   * Creates a predicate to test two {@code <number>\} values are close using an absolute error.
    *
    * @param absoluteError The maximum absolute error between {@code value1\} and
    *        {@code value2\} for which both numbers are still considered equal.
@@ -216,19 +216,18 @@ public final class Predicates {
   public static <Number><Number>BiPredicate <number>sAreAbsolutelyClose(
       <numberAbsType> absoluteError) {
     return new <Number><Number>AreAbsolutelyClose(absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,an:{number,Number,numberAbsType,javadocNaN,zero,an |
 <\n>
   /**
-   * Creates a predicate to test that a {@code <number>\} value is close to the {@code reference\}
-   * value using a relative error.
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using a relative error.
    * The relative error between values {@code reference\} and {@code value\} is relative to the
    * largest magnitude of the two values and the test is:
    *
    * \<pre>
    * {@code
-   * |reference-value| \<= max(|reference|, |value|) * relativeError
-   * \}
-   * \</pre>
+   * |reference - value| \<= max(|reference|, |value|) * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is symmetric for {@code reference\} and {@code value\}. The test is
    * equivalent to testing convergence of two values.
@@ -241,7 +240,7 @@ public final class Predicates {
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
-   * include the special case of {@code -0.0 == 0.0\}.
+   * include the special case of {@code -<zero> == <zero>\}.
 <else>
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
@@ -259,16 +258,15 @@ public final class Predicates {
   \}
 
   /**
-   * Creates a predicate to test that a {@code <number>\} value is close to the {@code reference\}
-   * value using a relative and/or an absolute error.
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using a relative and/or an absolute error.
    * The relative error between values {@code value1\} and {@code value2\} is
    * relative to the largest magnitude of the two values and the test is:
    *
    * \<pre>
    * {@code
-   * |reference-value| \<= max(|reference|, |value|) * relativeError
-   * \}
-   * \</pre>
+   * |reference - value| \<= max(|reference|, |value|) * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is symmetric for {@code reference\} and {@code value\}. The test is
    * equivalent to testing convergence of two values.
@@ -294,18 +292,17 @@ public final class Predicates {
   public static <Number>Predicate <number>IsClose(<number> reference, double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number>IsClose(reference, relativeError, absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero:{number,Number,numberAbsType,javadocNaN,zero |
 <\n>
   /**
-   * Creates a predicate to test that {@code <number>\} values are close using a relative error.
+   * Creates a predicate to test two {@code <number>\} values are close using a relative error.
    * The relative error between values {@code value1\} and {@code value2\} is relative to the
    * largest magnitude of the two values and the test is:
    *
    * \<pre>
    * {@code
-   * |value1-value2| \<= max(|value1|, |value2|) * relativeError
-   * \}
-   * \</pre>
+   * |value1 - value2| \<= max(|value1|, |value2|) * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is symmetric for {@code value1\} and {@code value2\}. The test is
    * equivalent to testing convergence of two values.
@@ -318,7 +315,7 @@ public final class Predicates {
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
-   * include the special case of {@code -0.0 == 0.0\}.
+   * include the special case of {@code -<zero> == <zero>\}.
 <else>
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
@@ -334,15 +331,14 @@ public final class Predicates {
   \}
 
   /**
-   * Creates a predicate to test that {@code <number>\} values are close using a relative and/or
+   * Creates a predicate to test two {@code <number>\} values are close using a relative and/or
    * an absolute error. The relative error between values {@code value1\} and {@code value2\} is
    * relative to the largest magnitude of the two values and the test is:
    *
    * \<pre>
    * {@code
-   * |value1-value2| \<= max(|value1|, |value2|) * relativeError
-   * \}
-   * \</pre>
+   * |value1 - value2| \<= max(|value1|, |value2|) * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is symmetric for {@code value1\} and {@code value2\}. The test is
    * equivalent to testing convergence of two values.
@@ -367,19 +363,18 @@ public final class Predicates {
   public static <Number><Number>BiPredicate <number>sAreClose(double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number><Number>AreClose(relativeError, absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,an:{number,Number,numberAbsType,javadocNaN,zero,an |
 <\n>
   /**
-   * Creates a predicate to test a {@code <number>\} value is close to a {@code reference\}
-   * value using a relative error. The relative error between values
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using a relative error. The relative error between values
    * {@code reference\} and {@code value\} is relative to the magnitude of {@code reference\}
    * and the test is:
    *
    * \<pre>
    * {@code
-   * |reference-value| \<= |reference| * relativeError
-   * \}
-   * \</pre>
+   * |reference - value| \<= |reference| * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is asymmetric for {@code reference\} and {@code value\}. The test is
    * equivalent to testing {@code value\} falls within a relative range of
@@ -393,7 +388,7 @@ public final class Predicates {
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
-   * include the special case of {@code -0.0 == 0.0\}.
+   * include the special case of {@code -<zero> == <zero>\}.
 <else>
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
@@ -412,16 +407,15 @@ public final class Predicates {
   \}
 
   /**
-   * Creates a predicate to test a {@code <number>\} value is close to a {@code reference\}
-   * value using a relative and/or absolute error. The relative error between values
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using a relative and/or absolute error. The relative error between values
    * {@code reference\} and {@code value\} is relative to the magnitude of {@code reference\}
    * and the test is:
    *
    * \<pre>
    * {@code
-   * |reference-value| \<= |reference| * relativeError
-   * \}
-   * \</pre>:
+   * |reference - value| \<= |reference| * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is asymmetric for {@code reference\} and {@code value\}. The test is
    * equivalent to testing {@code value\} falls within a relative and/or absolute range of
@@ -432,6 +426,10 @@ public final class Predicates {
    * difference to another value and the predicate will return false. This includes a test of
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
+   *
+   * \<p>An absolute error of {@code 0\} will allow all values to equal themselves
+   * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
+   * include the special case of {@code -<zero> == <zero>\}.
 <endif>
    *
    * @param reference The reference value.
@@ -449,19 +447,18 @@ public final class Predicates {
   public static <Number>Predicate <number>IsCloseTo(<number> reference,
       double relativeError, <numberAbsType> absoluteError) {
     return new <Number>IsCloseTo(reference, relativeError, absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs:{number,Number,numberAbsType,javadocNaN |
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero:{number,Number,numberAbsType,javadocNaN,zero |
 <\n>
   /**
-   * Creates a predicate to test a {@code <number>\} value {@code B\} is close to an expected
-   * value {@code A\} using a relative error. The relative error between values
+   * Creates a predicate to test an {@code actual\} value is close to an {@code expected\}
+   * value using a relative error. The relative error between values
    * {@code expected\} and {@code actual\} is relative to the magnitude of {@code expected\}
    * and the test is:
    *
    * \<pre>
    * {@code
-   * |expected-actual| \<= |expected| * relativeError
-   * \}
-   * \</pre>
+   * |expected - actual| \<= |expected| * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
    * equivalent to testing {@code actual\} falls within a relative range of
@@ -478,7 +475,7 @@ public final class Predicates {
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
-   * include the special case of {@code -0.0 == 0.0\}.
+   * include the special case of {@code -<zero> == <zero>\}.
 <else>
    *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
@@ -495,16 +492,15 @@ public final class Predicates {
   \}
 
   /**
-   * Creates a predicate to test a {@code <number>\} value {@code B\} is close to an expected
-   * value {@code A\} using a relative and/or absolute error. The relative error between values
+   * Creates a predicate to test an {@code actual\} value is close to an {@code expected\}
+   * value using a relative and/or absolute error. The relative error between values
    * {@code expected\} and {@code actual\} is relative to the magnitude of {@code expected\}
    * and the test is:
    *
    * \<pre>
    * {@code
-   * |expected-actual| \<= |expected| * relativeError
-   * \}
-   * \</pre>:
+   * |expected - actual| \<= |expected| * relativeError
+   * \}\</pre>:
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
    * equivalent to testing {@code actual\} falls within a relative and/or absolute range of
@@ -518,6 +514,10 @@ public final class Predicates {
    * difference to another value and the predicate will return false. This includes a test of
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
+   *
+   * \<p>An absolute error of {@code 0\} will allow all values to equal themselves
+   * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
+   * include the special case of {@code -<zero> == <zero>\}.
 <endif>
    *
    * @param relativeError The maximum error, relative to {@code expected\}, between

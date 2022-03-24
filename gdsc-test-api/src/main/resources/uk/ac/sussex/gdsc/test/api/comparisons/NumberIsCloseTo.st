@@ -29,15 +29,14 @@ public class <Number>IsCloseTo
   private final <errorType> absoluteError;
 
   /**
-   * Create a predicate to test a {@code <number>} value is close to a reference value using a
+   * Create a predicate to test <an> {@code <number>} is close to a {@code reference} value using a
    * relative and/or absolute error. The relative error between values {@code reference} and
    * {@code value} is relative to the magnitude of {@code reference} and the test is:
    *
    * \<pre>
    * {@code
-   * |reference-value| \<= |reference| * relativeError
-   * \}
-   * \</pre>
+   * |reference - value| \<= |reference| * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is asymmetric for {@code reference} and {@code value}. The test is
    * equivalent to testing {@code value} falls within a relative and/or absolute range of
@@ -73,7 +72,7 @@ public class <Number>IsCloseTo
   /**
    * {@inheritDoc}
    *
-   * \<p>Tests that {@code value} is close to the reference using a relative and/or an absolute
+   * \<p>Tests that the {@code value} is close to the reference using a relative and/or an absolute
    * error tolerance. The relative error is relative to the magnitude of {@code reference}.
    *
    * @return true if close

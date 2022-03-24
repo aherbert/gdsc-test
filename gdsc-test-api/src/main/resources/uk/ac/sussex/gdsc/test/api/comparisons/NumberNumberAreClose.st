@@ -32,9 +32,8 @@ public class <Number><Number>AreClose
    *
    * \<pre>
    * {@code
-   * |value1-value2| \<= max(|value1|, |value2|) * relativeError
-   * \}
-   * \</pre>
+   * |value1 - value2| \<= max(|value1|, |value2|) * relativeError
+   * \}\</pre>
    *
    * \<p>The relative error is symmetric for {@code value1} and {@code value2}. The test is
    * equivalent to testing convergence of two values.
