@@ -1,7 +1,5 @@
 <package>
 
-import uk.ac.sussex.gdsc.test.api.Strings;
-
 import java.util.Objects;
 import java.util.function.Supplier;
 

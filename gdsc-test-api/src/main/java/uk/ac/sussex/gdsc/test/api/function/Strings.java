@@ -20,26 +20,26 @@
  * #L%
  */
 
-package uk.ac.sussex.gdsc.test.api;
+package uk.ac.sussex.gdsc.test.api.function;
 
 import java.util.function.Supplier;
 
 /**
  * Defines {@link String} utilities.
  */
-public final class Strings {
+final class Strings {
 
   /** The space ' ' character. */
   private static final char SPACE_CHAR = ' ';
 
   /** The empty string. */
-  public static final String EMPTY = "";
+  static final String EMPTY = "";
 
   /** The wrapped unknown string: "(NA)". */
-  public static final String NA = "(NA)";
+  static final String NA = "(NA)";
 
   /**
-   * Do not allow public construction.
+   * Do not allow construction.
    */
   private Strings() {}
 
@@ -49,7 +49,7 @@ public final class Strings {
    * @param string the string
    * @return true, if is not empty
    */
-  public static boolean isNotEmpty(String string) {
+  static boolean isNotEmpty(String string) {
     return string != null && hasNonWhiteSpace(string);
   }
 
@@ -59,7 +59,7 @@ public final class Strings {
    * @param string the string
    * @return true, if null or empty
    */
-  public static boolean isNullOrEmpty(String string) {
+  static boolean isNullOrEmpty(String string) {
     return string == null || !hasNonWhiteSpace(string);
   }
 
@@ -93,7 +93,7 @@ public final class Strings {
    * @param object the object
    * @return the string representation
    */
-  public static String toString(Object object) {
+  static String toString(Object object) {
     if (object instanceof String) {
       return (String) object;
     }
@@ -117,7 +117,7 @@ public final class Strings {
    * @param object the object
    * @return the string representation
    */
-  public static String negateToString(Object object) {
+  static String negateToString(Object object) {
     final String s = toString(object);
     return (isNotEmpty(s)) ? "!(" + s + ")" : null;
   }
@@ -137,7 +137,7 @@ public final class Strings {
    * @return the OR string representation
    * @see #toString(Object)
    */
-  public static String orToString(Object object1, Object object2) {
+  static String orToString(Object object1, Object object2) {
     final String s1 = toString(object1);
     final String s2 = toString(object2);
     if (isNotEmpty(s1) || isNotEmpty(s2)) {
@@ -161,7 +161,7 @@ public final class Strings {
    * @return the AND string representation
    * @see #toString(Object)
    */
-  public static String andToString(Object object1, Object object2) {
+  static String andToString(Object object1, Object object2) {
     final String s1 = toString(object1);
     final String s2 = toString(object2);
     if (isNotEmpty(s1) || isNotEmpty(s2)) {
@@ -185,7 +185,7 @@ public final class Strings {
    * @return the XOR string representation
    * @see #toString(Object)
    */
-  public static String xorToString(Object object1, Object object2) {
+  static String xorToString(Object object1, Object object2) {
     final String s1 = toString(object1);
     final String s2 = toString(object2);
     if (isNotEmpty(s1) || isNotEmpty(s2)) {
@@ -202,7 +202,7 @@ public final class Strings {
    * @param string the string
    * @return the wrapped string
    */
-  public static String wrap(String string) {
+  static String wrap(String string) {
     return isNotEmpty(string) ? "(" + string + ")" : NA;
   }
 }

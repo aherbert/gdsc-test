@@ -20,7 +20,7 @@
  * #L%
  */
 
-package uk.ac.sussex.gdsc.test.api;
+package uk.ac.sussex.gdsc.test.api.function;
 
 import java.util.function.BiFunction;
 import java.util.function.Supplier;

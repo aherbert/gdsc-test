@@ -16,6 +16,7 @@ import uk.ac.sussex.gdsc.test.api.function.LongLongBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.LongPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
+import java.util.function.Supplier;
 
 /**
  * Build messages for assertions.
@@ -45,10 +46,10 @@ final class MessageBuilder {
    * The suffix for the formatted actual value.
    */
   private static final char END_FORMAT = '>';
-  /**
-   * The prefix for array indices.
-   */
+  /** The prefix for array indices. */
   private static final String AT_INDEX = " at index ";
+  /** The space ' ' character. */
+  private static final char SPACE_CHAR = ' ';
 
   /** The message.*/
   private final StringBuilder sb = new StringBuilder(256);
@@ -64,7 +65,7 @@ final class MessageBuilder {
    * @param prefix the prefix
    */
   private MessageBuilder(String prefix) {
-    if (Strings.isNotEmpty(prefix)) {
+    if (isNotEmpty(prefix)) {
       sb.append(prefix).append(" ==> ");
     }
   }
@@ -88,7 +89,7 @@ final class MessageBuilder {
    * @return the message builder
    */
   static MessageBuilder of(Object messageOrSupplier) {
-    return new MessageBuilder(Strings.toString(messageOrSupplier));
+    return new MessageBuilder(toString(messageOrSupplier));
   }
 
   @Override
@@ -228,10 +229,61 @@ final class MessageBuilder {
    * @return the message builder
    */
   private MessageBuilder appendPredicate(Object predicate) {
-    final String description = Strings.toString(predicate);
-    if (Strings.isNotEmpty(description)) {
+    final String description = toString(predicate);
+    if (isNotEmpty(description)) {
       sb.append(". ").append(description);
     }
     return this;
+  }
+
+  /**
+   * Gets the string representation. The object may be a {@link String} or {@link Supplier}.
+   *
+   * \<ul>
+   *  \<li>If the object is a {@link String} then the string is returned.
+   *  \<li>If the object is a {@link Supplier} then the supplied object is obtained and,
+   *      if not null, {@link Object#toString()} is returned.
+   *  \<li>Otherwise returns {@code null}.
+   * \</ul>
+   *
+   * @param object the object
+   * @return the string representation
+   */
+  static String toString(Object object) {
+    if (object instanceof String) {
+      return (String) object;
+    }
+    if (object instanceof Supplier) {
+      final Object supplied = ((Supplier\<?>) object).get();
+      if (supplied != null) {
+        return supplied.toString();
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Checks if the string is not null or empty whitespace.
+   *
+   * @param string the string
+   * @return true, if is not empty
+   */
+  static boolean isNotEmpty(String string) {
+    return string != null && hasNonWhiteSpace(string);
+  }
+
+  /**
+   * Checks for non white space.
+   *
+   * @param string the string
+   * @return true, if successful
+   */
+  private static boolean hasNonWhiteSpace(String string) {
+    for (int i = 0; i \< string.length(); i++) {
+      if (string.charAt(i) > SPACE_CHAR) {
+        return true;
+      }
+    }
+    return false;
   }
 }
