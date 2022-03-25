@@ -27,9 +27,9 @@ import java.util.Locale;
 import java.util.function.Supplier;
 
 /**
- * Contains function utilities.
+ * Contains lambda function utilities.
  */
-public final class FunctionUtils {
+public final class Lambdas {
 
   /** The default locale. */
   private static final Locale DEFAULT_LOCALE = Locale.getDefault(Locale.Category.FORMAT);
@@ -37,7 +37,7 @@ public final class FunctionUtils {
   /**
    * Do not allow construction.
    */
-  private FunctionUtils() {
+  private Lambdas() {
     // Do nothing
   }
 
