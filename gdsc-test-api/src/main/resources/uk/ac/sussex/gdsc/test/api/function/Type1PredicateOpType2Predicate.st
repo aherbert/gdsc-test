@@ -21,7 +21,7 @@ public class <Type1>Predicate<Op><Type2>Predicate
   private final <Type2>Predicate predicate2;
 
   /**
-   * Create a new combined {@code <Op>} predicate or two single-value predicates.
+   * Create a new combined {@code <Op>} predicate of two single-value predicates.
    *
    * @param predicate1 the first predicate
    * @param predicate2 the second predicate

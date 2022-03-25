@@ -8,7 +8,7 @@
  * \<p>This is a {@link FunctionalInterface} whose functional method is
  * {@link #test(<type>)}.
  *
- * \<p>Note: This is a copy implementation of {@link java.util.function.LongPredicate}
+ * \<p>Note: This is a re-implementation of {@code java.util.function} primitive predicates
  * to consume <type> and add functionality including {@code xor} and inheritance of
  * the marker interface {@link PrimitivePredicate}.
  *

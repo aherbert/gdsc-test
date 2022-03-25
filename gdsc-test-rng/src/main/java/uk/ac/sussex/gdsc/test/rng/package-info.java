@@ -31,6 +31,9 @@
  *
  * <li>A factory for generating a random provider</li>
  *
+ * <li>Implementations of
+ * {@link org.apache.commons.rng.UniformRandomProvider UniformRandomProvider}</li>
+ *
  * </ul>
  *
  * @see <a href="https://commons.apache.org/proper/commons-rng/">Commons RNG</a>
