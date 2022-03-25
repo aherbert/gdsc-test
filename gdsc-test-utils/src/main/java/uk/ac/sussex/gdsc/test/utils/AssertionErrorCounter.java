@@ -120,7 +120,7 @@ public class AssertionErrorCounter {
    *
    * @param index the test index
    * @param test the test
-   * @throws IllegalArgumentException If the test index is invalid
+   * @throws IllegalArgumentException if the test index is invalid
    * @throws AssertionError the assertion error if the failure limit has been exceeded
    */
   public void run(int index, TestAssertion test) {

@@ -39,10 +39,10 @@ final class TestPrimitiveAssertions {
    *
    * \<p>Fails with the supplied failure {@code message\}.
    *
-   * @param expected The expected value.
-   * @param actual The value to check against {@code expected\}.
-   * @param test The test.
-   * @param message The message.
+   * @param expected the expected value
+   * @param actual the value to check against {@code expected\}
+   * @param test the test
+   * @param message the message
    */
   static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
       String message) {
@@ -58,10 +58,10 @@ final class TestPrimitiveAssertions {
    * \<p>If necessary, the failure message will be retrieved lazily from the supplied
    * {@code messageSupplier\}.
    *
-   * @param expected The expected value.
-   * @param actual The value to check against {@code expected\}.
-   * @param test The test.
-   * @param messageSupplier The message supplier.
+   * @param expected the expected value
+   * @param actual the value to check against {@code expected\}
+   * @param test the test
+   * @param messageSupplier the message supplier
    */
   static void assertTest(<type> expected, <type> actual, <Type><Type>BiPredicate test,
       Supplier\<String> messageSupplier) {
@@ -76,9 +76,9 @@ final class TestPrimitiveAssertions {
    *
    * \<p>Fails with the supplied failure {@code message\}.
    *
-   * @param value The value to test.
-   * @param test The test.
-   * @param message The message.
+   * @param value the value to test
+   * @param test the test
+   * @param message the message
    */
   static void assertTest(<type> value, <Type>Predicate test, String message) {
     if (!test.test(value)) {
@@ -93,9 +93,9 @@ final class TestPrimitiveAssertions {
    * \<p>If necessary, the failure message will be retrieved lazily from the supplied
    * {@code messageSupplier\}.
    *
-   * @param value The value to test.
-   * @param test The test.
-   * @param messageSupplier The message supplier.
+   * @param value the value to test
+   * @param test the test
+   * @param messageSupplier the message supplier
    */
   static void assertTest(<type> value, <Type>Predicate test, Supplier\<String> messageSupplier) {
     if (!test.test(value)) {

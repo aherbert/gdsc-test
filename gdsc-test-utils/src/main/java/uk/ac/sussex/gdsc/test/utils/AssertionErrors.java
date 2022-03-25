@@ -37,9 +37,9 @@ public final class AssertionErrors {
    * Wraps an assertion error with a new error that has a formatted message appended to the input
    * error's message.
    *
-   * @param error The error.
-   * @param messageSupplier The message supplier.
-   * @throws AssertionError The wrapped assertion error.
+   * @param error the error
+   * @param messageSupplier the message supplier
+   * @throws AssertionError the wrapped assertion error
    */
   public static void appendMessage(AssertionError error, Supplier<String> messageSupplier)
       throws AssertionError {
@@ -54,9 +54,9 @@ public final class AssertionErrors {
    * Wraps an assertion error with a new error that has a formatted message prepended to the input
    * error's message.
    *
-   * @param error The error.
-   * @param messageSupplier The message supplier.
-   * @throws AssertionError The wrapped assertion error.
+   * @param error the error
+   * @param messageSupplier the message supplier
+   * @throws AssertionError the wrapped assertion error
    */
   public static void prependMessage(AssertionError error, Supplier<String> messageSupplier)
       throws AssertionError {

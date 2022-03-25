@@ -43,8 +43,8 @@ public final class FloatEquality {
    * <p>For example {@code -0.0f} and {@code 0.0f} are not equal. {@code Float.NaN} and
    * {@code Float.NaN} are equal.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
+   * @param value1 the first value
+   * @param value2 the second value
    * @return true if equal
    */
   public static boolean areEqual(float value1, float value2) {
@@ -60,12 +60,12 @@ public final class FloatEquality {
    *
    * <p>If either value is NaN this returns false.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param ulpError The maximum ULP error between {@code value1} and {@code value2} for
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for
    *        which both numbers are still considered equal.
    * @return true if within the error
-   * @throws IllegalArgumentException If the ULP error is not positive
+   * @throws IllegalArgumentException if the ULP error is not positive
    */
   public static boolean areWithinUlp(float value1, float value2, short ulpError) {
     validateUlpError(ulpError);
@@ -75,8 +75,8 @@ public final class FloatEquality {
   /**
    * Check the error is positive.
    *
-   * @param ulpError The maximum ULP error between two values
-   * @throws IllegalArgumentException If the ULP error is not positive
+   * @param ulpError the maximum ULP error between two values
+   * @throws IllegalArgumentException if the ULP error is not positive
    */
   static void validateUlpError(short ulpError) {
     if (ulpError < 0) {
@@ -95,9 +95,9 @@ public final class FloatEquality {
    *
    * <p>It is assumed the errors have been validated with {@link #validateUlpError(short)}.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param ulpError The maximum ULP error between {@code value1} and {@code value2} for
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for
    *        which both numbers are still considered equal.
    * @return true if equal within a ULP error
    */
@@ -130,12 +130,12 @@ public final class FloatEquality {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if within the error
-   * @throws IllegalArgumentException If the absolute error is not positive and finite
+   * @throws IllegalArgumentException if the absolute error is not positive and finite
    */
   public static boolean areWithin(float value1, float value2, float absoluteError) {
     validateAbsoluteError(absoluteError);
@@ -145,8 +145,8 @@ public final class FloatEquality {
   /**
    * Check the error is within the maximum difference between {@code float} primitives.
    *
-   * @param absoluteError The maximum absolute error between two values
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @param absoluteError the maximum absolute error between two values
+   * @throws IllegalArgumentException if the absolute error is not positive finite
    */
   static void validateAbsoluteError(float absoluteError) {
     if (Float.isNaN(absoluteError) || absoluteError < 0
@@ -164,9 +164,9 @@ public final class FloatEquality {
    *
    * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(float)}.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
@@ -202,15 +202,15 @@ public final class FloatEquality {
    * <p>Note: The relative error is a double since the relative error computation is performed in
    * double precision.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if close
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the absolute error is not positive finite
    */
   public static boolean areClose(float value1, float value2, double relativeError,
       float absoluteError) {
@@ -221,10 +221,10 @@ public final class FloatEquality {
   /**
    * Check the errors allow a test of {@code float} equality using a symmetric relative error.
    *
-   * @param relativeError The maximum relative error
-   * @param absoluteError The maximum absolute error
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @param relativeError the maximum relative error
+   * @param absoluteError the maximum absolute error
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the absolute error is not positive finite
    */
   static void validateAreClose(double relativeError, float absoluteError) {
     NumberEquality.validateSymmetricRelativeError(relativeError);
@@ -241,11 +241,11 @@ public final class FloatEquality {
    *
    * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, float)}.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if close
    */
@@ -298,16 +298,16 @@ public final class FloatEquality {
    * <p>Note: The relative error is a double since the relative error computation is performed in
    * double precision.
    *
-   * @param expected The expected value.
-   * @param actual The actual value.
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return true if actual is close to expected
-   * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive finite
    */
   public static boolean isCloseTo(float expected, float actual, double relativeError,
       float absoluteError) {
@@ -318,10 +318,10 @@ public final class FloatEquality {
   /**
    * Check the errors allow a test of {@code float} equality using an asymmetric relative error.
    *
-   * @param relativeError The maximum relative error
-   * @param absoluteError The maximum absolute error
-   * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive
+   * @param relativeError the maximum relative error
+   * @param absoluteError the maximum absolute error
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive
    */
   static void validateIsCloseTo(double relativeError, float absoluteError) {
     NumberEquality.validateAsymmetricRelativeError(relativeError);
@@ -337,12 +337,12 @@ public final class FloatEquality {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
-   * @param expected The expected value.
-   * @param actual The actual value.
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return true if actual is close to expected
    */

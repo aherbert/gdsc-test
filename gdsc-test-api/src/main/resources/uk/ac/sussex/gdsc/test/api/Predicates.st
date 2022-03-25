@@ -123,7 +123,7 @@ public final class Predicates {
    * Creates a predicate to test <an> {@code <type>\} value is equal to the {@code reference\} value
    * using the {@code ==\} operator.
    *
-   * @param reference The reference value.
+   * @param reference the reference value
    * @return the predicate
    */
   public static <Type>Predicate <type>IsEqualTo(<type> reference) {
@@ -144,7 +144,7 @@ public final class Predicates {
    * Creates a predicate to test a {@code <float>\} value is equal to the {@code reference\} value
    * using binary comparison of the values converted using {@link <Float>#<float>To<Int>Bits(<float>)\}.
    *
-   * @param reference The reference value.
+   * @param reference the reference value
    * @return the predicate
    */
   public static <Float>Predicate <float>IsBinaryEqual(<float> reference) {
@@ -165,11 +165,11 @@ public final class Predicates {
    * Creates a predicate to test a {@code <float>\} value is close to a {@code reference\} value
    * using a ULP error.
    *
-   * @param reference The reference value.
-   * @param ulpError The maximum ULP error between {@code reference\} and
+   * @param reference the reference value
+   * @param ulpError the maximum ULP error between {@code reference\} and
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the ulp error is not positive
+   * @throws IllegalArgumentException if the ulp error is not positive
    */
   public static <Float>Predicate <float>IsUlpClose(<float> reference,
       <ulpType> ulpError) {
@@ -179,10 +179,10 @@ public final class Predicates {
   /**
    * Creates a predicate to test two {@code <float>\} values are close using a ULP error.
    *
-   * @param ulpError The maximum ULP error between {@code value1\} and
+   * @param ulpError the maximum ULP error between {@code value1\} and
    *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the ulp error is not positive
+   * @throws IllegalArgumentException if the ulp error is not positive
    */
   public static <Float><Float>BiPredicate <float>sAreUlpClose(<ulpType> ulpError) {
     return new <Float><Float>AreUlpClose(ulpError);
@@ -192,11 +192,11 @@ public final class Predicates {
    * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
    * using an absolute error.
    *
-   * @param reference The reference value.
-   * @param absoluteError The maximum absolute error between {@code reference\} and
+   * @param reference the reference value
+   * @param absoluteError the maximum absolute error between {@code reference\} and
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
+   * @throws IllegalArgumentException if the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
    */
   public static <Number>Predicate <number>IsAbsolutelyClose(<number> reference,
@@ -207,10 +207,10 @@ public final class Predicates {
   /**
    * Creates a predicate to test two {@code <number>\} values are close using an absolute error.
    *
-   * @param absoluteError The maximum absolute error between {@code value1\} and
+   * @param absoluteError the maximum absolute error between {@code value1\} and
    *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the absolute error is not positive or below the maximum
+   * @throws IllegalArgumentException if the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
    */
   public static <Number><Number>BiPredicate <number>sAreAbsolutelyClose(
@@ -246,11 +246,11 @@ public final class Predicates {
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
 <endif>
    *
-   * @param reference The reference value.
-   * @param relativeError The maximum relative error between {@code reference\} and
+   * @param reference the reference value
+   * @param relativeError the maximum relative error between {@code reference\} and
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
    */
   public static <Number>Predicate <number>IsRelativelyClose(<number> reference,
       double relativeError) {
@@ -278,14 +278,14 @@ public final class Predicates {
    * is a test of the measured distance between two finite values.
 <endif>
    *
-   * @param reference The reference value.
-   * @param relativeError The maximum relative error between {@code reference\} and
+   * @param reference the reference value
+   * @param relativeError the maximum relative error between {@code reference\} and
    *        {@code value\} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code reference\} and
+   * @param absoluteError the maximum absolute error between {@code reference\} and
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive or is
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the absolute error is not positive or is
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
    */
@@ -321,10 +321,10 @@ public final class Predicates {
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
 <endif>
    *
-   * @param relativeError The maximum relative error between {@code value1\} and
+   * @param relativeError the maximum relative error between {@code value1\} and
    *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
    */
   public static <Number><Number>BiPredicate <number>sAreRelativelyClose(double relativeError) {
     return new <Number><Number>AreClose(relativeError, 0);
@@ -350,13 +350,13 @@ public final class Predicates {
    * is a test of the measured distance between two finite values.
 <endif>
    *
-   * @param relativeError The maximum relative error between {@code value1\} and
+   * @param relativeError the maximum relative error between {@code value1\} and
    *        {@code value2\} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1\} and
+   * @param absoluteError the maximum absolute error between {@code value1\} and
    *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive or is
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the absolute error is not positive or is
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
    */
@@ -394,12 +394,12 @@ public final class Predicates {
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
 <endif>
    *
-   * @param reference The reference value.
-   * @param relativeError The maximum error, relative to {@code reference\}, between
+   * @param reference the reference value
+   * @param relativeError the maximum error, relative to {@code reference\}, between
    *        {@code reference\} and {@code value\} for which both numbers are still
    *        considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException if the relative error is not positive finite
    */
   public static <Number>Predicate <number>IsRelativelyCloseTo(<number> reference,
       double relativeError) {
@@ -432,15 +432,15 @@ public final class Predicates {
    * include the special case of {@code -<zero> == <zero>\}.
 <endif>
    *
-   * @param reference The reference value.
-   * @param relativeError The maximum error, relative to {@code reference\}, between
+   * @param reference the reference value
+   * @param relativeError the maximum error, relative to {@code reference\}, between
    *        {@code reference\} and {@code value\} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code reference\} and
+   * @param absoluteError the maximum absolute error between {@code reference\} and
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive or is
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
    */
@@ -481,11 +481,11 @@ public final class Predicates {
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
 <endif>
    *
-   * @param relativeError The maximum error, relative to {@code expected\}, between
+   * @param relativeError the maximum error, relative to {@code expected\}, between
    *        {@code expected\} and {@code actual\} for which both numbers are still
    *        considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @throws IllegalArgumentException if the relative error is not positive finite
    */
   public static <Number><Number>BiPredicate <number>sIsRelativelyCloseTo(double relativeError) {
     return new <Number><Number>IsCloseTo(relativeError, 0);
@@ -520,14 +520,14 @@ public final class Predicates {
    * include the special case of {@code -<zero> == <zero>\}.
 <endif>
    *
-   * @param relativeError The maximum error, relative to {@code expected\}, between
+   * @param relativeError the maximum error, relative to {@code expected\}, between
    *        {@code expected\} and {@code actual\} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected\} and
+   * @param absoluteError the maximum absolute error between {@code expected\} and
    *        {@code actual\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive or is
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
    */
@@ -541,8 +541,8 @@ public final class Predicates {
    * single-value predicates, each predicate testing a different value of the
    * {@link <Type><Type>BiPredicate#test(<type>, <type>)\} method.
    *
-   * @param predicate1 The predicate to test the first value
-   * @param predicate2 The predicate to test the second value
+   * @param predicate1 the predicate to test the first value
+   * @param predicate2 the predicate to test the second value
    * @return the predicate
    */
   public static <Type><Type>BiPredicate <op>(<Type>Predicate predicate1,

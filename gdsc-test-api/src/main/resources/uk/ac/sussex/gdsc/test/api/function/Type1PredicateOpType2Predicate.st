@@ -25,8 +25,8 @@ public class <Type1>Predicate<Op><Type2>Predicate
   /**
    * Create a new combined {@code <Op>} predicate or two single-value predicates.
    *
-   * @param predicate1 The first predicate
-   * @param predicate2 The second predicate
+   * @param predicate1 the first predicate
+   * @param predicate2 the second predicate
    */
   public <Type1>Predicate<Op><Type2>Predicate(<Type1>Predicate predicate1,
       <Type2>Predicate predicate2) {

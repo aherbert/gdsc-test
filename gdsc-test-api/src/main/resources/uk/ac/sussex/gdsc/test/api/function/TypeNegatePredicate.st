@@ -20,7 +20,7 @@ public class <Type>NegatePredicate implements <Type>Predicate, Supplier\<String>
   /**
    * Create a new negate predicate.
    *
-   * @param predicate The predicate
+   * @param predicate the predicate
    */
   public <Type>NegatePredicate(<Type>Predicate predicate) {
     this.predicate = Objects.requireNonNull(predicate, "Predicate is null");

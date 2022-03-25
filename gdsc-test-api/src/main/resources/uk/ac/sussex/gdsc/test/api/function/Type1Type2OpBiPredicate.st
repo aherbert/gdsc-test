@@ -24,8 +24,8 @@ public class <Type1><Type2><Op>BiPredicate
   /**
    * Create a new combined {@code <Op>} predicate.
    *
-   * @param predicate1 The first predicate
-   * @param predicate2 The second predicate
+   * @param predicate1 the first predicate
+   * @param predicate2 the second predicate
    */
   public <Type1><Type2><Op>BiPredicate(<Type1><Type2>BiPredicate predicate1,
       <Type1><Type2>BiPredicate predicate2) {

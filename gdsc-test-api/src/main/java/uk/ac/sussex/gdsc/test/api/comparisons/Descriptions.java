@@ -80,7 +80,7 @@ final class Descriptions {
    * "v1=" + value + ". "
    * </pre>
    *
-   * @param value The string representing the reference value.
+   * @param value the string representing the reference value.
    * @return the description
    */
   static String getReferenceDescription(String value) {
@@ -92,7 +92,7 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive).
    *
-   * @param ulpError The maximum ULP error between {@code value1} and {@code value2} for
+   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for
    *        which both numbers are still considered equal.
    * @return the description
    */
@@ -105,7 +105,7 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive finite).
    *
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -119,7 +119,7 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive finite).
    *
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -133,7 +133,7 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive).
    *
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -147,7 +147,7 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive).
    *
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -161,7 +161,7 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive).
    *
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -186,9 +186,9 @@ final class Descriptions {
    * description just contains the relative error.
    * </ul>
    *
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -213,9 +213,9 @@ final class Descriptions {
    * description just contains the relative error.
    * </ul>
    *
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -240,9 +240,9 @@ final class Descriptions {
    * description just contains the relative error.
    * </ul>
    *
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -267,9 +267,9 @@ final class Descriptions {
    * description just contains the relative error.
    * </ul>
    *
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return the description
    */
@@ -295,10 +295,10 @@ final class Descriptions {
    * description just contains the relative error.
    * </ul>
    *
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return the description
    */
@@ -323,10 +323,10 @@ final class Descriptions {
    * description just contains the relative error.
    * </ul>
    *
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return the description
    */
@@ -351,10 +351,10 @@ final class Descriptions {
    * description just contains the relative error.
    * </ul>
    *
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return the description
    */
@@ -379,10 +379,10 @@ final class Descriptions {
    * description just contains the relative error.
    * </ul>
    *
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return the description
    */

@@ -38,7 +38,7 @@ public abstract class FormatSupplier implements Supplier<String> {
    * Constructs a new instance of this class.
    *
    * @param format the format
-   * @throws IllegalArgumentException If the format is null or empty
+   * @throws IllegalArgumentException if the format is null or empty
    */
   public FormatSupplier(String format) {
     if (format == null || format.length() == 0) {

@@ -154,7 +154,7 @@ public final class Strings {
    *  <li>If both strings are valid the result is {@code (string1) && (string2)}.
    *  <li>If either string is {@code null} or empty it will be replaced with {@code NA}.
    *  <li>Otherwise returns {@code null}.
-   * </ul> {@link String} or {@link Supplier} of {@link String}.
+   * </ul>
    *
    * @param object1 the first object
    * @param object2 the second object

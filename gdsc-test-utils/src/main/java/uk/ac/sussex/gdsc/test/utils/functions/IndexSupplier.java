@@ -62,7 +62,7 @@ public class IndexSupplier implements Supplier<String> {
    * Constructs a new instance of this class.
    *
    * @param dimensions the dimensions
-   * @throws IllegalArgumentException If the dimensions are not strictly positive
+   * @throws IllegalArgumentException if the dimensions are not strictly positive
    */
   public IndexSupplier(int dimensions) {
     if (dimensions <= 0) {
@@ -77,7 +77,7 @@ public class IndexSupplier implements Supplier<String> {
    * @param dimensions the dimensions
    * @param messagePrefix the message prefix
    * @param messageSuffix the message suffix
-   * @throws IllegalArgumentException If the dimensions are not strictly positive
+   * @throws IllegalArgumentException if the dimensions are not strictly positive
    */
   public IndexSupplier(int dimensions, String messagePrefix, String messageSuffix) {
     this(dimensions);

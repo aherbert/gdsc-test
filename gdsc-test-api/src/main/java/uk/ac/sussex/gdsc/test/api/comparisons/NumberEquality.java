@@ -40,9 +40,9 @@ final class NumberEquality {
   /**
    * Check the error is positive and less than the the maximum error.
    *
-   * @param absoluteError The absolute error between two values
+   * @param absoluteError the absolute error between two values
    * @param maximumDifference the maximum difference
-   * @throws IllegalArgumentException If the absolute error is not positive or is {@code <=}
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
    *         than the maximum difference
    */
   static void validateAbsoluteError(long absoluteError, long maximumDifference) {
@@ -58,9 +58,9 @@ final class NumberEquality {
   /**
    * Check the error is positive and less than the the maximum error.
    *
-   * @param absoluteError The absolute error between two values
+   * @param absoluteError the absolute error between two values
    * @param maximumDifference the maximum difference
-   * @throws IllegalArgumentException If the absolute error is not positive or is {@code <=}
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
    *         than the maximum difference
    */
   static void validateAbsoluteError(int absoluteError, int maximumDifference) {
@@ -83,8 +83,8 @@ final class NumberEquality {
    * <p>The maximum possible value is 2. The error threshold must be below this level otherwise it
    * cannot be used to test equality.
    *
-   * @param relativeError The maximum relative error
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
+   * @param relativeError the maximum relative error
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
    */
   static void validateSymmetricRelativeError(double relativeError) {
     if (negativeOrNaN(relativeError) || relativeError >= MAX_RELATIVE_ERROR) {
@@ -96,8 +96,8 @@ final class NumberEquality {
   /**
    * Validate the asymmetric relative error threshold.
    *
-   * @param relativeError The maximum relative error
-   * @throws IllegalArgumentException If the relative error is not positive finite
+   * @param relativeError the maximum relative error
+   * @throws IllegalArgumentException if the relative error is not positive finite
    */
   static void validateAsymmetricRelativeError(double relativeError) {
     if (negativeOrNaN(relativeError) || relativeError == Double.POSITIVE_INFINITY) {
@@ -124,9 +124,9 @@ final class NumberEquality {
    *
    * <p>The error is assumed to be positive.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
@@ -145,11 +145,11 @@ final class NumberEquality {
    *
    * <p>The error is assumed to be positive.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if close
    */
@@ -173,12 +173,12 @@ final class NumberEquality {
    *
    * <p>The error is assumed to be positive.
    *
-   * @param expected The expected value.
-   * @param actual The actual value.
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return true if actual is close to expected
    */

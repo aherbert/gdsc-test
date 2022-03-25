@@ -36,7 +36,7 @@ public class ObjectArrayFormatSupplier extends ArrayFormatSupplier {
    *
    * @param format the format (assumed to support the class {@link #getArgs()} function)
    * @param size the size
-   * @throws IllegalArgumentException If the format is null or empty, or size if not strictly
+   * @throws IllegalArgumentException if the format is null or empty, or size if not strictly
    *         positive
    */
   public ObjectArrayFormatSupplier(String format, int size) {

@@ -23,8 +23,8 @@ public class <Type><Op>Predicate implements <Type>Predicate, Supplier\<String> {
   /**
    * Create a new combined {@code <Op>} predicate.
    *
-   * @param predicate1 The first predicate
-   * @param predicate2 The second predicate
+   * @param predicate1 the first predicate
+   * @param predicate2 the second predicate
    */
   public <Type><Op>Predicate(<Type>Predicate predicate1, <Type>Predicate predicate2) {
     this.predicate1 = Objects.requireNonNull(predicate1, "Predicate 1 is null");

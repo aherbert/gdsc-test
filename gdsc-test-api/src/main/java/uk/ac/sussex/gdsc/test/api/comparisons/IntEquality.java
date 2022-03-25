@@ -42,8 +42,8 @@ public final class IntEquality {
   /**
    * Tests that two ints are equal.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
+   * @param value1 the first value
+   * @param value2 the second value
    * @return true if equal
    */
   public static boolean areEqual(int value1, int value2) {
@@ -57,12 +57,12 @@ public final class IntEquality {
    * difference between two {@code int} values then it is not a valid test and an exception is
    * raised.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if within the error
-   * @throws IllegalArgumentException If the absolute error is not positive or is {@code <=}
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
    *         than the maximum difference between int primitives
    */
   public static boolean areWithin(int value1, int value2, long absoluteError) {
@@ -73,8 +73,8 @@ public final class IntEquality {
   /**
    * Check the error is within the maximum difference between {@code int} primitives.
    *
-   * @param absoluteError The maximum absolute error between two values
-   * @throws IllegalArgumentException If the absolute error is not positive or is {@code <=}
+   * @param absoluteError the maximum absolute error between two values
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
    *         than the maximum difference between int primitives
    */
   static void validateAbsoluteError(long absoluteError) {
@@ -86,9 +86,9 @@ public final class IntEquality {
    *
    * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(long)}.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
@@ -115,15 +115,15 @@ public final class IntEquality {
    * <p>Note: The relative error is a double since the relative error computation is performed in
    * double precision.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if close
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive finite
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the absolute error is not positive finite
    */
   public static boolean areClose(int value1, int value2, double relativeError, long absoluteError) {
     validateAreClose(relativeError, absoluteError);
@@ -133,10 +133,10 @@ public final class IntEquality {
   /**
    * Check the errors allow a test of {@code int} equality using a symmetric relative error.
    *
-   * @param relativeError The maximum relative error
-   * @param absoluteError The maximum absolute error
-   * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive
+   * @param relativeError the maximum relative error
+   * @param absoluteError the maximum absolute error
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the absolute error is not positive
    */
   static void validateAreClose(double relativeError, long absoluteError) {
     NumberEquality.validateSymmetricRelativeError(relativeError);
@@ -150,11 +150,11 @@ public final class IntEquality {
    *
    * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, long)}.
    *
-   * @param value1 The first value.
-   * @param value2 The second value.
-   * @param relativeError The maximum relative error between {@code value1} and
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError The maximum absolute error between {@code value1} and
+   * @param absoluteError the maximum absolute error between {@code value1} and
    *        {@code value2} for which both numbers are still considered equal.
    * @return true if close
    */
@@ -200,16 +200,16 @@ public final class IntEquality {
    * testing testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
-   * @param expected The expected value.
-   * @param actual The actual value.
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return true if actual is close to expected
-   * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is {@code <=}
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
    *         than the maximum difference between int primitives
    */
   public static boolean isCloseTo(int expected, int actual, double relativeError,
@@ -221,10 +221,10 @@ public final class IntEquality {
   /**
    * Check the errors allow a test of {@code int} equality using an asymmetric relative error.
    *
-   * @param relativeError The maximum relative error
-   * @param absoluteError The maximum absolute error
-   * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is {@code <=}
+   * @param relativeError the maximum relative error
+   * @param absoluteError the maximum absolute error
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
    *         than the maximum difference between int primitives
    */
   static void validateIsCloseTo(double relativeError, long absoluteError) {
@@ -238,12 +238,12 @@ public final class IntEquality {
    *
    * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, long)}.
    *
-   * @param expected The expected value.
-   * @param actual The actual value.
-   * @param relativeError The maximum error, relative to {@code expected}, between
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.
-   * @param absoluteError The maximum absolute error between {@code expected} and
+   * @param absoluteError the maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @return true if actual is close to expected
    */

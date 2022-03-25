@@ -32,7 +32,7 @@ public interface TestAssertion {
   /**
    * Run the test assertion.
    *
-   * @throws AssertionError If the assertion fails
+   * @throws AssertionError if the assertion fails
    */
   void test() throws AssertionError;
 }

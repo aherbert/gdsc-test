@@ -21,7 +21,7 @@ public class <Type1><Type2>NegateBiPredicate
   /**
    * Create a new negate predicate.
    *
-   * @param predicate The predicate
+   * @param predicate the predicate
    */
   public <Type1><Type2>NegateBiPredicate(<Type1><Type2>BiPredicate predicate) {
     this.predicate = Objects.requireNonNull(predicate, "Predicate is null");

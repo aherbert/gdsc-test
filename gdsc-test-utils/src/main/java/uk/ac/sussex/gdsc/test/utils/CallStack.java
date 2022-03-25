@@ -94,7 +94,7 @@ public final class CallStack {
    *
    * @param count the count
    * @return the stack trace element
-   * @throws IllegalArgumentException If {@code count < 0}
+   * @throws IllegalArgumentException if {@code count < 0}
    */
   public static StackTraceElement getStackTraceElement(int count) {
     if (count < 0) {
