@@ -27,17 +27,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
-class LambdasTest {
+class FormatSupplierTest {
   @Test
   void testGetSupplierUsingArrayOfParameters() {
-    final String message = Lambdas.getSupplier("%d %.1f", 1, 2.3).get();
+    final String message = FormatSupplier.getSupplier("%d %.1f", 1, 2.3).get();
     Assertions.assertEquals("1 2.3", message);
   }
 
   @Test
   void testGetSupplierUsingSingleObjectArray() {
     final Object[] args = new Object[] {1, 2.3};
-    final String message = Lambdas.getSupplier("%d %.1f", args).get();
+    final String message = FormatSupplier.getSupplier("%d %.1f", args).get();
     Assertions.assertEquals("1 2.3", message);
   }
 
@@ -45,7 +45,7 @@ class LambdasTest {
   void testGetSupplierUsingSingleObjectArrayAndArrayOfParametersThrows() {
     final Object[] args = new Object[] {1, 2.3};
     Assertions.assertThrows(IllegalFormatConversionException.class, () -> {
-      Lambdas.getSupplier("%d %f %d", args, 3).get();
+      FormatSupplier.getSupplier("%d %f %d", args, 3).get();
     });
   }
 }

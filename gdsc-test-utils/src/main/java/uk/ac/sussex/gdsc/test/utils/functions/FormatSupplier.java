@@ -68,4 +68,27 @@ public abstract class FormatSupplier implements Supplier<String> {
    * @return the arguments
    */
   public abstract Object[] getArgs();
+
+
+  /**
+   * Get a supplier for the string using the format and arguments.
+   *
+   * <p>This can be used where it is not convenient to create a lambda function directly because the
+   * arguments are not effectively final.
+   *
+   * <p>Returns the equivalent of:
+   *
+   * <pre>
+   * <code>
+   * () -&gt; String.format(format, args);
+   * </code>
+   * </pre>
+   *
+   * @param format the format
+   * @param args the arguments
+   * @return the supplier
+   */
+  public static Supplier<String> getSupplier(String format, Object... args) {
+    return () -> String.format(format, args).toString();
+  }
 }
