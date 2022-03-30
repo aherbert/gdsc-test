@@ -30,5 +30,6 @@
   <suppress checks="MemberName" files="uk.ac.sussex.gdsc.test.rng.L64X128MixRandom.java" />
   <suppress checks="OverloadMethodsDeclarationOrder" files="uk.ac.sussex.gdsc.test.rng.BaseLongUniformRandomProviderTest.java" />
   <suppress checks="MemberName" files="uk.ac.sussex.gdsc.test.utils.ByteScrambler.java" />
+  <suppress checks="MemberName" files="uk.ac.sussex.gdsc.test.rng.L64X128M.java" />
   <suppress checks="VariableDeclarationUsageDistance" files="uk.ac.sussex.gdsc.test.utils.ByteScrambler.java" />
 </suppressions>
