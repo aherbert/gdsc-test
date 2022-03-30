@@ -14,7 +14,7 @@ Import the project into Eclipse (File>Import)
 Select: Maven > Existing Maven projects
 
 This will import the project but may not link it to the source Git repository.
-Right-click on the project name and select 'Team > Share'. If you share it back to 
+Right-click on the project name and select 'Team > Share'. If you share it back to
 the same location it will attach to the source Git repository.
 
 Code formatting
