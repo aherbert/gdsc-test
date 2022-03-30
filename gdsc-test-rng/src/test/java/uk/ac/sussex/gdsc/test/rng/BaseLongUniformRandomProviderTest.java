@@ -29,6 +29,7 @@ import org.apache.commons.rng.RandomProviderState;
 import org.apache.commons.rng.RestorableUniformRandomProvider;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -45,6 +46,13 @@ abstract class BaseLongUniformRandomProviderTest {
    * @return the uniform random provider
    */
   protected abstract RestorableUniformRandomProvider createRng(long seed);
+
+  /**
+   * Creates the rng to test using the default seeding.
+   *
+   * @return the uniform random provider
+   */
+  protected abstract RestorableUniformRandomProvider createRng();
 
   // Method to stream arguments to the parameterized tests.
   // A fixed seed is used to avoid flaky tests.
@@ -268,5 +276,20 @@ abstract class BaseLongUniformRandomProviderTest {
   void testRestoreUsingBadStateThrows(RestorableUniformRandomProvider rng) {
     final RandomProviderState state = null;
     Assertions.assertThrows(IllegalArgumentException.class, () -> rng.restoreState(state));
+  }
+
+  @RepeatedTest(value = 3)
+  void testNoArgumentConstructor() {
+    final UniformRandomProvider rng1 = createRng();
+    final UniformRandomProvider rng2 = createRng();
+    final int n = 10;
+    // Chance of matched output = 1 in (2^64)^n
+    // n = 10: 1 in 4.56e192
+    for (int i = n; i-- != 0;) {
+      if (rng1.nextLong() != rng2.nextLong()) {
+        return;
+      }
+    }
+    Assertions.fail("2 instances output the same sequence");
   }
 }

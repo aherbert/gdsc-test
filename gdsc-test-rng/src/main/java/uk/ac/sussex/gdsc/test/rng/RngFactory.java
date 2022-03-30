@@ -25,6 +25,7 @@ package uk.ac.sussex.gdsc.test.rng;
 import java.util.Arrays;
 import java.util.SplittableRandom;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.IntUnaryOperator;
 import org.apache.commons.rng.RestorableUniformRandomProvider;
 import uk.ac.sussex.gdsc.test.utils.RandomSeeds;
 import uk.ac.sussex.gdsc.test.utils.TestSettings;
@@ -140,5 +141,64 @@ public final class RngFactory {
    */
   public static RestorableUniformRandomProvider createWithFixedSeed() {
     return create(TestSettings.getSeed());
+  }
+
+  /**
+   * Creates a random seed.
+   *
+   * @return the seed
+   */
+  static long createSeed() {
+    return ThreadLocalRandom.current().nextLong();
+  }
+
+  /**
+   * Creates an increment with a random combination of bits with many bit transitions.
+   *
+   * <p>For use as a Weyl sequence increment this should be set to odd.
+   *
+   * <pre>
+   * long inc = RngUtils.createIncrement() | 1;
+   * </pre>
+   *
+   * @return the increment
+   */
+  static long createIncrement() {
+    return createIncrement(new SplittableRandom()::nextInt);
+  }
+
+  /**
+   * Creates an increment with a random combination of bits with many bit transitions.
+   *
+   * @param nextInt Function to generate X in [0, n) for argument n
+   * @return the increment
+   */
+  static long createIncrement(IntUnaryOperator nextInt) {
+    // Any value with many bit transitions is suitable, i.e. the golden ratio.
+    // However this method will not be used very often and can use an algorithm to
+    // create a hex digit permutation.
+    final byte[] index = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    // This uses a partial Fisher-Yates shuffle of the top half of the index array.
+    // This will generate 8 unique hex digits which are recorded into the increment.
+    // This is done twice for a 16 hex digit increment with 0 to 2 occurrences of each
+    // digit in total, and 0 or 1 occurrences of each digit in each 32-bit half.
+    // Note:
+    // Permutations(16, 8) = 518,918,400
+    // Doing this twice is 2.69e17 permutations.
+    // This is less than the period of a RNG with 2^64 states (1.84e19) so the nextInt
+    // operation can use a small state RNG.
+    long inc = 0;
+    for (int k = 2; k-- != 0;) {
+      for (int i = 16; i-- != 8;) {
+        final int j = nextInt.applyAsInt(i + 1);
+        final byte b = index[j];
+        index[j] = index[i];
+        index[i] = b;
+        // No mask necessary using 'b & 0xf' as all bytes are positive
+        // avoiding sign extension bugs
+        inc = (inc << 4) | b;
+      }
+    }
+    return inc;
   }
 }

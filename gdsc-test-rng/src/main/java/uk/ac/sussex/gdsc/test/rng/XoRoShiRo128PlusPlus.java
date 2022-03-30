@@ -23,6 +23,7 @@
 package uk.ac.sussex.gdsc.test.rng;
 
 import java.nio.ByteBuffer;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * A fast all-purpose 64-bit generator.
@@ -35,11 +36,39 @@ import java.nio.ByteBuffer;
  */
 public final class XoRoShiRo128PlusPlus extends LongUniformRandomProvider {
 
+  /**
+   * Provide lazy loading of random seeds.
+   */
+  private static class RandomSeed {
+    /** The seed. */
+    private static final AtomicLong SEED = new AtomicLong(RngFactory.createSeed());
+    /** The increment. */
+    private static final long INC = RngFactory.createIncrement() | 1;
+
+    /**
+     * Get the next random seed.
+     *
+     * @return the seed
+     */
+    static long next() {
+      return SEED.getAndAdd(INC);
+    }
+  }
+
   /** State 0 of the generator. */
   private long state0;
 
   /** State 1 of the generator. */
   private long state1;
+
+  /**
+   * Create a new randomly seeded instance. Instances created using this constructor will start at a
+   * unique point in the state cycle and are likely to generate sequences that are independent from
+   * other similarly created instances. The instances will vary across program executions.
+   */
+  public XoRoShiRo128PlusPlus() {
+    this(RandomSeed.next());
+  }
 
   /**
    * Create a new instance setting the 128-bit state by expansion and mixing of the provided 64-bit

@@ -36,6 +36,11 @@ class XoRoShiRo128PlusPlusTest extends BaseLongUniformRandomProviderTest {
     return new XoRoShiRo128PlusPlus(seed);
   }
 
+  @Override
+  protected RestorableUniformRandomProvider createRng() {
+    return new XoRoShiRo128PlusPlus();
+  }
+
   @Test
   void testNextLongReference() {
     // Tested with respect to commons-rng implementation.

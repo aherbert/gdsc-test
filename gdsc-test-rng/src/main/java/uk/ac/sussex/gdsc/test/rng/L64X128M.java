@@ -23,6 +23,7 @@
 package uk.ac.sussex.gdsc.test.rng;
 
 import java.nio.ByteBuffer;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * A fast all-purpose 64-bit generator.
@@ -48,6 +49,25 @@ public final class L64X128M extends LongUniformRandomProvider {
   /** LCG multiplier. Note: (M % 8) = 5. */
   private static final long M = 0xd1342543de82ef95L;
 
+  /**
+   * Provide lazy loading of random seeds.
+   */
+  private static class RandomSeed {
+    /** The seed. */
+    private static final AtomicLong SEED = new AtomicLong(RngFactory.createSeed());
+    /** The increment. */
+    private static final long INC = RngFactory.createIncrement() | 1;
+
+    /**
+     * Get the next random seed.
+     *
+     * @return the seed
+     */
+    static long next() {
+      return SEED.getAndAdd(INC);
+    }
+  }
+
   /** Per-instance LCG additive parameter (must be odd). */
   private final long a;
   /** State of the LCG generator. */
@@ -56,6 +76,15 @@ public final class L64X128M extends LongUniformRandomProvider {
   private long x0;
   /** State 1 of the XBG generator (x0 and x1 are never both zero). */
   private long x1;
+
+  /**
+   * Create a new randomly seeded instance. Instances created using this constructor will start at a
+   * unique point in the state cycle and are likely to generate sequences that are independent from
+   * other similarly created instances. The instances will vary across program executions.
+   */
+  public L64X128M() {
+    this(RandomSeed.next());
+  }
 
   /**
    * Create a new instance setting the state by expansion and mixing of the provided 64-bit seed.

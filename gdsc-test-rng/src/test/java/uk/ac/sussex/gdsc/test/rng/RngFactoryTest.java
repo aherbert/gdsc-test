@@ -22,8 +22,10 @@
 
 package uk.ac.sussex.gdsc.test.rng;
 
+import java.util.Arrays;
 import java.util.SplittableRandom;
 import java.util.concurrent.ThreadLocalRandom;
+import org.apache.commons.math3.stat.inference.ChiSquareTest;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -160,5 +162,30 @@ class RngFactoryTest {
     for (int i = 0; i < 50; i++) {
       Assertions.assertEquals(rng.nextLong(), RngFactory.stafford13(state += increment));
     }
+  }
+
+  @ParameterizedTest
+  @ValueSource(longs = {213678461834L, -12637812638343244L, 263784682389L})
+  void testCreateIncrement(long seed) {
+    // increments should have many transitions and be random
+    final SplittableRandom rng = new SplittableRandom(seed);
+    final long[] observed = new long[16];
+    for (int n = 0; n < 1000; n++) {
+      final long l = RngFactory.createIncrement(rng::nextInt);
+      final int t = Long.bitCount((l >>> 1) ^ l);
+      Assertions.assertTrue(t > 20,
+          () -> String.format("Not enough transitions: %s == %d", Long.toHexString(l), t));
+      // Histogram
+      long b = l;
+      for (int i = 16; i-- != 0;) {
+        observed[(int) (b & 0xf)]++;
+        b >>>= 4;
+      }
+    }
+    final double[] expected = new double[16];
+    Arrays.fill(expected, 1.0 / 16);
+    final ChiSquareTest test = new ChiSquareTest();
+    final double pvalue = test.chiSquareTest(expected, observed);
+    Assertions.assertFalse(pvalue < 0.01, "P-value = " + pvalue);
   }
 }

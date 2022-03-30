@@ -37,6 +37,11 @@ class L64X128MTest extends BaseLongUniformRandomProviderTest {
     return new L64X128M(seed);
   }
 
+  @Override
+  protected RestorableUniformRandomProvider createRng() {
+    return new L64X128M();
+  }
+
   static Stream<Arguments> testNextLongReference() {
     // Tested with respect to JDK 17 implementation.
     // The seeds were created using the same method in the JDK source from a single
