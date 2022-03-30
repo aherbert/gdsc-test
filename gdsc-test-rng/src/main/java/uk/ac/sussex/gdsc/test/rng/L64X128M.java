@@ -34,9 +34,9 @@ import java.nio.ByteBuffer;
  * MurmurHash3 mixer with constants optimised by Doug Lea. This generator is implemented as
  * algorithm "L64X128MixRandom" in JDK 17 and the source is provided in the paper:
  *
- * <blockquote>Steele and Vigna (2021) LXM: better splittable pseudorandom number generators
- * (and almost as fast). Proceedings of the ACM on Programming Languages, Volume 5,
- * Article 148, pp 1–31.</blockquote>
+ * <blockquote>Steele and Vigna (2021) LXM: better splittable pseudorandom number generators (and
+ * almost as fast). Proceedings of the ACM on Programming Languages, Volume 5, Article 148, pp
+ * 1–31.</blockquote>
  *
  * <p>Memory footprint is 256 bits and the period is 2<sup>64</sup> 2<sup>128</sup>-1.
  *

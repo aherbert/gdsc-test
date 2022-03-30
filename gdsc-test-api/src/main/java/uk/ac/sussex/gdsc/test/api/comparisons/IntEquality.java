@@ -59,11 +59,11 @@ public final class IntEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if within the error
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference between int primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference between int primitives
    */
   public static boolean areWithin(int value1, int value2, long absoluteError) {
     validateAbsoluteError(absoluteError);
@@ -74,8 +74,8 @@ public final class IntEquality {
    * Check the error is within the maximum difference between {@code int} primitives.
    *
    * @param absoluteError the maximum absolute error between two values
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference between int primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference between int primitives
    */
   static void validateAbsoluteError(long absoluteError) {
     NumberEquality.validateAbsoluteError(absoluteError, MAX_ABS_ERROR);
@@ -88,8 +88,8 @@ public final class IntEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
   static boolean testAreWithin(int value1, int value2, long absoluteError) {
@@ -117,10 +117,10 @@ public final class IntEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param relativeError the maximum relative error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if close
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
    * @throws IllegalArgumentException if the absolute error is not positive finite
@@ -152,10 +152,10 @@ public final class IntEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param relativeError the maximum relative error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if close
    */
   static boolean testAreClose(int value1, int value2, double relativeError, long absoluteError) {
@@ -202,15 +202,14 @@ public final class IntEquality {
    *
    * @param expected the expected value.
    * @param actual the actual value.
-   * @param relativeError the maximum error, relative to {@code expected}, between
-   *        {@code expected} and {@code actual} for which both numbers are still
-   *        considered equal.
-   * @param absoluteError the maximum absolute error between {@code expected} and
-   *        {@code actual} for which both numbers are still considered equal.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
    * @return true if actual is close to expected
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference between int primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference between int primitives
    */
   public static boolean isCloseTo(int expected, int actual, double relativeError,
       long absoluteError) {
@@ -224,8 +223,8 @@ public final class IntEquality {
    * @param relativeError the maximum relative error
    * @param absoluteError the maximum absolute error
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference between int primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference between int primitives
    */
   static void validateIsCloseTo(double relativeError, long absoluteError) {
     NumberEquality.validateAsymmetricRelativeError(relativeError);
@@ -240,11 +239,10 @@ public final class IntEquality {
    *
    * @param expected the expected value.
    * @param actual the actual value.
-   * @param relativeError the maximum error, relative to {@code expected}, between
-   *        {@code expected} and {@code actual} for which both numbers are still
-   *        considered equal.
-   * @param absoluteError the maximum absolute error between {@code expected} and
-   *        {@code actual} for which both numbers are still considered equal.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
    * @return true if actual is close to expected
    */
   static boolean testIsCloseTo(int expected, int actual, double relativeError, long absoluteError) {

@@ -59,11 +59,11 @@ public final class ByteEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if within the tolerance
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference between byte primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference between byte primitives
    */
   public static boolean areWithin(byte value1, byte value2, int absoluteError) {
     validateAbsoluteError(absoluteError);
@@ -74,8 +74,8 @@ public final class ByteEquality {
    * Check the error is within the maximum difference between {@code byte} primitives.
    *
    * @param absoluteError the maximum absolute error between two values
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference between byte primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference between byte primitives
    */
   static void validateAbsoluteError(int absoluteError) {
     NumberEquality.validateAbsoluteError(absoluteError, MAX_ABS_ERROR);
@@ -88,8 +88,8 @@ public final class ByteEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
   static boolean testAreWithin(byte value1, byte value2, int absoluteError) {
@@ -115,10 +115,10 @@ public final class ByteEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param relativeError the maximum relative error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if close
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
    * @throws IllegalArgumentException if the absolute error is not positive finite
@@ -151,15 +151,14 @@ public final class ByteEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param relativeError the maximum relative error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if close
    */
   static boolean testAreClose(byte value1, byte value2, double relativeError, int absoluteError) {
-    return NumberEquality.shortsOrBytesTestAreClose(value1, value2, relativeError,
-        absoluteError);
+    return NumberEquality.shortsOrBytesTestAreClose(value1, value2, relativeError, absoluteError);
   }
 
   /**
@@ -179,15 +178,14 @@ public final class ByteEquality {
    *
    * @param expected the expected value.
    * @param actual the actual value.
-   * @param relativeError the maximum error, relative to {@code expected}, between
-   *        {@code expected} and {@code actual} for which both numbers are still
-   *        considered equal.
-   * @param absoluteError the maximum absolute error between {@code expected} and
-   *        {@code actual} for which both numbers are still considered equal.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
    * @return true if actual is close to expected
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference between byte primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference between byte primitives
    */
   public static boolean isCloseTo(byte expected, byte actual, double relativeError,
       int absoluteError) {
@@ -201,8 +199,8 @@ public final class ByteEquality {
    * @param relativeError the maximum relative error
    * @param absoluteError the maximum absolute error
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference between byte primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference between byte primitives
    */
   static void validateIsCloseTo(double relativeError, int absoluteError) {
     NumberEquality.validateAsymmetricRelativeError(relativeError);
@@ -217,11 +215,10 @@ public final class ByteEquality {
    *
    * @param expected the expected value.
    * @param actual the actual value.
-   * @param relativeError the maximum error, relative to {@code expected}, between
-   *        {@code expected} and {@code actual} for which both numbers are still
-   *        considered equal.
-   * @param absoluteError the maximum absolute error between {@code expected} and
-   *        {@code actual} for which both numbers are still considered equal.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
    * @return true if actual is close to expected
    */
   static boolean testIsCloseTo(byte expected, byte actual, double relativeError,

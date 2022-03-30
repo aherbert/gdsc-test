@@ -48,8 +48,7 @@ class AssertionErrorTest {
       Assertions.assertEquals(ex.getMessage(), messageSupplier.get());
     }
     try {
-      AssertionErrors.appendMessage(new AssertionError("Something bad"),
-          messageSupplier);
+      AssertionErrors.appendMessage(new AssertionError("Something bad"), messageSupplier);
     } catch (final AssertionError ex) {
       // Empty string is ignored
       Assertions.assertEquals(ex.getMessage(), "Something bad " + messageSupplier.get());

@@ -42,8 +42,8 @@ final class NumberEquality {
    *
    * @param absoluteError the absolute error between two values
    * @param maximumDifference the maximum difference
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference
    */
   static void validateAbsoluteError(long absoluteError, long maximumDifference) {
     if (absoluteError < 0) {
@@ -60,8 +60,8 @@ final class NumberEquality {
    *
    * @param absoluteError the absolute error between two values
    * @param maximumDifference the maximum difference
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=}
-   *         than the maximum difference
+   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
+   *         the maximum difference
    */
   static void validateAbsoluteError(int absoluteError, int maximumDifference) {
     if (absoluteError < 0) {
@@ -126,8 +126,8 @@ final class NumberEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
   static boolean shortOrBytesTestAreWithin(int value1, int value2, int absoluteError) {
@@ -147,10 +147,10 @@ final class NumberEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param relativeError the maximum relative error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if close
    */
   static boolean shortsOrBytesTestAreClose(int value1, int value2, double relativeError,
@@ -175,11 +175,10 @@ final class NumberEquality {
    *
    * @param expected the expected value.
    * @param actual the actual value.
-   * @param relativeError the maximum error, relative to {@code expected}, between
-   *        {@code expected} and {@code actual} for which both numbers are still
-   *        considered equal.
-   * @param absoluteError the maximum absolute error between {@code expected} and
-   *        {@code actual} for which both numbers are still considered equal.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
    * @return true if actual is close to expected
    */
   static boolean shortsOrBytesTestIsCloseTo(int expected, int actual, double relativeError,

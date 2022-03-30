@@ -36,9 +36,10 @@ public final class Hex {
   /** Output Hex characters. */
   private static final char[] HEX_DIGITS =
       {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-  /** The byte used to indicate the character is unmapped.
-   * No ASCII character is above 127 so this can use -1.
-   * Bad characters can be identified with a sign test. */
+  /**
+   * The byte used to indicate the character is unmapped. No ASCII character is above 127 so this
+   * can use -1. Bad characters can be identified with a sign test.
+   */
   private static final byte UNMAPPED = (byte) -1;
 
   /**
@@ -85,7 +86,7 @@ public final class Hex {
     }
     // Two hex characters per byte
     final char[] chars = new char[len << 1];
-    for (int i = len; i-- != 0; ) {
+    for (int i = len; i-- != 0;) {
       chars[i << 1] = HEX_DIGITS[(bytes[i] & 0xf0) >>> 4];
       chars[(i << 1) + 1] = HEX_DIGITS[bytes[i] & 0xf];
     }
@@ -137,7 +138,7 @@ public final class Hex {
     }
 
     // Process pairs
-    for (int i = length; i-- != 0; ) {
+    for (int i = length; i-- != 0;) {
       final int ch1 = mapToHexNumber(string.charAt(i << 1));
       final int ch2 = mapToHexNumber(string.charAt((i << 1) + 1));
       if ((ch1 | ch2) < 0) {

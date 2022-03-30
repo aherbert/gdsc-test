@@ -42,9 +42,8 @@ class LongUniformRandomProviderTest {
   private static final int N = 1000;
 
   /**
-   * Creates two RNGs. The first is the Commons RNG implementation.
-   * The second is the same 64-bit source of randomness providing the bits
-   * for the {@link LongUniformRandomProvider}.
+   * Creates two RNGs. The first is the Commons RNG implementation. The second is the same 64-bit
+   * source of randomness providing the bits for the {@link LongUniformRandomProvider}.
    *
    * @return the uniform random providers
    */
@@ -205,11 +204,9 @@ class LongUniformRandomProviderTest {
     }
 
     @Override
-    void saveState(ByteBuffer bb) {
-    }
+    void saveState(ByteBuffer bb) {}
 
     @Override
-    void restoreState(ByteBuffer bb) {
-    }
+    void restoreState(ByteBuffer bb) {}
   }
 }

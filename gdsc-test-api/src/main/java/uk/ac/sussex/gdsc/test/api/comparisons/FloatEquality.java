@@ -62,8 +62,8 @@ public final class FloatEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for
-   *        which both numbers are still considered equal.
+   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for which both
+   *        numbers are still considered equal.
    * @return true if within the error
    * @throws IllegalArgumentException if the ULP error is not positive
    */
@@ -97,8 +97,8 @@ public final class FloatEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for
-   *        which both numbers are still considered equal.
+   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for which both
+   *        numbers are still considered equal.
    * @return true if equal within a ULP error
    */
   static boolean testAreWithinUlp(float value1, float value2, short ulpError) {
@@ -132,8 +132,8 @@ public final class FloatEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if within the error
    * @throws IllegalArgumentException if the absolute error is not positive and finite
    */
@@ -166,8 +166,8 @@ public final class FloatEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if equal within an absolute error
    */
   static boolean testAreWithin(float value1, float value2, float absoluteError) {
@@ -204,10 +204,10 @@ public final class FloatEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param relativeError the maximum relative error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if close
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
    * @throws IllegalArgumentException if the absolute error is not positive finite
@@ -243,10 +243,10 @@ public final class FloatEquality {
    *
    * @param value1 the first value
    * @param value2 the second value
-   * @param relativeError the maximum relative error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return true if close
    */
   static boolean testAreClose(float value1, float value2, double relativeError,
@@ -300,11 +300,10 @@ public final class FloatEquality {
    *
    * @param expected the expected value.
    * @param actual the actual value.
-   * @param relativeError the maximum error, relative to {@code expected}, between
-   *        {@code expected} and {@code actual} for which both numbers are still
-   *        considered equal.
-   * @param absoluteError the maximum absolute error between {@code expected} and
-   *        {@code actual} for which both numbers are still considered equal.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
    * @return true if actual is close to expected
    * @throws IllegalArgumentException if the relative error is not positive finite
    * @throws IllegalArgumentException if the absolute error is not positive finite
@@ -339,11 +338,10 @@ public final class FloatEquality {
    *
    * @param expected the expected value.
    * @param actual the actual value.
-   * @param relativeError the maximum error, relative to {@code expected}, between
-   *        {@code expected} and {@code actual} for which both numbers are still
-   *        considered equal.
-   * @param absoluteError the maximum absolute error between {@code expected} and
-   *        {@code actual} for which both numbers are still considered equal.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
    * @return true if actual is close to expected
    */
   static boolean testIsCloseTo(float expected, float actual, double relativeError,

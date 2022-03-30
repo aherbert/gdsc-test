@@ -134,8 +134,8 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
   }
 
   /**
-   * Gets the state size in bytes. This is the number of bytes required to save the state
-   * to a {@link ByteBuffer}.
+   * Gets the state size in bytes. This is the number of bytes required to save the state to a
+   * {@link ByteBuffer}.
    *
    * @return the state size
    */

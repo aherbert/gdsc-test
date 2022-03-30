@@ -29,8 +29,8 @@ import java.lang.annotation.Target;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
- * {@code @DisabledIfHeadless} is used to signal that the annotated method should be disabled
- * if the system is headless.
+ * {@code @DisabledIfHeadless} is used to signal that the annotated method should be disabled if the
+ * system is headless.
  *
  * @see java.awt.GraphicsEnvironment#isHeadless()
  */

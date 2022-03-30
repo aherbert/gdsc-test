@@ -74,8 +74,9 @@ final class Descriptions {
   }
 
   /**
-   * Gets the description for the reference value. This is to be used as a prefix
-   * for a two argument predicate description using values {@code v1} and {@code v2}.
+   * Gets the description for the reference value. This is to be used as a prefix for a two argument
+   * predicate description using values {@code v1} and {@code v2}.
+   *
    * <pre>
    * "v1=" + value + ". "
    * </pre>
@@ -92,8 +93,8 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive).
    *
-   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for
-   *        which both numbers are still considered equal.
+   * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for which both
+   *        numbers are still considered equal.
    * @return the description
    */
   static String getDescriptionWithinUlp(int ulpError) {
@@ -105,8 +106,8 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive finite).
    *
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return the description
    */
   static String getDescriptionWithin(double absoluteError) {
@@ -119,8 +120,8 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive finite).
    *
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return the description
    */
   static String getDescriptionWithin(float absoluteError) {
@@ -133,8 +134,8 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive).
    *
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return the description
    */
   static String getDescriptionWithin(BigInteger absoluteError) {
@@ -147,8 +148,8 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive).
    *
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return the description
    */
   static String getDescriptionWithin(long absoluteError) {
@@ -161,8 +162,8 @@ final class Descriptions {
    *
    * <p>It is assumed the error has been validated (is positive).
    *
-   * @param absoluteError the maximum absolute error between {@code value1} and
-   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
    * @return the description
    */
   static String getDescriptionWithin(int absoluteError) {
