@@ -216,8 +216,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               </manifest>
             </archive>
-            <!-- Enable MathJax -->
-            <additionalOptions><![CDATA[--allow-script-in-comments -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalOptions>
           </configuration>
         </plugin>
         <plugin>
@@ -533,8 +531,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             </manifest>
           </archive>
-          <!-- Enable MathJax -->
-          <additionalparam><![CDATA[--allow-script-in-comments -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${rng.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;']]></additionalparam>
         </configuration>
         <reportSets>
           <reportSet>
