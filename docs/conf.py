@@ -20,13 +20,14 @@ import os
 # -- Project information -----------------------------------------------------
 
 project = u'GDSC Test'
-copyright = u'2018, Alex Herbert'
+copyright = u'2018-2022, Alex Herbert'
 author = u'Alex Herbert'
 
 # The short X.Y version
 version = u''
 # The full version, including alpha/beta/rc tags
-release = u'1.0.0'
+# This does not appear in the HTML version. It is in the PDF.
+release = u'1.1'
 
 
 # -- General configuration ---------------------------------------------------

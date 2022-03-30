@@ -3,12 +3,12 @@ Change Log
 
 .. contents::
 
-Version 1.0.0
--------------
+Version 1.0
+-----------
 
 First working version of GDSC Test.
 
-GDSC Test 1.0.0 contains the following modules:
+GDSC Test 1.0 contains the following modules:
 
 - ``gdsc-test-build-tools`` (required only for building the source)
 - ``gdsc-test-generator``
