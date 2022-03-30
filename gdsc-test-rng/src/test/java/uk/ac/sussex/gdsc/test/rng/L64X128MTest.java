@@ -31,10 +31,10 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @SuppressWarnings("javadoc")
-class L64X128MixRandomTest extends BaseLongUniformRandomProviderTest {
+class L64X128MTest extends BaseLongUniformRandomProviderTest {
   @Override
   protected RestorableUniformRandomProvider createRng(long seed) {
-    return new L64X128MixRandom(seed);
+    return new L64X128M(seed);
   }
 
   static Stream<Arguments> testNextLongReference() {
@@ -84,7 +84,7 @@ class L64X128MixRandomTest extends BaseLongUniformRandomProviderTest {
   @ParameterizedTest
   @MethodSource
   void testNextLongReference(long[] seed, long[] expected) {
-    final L64X128MixRandom rng = new L64X128MixRandom(seed[0], seed[1], seed[2], seed[3]);
+    final L64X128M rng = new L64X128M(seed[0], seed[1], seed[2], seed[3]);
     for (int i = 0; i < expected.length; i++) {
       final long v = expected[i];
       final int index = i;
@@ -95,8 +95,8 @@ class L64X128MixRandomTest extends BaseLongUniformRandomProviderTest {
 
   @Test
   void testZeroSeed() {
-    final L64X128MixRandom rng1 = new L64X128MixRandom(0);
-    final L64X128MixRandom rng2 = new L64X128MixRandom(0, 0);
+    final L64X128M rng1 = new L64X128M(0);
+    final L64X128M rng2 = new L64X128M(0, 0);
     long zeroOutput = 0;
     for (int i = 0; i < 10; i++) {
       final long value = rng1.nextLong();
@@ -108,7 +108,7 @@ class L64X128MixRandomTest extends BaseLongUniformRandomProviderTest {
 
   @Test
   void testFullZeroSeed() {
-    final L64X128MixRandom rng = new L64X128MixRandom(0, 0, 0, 0);
+    final L64X128M rng = new L64X128M(0, 0, 0, 0);
     long zeroOutput = 0;
     for (int i = 0; i < 10; i++) {
       zeroOutput |= rng.nextLong();

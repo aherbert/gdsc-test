@@ -44,7 +44,7 @@ import java.nio.ByteBuffer;
  * @see <a href="https://doi.org/10.1145/3485525">Steele &amp; Vigna (2021) Proc. ACM Programming
  *      Languages 5, 1-31</a>
  */
-public final class L64X128MixRandom extends LongUniformRandomProvider {
+public final class L64X128M extends LongUniformRandomProvider {
   /** LCG multiplier. Note: (M % 8) = 5. */
   private static final long M = 0xd1342543de82ef95L;
 
@@ -62,7 +62,7 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
    *
    * @param seed the seed for the state
    */
-  public L64X128MixRandom(long seed) {
+  public L64X128M(long seed) {
     // Mix in irregular bit spacing will improve simple seeds, e.g. 0, 1, 2.
     seed ^= RngFactory.GOLDEN_RATIO;
     // Must be odd
@@ -83,7 +83,7 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
    * @param seed0 the first seed for the state
    * @param seed1 the second seed for the state
    */
-  public L64X128MixRandom(long seed0, long seed1) {
+  public L64X128M(long seed0, long seed1) {
     // Mix in irregular bit spacing will improve simple seeds, e.g. 0, 1, 2.
     seed0 ^= RngFactory.GOLDEN_RATIO;
     seed1 ^= RngFactory.GOLDEN_RATIO;
@@ -106,7 +106,7 @@ public final class L64X128MixRandom extends LongUniformRandomProvider {
    * @param x0 the XBG state 0
    * @param x1 the XBG state 1
    */
-  public L64X128MixRandom(long a, long s, long x0, long x1) {
+  public L64X128M(long a, long s, long x0, long x1) {
     // Must be odd
     this.a = a | 1;
     this.s = s;

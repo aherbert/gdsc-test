@@ -73,7 +73,7 @@ public final class RngFactory {
     // Convert seed to a long array. This may be zero padded.
     if (seed.length > 2 * Long.BYTES) {
       final long[] longSeed = Arrays.copyOf(RandomSeeds.makeLongArray(seed), 4);
-      return new L64X128MixRandom(longSeed[0], longSeed[1], longSeed[2], longSeed[3]);
+      return new L64X128M(longSeed[0], longSeed[1], longSeed[2], longSeed[3]);
     }
     final long[] longSeed = Arrays.copyOf(RandomSeeds.makeLongArray(seed), 2);
     return new XoRoShiRo128PlusPlus(longSeed[0], longSeed[1]);
