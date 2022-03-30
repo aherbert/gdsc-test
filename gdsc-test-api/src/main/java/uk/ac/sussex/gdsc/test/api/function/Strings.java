@@ -98,9 +98,9 @@ final class Strings {
       return (String) object;
     }
     if (object instanceof Supplier) {
-      final Object supplied = ((Supplier<?>) object).get();
-      if (supplied != null) {
-        return supplied.toString();
+      final Object result = ((Supplier<?>) object).get();
+      if (result != null) {
+        return result.toString();
       }
     }
     return null;
