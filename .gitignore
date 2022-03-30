@@ -11,6 +11,7 @@ site-content
 *.iws
 .idea
 .DS_Store
+.cache
 *~
 /.externalToolBuilders/
 /maven-eclipse.xml
