@@ -3,10 +3,12 @@ GDSC Test
 
 GDSC Test provides utility functionality for writing Java tests.
 
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%20v2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.com/aherbert/gdsc-test.svg?branch=master)](https://travis-ci.com/aherbert/gdsc-test)
 [![Coverage Status](https://coveralls.io/repos/github/aherbert/gdsc-test/badge.svg?branch=master)](https://coveralls.io/github/aherbert/gdsc-test?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/gdsc-test/badge/?version=latest)](https://gdsc-test.readthedocs.io/en/latest/?badge=latest)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%20v2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/)
+[![Javadocs](https://javadoc.io/badge2/uk.ac.sussex.gdsc/gdsc-test-api/javadoc.svg)](https://javadoc.io/doc/uk.ac.sussex.gdsc/gdsc-test-api)
 
 Functionality includes:
 
