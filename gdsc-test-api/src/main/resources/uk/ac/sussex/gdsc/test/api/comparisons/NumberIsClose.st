@@ -87,7 +87,7 @@ public class <Number>IsClose
    */
   @Override
   public String get() {
-    return Descriptions.getReferenceDescription(<Class>.toString(reference)) +
-           Descriptions.getDescriptionClose(relativeError, absoluteError);
+    return Descriptions.getReferenceDescription(<Class>.toString(reference))
+        + Descriptions.getDescriptionClose(relativeError, absoluteError);
   }
 }

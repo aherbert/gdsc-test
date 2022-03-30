@@ -19,19 +19,19 @@ public class MessageBuilderTest {
   }
 
   @Test
-  void testToString() {
-    Assertions.assertNull(MessageBuilder.toString(null));
+  void testObjectToString() {
+    Assertions.assertNull(MessageBuilder.objectToString(null));
 
     final String string1 = "asdhjkfkas";
     final String string2 = "ahsfhkasdj";
-    Assertions.assertEquals(string1, MessageBuilder.toString(string1));
-    Assertions.assertNotEquals(string1, MessageBuilder.toString(string2));
+    Assertions.assertEquals(string1, MessageBuilder.objectToString(string1));
+    Assertions.assertNotEquals(string1, MessageBuilder.objectToString(string2));
 
     final Supplier\<String> supp1 = () -> string1;
     final Supplier\<String> supp2 = () -> null;
-    Assertions.assertEquals(string1, MessageBuilder.toString(supp1));
-    Assertions.assertNotEquals(string1, MessageBuilder.toString(supp2));
+    Assertions.assertEquals(string1, MessageBuilder.objectToString(supp1));
+    Assertions.assertNotEquals(string1, MessageBuilder.objectToString(supp2));
 
-    Assertions.assertNull(MessageBuilder.toString(supp2));
+    Assertions.assertNull(MessageBuilder.objectToString(supp2));
   }
 }

@@ -82,7 +82,7 @@ public class <Float>IsUlpClose
    */
   @Override
   public String get() {
-    return Descriptions.getReferenceDescription(<Float>.toString(reference)) +
-           Descriptions.getDescriptionWithinUlp(ulpError);
+    return Descriptions.getReferenceDescription(<Float>.toString(reference))
+        + Descriptions.getDescriptionWithinUlp(ulpError);
   }
 }

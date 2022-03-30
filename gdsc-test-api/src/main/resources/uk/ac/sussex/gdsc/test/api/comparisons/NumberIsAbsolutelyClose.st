@@ -68,7 +68,7 @@ public class <Number>Is<Absolutely>Close
    */
   @Override
   public String get() {
-    return Descriptions.getReferenceDescription(<Class>.toString(reference)) +
-           Descriptions.getDescriptionWithin(absoluteError);
+    return Descriptions.getReferenceDescription(<Class>.toString(reference))
+        + Descriptions.getDescriptionWithin(absoluteError);
   }
 }

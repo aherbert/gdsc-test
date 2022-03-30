@@ -16,6 +16,7 @@ import uk.ac.sussex.gdsc.test.api.function.LongLongBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.LongPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortPredicate;
 import uk.ac.sussex.gdsc.test.api.function.ShortShortBiPredicate;
+
 import java.util.function.Supplier;
 
 /**
@@ -83,13 +84,13 @@ final class MessageBuilder {
    * Create an instance with the prefix from the message or Supplier. If the message
    * implements {@link java.util.function.Supplier Supplier\} obtain the object
    * and convert to a {@link Object#toString String\}; if a String then use the
-   * message directory. Null or empty String messages are ignored.
+   * message directly. Null or empty String messages are ignored.
    *
    * @param messageOrSupplier the prefix
    * @return the message builder
    */
   static MessageBuilder of(Object messageOrSupplier) {
-    return new MessageBuilder(toString(messageOrSupplier));
+    return new MessageBuilder(objectToString(messageOrSupplier));
   }
 
   @Override
@@ -229,7 +230,7 @@ final class MessageBuilder {
    * @return the message builder
    */
   private MessageBuilder appendPredicate(Object predicate) {
-    final String description = toString(predicate);
+    final String description = objectToString(predicate);
     if (isNotEmpty(description)) {
       sb.append(". ").append(description);
     }
@@ -237,7 +238,8 @@ final class MessageBuilder {
   }
 
   /**
-   * Gets the string representation. The object may be a {@link String} or {@link Supplier}.
+   * Gets the string representation of the predicate. The object may be a {@link String} or
+   * {@link Supplier}.
    *
    * \<ul>
    *  \<li>If the object is a {@link String} then the string is returned.
@@ -246,17 +248,17 @@ final class MessageBuilder {
    *  \<li>Otherwise returns {@code null}.
    * \</ul>
    *
-   * @param object the object
+   * @param predicate the predicate
    * @return the string representation
    */
-  static String toString(Object object) {
-    if (object instanceof String) {
-      return (String) object;
+  static String objectToString(Object predicate) {
+    if (predicate instanceof String) {
+      return (String) predicate;
     }
-    if (object instanceof Supplier) {
-      final Object supplied = ((Supplier\<?>) object).get();
-      if (supplied != null) {
-        return supplied.toString();
+    if (predicate instanceof Supplier) {
+      final Object result = ((Supplier\<?>) predicate).get();
+      if (result != null) {
+        return result.toString();
       }
     }
     return null;

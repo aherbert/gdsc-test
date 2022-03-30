@@ -90,7 +90,7 @@ public class <Number>IsCloseTo
    */
   @Override
   public String get() {
-    return Descriptions.getReferenceDescription(<Class>.toString(reference)) +
-           Descriptions.getDescriptionIsCloseTo(relativeError, absoluteError);
+    return Descriptions.getReferenceDescription(<Class>.toString(reference))
+        + Descriptions.getDescriptionIsCloseTo(relativeError, absoluteError);
   }
 }
