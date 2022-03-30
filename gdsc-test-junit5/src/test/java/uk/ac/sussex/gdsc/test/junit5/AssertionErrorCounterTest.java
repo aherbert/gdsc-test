@@ -35,6 +35,7 @@ import uk.ac.sussex.gdsc.test.utils.AssertionErrorCounter;
 class AssertionErrorCounterTest {
   @ParameterizedTest
   @CsvSource({
+  // @formatter:off
       "1, 0, true",
       "1, 1, false",
       "1, 1, true",
@@ -45,6 +46,7 @@ class AssertionErrorCounterTest {
       "2, 1, true",
       "2, 2, false",
       "2, 2, true",
+      // @formatter:on
   })
   void runTestAssert(int size, int limit, boolean exceed) {
     final AssertionErrorCounter fc = new AssertionErrorCounter(limit, size);
