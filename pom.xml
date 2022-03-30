@@ -88,9 +88,11 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}</parent.dir>
     <!-- Versions -->
+    <gdsc.bc.version>1.0</gdsc.bc.version>
     <checkstyle.version>8.35</checkstyle.version>
     <commons.codec.version>1.14</commons.codec.version>
     <commons.rng.version>1.4</commons.rng.version>
+    <japicmp.version>0.15.3</japicmp.version>
     <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     <org.jacoco.version>0.8.7</org.jacoco.version>
@@ -430,6 +432,49 @@ The GDSC Test package contains code for use with the JUnit test framework.
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.github.siom79.japicmp</groupId>
+        <artifactId>japicmp-maven-plugin</artifactId>
+        <version>${japicmp.version}</version>
+        <configuration>
+          <oldVersion>
+            <dependency>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>${project.artifactId}</artifactId>
+              <version>${gdsc.bc.version}</version>
+              <type>jar</type>
+           </dependency>
+          </oldVersion>
+          <newVersion>
+            <file>
+              <path>${project.build.directory}/${project.artifactId}-${project.version}.${project.packaging}</path>
+            </file>
+          </newVersion>
+          <parameter>
+            <onlyModified>true</onlyModified>
+            <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+            <!-- skip japicmp on "mvn site" - use "mvn package site" to include report -->
+            <ignoreMissingNewVersion>true</ignoreMissingNewVersion>
+            <reportOnlyFilename>true</reportOnlyFilename>
+            <overrideCompatibilityChangeParameters>
+              <overrideCompatibilityChangeParameter>
+                <compatibilityChange>METHOD_NEW_DEFAULT</compatibilityChange>
+                <binaryCompatible>true</binaryCompatible>
+                <sourceCompatible>true</sourceCompatible>
+                <semanticVersionLevel>PATCH</semanticVersionLevel>
+              </overrideCompatibilityChangeParameter>
+            </overrideCompatibilityChangeParameters>
+          </parameter>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>cmp</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -545,6 +590,28 @@ The GDSC Test package contains code for use with the JUnit test framework.
       <plugin>
         <artifactId>maven-jxr-plugin</artifactId>
         <version>${maven-jxr-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>com.github.siom79.japicmp</groupId>
+        <artifactId>japicmp-maven-plugin</artifactId>
+        <version>${japicmp.version}</version>
+        <configuration>
+          <parameter>
+            <onlyModified>true</onlyModified>
+            <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+            <!-- skip japicmp on "mvn site" - use "mvn package site" to include report -->
+            <ignoreMissingNewVersion>true</ignoreMissingNewVersion>
+            <reportOnlyFilename>true</reportOnlyFilename>
+            <overrideCompatibilityChangeParameters>
+              <overrideCompatibilityChangeParameter>
+                <compatibilityChange>METHOD_NEW_DEFAULT</compatibilityChange>
+                <binaryCompatible>true</binaryCompatible>
+                <sourceCompatible>true</sourceCompatible>
+                <semanticVersionLevel>PATCH</semanticVersionLevel>
+              </overrideCompatibilityChangeParameter>
+            </overrideCompatibilityChangeParameters>
+          </parameter>
+        </configuration>
       </plugin>
     </plugins>
   </reporting>
