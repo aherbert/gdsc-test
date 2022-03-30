@@ -33,6 +33,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
@@ -49,6 +51,14 @@ class CodeGeneratorTest {
         CodeGenerator.getExitCodeForException(new InvalidModelException("Test")));
     Assertions.assertEquals(ExitCode.FAILED,
         CodeGenerator.getExitCodeForException(new Exception()));
+  }
+
+  @Test
+  void testGetExitCode() {
+    final HashSet<Integer> set = new HashSet<>();
+    final ExitCode[] codes = ExitCode.values();
+    Arrays.stream(codes).forEach(c -> set.add(c.getExitCode()));
+    Assertions.assertEquals(codes.length, set.size());
   }
 
   @Test

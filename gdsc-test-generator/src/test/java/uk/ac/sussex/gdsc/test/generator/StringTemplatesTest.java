@@ -286,4 +286,11 @@ class StringTemplatesTest {
     final String expected = String.format("package org.test;%nbill=flower;%nben=pot;%n");
     Assertions.assertEquals(expected, list.get(0).getValue(), "Output is wrong");
   }
+
+  @Test
+  void testSkipSubstitution() {
+    Assertions.assertFalse(StringTemplates.skipSubstitution("hello"));
+    Assertions.assertTrue(StringTemplates.skipSubstitution(""));
+    Assertions.assertFalse(StringTemplates.skipSubstitution(new Object()));
+  }
 }
