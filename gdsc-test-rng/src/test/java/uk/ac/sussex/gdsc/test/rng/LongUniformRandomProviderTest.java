@@ -164,7 +164,7 @@ class LongUniformRandomProviderTest {
         return 42;
       }
     };
-    Assertions.assertThrows(IllegalArgumentException.class, () -> rng.nextInt(n));
+    Assertions.assertThrows(IllegalArgumentException.class, () -> rng.nextLong(n));
   }
 
   @RepeatedTest(value = 3)
