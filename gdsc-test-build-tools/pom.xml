@@ -21,6 +21,8 @@ Contains build tools for the GDSC Test build process.
     <gdsc.automatic.module.name>uk.ac.sussex.gdsc.test.build.tools</gdsc.automatic.module.name>
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}/..</parent.dir>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <japicmp.skip>true</japicmp.skip>
   </properties>
 
   <build>
