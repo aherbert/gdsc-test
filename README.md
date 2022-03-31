@@ -83,30 +83,22 @@ Object[] actual = new int[4][5][6];
 TestAssertions.assertArrayTest(expected, actual, equal);
 ```
 
-Maven Installation
-------------------
+Installation
+------------
 
-This package is a library to be used used by other Java programs. It is only
-necessary to perform an install if you are building other packages that depend
-on it.
+This package is a library to be used used by other Java programs.
+The latest version is on Maven central:
 
-1. Clone the repository
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/)
+
+The package can be installed locally from the source using Maven.
 
         git clone https://github.com/aherbert/gdsc-test.git
-
-2. Build the code and install using Maven
-
         cd gdsc-test
         mvn install
 
-This will produce a gdsc-test-[package]-[VERSION].jar file in the local Maven
-repository.
+Background
+----------
 
-
-# About #
-
-###### Owner ######
-Alex Herbert
-
-###### Institution ######
-[Genome Damage and Stability Centre, University of Sussex](http://www.sussex.ac.uk/gdsc/)
+Developed at the
+[Genome Damage and Stability Centre, University of Sussex](http://www.sussex.ac.uk/gdsc/).
