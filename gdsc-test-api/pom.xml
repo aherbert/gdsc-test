@@ -81,10 +81,10 @@ Contains a generic framework for test predicates.
                 <!-- automatically creates the classpath using all project dependencies, also adding the project build directory -->
                 <classpath />
                 <argument>uk.ac.sussex.gdsc.test.generator.CodeGenerator</argument>
-                <argument>src/main/resources</argument>
+                <argument>src/main/templates</argument>
                 <argument>${generated.sources}</argument>
                 <argument>--header</argument>
-                <argument>src/main/resources/generator/license-header.txt</argument>
+                <argument>src/main/templates/license-header.txt</argument>
               </arguments>
             </configuration>
           </execution>
@@ -102,10 +102,10 @@ Contains a generic framework for test predicates.
                 <!-- automatically creates the classpath using all project dependencies, also adding the project build directory -->
                 <classpath />
                 <argument>uk.ac.sussex.gdsc.test.generator.CodeGenerator</argument>
-                <argument>src/test/resources</argument>
+                <argument>src/test/templates</argument>
                 <argument>${generated.test.sources}</argument>
                 <argument>--header</argument>
-                <argument>src/main/resources/generator/license-header.txt</argument>
+                <argument>src/main/templates/license-header.txt</argument>
               </arguments>
             </configuration>
           </execution>
