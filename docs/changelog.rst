@@ -3,6 +3,11 @@ Change Log
 
 .. contents::
 
+Version 1.1
+-------------
+
+Minor release of GDSC Test.
+
 Version 1.0.1
 -------------
 
