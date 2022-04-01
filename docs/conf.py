@@ -27,7 +27,7 @@ author = u'Alex Herbert'
 version = u''
 # The full version, including alpha/beta/rc tags
 # This does not appear in the HTML version. It is in the PDF.
-release = u'1.1'
+release = u'1.0.2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -95,6 +95,12 @@ else:
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+html_css_files = [
+    'css/custom.css',
+]
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
