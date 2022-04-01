@@ -3,6 +3,25 @@ Change Log
 
 .. contents::
 
+Version 1.0.1
+-------------
+
+Patch release of GDSC Test.
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Change
+     - Description
+
+   * - Update
+     - Update build tools to support JDK 17.
+
+   * - Update
+     - Remove redundant files from the gdsc-test-api jar.
+
+
 Version 1.0
 -----------
 
