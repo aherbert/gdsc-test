@@ -3,10 +3,21 @@ Change Log
 
 .. contents::
 
-Version 1.1
+Version 1.0.2
 -------------
 
-Minor release of GDSC Test.
+Patch release of GDSC Test.
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Change
+     - Description
+
+   * - Fix
+     - Avoid using a method reference to SplittableRandom.
+       The method changes to a default implementation in JDK 17.
 
 Version 1.0.1
 -------------
