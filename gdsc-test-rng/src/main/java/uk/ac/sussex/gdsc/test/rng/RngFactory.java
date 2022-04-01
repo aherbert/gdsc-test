@@ -164,7 +164,8 @@ public final class RngFactory {
    * @return the increment
    */
   static long createIncrement() {
-    return createIncrement(new SplittableRandom()::nextInt);
+    final SplittableRandom r = new SplittableRandom();
+    return createIncrement(n -> r.nextInt(n));
   }
 
   /**
