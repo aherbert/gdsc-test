@@ -210,7 +210,7 @@ abstract class BaseLongUniformRandomProviderTest {
     // p-value of 0.01 taken from a 2-tailed Normal distribution. Computation of
     // the p-value requires the complimentary error function.
     final double absSum = Math.abs(sum);
-    final double max = Math.sqrt(numberOfBits) * 2.576;
+    final double max = Math.sqrt(numberOfBits) * 2.5758293035489004;
     Assertions.assertTrue(absSum <= max, () -> "Walked too far astray: " + absSum + " > " + max
         + " (test will fail randomly about 1 in 100 times)");
   }
