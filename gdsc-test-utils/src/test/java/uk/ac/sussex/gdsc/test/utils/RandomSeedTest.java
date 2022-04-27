@@ -89,7 +89,6 @@ class RandomSeedTest {
     Assertions.assertFalse(rs1.equalBytes(null));
   }
 
-
   @Test
   void testHashCode() {
     // Zero length seed

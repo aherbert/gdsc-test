@@ -215,7 +215,6 @@ class StringTemplateModelTest {
     assertMessageContains(message, "package name", "package name contains illegal characters");
   }
 
-
   @Test
   void testCreateThrowsWithInvalidScope() {
     final Properties properties = new Properties();

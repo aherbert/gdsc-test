@@ -163,7 +163,6 @@ final class NumberEquality {
     return delta <= Math.max(Math.abs(value1), Math.abs(value2)) * relativeError;
   }
 
-
   /**
    * Tests a short/byte value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.

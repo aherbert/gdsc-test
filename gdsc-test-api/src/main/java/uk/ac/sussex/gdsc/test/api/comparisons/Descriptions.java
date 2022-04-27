@@ -279,7 +279,6 @@ final class Descriptions {
     return getDescriptionAreClose(DESCRIPTION_REL_ERROR_LTE, relativeError, absoluteError);
   }
 
-
   //@formatter:off
   /**
    * Get the description of the test that a value is close to an expected value using a relative

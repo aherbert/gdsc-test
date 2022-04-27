@@ -69,7 +69,6 @@ public abstract class FormatSupplier implements Supplier<String> {
    */
   public abstract Object[] getArgs();
 
-
   /**
    * Get a supplier for the string using the format and arguments.
    *
