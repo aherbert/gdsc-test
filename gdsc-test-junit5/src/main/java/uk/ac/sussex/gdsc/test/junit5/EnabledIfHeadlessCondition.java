@@ -37,8 +37,10 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  */
 class EnabledIfHeadlessCondition implements ExecutionCondition {
 
+  /** Enabled result. */
   private static final ConditionEvaluationResult ENABLED =
       enabled("Enabled on headless environment");
+  /** Disabled result. */
   private static final ConditionEvaluationResult DISABLED =
       disabled("Disabled on non-headless environment");
 
