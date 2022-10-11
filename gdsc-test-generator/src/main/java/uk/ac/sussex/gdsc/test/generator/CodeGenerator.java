@@ -77,7 +77,7 @@ public class CodeGenerator {
 
   /** The logging level. */
   @Option(names = {"-l", "--logging"}, description = "INFO, FINE, FINER, ...")
-  private Level level = Level.INFO; // NOPMD - Cannot be final to allow update by PicoCLI
+  private Level level = Level.INFO; // NOPMD Cannot be final to allow update by PicoCLI
 
   /** The debug flag. */
   @Option(names = {"-d", "--debug"}, description = "Extra debug information.")
