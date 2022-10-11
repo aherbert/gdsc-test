@@ -72,13 +72,13 @@ public final class TestSettings {
   private static final byte[] NO_SEED = null;
 
   /** The allowed test complexity. */
-  private static final int testComplexity;
+  private static final int TEST_COMPLEXITY;
 
   /** The fixed seed for uniform random generator. */
   private static byte[] seed;
 
   /** The lock object used to synchronise when seed is updated. */
-  private static final Object seedLock = new Object();
+  private static final Object SEED_LOCK = new Object();
 
   /**
    * The number of repeats for tests using the seeded uniform random generator.
@@ -86,7 +86,7 @@ public final class TestSettings {
   private static int repeats;
 
   static {
-    testComplexity = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
+    TEST_COMPLEXITY = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
     seed = getProperty(PROPERTY_RANDOM_SEED, NO_SEED);
     // Ensure repeated tests run once. They should be disabled using other
     // mechanisms.
@@ -162,7 +162,7 @@ public final class TestSettings {
    * @return the test complexity
    */
   public static int getTestComplexity() {
-    return testComplexity;
+    return TEST_COMPLEXITY;
   }
 
   /**
@@ -176,7 +176,7 @@ public final class TestSettings {
    */
   static void setSeed(byte[] bytes) {
     final byte[] newSeed = (RandomSeeds.nullOrEmpty(bytes)) ? NO_SEED : bytes.clone();
-    synchronized (seedLock) {
+    synchronized (SEED_LOCK) {
       seed = newSeed;
     }
   }
@@ -229,6 +229,6 @@ public final class TestSettings {
    * @see #getTestComplexity()
    */
   public static boolean allow(TestComplexity complexity) {
-    return complexity.getValue() <= testComplexity;
+    return complexity.getValue() <= TEST_COMPLEXITY;
   }
 }
