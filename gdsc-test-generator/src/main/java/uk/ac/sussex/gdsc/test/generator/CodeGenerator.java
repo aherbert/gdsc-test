@@ -312,7 +312,7 @@ public class CodeGenerator {
    */
   private void processTemplate(String sourcePath, String header, File stFile)
       throws InvalidModelException, IOException {
-    logger.log(Level.INFO, stFile.getPath());
+    logger.log(Level.INFO, () -> stFile.getPath());
     // Check for .properties file
     final String propsPath = FilenameUtils.removeExtension(stFile.getPath()) + ".properties";
     final File propsFile = new File(propsPath);
@@ -350,7 +350,7 @@ public class CodeGenerator {
 
     for (final Pair<String, String> file : files) {
       final File targetFile = getTargetFile(pathForTarget, file.getKey());
-      logger.log(Level.INFO, targetFile.getPath());
+      logger.log(Level.INFO, () -> targetFile.getPath());
       FileUtils.write(targetFile, header + file.getValue(), StandardCharsets.UTF_8);
     }
   }
