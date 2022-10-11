@@ -91,7 +91,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <gdsc.bc.version>1.0</gdsc.bc.version>
     <checkstyle.version>8.35</checkstyle.version>
     <commons.codec.version>1.14</commons.codec.version>
-    <commons.rng.version>1.4</commons.rng.version>
+    <commons.rng.version>1.5</commons.rng.version>
     <japicmp.version>0.15.3</japicmp.version>
     <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
@@ -142,19 +142,16 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
-        <artifactId>commons-rng-client-api</artifactId>
+        <artifactId>commons-rng-bom</artifactId>
         <version>${commons.rng.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-rng-simple</artifactId>
-        <version>${commons.rng.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
         <version>${commons.codec.version}</version>
-      </dependency>
+       </dependency>
     </dependencies>
   </dependencyManagement>
 
