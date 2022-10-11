@@ -36,49 +36,6 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
   private static final long POW_32 = 1L << 32;
 
   @Override
-  public void nextBytes(byte[] bytes) {
-    nextBytes(bytes, 0, bytes.length);
-  }
-
-  @Override
-  public void nextBytes(byte[] bytes, int start, int len) {
-    // Note: No range checks: e.g. Objects.checkFromIndexSize
-
-    int index = start;
-
-    // Index of first insertion plus multiple of 8 part of length
-    // (i.e. length with 3 least significant bits unset).
-    final int indexLoopLimit = index + (len & 0x7ffffff8);
-
-    // Start filling in the byte array, 8 bytes at a time.
-    while (index < indexLoopLimit) {
-      final long random = nextLong();
-      bytes[index++] = (byte) random;
-      bytes[index++] = (byte) (random >>> 8);
-      bytes[index++] = (byte) (random >>> 16);
-      bytes[index++] = (byte) (random >>> 24);
-      bytes[index++] = (byte) (random >>> 32);
-      bytes[index++] = (byte) (random >>> 40);
-      bytes[index++] = (byte) (random >>> 48);
-      bytes[index++] = (byte) (random >>> 56);
-    }
-
-    final int indexLimit = start + len;
-
-    // Fill in the remaining bytes.
-    if (index < indexLimit) {
-      for (long random = nextLong(); index < indexLimit; random >>>= 8) {
-        bytes[index++] = (byte) random;
-      }
-    }
-  }
-
-  @Override
-  public int nextInt() {
-    return (int) (nextLong() >>> 32);
-  }
-
-  @Override
   public int nextInt(int limit) {
     if (limit <= 0) {
       throw new IllegalArgumentException("Not positive: " + limit);
@@ -126,11 +83,6 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
   @Override
   public float nextFloat() {
     return (nextLong() >>> 40) * 0x1.0p-24f;
-  }
-
-  @Override
-  public double nextDouble() {
-    return (nextLong() >>> 11) * 0x1.0p-53;
   }
 
   /**
