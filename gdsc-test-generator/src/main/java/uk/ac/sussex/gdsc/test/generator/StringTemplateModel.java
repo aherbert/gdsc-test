@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -477,7 +478,7 @@ public final class StringTemplateModel {
    * @return the class name scope substitution.
    */
   public List<Pair<String, List<String>>> getClassNameScope() {
-    return classNameScope;
+    return Collections.unmodifiableList(classNameScope);
   }
 
   /**
@@ -486,7 +487,7 @@ public final class StringTemplateModel {
    * @return the class scope substitutions.
    */
   public List<Pair<String, List<Object>>> getClassScope() {
-    return classScope;
+    return Collections.unmodifiableList(classScope);
   }
 
   /**
@@ -495,6 +496,6 @@ public final class StringTemplateModel {
    * @return the template scope substitutions.
    */
   public List<Pair<String, List<Object>>> getTemplateScope() {
-    return templateScope;
+    return Collections.unmodifiableList(templateScope);
   }
 }
