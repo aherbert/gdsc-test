@@ -53,6 +53,15 @@ public final class L64X128M extends LongUniformRandomProvider {
   /** LCG multiplier. Note: (M % 8) = 5. */
   private static final long M = 0xd1342543de82ef95L;
 
+  /** Per-instance LCG additive parameter (must be odd). */
+  private final long a;
+  /** State of the LCG generator. */
+  private long s;
+  /** State 0 of the XBG generator (x0 and x1 are never both zero). */
+  private long x0;
+  /** State 1 of the XBG generator (x0 and x1 are never both zero). */
+  private long x1;
+
   /**
    * Provide lazy loading of random seeds.
    */
@@ -71,15 +80,6 @@ public final class L64X128M extends LongUniformRandomProvider {
       return SEED.getAndAdd(INC);
     }
   }
-
-  /** Per-instance LCG additive parameter (must be odd). */
-  private final long a;
-  /** State of the LCG generator. */
-  private long s;
-  /** State 0 of the XBG generator (x0 and x1 are never both zero). */
-  private long x0;
-  /** State 1 of the XBG generator (x0 and x1 are never both zero). */
-  private long x1;
 
   /**
    * Create a new randomly seeded instance. Instances created using this constructor will start at a

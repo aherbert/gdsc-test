@@ -36,6 +36,12 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public final class XoRoShiRo128PlusPlus extends LongUniformRandomProvider {
 
+  /** State 0 of the generator. */
+  private long state0;
+
+  /** State 1 of the generator. */
+  private long state1;
+
   /**
    * Provide lazy loading of random seeds.
    */
@@ -54,12 +60,6 @@ public final class XoRoShiRo128PlusPlus extends LongUniformRandomProvider {
       return SEED.getAndAdd(INC);
     }
   }
-
-  /** State 0 of the generator. */
-  private long state0;
-
-  /** State 1 of the generator. */
-  private long state1;
 
   /**
    * Create a new randomly seeded instance. Instances created using this constructor will start at a
