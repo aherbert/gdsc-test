@@ -23,7 +23,7 @@
 /**
  * Provides functional interfaces for testing {@code true/false} conditional predicates.
  *
- * <p>The classes are an extension to the interfaces provided within {@link java.util.function}.
+ * <p>The classes are an extension to the interfaces provided within {@code java.util.function}.
  *
  * @since 1.0
  */
