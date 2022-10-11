@@ -122,8 +122,8 @@ public final class CallStack {
           return element;
         }
         remaining--;
-      } else if (element.getMethodName()
-          .equals("getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3")) {
+      } else if ("getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3"
+          .equals(element.getMethodName())) {
         thisMethod = true;
       }
     }
