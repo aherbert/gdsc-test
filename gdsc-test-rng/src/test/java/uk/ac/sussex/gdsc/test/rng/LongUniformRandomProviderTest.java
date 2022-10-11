@@ -94,7 +94,7 @@ class LongUniformRandomProviderTest {
   }
 
   @ParameterizedTest
-  @CsvSource({"42, 0, 10", "32, 5, 11", "32, 13, 19",})
+  @CsvSource({"42, 0, 10", "32, 5, 11", "32, 13, 19"})
   void testNextBytesInRange(int n, int start, int len) {
     final UniformRandomProvider[] rngs = createRngs();
     final UniformRandomProvider rng1 = rngs[0];

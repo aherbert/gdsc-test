@@ -57,7 +57,7 @@ class L64X128MTest extends BaseLongUniformRandomProviderTest {
             0x22f06a22940e1f0cL, 0x52bdf3245280f328L, 0x5516747d413c280bL, 0xddd0f850df96c98L,
             0xdfb9116eea895a14L, 0x25f60644acc87ce4L, 0xb94c8052b25b565bL, 0xbbb536f152b9a2aL,
             0x96a5ce9ee3b33b5L, 0x39aea581c5664cadL, 0x380c937f40d03b5fL, 0x45da7bcf336e4705L,
-            0x41cb2a1bc8a58a3fL, 0x1b7b23957c4bfe0bL, 0x1a46b40e434da627L, 0x475a6df8672ff740L,};
+            0x41cb2a1bc8a58a3fL, 0x1b7b23957c4bfe0bL, 0x1a46b40e434da627L, 0x475a6df8672ff740L};
     final long[] seed1 = {0xff77c956b975e221L, 0x1L, 0xbe4864af048f18adL, 0x94cbd6584dcee383L};
     final long[] expected1 =
         {0x58af99006463a1ddL, 0x5232385f7bb44cabL, 0xf7bcd93fca2f8a9eL, 0xa4d017f7ea78641aL,
@@ -69,7 +69,7 @@ class L64X128MTest extends BaseLongUniformRandomProviderTest {
             0xf686b56bf84e459cL, 0x95a8f1c00399620L, 0xfbdde4dc485f438cL, 0x1dc9c3982ec804e8L,
             0xc2c9a7a867a709ebL, 0x70ce59c971b69c09L, 0x7e741cbd1b70ad3fL, 0xcd62b31bd28c8002L,
             0xcce013271a31a5fL, 0x7f7bdc34e56c684bL, 0xc4c6bb013e5afb0aL, 0xe21fdb4e6f3c7bbbL,
-            0x61f47af483e5b81eL, 0x727ce5d845d51e90L, 0x263158b930f3c549L, 0x5368e2efdebbd3edL,};
+            0x61f47af483e5b81eL, 0x727ce5d845d51e90L, 0x263158b930f3c549L, 0x5368e2efdebbd3edL};
     final long[] seed2 = {0x4d470502e5836d10L, 0x1L, 0x4d242a741503e6d7L, 0xdbbca68fe75b4976L};
     final long[] expected2 =
         {0x8a72f5d6b27500c2L, 0x56af3f0f17cafd19L, 0xe5818e6e037ee4deL, 0x5c4ce05a73225bb8L,
@@ -81,7 +81,7 @@ class L64X128MTest extends BaseLongUniformRandomProviderTest {
             0x268dde1392fe7d1cL, 0xbe9b570115ffac61L, 0x2653e9e0a45af50L, 0x4ed197bad36e2f1eL,
             0xf2af50247f7031c1L, 0xfa4ca4ca2e1fad26L, 0x1f045d23a5658106L, 0x636481d62fd2cf1eL,
             0xa78354e2a703fe3eL, 0xd291c6985db6b497L, 0x306121671da01781L, 0x9d2d0319d7e9c13cL,
-            0xb2e18743866bb542L, 0xdfc9ca2c79e48196L, 0x9e15f55e5edf352eL, 0xcb01ec8e71e566f3L,};
+            0xb2e18743866bb542L, 0xdfc9ca2c79e48196L, 0x9e15f55e5edf352eL, 0xcb01ec8e71e566f3L};
     return Stream.of(Arguments.of(seed0, expected0), Arguments.of(seed1, expected1),
         Arguments.of(seed2, expected2));
   }
