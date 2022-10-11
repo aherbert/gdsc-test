@@ -200,8 +200,10 @@ public final class TestSettings {
       currentSeed = RandomSeeds.generateSeed(DEFAULT_SEED_SIZE);
       // Log the seed that is generated
       final Logger logger = Logger.getLogger(TestSettings.class.getName());
-      logger.log(Level.INFO,
-          String.format("-D%s=%s", PROPERTY_RANDOM_SEED, Hex.encodeAsString(currentSeed)));
+      if (logger.isLoggable(Level.INFO)) {
+        logger
+            .info(String.format("-D%s=%s", PROPERTY_RANDOM_SEED, Hex.encodeAsString(currentSeed)));
+      }
       setSeed(currentSeed);
     }
     // Do not expose the internal seed by using a copy
