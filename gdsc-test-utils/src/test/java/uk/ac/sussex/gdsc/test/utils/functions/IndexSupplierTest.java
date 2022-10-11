@@ -29,8 +29,8 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("javadoc")
 class IndexSupplierTest {
-  private final String messagePrefix = "prefix ";
-  private final String messageSuffix = " suffix";
+  private static final String PREFIX = "prefix ";
+  private static final String SUFFIX = " suffix";
 
   @Test
   void testConstructer() {
@@ -47,11 +47,11 @@ class IndexSupplierTest {
       Assertions.assertNotNull(is);
       Assertions.assertEquals(dim, is.getDimensions());
 
-      is = new IndexSupplier(dim, messagePrefix, messageSuffix);
+      is = new IndexSupplier(dim, PREFIX, SUFFIX);
       Assertions.assertNotNull(is);
       Assertions.assertEquals(dim, is.getDimensions());
-      Assertions.assertEquals(messagePrefix, is.getMessagePrefix());
-      Assertions.assertEquals(messageSuffix, is.getMessageSuffix());
+      Assertions.assertEquals(PREFIX, is.getMessagePrefix());
+      Assertions.assertEquals(SUFFIX, is.getMessageSuffix());
     }
   }
 
@@ -73,15 +73,15 @@ class IndexSupplierTest {
     Assertions.assertNull(is.getMessagePrefix());
     is.setMessagePrefix("");
     Assertions.assertEquals("", is.getMessagePrefix());
-    is.setMessagePrefix(messagePrefix);
-    Assertions.assertEquals(messagePrefix, is.getMessagePrefix());
+    is.setMessagePrefix(PREFIX);
+    Assertions.assertEquals(PREFIX, is.getMessagePrefix());
 
     is.setMessageSuffix(null);
     Assertions.assertNull(is.getMessageSuffix());
     is.setMessageSuffix("");
     Assertions.assertEquals("", is.getMessageSuffix());
-    is.setMessageSuffix(messageSuffix);
-    Assertions.assertEquals(messageSuffix, is.getMessageSuffix());
+    is.setMessageSuffix(SUFFIX);
+    Assertions.assertEquals(SUFFIX, is.getMessageSuffix());
   }
 
   @Test
@@ -106,12 +106,12 @@ class IndexSupplierTest {
     }
     is.setFormat("(", ")");
     // Try with empty message pre/suffix
-    is.setMessagePrefix(messagePrefix);
-    is.setMessageSuffix(messageSuffix);
+    is.setMessagePrefix(PREFIX);
+    is.setMessageSuffix(SUFFIX);
     for (int i = 0; i < 5; i++) {
       final int next = rng.nextInt(10);
       is.set(0, next);
-      Assertions.assertEquals(messagePrefix + "(" + next + ")" + messageSuffix, is.get());
+      Assertions.assertEquals(PREFIX + "(" + next + ")" + SUFFIX, is.get());
     }
 
     Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
