@@ -41,6 +41,10 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * <p>Memory footprint is 256 bits and the period is 2<sup>64</sup> 2<sup>128</sup>-1.
  *
+ * <p>Note: This class only supports the save/restore functionality of
+ * {@link org.apache.commons.rng.RestorableUniformRandomProvider RestorableUniformRandomProvider}
+ * when the saved state is used on the <em>same</em> instance of the generator.
+ *
  * @see <a href="https://prng.di.unimi.it/">xorshiro / xoroshiro generators</a>
  * @see <a href="https://doi.org/10.1145/3485525">Steele &amp; Vigna (2021) Proc. ACM Programming
  *      Languages 5, 1-31</a>
