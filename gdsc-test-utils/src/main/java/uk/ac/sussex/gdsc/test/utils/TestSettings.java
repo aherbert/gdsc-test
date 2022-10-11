@@ -105,7 +105,7 @@ public final class TestSettings {
     if (text != null) {
       try {
         return Integer.parseInt(text);
-      } catch (final NumberFormatException ex) {
+      } catch (final NumberFormatException ignored) {
         // Ignore and return the default
       }
     }
@@ -142,7 +142,7 @@ public final class TestSettings {
     if (text != null) {
       try {
         return Long.parseLong(text);
-      } catch (final NumberFormatException ex) {
+      } catch (final NumberFormatException ignored) {
         // Ignore and return the default
       }
     }
