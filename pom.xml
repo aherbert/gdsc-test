@@ -90,7 +90,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <!-- Versions -->
     <gdsc.bc.version>1.0</gdsc.bc.version>
     <checkstyle.version>10.3.4</checkstyle.version>
-    <commons.codec.version>1.14</commons.codec.version>
+    <commons.codec.version>1.15</commons.codec.version>
     <commons.rng.version>1.5</commons.rng.version>
     <revapi.version>0.14.7</revapi.version>
     <revapi.java.version>0.27.0</revapi.java.version>
