@@ -441,6 +441,22 @@ The GDSC Test package contains code for use with the JUnit test framework.
             <version>${revapi.java.version}</version>
           </dependency>
         </dependencies>
+        <configuration>
+          <analysisConfiguration>
+            <revapi.differences id="intentional-api-changes">
+              <ignore>true</ignore>
+            </revapi.differences>
+          </analysisConfiguration>
+          <analysisConfigurationFiles>
+            <configurationFile>
+              <path>${parent.dir}/src/conf/revapi/api-changes.json</path>
+              <roots>
+                <!-- Path to configuration in the JSON config file -->
+                <root>1.1</root>
+              </roots>
+            </configurationFile>
+          </analysisConfigurationFiles>
+        </configuration>
         <executions>
           <execution>
             <goals>
@@ -570,6 +586,16 @@ The GDSC Test package contains code for use with the JUnit test framework.
         <artifactId>revapi-maven-plugin</artifactId>
         <version>${revapi.version}</version>
         <configuration>
+          <!-- For reporting do not ignore the "intentional-api-changes" so they are included -->
+          <analysisConfigurationFiles>
+            <configurationFile>
+              <path>${parent.dir}/src/conf/revapi/api-changes.json</path>
+              <roots>
+                <!-- Path(s) to configuration in the JSON config file -->
+                <root>1.1</root>
+              </roots>
+            </configurationFile>
+          </analysisConfigurationFiles>
           <!-- Note: Property 'reportSeverity' is deprecated but newer 'reportCriticality'
                does work as documented. -->
           <reportSeverity>equivalent</reportSeverity>
