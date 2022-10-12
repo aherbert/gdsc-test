@@ -1,124 +1,107 @@
 {
-  "1.1": [
-    {
-      "extension": "revapi.differences",
-      "id": "intentional-api-changes",
-      "configuration": {
-        "differences": [
-          {
-            "code": "java.class.externalClassExposedInAPI",
-            "new": "interface org.junit.jupiter.api.extension.ExecutableInvoker",
-            "justification": "New method in ExtensionContext returns a new class ExecutableInvoker. This method is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
-          },
-          {
-            "code": "java.method.addedToInterface",
-            "new": "method <T> java.util.Optional<T> org.junit.jupiter.api.extension.ExtensionContext::getConfigurationParameter(java.lang.String, java.util.function.Function<java.lang.String, T>)",
-            "justification": "New method in ExtensionContext is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
-          },
-          {
-            "code": "java.method.addedToInterface",
-            "new": "method org.junit.jupiter.api.extension.ExecutableInvoker org.junit.jupiter.api.extension.ExtensionContext::getExecutableInvoker()",
-            "justification": "New method in ExtensionContext is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
-          },
-          {
-            "code": "java.method.addedToInterface",
-            "new": "method org.junit.jupiter.api.parallel.ExecutionMode org.junit.jupiter.api.extension.ExtensionContext::getExecutionMode()",
-            "justification": "New method in ExtensionContext is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
-          },
-          {
-            "code": "java.annotation.attributeValueChanged",
-            "old": "method org.junit.jupiter.api.extension.TestInstances org.junit.jupiter.api.extension.ExtensionContext::getRequiredTestInstances()",
-            "new": "method org.junit.jupiter.api.extension.TestInstances org.junit.jupiter.api.extension.ExtensionContext::getRequiredTestInstances()",
-            "annotationType": "org.apiguardian.api.API",
-            "attribute": "status",
-            "oldValue": "org.apiguardian.api.API.Status.EXPERIMENTAL",
-            "newValue": "org.apiguardian.api.API.Status.STABLE",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          },
-          {
-            "code": "java.annotation.attributeValueChanged",
-            "old": "method org.junit.jupiter.api.extension.TestInstances org.junit.jupiter.api.extension.ExtensionContext::getRequiredTestInstances()",
-            "new": "method org.junit.jupiter.api.extension.TestInstances org.junit.jupiter.api.extension.ExtensionContext::getRequiredTestInstances()",
-            "annotationType": "org.apiguardian.api.API",
-            "attribute": "since",
-            "oldValue": "\"5.4\"",
-            "newValue": "\"5.7\"",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          },
-          {
-            "code": "java.annotation.attributeValueChanged",
-            "old": "method java.util.Optional<org.junit.jupiter.api.extension.TestInstances> org.junit.jupiter.api.extension.ExtensionContext::getTestInstances()",
-            "new": "method java.util.Optional<org.junit.jupiter.api.extension.TestInstances> org.junit.jupiter.api.extension.ExtensionContext::getTestInstances()",
-            "annotationType": "org.apiguardian.api.API",
-            "attribute": "status",
-            "oldValue": "org.apiguardian.api.API.Status.EXPERIMENTAL",
-            "newValue": "org.apiguardian.api.API.Status.STABLE",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          },
-          {
-            "code": "java.annotation.attributeValueChanged",
-            "old": "method java.util.Optional<org.junit.jupiter.api.extension.TestInstances> org.junit.jupiter.api.extension.ExtensionContext::getTestInstances()",
-            "new": "method java.util.Optional<org.junit.jupiter.api.extension.TestInstances> org.junit.jupiter.api.extension.ExtensionContext::getTestInstances()",
-            "annotationType": "org.apiguardian.api.API",
-            "attribute": "since",
-            "oldValue": "\"5.4\"",
-            "newValue": "\"5.7\"",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          },
-          {
-            "code": "java.annotation.attributeValueChanged",
-            "old": "interface org.junit.jupiter.api.extension.TestInstances",
-            "new": "interface org.junit.jupiter.api.extension.TestInstances",
-            "annotationType": "org.apiguardian.api.API",
-            "attribute": "status",
-            "oldValue": "org.apiguardian.api.API.Status.EXPERIMENTAL",
-            "newValue": "org.apiguardian.api.API.Status.STABLE",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          },
-          {
-            "code": "java.annotation.attributeValueChanged",
-            "old": "interface org.junit.jupiter.api.extension.TestInstances",
-            "new": "interface org.junit.jupiter.api.extension.TestInstances",
-            "annotationType": "org.apiguardian.api.API",
-            "attribute": "since",
-            "oldValue": "\"5.4\"",
-            "newValue": "\"5.7\"",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          },
-          {
-            "code": "java.class.externalClassExposedInAPI",
-            "new": "enum org.junit.jupiter.api.parallel.ExecutionMode",
-            "justification": "New method in ExtensionContext returns a new class ExecutionMode. This method is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
-          },
-          {
-            "code": "java.annotation.removed",
-            "old": "method org.junit.jupiter.params.provider.Arguments org.junit.jupiter.params.provider.Arguments::arguments(java.lang.Object[])",
-            "new": "method org.junit.jupiter.params.provider.Arguments org.junit.jupiter.params.provider.Arguments::arguments(java.lang.Object[])",
-            "annotation": "@org.apiguardian.api.API(status = org.apiguardian.api.API.Status.EXPERIMENTAL, since = \"5.3\")",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          },
-          {
-            "code": "java.annotation.attributeValueChanged",
-            "old": "interface org.junit.jupiter.params.provider.Arguments",
-            "new": "interface org.junit.jupiter.params.provider.Arguments",
-            "annotationType": "org.apiguardian.api.API",
-            "attribute": "status",
-            "oldValue": "org.apiguardian.api.API.Status.EXPERIMENTAL",
-            "newValue": "org.apiguardian.api.API.Status.STABLE",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          },
-          {
-            "code": "java.annotation.attributeValueChanged",
-            "old": "interface org.junit.jupiter.params.provider.Arguments",
-            "new": "interface org.junit.jupiter.params.provider.Arguments",
-            "annotationType": "org.apiguardian.api.API",
-            "attribute": "since",
-            "oldValue": "\"5.0\"",
-            "newValue": "\"5.7\"",
-            "justification": "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-          }
-        ]
-      }
+  "1.1" : [ {
+    "extension" : "revapi.differences",
+    "id" : "intentional-api-changes",
+    "configuration" : {
+      "differences" : [ {
+        "code" : "java.class.externalClassExposedInAPI",
+        "new" : "interface org.junit.jupiter.api.extension.ExecutableInvoker",
+        "justification" : "New method in ExtensionContext returns a new class ExecutableInvoker. This method is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
+      }, {
+        "code" : "java.method.addedToInterface",
+        "new" : "method <T> java.util.Optional<T> org.junit.jupiter.api.extension.ExtensionContext::getConfigurationParameter(java.lang.String, java.util.function.Function<java.lang.String, T>)",
+        "justification" : "New method in ExtensionContext is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
+      }, {
+        "code" : "java.method.addedToInterface",
+        "new" : "method org.junit.jupiter.api.extension.ExecutableInvoker org.junit.jupiter.api.extension.ExtensionContext::getExecutableInvoker()",
+        "justification" : "New method in ExtensionContext is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
+      }, {
+        "code" : "java.method.addedToInterface",
+        "new" : "method org.junit.jupiter.api.parallel.ExecutionMode org.junit.jupiter.api.extension.ExtensionContext::getExecutionMode()",
+        "justification" : "New method in ExtensionContext is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
+      }, {
+        "code" : "java.annotation.attributeValueChanged",
+        "old" : "method org.junit.jupiter.api.extension.TestInstances org.junit.jupiter.api.extension.ExtensionContext::getRequiredTestInstances()",
+        "new" : "method org.junit.jupiter.api.extension.TestInstances org.junit.jupiter.api.extension.ExtensionContext::getRequiredTestInstances()",
+        "annotationType" : "org.apiguardian.api.API",
+        "attribute" : "status",
+        "oldValue" : "org.apiguardian.api.API.Status.EXPERIMENTAL",
+        "newValue" : "org.apiguardian.api.API.Status.STABLE",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "code" : "java.annotation.attributeValueChanged",
+        "old" : "method org.junit.jupiter.api.extension.TestInstances org.junit.jupiter.api.extension.ExtensionContext::getRequiredTestInstances()",
+        "new" : "method org.junit.jupiter.api.extension.TestInstances org.junit.jupiter.api.extension.ExtensionContext::getRequiredTestInstances()",
+        "annotationType" : "org.apiguardian.api.API",
+        "attribute" : "since",
+        "oldValue" : "\"5.4\"",
+        "newValue" : "\"5.7\"",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "code" : "java.annotation.attributeValueChanged",
+        "old" : "method java.util.Optional<org.junit.jupiter.api.extension.TestInstances> org.junit.jupiter.api.extension.ExtensionContext::getTestInstances()",
+        "new" : "method java.util.Optional<org.junit.jupiter.api.extension.TestInstances> org.junit.jupiter.api.extension.ExtensionContext::getTestInstances()",
+        "annotationType" : "org.apiguardian.api.API",
+        "attribute" : "status",
+        "oldValue" : "org.apiguardian.api.API.Status.EXPERIMENTAL",
+        "newValue" : "org.apiguardian.api.API.Status.STABLE",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "code" : "java.annotation.attributeValueChanged",
+        "old" : "method java.util.Optional<org.junit.jupiter.api.extension.TestInstances> org.junit.jupiter.api.extension.ExtensionContext::getTestInstances()",
+        "new" : "method java.util.Optional<org.junit.jupiter.api.extension.TestInstances> org.junit.jupiter.api.extension.ExtensionContext::getTestInstances()",
+        "annotationType" : "org.apiguardian.api.API",
+        "attribute" : "since",
+        "oldValue" : "\"5.4\"",
+        "newValue" : "\"5.7\"",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "code" : "java.annotation.attributeValueChanged",
+        "old" : "interface org.junit.jupiter.api.extension.TestInstances",
+        "new" : "interface org.junit.jupiter.api.extension.TestInstances",
+        "annotationType" : "org.apiguardian.api.API",
+        "attribute" : "status",
+        "oldValue" : "org.apiguardian.api.API.Status.EXPERIMENTAL",
+        "newValue" : "org.apiguardian.api.API.Status.STABLE",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "code" : "java.annotation.attributeValueChanged",
+        "old" : "interface org.junit.jupiter.api.extension.TestInstances",
+        "new" : "interface org.junit.jupiter.api.extension.TestInstances",
+        "annotationType" : "org.apiguardian.api.API",
+        "attribute" : "since",
+        "oldValue" : "\"5.4\"",
+        "newValue" : "\"5.7\"",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "code" : "java.class.externalClassExposedInAPI",
+        "new" : "enum org.junit.jupiter.api.parallel.ExecutionMode",
+        "justification" : "New method in ExtensionContext returns a new class ExecutionMode. This method is not used by method java.util.stream.Stream<? extends org.junit.jupiter.params.provider.Arguments> uk.ac.sussex.gdsc.test.junit5.RandomSeedSource::provideArguments(org.junit.jupiter.api.extension.ExtensionContext)."
+      }, {
+        "code" : "java.annotation.removed",
+        "old" : "method org.junit.jupiter.params.provider.Arguments org.junit.jupiter.params.provider.Arguments::arguments(java.lang.Object[])",
+        "new" : "method org.junit.jupiter.params.provider.Arguments org.junit.jupiter.params.provider.Arguments::arguments(java.lang.Object[])",
+        "annotation" : "@org.apiguardian.api.API(status = org.apiguardian.api.API.Status.EXPERIMENTAL, since = \"5.3\")",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "code" : "java.annotation.attributeValueChanged",
+        "old" : "interface org.junit.jupiter.params.provider.Arguments",
+        "new" : "interface org.junit.jupiter.params.provider.Arguments",
+        "annotationType" : "org.apiguardian.api.API",
+        "attribute" : "status",
+        "oldValue" : "org.apiguardian.api.API.Status.EXPERIMENTAL",
+        "newValue" : "org.apiguardian.api.API.Status.STABLE",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "code" : "java.annotation.attributeValueChanged",
+        "old" : "interface org.junit.jupiter.params.provider.Arguments",
+        "new" : "interface org.junit.jupiter.params.provider.Arguments",
+        "annotationType" : "org.apiguardian.api.API",
+        "attribute" : "since",
+        "oldValue" : "\"5.0\"",
+        "newValue" : "\"5.7\"",
+        "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      } ]
     }
-  ]
+  } ]
 }
