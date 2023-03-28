@@ -30,6 +30,8 @@ jobs:
       env:
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+    - name: Build coverage
+      run: mvn -B --no-transfer-progress -P jacoco,gdsc-test-doc jacoco:report-aggregate -pl gdsc-test-doc
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
