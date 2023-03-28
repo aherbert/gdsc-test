@@ -280,7 +280,7 @@ public class TestAssertionsTest {
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
     // Test with a custom predicate which does not implement Supplier\<String> (i.e. no description)
-    <Type><Type>BiPredicate customPredicate = (v1,v2) -> false;
+    <Type><Type>BiPredicate customPredicate = (v1, v2) -> false;
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertTest(value1, value2, customPredicate);
     \}, "Does not throw with custom predicate").getMessage();
@@ -451,7 +451,7 @@ public class TestAssertionsTest {
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
     // Test with a custom predicate which does not implement Supplier\<String> (i.e. no description)
-    <Type><Type>BiPredicate customPredicate = (v1,v2) -> false;
+    <Type><Type>BiPredicate customPredicate = (v1, v2) -> false;
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(value1, value2, customPredicate);
     \}, "Does not throw with custom predicate").getMessage();
