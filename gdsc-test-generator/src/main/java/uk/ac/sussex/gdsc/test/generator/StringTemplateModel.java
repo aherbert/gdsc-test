@@ -405,9 +405,9 @@ public final class StringTemplateModel {
     try (CSVParser parser = CSV_FORMAT.parse(new StringReader(value.trim()))) {
       // Note: There should always be a record as value is not null
       final List<CSVRecord> records = parser.getRecords();
-      final CSVRecord record = records.get(0);
-      final List<String> values = new ArrayList<>(record.size());
-      for (final String field : record) {
+      final CSVRecord csvRecord = records.get(0);
+      final List<String> values = new ArrayList<>(csvRecord.size());
+      for (final String field : csvRecord) {
         values.add(field);
       }
       return values;
