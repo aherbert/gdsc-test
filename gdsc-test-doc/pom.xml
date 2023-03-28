@@ -19,8 +19,11 @@
   <properties>
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}/..</parent.dir>
+    <!-- There is nothing to do -->
+    <maven.source.skip>true</maven.source.skip>
+    <maven.install.skip>true</maven.install.skip>
     <maven.deploy.skip>true</maven.deploy.skip>
-    <japicmp.skip>true</japicmp.skip>
+    <revapi.skip>true</revapi.skip>
   </properties>
 
   <!-- Depend on all other modules -->
@@ -81,7 +84,6 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <executions>
           <execution>
@@ -126,13 +128,19 @@
 
       <!-- There is nothing to do -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
+        <artifactId>maven-jar-plugin</artifactId>
         <configuration>
-          <skipSource>true</skipSource>
+          <skipIfEmpty>true</skipIfEmpty>
         </configuration>
       </plugin>
-
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <configuration>
+          <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+          <skipStaging>true</skipStaging>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
