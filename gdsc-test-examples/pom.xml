@@ -80,10 +80,20 @@ Contains examples of the GDSC Test libraries.
       </plugins>
     </pluginManagement>
 
-    <!-- Note: This does not disable the nexus-staging-maven-plugin.
-      The last module in the reactor must have the plugin enabled for a bulk deploy.
-      To avoid deploying the examples jar would require a dummy module at the end
-      of the reactor. -->
+    <plugins>
+      <!-- There is nothing to do -->
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <skipIfEmpty>true</skipIfEmpty>
+        </configuration>
+      </plugin>
+
+      <!-- Note: This does not disable the nexus-staging-maven-plugin.
+        The last module in the reactor must have the plugin enabled for a bulk deploy.
+        To avoid deploying the examples jar would require a dummy module at the end
+        of the reactor. -->
+    </plugins>
   </build>
 
 </project>
