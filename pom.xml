@@ -716,91 +716,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
       </modules>
     </profile>
     <profile>
-      <id>coveralls</id>
-      <activation>
-        <property>
-          <name>env.TRAVIS</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <!-- Submit coverage -->
-          <plugin>
-            <groupId>org.eluder.coveralls</groupId>
-            <artifactId>coveralls-maven-plugin</artifactId>
-            <version>4.3.0</version>
-          </plugin>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>${org.jacoco.version}</version>
-            <executions>
-              <execution>
-                <id>default-prepare-agent</id>
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>default-report</id>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>default-check</id>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <!-- Currently the same as the jacoco profile but halts on failure -->
-                <configuration>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${org.jacoco.class.covered}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${org.jacoco.instruction.covered}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${org.jacoco.method.covered}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${org.jacoco.branch.covered}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${org.jacoco.line.covered}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${org.jacoco.complexity.covered}</minimum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                  <haltOnFailure>true</haltOnFailure>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
       <id>jacoco</id>
       <build>
         <plugins>
@@ -864,7 +779,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
                       </limits>
                     </rule>
                   </rules>
-                  <haltOnFailure>false</haltOnFailure>
+                  <haltOnFailure>true</haltOnFailure>
                 </configuration>
               </execution>
             </executions>
