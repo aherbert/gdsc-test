@@ -1,17 +1,21 @@
 GDSC Test Documentation
 =======================
 
-.. image:: https://travis-ci.com/aherbert/gdsc-test.svg?branch=master
-    :target: https://travis-ci.com/aherbert/gdsc-test
+.. image:: https://github.com/aherbert/gdsc-test/actions/workflows/build.yml/badge.svg
+    :target: https://github.com/aherbert/gdsc-test/actions/workflows/build.yml
     :alt: Build Status
 
-.. image:: https://coveralls.io/repos/github/aherbert/gdsc-test/badge.svg?branch=master
-    :target: https://coveralls.io/github/aherbert/gdsc-test?branch=master
+.. image:: https://codecov.io/gh/aherbert/gdsc-test/branch/master/graph/badge.svg
+    :target: https://app.codecov.io/gh/aherbert/gdsc-test
     :alt: Coverage Status
 
 .. image:: https://readthedocs.org/projects/gdsc-test/badge/?version=latest
     :target: https://gdsc-test.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
+
+.. image:: https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/badge.svg
+    :target: https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/
+    :alt: Maven Central
 
 .. image:: https://img.shields.io/badge/License-Apache%20v2-blue.svg
     :target: https://www.apache.org/licenses/LICENSE-2.0
