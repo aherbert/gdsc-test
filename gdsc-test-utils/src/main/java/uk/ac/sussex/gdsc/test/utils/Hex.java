@@ -158,6 +158,6 @@ public final class Hex {
    * @return the hex number
    */
   private static byte mapToHexNumber(int ch) {
-    return (ch > DECODE_TABLE.length) ? UNMAPPED : DECODE_TABLE[ch];
+    return ch < DECODE_TABLE.length ? DECODE_TABLE[ch] : UNMAPPED;
   }
 }

@@ -8,6 +8,16 @@ Version 1.1
 
 Minor release of GDSC Test.
 
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Change
+     - Description
+
+   * - Fix
+     - Correct decode of hex char sequence containing a lower-case 'g' character.
+
 Version 1.0.2
 -------------
 

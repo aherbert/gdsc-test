@@ -44,8 +44,12 @@ class HexTest {
     Assertions.assertArrayEquals(empty, Hex.decode(null), "Null input");
     Assertions.assertArrayEquals(empty, Hex.decode(""), "Empty input");
     Assertions.assertArrayEquals(empty, Hex.decode("j"), "Bad single character");
-    Assertions.assertArrayEquals(empty, Hex.decode("abcsfp678"),
-        "Bad single character in larger string");
+    Assertions.assertArrayEquals(empty, Hex.decode("/0123456789ABCDEFabcdef"), "Bad char");
+    Assertions.assertArrayEquals(empty, Hex.decode("0123456789:ABCDEFabcdef"), "Bar char");
+    Assertions.assertArrayEquals(empty, Hex.decode("0123456789@ABCDEFabcdef"), "Bar char");
+    Assertions.assertArrayEquals(empty, Hex.decode("0123456789ABCDEFGabcdef"), "Bar char");
+    Assertions.assertArrayEquals(empty, Hex.decode("0123456789ABCDEF`abcdef"), "Bar char");
+    Assertions.assertArrayEquals(empty, Hex.decode("0123456789ABCDEFabcdefg"), "Bar char");
   }
 
   @Test
