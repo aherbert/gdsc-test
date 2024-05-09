@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 public class <Number>IsCloseToTest {
 
   /**
-   * Test {@link <Number>IsCloseTo#test(<number>, <number>)}.
+   * Test {@link <Number>IsCloseTo#test(<number>)}.
    */
   @Test
   public void testTest() {
