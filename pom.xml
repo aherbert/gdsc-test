@@ -92,6 +92,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <checkstyle.version>9.3</checkstyle.version>
     <commons.codec.version>1.15</commons.codec.version>
     <commons.rng.version>1.6</commons.rng.version>
+    <commons.statistics.version>1.1</commons.statistics.version>
     <revapi.version>0.14.7</revapi.version>
     <revapi.java.version>0.27.0</revapi.java.version>
     <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
@@ -145,6 +146,13 @@ The GDSC Test package contains code for use with the JUnit test framework.
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-rng-bom</artifactId>
         <version>${commons.rng.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-statistics-bom</artifactId>
+        <version>${commons.statistics.version}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
