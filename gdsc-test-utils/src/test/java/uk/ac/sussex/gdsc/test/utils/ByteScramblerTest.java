@@ -24,9 +24,10 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import java.util.Arrays;
 import java.util.stream.DoubleStream;
-import org.apache.commons.math3.stat.inference.ChiSquareTest;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.simple.RandomSource;
+import org.apache.commons.statistics.inference.ChiSquareTest;
+import org.apache.commons.statistics.inference.SignificanceResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -71,9 +72,8 @@ class ByteScramblerTest {
       }
     }
     // Do a chi-square test
-    final ChiSquareTest chiSq = new ChiSquareTest();
     final double[] expected = DoubleStream.generate(() -> 1.0 / 256).limit(256).toArray();
-    final double pValue = chiSq.chiSquareTest(expected, histogram);
-    Assertions.assertFalse(pValue < 0.01);
+    final SignificanceResult r = ChiSquareTest.withDefaults().test(expected, histogram);
+    Assertions.assertFalse(r.reject(0.01), () -> "p-value = " + r.getPValue());
   }
 }

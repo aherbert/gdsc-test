@@ -25,8 +25,9 @@ package uk.ac.sussex.gdsc.test.rng;
 import java.util.Arrays;
 import java.util.SplittableRandom;
 import java.util.concurrent.ThreadLocalRandom;
-import org.apache.commons.math3.stat.inference.ChiSquareTest;
 import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.statistics.inference.ChiSquareTest;
+import org.apache.commons.statistics.inference.SignificanceResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -184,8 +185,7 @@ class RngFactoryTest {
     }
     final double[] expected = new double[16];
     Arrays.fill(expected, 1.0 / 16);
-    final ChiSquareTest test = new ChiSquareTest();
-    final double pvalue = test.chiSquareTest(expected, observed);
-    Assertions.assertFalse(pvalue < 0.01, "P-value = " + pvalue);
+    final SignificanceResult r = ChiSquareTest.withDefaults().test(expected, observed);
+    Assertions.assertFalse(r.reject(0.01), () -> "p-value = " + r.getPValue());
   }
 }

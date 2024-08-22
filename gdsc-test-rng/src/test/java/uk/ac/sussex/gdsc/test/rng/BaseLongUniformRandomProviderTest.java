@@ -24,10 +24,11 @@ package uk.ac.sussex.gdsc.test.rng;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
-import org.apache.commons.math3.stat.inference.ChiSquareTest;
 import org.apache.commons.rng.RandomProviderState;
 import org.apache.commons.rng.RestorableUniformRandomProvider;
 import org.apache.commons.rng.UniformRandomProvider;
+import org.apache.commons.statistics.inference.ChiSquareTest;
+import org.apache.commons.statistics.inference.SignificanceResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.TestInstance;
@@ -230,9 +231,8 @@ abstract class BaseLongUniformRandomProviderTest {
     }
     final double[] expected = new double[bins];
     Arrays.fill(expected, (double) samples / bins);
-    final ChiSquareTest test = new ChiSquareTest();
-    final double pvalue = test.chiSquareTest(expected, observed);
-    Assertions.assertFalse(pvalue < 0.01, "P-value = " + pvalue);
+    final SignificanceResult r = ChiSquareTest.withDefaults().test(expected, observed);
+    Assertions.assertFalse(r.reject(0.01), () -> "p-value = " + r.getPValue());
   }
 
   @ParameterizedTest
@@ -248,9 +248,8 @@ abstract class BaseLongUniformRandomProviderTest {
     }
     final double[] expected = new double[bins];
     Arrays.fill(expected, (double) samples / bins);
-    final ChiSquareTest test = new ChiSquareTest();
-    final double pvalue = test.chiSquareTest(expected, observed);
-    Assertions.assertFalse(pvalue < 0.01, "P-value = " + pvalue);
+    final SignificanceResult r = ChiSquareTest.withDefaults().test(expected, observed);
+    Assertions.assertFalse(r.reject(0.01), () -> "p-value = " + r.getPValue());
   }
 
   @ParameterizedTest

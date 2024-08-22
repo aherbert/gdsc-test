@@ -41,8 +41,7 @@ Contains utilities for use with test frameworks.
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
-      <artifactId>commons-math3</artifactId>
-      <version>3.6.1</version>
+      <artifactId>commons-statistics-inference</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
