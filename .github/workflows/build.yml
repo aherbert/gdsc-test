@@ -44,6 +44,6 @@ jobs:
     - name: Build coverage
       run: mvn -B --no-transfer-progress -P jacoco,gdsc-test-doc jacoco:report-aggregate
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       with:
         files: ./gdsc-test-doc/target/site/jacoco-aggregate/jacoco.xml
