@@ -22,11 +22,24 @@ jobs:
         distribution: temurin
         java-version: ${{ matrix.java }}
         cache: 'maven'
+        # these values cause the plugin to set up the Maven settings.xml file
+        server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
+        server-username: SONATYPE_USERNAME # env variable for username in deploy
+        server-password: SONATYPE_PASSWORD # env variable for token in deploy
     - name: Build
-      run: .github/build.sh
       env:
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      run: mvn -V -B --no-transfer-progress -P jacoco spotbugs:check verify
+    - name: Deploy SNAPSHOT
+      # must run directly after 'Build'
+      if: matrix.java == 8 && github.repository == 'aherbert/gdsc-test' && github.ref_name == 'master' && contains(['SNAPSHOT'], env.BUILD_VERSION)
+      env:
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      run: >
+        mvn -V -B --no-transfer-progress -Psnapshot-release deploy -Dgpg.skip 
+        -DskipTests -Drat.skip -Djacoco.skip -Dcyclonedx.skip -Dspotbugs.skip -Dspdx.skip -Dpmd.skip
     - name: Build coverage
       run: mvn -B --no-transfer-progress -P jacoco,gdsc-test-doc jacoco:report-aggregate
     - name: Upload coverage to Codecov
