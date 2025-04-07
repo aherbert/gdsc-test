@@ -26,6 +26,8 @@ jobs:
         server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
         server-username: SONATYPE_USERNAME # env variable for username in deploy
         server-password: SONATYPE_PASSWORD # env variable for token in deploy
+    - name: Get version
+      run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
     - name: Build
       env:
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
@@ -33,7 +35,7 @@ jobs:
       run: mvn -V -B --no-transfer-progress -P jacoco spotbugs:check verify
     - name: Deploy SNAPSHOT
       # must run directly after 'Build'
-      if: matrix.java == 8 && github.repository == 'aherbert/gdsc-test' && github.ref_name == 'master' && contains(['SNAPSHOT'], env.BUILD_VERSION)
+      if: matrix.java == 8 && github.repository == 'aherbert/gdsc-test' && github.ref_name == 'master' && contains(env.PROJECT_VERSION, 'SNAPSHOT')
       env:
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
