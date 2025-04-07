@@ -7,7 +7,7 @@ GDSC Test provides utility functionality for writing Java tests.
 [![Build Status](https://github.com/aherbert/gdsc-test/actions/workflows/build.yml/badge.svg)](https://github.com/aherbert/gdsc-test/actions/workflows/build.yml)
 [![Coverage Status](https://codecov.io/gh/aherbert/gdsc-test/branch/master/graph/badge.svg)](https://app.codecov.io/gh/aherbert/gdsc-test)
 [![Documentation Status](https://readthedocs.org/projects/gdsc-test/badge/?version=latest)](https://gdsc-test.readthedocs.io/en/latest/?badge=latest)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/)
+[![Maven Central](https://img.shields.io/maven-central/v/uk.ac.sussex.gdsc/gdsc-test-api)](https://search.maven.org/artifact/uk.ac.sussex.gdsc/gdsc-test-api/)
 [![Javadocs](https://javadoc.io/badge2/uk.ac.sussex.gdsc/gdsc-test-api/javadoc.svg)](https://javadoc.io/doc/uk.ac.sussex.gdsc/gdsc-test-api)
 
 Functionality includes:
@@ -89,7 +89,7 @@ Installation
 This package is a library to be used used by other Java programs.
 The latest version is on Maven central:
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/)
+[![Maven Central](https://img.shields.io/maven-central/v/uk.ac.sussex.gdsc/gdsc-test-api)](https://search.maven.org/artifact/uk.ac.sussex.gdsc/gdsc-test-api/)
 
 The package can be installed locally from the source using Maven.
 

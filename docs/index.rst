@@ -13,8 +13,8 @@ GDSC Test Documentation
     :target: https://gdsc-test.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/badge.svg
-    :target: https://maven-badges.herokuapp.com/maven-central/uk.ac.sussex.gdsc/gdsc-test-api/
+.. image:: https://img.shields.io/maven-central/v/uk.ac.sussex.gdsc/gdsc-test-api
+    :target: https://search.maven.org/artifact/uk.ac.sussex.gdsc/gdsc-test-api/
     :alt: Maven Central
 
 .. image:: https://img.shields.io/badge/License-Apache%20v2-blue.svg
