@@ -375,7 +375,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
         <configuration>
           <configLocation>${parent.dir}/src/conf/checkstyle/checkstyle.xml</configLocation>
           <suppressionsLocation>${parent.dir}/src/conf/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
-          <encoding>UTF-8</encoding>
           <consoleOutput>true</consoleOutput>
           <failsOnError>true</failsOnError>
           <linkXRef>true</linkXRef>
@@ -511,7 +510,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
         <configuration>
           <configLocation>${parent.dir}/src/conf/checkstyle/checkstyle.xml</configLocation>
           <suppressionsLocation>${parent.dir}/src/conf/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
-          <encoding>UTF-8</encoding>
           <linkXRef>true</linkXRef>
           <enableRulesSummary>false</enableRulesSummary>
           <includeResources>false</includeResources>
