@@ -27,7 +27,7 @@ author = u'Alex Herbert'
 version = u''
 # The full version, including alpha/beta/rc tags
 # This does not appear in the HTML version. It is in the PDF.
-release = u'1.1'
+release = u'1.1.1'
 
 
 # -- General configuration ---------------------------------------------------

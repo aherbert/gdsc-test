@@ -7,7 +7,7 @@
   <parent>
     <groupId>uk.ac.sussex.gdsc</groupId>
     <artifactId>gdsc-test-parent</artifactId>
-    <version>1.1</version>
+    <version>1.1.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>gdsc-test-junit5</artifactId>
@@ -29,7 +29,7 @@ Contains utilities for use with JUnit 5.
     <dependency>
       <groupId>uk.ac.sussex.gdsc</groupId>
       <artifactId>gdsc-test-utils</artifactId>
-      <version>1.1</version>
+      <version>1.1.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
