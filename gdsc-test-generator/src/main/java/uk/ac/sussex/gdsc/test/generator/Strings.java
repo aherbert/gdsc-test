@@ -4,7 +4,7 @@
  *
  * Generates Java classes for the GDSC Test project.
  * %%
- * Copyright (C) 2018 - 2022 Alex Herbert
+ * Copyright (C) 2018 - 2025 Alex Herbert
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
