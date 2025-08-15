@@ -650,7 +650,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
             </executions>
           </plugin>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
+            <groupId>org.sonatype.central</groupId>
             <artifactId>central-publishing-maven-plugin</artifactId>
             <extensions>true</extensions>
             <configuration>
@@ -686,7 +686,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
             </executions>
           </plugin>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
+            <groupId>org.sonatype.central</groupId>
             <artifactId>central-publishing-maven-plugin</artifactId>
             <extensions>true</extensions>
             <configuration>
