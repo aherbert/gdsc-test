@@ -42,14 +42,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <url>https://travis-ci.com/aherbert/gdsc-test</url>
   </ciManagement>
   <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
     <site>
       <id>${project.artifactId}-site</id>
       <url>file://${parent.dir}/mvn-repo</url>
@@ -96,7 +88,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <revapi.version>0.14.7</revapi.version>
     <revapi.java.version>0.27.0</revapi.java.version>
     <license-maven-plugin.version>2.5.0</license-maven-plugin.version>
-    <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
+    <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
     <org.jacoco.version>0.8.7</org.jacoco.version>
     <org.junit.bom.version>5.9.1</org.junit.bom.version>
     <pmd.version>7.13.0</pmd.version>
@@ -163,6 +155,20 @@ The GDSC Test package contains code for use with the JUnit test framework.
        </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <repositories>
+    <repository>
+      <name>Central Portal Snapshots</name>
+      <id>central-portal-snapshots</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
   <build>
     <defaultGoal>clean install</defaultGoal>
@@ -272,9 +278,9 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <version>${maven-deploy-plugin.version}</version>
         </plugin>
         <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>${nexus-staging-maven-plugin.version}</version>
+          <groupId>org.sonatype.central</groupId>
+          <artifactId>central-publishing-maven-plugin</artifactId>
+          <version>${central-publishing-maven-plugin.version}</version>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
@@ -645,14 +651,13 @@ The GDSC Test package contains code for use with the JUnit test framework.
           </plugin>
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
             <extensions>true</extensions>
             <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-              <!-- Not required for snapshot -->
-              <skipStaging>true</skipStaging>
+              <publishingServerId>central</publishingServerId>
+              <!-- It is not clear if this applies to snapshots that do not
+                use trigger the validation stage after upload. -->
+              <autoPublish>true</autoPublish>
             </configuration>
           </plugin>
         </plugins>
@@ -682,13 +687,11 @@ The GDSC Test package contains code for use with the JUnit test framework.
           </plugin>
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
             <extensions>true</extensions>
             <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <!-- The staged repo must be inspected and then released -->
-              <autoReleaseAfterClose>false</autoReleaseAfterClose>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>false</autoPublish>
             </configuration>
           </plugin>
         </plugins>
