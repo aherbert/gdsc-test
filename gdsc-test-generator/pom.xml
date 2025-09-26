@@ -26,7 +26,7 @@ Generates Java classes for the GDSC Test project.
     <stringtemplate.version>4.0.2</stringtemplate.version>
     <picocli.version>4.7.7</picocli.version>
     <commons.io.version>2.14.0</commons.io.version>
-    <commons.csv.version>1.8</commons.csv.version>
+    <commons.csv.version>1.14.1</commons.csv.version>
     <commons.lang3.version>3.11</commons.lang3.version>
   </properties>
 
