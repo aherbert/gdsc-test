@@ -1,5 +1,14 @@
 {
   "1.1" : [ {
+    "extension": "revapi.java",
+    "configuration": {
+      "checks": {
+        "varargOverloadsOnlyDifferInVarargParameter": {
+          "reportUnchanged": false
+        }
+      }
+    }
+  }, {
     "extension" : "revapi.differences",
     "id" : "intentional-api-changes",
     "configuration" : {
@@ -101,17 +110,6 @@
         "oldValue" : "\"5.0\"",
         "newValue" : "\"5.7\"",
         "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
-      }, {
-        "code": "java.method.varargOverloadsOnlyDifferInVarargParameter",
-        "old": "method void picocli.CommandLine.Help.TextTable::addRowValues(java.lang.String[])",
-        "new": "method void picocli.CommandLine.Help.TextTable::addRowValues(java.lang.String[])",
-        "justification": "Method not used in the package"
-      },
-      {
-        "code": "java.method.varargOverloadsOnlyDifferInVarargParameter",
-        "old": "method void picocli.CommandLine.Help.TextTable::addRowValues(picocli.CommandLine.Help.Ansi.Text[])",
-        "new": "method void picocli.CommandLine.Help.TextTable::addRowValues(picocli.CommandLine.Help.Ansi.Text[])",
-        "justification": "Method not used in the package"
       } ]
     }
   } ]
