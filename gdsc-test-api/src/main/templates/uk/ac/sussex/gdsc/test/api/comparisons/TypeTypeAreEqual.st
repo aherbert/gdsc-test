@@ -19,6 +19,9 @@ public class <Type><Type>AreEqual
   /** A default instance. */
   public static final <Type><Type>AreEqual INSTANCE = new <Type><Type>AreEqual();
 
+  /** Create an instance. */
+  public <Type><Type>AreEqual() {}
+
   /**
    * {@inheritDoc}
    *

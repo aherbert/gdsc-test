@@ -161,6 +161,13 @@ public class CodeGenerator {
   }
 
   /**
+   * Create an instance.
+   */
+  public CodeGenerator() {
+    // Empty
+  }
+
+  /**
    * Scan a source directory tree and generate Java code into a target directory.
    *
    * <p>All parameters are parsed from the the input arguments.

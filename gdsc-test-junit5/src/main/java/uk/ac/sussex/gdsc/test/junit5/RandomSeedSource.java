@@ -116,6 +116,11 @@ public class RandomSeedSource implements ArgumentsProvider {
     }
   }
 
+  /** Create an instance. */
+  public RandomSeedSource() {
+      // Empty
+  }
+
   @Override
   public Stream<? extends Arguments> provideArguments(ExtensionContext arg0) {
     return getSeedSequence().provideArguments();

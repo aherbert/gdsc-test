@@ -21,6 +21,9 @@ public class <Float><Float>AreBinaryEqual
   public static final <Float><Float>AreBinaryEqual INSTANCE =
       new <Float><Float>AreBinaryEqual();
 
+  /** Create an instance. */
+  public <Float><Float>AreBinaryEqual() {}
+
   /**
    * {@inheritDoc}
    *

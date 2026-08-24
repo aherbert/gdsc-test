@@ -20,6 +20,9 @@ public class <Float>Is<Special>
   /** A default instance. */
   public static final <Float>Is<Special> INSTANCE = new <Float>Is<Special>();
 
+  /** Create an instance. */
+  public <Float>Is<Special>() {}
+
   /**
    * {@inheritDoc}
    *
