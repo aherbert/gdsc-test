@@ -23,6 +23,7 @@ Contains build tools for the GDSC Test build process.
     <parent.dir>${basedir}/..</parent.dir>
     <maven.deploy.skip>true</maven.deploy.skip>
     <japicmp.skip>true</japicmp.skip>
+    <revapi.skip>true</revapi.skip>
   </properties>
 
   <build>
