@@ -69,6 +69,8 @@ The GDSC Test package contains code for use with the JUnit test framework.
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.testSource>1.8</maven.compiler.testSource>
+    <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyy/MM/dd HH:mm</maven.build.timestamp.format>
     <build.date>${maven.build.timestamp}</build.date>
