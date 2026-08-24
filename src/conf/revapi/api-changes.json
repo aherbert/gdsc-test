@@ -110,6 +110,23 @@
         "oldValue" : "\"5.0\"",
         "newValue" : "\"5.7\"",
         "justification" : "Attributes are not used in the package for annotation processing. Downstream projects using annotations may be affected."
+      }, {
+        "ignore": true,
+        "code": "java.class.externalClassExposedInAPI",
+        "new": "interface org.apache.commons.lang3.function.FailableBiConsumer<T, U, E extends java.lang.Throwable>",
+        "justification": "New interface is a parameter added to new default method in o.a.c.lang3.tuple.Pair"
+      },
+      {
+        "ignore": true,
+        "code": "java.class.externalClassExposedInAPI",
+        "new": "interface org.apache.commons.lang3.function.FailableBiFunction<T, U, R, E extends java.lang.Throwable>",
+        "justification": "New interface is a parameter added to new default method in o.a.c.lang3.tuple.Pair"
+      },
+      {
+        "ignore": true,
+        "code": "java.class.externalClassExposedInAPI",
+        "new": "interface org.apache.commons.lang3.function.FailableFunction<T, R, E extends java.lang.Throwable>",
+        "justification": "New interface is a parameter added to new default method in o.a.c.lang3.tuple.Pair"
       } ]
     }
   } ]
