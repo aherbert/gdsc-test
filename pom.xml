@@ -219,11 +219,6 @@ The GDSC Test package contains code for use with the JUnit test framework.
             <docencoding>UTF-8</docencoding>
             <linksource>true</linksource>
             <notimestamp>true</notimestamp>
-            <links>
-              <link>http://docs.oracle.com/javase/8/docs/api/</link>
-              <link>http://docs.oracle.com/javase/7/docs/api/</link>
-              <link>http://docs.oracle.com/javaee/6/api/</link>
-            </links>
             <archive>
               <manifest>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
