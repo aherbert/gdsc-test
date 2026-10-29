@@ -3,10 +3,10 @@ Change Log
 
 .. contents::
 
-Version 1.1.1
--------------
+Version 1.2
+-----------
 
-Patch release of GDSC Test.
+Minor release of GDSC Test.
 
 .. list-table::
    :widths: 30 70
