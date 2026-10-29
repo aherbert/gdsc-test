@@ -1357,6 +1357,21 @@ class EqualityTest {
     Assertions.assertFalse(LongEquality.areClose(actual, expected2, relativeError, absoluteError));
   }
 
+  @Test
+  void testLongsAreCloseUsingOverflow() {
+    // The difference overflows a signed long
+    final long max = Long.MAX_VALUE;
+    final long min = Long.MIN_VALUE;
+    // delta = 2^63 + 1
+    Assertions.assertTrue(LongEquality.areClose(max, -2, 1.5, 0));
+    Assertions.assertTrue(LongEquality.areClose(-2, max, 1.5, 0));
+    Assertions.assertFalse(LongEquality.areClose(max, -2, 0.9, 0));
+    Assertions.assertFalse(LongEquality.areClose(-2, max, 0.9, 0));
+    // delta = 2^64 - 1
+    Assertions.assertFalse(LongEquality.areClose(max, min, 1.5, max));
+    Assertions.assertFalse(LongEquality.areClose(min, max, 1.5, max));
+  }
+
   // int Close
 
   @Test
@@ -2259,6 +2274,21 @@ class EqualityTest {
     Assertions.assertTrue(LongEquality.isCloseTo(expected, actual2, relativeError, absoluteError));
     // Expected is within 1.0 of actual
     Assertions.assertFalse(LongEquality.isCloseTo(actual2, expected, relativeError, absoluteError));
+  }
+
+  @Test
+  void testLongsIsCloseToUsingOverflow() {
+    // The difference overflows a signed long
+    final long max = Long.MAX_VALUE;
+    final long min = Long.MIN_VALUE;
+    // delta = 2^63 + 1
+    Assertions.assertTrue(LongEquality.isCloseTo(min, 1, 1.5, 0));
+    Assertions.assertFalse(LongEquality.isCloseTo(min, 1, 0.9, 0));
+    Assertions.assertTrue(LongEquality.isCloseTo(-2, max, Double.MAX_VALUE, 0));
+    // delta = 2^64 - 1
+    Assertions.assertTrue(LongEquality.isCloseTo(min, max, 2, 0));
+    Assertions.assertFalse(LongEquality.isCloseTo(min, max, 1.5, 0));
+    Assertions.assertFalse(LongEquality.isCloseTo(min, max, 1.5, max));
   }
 
   // int IsCloseTo

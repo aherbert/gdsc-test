@@ -33,6 +33,10 @@ Patch release of GDSC Test.
        evaluated exactly. Infinite values are not close, and comparisons are not subject to
        rounding, overflow or underflow of the difference or the relative limit.
 
+   * - Fix
+     - ``LongEquality`` relative error comparisons support a difference between the values
+       that overflows a signed ``long``.
+
 Version 1.1
 -------------
 

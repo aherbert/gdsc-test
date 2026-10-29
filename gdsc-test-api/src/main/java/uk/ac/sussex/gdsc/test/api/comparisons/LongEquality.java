@@ -222,12 +222,9 @@ public final class LongEquality {
    * @return true if close
    */
   static boolean testAreClose(long value1, long value2, double relativeError, long absoluteError) {
+    // The difference is an unsigned 64-bit integer
     final long delta = (value1 > value2) ? value1 - value2 : value2 - value1;
-    // Check delta for overflow. It should be positive.
-    if (delta < 0) {
-      return false;
-    }
-    if (delta <= absoluteError) {
+    if (leqUnsigned(delta, absoluteError)) {
       return true;
     }
     // Compute using double precision the equivalent of:
@@ -235,7 +232,8 @@ public final class LongEquality {
     // Note that Math.abs(long) will be negative for Long.MIN_VALUE so
     // use negative abs instead which holds all magnitudes.
     // This is then negated afterwards to achieve the absolute relative tolerance.
-    return delta <= 0.0 - (Math.min(negativeAbs(value1), negativeAbs(value2)) * relativeError);
+    return unsignedToDouble(delta) <= 0.0
+        - (Math.min(negativeAbs(value1), negativeAbs(value2)) * relativeError);
   }
 
   /**
@@ -249,6 +247,36 @@ public final class LongEquality {
    */
   private static long negativeAbs(long value) {
     return (value <= 0) ? value : -value;
+  }
+
+  /**
+   * Convert the unsigned 64-bit integer to the closest double value.
+   *
+   * @param value the unsigned value
+   * @return the double value
+   */
+  private static double unsignedToDouble(long value) {
+    if (value >= 0) {
+      return value;
+    }
+    // Halve the value and retain the lowest bit for correct rounding
+    return ((value >>> 1) | (value & 1)) * 2.0;
+  }
+
+  /**
+   * Test a less-than-or-equal comparison between two values as if unsigned.
+   *
+   * <p>Returns the equivalent of:
+   * <pre>{@code
+   *     Long.compareUnsigned(x, y) <= 0
+   * }</pre>
+   *
+   * @param x the first {@code long} to compare
+   * @param y the second {@code long} to compare
+   * @return true if {@code x <= y} as unsigned integers
+   */
+  private static boolean leqUnsigned(long x, long y) {
+    return x + Long.MIN_VALUE <= y + Long.MIN_VALUE;
   }
 
   /**
@@ -311,17 +339,14 @@ public final class LongEquality {
    */
   static boolean testIsCloseTo(long expected, long actual, double relativeError,
       long absoluteError) {
+    // The difference is an unsigned 64-bit integer
     final long delta = (expected > actual) ? expected - actual : actual - expected;
-    // Check delta for overflow. It should be positive.
-    if (delta < 0) {
-      return false;
-    }
-    if (delta <= absoluteError) {
+    if (leqUnsigned(delta, absoluteError)) {
       return true;
     }
     // Compute using double precision.
     // Note that Math.abs(long) will be negative for Long.MIN_VALUE so abs
     // is used after the conversion to double.
-    return delta <= Math.abs(expected * relativeError);
+    return unsignedToDouble(delta) <= Math.abs(expected * relativeError);
   }
 }
