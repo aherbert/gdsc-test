@@ -22,7 +22,9 @@
 
 package uk.ac.sussex.gdsc.test.api.comparisons;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.SplittableRandom;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -430,6 +432,50 @@ class EqualityTest {
     Assertions.assertFalse(FloatEquality.areWithin(actual, expected2, absoluteError));
   }
 
+  @Test
+  void testFloatsAreWithinUsingExactDifference() {
+    // The rounded difference equals the error but the exact difference does not
+    assertFloatsAreWithinError(1, -0x1.0p-30f, 1, false);
+    assertFloatsAreWithinError(-1, 0x1.0p-30f, 1, false);
+    assertFloatsAreWithinError(1, 0x1.0p-30f, 1, true);
+    assertFloatsAreWithinError(1 + 0x1.0p-23f, -0x1.0p-26f, 1 + 0x1.0p-23f, false);
+    // The double difference is inexact
+    assertFloatsAreWithinError(1, -0x1.0p-60f, 1, false);
+    assertFloatsAreWithinError(-1, 0x1.0p-60f, 1, false);
+    assertFloatsAreWithinError(1, 0x1.0p-60f, 1, true);
+    assertFloatsAreWithinError(Float.MAX_VALUE, -Float.MIN_VALUE, Float.MAX_VALUE, false);
+    assertFloatsAreWithinError(Float.MAX_VALUE, Float.MIN_VALUE, Float.MAX_VALUE, true);
+    // Exact difference equals the error
+    assertFloatsAreWithinError(5, 5, 0, true);
+    assertFloatsAreWithinError(1, 0, 1, true);
+    // The float difference overflows
+    final float max = Float.MAX_VALUE;
+    assertFloatsAreWithinError(max, -max, max, false);
+    assertFloatsAreWithinError(max / 2, -max, max, false);
+    assertFloatsAreWithinError(0x1.0p-30f, -max, max, false);
+    assertFloatsAreWithinError(-0x1.0p-30f, -max, max, true);
+  }
+
+  @Test
+  void testFloatsAreWithinUsingInfiniteValues() {
+    final float inf = Float.POSITIVE_INFINITY;
+    for (final float absoluteError : new float[] {0, 1, Float.MAX_VALUE}) {
+      assertFloatsAreWithinError(inf, inf, absoluteError, false);
+      assertFloatsAreWithinError(-inf, -inf, absoluteError, false);
+      assertFloatsAreWithinError(inf, -inf, absoluteError, false);
+      assertFloatsAreWithinError(inf, Float.MAX_VALUE, absoluteError, false);
+      assertFloatsAreWithinError(inf, 0, absoluteError, false);
+    }
+  }
+
+  private static void assertFloatsAreWithinError(float v1, float v2, float absoluteError,
+      boolean expected) {
+    Assertions.assertEquals(expected, FloatEquality.areWithin(v1, v2, absoluteError),
+        () -> String.format("areWithin(%s, %s, %s)", v1, v2, absoluteError));
+    Assertions.assertEquals(expected, FloatEquality.areWithin(v2, v1, absoluteError),
+        () -> String.format("areWithin(%s, %s, %s)", v2, v1, absoluteError));
+  }
+
   // double Within
 
   @Test
@@ -496,6 +542,45 @@ class EqualityTest {
     final double expected2 = actual - Math.nextUp(absoluteError);
     Assertions.assertFalse(DoubleEquality.areWithin(expected2, actual, absoluteError));
     Assertions.assertFalse(DoubleEquality.areWithin(actual, expected2, absoluteError));
+  }
+
+  @Test
+  void testDoublesAreWithinUsingExactDifference() {
+    // The rounded difference equals the error but the exact difference does not
+    assertDoublesAreWithinError(1, -0x1.0p-60, 1, false);
+    assertDoublesAreWithinError(-1, 0x1.0p-60, 1, false);
+    assertDoublesAreWithinError(1, 0x1.0p-60, 1, true);
+    assertDoublesAreWithinError(-1, -0x1.0p-60, 1, true);
+    assertDoublesAreWithinError(1 + 0x1.0p-52, -0x1.0p-55, 1 + 0x1.0p-52, false);
+    assertDoublesAreWithinError(1 + 0x1.0p-52, 0x1.0p-55, 1 + 0x1.0p-52, true);
+    // Exact difference equals the error
+    assertDoublesAreWithinError(5, 5, 0, true);
+    assertDoublesAreWithinError(1, 0, 1, true);
+    assertDoublesAreWithinError(-1, 0, 1, true);
+    assertDoublesAreWithinError(Double.MIN_VALUE, -Double.MIN_VALUE, 2 * Double.MIN_VALUE, true);
+    assertDoublesAreWithinError(Double.MIN_VALUE, -Double.MIN_VALUE, Double.MIN_VALUE, false);
+    // The difference overflows
+    assertDoublesAreWithinError(Double.MAX_VALUE, -Double.MAX_VALUE, Double.MAX_VALUE, false);
+  }
+
+  @Test
+  void testDoublesAreWithinUsingInfiniteValues() {
+    final double inf = Double.POSITIVE_INFINITY;
+    for (final double absoluteError : new double[] {0, 1, Double.MAX_VALUE}) {
+      assertDoublesAreWithinError(inf, inf, absoluteError, false);
+      assertDoublesAreWithinError(-inf, -inf, absoluteError, false);
+      assertDoublesAreWithinError(inf, -inf, absoluteError, false);
+      assertDoublesAreWithinError(inf, Double.MAX_VALUE, absoluteError, false);
+      assertDoublesAreWithinError(inf, 0, absoluteError, false);
+    }
+  }
+
+  private static void assertDoublesAreWithinError(double v1, double v2, double absoluteError,
+      boolean expected) {
+    Assertions.assertEquals(expected, DoubleEquality.areWithin(v1, v2, absoluteError),
+        () -> String.format("areWithin(%s, %s, %s)", v1, v2, absoluteError));
+    Assertions.assertEquals(expected, DoubleEquality.areWithin(v2, v1, absoluteError),
+        () -> String.format("areWithin(%s, %s, %s)", v2, v1, absoluteError));
   }
 
   // long Within using BigInteger
@@ -968,6 +1053,52 @@ class EqualityTest {
     Assertions.assertFalse(FloatEquality.areClose(actual, expected2, relativeError, absoluteError));
   }
 
+  @Test
+  void testFloatsAreCloseUsingInfiniteValues() {
+    final float inf = Float.POSITIVE_INFINITY;
+    for (final double relativeError : new double[] {0, 0.5, Math.nextDown(2.0)}) {
+      for (final float absoluteError : new float[] {0, 1, Float.MAX_VALUE}) {
+        Assertions.assertFalse(FloatEquality.areClose(inf, inf, relativeError, absoluteError));
+        Assertions.assertFalse(FloatEquality.areClose(-inf, -inf, relativeError, absoluteError));
+        Assertions.assertFalse(FloatEquality.areClose(inf, -inf, relativeError, absoluteError));
+        Assertions.assertFalse(
+            FloatEquality.areClose(inf, Float.MAX_VALUE, relativeError, absoluteError));
+        Assertions.assertFalse(
+            FloatEquality.areClose(Float.MAX_VALUE, inf, relativeError, absoluteError));
+      }
+    }
+  }
+
+  @Test
+  void testFloatsAreCloseUsingOverflow() {
+    // The float difference of opposite signed values overflows: 2 * MAX_VALUE
+    final float max = Float.MAX_VALUE;
+    for (final double relativeError : new double[] {1, 1.5, Math.nextDown(2.0)}) {
+      Assertions.assertFalse(FloatEquality.areClose(max, -max, relativeError, max));
+      Assertions.assertFalse(FloatEquality.areClose(-max, max, relativeError, max));
+    }
+    Assertions.assertTrue(FloatEquality.areClose(max, -max / 2, 1.5, 0));
+    Assertions.assertFalse(FloatEquality.areClose(max, -max / 2, Math.nextDown(1.5), 0));
+  }
+
+  @Test
+  void testFloatsAreCloseUsingUnderflow() {
+    // The relative limit is not representable
+    final float min = Float.MIN_VALUE;
+    Assertions.assertTrue(FloatEquality.areClose(min, 2 * min, 0.5, 0));
+    Assertions.assertFalse(FloatEquality.areClose(min, 2 * min, Math.nextDown(0.5), 0));
+    Assertions.assertTrue(FloatEquality.areClose(2 * min, min, 0.5, 0));
+    Assertions.assertFalse(FloatEquality.areClose(2 * min, min, Math.nextDown(0.5), 0));
+  }
+
+  @Test
+  void testFloatsAreCloseUsingInexactDifference() {
+    // The double difference is inexact and equal to the relative limit
+    Assertions.assertFalse(FloatEquality.areClose(1, -0x1.0p-60f, 1, 0));
+    Assertions.assertFalse(FloatEquality.areClose(-1, 0x1.0p-60f, 1, 0));
+    Assertions.assertTrue(FloatEquality.areClose(1, 0x1.0p-60f, 1, 0));
+  }
+
   // double Close
 
   @Test
@@ -1069,6 +1200,53 @@ class EqualityTest {
         .assertFalse(DoubleEquality.areClose(expected2, actual, relativeError, absoluteError));
     Assertions
         .assertFalse(DoubleEquality.areClose(actual, expected2, relativeError, absoluteError));
+  }
+
+  @Test
+  void testDoublesAreCloseUsingInfiniteValues() {
+    final double inf = Double.POSITIVE_INFINITY;
+    for (final double relativeError : new double[] {0, 0.5, Math.nextDown(2.0)}) {
+      for (final double absoluteError : new double[] {0, 1, Double.MAX_VALUE}) {
+        Assertions.assertFalse(DoubleEquality.areClose(inf, inf, relativeError, absoluteError));
+        Assertions.assertFalse(DoubleEquality.areClose(-inf, -inf, relativeError, absoluteError));
+        Assertions.assertFalse(DoubleEquality.areClose(inf, -inf, relativeError, absoluteError));
+        Assertions.assertFalse(
+            DoubleEquality.areClose(inf, Double.MAX_VALUE, relativeError, absoluteError));
+        Assertions.assertFalse(
+            DoubleEquality.areClose(Double.MAX_VALUE, inf, relativeError, absoluteError));
+      }
+    }
+  }
+
+  @Test
+  void testDoublesAreCloseUsingOverflow() {
+    // The difference of opposite signed values overflows: 2 * MAX_VALUE
+    final double max = Double.MAX_VALUE;
+    for (final double relativeError : new double[] {1, 1.5, Math.nextDown(2.0)}) {
+      Assertions.assertFalse(DoubleEquality.areClose(max, -max, relativeError, max));
+      Assertions.assertFalse(DoubleEquality.areClose(-max, max, relativeError, max));
+    }
+    // Same signed values
+    Assertions.assertTrue(DoubleEquality.areClose(max, max / 2, 0.5, 0));
+    Assertions.assertFalse(DoubleEquality.areClose(max, max / 2, Math.nextDown(0.5), 0));
+  }
+
+  @Test
+  void testDoublesAreCloseUsingUnderflow() {
+    // The relative limit is not representable
+    final double min = Double.MIN_VALUE;
+    Assertions.assertTrue(DoubleEquality.areClose(min, 2 * min, 0.5, 0));
+    Assertions.assertFalse(DoubleEquality.areClose(min, 2 * min, Math.nextDown(0.5), 0));
+    Assertions.assertTrue(DoubleEquality.areClose(2 * min, min, 0.5, 0));
+    Assertions.assertFalse(DoubleEquality.areClose(2 * min, min, Math.nextDown(0.5), 0));
+  }
+
+  @Test
+  void testDoublesAreCloseUsingInexactDifference() {
+    // The double difference is inexact and equal to the relative limit
+    Assertions.assertFalse(DoubleEquality.areClose(1, -0x1.0p-60, 1, 0));
+    Assertions.assertFalse(DoubleEquality.areClose(-1, 0x1.0p-60, 1, 0));
+    Assertions.assertTrue(DoubleEquality.areClose(1, 0x1.0p-60, 1, 0));
   }
 
   // long Close
@@ -1611,7 +1789,136 @@ class EqualityTest {
         .assertFalse(FloatEquality.isCloseTo(expected2, actual, relativeError, absoluteError));
   }
 
-  // double Close
+  @Test
+  void testFloatsIsCloseToUsingInfiniteValues() {
+    final float inf = Float.POSITIVE_INFINITY;
+    for (final double relativeError : new double[] {0, 0.5, 2, Double.MAX_VALUE}) {
+      for (final float absoluteError : new float[] {0, 1, Float.MAX_VALUE}) {
+        Assertions.assertFalse(FloatEquality.isCloseTo(inf, inf, relativeError, absoluteError));
+        Assertions.assertFalse(FloatEquality.isCloseTo(-inf, -inf, relativeError, absoluteError));
+        Assertions.assertFalse(FloatEquality.isCloseTo(inf, -inf, relativeError, absoluteError));
+        Assertions.assertFalse(
+            FloatEquality.isCloseTo(inf, Float.MAX_VALUE, relativeError, absoluteError));
+        Assertions.assertFalse(
+            FloatEquality.isCloseTo(Float.MAX_VALUE, inf, relativeError, absoluteError));
+      }
+    }
+  }
+
+  @Test
+  void testFloatsIsCloseToUsingOverflow() {
+    // The float difference of opposite signed values overflows: 2 * MAX_VALUE
+    final float max = Float.MAX_VALUE;
+    for (final double relativeError : new double[] {1, 1.5, Math.nextDown(2.0)}) {
+      Assertions.assertFalse(FloatEquality.isCloseTo(max, -max, relativeError, max));
+      Assertions.assertFalse(FloatEquality.isCloseTo(-max, max, relativeError, max));
+    }
+    Assertions.assertTrue(FloatEquality.isCloseTo(max, -max, 2, 0));
+    Assertions.assertTrue(FloatEquality.isCloseTo(-max, max, 2, 0));
+    // The relative limit overflows
+    Assertions.assertTrue(FloatEquality.isCloseTo(max, -max, Double.MAX_VALUE, 0));
+  }
+
+  @Test
+  void testFloatsIsCloseToUsingUnderflow() {
+    // The relative limit is not representable
+    final float min = Float.MIN_VALUE;
+    Assertions.assertTrue(FloatEquality.isCloseTo(2 * min, min, 0.5, 0));
+    Assertions.assertFalse(FloatEquality.isCloseTo(2 * min, min, Math.nextDown(0.5), 0));
+    Assertions.assertTrue(FloatEquality.isCloseTo(min, 2 * min, 1, 0));
+    Assertions.assertFalse(FloatEquality.isCloseTo(min, 2 * min, Math.nextDown(1.0), 0));
+    Assertions.assertFalse(FloatEquality.isCloseTo(min, 2 * min, Double.MIN_VALUE, 0));
+  }
+
+  @Test
+  void testFloatsIsCloseToUsingInexactDifference() {
+    // The double difference is inexact and equal to the relative limit
+    Assertions.assertFalse(FloatEquality.isCloseTo(1, -0x1.0p-60f, 1, 0));
+    Assertions.assertFalse(FloatEquality.isCloseTo(-1, 0x1.0p-60f, 1, 0));
+    Assertions.assertTrue(FloatEquality.isCloseTo(1, 0x1.0p-60f, 1, 0));
+    // The relative limit is inexact
+    Assertions.assertTrue(FloatEquality.isCloseTo(3, 3 - 0.3f, 0.3f / 3.0, 0));
+  }
+
+  @Test
+  void testFloatsAreCloseAtBoundary() {
+    // Test values close to the relative and absolute limits against an exact computation
+    final SplittableRandom rng = new SplittableRandom(0x6a09e667L);
+    for (int i = 0; i < 5000; i++) {
+      final float value1 = randomFloat(rng);
+      final double relativeError = rng.nextDouble() * 1.5;
+      final double limit = Math.abs(value1) * relativeError;
+      final float value = (float) (rng.nextBoolean() ? value1 - limit : value1 + limit);
+      if (!Float.isFinite(value)) {
+        continue;
+      }
+      // Step from 4 ULP below to 4 ULP above the limit
+      float value2 = value;
+      for (int j = 0; j < 4; j++) {
+        value2 = Math.nextDown(value2);
+      }
+      for (int j = 0; j <= 8; j++) {
+        assertFloatsAreCloseExact(value1, value2, relativeError);
+        value2 = Math.nextUp(value2);
+      }
+    }
+    // Values with any exponent. The double difference may be inexact.
+    for (int i = 0; i < 5000; i++) {
+      final float value1 = randomFloat(rng);
+      final float value2 = randomFloat(rng);
+      // Relative error at the limit of the double difference
+      double relativeError = Math.abs((double) value1 - value2) / Math.abs(value1);
+      if (!(relativeError < 2)) {
+        continue;
+      }
+      // Step from 4 ULP below to 4 ULP above the limit
+      for (int j = 0; j < 4; j++) {
+        relativeError = Math.nextDown(relativeError);
+      }
+      for (int j = 0; j <= 8; j++) {
+        if (relativeError >= 0) {
+          assertFloatsAreCloseExact(value1, value2, relativeError);
+        }
+        relativeError = Math.nextUp(relativeError);
+      }
+    }
+  }
+
+  /**
+   * Create a random float with a random sign and exponent. The result may be sub-normal.
+   *
+   * @param rng the source of randomness
+   * @return the value
+   */
+  private static float randomFloat(SplittableRandom rng) {
+    final float value = Math.scalb(1 + (float) rng.nextDouble(), rng.nextInt(270) - 145);
+    return rng.nextBoolean() ? -value : value;
+  }
+
+  private static void assertFloatsAreCloseExact(float value1, float value2,
+      double relativeError) {
+    final BigDecimal delta = new BigDecimal(value1).subtract(new BigDecimal(value2)).abs();
+    final BigDecimal bdRelativeError = new BigDecimal(relativeError);
+    // Use the float difference as the absolute error. The exact difference may be above
+    // or below this value.
+    final float absoluteError = Math.abs(value1 - value2);
+    if (Float.isFinite(absoluteError)) {
+      final boolean within = delta.compareTo(new BigDecimal(absoluteError)) <= 0;
+      Assertions.assertEquals(within, FloatEquality.areWithin(value1, value2, absoluteError),
+          () -> String.format("areWithin(%s, %s, %s)", value1, value2, absoluteError));
+    }
+    final float magnitude = Math.max(Math.abs(value1), Math.abs(value2));
+    final boolean close =
+        delta.compareTo(new BigDecimal(magnitude).multiply(bdRelativeError)) <= 0;
+    Assertions.assertEquals(close, FloatEquality.areClose(value1, value2, relativeError, 0),
+        () -> String.format("areClose(%s, %s, %s, 0)", value1, value2, relativeError));
+    final boolean closeTo =
+        delta.compareTo(new BigDecimal(Math.abs(value1)).multiply(bdRelativeError)) <= 0;
+    Assertions.assertEquals(closeTo, FloatEquality.isCloseTo(value1, value2, relativeError, 0),
+        () -> String.format("isCloseTo(%s, %s, %s, 0)", value1, value2, relativeError));
+  }
+
+  // double IsCloseTo
 
   @Test
   void testDoublesIsCloseToThrows() {
@@ -1712,6 +2019,135 @@ class EqualityTest {
     final double expected2 = actual - Math.nextUp(expected - actual);
     Assertions
         .assertFalse(DoubleEquality.isCloseTo(expected2, actual, relativeError, absoluteError));
+  }
+
+  @Test
+  void testDoublesIsCloseToUsingInfiniteValues() {
+    final double inf = Double.POSITIVE_INFINITY;
+    for (final double relativeError : new double[] {0, 0.5, 2, Double.MAX_VALUE}) {
+      for (final double absoluteError : new double[] {0, 1, Double.MAX_VALUE}) {
+        Assertions.assertFalse(DoubleEquality.isCloseTo(inf, inf, relativeError, absoluteError));
+        Assertions.assertFalse(DoubleEquality.isCloseTo(-inf, -inf, relativeError, absoluteError));
+        Assertions.assertFalse(DoubleEquality.isCloseTo(inf, -inf, relativeError, absoluteError));
+        Assertions.assertFalse(
+            DoubleEquality.isCloseTo(inf, Double.MAX_VALUE, relativeError, absoluteError));
+        Assertions.assertFalse(
+            DoubleEquality.isCloseTo(Double.MAX_VALUE, inf, relativeError, absoluteError));
+      }
+    }
+  }
+
+  @Test
+  void testDoublesIsCloseToUsingOverflow() {
+    // The difference of opposite signed values overflows: 2 * MAX_VALUE
+    final double max = Double.MAX_VALUE;
+    for (final double relativeError : new double[] {1, 1.5, Math.nextDown(2.0)}) {
+      Assertions.assertFalse(DoubleEquality.isCloseTo(max, -max, relativeError, max));
+      Assertions.assertFalse(DoubleEquality.isCloseTo(-max, max, relativeError, max));
+    }
+    Assertions.assertTrue(DoubleEquality.isCloseTo(max, -max, 2, 0));
+    Assertions.assertTrue(DoubleEquality.isCloseTo(-max, max, 2, 0));
+    // The relative limit overflows
+    Assertions.assertTrue(DoubleEquality.isCloseTo(max, -max, Double.MAX_VALUE, 0));
+    Assertions.assertTrue(DoubleEquality.isCloseTo(2, -max, Double.MAX_VALUE, 0));
+    // The exact limit equals MAX_VALUE
+    Assertions.assertFalse(DoubleEquality.isCloseTo(1, -max, Double.MAX_VALUE, 0));
+  }
+
+  @Test
+  void testDoublesIsCloseToUsingUnderflow() {
+    // The relative limit is not representable
+    final double min = Double.MIN_VALUE;
+    Assertions.assertTrue(DoubleEquality.isCloseTo(2 * min, min, 0.5, 0));
+    Assertions.assertFalse(DoubleEquality.isCloseTo(2 * min, min, Math.nextDown(0.5), 0));
+    Assertions.assertTrue(DoubleEquality.isCloseTo(min, 2 * min, 1, 0));
+    Assertions.assertFalse(DoubleEquality.isCloseTo(min, 2 * min, Math.nextDown(1.0), 0));
+  }
+
+  @Test
+  void testDoublesIsCloseToUsingInexactDifference() {
+    // The double difference is inexact and equal to the relative limit
+    Assertions.assertFalse(DoubleEquality.isCloseTo(1, -0x1.0p-60, 1, 0));
+    Assertions.assertFalse(DoubleEquality.isCloseTo(-1, 0x1.0p-60, 1, 0));
+    Assertions.assertTrue(DoubleEquality.isCloseTo(1, 0x1.0p-60, 1, 0));
+  }
+
+  @Test
+  void testDoublesAreCloseAtBoundary() {
+    // Test values close to the relative and absolute limits against an exact computation
+    final SplittableRandom rng = new SplittableRandom(0x2f6e2b1L);
+    for (int i = 0; i < 5000; i++) {
+      final double value1 = randomDouble(rng);
+      final double relativeError = rng.nextDouble() * 1.5;
+      final double limit = Math.abs(value1) * relativeError;
+      final double value = rng.nextBoolean() ? value1 - limit : value1 + limit;
+      if (!Double.isFinite(value)) {
+        continue;
+      }
+      // Step from 4 ULP below to 4 ULP above the limit
+      double value2 = value;
+      for (int j = 0; j < 4; j++) {
+        value2 = Math.nextDown(value2);
+      }
+      for (int j = 0; j <= 8; j++) {
+        assertDoublesAreCloseExact(value1, value2, relativeError);
+        value2 = Math.nextUp(value2);
+      }
+    }
+    // Values with any exponent. The double difference may be inexact.
+    for (int i = 0; i < 5000; i++) {
+      final double value1 = randomDouble(rng);
+      final double value2 = randomDouble(rng);
+      // Relative error at the limit of the double difference
+      double relativeError = Math.abs(value1 - value2) / Math.abs(value1);
+      if (!(relativeError < 2)) {
+        continue;
+      }
+      // Step from 4 ULP below to 4 ULP above the limit
+      for (int j = 0; j < 4; j++) {
+        relativeError = Math.nextDown(relativeError);
+      }
+      for (int j = 0; j <= 8; j++) {
+        if (relativeError >= 0) {
+          assertDoublesAreCloseExact(value1, value2, relativeError);
+        }
+        relativeError = Math.nextUp(relativeError);
+      }
+    }
+  }
+
+  /**
+   * Create a random double with a random sign and exponent. The result may be sub-normal.
+   *
+   * @param rng the source of randomness
+   * @return the value
+   */
+  private static double randomDouble(SplittableRandom rng) {
+    final double value = Math.scalb(1 + rng.nextDouble(), rng.nextInt(2060) - 1060);
+    return rng.nextBoolean() ? -value : value;
+  }
+
+  private static void assertDoublesAreCloseExact(double value1, double value2,
+      double relativeError) {
+    final BigDecimal delta = new BigDecimal(value1).subtract(new BigDecimal(value2)).abs();
+    final BigDecimal bdRelativeError = new BigDecimal(relativeError);
+    // Use the double difference as the absolute error. The exact difference may be above
+    // or below this value.
+    final double absoluteError = Math.abs(value1 - value2);
+    if (Double.isFinite(absoluteError)) {
+      final boolean within = delta.compareTo(new BigDecimal(absoluteError)) <= 0;
+      Assertions.assertEquals(within, DoubleEquality.areWithin(value1, value2, absoluteError),
+          () -> String.format("areWithin(%s, %s, %s)", value1, value2, absoluteError));
+    }
+    final double magnitude = Math.max(Math.abs(value1), Math.abs(value2));
+    final boolean close =
+        delta.compareTo(new BigDecimal(magnitude).multiply(bdRelativeError)) <= 0;
+    Assertions.assertEquals(close, DoubleEquality.areClose(value1, value2, relativeError, 0),
+        () -> String.format("areClose(%s, %s, %s, 0)", value1, value2, relativeError));
+    final boolean closeTo =
+        delta.compareTo(new BigDecimal(Math.abs(value1)).multiply(bdRelativeError)) <= 0;
+    Assertions.assertEquals(closeTo, DoubleEquality.isCloseTo(value1, value2, relativeError, 0),
+        () -> String.format("isCloseTo(%s, %s, %s, 0)", value1, value2, relativeError));
   }
 
   // long IsCloseTo

@@ -22,10 +22,24 @@
 
 package uk.ac.sussex.gdsc.test.api.comparisons;
 
+import java.math.BigDecimal;
+
 /**
  * Defines utilities for testing {@code float} equality.
  */
 public final class FloatEquality {
+  /**
+   * Factor to obtain the lower limit for an unambiguous relative test computed using double
+   * precision. The rounding errors of the difference and the relative limit are each at most
+   * 2<sup>-53</sup> (relative) for normal numbers. The margin of 2<sup>-50</sup> covers both errors
+   * and the rounding of the threshold computation.
+   */
+  private static final double LOWER = 1 - 0x1.0p-50;
+  /**
+   * Factor to obtain the upper limit for an unambiguous relative test computed using double
+   * precision.
+   */
+  private static final double UPPER = 1 + 0x1.0p-50;
 
   /**
    * Do not allow public construction.
@@ -162,6 +176,8 @@ public final class FloatEquality {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
+   * <p>The test is evaluated exactly, i.e. as if computed with infinite precision.
+   *
    * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(float)}.
    *
    * @param value1 the first value
@@ -172,9 +188,41 @@ public final class FloatEquality {
    */
   static boolean testAreWithin(float value1, float value2, float absoluteError) {
     // Ignore NaNs. This is OK since if either number is a NaN the difference
-    // will be NaN and we end up returning false.
-    final float delta = Math.abs(value1 - value2);
-    return (delta <= absoluteError);
+    // will be NaN and we end up returning false. An infinite value creates a difference
+    // that is infinite or NaN and also returns false.
+    return testAreWithin(value1, value2, Math.abs((double) value1 - value2), absoluteError);
+  }
+
+  /**
+   * Tests that two floats are equal within an absolute error, i.e.
+   * {@code |value1-value2| <= absoluteError}. The test is evaluated exactly, i.e. as if computed
+   * with infinite precision.
+   *
+   * <p>If either value is NaN or Infinity the difference is NaN or Infinity and this returns
+   * false.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param delta the absolute difference {@code |value1-value2|} computed using double precision
+   * @param absoluteError the maximum absolute error
+   * @return true if equal within an absolute error
+   */
+  private static boolean testAreWithin(double value1, double value2, double delta,
+      float absoluteError) {
+    if (delta != absoluteError) {
+      // Rounding to nearest is monotonic and the error is a double. Thus the rounded
+      // difference is unambiguous unless it is equal to the error.
+      return delta < absoluteError;
+    }
+    // The rounded difference equals the error.
+    // The double difference of two floats is inexact if the exponents are far apart.
+    // Compute the round-off of the difference using Knuth's TwoDiff.
+    final double x = value1 - value2;
+    final double bVirtual = value1 - x;
+    final double t = (value1 - (x + bVirtual)) - (value2 - bVirtual);
+    // The exact difference is x + t. It is within the error if the round-off
+    // is zero or reduces the magnitude, i.e. t has the opposite sign to x.
+    return x > 0 ? t <= 0 : t >= 0;
   }
 
   /**
@@ -199,8 +247,8 @@ public final class FloatEquality {
    * example {@code -0} and {@code 0} are equal using an error of {@code 0}. {@code Float.NaN} and
    * {@code Float.NaN} are not equal.
    *
-   * <p>Note: The relative error is a double since the relative error computation is performed in
-   * double precision.
+   * <p>Note: The relative error is a double to allow the error to be specified with more precision
+   * than a float.
    *
    * @param value1 the first value
    * @param value2 the second value
@@ -239,6 +287,8 @@ public final class FloatEquality {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
+   * <p>The test is evaluated exactly, i.e. as if computed with infinite precision.
+   *
    * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, float)}.
    *
    * @param value1 the first value
@@ -251,25 +301,16 @@ public final class FloatEquality {
    */
   static boolean testAreClose(float value1, float value2, double relativeError,
       float absoluteError) {
-    // Ignore NaNs. This is OK since if either number is a NaN the difference
-    // will be NaN and we end up returning false.
-    final float delta = Math.abs(value1 - value2);
-    if (delta <= absoluteError) {
+    final double delta = Math.abs((double) value1 - value2);
+    if (testAreWithin(value1, value2, delta, absoluteError)) {
       return true;
     }
-    // Compute using double precision
-    return delta <= max(Math.abs(value1), Math.abs(value2)) * relativeError;
-  }
-
-  /**
-   * Compute the maximum of two values without NaN checks.
-   *
-   * @param value1 first value
-   * @param value2 second value
-   * @return The maximum value
-   */
-  private static float max(final float value1, final float value2) {
-    return (value1 >= value2) ? value1 : value2;
+    // The double difference of floats is infinite or NaN only if a value is infinite or NaN
+    if (!(delta < Double.POSITIVE_INFINITY)) {
+      return false;
+    }
+    return testRelative(value1, value2, delta, Math.max(Math.abs(value1), Math.abs(value2)),
+        relativeError);
   }
 
   /**
@@ -284,7 +325,7 @@ public final class FloatEquality {
    * </pre>
    *
    * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
-   * testing testing {@code actual} falls within a relative and/or absolute range of
+   * testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
@@ -295,8 +336,8 @@ public final class FloatEquality {
    * example {@code -0} and {@code 0} are equal using an error of {@code 0}. {@code Double.NaN} and
    * {@code Double.NaN} are not equal.
    *
-   * <p>Note: The relative error is a double since the relative error computation is performed in
-   * double precision.
+   * <p>Note: The relative error is a double to allow the error to be specified with more precision
+   * than a float.
    *
    * @param expected the expected value.
    * @param actual the actual value.
@@ -331,10 +372,13 @@ public final class FloatEquality {
    * Tests a float value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
-   * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, float)}.
-   *
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
+   *
+   * <p>The test is evaluated exactly, i.e. as if computed with infinite precision.
+   *
+   * <p>It is assumed the errors have been validated with
+   * {@link #validateIsCloseTo(double, float)}.
    *
    * @param expected the expected value.
    * @param actual the actual value.
@@ -346,13 +390,69 @@ public final class FloatEquality {
    */
   static boolean testIsCloseTo(float expected, float actual, double relativeError,
       float absoluteError) {
-    // Ignore NaNs. This is OK since if either number is a NaN the difference
-    // will be NaN and we end up returning false.
-    final float delta = Math.abs(expected - actual);
-    if (delta <= absoluteError) {
+    final double delta = Math.abs((double) expected - actual);
+    if (testAreWithin(expected, actual, delta, absoluteError)) {
       return true;
     }
-    // Compute using double precision
-    return delta <= Math.abs(expected) * relativeError;
+    // The double difference of floats is infinite or NaN only if a value is infinite or NaN
+    if (!(delta < Double.POSITIVE_INFINITY)) {
+      return false;
+    }
+    return testRelative(expected, actual, delta, Math.abs(expected), relativeError);
+  }
+
+  /**
+   * Tests that {@code |value1-value2| <= magnitude * relativeError}. The test is evaluated exactly,
+   * i.e. as if computed with infinite precision.
+   *
+   * <p>The test is computed using double precision if the result is unambiguous; otherwise the
+   * test is computed using {@link BigDecimal}.
+   *
+   * <p>It is assumed the values are finite and the difference is above zero.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param delta the absolute difference {@code |value1-value2|} computed using double precision
+   * @param magnitude the magnitude used to scale the relative error
+   * @param relativeError the relative error
+   * @return true if the difference is within the relative limit
+   */
+  private static boolean testRelative(float value1, float value2, double delta, float magnitude,
+      double relativeError) {
+    final double limit = magnitude * relativeError;
+    if (limit < Double.MIN_NORMAL) {
+      // Rounding is monotonic so the exact limit is below the smallest normal double.
+      // This is below the smallest non-zero difference of two floats.
+      return false;
+    }
+    // The double difference of two floats cannot overflow and is above the smallest normal
+    // double. The difference and the limit have a relative rounding error of at most 2^-53.
+    // An infinite limit is above the largest difference.
+    if (delta <= limit * LOWER) {
+      return true;
+    }
+    if (delta >= limit * UPPER) {
+      return false;
+    }
+    // Ambiguous (close to the limit): compute exactly.
+    return testRelativeExact(value1, value2, magnitude, relativeError);
+  }
+
+  /**
+   * Tests that {@code |value1-value2| <= magnitude * relativeError} using {@link BigDecimal}. This
+   * is separate from the double precision test to allow the common case to be inlined.
+   *
+   * <p>It is assumed the values are finite.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param magnitude the magnitude used to scale the relative error
+   * @param relativeError the relative error
+   * @return true if the difference is within the relative limit
+   */
+  private static boolean testRelativeExact(float value1, float value2, float magnitude,
+      double relativeError) {
+    return new BigDecimal(value1).subtract(new BigDecimal(value2)).abs()
+        .compareTo(new BigDecimal(magnitude).multiply(new BigDecimal(relativeError))) <= 0;
   }
 }

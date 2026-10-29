@@ -28,6 +28,11 @@ Patch release of GDSC Test.
    * - Fix
      - Correct the documentation. The random source example uses ``RngFactory``.
 
+   * - Fix
+     - ``DoubleEquality`` and ``FloatEquality`` absolute and relative error comparisons are
+       evaluated exactly. Infinite values are not close, and comparisons are not subject to
+       rounding, overflow or underflow of the difference or the relative limit.
+
 Version 1.1
 -------------
 
