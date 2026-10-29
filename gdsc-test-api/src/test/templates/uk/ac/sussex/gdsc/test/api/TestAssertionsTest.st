@@ -440,14 +440,14 @@ public class TestAssertionsTest {
       TestAssertions.assertArrayTest(value1, longerValue,
           new Dummy<Type><Type>BiPredicate(1), testMessageSupplier);
     \}, "Does not throw with longer actual array").getMessage();
-    assertMessageContains(message, "lengths differ", "the failure was to to different lengths");
+    assertMessageContains(message, "lengths differ", "the failure was due to different lengths");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(longerValue, value1,
           new Dummy<Type><Type>BiPredicate(1), testMessageSupplier);
     \}, "Does not throw with longer expected array").getMessage();
-    assertMessageContains(message, "lengths differ", "the failure was to to different lengths");
+    assertMessageContains(message, "lengths differ", "the failure was due to different lengths");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
     // Test with a custom predicate which does not implement Supplier\<String> (i.e. no description)
@@ -664,14 +664,14 @@ public class TestAssertionsTest {
       TestAssertions.assertArrayTest(nestedValue1, longerValue,
           new Dummy<Type><Type>BiPredicate(1), testMessageSupplier);
     \}, "Does not throw with longer actual array").getMessage();
-    assertMessageContains(message, "lengths differ", "the failure was to to different lengths");
+    assertMessageContains(message, "lengths differ", "the failure was due to different lengths");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
     message = Assertions.assertThrows(AssertionError.class, () -> {
       TestAssertions.assertArrayTest(longerValue, nestedValue1,
           new Dummy<Type><Type>BiPredicate(1), testMessageSupplier);
     \}, "Does not throw with longer expected array").getMessage();
-    assertMessageContains(message, "lengths differ", "the failure was to to different lengths");
+    assertMessageContains(message, "lengths differ", "the failure was due to different lengths");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
 
     // Test the message contains the array index.

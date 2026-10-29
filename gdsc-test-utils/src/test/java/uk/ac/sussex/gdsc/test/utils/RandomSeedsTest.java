@@ -150,7 +150,7 @@ class RandomSeedsTest {
       actual = RandomSeeds.makeLongArray(bytes);
       final int nBytes = i;
       Assertions.assertArrayEquals(values, actual,
-          () -> nBytes + " byte trucated array is different");
+          () -> nBytes + " byte truncated array is different");
     }
   }
 
@@ -184,7 +184,7 @@ class RandomSeedsTest {
       actual = RandomSeeds.makeIntArray(bytes);
       final int nBytes = i;
       Assertions.assertArrayEquals(values, actual,
-          () -> nBytes + " byte trucated array is different");
+          () -> nBytes + " byte truncated array is different");
     }
   }
 

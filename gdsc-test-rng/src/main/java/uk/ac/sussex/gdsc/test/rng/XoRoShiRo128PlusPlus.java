@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * and the period is 2<sup>128</sup>-1.
  *
  * @see <a href="http://xoshiro.di.unimi.it/xoroshiro128plusplus.c">Original source code</a>
- * @see <a href="http://xoshiro.di.unimi.it/">xorshiro / xoroshiro generators</a>
+ * @see <a href="http://xoshiro.di.unimi.it/">xoshiro / xoroshiro generators</a>
  */
 public final class XoRoShiRo128PlusPlus extends LongUniformRandomProvider {
 

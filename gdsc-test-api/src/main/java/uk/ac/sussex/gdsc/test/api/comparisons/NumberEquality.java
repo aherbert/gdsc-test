@@ -38,7 +38,7 @@ final class NumberEquality {
   }
 
   /**
-   * Check the error is positive and less than the the maximum error.
+   * Check the error is positive and less than the maximum error.
    *
    * @param absoluteError the absolute error between two values
    * @param maximumDifference the maximum difference
@@ -56,7 +56,7 @@ final class NumberEquality {
   }
 
   /**
-   * Check the error is positive and less than the the maximum error.
+   * Check the error is positive and less than the maximum error.
    *
    * @param absoluteError the absolute error between two values
    * @param maximumDifference the maximum difference

@@ -26,7 +26,7 @@ import java.util.Arrays;
 
 /**
  * Defines a LIFO stack of {@code int} indices. The indices can be compiled into a string
- * representation of the access of a ND array.
+ * representation of the access of an ND array.
  *
  * <pre>
  * Indices i = new Indices();

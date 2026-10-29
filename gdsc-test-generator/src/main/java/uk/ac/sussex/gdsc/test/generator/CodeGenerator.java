@@ -170,7 +170,7 @@ public class CodeGenerator {
   /**
    * Scan a source directory tree and generate Java code into a target directory.
    *
-   * <p>All parameters are parsed from the the input arguments.
+   * <p>All parameters are parsed from the input arguments.
    *
    * <p>Calls {@link System#exit(int)} with the exit code value from
    * {@link CodeGenerator#run(String[])}.
@@ -184,7 +184,7 @@ public class CodeGenerator {
   /**
    * Scan a source directory tree and generate Java code into a target directory.
    *
-   * <p>All parameters are parsed from the the input arguments.
+   * <p>All parameters are parsed from the input arguments.
    *
    * <p>Errors parsing the parameters are written to the configured output error stream
    * ({@link System#err}).

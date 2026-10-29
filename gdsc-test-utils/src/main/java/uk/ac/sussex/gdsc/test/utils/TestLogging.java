@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 /**
- * Class used to generate {@link LogRecord}s to record test results. Records can be writtin using a
+ * Class used to generate {@link LogRecord}s to record test results. Records can be written using a
  * {@link java.util.logging.Logger}.
  */
 public final class TestLogging {

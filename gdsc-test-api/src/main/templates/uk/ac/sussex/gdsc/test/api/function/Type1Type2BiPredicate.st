@@ -75,7 +75,7 @@ public interface <Type1><Type2>BiPredicate extends PrimitiveBiPredicate {
 
   /**
    * Returns a composed predicate that represents a logical XOR of this predicate and another. When
-   * evaluating the composed predicate both predicates must be evaulated.
+   * evaluating the composed predicate both predicates must be evaluated.
    *
    * \<p>Any exceptions thrown during evaluation of either predicate are relayed to the caller.
    *

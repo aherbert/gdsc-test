@@ -25,7 +25,7 @@ package uk.ac.sussex.gdsc.test.utils;
 import java.util.Arrays;
 
 /**
- * Contains utility functions for Hexidecimal (Hex) numbers.
+ * Contains utility functions for Hexadecimal (Hex) numbers.
  */
 public final class Hex {
 
