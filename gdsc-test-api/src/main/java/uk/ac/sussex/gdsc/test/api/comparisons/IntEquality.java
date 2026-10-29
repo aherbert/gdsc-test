@@ -197,7 +197,7 @@ public final class IntEquality {
    * </pre>
    *
    * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
-   * testing testing {@code actual} falls within a relative and/or absolute range of
+   * testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
    * @param expected the expected value.

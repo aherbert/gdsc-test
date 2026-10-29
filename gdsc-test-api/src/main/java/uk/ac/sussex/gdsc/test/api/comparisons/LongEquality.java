@@ -211,6 +211,11 @@ public final class LongEquality {
    * between values {@code value1} and {@code value2} is relative to the largest magnitude of the
    * two values.
    *
+   * <p>The relative limit is computed using double precision as
+   * {@code max(|value1|, |value2|) * relativeError}. The difference between the values is compared
+   * to the absolute error and the relative limit exactly, i.e. as if computed with infinite
+   * precision.
+   *
    * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, long)}.
    *
    * @param value1 the first value
@@ -227,13 +232,13 @@ public final class LongEquality {
     if (leqUnsigned(delta, absoluteError)) {
       return true;
     }
-    // Compute using double precision the equivalent of:
-    // delta <= Math.max(Math.abs(value1), Math.abs(value2)) * relativeError.
+    // Compute the limit using double precision:
+    // Math.max(Math.abs(value1), Math.abs(value2)) * relativeError.
     // Note that Math.abs(long) will be negative for Long.MIN_VALUE so
     // use negative abs instead which holds all magnitudes.
     // This is then negated afterwards to achieve the absolute relative tolerance.
-    return unsignedToDouble(delta) <= 0.0
-        - (Math.min(negativeAbs(value1), negativeAbs(value2)) * relativeError);
+    return leqUnsigned(delta,
+        0.0 - (Math.min(negativeAbs(value1), negativeAbs(value2)) * relativeError));
   }
 
   /**
@@ -250,17 +255,23 @@ public final class LongEquality {
   }
 
   /**
-   * Convert the unsigned 64-bit integer to the closest double value.
+   * Test {@code x <= limit} exactly where {@code x} is an unsigned 64-bit integer.
    *
-   * @param value the unsigned value
-   * @return the double value
+   * <p>It is assumed the limit is positive.
+   *
+   * @param x the unsigned value
+   * @param limit the limit
+   * @return true if {@code x <= limit}
    */
-  private static double unsignedToDouble(long value) {
-    if (value >= 0) {
-      return value;
+  private static boolean leqUnsigned(long x, double limit) {
+    if (limit >= 0x1.0p64) {
+      // Above the largest unsigned 64-bit integer (or infinite)
+      return true;
     }
-    // Halve the value and retain the lowest bit for correct rounding
-    return ((value >>> 1) | (value & 1)) * 2.0;
+    // x <= limit if x <= floor(limit). Truncate the limit to an unsigned integer.
+    // Limits above 2^63 are integers and the subtraction of 2^63 is exact.
+    final long y = limit < 0x1.0p63 ? (long) limit : (long) (limit - 0x1.0p63) ^ Long.MIN_VALUE;
+    return leqUnsigned(x, y);
   }
 
   /**
@@ -291,7 +302,7 @@ public final class LongEquality {
    * </pre>
    *
    * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
-   * testing testing {@code actual} falls within a relative and/or absolute range of
+   * testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
    * @param expected the expected value.
@@ -327,6 +338,10 @@ public final class LongEquality {
    * Tests a long value is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected}.
    *
+   * <p>The relative limit is computed using double precision as
+   * {@code |expected| * relativeError}. The difference between the values is compared to the
+   * absolute error and the relative limit exactly, i.e. as if computed with infinite precision.
+   *
    * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, long)}.
    *
    * @param expected the expected value.
@@ -344,9 +359,9 @@ public final class LongEquality {
     if (leqUnsigned(delta, absoluteError)) {
       return true;
     }
-    // Compute using double precision.
+    // Compute the limit using double precision.
     // Note that Math.abs(long) will be negative for Long.MIN_VALUE so abs
     // is used after the conversion to double.
-    return unsignedToDouble(delta) <= Math.abs(expected * relativeError);
+    return leqUnsigned(delta, Math.abs(expected * relativeError));
   }
 }
