@@ -3,6 +3,31 @@ Change Log
 
 .. contents::
 
+Version 1.1.1
+-------------
+
+Patch release of GDSC Test.
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Change
+     - Description
+
+   * - Update
+     - Add documented default constructors to public classes without an explicit constructor.
+
+   * - Update
+     - Publish to Maven Central using the Central Publisher Portal.
+
+   * - Update
+     - Update the build plugins and the code generator dependencies (Commons CSV 1.14.1,
+       Commons Lang 3.20.0, picocli 4.7.7).
+
+   * - Fix
+     - Correct the documentation. The random source example uses ``RngFactory``.
+
 Version 1.1
 -------------
 
