@@ -68,7 +68,7 @@ In the case of bi-valued predicates Java only provides ``BiPredicate<T, U>``::
         // Default methods
     }
 
-Primitives must be tested via the auto-boxing of primitives in their respective class.
+Primitives must be tested via the auto-boxing of primitives in their respective wrapper class.
 
 A Predicate Library
 -------------------
@@ -134,4 +134,4 @@ Code Generation
 The simple and repetitive code for most predicates in the library is auto-generated from
 templates.
 
-Generation uses the `String Template <http://www.stringtemplate.org/>`_ library.
+Generation uses the `String Template <https://www.stringtemplate.org/>`_ library.

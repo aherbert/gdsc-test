@@ -36,7 +36,7 @@ Predicate Library
 =================
 
 The GDSC predicate library is an extension of the ``java.util.function`` primitive predicates
-``DoublePredicate`` and ``LongPredicate`` to all java primitives. These are functional interfaces
+``DoublePredicate``, ``IntPredicate`` and ``LongPredicate`` to all Java primitives. These are functional interfaces
 for single or bi-valued predicates providing the following::
 
     @FunctionalInterface
@@ -52,7 +52,7 @@ for single or bi-valued predicates providing the following::
     }
 
 where ``<type>`` is one of: ``boolean``, ``byte``, ``char``, ``double``, ``float``, ``int``,
-``long`` and ``short`` (see `why all the primitives? <why.html>`_).
+``long`` and ``short`` (see :ref:`why all the primitives? <why>`).
 
 The predicate functional interfaces provide:
 
@@ -60,11 +60,11 @@ The predicate functional interfaces provide:
 - Negation to an opposite test
 
 Standard predicates are provided to test equality and closeness within an absolute or relative
-error (see `Relative Equality <relativeequality.html>`_). Floating-point numbers can be compared
+error (see :ref:`relativeequality`). Floating-point numbers can be compared
 with a units in the last place (`ULP <https://en.wikipedia.org/wiki/Unit_in_the_last_place>`_)
 tolerance.
 
-Combined predicates exists to combine two single-valued predicates into a bi-valued predicate that
+Combined predicates exist to combine two single-valued predicates into a bi-valued predicate that
 tests each input value with a distinct predicate.
 
 Assertion Utilities
@@ -211,7 +211,7 @@ An example implementation for test randomness is provided using
 for example::
 
     import uk.ac.sussex.gdsc.test.junit5.SeededTest;
-    import uk.ac.sussex.gdsc.test.rng.RngUtils;
+    import uk.ac.sussex.gdsc.test.rng.RngFactory;
     import uk.ac.sussex.gdsc.test.utils.RandomSeed;
 
     import org.apache.commons.rng.UniformRandomProvider;
@@ -220,7 +220,7 @@ for example::
     // and repeats
     @SeededTest
     public void testSomethingRandom(RandomSeed seed) {
-        UniformRandomProvider rng = RngUtils.create(seed.get());
+        UniformRandomProvider rng = RngFactory.create(seed.get());
         // Do the test ...
     }
 
@@ -254,7 +254,7 @@ Contents
 Issues
 ======
 
-Please fill bug report in https://github.com/aherbert/gdsc-test/issues.
+Please file a bug report at https://github.com/aherbert/gdsc-test/issues.
 
 .. toctree::
     :hidden:

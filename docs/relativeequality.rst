@@ -26,7 +26,7 @@ A **symmetric** relative error is:
 
 This term is identical if :math:`a` and :math:`b` are switched.
 
-The equivalent **asymmetric** relative error :math:`e` is: 
+The equivalent **asymmetric** relative error :math:`e_a` is:
 
 .. math::
 
@@ -65,14 +65,14 @@ the test is asymmetric it can be used when :math:`a` is the known (expected) val
 is an actual value to be tested, i.e. test if the actual value is close to the expected value using
 a relative error.
 
-Value Around Zero
------------------
+Values Around Zero
+------------------
 
 The relative equality uses the magnitude of the values to define the scale.
 
 .. math::
 
-    e &= \frac { |a-b| } { max(|a|,|b|) }
+    e &= \frac { |a-b| } { \max(|a|, |b|) }
 
     e_a &= \frac { |a-b| } { |a| }
 
@@ -80,7 +80,7 @@ In the limit :math:`|a| = 0` then :math:`e_a = \infty` but :math:`e = 1`.
 
 The **asymmetric** relative error is thus unbounded.
 
-The limit for the **symmetric** relative error is `2` when :math:`a` and :math:`b` are
+The limit for the **symmetric** relative error is :math:`2` when :math:`a` and :math:`b` are
 of equal magnitudes and opposite signs, e.g.
 
 .. math::

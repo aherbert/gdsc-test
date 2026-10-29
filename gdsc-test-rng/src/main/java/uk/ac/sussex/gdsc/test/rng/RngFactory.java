@@ -158,7 +158,7 @@ public final class RngFactory {
    * <p>For use as a Weyl sequence increment this should be set to odd.
    *
    * <pre>
-   * long inc = RngUtils.createIncrement() | 1;
+   * long inc = RngFactory.createIncrement() | 1;
    * </pre>
    *
    * @return the increment
