@@ -90,22 +90,22 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <revapi.version>0.15.1</revapi.version>
     <revapi.java.version>0.28.4</revapi.java.version>
     <license-maven-plugin.version>2.5.0</license-maven-plugin.version>
-    <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
+    <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
     <org.jacoco.version>0.8.7</org.jacoco.version>
     <org.junit.bom.version>5.9.1</org.junit.bom.version>
     <pmd.version>7.22.0</pmd.version>
     <spotbugs.version>4.8.6.7</spotbugs.version>
     <!-- Maven plugins -->
-    <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
+    <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
     <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
     <formatter-maven-plugin.version>2.29.0</formatter-maven-plugin.version>
     <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <maven-clean-plugin.version>3.4.1</maven-clean-plugin.version>
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
-    <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+    <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
     <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-    <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
+    <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
     <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
     <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
@@ -417,7 +417,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
           <excludeFilterFile>${parent.dir}/src/conf/spotbugs/spotbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
       </plugin>
-      <!-- use of mvn release:prepeare release perform should use the nexus release profile -->
+      <!-- use of mvn release:prepare release:perform should use the nexus release profile -->
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <version>${maven-release-plugin.version}</version>
@@ -653,7 +653,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
             <configuration>
               <publishingServerId>central</publishingServerId>
               <!-- It is not clear if this applies to snapshots that do not
-                use trigger the validation stage after upload. -->
+                   trigger the validation stage after upload. -->
               <autoPublish>true</autoPublish>
             </configuration>
           </plugin>
@@ -662,7 +662,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     </profile>
     <profile>
       <id>release</id>
-      <!-- All settings for signing and ossrh should be in settings.xml -->
+      <!-- All settings for signing and the Central Portal should be in settings.xml -->
       <properties>
         <gpg.executable>gpg</gpg.executable>
         <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
@@ -809,9 +809,7 @@ The GDSC Test package contains code for use with the JUnit test framework.
     <module>gdsc-test-utils</module>
     <module>gdsc-test-junit5</module>
     <module>gdsc-test-rng</module>
-    <!-- These are not deployed but cannot skip the nexus staging plugin as they are -->
-    <!-- the last modules in the build order. So selectively run them. -->
-    <!-- See: https://issues.sonatype.org/browse/NEXUS-9138 -->
+    <!-- These are not published (skipPublishing=true) and are built using profiles. -->
     <!-- <module>gdsc-test-doc</module> uses profile gdsc-test-doc -->
     <!-- <module>gdsc-test-examples</module> uses profile gdsc-test-examples -->
   </modules>

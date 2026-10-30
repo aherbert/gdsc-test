@@ -21,21 +21,12 @@ Contains build tools for the GDSC Test build process.
     <gdsc.automatic.module.name>uk.ac.sussex.gdsc.test.build.tools</gdsc.automatic.module.name>
     <!-- Workaround to avoid duplicating config files. -->
     <parent.dir>${basedir}/..</parent.dir>
-    <maven.deploy.skip>true</maven.deploy.skip>
+    <skipPublishing>true</skipPublishing>
     <japicmp.skip>true</japicmp.skip>
     <revapi.skip>true</revapi.skip>
   </properties>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <configuration>
-          <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-        </configuration>
-      </plugin>
-    </plugins>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
