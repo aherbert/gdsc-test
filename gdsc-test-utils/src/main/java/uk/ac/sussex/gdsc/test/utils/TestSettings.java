@@ -107,6 +107,7 @@ public final class TestSettings {
         return Integer.parseInt(text);
       } catch (final NumberFormatException ignored) {
         // Ignore and return the default
+        logInvalidProperty("integer", name, text);
       }
     }
     return defaultValue;
@@ -126,6 +127,7 @@ public final class TestSettings {
       if (!RandomSeeds.nullOrEmpty(bytes)) {
         return bytes;
       }
+      logInvalidProperty("hex-encoded", name, text);
     }
     return defaultValue;
   }
@@ -144,9 +146,24 @@ public final class TestSettings {
         return Long.parseLong(text);
       } catch (final NumberFormatException ignored) {
         // Ignore and return the default
+        logInvalidProperty("long integer", name, text);
       }
     }
     return defaultValue;
+  }
+
+  /**
+   * Log a warning that the system property is invalid and is ignored.
+   *
+   * @param type the type of the property
+   * @param name the name
+   * @param text the property value
+   */
+  private static void logInvalidProperty(String type, String name, String text) {
+    final Logger logger = Logger.getLogger(TestSettings.class.getName());
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning(String.format("Ignoring invalid %s property -D%s=%s", type, name, text));
+    }
   }
 
   /**

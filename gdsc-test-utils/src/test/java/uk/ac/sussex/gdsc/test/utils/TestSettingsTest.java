@@ -24,7 +24,11 @@ package uk.ac.sussex.gdsc.test.utils;
 
 import uk.ac.sussex.gdsc.test.utils.TestLogging.TestLevel;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -116,12 +120,18 @@ class TestSettingsTest {
     final String key = "A long key that should be really, really unique";
     System.clearProperty(key);
     final int defaultValue = -6765757;
-    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
-    System.setProperty(key, "xx");
-    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
-    System.setProperty(key, "1");
-    Assertions.assertEquals(1, TestSettings.getProperty(key, defaultValue));
-    System.clearProperty(key);
+    try {
+      assertNoWarning(() -> Assertions.assertEquals(defaultValue,
+          TestSettings.getProperty(key, defaultValue)));
+      System.setProperty(key, "xx");
+      assertWarning(key, () -> Assertions.assertEquals(defaultValue,
+          TestSettings.getProperty(key, defaultValue)));
+      System.setProperty(key, "1");
+      assertNoWarning(
+          () -> Assertions.assertEquals(1, TestSettings.getProperty(key, defaultValue)));
+    } finally {
+      System.clearProperty(key);
+    }
   }
 
   @Test
@@ -129,12 +139,18 @@ class TestSettingsTest {
     final String key = "A long key that should be really, really unique";
     System.clearProperty(key);
     final long defaultValue = -6765757676567L;
-    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
-    System.setProperty(key, "xx");
-    Assertions.assertEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
-    System.setProperty(key, "1");
-    Assertions.assertEquals(1, TestSettings.getProperty(key, defaultValue));
-    System.clearProperty(key);
+    try {
+      assertNoWarning(() -> Assertions.assertEquals(defaultValue,
+          TestSettings.getProperty(key, defaultValue)));
+      System.setProperty(key, "xx");
+      assertWarning(key, () -> Assertions.assertEquals(defaultValue,
+          TestSettings.getProperty(key, defaultValue)));
+      System.setProperty(key, "1");
+      assertNoWarning(
+          () -> Assertions.assertEquals(1, TestSettings.getProperty(key, defaultValue)));
+    } finally {
+      System.clearProperty(key);
+    }
   }
 
   @Test
@@ -142,23 +158,84 @@ class TestSettingsTest {
     final String key = "A long key that should be really, really unique";
     System.clearProperty(key);
     final byte[] defaultValue = new byte[] {1, 23, 4};
-    Assertions.assertArrayEquals(defaultValue, TestSettings.getProperty(key, defaultValue));
+    try {
+      assertNoWarning(() -> Assertions.assertArrayEquals(defaultValue,
+          TestSettings.getProperty(key, defaultValue)));
 
-    // Ignore seeds with no information
-    for (String seed : new String[] {"", " ", "  ", "xx"}) {
-      System.setProperty(key, seed);
-      Assertions.assertArrayEquals(defaultValue, TestSettings.getProperty(key, defaultValue),
-          () -> "Seed is " + seed);
-    }
+      // Ignore seeds with no information and log a warning
+      for (String seed : new String[] {"", " ", "  ", "xx", "0x12"}) {
+        System.setProperty(key, seed);
+        assertWarning(key, () -> Assertions.assertArrayEquals(defaultValue,
+            TestSettings.getProperty(key, defaultValue), () -> "Seed is " + seed));
+      }
 
-    // Decode seeds with information, even if it is zero
-    for (String seed : new String[] {"0", "0000", "1", "1234567890abcdef"}) {
-      System.setProperty(key, seed);
-      final byte[] expected = Hex.decode(seed);
-      Assertions.assertArrayEquals(expected, TestSettings.getProperty(key, defaultValue),
-          () -> "Seed is " + seed);
+      // Decode seeds with information, even if it is zero
+      for (String seed : new String[] {"0", "0000", "1", "1234567890abcdef"}) {
+        System.setProperty(key, seed);
+        final byte[] expected = Hex.decode(seed);
+        assertNoWarning(() -> Assertions.assertArrayEquals(expected,
+            TestSettings.getProperty(key, defaultValue), () -> "Seed is " + seed));
+      }
+    } finally {
+      System.clearProperty(key);
     }
-    System.clearProperty(key);
+  }
+
+  /**
+   * Assert the action logs a single warning from {@link TestSettings} containing the property
+   * name.
+   *
+   * @param name the property name
+   * @param action the action
+   */
+  private static void assertWarning(String name, Runnable action) {
+    final List<LogRecord> records = captureLogRecords(action);
+    Assertions.assertEquals(1, records.size());
+    Assertions.assertEquals(Level.WARNING, records.get(0).getLevel());
+    Assertions.assertTrue(records.get(0).getMessage().contains(name));
+  }
+
+  /**
+   * Assert the action logs nothing from {@link TestSettings}.
+   *
+   * @param action the action
+   */
+  private static void assertNoWarning(Runnable action) {
+    Assertions.assertEquals(0, captureLogRecords(action).size());
+  }
+
+  /**
+   * Capture the records logged by {@link TestSettings} when running the action.
+   *
+   * @param action the action
+   * @return the records
+   */
+  private static List<LogRecord> captureLogRecords(Runnable action) {
+    final List<LogRecord> records = new ArrayList<>();
+    final Handler handler = new Handler() {
+      @Override
+      public void publish(LogRecord record) {
+        records.add(record);
+      }
+
+      @Override
+      public void flush() {
+        // Do nothing
+      }
+
+      @Override
+      public void close() {
+        // Do nothing
+      }
+    };
+    final Logger settingsLogger = Logger.getLogger(TestSettings.class.getName());
+    settingsLogger.addHandler(handler);
+    try {
+      action.run();
+    } finally {
+      settingsLogger.removeHandler(handler);
+    }
+    return records;
   }
 
   @Test

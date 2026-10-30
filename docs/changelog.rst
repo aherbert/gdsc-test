@@ -25,6 +25,9 @@ Minor release of GDSC Test.
      - Update the build plugins and the code generator dependencies (Commons CSV 1.14.1,
        Commons Lang 3.20.0, picocli 4.7.7).
 
+   * - Update
+     - Log a warning when a ``gdsc.test`` system property has an invalid value and is ignored.
+
    * - Fix
      - Correct the documentation. The random source example uses ``RngFactory``.
 
