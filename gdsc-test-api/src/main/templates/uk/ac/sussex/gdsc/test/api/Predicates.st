@@ -565,7 +565,7 @@ public final class Predicates {
    * \<pre>
    * {@code
    * |expected - actual| \<= |expected| * relativeError
-   * \}\</pre>:
+   * \}\</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
    * equivalent to testing {@code actual\} falls within a relative and/or absolute range of

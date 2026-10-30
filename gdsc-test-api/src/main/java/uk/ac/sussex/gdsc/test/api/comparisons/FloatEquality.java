@@ -125,7 +125,7 @@ public final class FloatEquality {
       // Add the values and compare unsigned. Do this by adding 2^31 to both values.
       // See Integer.compareUnsigned.
       // Note:
-      // If either value is NaN, the exponent bits are set to (255 << 24) and the
+      // If either value is NaN, the exponent bits are set to (255 << 23) and the
       // distance above 0.0 is always above a short ULP error. So omit the test
       // for NaN.
       return (a + b + Integer.MIN_VALUE) <= (ulpError + Integer.MIN_VALUE);

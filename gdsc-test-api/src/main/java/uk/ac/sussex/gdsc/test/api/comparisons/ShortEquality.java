@@ -167,7 +167,7 @@ public final class ShortEquality {
   }
 
   /**
-   * Tests that an short is close to an expected value. The relative error between values
+   * Tests that a short is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
    * test is:
    *

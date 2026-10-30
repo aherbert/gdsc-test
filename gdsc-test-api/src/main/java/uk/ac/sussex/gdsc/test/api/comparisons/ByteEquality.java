@@ -167,7 +167,7 @@ public final class ByteEquality {
   }
 
   /**
-   * Tests that an byte is close to an expected value. The relative error between values
+   * Tests that a byte is close to an expected value. The relative error between values
    * {@code expected} and {@code actual} is relative to the magnitude of {@code expected} and the
    * test is:
    *
