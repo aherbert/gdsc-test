@@ -53,11 +53,13 @@ public final class RngFactory {
    * Gets the uniform random provider using the given seed.
    *
    * <p>If the {@code seed} is null or empty then a random seed will be used. This is generated
-   * using {@code ThreadLocalRandom.current().nextLong()}.
+   * using {@code ThreadLocalRandom.current().nextLong()} and
+   * {@code new SplittableRandom().nextLong()}.
    *
    * @param seed the seed
    * @return the uniform random provider
    * @see ThreadLocalRandom
+   * @see SplittableRandom
    */
   public static RestorableUniformRandomProvider create(byte[] seed) {
     if (RandomSeeds.nullOrEmpty(seed)) {

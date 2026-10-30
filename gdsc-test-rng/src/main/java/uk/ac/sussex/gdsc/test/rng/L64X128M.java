@@ -103,11 +103,12 @@ public final class L64X128M extends LongUniformRandomProvider {
   }
 
   /**
-   * Create a new instance setting the state using the provided seed.
+   * Create a new instance setting the state by expansion and mixing of the provided 64-bit seeds.
+   * The first seed creates the LCG addition and the second seed creates the LCG state. The XBG
+   * state is created from the LCG state.
    *
-   * <p>Note: This generator is invalid with all-zero bits in the state. If both seeds are zero the
-   * results is the same as using the single argument constructor with a seed of zero where the
-   * state is created by expansion and mixing of the single 64-bit seed.
+   * <p>Note: If both seeds are the same the result is the same as using the single argument
+   * constructor.
    *
    * @param seed0 the first seed for the state
    * @param seed1 the second seed for the state
@@ -128,7 +129,7 @@ public final class L64X128M extends LongUniformRandomProvider {
    * Create a new instance setting the state using the provided seed.
    *
    * <p>Note: This generator is invalid with all-zero bits in the state of the XBG generator. If
-   * both seeds are zero the state is populated using the seeded LCG.
+   * both XBG seeds are zero the XBG state is created by expansion and mixing of the LCG state.
    *
    * @param a the LCG addition (set to odd which loses 1 bit of the seed)
    * @param s the LCG state

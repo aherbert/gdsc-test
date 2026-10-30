@@ -397,7 +397,9 @@ public final class StringTemplateModel {
   }
 
   /**
-   * Split the key value into a list using whitespace.
+   * Split the key value into a list using a single space delimiter. Fields may be quoted using
+   * double quotes; a backslash escapes the following character; and the field {@code \N} is
+   * null.
    *
    * @param key the key
    * @param value the value
@@ -424,7 +426,7 @@ public final class StringTemplateModel {
   }
 
   /**
-   * Split the string value into a list using whitespace.
+   * Split the string value into a list using a single space delimiter.
    *
    * @param key the key
    * @param value the value

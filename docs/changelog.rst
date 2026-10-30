@@ -42,6 +42,10 @@ Minor release of GDSC Test.
        ``int``, ``short``, ``byte`` and ``long`` using a ``BigInteger`` error.
 
    * - Fix
+     - Correct documentation errors in examples, method descriptions and the ``CodeGenerator``
+       exit codes.
+
+   * - Fix
      - Relative error comparisons of ``double`` and ``float`` values return false if either
        value is infinite. The difference between the values and the relative limit are computed
        without overflow.

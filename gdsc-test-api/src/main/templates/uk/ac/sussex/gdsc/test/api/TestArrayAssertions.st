@@ -95,7 +95,7 @@ final class TestArrayAssertions {
    * @param expected the expected value
    * @param actual the actual value to check against {@code expected\}
    * @param test the test predicate
-   * @param messageSupplier the message supplier
+   * @param messageOrSupplier the message or supplier
    * @param indices the precursor indices (never null)
    */
   private static void assertArrayTest(Object[] expected, Object[] actual, PrimitiveBiPredicate test,
@@ -171,7 +171,7 @@ final class TestArrayAssertions {
    *
    * @param value the value
    * @param test the test predicate
-   * @param messageSupplier the message supplier
+   * @param messageOrSupplier the message or supplier
    * @param indices the precursor indices (never null)
    */
   private static void assertArrayTest(Object[] value, PrimitivePredicate test,
@@ -277,6 +277,7 @@ final class TestArrayAssertions {
    * @param actual the actual object
    * @param messageOrSupplier the message or supplier
    * @param indices the indices
+   * @return the message
    */
   private static String buildNonMatchingArrayTypesMessage(Object expected, Object actual,
       Object messageOrSupplier, Indices indices) {
@@ -330,6 +331,8 @@ final class TestArrayAssertions {
    *
    * @param value the value
    * @param test the test predicate
+   * @param messageOrSupplier the message or supplier
+   * @param indices the indices
    */
   private static void assertArrayElement(Object value, PrimitivePredicate test,
       Object messageOrSupplier, Indices indices) {
@@ -352,6 +355,7 @@ final class TestArrayAssertions {
    *
    * @param expected the expected type
    * @param actual the actual object
+   * @return the message
    */
   private static String buildInvalidPredicateMessage(Object expected, Object actual) {
     return MessageBuilder.create().append("Invalid predicate, ")
@@ -388,7 +392,7 @@ final class TestArrayAssertions {
    *
    * @param expected the expected value
    * @param actual the actual value to check against {@code expected\}
-   * @param messageSupplier the message supplier
+   * @param messageOrSupplier the message or supplier
    * @param indices the precursor indices (never null)
    */
   private static void assertNotNull(Object expected, Object actual, Object messageOrSupplier,
@@ -407,7 +411,7 @@ final class TestArrayAssertions {
    * \<em>Asserts\</em> the value array is not null.
    *
    * @param value the value
-   * @param messageSupplier the message supplier
+   * @param messageOrSupplier the message or supplier
    * @param indices the precursor indices (never null)
    */
   private static void assertNotNull(Object value, Object messageOrSupplier,
@@ -423,7 +427,7 @@ final class TestArrayAssertions {
    *
    * @param expected the expected value
    * @param actual the actual value to check against {@code expected\}
-   * @param messageSupplier the message supplier
+   * @param messageOrSupplier the message or supplier
    * @param indices the precursor indices (never null)
    */
   private static void assertEqualLengths(int expected, int actual, Object messageOrSupplier,

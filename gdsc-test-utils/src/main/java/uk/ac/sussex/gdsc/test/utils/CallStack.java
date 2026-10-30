@@ -46,7 +46,7 @@ public final class CallStack {
   private CallStack() {}
 
   /**
-   * Gets the code point (ClassName:MethodName:LineNumber) marking the position where this method
+   * Gets the code point (ClassName:MethodName:LineNumber:) marking the position where this method
    * was called.
    *
    * <p>Note: This method will generate a stack trace to extract the required information.
@@ -59,7 +59,7 @@ public final class CallStack {
   }
 
   /**
-   * Gets the code point (ClassName:MethodName:LineNumber) from the stack trace element.
+   * Gets the code point (ClassName:MethodName:LineNumber:) from the stack trace element.
    *
    * <p>Returns an empty string if the element is null avoiding a NullPointerException if the
    * element is not available.

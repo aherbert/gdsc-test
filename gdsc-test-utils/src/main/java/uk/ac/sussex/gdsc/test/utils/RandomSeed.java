@@ -96,8 +96,7 @@ public final class RandomSeed implements Serializable, Supplier<byte[]>, LongSup
   /**
    * Returns a hash code value for the object.
    *
-   * <p>The hashcode is computed using the components of the seed that contribute to randomness. The
-   * repetition counts are ignored.
+   * <p>The hashcode is computed using the seed bytes.
    *
    * @see java.lang.Object#hashCode()
    */
@@ -158,14 +157,14 @@ public final class RandomSeed implements Serializable, Supplier<byte[]>, LongSup
   }
 
   /**
-   * Returns <tt>true</tt> if the two specified arrays of bytes are <i>equal</i> to one another. Two
+   * Returns {@code true} if the two specified arrays of bytes are <i>equal</i> to one another. Two
    * arrays are considered equal if both arrays contain the same number of elements, and all
    * corresponding pairs of elements in the two arrays are equal. In other words, two arrays are
    * equal if they contain the same elements in the same order.
    *
    * @param b1 one array to be tested for equality
    * @param b2 the other array to be tested for equality
-   * @return <tt>true</tt> if the two arrays are equal
+   * @return {@code true} if the two arrays are equal
    */
   static boolean equalBytes(byte[] b1, byte[] b2) {
     // Copied from Arrays.equals but removed the check for null arrays.

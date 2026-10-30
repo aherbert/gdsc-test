@@ -94,12 +94,12 @@ public class CodeGenerator {
   /**
    * The possible exit codes from the generator.
    *
-   * <p>A non-zero exit code indicates error.
+   * <p>A non-zero exit code indicates error, with the exception of {@link #HELP}.
    */
   public enum ExitCode {
     /** The return code for normal completion. */
     OK,
-    /** The return code for printing help. */
+    /** The return code for printing the help or version information. */
     HELP,
     /** The return code for bad parameters. */
     BAD_PARAMETERS,
@@ -117,7 +117,7 @@ public class CodeGenerator {
     /**
      * Gets the exit code.
      *
-     * <p>A non-zero exit code indicates error.
+     * <p>A non-zero exit code indicates error, with the exception of {@link #HELP}.
      *
      * @return the exit code
      */

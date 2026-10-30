@@ -36,7 +36,8 @@ import java.util.Arrays;
  * i.toString(); // "[1][3]"
  * i.pop();
  * i.toString(); // "[1]"
- * i.replace(43);
+ * i.pop();
+ * i.push(43);
  * i.toString(); // "[43]"
  * </pre>
  *

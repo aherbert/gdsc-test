@@ -24,7 +24,7 @@ public class <Float>IsBinaryEqual
   private final <int> binaryReference;
 
   /**
-   * Create a predicate to test a {@code <float>} value is close to a {@code reference} value using
+   * Create a predicate to test a {@code <float>} value is equal to a {@code reference} value using
    * binary equality.
    *
    * \<p>Equality to the {@code reference} value will use binary comparison of the values

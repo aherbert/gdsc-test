@@ -112,7 +112,8 @@ public final class Hex {
    *
    * <p>If the sequence is not a valid hex character then an empty array is returned.
    *
-   * <p>If the sequence is an odd length then the final hex character is assumed to be '0'.
+   * <p>If the sequence is an odd length then a final '0' character is assumed, i.e. the last hex
+   * character is used for the upper 4 bits of the final byte.
    *
    * @param string the string
    * @return the bytes

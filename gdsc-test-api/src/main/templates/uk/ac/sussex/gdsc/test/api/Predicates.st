@@ -284,7 +284,7 @@ public final class Predicates {
   /**
    * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
    * using a relative and/or an absolute error.
-   * The relative error between values {@code value1\} and {@code value2\} is
+   * The relative error between values {@code reference\} and {@code value\} is
    * relative to the largest magnitude of the two values and the test is:
    *
    * \<pre>

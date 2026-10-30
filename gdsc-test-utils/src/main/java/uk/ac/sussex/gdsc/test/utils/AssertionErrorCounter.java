@@ -35,10 +35,11 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
  * in multiple tests execute in parallel. If any single test index exceeds the limit then the
  * assertion error will be thrown.
  *
- * <p>The class can be used with lambda functions, e.g.
+ * <p>The class can be used with lambda functions, e.g. (using Java assertions enabled with
+ * {@code -ea}):
  *
  * <pre>
- * TestCounter c = new TestCounter(2);
+ * AssertionErrorCounter c = new AssertionErrorCounter(2);
  * c.run(() -&gt; {
  *   assert 1 == 0;
  * });

@@ -468,7 +468,7 @@ public final class TestLogging {
 
   /**
    * Get the record to log the result of two tasks. A test is made to determine if the fast has a
-   * lower time than the slow.
+   * time lower than or equal to the slow.
    *
    * <ul>
    *
@@ -494,7 +494,7 @@ public final class TestLogging {
 
   /**
    * Get the record to log the result of two tasks. A test is made to determine if the fast has a
-   * lower time than the slow.
+   * time lower than or equal to the slow.
    *
    * <ul>
    *
@@ -523,7 +523,7 @@ public final class TestLogging {
 
   /**
    * Get the record to log the result of two tasks. A test is made to determine if the fast has a
-   * lower time than the slow.
+   * time lower than or equal to the slow.
    *
    * <ul>
    *
@@ -552,7 +552,7 @@ public final class TestLogging {
 
   /**
    * Get the record to log the result of two tasks. A test is made to determine if the fast has a
-   * lower time than the slow.
+   * time lower than or equal to the slow.
    *
    * <ul>
    *
