@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -91,6 +92,29 @@ class TestLoggingTest {
       checkSerialize(l, TestLogging.getRecord(l, format, args), expected);
       checkSerialize(l, TestLogging.getRecord(l, () -> String.format(format, args)), expected);
     }
+  }
+
+  @Test
+  void canSerializeRecordWithFormatSpecifiers() throws IOException, ClassNotFoundException {
+    // Messages containing format specifiers must not be formatted
+    final Level l = TestLevel.TEST_INFO;
+    for (final String expected : new String[] {"100% pass", "50%% done", "Value %d", "%n%s"}) {
+      checkSerialize(l, TestLogging.getRecord(l, expected), expected);
+      checkSerialize(l, TestLogging.getRecord(l, () -> expected), expected);
+      checkSerialize(TestLevel.TEST_FAILURE, TestLogging.getFailRecord(() -> expected), expected);
+    }
+  }
+
+  @Test
+  void canSerializeRecordWithNonSerializableArguments()
+      throws IOException, ClassNotFoundException {
+    // Optional is not serializable
+    final Object arg = Optional.of("abc");
+    final String format = "Value %s, %d%%";
+    final String expected = String.format(format, arg, 42);
+    final Level l = TestLevel.TEST_INFO;
+    checkSerialize(l, TestLogging.getRecord(l, format, arg, 42), expected);
+    checkSerialize(TestLevel.TEST_FAILURE, TestLogging.getFailRecord(format, arg, 42), expected);
   }
 
   private static void checkSerialize(Level level, LogRecord record, String expected)

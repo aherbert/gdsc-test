@@ -49,6 +49,12 @@ Minor release of GDSC Test.
        Previously failures could be lost if the same test index was used by multiple threads
        concurrently; use of a dedicated index per thread was not affected.
 
+   * - Fix
+     - ``TestLogging`` records created with a message supplier or object can be serialised
+       when the message contains a format specifier, e.g. ``%``. Previously the message was
+       used as the format string of the deserialised record. Records created with a format and
+       arguments can be serialised when the arguments are not serialisable.
+
 Version 1.1
 -------------
 

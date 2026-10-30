@@ -92,8 +92,6 @@ public final class TestLogging {
     private static final Supplier<String> NO_SUPPLIER = null;
     /** The constant for no format. */
     private static final String NO_FORMAT = null;
-    /** The constant for no arguments. */
-    private static final Object[] NO_ARGS = null;
 
     /**
      * The message supplier.
@@ -180,11 +178,21 @@ public final class TestLogging {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-      // The message supplier cannot be serialised so convert to a format string
-      // and empty arguments
-      if (msgSupplier != null) {
-        format = msgSupplier.get();
-        args = NO_ARGS; // These can be null
+      // The message supplier cannot be serialised and the format arguments may not be
+      // serialisable. Create the message and store it as the argument to a format string.
+      // The message cannot be used as the format string as it may contain format
+      // specifiers, e.g. '%'.
+      final String message;
+      if (format != null) {
+        message = String.format(format, args);
+      } else if (msgSupplier != null) {
+        message = msgSupplier.get();
+      } else {
+        message = null;
+      }
+      if (message != null) {
+        format = "%s";
+        args = new Object[] {message};
         msgSupplier = NO_SUPPLIER;
       }
       out.defaultWriteObject();
