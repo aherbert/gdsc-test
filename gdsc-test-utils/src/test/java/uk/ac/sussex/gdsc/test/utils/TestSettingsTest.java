@@ -26,6 +26,10 @@ import uk.ac.sussex.gdsc.test.utils.TestLogging.TestLevel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -93,6 +97,43 @@ class TestSettingsTest {
       TestSettings.setSeed(seed);
 
     } finally {
+      logger.setLevel(level);
+    }
+  }
+
+  @Test
+  void testGetSeedInParallel() throws Exception {
+    // Disable logging the seed
+    final Logger logger = Logger.getLogger(TestSettings.class.getName());
+    final Level level = logger.getLevel();
+    logger.setLevel(Level.OFF);
+
+    final byte[] seed = TestSettings.getSeed();
+    final int threads = 4;
+    final ExecutorService executor = Executors.newFixedThreadPool(threads);
+    try {
+      for (int repeat = 0; repeat < 200; repeat++) {
+        // Generate a new seed on the first call to getSeed
+        TestSettings.setSeed(null);
+        final CountDownLatch start = new CountDownLatch(1);
+        final List<Future<byte[]>> futures = new ArrayList<>();
+        for (int i = 0; i < threads; i++) {
+          futures.add(executor.submit(() -> {
+            start.await();
+            return TestSettings.getSeed();
+          }));
+        }
+        start.countDown();
+        final byte[] expected = futures.get(0).get();
+        for (final Future<byte[]> f : futures) {
+          Assertions.assertArrayEquals(expected, f.get(), "All threads should use the same seed");
+        }
+        Assertions.assertArrayEquals(expected, TestSettings.getSeed(), "Seed should be constant");
+      }
+    } finally {
+      executor.shutdown();
+      // Restore
+      TestSettings.setSeed(seed);
       logger.setLevel(level);
     }
   }

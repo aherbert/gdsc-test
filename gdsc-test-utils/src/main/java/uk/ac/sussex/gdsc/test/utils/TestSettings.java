@@ -22,6 +22,7 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,10 +76,7 @@ public final class TestSettings {
   private static final int TEST_COMPLEXITY;
 
   /** The fixed seed for uniform random generator. */
-  private static byte[] seed;
-
-  /** The lock object used to synchronise when seed is updated. */
-  private static final Object SEED_LOCK = new Object();
+  private static final AtomicReference<byte[]> SEED;
 
   /**
    * The number of repeats for tests using the seeded uniform random generator.
@@ -87,7 +85,7 @@ public final class TestSettings {
 
   static {
     TEST_COMPLEXITY = getProperty(PROPERTY_TEST_COMPLEXITY, TestComplexity.NONE.getValue());
-    seed = getProperty(PROPERTY_RANDOM_SEED, NO_SEED);
+    SEED = new AtomicReference<>(getProperty(PROPERTY_RANDOM_SEED, NO_SEED));
     // Ensure repeated tests run once. They should be disabled using other
     // mechanisms.
     repeats = Math.max(1, getProperty(PROPERTY_RANDOM_REPEATS, 1));
@@ -193,9 +191,7 @@ public final class TestSettings {
    */
   static void setSeed(byte[] bytes) {
     final byte[] newSeed = (RandomSeeds.nullOrEmpty(bytes)) ? NO_SEED : bytes.clone();
-    synchronized (SEED_LOCK) {
-      seed = newSeed;
-    }
+    SEED.set(newSeed);
   }
 
   /**
@@ -204,7 +200,8 @@ public final class TestSettings {
    * <p>This is set using the system property {@value #PROPERTY_RANDOM_SEED}.
    *
    * <p>If not set then a random seed will be generated and logged at the {@link Level#INFO} level
-   * to allow tests to be repeated (if a failure occurs).
+   * to allow tests to be repeated (if a failure occurs). The generated seed is returned by all
+   * subsequent calls.
    *
    * <p>Note: It is not recommended to use the same seed for random tests to ensure the tests are
    * robust to failure introduced by randomness.
@@ -212,16 +209,20 @@ public final class TestSettings {
    * @return the seed
    */
   public static byte[] getSeed() {
-    byte[] currentSeed = seed;
+    byte[] currentSeed = SEED.get();
     if (currentSeed == null) {
-      currentSeed = RandomSeeds.generateSeed(DEFAULT_SEED_SIZE);
-      // Log the seed that is generated
-      final Logger logger = Logger.getLogger(TestSettings.class.getName());
-      if (logger.isLoggable(Level.INFO)) {
-        logger
-            .info(String.format("-D%s=%s", PROPERTY_RANDOM_SEED, Hex.encodeAsString(currentSeed)));
+      // Atomically set the seed if null. The update function may be applied multiple times
+      // under contention so the new seed is generated outside the function.
+      final byte[] newSeed = RandomSeeds.generateSeed(DEFAULT_SEED_SIZE);
+      currentSeed = SEED.updateAndGet(s -> s == null ? newSeed : s);
+      // Log the seed only if it is used, i.e. was not set by another thread
+      if (currentSeed == newSeed) {
+        final Logger logger = Logger.getLogger(TestSettings.class.getName());
+        if (logger.isLoggable(Level.INFO)) {
+          logger.info(
+              String.format("-D%s=%s", PROPERTY_RANDOM_SEED, Hex.encodeAsString(currentSeed)));
+        }
       }
-      setSeed(currentSeed);
     }
     // Do not expose the internal seed by using a copy
     return currentSeed.clone();

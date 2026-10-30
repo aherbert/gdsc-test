@@ -55,6 +55,10 @@ Minor release of GDSC Test.
        used as the format string of the deserialised record. Records created with a format and
        arguments can be serialised when the arguments are not serialisable.
 
+   * - Fix
+     - ``TestSettings.getSeed`` generates a single seed when called concurrently and no seed
+       is set. Previously concurrent calls could generate and return different seeds.
+
 Version 1.1
 -------------
 
