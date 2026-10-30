@@ -23,6 +23,7 @@
 package uk.ac.sussex.gdsc.test.rng;
 
 import java.util.stream.Stream;
+import org.apache.commons.rng.RandomProviderState;
 import org.apache.commons.rng.RestorableUniformRandomProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -109,6 +110,22 @@ class L64X128MTest extends BaseLongUniformRandomProviderTest {
       zeroOutput |= value;
     }
     Assertions.assertNotEquals(0, zeroOutput, "Zero seed should not create all zero output");
+  }
+
+  @Test
+  void testRestoreStateToDifferentInstance() {
+    // Generators with a different LCG addition
+    final L64X128M rng1 = new L64X128M(1, 2, 3, 4);
+    final L64X128M rng2 = new L64X128M(5, 2, 3, 4);
+    final RandomProviderState state = rng1.saveState();
+    final long[] expected = new long[10];
+    for (int i = 0; i < expected.length; i++) {
+      expected[i] = rng1.nextLong();
+    }
+    rng2.restoreState(state);
+    for (int i = 0; i < expected.length; i++) {
+      Assertions.assertEquals(expected[i], rng2.nextLong());
+    }
   }
 
   @Test

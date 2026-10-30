@@ -41,10 +41,6 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * <p>Memory footprint is 256 bits and the period is 2<sup>64</sup> 2<sup>128</sup>-1.
  *
- * <p>Note: This class only supports the save/restore functionality of
- * {@link org.apache.commons.rng.RestorableUniformRandomProvider RestorableUniformRandomProvider}
- * when the saved state is used on the <em>same</em> instance of the generator.
- *
  * @see <a href="https://prng.di.unimi.it/">xorshiro / xoroshiro generators</a>
  * @see <a href="https://doi.org/10.1145/3485525">Steele &amp; Vigna (2021) Proc. ACM Programming
  *      Languages 5, 1-31</a>
@@ -54,7 +50,7 @@ public final class L64X128M extends LongUniformRandomProvider {
   private static final long M = 0xd1342543de82ef95L;
 
   /** Per-instance LCG additive parameter (must be odd). */
-  private final long a;
+  private long a;
   /** State of the LCG generator. */
   private long s;
   /** State 0 of the XBG generator (x0 and x1 are never both zero). */
@@ -177,11 +173,12 @@ public final class L64X128M extends LongUniformRandomProvider {
 
   @Override
   int getStateSize() {
-    return 3 * Long.BYTES;
+    return 4 * Long.BYTES;
   }
 
   @Override
   void saveState(ByteBuffer bb) {
+    bb.putLong(a);
     bb.putLong(s);
     bb.putLong(x0);
     bb.putLong(x1);
@@ -189,6 +186,7 @@ public final class L64X128M extends LongUniformRandomProvider {
 
   @Override
   void restoreState(ByteBuffer bb) {
+    a = bb.getLong();
     s = bb.getLong();
     x0 = bb.getLong();
     x1 = bb.getLong();

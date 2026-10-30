@@ -28,6 +28,10 @@ Minor release of GDSC Test.
    * - Update
      - Log a warning when a ``gdsc.test`` system property has an invalid value and is ignored.
 
+   * - Update
+     - ``L64X128M`` saves the full generator state to support restoring the state to a different
+       instance, as allowed by ``RestorableUniformRandomProvider``.
+
    * - Fix
      - Correct the documentation. The random source example uses ``RngFactory``.
 
