@@ -63,6 +63,10 @@ Minor release of GDSC Test.
      - ``TestSettings.getSeed`` generates a single seed when called concurrently and no seed
        is set. Previously concurrent calls could generate and return different seeds.
 
+   * - Fix
+     - Restoring the state of a generator created by ``RngFactory`` throws an
+       ``IllegalArgumentException`` if the state was saved by a different type of generator.
+
 Version 1.1
 -------------
 

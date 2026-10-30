@@ -109,9 +109,12 @@ abstract class LongUniformRandomProvider implements RestorableUniformRandomProvi
 
   @Override
   public void restoreState(RandomProviderState state) {
-    if (state instanceof RngState) {
-      final RngState rngState = (RngState) state;
-      final ByteBuffer bb = ByteBuffer.wrap(rngState.state);
+    // Detect a state saved by a generator with a different state size.
+    // Note: This relies on each generator having a unique state size. Adding a generator
+    // with the same state size as an existing generator will require refactoring of the
+    // save/restore state, e.g. to record the generator class in the state.
+    if (state instanceof RngState && ((RngState) state).state.length == getStateSize()) {
+      final ByteBuffer bb = ByteBuffer.wrap(((RngState) state).state);
       restoreState(bb);
     } else {
       throw new IllegalArgumentException("Incompatible state");

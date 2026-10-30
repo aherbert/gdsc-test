@@ -25,11 +25,14 @@ package uk.ac.sussex.gdsc.test.rng;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.LongSupplier;
+import org.apache.commons.rng.RandomProviderState;
+import org.apache.commons.rng.RestorableUniformRandomProvider;
 import org.apache.commons.rng.UniformRandomProvider;
 import org.apache.commons.rng.core.source32.IntProvider;
 import org.apache.commons.rng.simple.RandomSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -195,6 +198,16 @@ class LongUniformRandomProviderTest {
     for (int i = 0; i < N; i++) {
       Assertions.assertEquals(rng1.nextDouble(), rng2.nextDouble());
     }
+  }
+
+  @Test
+  void testRestoreUsingIncompatibleStateThrows() {
+    final RestorableUniformRandomProvider rng1 = new XoRoShiRo128PlusPlus(123);
+    final RestorableUniformRandomProvider rng2 = new L64X128M(123);
+    final RandomProviderState state1 = rng1.saveState();
+    final RandomProviderState state2 = rng2.saveState();
+    Assertions.assertThrows(IllegalArgumentException.class, () -> rng1.restoreState(state2));
+    Assertions.assertThrows(IllegalArgumentException.class, () -> rng2.restoreState(state1));
   }
 
   private abstract static class NoStateLongUniformRandomProvider extends LongUniformRandomProvider {
