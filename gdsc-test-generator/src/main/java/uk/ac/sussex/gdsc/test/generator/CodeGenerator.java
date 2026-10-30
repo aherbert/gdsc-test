@@ -299,10 +299,11 @@ public class CodeGenerator {
   /**
    * Load the file header.
    *
-   * <p>Returns the empty string if the file doesn't exists or is empty.
+   * <p>Returns the empty string if no header file is specified.
    *
    * @return the file header
-   * @throws IOException Signals that an I/O exception has occurred.
+   * @throws IOException Signals that an I/O exception has occurred, e.g. the header file does not
+   *         exist.
    */
   private String loadHeader() throws IOException {
     return (headerFile == null) ? "" : FileUtils.readFileToString(headerFile, (String) null);
@@ -365,14 +366,19 @@ public class CodeGenerator {
   /**
    * Gets the package name.
    *
-   * <p>The input path is assumed to start with the {@link File#separatorChar}.
+   * <p>The input path is assumed to be empty or start with the {@link File#separatorChar}.
    *
-   * <p>E.g. "/some/dir/structure" returns "some.dir.structure".
+   * <p>E.g. "/some/dir/structure" returns "some.dir.structure"; "" returns "" (the default
+   * package).
    *
    * @param pathFromSource the path from source
    * @return the package name
    */
   private static String getPackageName(String pathFromSource) {
+    if (pathFromSource.isEmpty()) {
+      // Default package
+      return "";
+    }
     final String packageName = pathFromSource.replace(File.separatorChar, '.');
     return packageName.substring(1);
   }

@@ -162,6 +162,70 @@ class CodeGeneratorTest {
   }
 
   @Test
+  void testGenerationInDefaultPackage() throws IOException {
+    // Create a source and target directory structure
+    final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
+    final File rootFile = root.toFile();
+
+    final String pathForSource = new File(rootFile, "source").getPath();
+    final String pathForTarget = new File(rootFile, "target").getPath();
+    final File sourceDir = new File(pathForSource);
+    FileUtils.forceMkdir(sourceDir);
+
+    // Write a template file in the source root
+    final String templateClassName = "MyTemplate";
+    final String template = "<package>class MyTemplate {}";
+    FileUtils.write(new File(sourceDir, templateClassName + ".st"), template,
+        StandardCharsets.UTF_8);
+
+    // Write a properties file. This can be empty.
+    final Properties properties = new Properties();
+    try (FileOutputStream outStream =
+        new FileOutputStream(new File(sourceDir, templateClassName + ".properties"))) {
+      properties.store(outStream, "Test template");
+    }
+
+    // Run the generator
+    final ExitCode result =
+        CodeGenerator.run(getArgs(pathForSource, pathForTarget, "-l", "WARNING"));
+    Assertions.assertEquals(ExitCode.OK, result, "Exit code");
+
+    // Check the expected target template has no package statement
+    final String template1 = FileUtils.readFileToString(
+        new File(pathForTarget, "MyTemplate.java"), StandardCharsets.UTF_8);
+    Assertions.assertEquals("class MyTemplate {}", template1, "Template");
+
+    // Clean up only on success
+    FileUtils.forceDeleteOnExit(rootFile);
+  }
+
+  @Test
+  void testMissingFileHeader() throws IOException {
+    // Create a source and target directory structure
+    final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
+    final File rootFile = root.toFile();
+
+    final String pathForSource = new File(rootFile, "source").getPath();
+    final String pathForTarget = new File(rootFile, "target").getPath();
+    final File sourceDir = new File(pathForSource, "org");
+    FileUtils.forceMkdir(sourceDir);
+
+    // Write a template file
+    final String templateClassName = "MyTemplate";
+    FileUtils.write(new File(sourceDir, templateClassName + ".st"), "template text",
+        StandardCharsets.UTF_8);
+
+    // Run the generator with a header file that does not exist
+    final File headerFile = new File(rootFile, "header.txt");
+    final ExitCode result = CodeGenerator.run(
+        getArgs(pathForSource, pathForTarget, "-l", "OFF", "--header", headerFile.getPath()));
+    Assertions.assertEquals(ExitCode.IO_ERROR, result, "Exit code");
+
+    // Clean up only on success
+    FileUtils.forceDeleteOnExit(rootFile);
+  }
+
+  @Test
   void testFileHeader() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());

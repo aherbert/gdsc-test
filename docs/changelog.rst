@@ -67,6 +67,10 @@ Minor release of GDSC Test.
      - Restoring the state of a generator created by ``RngFactory`` throws an
        ``IllegalArgumentException`` if the state was saved by a different type of generator.
 
+   * - Fix
+     - ``CodeGenerator`` supports templates in the source root directory (default package).
+       A null value (``\N``) for a class name substitution is reported as an invalid model.
+
 Version 1.1
 -------------
 

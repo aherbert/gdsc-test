@@ -340,6 +340,12 @@ public final class StringTemplateModel {
     // The class scope is a list of single strings
     final List<String> list =
         splitValue(scope.getRight(), properties.getProperty(scope.getRight()));
+    // The null string is not a valid class name substitution
+    if (list.contains(null)) {
+      throw new InvalidModelException(
+          String.format("Null substitution value for scope <%s> key: %s",
+              SubstitutionScope.CLASSNAME, scope.getRight()));
+    }
     if (classnameListSize != 0 && list.size() != classnameListSize) {
       throw new InvalidModelException(String.format(
           "Subsequent entry for scope <%s> has different size", SubstitutionScope.CLASSNAME));

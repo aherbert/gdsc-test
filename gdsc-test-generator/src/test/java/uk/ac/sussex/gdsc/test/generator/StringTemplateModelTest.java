@@ -391,6 +391,25 @@ class StringTemplateModelTest {
   }
 
   @Test
+  void testCreateThrowsWithNullClassnameScopeValue() {
+    final Properties properties = new Properties();
+    final String packageName = "";
+    final String templateClassName = "MyTemplate";
+    final String template = "";
+
+    // Null string value in classname scope
+    final String key = "classname.My";
+    final String value = "His \\N";
+    properties.clear();
+    properties.put(key, value);
+
+    final String message = Assertions.assertThrows(InvalidModelException.class, () -> {
+      StringTemplateModel.create(properties, packageName, templateClassName, template);
+    }).getMessage();
+    assertMessageContains(message, "value", "the fail reason was a bad value");
+  }
+
+  @Test
   void testCreateThrowsWithOnlyWhitespaceInClassnameScopeValue() {
     final Properties properties = new Properties();
     final String packageName = "";
