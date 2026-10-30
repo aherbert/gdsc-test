@@ -40,6 +40,10 @@ Minor release of GDSC Test.
      - ``LongEquality`` relative error comparisons support a difference between the values
        that overflows a signed ``long``.
 
+   * - Fix
+     - ``TestAssertions.assertArrayTest`` applies the predicate when the expected and actual
+       arrays are the same object. Null expected and actual arrays fail the assertion.
+
 Version 1.1
 -------------
 

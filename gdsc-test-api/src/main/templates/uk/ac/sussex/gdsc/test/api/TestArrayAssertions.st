@@ -100,20 +100,12 @@ final class TestArrayAssertions {
    */
   private static void assertArrayTest(Object[] expected, Object[] actual, PrimitiveBiPredicate test,
       Object messageOrSupplier, Indices indices) {
-    if (expected == actual) {
-      return;
-    }
     assertNotNull(expected, actual, messageOrSupplier, indices);
     assertEqualLengths(expected.length, actual.length, messageOrSupplier, indices);
 
     for (int i = 0; i \< expected.length; i++) {
       final Object e = expected[i];
       final Object a = actual[i];
-
-      if (e == a) {
-        // Fast skip of the same object
-        continue;
-      }
 
       indices.push(i);
       assertArrayElements(e, a, test, messageOrSupplier, indices);
@@ -212,9 +204,6 @@ final class TestArrayAssertions {
    */
   static void assertArrayTest(<type>[] expected, <type>[] actual,
       <Type><Type>BiPredicate test, Object messageOrSupplier, Indices indices) {
-    if (expected == actual) {
-      return;
-    \}
     assertNotNull(expected, actual, messageOrSupplier, indices);
     assertEqualLengths(expected.length, actual.length, messageOrSupplier, indices);
 

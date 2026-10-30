@@ -373,6 +373,10 @@ public class TestAssertionsTest {
     Assertions.assertDoesNotThrow(() -> {
       TestAssertions.assertArrayTest(value1, value1, new Dummy<Type><Type>BiPredicate(1));
     \}, "Throws with same array for expected and actual");
+    // Same array is tested with the predicate
+    Assertions.assertThrows(AssertionError.class, () -> {
+      TestAssertions.assertArrayTest(value1, value1, new Dummy<Type><Type>BiPredicate(0));
+    \}, "Does not throw with same array for expected and actual and failed test");
 
     // No message
     Assertions.assertDoesNotThrow(() -> {
@@ -433,6 +437,13 @@ public class TestAssertionsTest {
         "the failure was due to the expected being null");
     assertMessageContains(message, "null", "the failure was due to the expected being null");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
+
+    message = Assertions.assertThrows(AssertionError.class, () -> {
+      TestAssertions.assertArrayTest(nullValue, nullValue,
+          new Dummy<Type><Type>BiPredicate(1), testMessageSupplier);
+    \}, "Does not throw with null expected and actual arrays").getMessage();
+    assertMessageContains(message, "expected array",
+        "the failure was due to the expected being null");
 
     // Length mismatch
     <type>[] longerValue = new <type>[]{ <dummyValue1>, <dummyValue1> \};
@@ -588,6 +599,10 @@ public class TestAssertionsTest {
       TestAssertions.assertArrayTest(nestedValue1, nestedValue1,
           new Dummy<Type><Type>BiPredicate(1));
     \}, "Throws with same reference");
+    Assertions.assertThrows(AssertionError.class, () -> {
+      TestAssertions.assertArrayTest(nestedValue1, nestedValue1,
+          new Dummy<Type><Type>BiPredicate(0));
+    \}, "Does not throw with same reference and failed test");
 
     // Test with same reference to nested array
     Object[] nestedValue1b = new <type>[][][]{{ value1 \}\};
@@ -595,6 +610,10 @@ public class TestAssertionsTest {
       TestAssertions.assertArrayTest(nestedValue1, nestedValue1b,
           new Dummy<Type><Type>BiPredicate(1));
     \}, "Throws with same nested array");
+    Assertions.assertThrows(AssertionError.class, () -> {
+      TestAssertions.assertArrayTest(nestedValue1, nestedValue1b,
+          new Dummy<Type><Type>BiPredicate(0));
+    \}, "Does not throw with same nested array and failed test");
 
     // No message
     Assertions.assertDoesNotThrow(() -> {
@@ -657,6 +676,13 @@ public class TestAssertionsTest {
         "the failure was due to the expected being null");
     assertMessageContains(message, "null", "the failure was due to the expected being null");
     assertMessageContains(message, testMessageSupplier.get(), "the supplied message");
+
+    message = Assertions.assertThrows(AssertionError.class, () -> {
+      TestAssertions.assertArrayTest(nullValue, nullValue,
+          new Dummy<Type><Type>BiPredicate(1), testMessageSupplier);
+    \}, "Does not throw with null expected and actual arrays").getMessage();
+    assertMessageContains(message, "expected array",
+        "the failure was due to the expected being null");
 
     // Length mismatch
     <type>[][][] longerValue = new <type>[][][]{{{ <dummyValue1>, <dummyValue1> \}\}\};
