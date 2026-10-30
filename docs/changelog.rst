@@ -44,6 +44,11 @@ Minor release of GDSC Test.
      - ``TestAssertions.assertArrayTest`` applies the predicate when the expected and actual
        arrays are the same object. Null expected and actual arrays fail the assertion.
 
+   * - Fix
+     - ``AssertionErrorCounter`` counts failures atomically to support tests run in parallel.
+       Previously failures could be lost if the same test index was used by multiple threads
+       concurrently; use of a dedicated index per thread was not affected.
+
 Version 1.1
 -------------
 

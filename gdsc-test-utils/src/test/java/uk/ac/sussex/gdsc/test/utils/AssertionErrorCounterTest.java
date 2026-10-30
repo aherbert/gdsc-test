@@ -22,6 +22,13 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -147,5 +154,49 @@ class AssertionErrorCounterTest {
     final AssertionErrorCounter tc1 = new AssertionErrorCounter(failLimit, size);
     tc1.run(ERROR);
     tc1.run(1, ERROR);
+  }
+
+  @Test
+  void canCountFailuresInParallel() throws Exception {
+    final int threads = 4;
+    final int failuresPerThread = 10000;
+    final int size = 2;
+    // The limit allows all but one of the failures
+    final int failLimit = threads * failuresPerThread - 1;
+    final AssertionErrorCounter tc = new AssertionErrorCounter(failLimit, size);
+    final AtomicInteger[] thrown = {new AtomicInteger(), new AtomicInteger()};
+    final CountDownLatch start = new CountDownLatch(1);
+    final ExecutorService executor = Executors.newFixedThreadPool(threads);
+    try {
+      final List<Future<?>> futures = new ArrayList<>();
+      for (int i = 0; i < threads; i++) {
+        futures.add(executor.submit(() -> {
+          start.await();
+          for (int j = 0; j < failuresPerThread; j++) {
+            for (int index = 0; index < size; index++) {
+              try {
+                tc.run(index, ERROR);
+              } catch (final AssertionError ex) {
+                thrown[index].incrementAndGet();
+              }
+            }
+          }
+          return null;
+        }));
+      }
+      start.countDown();
+      for (final Future<?> f : futures) {
+        f.get();
+      }
+    } finally {
+      executor.shutdown();
+    }
+    // Exactly one failure for each index exceeds the limit
+    for (int index = 0; index < size; index++) {
+      Assertions.assertEquals(1, thrown[index].get(), "Failures exceeding the limit");
+      // Subsequent failures are thrown
+      final int i = index;
+      Assertions.assertThrows(AssertionError.class, () -> tc.run(i, ERROR));
+    }
   }
 }

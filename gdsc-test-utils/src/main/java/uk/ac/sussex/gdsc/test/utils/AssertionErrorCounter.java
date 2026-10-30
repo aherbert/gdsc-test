@@ -22,6 +22,8 @@
 
 package uk.ac.sussex.gdsc.test.utils;
 
+import java.util.concurrent.atomic.AtomicIntegerArray;
+
 /**
  * Runs test assertions and counts any thrown {@link AssertionError}s. If the limit is exceeded then
  * the last generated error is thrown. Any other runtime exception will not be suppressed.
@@ -57,7 +59,7 @@ public class AssertionErrorCounter {
   private final int failureLimit;
 
   /** The failures. */
-  private final int[] failures;
+  private final AtomicIntegerArray failures;
 
   /**
    * Compute the failure limit.
@@ -102,7 +104,7 @@ public class AssertionErrorCounter {
     if (size <= 0) {
       throw new IllegalArgumentException("Size must be strictly positive: " + size);
     }
-    failures = new int[size];
+    failures = new AtomicIntegerArray(size);
   }
 
   /**
@@ -124,8 +126,8 @@ public class AssertionErrorCounter {
    * @throws AssertionError the assertion error if the failure limit has been exceeded
    */
   public void run(int index, TestAssertion test) {
-    if (index < 0 || index >= failures.length) {
-      throw new IllegalArgumentException("Invalid index : " + index + " / " + failures.length);
+    if (index < 0 || index >= failures.length()) {
+      throw new IllegalArgumentException("Invalid index : " + index + " / " + failures.length());
     }
     runTest(index, test);
   }
@@ -141,10 +143,12 @@ public class AssertionErrorCounter {
     try {
       test.test();
     } catch (final AssertionError ex) {
-      if (failures[index] >= failureLimit) {
+      // Atomically increment the failure count if below the limit.
+      // The count is not incremented when at the limit to avoid overflow.
+      if (failures.getAndUpdate(index,
+          count -> count < failureLimit ? count + 1 : count) >= failureLimit) {
         throw ex;
       }
-      failures[index]++;
     }
   }
 }
