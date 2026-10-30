@@ -143,6 +143,9 @@ public final class RngFactory {
    * Gets a uniform random provider with a fixed seed set using the system property
    * {@link TestSettings#PROPERTY_RANDOM_SEED}.
    *
+   * <p>If the system property is not set then a random seed is generated and logged by
+   * {@link TestSettings#getSeed()}. The same seed is used for all subsequent calls.
+   *
    * <p>Note: To obtain a randomly seeded provider use {@link #create(byte[])} passing null as the
    * seed.
    *

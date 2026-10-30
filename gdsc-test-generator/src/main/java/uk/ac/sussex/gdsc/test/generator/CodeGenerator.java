@@ -114,7 +114,7 @@ public class CodeGenerator {
     MISSING_TEMPLATES,
     /** The return code for a file input/output error. */
     IO_ERROR,
-    /** The return code for any other error. */
+    /** The return code for any other error, e.g. an unexpected runtime exception. */
     FAILED;
 
     /**
@@ -196,7 +196,8 @@ public class CodeGenerator {
    * ({@link System#out}).
    *
    * <p>Any errors generating the Java code are logged using {@link java.util.logging.Logger} and
-   * the method returns a code indicating the result.
+   * the method returns a code indicating the result. An unexpected runtime exception returns
+   * {@link ExitCode#FAILED}.
    *
    * <p>Runtime errors will not be caught and logged.
    *
@@ -229,7 +230,8 @@ public class CodeGenerator {
       new DefaultExceptionHandler<List<Object>>().useErr(getErr())
           .useAnsi(CommandLine.Help.Ansi.AUTO).handleParseException(ex, args);
       return ExitCode.BAD_PARAMETERS;
-    } catch (final InvalidModelException | IOException ex) {
+    } catch (final InvalidModelException | IOException | RuntimeException ex) {
+      // Any runtime exception is unexpected and returns the FAILED exit code
       final LogRecord lr =
           new LogRecord(Level.SEVERE, "Failed to generate code: " + ex.getMessage());
       if (apiGenerator.debug) {

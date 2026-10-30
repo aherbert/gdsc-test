@@ -36,6 +36,8 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -51,6 +53,19 @@ class CodeGeneratorTest {
         CodeGenerator.getExitCodeForException(new InvalidModelException("Test")));
     Assertions.assertEquals(ExitCode.FAILED,
         CodeGenerator.getExitCodeForException(new Exception()));
+  }
+
+  @Test
+  void testUnexpectedExceptionReturnsFailed() {
+    final Logger logger = Logger.getLogger(CodeGenerator.class.getName());
+    final Level level = logger.getLevel();
+    logger.setLevel(Level.OFF);
+    try {
+      // Null arguments cause an unexpected runtime exception
+      Assertions.assertEquals(ExitCode.FAILED, CodeGenerator.run(null), "Exit code");
+    } finally {
+      logger.setLevel(level);
+    }
   }
 
   @Test

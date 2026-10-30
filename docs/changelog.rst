@@ -90,6 +90,11 @@ Minor release of GDSC Test.
        match the encoding of the generated code. Previously the platform default encoding was
        used.
 
+   * - Fix
+     - ``CodeGenerator`` reports a malformed substitution value, e.g. an unclosed quote, as an
+       invalid model. Any other unexpected error returns the ``FAILED`` exit code; previously the
+       exception was not caught and the exit code matched the ``HELP`` exit code.
+
 Version 1.1
 -------------
 

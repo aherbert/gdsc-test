@@ -24,6 +24,7 @@ package uk.ac.sussex.gdsc.test.generator;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -420,8 +421,9 @@ public final class StringTemplateModel {
         values.add(field);
       }
       return values;
-    } catch (final IOException ex) {
-      // This should not happen with a non-null string
+    } catch (final IOException | UncheckedIOException ex) {
+      // This should not happen with a non-null string unless the value is malformed,
+      // e.g. an unclosed quote
       throw new InvalidModelException("Failed to read value: " + value, ex);
     }
   }

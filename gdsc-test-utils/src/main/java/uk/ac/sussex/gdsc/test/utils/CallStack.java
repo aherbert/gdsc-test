@@ -92,8 +92,10 @@ public final class CallStack {
    *
    * <p>Note: This method will generate a stack trace to extract the required information.
    *
+   * <p>Returns null if the count exceeds the depth of the stack trace.
+   *
    * @param count the count
-   * @return the stack trace element
+   * @return the stack trace element (or null)
    * @throws IllegalArgumentException if {@code count < 0}
    */
   public static StackTraceElement getStackTraceElement(int count) {
@@ -108,7 +110,7 @@ public final class CallStack {
    * offset this by a count of elements to locate a position before this method in the stack trace.
    *
    * @param count the count ({@code >=0})
-   * @return the stack trace element
+   * @return the stack trace element (or null if the count exceeds the stack depth)
    */
   private static StackTraceElement
       getStackTraceElement_499ad503_0184_4099_bf36_65c73b4932d3(int count) {
