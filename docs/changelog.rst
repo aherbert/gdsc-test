@@ -32,9 +32,9 @@ Minor release of GDSC Test.
      - Correct the documentation. The random source example uses ``RngFactory``.
 
    * - Fix
-     - Absolute and relative error comparisons evaluate the difference between the values
-       exactly. The relative limit is computed using double precision. This is consistent for
-       all primitive types. Infinite ``double`` and ``float`` values are not close.
+     - Relative error comparisons of ``double`` and ``float`` values return false if either
+       value is infinite. The difference between the values and the relative limit are computed
+       without overflow.
 
    * - Fix
      - ``LongEquality`` relative error comparisons support a difference between the values

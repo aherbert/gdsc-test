@@ -162,7 +162,7 @@ public final class DoubleEquality {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
-   * <p>The test is evaluated exactly, i.e. as if computed with infinite precision.
+   * <p>The difference between the values is computed using double precision.
    *
    * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(double)}.
    *
@@ -176,39 +176,8 @@ public final class DoubleEquality {
     // Ignore NaNs. This is OK since if either number is a NaN the difference
     // will be NaN and we end up returning false. An infinite value creates a difference
     // that is infinite or NaN and also returns false.
-    return testAreWithin(value1, value2, Math.abs(value1 - value2), absoluteError);
-  }
-
-  /**
-   * Tests that two doubles are equal within an error, i.e. {@code |value1-value2| <= error}. The
-   * test is evaluated exactly, i.e. as if computed with infinite precision.
-   *
-   * <p>If either value is NaN or Infinity the difference is NaN or Infinity and this returns
-   * false. This also applies if the difference of finite values overflows.
-   *
-   * <p>It is assumed the error is finite.
-   *
-   * @param value1 the first value
-   * @param value2 the second value
-   * @param delta the absolute difference {@code |value1-value2|} computed using double precision
-   * @param error the maximum error
-   * @return true if equal within the error
-   */
-  private static boolean testAreWithin(double value1, double value2, double delta,
-      double error) {
-    if (delta != error) {
-      // Rounding to nearest is monotonic and the error is a double. Thus the rounded
-      // difference is unambiguous unless it is equal to the error.
-      return delta < error;
-    }
-    // The rounded difference equals the error.
-    // Compute the round-off of the difference using Knuth's TwoDiff.
-    final double x = value1 - value2;
-    final double bVirtual = value1 - x;
-    final double t = (value1 - (x + bVirtual)) - (value2 - bVirtual);
-    // The exact difference is x + t. It is within the error if the round-off
-    // is zero or reduces the magnitude, i.e. t has the opposite sign to x.
-    return x > 0 ? t <= 0 : t >= 0;
+    final double delta = Math.abs(value1 - value2);
+    return delta <= absoluteError;
   }
 
   /**
@@ -270,10 +239,9 @@ public final class DoubleEquality {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
-   * <p>The relative limit is computed using double precision as
-   * {@code max(|value1|, |value2|) * relativeError}. The difference between the values is compared
-   * to the absolute error and the relative limit exactly, i.e. as if computed with infinite
-   * precision.
+   * <p>The difference between the values is computed using double precision. The relative limit is
+   * computed using double precision as {@code max(|value1|, |value2|) * relativeError}. These are
+   * computed without overflow, i.e. as if rounded with an unbounded exponent.
    *
    * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, double)}.
    *
@@ -288,7 +256,7 @@ public final class DoubleEquality {
   static boolean testAreClose(double value1, double value2, double relativeError,
       double absoluteError) {
     final double delta = Math.abs(value1 - value2);
-    if (testAreWithin(value1, value2, delta, absoluteError)) {
+    if (delta <= absoluteError) {
       return true;
     }
     // An infinite or NaN value cannot be close to any value. This must be checked as the
@@ -371,9 +339,9 @@ public final class DoubleEquality {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
-   * <p>The relative limit is computed using double precision as
-   * {@code |expected| * relativeError}. The difference between the values is compared to the
-   * absolute error and the relative limit exactly, i.e. as if computed with infinite precision.
+   * <p>The difference between the values is computed using double precision. The relative limit is
+   * computed using double precision as {@code |expected| * relativeError}. These are computed
+   * without overflow, i.e. as if rounded with an unbounded exponent.
    *
    * <p>It is assumed the errors have been validated with
    * {@link #validateIsCloseTo(double, double)}.
@@ -389,7 +357,7 @@ public final class DoubleEquality {
   static boolean testIsCloseTo(double expected, double actual, double relativeError,
       double absoluteError) {
     final double delta = Math.abs(expected - actual);
-    if (testAreWithin(expected, actual, delta, absoluteError)) {
+    if (delta <= absoluteError) {
       return true;
     }
     // An infinite or NaN value cannot be close to any value. This must be checked as the
@@ -402,12 +370,9 @@ public final class DoubleEquality {
   }
 
   /**
-   * Tests that {@code |value1-value2| <= limit} where the relative limit is computed using double
-   * precision as {@code magnitude * relativeError}. The difference between the values is compared
-   * to the limit exactly, i.e. as if computed with infinite precision.
-   *
-   * <p>If the limit overflows it is computed as {@code 2 * (magnitude * (relativeError / 2))}
-   * without overflow, i.e. the product is rounded to double precision with an unbounded exponent.
+   * Tests that {@code |value1-value2| <= magnitude * relativeError}. The difference between the
+   * values is computed using double precision. The relative limit is computed using double
+   * precision. These are computed without overflow, i.e. as if rounded with an unbounded exponent.
    *
    * <p>It is assumed the values are finite.
    *
@@ -418,29 +383,14 @@ public final class DoubleEquality {
    * @param relativeError the relative error
    * @return true if the difference is within the relative limit
    */
-  private static boolean testRelative(double value1, double value2, double delta,
-      double magnitude, double relativeError) {
-    final double limit = magnitude * relativeError;
-    if (limit != Double.POSITIVE_INFINITY) {
-      return testAreWithin(value1, value2, delta, limit);
-    }
-    // The limit overflows. The magnitude is finite so the relative error is above 1
-    // and can be halved exactly to compute half the limit.
-    final double halfLimit = magnitude * (relativeError * 0.5);
-    if (halfLimit == Double.POSITIVE_INFINITY) {
-      // The limit is above 2 * MAX_VALUE which is above the difference of any finite values
-      return true;
-    }
+  private static boolean testRelative(double value1, double value2, double delta, double magnitude,
+      double relativeError) {
     if (delta != Double.POSITIVE_INFINITY) {
-      // The limit is at least MAX_VALUE. The exact difference is below MAX_VALUE + ulp(MAX_VALUE)
-      // and the limit is a multiple of ulp(MAX_VALUE).
-      return halfLimit > Double.MAX_VALUE / 2 || testAreWithin(value1, value2, delta,
-          Double.MAX_VALUE);
+      // An infinite limit is above any finite difference
+      return delta <= magnitude * relativeError;
     }
-    // The difference overflows. The values have opposite signs and magnitudes above
-    // ulp(MAX_VALUE) / 2 so they can be halved exactly.
-    final double half1 = value1 * 0.5;
-    final double half2 = value2 * 0.5;
-    return testAreWithin(half1, half2, Math.abs(half1 - half2), halfLimit);
+    // The difference of finite values overflows. The values have opposite signs and magnitudes
+    // that can be halved exactly. Compare half the difference to half the limit.
+    return Math.abs(value1 * 0.5 - value2 * 0.5) <= magnitude * 0.5 * relativeError;
   }
 }
