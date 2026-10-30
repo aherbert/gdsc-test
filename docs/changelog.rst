@@ -85,6 +85,11 @@ Minor release of GDSC Test.
      - ``CodeGenerator`` supports templates in the source root directory (default package).
        A null value (``\N``) for a class name substitution is reported as an invalid model.
 
+   * - Fix
+     - ``CodeGenerator`` reads the string-template files and the header file using UTF-8 to
+       match the encoding of the generated code. Previously the platform default encoding was
+       used.
+
 Version 1.1
 -------------
 

@@ -200,6 +200,49 @@ class CodeGeneratorTest {
   }
 
   @Test
+  void testNonAsciiFileHeaderAndTemplate() throws IOException {
+    // Create a source and target directory structure
+    final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());
+    final File rootFile = root.toFile();
+
+    final String pathForSource = new File(rootFile, "source").getPath();
+    final String pathForTarget = new File(rootFile, "target").getPath();
+    final File sourceDir = new File(pathForSource, "org");
+    FileUtils.forceMkdir(sourceDir);
+
+    // Write a template file using UTF-8 with non-ASCII characters
+    final String templateClassName = "MyTemplate";
+    final String template = "// \u00c5ngstr\u00f6m \u00b5m \u2264 \u03c0 \ud83d\ude00";
+    FileUtils.write(new File(sourceDir, templateClassName + ".st"), template,
+        StandardCharsets.UTF_8);
+
+    // Write a properties file. This can be empty.
+    final Properties properties = new Properties();
+    try (FileOutputStream outStream =
+        new FileOutputStream(new File(sourceDir, templateClassName + ".properties"))) {
+      properties.store(outStream, "Test template");
+    }
+
+    // Write a header file using UTF-8 with non-ASCII characters
+    final File headerFile = new File(rootFile, "header.txt");
+    final String header = "// Copyright \u00a9 Caf\u00e9\n";
+    FileUtils.write(headerFile, header, StandardCharsets.UTF_8);
+
+    // Run the generator
+    final ExitCode result = CodeGenerator.run(
+        getArgs(pathForSource, pathForTarget, "-l", "WARNING", "--header", headerFile.getPath()));
+    Assertions.assertEquals(ExitCode.OK, result, "Exit code");
+
+    // Check the output is the same text
+    final String template1 = FileUtils.readFileToString(
+        new File(new File(pathForTarget, "org"), "MyTemplate.java"), StandardCharsets.UTF_8);
+    Assertions.assertEquals(header + template, template1, "Header + template");
+
+    // Clean up only on success
+    FileUtils.forceDeleteOnExit(rootFile);
+  }
+
+  @Test
   void testMissingFileHeader() throws IOException {
     // Create a source and target directory structure
     final Path root = Files.createTempDirectory(CodeGeneratorTest.class.getSimpleName());

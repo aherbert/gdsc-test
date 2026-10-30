@@ -53,6 +53,9 @@ import picocli.CommandLine.ParseResult;
 /**
  * Provides functionality to scan a source directory tree and generate Java code into a target
  * directory.
+ *
+ * <p>The string-template files and the header file are read using UTF-8. The generated Java code is
+ * written using UTF-8. The properties files use the {@link Properties} file format.
  */
 @Command(description = "Generates code using string-template files from a source directory.",
     name = "codegenerator", mixinStandardHelpOptions = true, version = "codegenerator 1.0")
@@ -88,7 +91,7 @@ public class CodeGenerator {
   private boolean overwrite;
 
   /** The header file. */
-  @Option(names = {"--header"}, description = "The licence header.")
+  @Option(names = {"--header"}, description = "The licence header (UTF-8).")
   private File headerFile;
 
   /**
@@ -299,14 +302,15 @@ public class CodeGenerator {
   /**
    * Load the file header.
    *
-   * <p>Returns the empty string if no header file is specified.
+   * <p>Returns the empty string if no header file is specified. The file is read using UTF-8.
    *
    * @return the file header
    * @throws IOException Signals that an I/O exception has occurred, e.g. the header file does not
    *         exist.
    */
   private String loadHeader() throws IOException {
-    return (headerFile == null) ? "" : FileUtils.readFileToString(headerFile, (String) null);
+    return (headerFile == null) ? ""
+        : FileUtils.readFileToString(headerFile, StandardCharsets.UTF_8);
   }
 
   /**
@@ -343,7 +347,7 @@ public class CodeGenerator {
     FileUtils.forceMkdir(pathForTarget);
 
     // Load template
-    final String template = FileUtils.readFileToString(stFile, (String) null);
+    final String template = FileUtils.readFileToString(stFile, StandardCharsets.UTF_8);
 
     // Create model
     final StringTemplateModel model =
