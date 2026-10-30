@@ -309,6 +309,7 @@ public final class TestLogging {
    *
    * @param thrown a throwable associated with the test result
    * @return the log record
+   * @throws NullPointerException if the throwable is null
    */
   public static LogRecord getFailRecord(Throwable thrown) {
     return new TestLogRecord(TestLevel.TEST_FAILURE, thrown);

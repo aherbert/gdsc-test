@@ -176,6 +176,7 @@ public final class Predicates {
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the ulp error is not positive
+   * @see <Float>Equality#areWithinUlp(<float>, <float>, <ulpType>)
    */
   public static <Float>Predicate <float>IsUlpClose(<float> reference,
       <ulpType> ulpError) {
@@ -189,6 +190,7 @@ public final class Predicates {
    *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the ulp error is not positive
+   * @see <Float>Equality#areWithinUlp(<float>, <float>, <ulpType>)
    */
   public static <Float><Float>BiPredicate <float>sAreUlpClose(<ulpType> ulpError) {
     return new <Float><Float>AreUlpClose(ulpError);
@@ -616,6 +618,7 @@ public final class Predicates {
    * @param predicate1 the predicate to test the first value
    * @param predicate2 the predicate to test the second value
    * @return the predicate
+   * @throws NullPointerException if either predicate is null
    */
   public static <Type><Type>BiPredicate <op>(<Type>Predicate predicate1,
       <Type>Predicate predicate2) {

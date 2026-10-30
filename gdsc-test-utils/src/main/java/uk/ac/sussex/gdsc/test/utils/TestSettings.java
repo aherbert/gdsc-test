@@ -246,6 +246,7 @@ public final class TestSettings {
    *
    * @param complexity the test complexity
    * @return true if the test complexity is equal or below the system level threshold
+   * @throws NullPointerException if the complexity is null
    * @see #getTestComplexity()
    */
   public static boolean allow(TestComplexity complexity) {

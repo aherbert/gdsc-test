@@ -25,6 +25,7 @@ public class <Type1>Predicate<Op><Type2>Predicate
    *
    * @param predicate1 the first predicate
    * @param predicate2 the second predicate
+   * @throws NullPointerException if either predicate is null
    */
   public <Type1>Predicate<Op><Type2>Predicate(<Type1>Predicate predicate1,
       <Type2>Predicate predicate2) {

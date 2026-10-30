@@ -83,6 +83,9 @@ public abstract class FormatSupplier implements Supplier<String> {
    * </code>
    * </pre>
    *
+   * <p>The format is not validated. An invalid format, including a null format, will cause an
+   * exception when the supplier is invoked.
+   *
    * @param format the format
    * @param args the arguments
    * @return the supplier

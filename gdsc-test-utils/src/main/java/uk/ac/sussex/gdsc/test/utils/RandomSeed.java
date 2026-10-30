@@ -61,6 +61,7 @@ public final class RandomSeed implements Serializable, Supplier<byte[]>, LongSup
    *
    * @param seed the seed
    * @return the random seed
+   * @throws NullPointerException if the seed is null
    */
   public static RandomSeed of(byte[] seed) {
     return new RandomSeed(seed);

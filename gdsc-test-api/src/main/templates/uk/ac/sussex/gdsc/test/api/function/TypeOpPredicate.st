@@ -23,6 +23,7 @@ public class <Type><Op>Predicate implements <Type>Predicate, Supplier\<String> {
    *
    * @param predicate1 the first predicate
    * @param predicate2 the second predicate
+   * @throws NullPointerException if either predicate is null
    */
   public <Type><Op>Predicate(<Type>Predicate predicate1, <Type>Predicate predicate2) {
     this.predicate1 = Objects.requireNonNull(predicate1, "Predicate 1 is null");

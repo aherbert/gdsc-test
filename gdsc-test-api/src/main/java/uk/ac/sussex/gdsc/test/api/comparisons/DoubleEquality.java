@@ -60,6 +60,11 @@ public final class DoubleEquality {
    *
    * <p>If either value is NaN this returns false.
    *
+   * <p>Infinite values are one ULP from the maximum finite value of the same sign
+   * ({@link Double#MAX_VALUE}). An infinite value is equal to itself with a ULP error of 0. Note that
+   * this is in contrast to the absolute and relative error tests where an infinite value is never
+   * close to any value.
+   *
    * @param value1 the first value
    * @param value2 the second value
    * @param ulpError the maximum ULP error between {@code value1} and {@code value2} for which both
@@ -92,6 +97,11 @@ public final class DoubleEquality {
    * zero is ignored, hence the method considers {@code -0.0} and {@code 0.0} to be equal.
    *
    * <p>If either value is NaN this returns false.
+   *
+   * <p>Infinite values are one ULP from the maximum finite value of the same sign
+   * ({@link Double#MAX_VALUE}). An infinite value is equal to itself with a ULP error of 0. Note that
+   * this is in contrast to the absolute and relative error tests where an infinite value is never
+   * close to any value.
    *
    * <p>It is assumed the errors have been validated with {@link #validateUlpError(int)}.
    *

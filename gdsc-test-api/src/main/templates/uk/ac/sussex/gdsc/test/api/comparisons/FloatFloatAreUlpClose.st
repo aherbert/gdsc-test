@@ -36,6 +36,9 @@ public class <Float><Float>AreUlpClose
    *
    * \<p>NaN values are ignored and the test returns false.
    *
+   * \<p>Infinite values are one ULP from the maximum finite value of the same sign
+   * ({@link <Float>#MAX_VALUE}). An infinite value is equal to itself with a ULP error of 0.
+   *
    * @param ulpError The maximum ULP error between {@code value1}
    *                 and {@code value2} for which both numbers are still
    *                 considered equal.

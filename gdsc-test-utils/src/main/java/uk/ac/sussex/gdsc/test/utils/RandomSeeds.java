@@ -103,6 +103,7 @@ public final class RandomSeeds {
    *
    * @param values the values
    * @return the bytes
+   * @throws NullPointerException if the values are null
    */
   public static byte[] makeByteArray(long... values) {
     final int size = values.length * Long.BYTES;
@@ -130,6 +131,7 @@ public final class RandomSeeds {
    *
    * @param values the values
    * @return the bytes
+   * @throws NullPointerException if the values are null
    */
   public static byte[] makeByteArray(int... values) {
     final int size = values.length * Integer.BYTES;

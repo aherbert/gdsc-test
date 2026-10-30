@@ -24,6 +24,7 @@ public class <Type1><Type2><Op>BiPredicate
    *
    * @param predicate1 the first predicate
    * @param predicate2 the second predicate
+   * @throws NullPointerException if either predicate is null
    */
   public <Type1><Type2><Op>BiPredicate(<Type1><Type2>BiPredicate predicate1,
       <Type1><Type2>BiPredicate predicate2) {

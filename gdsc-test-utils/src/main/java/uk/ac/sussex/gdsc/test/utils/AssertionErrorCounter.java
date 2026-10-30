@@ -87,6 +87,9 @@ public class AssertionErrorCounter {
   /**
    * Creates a new counter.
    *
+   * <p>The failure limit is the number of failures that are allowed. Any further failure will throw
+   * the {@link AssertionError}. A negative limit is treated as zero.
+   *
    * @param failureLimit the failure limit that will generate an AssertionError to be thrown
    */
   public AssertionErrorCounter(int failureLimit) {
@@ -96,9 +99,13 @@ public class AssertionErrorCounter {
   /**
    * Creates a new counter with a specified number of different tests to monitor.
    *
+   * <p>The failure limit is the number of failures that are allowed for each test index. Any
+   * further failure will throw the {@link AssertionError}. A negative limit is treated as zero.
+   *
    * @param failureLimit the failure limit that will generate an {@link AssertionError} to be thrown
    * @param size the number of different tests to be addressed by index in
    *        {@link #run(int, TestAssertion)}
+   * @throws IllegalArgumentException if the size is not strictly positive
    */
   public AssertionErrorCounter(int failureLimit, int size) {
     this.failureLimit = failureLimit;

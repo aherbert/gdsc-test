@@ -32,6 +32,10 @@ Minor release of GDSC Test.
      - ``L64X128M`` saves the full generator state to support restoring the state to a different
        instance, as allowed by ``RestorableUniformRandomProvider``.
 
+   * - Update
+     - Document the ULP comparison of infinite values, the use of the seed bytes by
+       ``RngFactory.create(byte[])``, and exceptions thrown for null or invalid arguments.
+
    * - Fix
      - Correct the documentation. The random source example uses ``RngFactory``.
 

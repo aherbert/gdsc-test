@@ -19,6 +19,7 @@ public class <Type>NegatePredicate implements <Type>Predicate, Supplier\<String>
    * Create a new negate predicate.
    *
    * @param predicate the predicate
+   * @throws NullPointerException if the predicate is null
    */
   public <Type>NegatePredicate(<Type>Predicate predicate) {
     this.predicate = Objects.requireNonNull(predicate, "Predicate is null");

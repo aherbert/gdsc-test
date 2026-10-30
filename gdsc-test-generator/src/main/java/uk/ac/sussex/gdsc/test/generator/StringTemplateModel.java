@@ -151,6 +151,7 @@ public final class StringTemplateModel {
    * @param template the template
    * @return the string template model
    * @throws InvalidModelException If the model cannot be created
+   * @throws NullPointerException If any argument is null
    */
   public static StringTemplateModel create(Properties properties, String packageName,
       String templateClassName, String template) throws InvalidModelException {

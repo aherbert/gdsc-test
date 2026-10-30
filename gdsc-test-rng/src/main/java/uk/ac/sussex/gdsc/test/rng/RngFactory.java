@@ -56,6 +56,13 @@ public final class RngFactory {
    * using {@code ThreadLocalRandom.current().nextLong()} and
    * {@code new SplittableRandom().nextLong()}.
    *
+   * <p>Otherwise the seed bytes are converted to {@code long} values, most significant byte first,
+   * and padded with zeros. A seed of up to 16 bytes creates a generator with a 128-bit state. A
+   * longer seed creates a generator with a 256-bit state using the first 32 bytes; any further
+   * bytes are ignored, as is the lowest bit of the 8th byte. Since the seed is padded with zeros,
+   * seeds that differ only by trailing zero bytes create the same generator if both seeds are up to
+   * 16 bytes, or both are longer.
+   *
    * @param seed the seed
    * @return the uniform random provider
    * @see ThreadLocalRandom
