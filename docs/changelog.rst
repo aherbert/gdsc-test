@@ -36,6 +36,12 @@ Minor release of GDSC Test.
      - Correct the documentation. The random source example uses ``RngFactory``.
 
    * - Fix
+     - Correct the documentation of the absolute error validation for numeric comparisons and
+       predicates. The absolute error must be positive and finite for ``double`` and ``float``;
+       positive for ``long``; and positive and below the maximum difference between values for
+       ``int``, ``short``, ``byte`` and ``long`` using a ``BigInteger`` error.
+
+   * - Fix
      - Relative error comparisons of ``double`` and ``float`` values return false if either
        value is infinite. The difference between the values and the relative limit are computed
        without overflow.

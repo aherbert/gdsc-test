@@ -49,8 +49,14 @@ public class <Number><Number>IsCloseTo
    * @param absoluteError The maximum absolute error between {@code expected} and
    *        {@code actual} for which both numbers are still considered equal.
    * @throws IllegalArgumentException If the relative error is not positive finite
-   * @throws IllegalArgumentException If the absolute error is not positive or is
-   *         {@code >=} than the maximum difference between <number> primitives
+<if(maxError)>
+   * @throws IllegalArgumentException If the absolute error is not positive or is not below the
+   *         maximum difference between <number> primitives
+<elseif(finiteError)>
+   * @throws IllegalArgumentException If the absolute error is not positive finite
+<else>
+   * @throws IllegalArgumentException If the absolute error is not positive
+<endif>
    */
   public <Number><Number>IsCloseTo(double relativeError, <errorType> absoluteError) {
     <Number>Equality.validateIsCloseTo(relativeError, absoluteError);

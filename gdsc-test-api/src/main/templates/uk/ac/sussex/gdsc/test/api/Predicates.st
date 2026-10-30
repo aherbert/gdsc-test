@@ -192,7 +192,7 @@ public final class Predicates {
    */
   public static <Float><Float>BiPredicate <float>sAreUlpClose(<ulpType> ulpError) {
     return new <Float><Float>AreUlpClose(ulpError);
-  \}}><numbers,Numbers,numberAbsTypes,an:{number,Number,numberAbsType,an |
+  \}}><numbers,Numbers,numberAbsTypes,an,maxErrors,finiteErrors:{number,Number,numberAbsType,an,maxError,finiteError |
 <\n>
   /**
    * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
@@ -202,14 +202,20 @@ public final class Predicates {
    * @param absoluteError the maximum absolute error between {@code reference\} and
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException if the absolute error is not positive or below the maximum
-   *         measurable difference between <number> values
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<elseif(finiteError)>
+   * @throws IllegalArgumentException if the absolute error is not positive finite
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
    * @see <Number>Equality#areWithin(<number>, <number>, <numberAbsType>)
    */
   public static <Number>Predicate <number>IsAbsolutelyClose(<number> reference,
       <numberAbsType> absoluteError) {
     return new <Number>IsAbsolutelyClose(reference, absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes:{number,Number,numberAbsType |
+  \}}><numbers,Numbers,numberAbsTypes,maxErrors,finiteErrors:{number,Number,numberAbsType,maxError,finiteError |
 <\n>
   /**
    * Creates a predicate to test two {@code <number>\} values are close using an absolute error.
@@ -217,14 +223,20 @@ public final class Predicates {
    * @param absoluteError the maximum absolute error between {@code value1\} and
    *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
-   * @throws IllegalArgumentException if the absolute error is not positive or below the maximum
-   *         measurable difference between <number> values
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<elseif(finiteError)>
+   * @throws IllegalArgumentException if the absolute error is not positive finite
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
    * @see <Number>Equality#areWithin(<number>, <number>, <numberAbsType>)
    */
   public static <Number><Number>BiPredicate <number>sAreAbsolutelyClose(
       <numberAbsType> absoluteError) {
     return new <Number><Number>AreAbsolutelyClose(absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,an:{number,Number,numberAbsType,javadocNaN,zero,an |
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,an,maxErrors,finiteErrors:{number,Number,numberAbsType,javadocNaN,zero,an,maxError,finiteError |
 <\n>
   /**
    * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
@@ -300,15 +312,20 @@ public final class Predicates {
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException if the absolute error is not positive or is
-   *         {@code \<=\} than the maximum difference between {@code <number>\}
-   *         primitives
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<elseif(finiteError)>
+   * @throws IllegalArgumentException if the absolute error is not positive finite
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
    * @see <Number>Equality#areClose(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number>Predicate <number>IsClose(<number> reference, double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number>IsClose(reference, relativeError, absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero:{number,Number,numberAbsType,javadocNaN,zero |
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,maxErrors,finiteErrors:{number,Number,numberAbsType,javadocNaN,zero,maxError,finiteError |
 <\n>
   /**
    * Creates a predicate to test two {@code <number>\} values are close using a relative error.
@@ -379,15 +396,20 @@ public final class Predicates {
    *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException if the absolute error is not positive or is
-   *         {@code \<=\} than the maximum difference between {@code <number>\}
-   *         primitives
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<elseif(finiteError)>
+   * @throws IllegalArgumentException if the absolute error is not positive finite
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
    * @see <Number>Equality#areClose(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number><Number>BiPredicate <number>sAreClose(double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number><Number>AreClose(relativeError, absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,an:{number,Number,numberAbsType,javadocNaN,zero,an |
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,an,maxErrors,finiteErrors:{number,Number,numberAbsType,javadocNaN,zero,an,maxError,finiteError |
 <\n>
   /**
    * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
@@ -471,15 +493,20 @@ public final class Predicates {
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive or is
-   *         {@code \<=\} than the maximum difference between {@code <number>\}
-   *         primitives
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<elseif(finiteError)>
+   * @throws IllegalArgumentException if the absolute error is not positive finite
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
    * @see <Number>Equality#isCloseTo(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number>Predicate <number>IsCloseTo(<number> reference,
       double relativeError, <numberAbsType> absoluteError) {
     return new <Number>IsCloseTo(reference, relativeError, absoluteError);
-  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero:{number,Number,numberAbsType,javadocNaN,zero |
+  \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,maxErrors,finiteErrors:{number,Number,numberAbsType,javadocNaN,zero,maxError,finiteError |
 <\n>
   /**
    * Creates a predicate to test an {@code actual\} value is close to an {@code expected\}
@@ -566,9 +593,14 @@ public final class Predicates {
    *        {@code actual\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive or is
-   *         {@code \<=\} than the maximum difference between {@code <number>\}
-   *         primitives
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<elseif(finiteError)>
+   * @throws IllegalArgumentException if the absolute error is not positive finite
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
    * @see <Number>Equality#isCloseTo(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError,

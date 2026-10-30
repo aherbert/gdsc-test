@@ -62,8 +62,8 @@ public final class ShortEquality {
    * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
    *        which both numbers are still considered equal.
    * @return true if within the tolerance
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
-   *         the maximum difference between short primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between short primitives
    */
   public static boolean areWithin(short value1, short value2, int absoluteError) {
     validateAbsoluteError(absoluteError);
@@ -71,11 +71,11 @@ public final class ShortEquality {
   }
 
   /**
-   * Check the error is within the maximum difference between {@code short} primitives.
+   * Check the error is positive and below the maximum difference between {@code short} primitives.
    *
    * @param absoluteError the maximum absolute error between two values
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
-   *         the maximum difference between short primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between short primitives
    */
   static void validateAbsoluteError(int absoluteError) {
     NumberEquality.validateAbsoluteError(absoluteError, MAX_ABS_ERROR);
@@ -124,7 +124,8 @@ public final class ShortEquality {
    *        which both numbers are still considered equal.
    * @return true if close
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException if the absolute error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between short primitives
    */
   public static boolean areClose(short value1, short value2, double relativeError,
       int absoluteError) {
@@ -138,7 +139,8 @@ public final class ShortEquality {
    * @param relativeError the maximum relative error
    * @param absoluteError the maximum absolute error
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException if the absolute error is not positive
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between short primitives
    */
   static void validateAreClose(double relativeError, int absoluteError) {
     NumberEquality.validateSymmetricRelativeError(relativeError);
@@ -190,8 +192,8 @@ public final class ShortEquality {
    *        which both numbers are still considered equal.
    * @return true if actual is close to expected
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
-   *         the maximum difference between short primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between short primitives
    */
   public static boolean isCloseTo(short expected, short actual, double relativeError,
       int absoluteError) {
@@ -205,8 +207,8 @@ public final class ShortEquality {
    * @param relativeError the maximum relative error
    * @param absoluteError the maximum absolute error
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
-   *         the maximum difference between short primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between short primitives
    */
   static void validateIsCloseTo(double relativeError, int absoluteError) {
     NumberEquality.validateAsymmetricRelativeError(relativeError);

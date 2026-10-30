@@ -137,7 +137,7 @@ public final class DoubleEquality {
    * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
    *        which both numbers are still considered equal.
    * @return true if within the error
-   * @throws IllegalArgumentException if the absolute error is not positive and finite
+   * @throws IllegalArgumentException if the absolute error is not positive finite
    */
   public static boolean areWithin(double value1, double value2, double absoluteError) {
     validateAbsoluteError(absoluteError);
@@ -145,7 +145,7 @@ public final class DoubleEquality {
   }
 
   /**
-   * Check the error is within the maximum difference between {@code double} primitives.
+   * Check the error is positive finite.
    *
    * @param absoluteError the maximum absolute error between two values
    * @throws IllegalArgumentException if the absolute error is not positive finite
@@ -329,7 +329,7 @@ public final class DoubleEquality {
    * @param relativeError the maximum relative error
    * @param absoluteError the maximum absolute error
    * @throws IllegalArgumentException if the relative error is not positive finite
-   * @throws IllegalArgumentException if the absolute error is not positive
+   * @throws IllegalArgumentException if the absolute error is not positive finite
    */
   static void validateIsCloseTo(double relativeError, double absoluteError) {
     NumberEquality.validateAsymmetricRelativeError(relativeError);

@@ -49,8 +49,14 @@ public class <Number>IsClose
    * @param absoluteError The maximum absolute error between {@code reference} and
    *        {@code value} for which both numbers are still considered equal.
    * @throws IllegalArgumentException If the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException If the absolute error is not positive or is
-   *         {@code >=} than the maximum difference between <number> primitives
+<if(maxError)>
+   * @throws IllegalArgumentException If the absolute error is not positive or is not below the
+   *         maximum difference between <number> primitives
+<elseif(finiteError)>
+   * @throws IllegalArgumentException If the absolute error is not positive finite
+<else>
+   * @throws IllegalArgumentException If the absolute error is not positive
+<endif>
    */
   public <Number>IsClose(<number> reference,
       double relativeError, <errorType> absoluteError) {

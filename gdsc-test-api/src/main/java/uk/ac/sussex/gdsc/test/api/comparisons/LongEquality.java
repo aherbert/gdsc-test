@@ -61,8 +61,8 @@ public final class LongEquality {
    * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
    *        which both numbers are still considered equal.
    * @return true if within the error
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
-   *         the maximum difference between byte primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between long primitives
    */
   public static boolean areWithin(long value1, long value2, BigInteger absoluteError) {
     validateAbsoluteError(absoluteError);
@@ -90,11 +90,11 @@ public final class LongEquality {
   }
 
   /**
-   * Check the error is within the maximum difference between {@code long} primitives.
+   * Check the error is positive and below the maximum difference between {@code long} primitives.
    *
    * @param absoluteError the maximum absolute error between two values
-   * @throws IllegalArgumentException if the absolute error is not positive or is {@code <=} than
-   *         the maximum difference between long primitives
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between long primitives
    */
   static void validateAbsoluteError(BigInteger absoluteError) {
     if (absoluteError.signum() < 0 || absoluteError.compareTo(MAX_ABS_ERROR) >= 0) {
@@ -105,7 +105,7 @@ public final class LongEquality {
   }
 
   /**
-   * Check the error is within the maximum difference between {@code long} primitives.
+   * Check the error is positive.
    *
    * @param absoluteError the maximum absolute error between two values
    * @throws IllegalArgumentException if the absolute error is not positive
@@ -188,7 +188,7 @@ public final class LongEquality {
    *        which both numbers are still considered equal.
    * @return true if close
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
-   * @throws IllegalArgumentException if the absolute error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive
    */
   public static boolean areClose(long value1, long value2, double relativeError,
       long absoluteError) {
