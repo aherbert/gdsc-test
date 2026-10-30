@@ -113,6 +113,9 @@ public final class ByteEquality {
    * <p>Note: The relative error is a double since the relative error computation is performed in
    * double precision.
    *
+   * <p>The difference between the values is exact. The relative limit is computed using double
+   * precision as {@code max(|value1|, |value2|) * relativeError}.
+   *
    * @param value1 the first value
    * @param value2 the second value
    * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
@@ -175,6 +178,9 @@ public final class ByteEquality {
    * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
    * testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
+   *
+   * <p>The difference between the values is exact. The relative limit is computed using double
+   * precision as {@code |expected| * relativeError}.
    *
    * @param expected the expected value.
    * @param actual the actual value.

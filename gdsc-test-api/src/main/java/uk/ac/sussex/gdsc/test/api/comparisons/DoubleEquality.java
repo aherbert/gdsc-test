@@ -130,6 +130,8 @@ public final class DoubleEquality {
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
    *
+   * <p>The difference between the values is computed using double precision.
+   *
    * @param value1 the first value
    * @param value2 the second value
    * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
@@ -196,6 +198,10 @@ public final class DoubleEquality {
    *
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
+   *
+   * <p>The difference between the values is computed using double precision. The relative limit is
+   * computed using double precision as {@code max(|value1|, |value2|) * relativeError}. These are
+   * computed without overflow, i.e. as if rounded with an unbounded exponent.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For
@@ -291,6 +297,10 @@ public final class DoubleEquality {
    *
    * <p>If either value is NaN or Infinity this returns false as the distance between the values is
    * Infinite or not valid.
+   *
+   * <p>The difference between the values is computed using double precision. The relative limit is
+   * computed using double precision as {@code |expected| * relativeError}. These are computed
+   * without overflow, i.e. as if rounded with an unbounded exponent.
    *
    * <p>Equality imposed by this method assumes the values are close and finite. This is not
    * consistent with {@link Double#equals(Object)} and, {@link Double#compare(double, double)}. For

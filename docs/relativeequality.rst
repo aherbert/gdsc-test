@@ -126,6 +126,31 @@ threshold :math:`rel_{max}` **or** an absolute error threshold :math:`abs_{max}`
 
     |a-b| &\leq abs_{max}
 
+Precision
+---------
+
+The tests are computed using the precision of the data type:
+
+- The difference :math:`|a-b|` is computed using the precision of the type. For ``double`` and
+  ``float`` values the difference is rounded, as in the absolute error test of other test
+  frameworks, for example ``assertEquals(expected, actual, delta)`` in ``JUnit 5``. The difference
+  of integer values is exact.
+- The relative limit, for example :math:`\max(|a|, |b|) \times rel_{max}`, is computed using
+  ``double`` precision.
+- The difference and the relative limit are computed without overflow. For example the
+  difference between ``Double.MAX_VALUE`` and ``-Double.MAX_VALUE`` is twice
+  ``Double.MAX_VALUE``.
+- If either value is NaN or infinite there is no valid difference and the values are not close.
+  This includes an infinite value compared with itself.
+
+Computing the relative limit using ``double`` precision allows a decimal relative error to include
+a value on the limit. For example the ``double`` value of ``0.3`` is slightly below 0.3 but the
+relative limit ``10 * 0.3`` is computed as ``3.0``::
+
+    DoubleDoubleBiPredicate isCloseTo = Predicates.doublesIsRelativelyCloseTo(0.3);
+
+    assert isCloseTo.test(10, 7) : "Difference 3 should be <= 0.3 of 10";
+
 Test Predicates
 ---------------
 

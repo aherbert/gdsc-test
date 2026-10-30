@@ -26,6 +26,9 @@ public class <Number>Is<Absolutely>Close
    * Create a predicate to test <an> {@code <number>} value is close to a {@code reference} value using
    * an absolute error.
    *
+   * \<p>The test is performed using {@link <Number>Equality#areWithin(<number>, <number>, <errorType>)}
+   * which defines the computation of the difference.
+   *
    * @param reference The reference value.
    * @param absoluteError The maximum absolute error between {@code reference}
    *                      and {@code value} for which both numbers are still

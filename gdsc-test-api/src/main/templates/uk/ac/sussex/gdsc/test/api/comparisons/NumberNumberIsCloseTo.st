@@ -40,6 +40,9 @@ public class <Number><Number>IsCloseTo
    * equivalent to testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
+   * \<p>The test is performed using {@link <Number>Equality#isCloseTo(<number>, <number>, double, <errorType>)}
+   * which defines the computation of the difference and the relative limit.
+   *
    * @param relativeError The maximum error, relative to {@code expected}, between
    *        {@code expected} and {@code actual} for which both numbers are still
    *        considered equal.

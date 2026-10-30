@@ -7,6 +7,7 @@ import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsCloseTo;
@@ -19,6 +20,7 @@ import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleAreUlpClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleDoubleIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.DoubleEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsClose;
@@ -28,6 +30,7 @@ import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsFinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsInfinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.DoubleIsUlpClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.FloatEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreBinaryEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatFloatAreClose;
@@ -43,6 +46,7 @@ import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsFinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsInfinite;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsUlpClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreEqual;
@@ -51,6 +55,7 @@ import uk.ac.sussex.gdsc.test.api.comparisons.IntIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsCloseTo;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsEqual;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsCloseTo;
@@ -59,6 +64,7 @@ import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsAbsolutelyClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsCloseTo;
@@ -198,6 +204,7 @@ public final class Predicates {
    * @return the predicate
    * @throws IllegalArgumentException if the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
+   * @see <Number>Equality#areWithin(<number>, <number>, <numberAbsType>)
    */
   public static <Number>Predicate <number>IsAbsolutelyClose(<number> reference,
       <numberAbsType> absoluteError) {
@@ -212,6 +219,7 @@ public final class Predicates {
    * @return the predicate
    * @throws IllegalArgumentException if the absolute error is not positive or below the maximum
    *         measurable difference between <number> values
+   * @see <Number>Equality#areWithin(<number>, <number>, <numberAbsType>)
    */
   public static <Number><Number>BiPredicate <number>sAreAbsolutelyClose(
       <numberAbsType> absoluteError) {
@@ -238,6 +246,9 @@ public final class Predicates {
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
    *
+   * \<p>The difference between the values is computed using <number> precision. The relative
+   * limit is computed using double precision.
+   *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
    * include the special case of {@code -<zero> == <zero>\}.
@@ -251,6 +262,7 @@ public final class Predicates {
    *        {@code value\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @see <Number>Equality#areClose(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number>Predicate <number>IsRelativelyClose(<number> reference,
       double relativeError) {
@@ -276,6 +288,9 @@ public final class Predicates {
    * difference to another value and the predicate will return false. This includes a test of
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
+   *
+   * \<p>The difference between the values is computed using <number> precision. The relative
+   * limit is computed using double precision.
 <endif>
    *
    * @param reference the reference value
@@ -288,6 +303,7 @@ public final class Predicates {
    * @throws IllegalArgumentException if the absolute error is not positive or is
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
+   * @see <Number>Equality#areClose(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number>Predicate <number>IsClose(<number> reference, double relativeError,
       <numberAbsType> absoluteError) {
@@ -313,6 +329,9 @@ public final class Predicates {
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
    *
+   * \<p>The difference between the values is computed using <number> precision. The relative
+   * limit is computed using double precision.
+   *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
    * include the special case of {@code -<zero> == <zero>\}.
@@ -325,6 +344,7 @@ public final class Predicates {
    *        {@code value2\} for which both numbers are still considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @see <Number>Equality#areClose(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number><Number>BiPredicate <number>sAreRelativelyClose(double relativeError) {
     return new <Number><Number>AreClose(relativeError, 0);
@@ -348,6 +368,9 @@ public final class Predicates {
    * difference to another value and the predicate will return false. This includes a test of
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
+   *
+   * \<p>The difference between the values is computed using <number> precision. The relative
+   * limit is computed using double precision.
 <endif>
    *
    * @param relativeError the maximum relative error between {@code value1\} and
@@ -359,6 +382,7 @@ public final class Predicates {
    * @throws IllegalArgumentException if the absolute error is not positive or is
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
+   * @see <Number>Equality#areClose(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number><Number>BiPredicate <number>sAreClose(double relativeError,
       <numberAbsType> absoluteError) {
@@ -386,6 +410,9 @@ public final class Predicates {
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
    *
+   * \<p>The difference between the values is computed using <number> precision. The relative
+   * limit is computed using double precision.
+   *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
    * include the special case of {@code -<zero> == <zero>\}.
@@ -400,6 +427,7 @@ public final class Predicates {
    *        considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the relative error is not positive finite
+   * @see <Number>Equality#isCloseTo(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number>Predicate <number>IsRelativelyCloseTo(<number> reference,
       double relativeError) {
@@ -427,6 +455,9 @@ public final class Predicates {
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
    *
+   * \<p>The difference between the values is computed using <number> precision. The relative
+   * limit is computed using double precision.
+   *
    * \<p>An absolute error of {@code 0\} will allow all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
    * include the special case of {@code -<zero> == <zero>\}.
@@ -443,6 +474,7 @@ public final class Predicates {
    * @throws IllegalArgumentException if the absolute error is not positive or is
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
+   * @see <Number>Equality#isCloseTo(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number>Predicate <number>IsCloseTo(<number> reference,
       double relativeError, <numberAbsType> absoluteError) {
@@ -473,6 +505,9 @@ public final class Predicates {
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
    *
+   * \<p>The difference between the values is computed using <number> precision. The relative
+   * limit is computed using double precision.
+   *
    * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
    * include the special case of {@code -<zero> == <zero>\}.
@@ -486,6 +521,7 @@ public final class Predicates {
    *        considered equal.
    * @return the predicate
    * @throws IllegalArgumentException if the relative error is not positive finite
+   * @see <Number>Equality#isCloseTo(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number><Number>BiPredicate <number>sIsRelativelyCloseTo(double relativeError) {
     return new <Number><Number>IsCloseTo(relativeError, 0);
@@ -515,6 +551,9 @@ public final class Predicates {
    * infinity with itself which is in contrast to the {@code ==\} operator. Thus the predicate
    * is a test of the measured distance between two finite values.
    *
+   * \<p>The difference between the values is computed using <number> precision. The relative
+   * limit is computed using double precision.
+   *
    * \<p>An absolute error of {@code 0\} will allow all values to equal themselves
    * with the exception of {@link <Number>#NaN\} or infinite values. This equality will
    * include the special case of {@code -<zero> == <zero>\}.
@@ -530,6 +569,7 @@ public final class Predicates {
    * @throws IllegalArgumentException if the absolute error is not positive or is
    *         {@code \<=\} than the maximum difference between {@code <number>\}
    *         primitives
+   * @see <Number>Equality#isCloseTo(<number>, <number>, double, <numberAbsType>)
    */
   public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError,
       <numberAbsType> absoluteError) {

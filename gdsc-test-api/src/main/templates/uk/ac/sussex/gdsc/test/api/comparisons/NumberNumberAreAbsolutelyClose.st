@@ -23,6 +23,9 @@ public class <Number><Number>Are<Absolutely>Close
   /**
    * Create a predicate to test two {@code <number>} values are close using an absolute error.
    *
+   * \<p>The test is performed using {@link <Number>Equality#areWithin(<number>, <number>, <errorType>)}
+   * which defines the computation of the difference.
+   *
    * @param absoluteError The maximum absolute error between {@code value1}
    *                      and {@code value2} for which both numbers are still
    *                      considered equal.

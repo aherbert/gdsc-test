@@ -40,6 +40,9 @@ public class <Number>IsClose
    * \<p>The relative error is symmetric for {@code reference} and {@code value}. The test is
    * equivalent to testing convergence on the reference value.
    *
+   * \<p>The test is performed using {@link <Number>Equality#areClose(<number>, <number>, double, <errorType>)}
+   * which defines the computation of the difference and the relative limit.
+   *
    * @param reference The reference value.
    * @param relativeError The maximum relative error between {@code reference} and
    *        {@code value} for which both numbers are still considered equal.
