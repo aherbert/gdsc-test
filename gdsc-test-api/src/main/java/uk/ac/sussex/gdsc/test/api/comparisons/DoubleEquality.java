@@ -259,12 +259,6 @@ public final class DoubleEquality {
     if (delta <= absoluteError) {
       return true;
     }
-    // An infinite or NaN value cannot be close to any value. This must be checked as the
-    // relative test would otherwise compute infinity <= infinity. Check the values as the
-    // difference of finite values may overflow.
-    if (!Double.isFinite(value1) || !Double.isFinite(value2)) {
-      return false;
-    }
     return testRelative(value1, value2, delta, max(Math.abs(value1), Math.abs(value2)),
         relativeError);
   }
@@ -360,12 +354,6 @@ public final class DoubleEquality {
     if (delta <= absoluteError) {
       return true;
     }
-    // An infinite or NaN value cannot be close to any value. This must be checked as the
-    // relative test would otherwise compute infinity <= infinity. Check the values as the
-    // difference of finite values may overflow.
-    if (!Double.isFinite(expected) || !Double.isFinite(actual)) {
-      return false;
-    }
     return testRelative(expected, actual, delta, Math.abs(expected), relativeError);
   }
 
@@ -374,7 +362,7 @@ public final class DoubleEquality {
    * values is computed using double precision. The relative limit is computed using double
    * precision. These are computed without overflow, i.e. as if rounded with an unbounded exponent.
    *
-   * <p>It is assumed the values are finite.
+   * <p>If either value is NaN or Infinity this returns false.
    *
    * @param value1 the first value
    * @param value2 the second value
@@ -385,12 +373,25 @@ public final class DoubleEquality {
    */
   private static boolean testRelative(double value1, double value2, double delta, double magnitude,
       double relativeError) {
+    // The difference identifies non-finite values without testing each value:
+    // - NaN if either value is NaN, or the values are infinite with the same sign
+    // - Infinite if either value is infinite, or the difference of finite values overflows
+    // - Finite only if both values are finite
     if (delta != Double.POSITIVE_INFINITY) {
-      // An infinite limit is above any finite difference
+      // Finite values: the magnitude is finite and the limit is not NaN.
+      // An infinite limit (overflow) is above any finite difference.
+      // A NaN difference fails the comparison and returns false.
       return delta <= magnitude * relativeError;
     }
-    // The difference of finite values overflows. The values have opposite signs and magnitudes
-    // that can be halved exactly. Compare half the difference to half the limit.
+    // Infinite difference. An infinite value cannot be close to any value. This must be
+    // checked as the comparison below would otherwise compute infinity <= infinity, e.g.
+    // isCloseTo with a finite expected value, an infinite actual value and a large
+    // relative error.
+    if (!Double.isFinite(value1) || !Double.isFinite(value2)) {
+      return false;
+    }
+    // The difference of finite values overflows. The values have opposite signs and
+    // magnitudes that can be halved exactly. Compare half the difference to half the limit.
     return Math.abs(value1 * 0.5 - value2 * 0.5) <= magnitude * 0.5 * relativeError;
   }
 }
