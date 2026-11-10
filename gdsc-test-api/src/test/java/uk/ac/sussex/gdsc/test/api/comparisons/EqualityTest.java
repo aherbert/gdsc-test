@@ -2959,4 +2959,285 @@ class EqualityTest {
     Assertions.assertTrue(IntEquality.isCloseToUnsigned(1, 2, 1, absoluteError));
     Assertions.assertFalse(IntEquality.isCloseToUnsigned(1, 3, 1, absoluteError));
   }
+
+  // unsigned long Close
+
+  @Test
+  void testLongsAreCloseUnsignedThrows() {
+    final long expected = 0;
+    final long actual = 0;
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1, 2,
+        Double.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        LongEquality.areCloseUnsigned(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (long badAbsoluteError : new long[] {Long.MIN_VALUE, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        LongEquality.areCloseUnsigned(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  void testLongsAreCloseUnsignedUsingNoError() {
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    // Use a range of values
+    for (long value : new long[] {Long.MIN_VALUE, Long.MIN_VALUE + 1, -1, 0, 1,
+        Long.MAX_VALUE - 1, Long.MAX_VALUE}) {
+      Assertions
+          .assertTrue(LongEquality.areCloseUnsigned(value, value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          LongEquality.areCloseUnsigned(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          LongEquality.areCloseUnsigned(value, nextDown(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          LongEquality.areCloseUnsigned(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          LongEquality.areCloseUnsigned(nextDown(value), value, relativeError, absoluteError));
+    }
+  }
+
+  @Test
+  void testLongsAreCloseUnsignedUsingAbsoluteError() {
+    final double relativeError = 0;
+
+    // Adjacent unsigned values: 2^63 - 1 and 2^63
+    Assertions.assertTrue(
+        LongEquality.areCloseUnsigned(Long.MAX_VALUE, Long.MIN_VALUE, relativeError, 1));
+    Assertions.assertTrue(
+        LongEquality.areCloseUnsigned(Long.MIN_VALUE, Long.MAX_VALUE, relativeError, 1));
+    Assertions.assertFalse(
+        LongEquality.areCloseUnsigned(Long.MAX_VALUE, Long.MIN_VALUE, relativeError, 0));
+    // The signed values are not close
+    Assertions
+        .assertFalse(LongEquality.areClose(Long.MAX_VALUE, Long.MIN_VALUE, relativeError, 1));
+
+    // Largest unsigned difference: 0 and 2^64 - 1
+    final long absoluteError = Long.MAX_VALUE;
+    Assertions.assertFalse(LongEquality.areCloseUnsigned(0, -1, relativeError, absoluteError));
+    Assertions.assertFalse(LongEquality.areCloseUnsigned(-1, 0, relativeError, absoluteError));
+    // The signed values are close
+    Assertions.assertTrue(LongEquality.areClose(0, -1, relativeError, 1));
+
+    // Largest difference within the absolute error: 2^63 - 1
+    Assertions.assertTrue(
+        LongEquality.areCloseUnsigned(0, Long.MAX_VALUE, relativeError, absoluteError));
+    Assertions.assertTrue(
+        LongEquality.areCloseUnsigned(-1, Long.MIN_VALUE, relativeError, absoluteError));
+    Assertions.assertFalse(
+        LongEquality.areCloseUnsigned(0, Long.MIN_VALUE, relativeError, absoluteError));
+    Assertions.assertFalse(
+        LongEquality.areCloseUnsigned(-1, Long.MAX_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  void testLongsAreCloseUnsignedUsingRelativeError() {
+    final long absoluteError = 0;
+
+    // Relative to the largest unsigned value: 2^63
+    final double relativeError = 0x1.0p-63;
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(Long.MAX_VALUE, Long.MIN_VALUE,
+        relativeError, absoluteError));
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(Long.MIN_VALUE, Long.MAX_VALUE,
+        relativeError, absoluteError));
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(
+        LongEquality.areCloseUnsigned(Long.MAX_VALUE, Long.MIN_VALUE, delta, absoluteError));
+    Assertions.assertFalse(
+        LongEquality.areCloseUnsigned(Long.MIN_VALUE, Long.MAX_VALUE, delta, absoluteError));
+    // The signed values are not close
+    Assertions.assertFalse(LongEquality.areClose(Long.MAX_VALUE, Long.MIN_VALUE, relativeError,
+        absoluteError));
+
+    // Largest unsigned values: 2^64 - 2 and 2^64 - 1.
+    // The relative limit uses 2^64 - 1 rounded to 2^64.
+    final double relativeError2 = 0x1.0p-64;
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(-1, -2, relativeError2, absoluteError));
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(-2, -1, relativeError2, absoluteError));
+    Assertions.assertFalse(
+        LongEquality.areCloseUnsigned(-1, -2, Math.nextDown(relativeError2), absoluteError));
+
+    // Largest unsigned difference: 0 and 2^64 - 1
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(0, -1, 1, absoluteError));
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(-1, 0, 1, absoluteError));
+    Assertions.assertFalse(LongEquality.areCloseUnsigned(0, -1, Math.nextDown(1.0), absoluteError));
+
+    // Smallest unsigned values: 0 and 1
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(0, 1, 1, absoluteError));
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(1, 0, 1, absoluteError));
+    Assertions
+        .assertFalse(LongEquality.areCloseUnsigned(0, 1, Math.nextDown(1.0), absoluteError));
+  }
+
+  @Test
+  void testLongsAreCloseUnsignedUsingRoundedLimit() {
+    // The unsigned value 2^63 + 2^10 + 1 is correctly rounded to the double 2^63 + 2^11.
+    // Halving the value without a sticky bit rounds to 2^63.
+    final long x = Long.MIN_VALUE + (1L << 10) + 1;
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(x, 0, 1, 0));
+    Assertions.assertTrue(LongEquality.areCloseUnsigned(0, x, 1, 0));
+    // The value 2^63 + 2^10 is rounded to 2^63 (round half to even)
+    final long y = Long.MIN_VALUE + (1L << 10);
+    Assertions.assertFalse(LongEquality.areCloseUnsigned(y, 0, 1, 0));
+    Assertions.assertFalse(LongEquality.areCloseUnsigned(0, y, 1, 0));
+  }
+
+  @Test
+  void testLongsAreCloseUnsignedUsingReference() {
+    final SplittableRandom rng = new SplittableRandom(0x9b05688cL);
+    for (int i = 0; i < 5000; i++) {
+      final long value1 = rng.nextLong();
+      // Values with a large or small difference
+      final long value2 = rng.nextBoolean() ? rng.nextLong() : value1 + rng.nextInt(-1000, 1000);
+      final BigInteger x = unsigned(value1);
+      final BigInteger y = unsigned(value2);
+      final BigInteger delta = x.subtract(y).abs();
+      final BigInteger max = x.max(y);
+      // Relative error at the limit of the difference
+      double relativeError = max.signum() == 0 ? 0 : delta.doubleValue() / max.doubleValue();
+      if (!(relativeError < 1.5)) {
+        continue;
+      }
+      // Step from 2 ULP below to 2 ULP above the limit
+      for (int j = 0; j < 2; j++) {
+        relativeError = Math.nextDown(relativeError);
+      }
+      for (int j = 0; j <= 4; j++) {
+        if (relativeError >= 0) {
+          final boolean expected = new BigDecimal(delta)
+              .compareTo(new BigDecimal(max.doubleValue() * relativeError)) <= 0;
+          Assertions.assertEquals(expected,
+              LongEquality.areCloseUnsigned(value1, value2, relativeError, 0));
+          Assertions.assertEquals(expected,
+              LongEquality.areCloseUnsigned(value2, value1, relativeError, 0));
+        }
+        relativeError = Math.nextUp(relativeError);
+      }
+      // Absolute error at the limit of the difference
+      if (delta.bitLength() < Long.SIZE) {
+        final long absoluteError = delta.longValue();
+        Assertions.assertTrue(LongEquality.areCloseUnsigned(value1, value2, 0, absoluteError));
+        if (absoluteError > 0) {
+          Assertions
+              .assertFalse(LongEquality.areCloseUnsigned(value1, value2, 0, absoluteError - 1));
+        }
+      } else {
+        Assertions.assertFalse(LongEquality.areCloseUnsigned(value1, value2, 0, Long.MAX_VALUE));
+      }
+    }
+  }
+
+  private static BigInteger unsigned(long value) {
+    return new BigInteger(Long.toUnsignedString(value));
+  }
+
+  // unsigned long IsCloseTo
+
+  @Test
+  void testLongsIsCloseToUnsignedThrows() {
+    final long expected = 0;
+    final long actual = 0;
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      LongEquality.isCloseToUnsigned(expected, actual, goodRelativeError, absoluteError);
+    }
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        LongEquality.isCloseToUnsigned(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (long badAbsoluteError : new long[] {Long.MIN_VALUE, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        LongEquality.isCloseToUnsigned(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  void testLongsIsCloseToUnsignedUsingNoError() {
+    final double relativeError = 0;
+    final long absoluteError = 0;
+
+    // Use a range of values
+    for (long value : new long[] {Long.MIN_VALUE, Long.MIN_VALUE + 1, -1, 0, 1,
+        Long.MAX_VALUE - 1, Long.MAX_VALUE}) {
+      Assertions
+          .assertTrue(LongEquality.isCloseToUnsigned(value, value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          LongEquality.isCloseToUnsigned(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          LongEquality.isCloseToUnsigned(value, nextDown(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          LongEquality.isCloseToUnsigned(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          LongEquality.isCloseToUnsigned(nextDown(value), value, relativeError, absoluteError));
+    }
+  }
+
+  @Test
+  void testLongsIsCloseToUnsignedUsingAbsoluteError() {
+    final double relativeError = 0;
+
+    // Adjacent unsigned values: 2^63 - 1 and 2^63
+    Assertions.assertTrue(
+        LongEquality.isCloseToUnsigned(Long.MAX_VALUE, Long.MIN_VALUE, relativeError, 1));
+    Assertions.assertTrue(
+        LongEquality.isCloseToUnsigned(Long.MIN_VALUE, Long.MAX_VALUE, relativeError, 1));
+    Assertions.assertFalse(
+        LongEquality.isCloseToUnsigned(Long.MAX_VALUE, Long.MIN_VALUE, relativeError, 0));
+
+    // Largest unsigned difference: 0 and 2^64 - 1
+    final long absoluteError = Long.MAX_VALUE;
+    Assertions.assertFalse(LongEquality.isCloseToUnsigned(0, -1, relativeError, absoluteError));
+    Assertions.assertFalse(LongEquality.isCloseToUnsigned(-1, 0, relativeError, absoluteError));
+    Assertions.assertTrue(
+        LongEquality.isCloseToUnsigned(0, Long.MAX_VALUE, relativeError, absoluteError));
+    Assertions.assertFalse(
+        LongEquality.isCloseToUnsigned(0, Long.MIN_VALUE, relativeError, absoluteError));
+  }
+
+  @Test
+  void testLongsIsCloseToUnsignedUsingRelativeError() {
+    final long absoluteError = 0;
+
+    // Relative to the expected unsigned value 2^63
+    final double relativeError = 0x1.0p-63;
+    Assertions.assertTrue(LongEquality.isCloseToUnsigned(Long.MIN_VALUE, Long.MAX_VALUE,
+        relativeError, absoluteError));
+    Assertions.assertFalse(LongEquality.isCloseToUnsigned(Long.MIN_VALUE, Long.MAX_VALUE,
+        Math.nextDown(relativeError), absoluteError));
+    // The expected unsigned value 2^63 - 1 is rounded to 2^63 for the relative limit
+    Assertions.assertTrue(LongEquality.isCloseToUnsigned(Long.MAX_VALUE, Long.MIN_VALUE,
+        relativeError, absoluteError));
+    // Order sensitive
+    Assertions.assertTrue(LongEquality.isCloseToUnsigned(2, 1, 0.5, absoluteError));
+    Assertions.assertFalse(LongEquality.isCloseToUnsigned(1, 2, 0.5, absoluteError));
+    // The signed values are not close
+    Assertions.assertFalse(LongEquality.isCloseTo(Long.MIN_VALUE, Long.MAX_VALUE, relativeError,
+        absoluteError));
+
+    // Relative to the largest unsigned value 2^64 - 1 (rounded to 2^64): the limit is 2^63
+    Assertions
+        .assertTrue(LongEquality.isCloseToUnsigned(-1, Long.MIN_VALUE, 0.5, absoluteError));
+    Assertions
+        .assertTrue(LongEquality.isCloseToUnsigned(-1, Long.MAX_VALUE, 0.5, absoluteError));
+    Assertions.assertFalse(
+        LongEquality.isCloseToUnsigned(-1, Long.MAX_VALUE - 1, 0.5, absoluteError));
+    Assertions.assertTrue(LongEquality.isCloseToUnsigned(-1, 0, 1, absoluteError));
+    Assertions.assertFalse(LongEquality.isCloseToUnsigned(0, -1, 2, absoluteError));
+
+    // Expected zero has no relative range
+    Assertions.assertFalse(LongEquality.isCloseToUnsigned(0, 1, 1, absoluteError));
+    Assertions.assertTrue(LongEquality.isCloseToUnsigned(1, 0, 1, absoluteError));
+    Assertions.assertTrue(LongEquality.isCloseToUnsigned(1, 2, 1, absoluteError));
+    Assertions.assertFalse(LongEquality.isCloseToUnsigned(1, 3, 1, absoluteError));
+  }
 }
