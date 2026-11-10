@@ -234,4 +234,160 @@ public final class ByteEquality {
     return NumberEquality.shortsOrBytesTestIsCloseTo(expected, actual, relativeError,
         absoluteError);
   }
+
+  /**
+   * Tests that two unsigned bytes are equal within an absolute error. The values are interpreted as
+   * unsigned 8-bit integers in the range {@code [0, 2^8)}.
+   *
+   * <p>This test uses {@code int} arithmetic. If the absolute error is equal or above the maximum
+   * difference between two {@code byte} values then it is not a valid test and an exception is
+   * raised.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if within the tolerance
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between byte primitives
+   * @see Byte#toUnsignedInt(byte)
+   */
+  public static boolean areWithinUnsigned(byte value1, byte value2, int absoluteError) {
+    validateAbsoluteError(absoluteError);
+    return testAreWithinUnsigned(value1, value2, absoluteError);
+  }
+
+  /**
+   * Tests that two unsigned bytes are equal within an absolute error. The values are interpreted as
+   * unsigned 8-bit integers.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(int)}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if equal within an absolute error
+   */
+  static boolean testAreWithinUnsigned(byte value1, byte value2, int absoluteError) {
+    return NumberEquality.shortOrBytesTestAreWithin(Byte.toUnsignedInt(value1),
+        Byte.toUnsignedInt(value2), absoluteError);
+  }
+
+  /**
+   * Tests that two unsigned bytes are close using a relative and absolute error. The values are
+   * interpreted as unsigned 8-bit integers in the range {@code [0, 2^8)}. The relative
+   * error between values {@code value1} and {@code value2} is relative to the largest of the two
+   * values and the test is:
+   *
+   * <pre>
+   * {@code
+   * |value1-value2| <= max(value1, value2) * relativeError
+   * }
+   * </pre>
+   *
+   * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
+   * convergence of two values.
+   *
+   * <p>Note: The relative error is a double since the relative error computation is performed in
+   * double precision.
+   *
+   * <p>The difference between the values is exact. The relative limit is computed using double
+   * precision as {@code max(value1, value2) * relativeError}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if close
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between byte primitives
+   * @see Byte#toUnsignedInt(byte)
+   */
+  public static boolean areCloseUnsigned(byte value1, byte value2, double relativeError,
+      int absoluteError) {
+    validateAreClose(relativeError, absoluteError);
+    return testAreCloseUnsigned(value1, value2, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that two unsigned bytes are close using a relative and/or absolute error. The values are
+   * interpreted as unsigned 8-bit integers. The relative error between values {@code value1}
+   * and {@code value2} is relative to the largest of the two values.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, int)}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if close
+   */
+  static boolean testAreCloseUnsigned(byte value1, byte value2, double relativeError,
+      int absoluteError) {
+    return NumberEquality.shortsOrBytesTestAreClose(Byte.toUnsignedInt(value1),
+        Byte.toUnsignedInt(value2), relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that an unsigned byte is close to an expected value. The values are interpreted as
+   * unsigned 8-bit integers in the range {@code [0, 2^8)}. The relative error between
+   * values {@code expected} and {@code actual} is relative to {@code expected} and the test is:
+   *
+   * <pre>
+   * {@code
+   * |expected-actual| <= expected * relativeError
+   * }
+   * </pre>
+   *
+   * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
+   * testing {@code actual} falls within a relative and/or absolute range of
+   * {@code expected}.
+   *
+   * <p>The difference between the values is exact. The relative limit is computed using double
+   * precision as {@code expected * relativeError}.
+   *
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between byte primitives
+   * @see Byte#toUnsignedInt(byte)
+   */
+  public static boolean isCloseToUnsigned(byte expected, byte actual, double relativeError,
+      int absoluteError) {
+    validateIsCloseTo(relativeError, absoluteError);
+    return testIsCloseToUnsigned(expected, actual, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests an unsigned byte value is close to an expected value. The values are interpreted as
+   * unsigned 8-bit integers. The relative error between values {@code expected} and
+   * {@code actual} is relative to {@code expected}.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, int)}.
+   *
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   */
+  static boolean testIsCloseToUnsigned(byte expected, byte actual, double relativeError,
+      int absoluteError) {
+    return NumberEquality.shortsOrBytesTestIsCloseTo(Byte.toUnsignedInt(expected),
+        Byte.toUnsignedInt(actual), relativeError, absoluteError);
+  }
 }

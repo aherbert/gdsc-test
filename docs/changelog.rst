@@ -17,8 +17,9 @@ Minor release of GDSC Test.
 
    * - Update
      - Add ``areWithinUnsigned``, ``areCloseUnsigned`` and ``isCloseToUnsigned`` to
-       ``IntEquality`` and ``LongEquality`` to test ``int`` and ``long`` values are close using an
-       absolute and/or relative error when interpreted as unsigned integers.
+       ``ByteEquality``, ``ShortEquality``, ``IntEquality`` and ``LongEquality`` to test integer
+       values are close using an absolute and/or relative error when interpreted as unsigned
+       integers.
 
    * - Update
      - Add documented default constructors to public classes without an explicit constructor.

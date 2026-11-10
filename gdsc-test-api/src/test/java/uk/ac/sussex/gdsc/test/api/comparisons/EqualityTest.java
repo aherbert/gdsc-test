@@ -2908,6 +2908,189 @@ class EqualityTest {
     }
   }
 
+  // unsigned short Within
+
+  @Test
+  void testShortsAreWithinUnsignedThrows() {
+    final short expected = 0;
+    final short actual = 0;
+
+    for (int absError : new int[] {0, 1, ShortEquality.MAX_ABS_ERROR - 1}) {
+      ShortEquality.areWithinUnsigned(expected, actual, absError);
+    }
+    for (int badAbsoluteError : new int[] {Integer.MIN_VALUE, -1, ShortEquality.MAX_ABS_ERROR,
+        Integer.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ShortEquality.areWithinUnsigned(expected, actual, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  void testShortsAreWithinUnsignedUsingNoError() {
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (short value : new short[] {Short.MIN_VALUE, Short.MIN_VALUE + 1, -1, 0, 1,
+        Short.MAX_VALUE - 1, Short.MAX_VALUE}) {
+      Assertions.assertTrue(ShortEquality.areWithinUnsigned(value, value, absoluteError));
+      Assertions.assertFalse(ShortEquality.areWithinUnsigned(value, nextUp(value), absoluteError));
+      Assertions
+          .assertFalse(ShortEquality.areWithinUnsigned(value, nextDown(value), absoluteError));
+      Assertions.assertFalse(ShortEquality.areWithinUnsigned(nextUp(value), value, absoluteError));
+      Assertions
+          .assertFalse(ShortEquality.areWithinUnsigned(nextDown(value), value, absoluteError));
+    }
+  }
+
+  @Test
+  void testShortsAreWithinUnsignedUsingAbsoluteError() {
+    final short max = Short.MAX_VALUE;
+    final short min = Short.MIN_VALUE;
+    final short zero = 0;
+    final short one = 1;
+    final short minusOne = -1;
+    final short minusTwo = -2;
+
+    // Adjacent unsigned values: 2^15 - 1 and 2^15
+    Assertions.assertTrue(ShortEquality.areWithinUnsigned(max, min, 1));
+    Assertions.assertTrue(ShortEquality.areWithinUnsigned(min, max, 1));
+    Assertions.assertFalse(ShortEquality.areWithinUnsigned(max, min, 0));
+    // The signed values are not within the error
+    Assertions.assertFalse(ShortEquality.areWithin(max, min, 1));
+
+    // Largest unsigned difference: 0 and 2^16 - 1
+    final int absoluteError = ShortEquality.MAX_ABS_ERROR - 1;
+    Assertions.assertFalse(ShortEquality.areWithinUnsigned(zero, minusOne, absoluteError));
+    Assertions.assertFalse(ShortEquality.areWithinUnsigned(minusOne, zero, absoluteError));
+    Assertions.assertTrue(ShortEquality.areWithinUnsigned(one, minusOne, absoluteError));
+    Assertions.assertTrue(ShortEquality.areWithinUnsigned(zero, minusTwo, absoluteError));
+    // The signed values are within the error
+    Assertions.assertTrue(ShortEquality.areWithin(zero, minusOne, 1));
+  }
+
+  @Test
+  void testShortsAreWithinUnsignedUsingReference() {
+    final short[] values = unsignedShortsValues();
+    for (final short value1 : values) {
+      for (final short value2 : values) {
+        final int delta = Math.abs((value1 & 0xffff) - (value2 & 0xffff));
+        for (int absoluteError = Math.max(0, delta - 1);
+            absoluteError <= delta + 1 && absoluteError < ShortEquality.MAX_ABS_ERROR;
+            absoluteError++) {
+          Assertions.assertEquals(delta <= absoluteError,
+              ShortEquality.areWithinUnsigned(value1, value2, absoluteError));
+        }
+      }
+    }
+  }
+
+  /**
+   * Gets short values for a reference test. Uses every 251st unsigned value and the values at the
+   * signed and unsigned boundaries.
+   *
+   * @return the values
+   */
+  private static short[] unsignedShortsValues() {
+    final short[] boundaries = {Short.MIN_VALUE, Short.MIN_VALUE + 1, -2, -1, 0, 1, 2,
+        Short.MAX_VALUE - 1, Short.MAX_VALUE};
+    final short[] values = new short[boundaries.length + 262];
+    System.arraycopy(boundaries, 0, values, 0, boundaries.length);
+    int n = boundaries.length;
+    for (int i = 0; i < (1 << 16); i += 251) {
+      values[n++] = (short) i;
+    }
+    return values;
+  }
+
+  // unsigned byte Within
+
+  @Test
+  void testBytesAreWithinUnsignedThrows() {
+    final byte expected = 0;
+    final byte actual = 0;
+
+    for (int absError : new int[] {0, 1, ByteEquality.MAX_ABS_ERROR - 1}) {
+      ByteEquality.areWithinUnsigned(expected, actual, absError);
+    }
+    for (int badAbsoluteError : new int[] {Integer.MIN_VALUE, -1, ByteEquality.MAX_ABS_ERROR,
+        Integer.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ByteEquality.areWithinUnsigned(expected, actual, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  void testBytesAreWithinUnsignedUsingNoError() {
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (byte value : new byte[] {Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1,
+        Byte.MAX_VALUE}) {
+      Assertions.assertTrue(ByteEquality.areWithinUnsigned(value, value, absoluteError));
+      Assertions.assertFalse(ByteEquality.areWithinUnsigned(value, nextUp(value), absoluteError));
+      Assertions.assertFalse(ByteEquality.areWithinUnsigned(value, nextDown(value), absoluteError));
+      Assertions.assertFalse(ByteEquality.areWithinUnsigned(nextUp(value), value, absoluteError));
+      Assertions.assertFalse(ByteEquality.areWithinUnsigned(nextDown(value), value, absoluteError));
+    }
+  }
+
+  @Test
+  void testBytesAreWithinUnsignedUsingAbsoluteError() {
+    final byte max = Byte.MAX_VALUE;
+    final byte min = Byte.MIN_VALUE;
+    final byte zero = 0;
+    final byte one = 1;
+    final byte minusOne = -1;
+    final byte minusTwo = -2;
+
+    // Adjacent unsigned values: 2^7 - 1 and 2^7
+    Assertions.assertTrue(ByteEquality.areWithinUnsigned(max, min, 1));
+    Assertions.assertTrue(ByteEquality.areWithinUnsigned(min, max, 1));
+    Assertions.assertFalse(ByteEquality.areWithinUnsigned(max, min, 0));
+    // The signed values are not within the error
+    Assertions.assertFalse(ByteEquality.areWithin(max, min, 1));
+
+    // Largest unsigned difference: 0 and 2^8 - 1
+    final int absoluteError = ByteEquality.MAX_ABS_ERROR - 1;
+    Assertions.assertFalse(ByteEquality.areWithinUnsigned(zero, minusOne, absoluteError));
+    Assertions.assertFalse(ByteEquality.areWithinUnsigned(minusOne, zero, absoluteError));
+    Assertions.assertTrue(ByteEquality.areWithinUnsigned(one, minusOne, absoluteError));
+    Assertions.assertTrue(ByteEquality.areWithinUnsigned(zero, minusTwo, absoluteError));
+    // The signed values are within the error
+    Assertions.assertTrue(ByteEquality.areWithin(zero, minusOne, 1));
+  }
+
+  @Test
+  void testBytesAreWithinUnsignedUsingReference() {
+    final byte[] values = unsignedBytesValues();
+    for (final byte value1 : values) {
+      for (final byte value2 : values) {
+        final int delta = Math.abs((value1 & 0xff) - (value2 & 0xff));
+        for (int absoluteError = Math.max(0, delta - 1);
+            absoluteError <= delta + 1 && absoluteError < ByteEquality.MAX_ABS_ERROR;
+            absoluteError++) {
+          Assertions.assertEquals(delta <= absoluteError,
+              ByteEquality.areWithinUnsigned(value1, value2, absoluteError));
+        }
+      }
+    }
+  }
+
+  /**
+   * Gets byte values for a reference test. Uses all the values.
+   *
+   * @return the values
+   */
+  private static byte[] unsignedBytesValues() {
+    final byte[] values = new byte[256];
+    for (int i = 0; i < values.length; i++) {
+      values[i] = (byte) i;
+    }
+    return values;
+  }
+
   // unsigned long Close
 
   @Test
@@ -3231,6 +3414,280 @@ class EqualityTest {
     return new BigInteger(Integer.toUnsignedString(value));
   }
 
+  // unsigned short Close
+
+  @Test
+  void testShortsAreCloseUnsignedThrows() {
+    final short expected = 0;
+    final short actual = 0;
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1, 2,
+        Double.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ShortEquality.areCloseUnsigned(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (int badAbsoluteError : new int[] {Integer.MIN_VALUE, -1, ShortEquality.MAX_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ShortEquality.areCloseUnsigned(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  void testShortsAreCloseUnsignedUsingNoError() {
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (short value : new short[] {Short.MIN_VALUE, Short.MIN_VALUE + 1, -1, 0, 1,
+        Short.MAX_VALUE - 1, Short.MAX_VALUE}) {
+      Assertions
+          .assertTrue(ShortEquality.areCloseUnsigned(value, value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          ShortEquality.areCloseUnsigned(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          ShortEquality.areCloseUnsigned(value, nextDown(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          ShortEquality.areCloseUnsigned(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          ShortEquality.areCloseUnsigned(nextDown(value), value, relativeError, absoluteError));
+    }
+  }
+
+  @Test
+  void testShortsAreCloseUnsignedUsingAbsoluteError() {
+    final short max = Short.MAX_VALUE;
+    final short min = Short.MIN_VALUE;
+    final short zero = 0;
+    final short one = 1;
+    final short minusOne = -1;
+    final short minusTwo = -2;
+    final double relativeError = 0;
+
+    // Adjacent unsigned values: 2^15 - 1 and 2^15
+    Assertions.assertTrue(ShortEquality.areCloseUnsigned(max, min, relativeError, 1));
+    Assertions.assertTrue(ShortEquality.areCloseUnsigned(min, max, relativeError, 1));
+    Assertions.assertFalse(ShortEquality.areCloseUnsigned(max, min, relativeError, 0));
+    // The signed values are not close
+    Assertions.assertFalse(ShortEquality.areClose(max, min, relativeError, 1));
+
+    // Largest unsigned difference: 0 and 2^16 - 1
+    final int absoluteError = ShortEquality.MAX_ABS_ERROR - 1;
+    Assertions
+        .assertFalse(ShortEquality.areCloseUnsigned(zero, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertFalse(ShortEquality.areCloseUnsigned(minusOne, zero, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ShortEquality.areCloseUnsigned(one, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ShortEquality.areCloseUnsigned(zero, minusTwo, relativeError, absoluteError));
+    // The signed values are close
+    Assertions.assertTrue(ShortEquality.areClose(zero, minusOne, relativeError, 1));
+  }
+
+  @Test
+  void testShortsAreCloseUnsignedUsingRelativeError() {
+    final short max = Short.MAX_VALUE;
+    final short min = Short.MIN_VALUE;
+    final short zero = 0;
+    final short one = 1;
+    final short minusOne = -1;
+    final short minusTwo = -2;
+    final int absoluteError = 0;
+
+    // Relative to the largest unsigned value: 2^15
+    final double relativeError = 0x1.0p-15;
+    Assertions.assertTrue(ShortEquality.areCloseUnsigned(max, min, relativeError, absoluteError));
+    Assertions.assertTrue(ShortEquality.areCloseUnsigned(min, max, relativeError, absoluteError));
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(ShortEquality.areCloseUnsigned(max, min, delta, absoluteError));
+    Assertions.assertFalse(ShortEquality.areCloseUnsigned(min, max, delta, absoluteError));
+    // The signed values are not close
+    Assertions.assertFalse(ShortEquality.areClose(max, min, relativeError, absoluteError));
+
+    // Largest unsigned values: 2^16 - 2 and 2^16 - 1
+    Assertions.assertTrue(
+        ShortEquality.areCloseUnsigned(minusOne, minusTwo, relativeError, absoluteError));
+    Assertions.assertTrue(
+        ShortEquality.areCloseUnsigned(minusTwo, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertFalse(ShortEquality.areCloseUnsigned(minusOne, minusTwo, 0x1.0p-16, absoluteError));
+
+    // Smallest unsigned values: 0 and 1
+    Assertions.assertTrue(ShortEquality.areCloseUnsigned(zero, one, 1, absoluteError));
+    Assertions.assertTrue(ShortEquality.areCloseUnsigned(one, zero, 1, absoluteError));
+    Assertions
+        .assertFalse(ShortEquality.areCloseUnsigned(zero, one, Math.nextDown(1.0), absoluteError));
+  }
+
+  @Test
+  void testShortsAreCloseUnsignedUsingReference() {
+    final short[] values = unsignedShortsValues();
+    for (final short value1 : values) {
+      for (final short value2 : values) {
+        final int x = value1 & 0xffff;
+        final int y = value2 & 0xffff;
+        final int delta = Math.abs(x - y);
+        final int max = Math.max(x, y);
+        if (max == 0) {
+          continue;
+        }
+        // Step from 2 ULP below to 2 ULP above the relative limit
+        double relativeError = (double) delta / max;
+        for (int j = 0; j < 2; j++) {
+          relativeError = Math.nextDown(relativeError);
+        }
+        for (int j = 0; j <= 4; j++) {
+          if (relativeError >= 0 && relativeError < 2) {
+            Assertions.assertEquals(delta <= max * relativeError,
+                ShortEquality.areCloseUnsigned(value1, value2, relativeError, 0));
+          }
+          relativeError = Math.nextUp(relativeError);
+        }
+      }
+    }
+  }
+
+  // unsigned byte Close
+
+  @Test
+  void testBytesAreCloseUnsignedThrows() {
+    final byte expected = 0;
+    final byte actual = 0;
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1, 2,
+        Double.MAX_VALUE}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ByteEquality.areCloseUnsigned(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (int badAbsoluteError : new int[] {Integer.MIN_VALUE, -1, ByteEquality.MAX_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ByteEquality.areCloseUnsigned(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  void testBytesAreCloseUnsignedUsingNoError() {
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (byte value : new byte[] {Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1,
+        Byte.MAX_VALUE}) {
+      Assertions
+          .assertTrue(ByteEquality.areCloseUnsigned(value, value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          ByteEquality.areCloseUnsigned(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          ByteEquality.areCloseUnsigned(value, nextDown(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          ByteEquality.areCloseUnsigned(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          ByteEquality.areCloseUnsigned(nextDown(value), value, relativeError, absoluteError));
+    }
+  }
+
+  @Test
+  void testBytesAreCloseUnsignedUsingAbsoluteError() {
+    final byte max = Byte.MAX_VALUE;
+    final byte min = Byte.MIN_VALUE;
+    final byte zero = 0;
+    final byte one = 1;
+    final byte minusOne = -1;
+    final byte minusTwo = -2;
+    final double relativeError = 0;
+
+    // Adjacent unsigned values: 2^7 - 1 and 2^7
+    Assertions.assertTrue(ByteEquality.areCloseUnsigned(max, min, relativeError, 1));
+    Assertions.assertTrue(ByteEquality.areCloseUnsigned(min, max, relativeError, 1));
+    Assertions.assertFalse(ByteEquality.areCloseUnsigned(max, min, relativeError, 0));
+    // The signed values are not close
+    Assertions.assertFalse(ByteEquality.areClose(max, min, relativeError, 1));
+
+    // Largest unsigned difference: 0 and 2^8 - 1
+    final int absoluteError = ByteEquality.MAX_ABS_ERROR - 1;
+    Assertions
+        .assertFalse(ByteEquality.areCloseUnsigned(zero, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertFalse(ByteEquality.areCloseUnsigned(minusOne, zero, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ByteEquality.areCloseUnsigned(one, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ByteEquality.areCloseUnsigned(zero, minusTwo, relativeError, absoluteError));
+    // The signed values are close
+    Assertions.assertTrue(ByteEquality.areClose(zero, minusOne, relativeError, 1));
+  }
+
+  @Test
+  void testBytesAreCloseUnsignedUsingRelativeError() {
+    final byte max = Byte.MAX_VALUE;
+    final byte min = Byte.MIN_VALUE;
+    final byte zero = 0;
+    final byte one = 1;
+    final byte minusOne = -1;
+    final byte minusTwo = -2;
+    final int absoluteError = 0;
+
+    // Relative to the largest unsigned value: 2^7
+    final double relativeError = 0x1.0p-7;
+    Assertions.assertTrue(ByteEquality.areCloseUnsigned(max, min, relativeError, absoluteError));
+    Assertions.assertTrue(ByteEquality.areCloseUnsigned(min, max, relativeError, absoluteError));
+    final double delta = Math.nextDown(relativeError);
+    Assertions.assertFalse(ByteEquality.areCloseUnsigned(max, min, delta, absoluteError));
+    Assertions.assertFalse(ByteEquality.areCloseUnsigned(min, max, delta, absoluteError));
+    // The signed values are not close
+    Assertions.assertFalse(ByteEquality.areClose(max, min, relativeError, absoluteError));
+
+    // Largest unsigned values: 2^8 - 2 and 2^8 - 1
+    Assertions.assertTrue(
+        ByteEquality.areCloseUnsigned(minusOne, minusTwo, relativeError, absoluteError));
+    Assertions.assertTrue(
+        ByteEquality.areCloseUnsigned(minusTwo, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertFalse(ByteEquality.areCloseUnsigned(minusOne, minusTwo, 0x1.0p-8, absoluteError));
+
+    // Smallest unsigned values: 0 and 1
+    Assertions.assertTrue(ByteEquality.areCloseUnsigned(zero, one, 1, absoluteError));
+    Assertions.assertTrue(ByteEquality.areCloseUnsigned(one, zero, 1, absoluteError));
+    Assertions
+        .assertFalse(ByteEquality.areCloseUnsigned(zero, one, Math.nextDown(1.0), absoluteError));
+  }
+
+  @Test
+  void testBytesAreCloseUnsignedUsingReference() {
+    final byte[] values = unsignedBytesValues();
+    for (final byte value1 : values) {
+      for (final byte value2 : values) {
+        final int x = value1 & 0xff;
+        final int y = value2 & 0xff;
+        final int delta = Math.abs(x - y);
+        final int max = Math.max(x, y);
+        if (max == 0) {
+          continue;
+        }
+        // Step from 2 ULP below to 2 ULP above the relative limit
+        double relativeError = (double) delta / max;
+        for (int j = 0; j < 2; j++) {
+          relativeError = Math.nextDown(relativeError);
+        }
+        for (int j = 0; j <= 4; j++) {
+          if (relativeError >= 0 && relativeError < 2) {
+            Assertions.assertEquals(delta <= max * relativeError,
+                ByteEquality.areCloseUnsigned(value1, value2, relativeError, 0));
+          }
+          relativeError = Math.nextUp(relativeError);
+        }
+      }
+    }
+  }
+
   // unsigned long IsCloseTo
 
   @Test
@@ -3429,5 +3886,271 @@ class EqualityTest {
     Assertions.assertTrue(IntEquality.isCloseToUnsigned(1, 0, 1, absoluteError));
     Assertions.assertTrue(IntEquality.isCloseToUnsigned(1, 2, 1, absoluteError));
     Assertions.assertFalse(IntEquality.isCloseToUnsigned(1, 3, 1, absoluteError));
+  }
+
+  // unsigned short IsCloseTo
+
+  @Test
+  void testShortsIsCloseToUnsignedThrows() {
+    final short expected = 0;
+    final short actual = 0;
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      ShortEquality.isCloseToUnsigned(expected, actual, goodRelativeError, absoluteError);
+    }
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ShortEquality.isCloseToUnsigned(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (int badAbsoluteError : new int[] {Integer.MIN_VALUE, -1, ShortEquality.MAX_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ShortEquality.isCloseToUnsigned(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  void testShortsIsCloseToUnsignedUsingNoError() {
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (short value : new short[] {Short.MIN_VALUE, Short.MIN_VALUE + 1, -1, 0, 1,
+        Short.MAX_VALUE - 1, Short.MAX_VALUE}) {
+      Assertions
+          .assertTrue(ShortEquality.isCloseToUnsigned(value, value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          ShortEquality.isCloseToUnsigned(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          ShortEquality.isCloseToUnsigned(value, nextDown(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          ShortEquality.isCloseToUnsigned(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          ShortEquality.isCloseToUnsigned(nextDown(value), value, relativeError, absoluteError));
+    }
+  }
+
+  @Test
+  void testShortsIsCloseToUnsignedUsingAbsoluteError() {
+    final short max = Short.MAX_VALUE;
+    final short min = Short.MIN_VALUE;
+    final short zero = 0;
+    final short one = 1;
+    final short minusOne = -1;
+    final short minusTwo = -2;
+    final double relativeError = 0;
+
+    // Adjacent unsigned values: 2^15 - 1 and 2^15
+    Assertions.assertTrue(ShortEquality.isCloseToUnsigned(max, min, relativeError, 1));
+    Assertions.assertTrue(ShortEquality.isCloseToUnsigned(min, max, relativeError, 1));
+    Assertions.assertFalse(ShortEquality.isCloseToUnsigned(max, min, relativeError, 0));
+
+    // Largest unsigned difference: 0 and 2^16 - 1
+    final int absoluteError = ShortEquality.MAX_ABS_ERROR - 1;
+    Assertions
+        .assertFalse(ShortEquality.isCloseToUnsigned(zero, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertFalse(ShortEquality.isCloseToUnsigned(minusOne, zero, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ShortEquality.isCloseToUnsigned(one, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ShortEquality.isCloseToUnsigned(zero, minusTwo, relativeError, absoluteError));
+  }
+
+  @Test
+  void testShortsIsCloseToUnsignedUsingRelativeError() {
+    final short max = Short.MAX_VALUE;
+    final short min = Short.MIN_VALUE;
+    final short zero = 0;
+    final short one = 1;
+    final short two = 2;
+    final short three = 3;
+    final short minusOne = -1;
+    final int absoluteError = 0;
+
+    // Relative to the expected unsigned value 2^15
+    final double relativeError = 0x1.0p-15;
+    Assertions.assertTrue(ShortEquality.isCloseToUnsigned(min, max, relativeError, absoluteError));
+    Assertions.assertFalse(
+        ShortEquality.isCloseToUnsigned(min, max, Math.nextDown(relativeError), absoluteError));
+    // Order sensitive: relative to the expected unsigned value 2^15 - 1
+    Assertions.assertFalse(ShortEquality.isCloseToUnsigned(max, min, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ShortEquality.isCloseToUnsigned(max, min, 2 * relativeError, absoluteError));
+    // The signed values are not close
+    Assertions.assertFalse(ShortEquality.isCloseTo(min, max, relativeError, absoluteError));
+
+    // Relative to the largest unsigned value 2^16 - 1; the actual value can be above 2^15
+    Assertions.assertTrue(ShortEquality.isCloseToUnsigned(minusOne, min, 0.5, absoluteError));
+    Assertions.assertFalse(ShortEquality.isCloseToUnsigned(minusOne, max, 0.5, absoluteError));
+
+    // Expected zero has no relative range
+    Assertions.assertFalse(ShortEquality.isCloseToUnsigned(zero, one, 1, absoluteError));
+    Assertions.assertTrue(ShortEquality.isCloseToUnsigned(one, zero, 1, absoluteError));
+    Assertions.assertTrue(ShortEquality.isCloseToUnsigned(one, two, 1, absoluteError));
+    Assertions.assertFalse(ShortEquality.isCloseToUnsigned(one, three, 1, absoluteError));
+  }
+
+  @Test
+  void testShortsIsCloseToUnsignedUsingReference() {
+    final short[] values = unsignedShortsValues();
+    for (final short expected : values) {
+      for (final short actual : values) {
+        final int x = expected & 0xffff;
+        final int y = actual & 0xffff;
+        final int delta = Math.abs(x - y);
+        if (x == 0) {
+          continue;
+        }
+        // Step from 2 ULP below to 2 ULP above the relative limit
+        double relativeError = (double) delta / x;
+        for (int j = 0; j < 2; j++) {
+          relativeError = Math.nextDown(relativeError);
+        }
+        for (int j = 0; j <= 4; j++) {
+          if (relativeError >= 0) {
+            Assertions.assertEquals(delta <= x * relativeError,
+                ShortEquality.isCloseToUnsigned(expected, actual, relativeError, 0));
+          }
+          relativeError = Math.nextUp(relativeError);
+        }
+      }
+    }
+  }
+
+  // unsigned byte IsCloseTo
+
+  @Test
+  void testBytesIsCloseToUnsignedThrows() {
+    final byte expected = 0;
+    final byte actual = 0;
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    for (double goodRelativeError : new double[] {2, Double.MAX_VALUE}) {
+      ByteEquality.isCloseToUnsigned(expected, actual, goodRelativeError, absoluteError);
+    }
+    for (double badRelativeError : new double[] {Double.NaN, Double.POSITIVE_INFINITY, -1}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ByteEquality.isCloseToUnsigned(expected, actual, badRelativeError, absoluteError);
+      });
+    }
+    for (int badAbsoluteError : new int[] {Integer.MIN_VALUE, -1, ByteEquality.MAX_ABS_ERROR}) {
+      Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        ByteEquality.isCloseToUnsigned(expected, actual, relativeError, badAbsoluteError);
+      });
+    }
+  }
+
+  @Test
+  void testBytesIsCloseToUnsignedUsingNoError() {
+    final double relativeError = 0;
+    final int absoluteError = 0;
+
+    // Use a range of values
+    for (byte value : new byte[] {Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1,
+        Byte.MAX_VALUE}) {
+      Assertions
+          .assertTrue(ByteEquality.isCloseToUnsigned(value, value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          ByteEquality.isCloseToUnsigned(value, nextUp(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          ByteEquality.isCloseToUnsigned(value, nextDown(value), relativeError, absoluteError));
+      Assertions.assertFalse(
+          ByteEquality.isCloseToUnsigned(nextUp(value), value, relativeError, absoluteError));
+      Assertions.assertFalse(
+          ByteEquality.isCloseToUnsigned(nextDown(value), value, relativeError, absoluteError));
+    }
+  }
+
+  @Test
+  void testBytesIsCloseToUnsignedUsingAbsoluteError() {
+    final byte max = Byte.MAX_VALUE;
+    final byte min = Byte.MIN_VALUE;
+    final byte zero = 0;
+    final byte one = 1;
+    final byte minusOne = -1;
+    final byte minusTwo = -2;
+    final double relativeError = 0;
+
+    // Adjacent unsigned values: 2^7 - 1 and 2^7
+    Assertions.assertTrue(ByteEquality.isCloseToUnsigned(max, min, relativeError, 1));
+    Assertions.assertTrue(ByteEquality.isCloseToUnsigned(min, max, relativeError, 1));
+    Assertions.assertFalse(ByteEquality.isCloseToUnsigned(max, min, relativeError, 0));
+
+    // Largest unsigned difference: 0 and 2^8 - 1
+    final int absoluteError = ByteEquality.MAX_ABS_ERROR - 1;
+    Assertions
+        .assertFalse(ByteEquality.isCloseToUnsigned(zero, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertFalse(ByteEquality.isCloseToUnsigned(minusOne, zero, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ByteEquality.isCloseToUnsigned(one, minusOne, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ByteEquality.isCloseToUnsigned(zero, minusTwo, relativeError, absoluteError));
+  }
+
+  @Test
+  void testBytesIsCloseToUnsignedUsingRelativeError() {
+    final byte max = Byte.MAX_VALUE;
+    final byte min = Byte.MIN_VALUE;
+    final byte zero = 0;
+    final byte one = 1;
+    final byte two = 2;
+    final byte three = 3;
+    final byte minusOne = -1;
+    final int absoluteError = 0;
+
+    // Relative to the expected unsigned value 2^7
+    final double relativeError = 0x1.0p-7;
+    Assertions.assertTrue(ByteEquality.isCloseToUnsigned(min, max, relativeError, absoluteError));
+    Assertions.assertFalse(
+        ByteEquality.isCloseToUnsigned(min, max, Math.nextDown(relativeError), absoluteError));
+    // Order sensitive: relative to the expected unsigned value 2^7 - 1
+    Assertions.assertFalse(ByteEquality.isCloseToUnsigned(max, min, relativeError, absoluteError));
+    Assertions
+        .assertTrue(ByteEquality.isCloseToUnsigned(max, min, 2 * relativeError, absoluteError));
+    // The signed values are not close
+    Assertions.assertFalse(ByteEquality.isCloseTo(min, max, relativeError, absoluteError));
+
+    // Relative to the largest unsigned value 2^8 - 1; the actual value can be above 2^7
+    Assertions.assertTrue(ByteEquality.isCloseToUnsigned(minusOne, min, 0.5, absoluteError));
+    Assertions.assertFalse(ByteEquality.isCloseToUnsigned(minusOne, max, 0.5, absoluteError));
+
+    // Expected zero has no relative range
+    Assertions.assertFalse(ByteEquality.isCloseToUnsigned(zero, one, 1, absoluteError));
+    Assertions.assertTrue(ByteEquality.isCloseToUnsigned(one, zero, 1, absoluteError));
+    Assertions.assertTrue(ByteEquality.isCloseToUnsigned(one, two, 1, absoluteError));
+    Assertions.assertFalse(ByteEquality.isCloseToUnsigned(one, three, 1, absoluteError));
+  }
+
+  @Test
+  void testBytesIsCloseToUnsignedUsingReference() {
+    final byte[] values = unsignedBytesValues();
+    for (final byte expected : values) {
+      for (final byte actual : values) {
+        final int x = expected & 0xff;
+        final int y = actual & 0xff;
+        final int delta = Math.abs(x - y);
+        if (x == 0) {
+          continue;
+        }
+        // Step from 2 ULP below to 2 ULP above the relative limit
+        double relativeError = (double) delta / x;
+        for (int j = 0; j < 2; j++) {
+          relativeError = Math.nextDown(relativeError);
+        }
+        for (int j = 0; j <= 4; j++) {
+          if (relativeError >= 0) {
+            Assertions.assertEquals(delta <= x * relativeError,
+                ByteEquality.isCloseToUnsigned(expected, actual, relativeError, 0));
+          }
+          relativeError = Math.nextUp(relativeError);
+        }
+      }
+    }
   }
 }
