@@ -264,4 +264,135 @@ public final class IntEquality {
     // is used after the conversion to double.
     return delta <= Math.abs(expected * relativeError);
   }
+
+  /**
+   * Tests that two unsigned ints are close using a relative and absolute error. The values are
+   * interpreted as unsigned 32-bit integers in the range {@code [0, 2^32)}. The relative error
+   * between values {@code value1} and {@code value2} is relative to the largest of the two values
+   * and the test is:
+   *
+   * <pre>
+   * {@code
+   * |value1-value2| <= max(value1, value2) * relativeError
+   * }
+   * </pre>
+   *
+   * <p>The test is symmetric for {@code value1} and {@code value2} and equivalent to testing
+   * convergence of two values.
+   *
+   * <p>Note: The relative error is a double since the relative error computation is performed in
+   * double precision.
+   *
+   * <p>The difference between the values is exact. The relative limit is computed using double
+   * precision as {@code max(value1, value2) * relativeError}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if close
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between int primitives
+   * @see Integer#toUnsignedLong(int)
+   */
+  public static boolean areCloseUnsigned(int value1, int value2, double relativeError,
+      long absoluteError) {
+    validateAreClose(relativeError, absoluteError);
+    return testAreCloseUnsigned(value1, value2, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests that two unsigned ints are close using a relative and/or absolute error. The values are
+   * interpreted as unsigned 32-bit integers. The relative error between values {@code value1} and
+   * {@code value2} is relative to the largest of the two values.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateAreClose(double, long)}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param relativeError the maximum relative error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if close
+   */
+  static boolean testAreCloseUnsigned(int value1, int value2, double relativeError,
+      long absoluteError) {
+    // Use long arithmetic on the unsigned values
+    final long x = Integer.toUnsignedLong(value1);
+    final long y = Integer.toUnsignedLong(value2);
+    final long delta = (x > y) ? x - y : y - x;
+    if (delta <= absoluteError) {
+      return true;
+    }
+    // Compute using double precision. The unsigned values are exact as a double.
+    return delta <= Math.max(x, y) * relativeError;
+  }
+
+  /**
+   * Tests that an unsigned int is close to an expected value. The values are interpreted as
+   * unsigned 32-bit integers in the range {@code [0, 2^32)}. The relative error between values
+   * {@code expected} and {@code actual} is relative to {@code expected} and the test is:
+   *
+   * <pre>
+   * {@code
+   * |expected-actual| <= expected * relativeError
+   * }
+   * </pre>
+   *
+   * <p>The test is asymmetric for {@code expected} and {@code actual}. The test is equivalent to
+   * testing {@code actual} falls within a relative and/or absolute range of
+   * {@code expected}.
+   *
+   * <p>The difference between the values is exact. The relative limit is computed using double
+   * precision as {@code expected * relativeError}.
+   *
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between int primitives
+   * @see Integer#toUnsignedLong(int)
+   */
+  public static boolean isCloseToUnsigned(int expected, int actual, double relativeError,
+      long absoluteError) {
+    validateIsCloseTo(relativeError, absoluteError);
+    return testIsCloseToUnsigned(expected, actual, relativeError, absoluteError);
+  }
+
+  /**
+   * Tests an unsigned int value is close to an expected value. The values are interpreted as
+   * unsigned 32-bit integers. The relative error between values {@code expected} and
+   * {@code actual} is relative to {@code expected}.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateIsCloseTo(double, long)}.
+   *
+   * @param expected the expected value.
+   * @param actual the actual value.
+   * @param relativeError the maximum error, relative to {@code expected}, between {@code expected}
+   *        and {@code actual} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and {@code actual} for
+   *        which both numbers are still considered equal.
+   * @return true if actual is close to expected
+   */
+  static boolean testIsCloseToUnsigned(int expected, int actual, double relativeError,
+      long absoluteError) {
+    // Use long arithmetic on the unsigned values
+    final long x = Integer.toUnsignedLong(expected);
+    final long y = Integer.toUnsignedLong(actual);
+    final long delta = (x > y) ? x - y : y - x;
+    if (delta <= absoluteError) {
+      return true;
+    }
+    // Compute using double precision. The unsigned value is exact as a double.
+    return delta <= x * relativeError;
+  }
 }
