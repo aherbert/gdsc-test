@@ -388,6 +388,82 @@ public final class LongEquality {
   }
 
   /**
+   * Tests that two unsigned longs are equal within an absolute error. The values are interpreted
+   * as unsigned 64-bit integers in the range {@code [0, 2^64)}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if within the error
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between long primitives
+   * @see Long#compareUnsigned(long, long)
+   */
+  public static boolean areWithinUnsigned(long value1, long value2, BigInteger absoluteError) {
+    validateAbsoluteError(absoluteError);
+    return testAreWithinUnsigned(value1, value2, absoluteError);
+  }
+
+  /**
+   * Tests that two unsigned longs are equal within an absolute error. The values are interpreted
+   * as unsigned 64-bit integers in the range {@code [0, 2^64)}.
+   *
+   * <p>This test is restricted to testing differences up to {@link Long#MAX_VALUE}. Larger
+   * differences can be tested using {@link #areWithinUnsigned(long, long, BigInteger)}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if within the error
+   * @throws IllegalArgumentException if the absolute error is not positive
+   * @see #areWithinUnsigned(long, long, BigInteger)
+   * @see Long#compareUnsigned(long, long)
+   */
+  public static boolean areWithinUnsigned(long value1, long value2, long absoluteError) {
+    validateAbsoluteError(absoluteError);
+    return testAreWithinUnsigned(value1, value2, absoluteError);
+  }
+
+  /**
+   * Tests that two unsigned longs are equal within an absolute error. The values are interpreted
+   * as unsigned 64-bit integers.
+   *
+   * <p>It is assumed the errors have been validated with
+   * {@link #validateAbsoluteError(BigInteger)}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if equal within an absolute error
+   */
+  static boolean testAreWithinUnsigned(long value1, long value2, BigInteger absoluteError) {
+    // The validated error is below 2^64 - 1 so the lower 64-bits are the unsigned error
+    return testAreWithinUnsigned(value1, value2, absoluteError.longValue());
+  }
+
+  /**
+   * Tests that two unsigned longs are equal within an absolute error. The values are interpreted
+   * as unsigned 64-bit integers. The absolute error is interpreted as an unsigned 64-bit integer.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(long)} or
+   * {@link #validateAbsoluteError(BigInteger)}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if equal within an absolute error
+   */
+  static boolean testAreWithinUnsigned(long value1, long value2, long absoluteError) {
+    // The difference is an unsigned 64-bit integer
+    final long delta = gtUnsigned(value1, value2) ? value1 - value2 : value2 - value1;
+    return leqUnsigned(delta, absoluteError);
+  }
+
+  /**
    * Tests that two unsigned longs are close using a relative and absolute error. The values are
    * interpreted as unsigned 64-bit integers in the range {@code [0, 2^64)}. The relative error
    * between values {@code value1} and {@code value2} is relative to the largest of the two values

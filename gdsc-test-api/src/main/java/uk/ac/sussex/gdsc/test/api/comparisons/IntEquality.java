@@ -266,6 +266,48 @@ public final class IntEquality {
   }
 
   /**
+   * Tests that two unsigned ints are equal within an absolute error. The values are interpreted as
+   * unsigned 32-bit integers in the range {@code [0, 2^32)}.
+   *
+   * <p>This test uses {@code long} arithmetic. If the absolute error is equal or above the maximum
+   * difference between two {@code int} values then it is not a valid test and an exception is
+   * raised.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if within the error
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between int primitives
+   * @see Integer#toUnsignedLong(int)
+   */
+  public static boolean areWithinUnsigned(int value1, int value2, long absoluteError) {
+    validateAbsoluteError(absoluteError);
+    return testAreWithinUnsigned(value1, value2, absoluteError);
+  }
+
+  /**
+   * Tests that two unsigned ints are equal within an absolute error. The values are interpreted as
+   * unsigned 32-bit integers.
+   *
+   * <p>It is assumed the errors have been validated with {@link #validateAbsoluteError(long)}.
+   *
+   * @param value1 the first value
+   * @param value2 the second value
+   * @param absoluteError the maximum absolute error between {@code value1} and {@code value2} for
+   *        which both numbers are still considered equal.
+   * @return true if equal within an absolute error
+   */
+  static boolean testAreWithinUnsigned(int value1, int value2, long absoluteError) {
+    // Use long arithmetic on the unsigned values
+    final long x = Integer.toUnsignedLong(value1);
+    final long y = Integer.toUnsignedLong(value2);
+    final long delta = (x > y) ? x - y : y - x;
+    return (delta <= absoluteError);
+  }
+
+  /**
    * Tests that two unsigned ints are close using a relative and absolute error. The values are
    * interpreted as unsigned 32-bit integers in the range {@code [0, 2^32)}. The relative error
    * between values {@code value1} and {@code value2} is relative to the largest of the two values
