@@ -12,10 +12,13 @@ import java.util.function.Supplier;
  * \<p>The computed relative error is asymmetric and the test is equivalent to testing
  * {@code actual} falls within a relative and/or absolute range of {@code reference}.
  *
- * @see <Number>Predicate#test(<number>)
- * @see <Number>Equality#isCloseTo(<number>, <number>, double, <errorType>)
+<if(unsigned)>
+ * \<p>The values are interpreted as unsigned integers.
+ *
+<endif> * @see <Number>Predicate#test(<number>)
+ * @see <Number>Equality#isCloseTo<Sign>(<number>, <number>, double, <errorType>)
  */
-public class <Number>IsCloseTo
+public class <Number>IsCloseTo<Sign>
     implements <Number>Predicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -35,14 +38,18 @@ public class <Number>IsCloseTo
    *
    * \<pre>
    * {@code
-   * |reference - value| \<= |reference| * relativeError
+   * |reference - value| \<= <if(unsigned)>reference * relativeError<else>|reference| * relativeError<endif>
    * \}\</pre>
    *
    * \<p>The relative error is asymmetric for {@code reference} and {@code value}. The test is
    * equivalent to testing {@code value} falls within a relative and/or absolute range of
    * {@code reference}.
    *
-   * \<p>The test is performed using {@link <Number>Equality#isCloseTo(<number>, <number>, double, <errorType>)}
+<if(unsigned)>
+   * \<p>The values are interpreted as unsigned integers.
+   *
+<endif>
+   * \<p>The test is performed using<if(unsigned)><\n>   *<endif> {@link <Number>Equality#isCloseTo<Sign>(<number>, <number>, double, <errorType>)}
    * which defines the computation of the difference and the relative limit.
    *
    * @param reference The reference value.
@@ -61,7 +68,7 @@ public class <Number>IsCloseTo
    * @throws IllegalArgumentException If the absolute error is not positive
 <endif>
    */
-  public <Number>IsCloseTo(<number> reference,
+  public <Number>IsCloseTo<Sign>(<number> reference,
       double relativeError, <errorType> absoluteError) {
     <Number>Equality.validateIsCloseTo(relativeError, absoluteError);
     this.reference = reference;
@@ -89,7 +96,7 @@ public class <Number>IsCloseTo
   @Override
   public boolean test(<number> value) {
     // Errors have been checked so use the package level method
-    return <Number>Equality.testIsCloseTo(reference, value, relativeError, absoluteError);
+    return <Number>Equality.testIsCloseTo<Sign>(reference, value, relativeError, absoluteError);
   }
 
   /**
@@ -99,7 +106,13 @@ public class <Number>IsCloseTo
    */
   @Override
   public String get() {
+<if(unsigned)>
+    return Descriptions.getReferenceDescription(Descriptions.toUnsignedString(reference))
+        + Descriptions.getUnsignedDescription(
+            Descriptions.getDescriptionIsCloseToUnsigned(relativeError, absoluteError));
+<else>
     return Descriptions.getReferenceDescription(<Class>.toString(reference))
         + Descriptions.getDescriptionIsCloseTo(relativeError, absoluteError);
+<endif>
   }
 }

@@ -37,6 +37,22 @@ public final class ApiTests {
   private static final short[] shortValues = {<shortValues:{v|<\n>      <v>,}>
   \};
 
+  /** The unsigned byte test values. Includes values either side of the signed limits. */
+  private static final byte[] unsignedByteValues = {<unsignedByteValues:{v|<\n>      <v>,}>
+  \};
+
+  /** The unsigned int test values. Includes values either side of the signed limits. */
+  private static final int[] unsignedIntValues = {<unsignedIntValues:{v|<\n>      <v>,}>
+  \};
+
+  /** The unsigned long test values. Includes values either side of the signed limits. */
+  private static final long[] unsignedLongValues = {<unsignedLongValues:{v|<\n>      <v>,}>
+  \};
+
+  /** The unsigned short test values. Includes values either side of the signed limits. */
+  private static final short[] unsignedShortValues = {<unsignedShortValues:{v|<\n>      <v>,}>
+  \};
+
   /** Do not allow public construction. */
   private ApiTests() {
     // No construction
@@ -49,5 +65,15 @@ public final class ApiTests {
    */
   public static <type>[] get<Type>Values() {
     return <type>Values.clone();
+  \}}>
+<unsignedTypes,UnsignedTypes:{type,Type |
+<\n>
+  /**
+   * Get the test values for the {@code <type>\} type interpreted as unsigned.
+   *
+   * @return the unsigned <type> values
+   */
+  public static <type>[] getUnsigned<Type>Values() {
+    return unsigned<Type>Values.clone();
   \}}>
 }

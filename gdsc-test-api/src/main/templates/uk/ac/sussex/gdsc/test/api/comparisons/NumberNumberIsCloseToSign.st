@@ -12,10 +12,13 @@ import java.util.function.Supplier;
  * \<p>The computed relative error is asymmetric and the test is equivalent to testing
  * {@code actual} falls within a relative and/or absolute range of {@code expected}.
  *
- * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see <Number>Equality#isCloseTo(<number>, <number>, double, <errorType>)
+<if(unsigned)>
+ * \<p>The values are interpreted as unsigned integers.
+ *
+<endif> * @see <Number><Number>BiPredicate#test(<number>, <number>)
+ * @see <Number>Equality#isCloseTo<Sign>(<number>, <number>, double, <errorType>)
  */
-public class <Number><Number>IsCloseTo
+public class <Number><Number>IsCloseTo<Sign>
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -33,14 +36,18 @@ public class <Number><Number>IsCloseTo
    *
    * \<pre>
    * {@code
-   * |expected - actual| \<= |expected| * relativeError
+   * |expected - actual| \<= <if(unsigned)>expected * relativeError<else>|expected| * relativeError<endif>
    * \}\</pre>
    *
    * \<p>The relative error is asymmetric for {@code expected} and {@code actual}. The test is
    * equivalent to testing {@code actual} falls within a relative and/or absolute range of
    * {@code expected}.
    *
-   * \<p>The test is performed using {@link <Number>Equality#isCloseTo(<number>, <number>, double, <errorType>)}
+<if(unsigned)>
+   * \<p>The values are interpreted as unsigned integers.
+   *
+<endif>
+   * \<p>The test is performed using<if(unsigned)><\n>   *<endif> {@link <Number>Equality#isCloseTo<Sign>(<number>, <number>, double, <errorType>)}
    * which defines the computation of the difference and the relative limit.
    *
    * @param relativeError The maximum error, relative to {@code expected}, between
@@ -58,7 +65,7 @@ public class <Number><Number>IsCloseTo
    * @throws IllegalArgumentException If the absolute error is not positive
 <endif>
    */
-  public <Number><Number>IsCloseTo(double relativeError, <errorType> absoluteError) {
+  public <Number><Number>IsCloseTo<Sign>(double relativeError, <errorType> absoluteError) {
     <Number>Equality.validateIsCloseTo(relativeError, absoluteError);
     this.relativeError = relativeError;
     this.absoluteError = absoluteError;
@@ -75,7 +82,7 @@ public class <Number><Number>IsCloseTo
   @Override
   public boolean test(<number> expected, <number> actual) {
     // Errors have been checked so use the package level method
-    return <Number>Equality.testIsCloseTo(expected, actual, relativeError, absoluteError);
+    return <Number>Equality.testIsCloseTo<Sign>(expected, actual, relativeError, absoluteError);
   }
 
   /**
@@ -85,6 +92,11 @@ public class <Number><Number>IsCloseTo
    */
   @Override
   public String get() {
+<if(unsigned)>
+    return Descriptions.getUnsignedDescription(
+        Descriptions.getDescriptionIsCloseToUnsigned(relativeError, absoluteError));
+<else>
     return Descriptions.getDescriptionIsCloseTo(relativeError, absoluteError);
+<endif>
   }
 }

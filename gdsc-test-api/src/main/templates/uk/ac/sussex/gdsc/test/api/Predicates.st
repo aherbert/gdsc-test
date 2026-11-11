@@ -4,13 +4,19 @@
 import uk.ac.sussex.gdsc.test.api.comparisons.BooleanBooleanAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.BooleanIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreAbsolutelyCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteByteIsCloseToUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsAbsolutelyCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsCloseToUnsigned;
+import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ByteIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharCharAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.CharIsEqual;
@@ -48,31 +54,49 @@ import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsNaN;
 import uk.ac.sussex.gdsc.test.api.comparisons.FloatIsUlpClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreAbsolutelyCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIntIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIntIsCloseToUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIsAbsolutelyCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIsCloseToUnsigned;
+import uk.ac.sussex.gdsc.test.api.comparisons.IntIsCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.IntIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongIsAbsolutelyCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongIsCloseToUnsigned;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongIsCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreAbsolutelyCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.LongLongIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.LongLongIsCloseToUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortEquality;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsAbsolutelyCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsClose;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsCloseToUnsigned;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortIsEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreAbsolutelyClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreAbsolutelyCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreClose;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreCloseUnsigned;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortAreEqual;
 import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortIsCloseTo;
+import uk.ac.sussex.gdsc.test.api.comparisons.ShortShortIsCloseToUnsigned;
 import uk.ac.sussex.gdsc.test.api.function.BooleanBooleanBiPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicate;
 import uk.ac.sussex.gdsc.test.api.function.BooleanPredicateAndBooleanPredicate;
@@ -217,6 +241,27 @@ public final class Predicates {
   public static <Number>Predicate <number>IsAbsolutelyClose(<number> reference,
       <numberAbsType> absoluteError) {
     return new <Number>IsAbsolutelyClose(reference, absoluteError);
+  \}}><unsignedNumbers,UnsignedNumbers,unsignedAbsTypes,unsignedAn,unsignedMaxErrors:{number,Number,numberAbsType,an,maxError |
+<\n>
+  /**
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using an absolute error. The values are interpreted as unsigned integers.
+   *
+   * @param reference the reference value
+   * @param absoluteError the maximum absolute error between {@code reference\} and
+   *        {@code value\} for which both numbers are still considered equal.
+   * @return the predicate
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
+   * @see <Number>Equality#areWithinUnsigned(<number>, <number>, <numberAbsType>)
+   */
+  public static <Number>Predicate <number>IsAbsolutelyCloseUnsigned(<number> reference,
+      <numberAbsType> absoluteError) {
+    return new <Number>IsAbsolutelyCloseUnsigned(reference, absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,maxErrors,finiteErrors:{number,Number,numberAbsType,maxError,finiteError |
 <\n>
   /**
@@ -238,6 +283,26 @@ public final class Predicates {
   public static <Number><Number>BiPredicate <number>sAreAbsolutelyClose(
       <numberAbsType> absoluteError) {
     return new <Number><Number>AreAbsolutelyClose(absoluteError);
+  \}}><unsignedNumbers,UnsignedNumbers,unsignedAbsTypes,unsignedMaxErrors:{number,Number,numberAbsType,maxError |
+<\n>
+  /**
+   * Creates a predicate to test two {@code <number>\} values are close using an absolute error.
+   * The values are interpreted as unsigned integers.
+   *
+   * @param absoluteError the maximum absolute error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
+   * @return the predicate
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
+   * @see <Number>Equality#areWithinUnsigned(<number>, <number>, <numberAbsType>)
+   */
+  public static <Number><Number>BiPredicate <number>sAreAbsolutelyCloseUnsigned(
+      <numberAbsType> absoluteError) {
+    return new <Number><Number>AreAbsolutelyCloseUnsigned(absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,an,maxErrors,finiteErrors:{number,Number,numberAbsType,javadocNaN,zero,an,maxError,finiteError |
 <\n>
   /**
@@ -327,6 +392,68 @@ public final class Predicates {
   public static <Number>Predicate <number>IsClose(<number> reference, double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number>IsClose(reference, relativeError, absoluteError);
+  \}}><unsignedNumbers,UnsignedNumbers,unsignedAbsTypes,unsignedAn,unsignedMaxErrors:{number,Number,numberAbsType,an,maxError |
+<\n>
+  /**
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using a relative error. The values are interpreted as unsigned integers.
+   * The relative error between values {@code reference\} and {@code value\} is relative to the
+   * largest of the two values and the test is:
+   *
+   * \<pre>
+   * {@code
+   * |reference - value| \<= max(reference, value) * relativeError
+   * \}\</pre>
+   *
+   * \<p>The relative error is symmetric for {@code reference\} and {@code value\}. The test is
+   * equivalent to testing convergence of two values.
+   *
+   * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
+   *
+   * @param reference the reference value
+   * @param relativeError the maximum relative error between {@code reference\} and
+   *        {@code value\} for which both numbers are still considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @see <Number>Equality#areCloseUnsigned(<number>, <number>, double, <numberAbsType>)
+   */
+  public static <Number>Predicate <number>IsRelativelyCloseUnsigned(<number> reference,
+      double relativeError) {
+    return new <Number>IsCloseUnsigned(reference, relativeError, 0);
+  \}
+
+  /**
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using a relative and/or an absolute error. The values are interpreted as unsigned integers.
+   * The relative error between values {@code reference\} and {@code value\} is
+   * relative to the largest of the two values and the test is:
+   *
+   * \<pre>
+   * {@code
+   * |reference - value| \<= max(reference, value) * relativeError
+   * \}\</pre>
+   *
+   * \<p>The relative error is symmetric for {@code reference\} and {@code value\}. The test is
+   * equivalent to testing convergence of two values.
+   *
+   * @param reference the reference value
+   * @param relativeError the maximum relative error between {@code reference\} and
+   *        {@code value\} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code reference\} and
+   *        {@code value\} for which both numbers are still considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
+   * @see <Number>Equality#areCloseUnsigned(<number>, <number>, double, <numberAbsType>)
+   */
+  public static <Number>Predicate <number>IsCloseUnsigned(<number> reference,
+      double relativeError, <numberAbsType> absoluteError) {
+    return new <Number>IsCloseUnsigned(reference, relativeError, absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,maxErrors,finiteErrors:{number,Number,numberAbsType,javadocNaN,zero,maxError,finiteError |
 <\n>
   /**
@@ -411,6 +538,66 @@ public final class Predicates {
   public static <Number><Number>BiPredicate <number>sAreClose(double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number><Number>AreClose(relativeError, absoluteError);
+  \}}><unsignedNumbers,UnsignedNumbers,unsignedAbsTypes,unsignedMaxErrors:{number,Number,numberAbsType,maxError |
+<\n>
+  /**
+   * Creates a predicate to test two {@code <number>\} values are close using a relative error.
+   * The values are interpreted as unsigned integers.
+   * The relative error between values {@code value1\} and {@code value2\} is relative to the
+   * largest of the two values and the test is:
+   *
+   * \<pre>
+   * {@code
+   * |value1 - value2| \<= max(value1, value2) * relativeError
+   * \}\</pre>
+   *
+   * \<p>The relative error is symmetric for {@code value1\} and {@code value2\}. The test is
+   * equivalent to testing convergence of two values.
+   *
+   * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
+   *
+   * @param relativeError the maximum relative error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+   * @see <Number>Equality#areCloseUnsigned(<number>, <number>, double, <numberAbsType>)
+   */
+  public static <Number><Number>BiPredicate <number>sAreRelativelyCloseUnsigned(
+      double relativeError) {
+    return new <Number><Number>AreCloseUnsigned(relativeError, 0);
+  \}
+
+  /**
+   * Creates a predicate to test two {@code <number>\} values are close using a relative and/or
+   * an absolute error. The values are interpreted as unsigned integers.
+   * The relative error between values {@code value1\} and {@code value2\} is
+   * relative to the largest of the two values and the test is:
+   *
+   * \<pre>
+   * {@code
+   * |value1 - value2| \<= max(value1, value2) * relativeError
+   * \}\</pre>
+   *
+   * \<p>The relative error is symmetric for {@code value1\} and {@code value2\}. The test is
+   * equivalent to testing convergence of two values.
+   *
+   * @param relativeError the maximum relative error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1\} and
+   *        {@code value2\} for which both numbers are still considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException if the relative error is not positive finite and below 2
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
+   * @see <Number>Equality#areCloseUnsigned(<number>, <number>, double, <numberAbsType>)
+   */
+  public static <Number><Number>BiPredicate <number>sAreCloseUnsigned(double relativeError,
+      <numberAbsType> absoluteError) {
+    return new <Number><Number>AreCloseUnsigned(relativeError, absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,an,maxErrors,finiteErrors:{number,Number,numberAbsType,javadocNaN,zero,an,maxError,finiteError |
 <\n>
   /**
@@ -508,6 +695,72 @@ public final class Predicates {
   public static <Number>Predicate <number>IsCloseTo(<number> reference,
       double relativeError, <numberAbsType> absoluteError) {
     return new <Number>IsCloseTo(reference, relativeError, absoluteError);
+  \}}><unsignedNumbers,UnsignedNumbers,unsignedAbsTypes,unsignedAn,unsignedMaxErrors:{number,Number,numberAbsType,an,maxError |
+<\n>
+  /**
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using a relative error. The values are interpreted as unsigned integers.
+   * The relative error between values {@code reference\} and {@code value\} is relative to
+   * {@code reference\} and the test is:
+   *
+   * \<pre>
+   * {@code
+   * |reference - value| \<= reference * relativeError
+   * \}\</pre>
+   *
+   * \<p>The relative error is asymmetric for {@code reference\} and {@code value\}. The test is
+   * equivalent to testing {@code value\} falls within a relative range of
+   * {@code reference\}.
+   *
+   * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
+   *
+   * @param reference the reference value
+   * @param relativeError the maximum error, relative to {@code reference\}, between
+   *        {@code reference\} and {@code value\} for which both numbers are still
+   *        considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @see <Number>Equality#isCloseToUnsigned(<number>, <number>, double, <numberAbsType>)
+   */
+  public static <Number>Predicate <number>IsRelativelyCloseToUnsigned(<number> reference,
+      double relativeError) {
+    return new <Number>IsCloseToUnsigned(reference, relativeError, 0);
+  \}
+
+  /**
+   * Creates a predicate to test <an> {@code <number>\} value is close to a {@code reference\} value
+   * using a relative and/or absolute error. The values are interpreted as unsigned integers.
+   * The relative error between values {@code reference\} and {@code value\} is relative to
+   * {@code reference\} and the test is:
+   *
+   * \<pre>
+   * {@code
+   * |reference - value| \<= reference * relativeError
+   * \}\</pre>
+   *
+   * \<p>The relative error is asymmetric for {@code reference\} and {@code value\}. The test is
+   * equivalent to testing {@code value\} falls within a relative and/or absolute range of
+   * {@code reference\}.
+   *
+   * @param reference the reference value
+   * @param relativeError the maximum error, relative to {@code reference\}, between
+   *        {@code reference\} and {@code value\} for which both numbers are still
+   *        considered equal.
+   * @param absoluteError the maximum absolute error between {@code reference\} and
+   *        {@code value\} for which both numbers are still considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException if the relative error is not positive finite
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
+   * @see <Number>Equality#isCloseToUnsigned(<number>, <number>, double, <numberAbsType>)
+   */
+  public static <Number>Predicate <number>IsCloseToUnsigned(<number> reference,
+      double relativeError, <numberAbsType> absoluteError) {
+    return new <Number>IsCloseToUnsigned(reference, relativeError, absoluteError);
   \}}><numbers,Numbers,numberAbsTypes,javadocNaNs,zero,maxErrors,finiteErrors:{number,Number,numberAbsType,javadocNaN,zero,maxError,finiteError |
 <\n>
   /**
@@ -608,6 +861,76 @@ public final class Predicates {
   public static <Number><Number>BiPredicate <number>sIsCloseTo(double relativeError,
       <numberAbsType> absoluteError) {
     return new <Number><Number>IsCloseTo(relativeError, absoluteError);
+  \}}><unsignedNumbers,UnsignedNumbers,unsignedAbsTypes,unsignedMaxErrors:{number,Number,numberAbsType,maxError |
+<\n>
+  /**
+   * Creates a predicate to test an {@code actual\} value is close to an {@code expected\}
+   * value using a relative error. The values are interpreted as unsigned integers.
+   * The relative error between values {@code expected\} and {@code actual\} is relative to
+   * {@code expected\} and the test is:
+   *
+   * \<pre>
+   * {@code
+   * |expected - actual| \<= expected * relativeError
+   * \}\</pre>
+   *
+   * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
+   * equivalent to testing {@code actual\} falls within a relative range of
+   * {@code expected\}.
+   *
+   * \<p>The arguments for the method {@link <Number><Number>BiPredicate#test(<number>, <number>)\}
+   * are {@code expected\} then {@code actual\}.
+   *
+   * \<p>An absolute error of {@code 0\} is assumed allowing all values to equal themselves.
+   *
+   * @param relativeError the maximum error, relative to {@code expected\}, between
+   *        {@code expected\} and {@code actual\} for which both numbers are still
+   *        considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException if the relative error is not positive finite
+   * @see <Number>Equality#isCloseToUnsigned(<number>, <number>, double, <numberAbsType>)
+   */
+  public static <Number><Number>BiPredicate <number>sIsRelativelyCloseToUnsigned(
+      double relativeError) {
+    return new <Number><Number>IsCloseToUnsigned(relativeError, 0);
+  \}
+
+  /**
+   * Creates a predicate to test an {@code actual\} value is close to an {@code expected\}
+   * value using a relative and/or absolute error. The values are interpreted as unsigned
+   * integers. The relative error between values {@code expected\} and {@code actual\} is
+   * relative to {@code expected\} and the test is:
+   *
+   * \<pre>
+   * {@code
+   * |expected - actual| \<= expected * relativeError
+   * \}\</pre>
+   *
+   * \<p>The relative error is asymmetric for {@code expected\} and {@code actual\}. The test is
+   * equivalent to testing {@code actual\} falls within a relative and/or absolute range of
+   * {@code expected\}.
+   *
+   * \<p>The arguments for the method {@link <Number><Number>BiPredicate#test(<number>, <number>)\}
+   * are {@code expected\} then {@code actual\}.
+   *
+   * @param relativeError the maximum error, relative to {@code expected\}, between
+   *        {@code expected\} and {@code actual\} for which both numbers are still
+   *        considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected\} and
+   *        {@code actual\} for which both numbers are still considered equal.
+   * @return the predicate
+   * @throws IllegalArgumentException if the relative error is not positive finite
+<if(maxError)>
+   * @throws IllegalArgumentException if the absolute error is not positive or is not below the
+   *         maximum difference between {@code <number>\} primitives
+<else>
+   * @throws IllegalArgumentException if the absolute error is not positive
+<endif>
+   * @see <Number>Equality#isCloseToUnsigned(<number>, <number>, double, <numberAbsType>)
+   */
+  public static <Number><Number>BiPredicate <number>sIsCloseToUnsigned(double relativeError,
+      <numberAbsType> absoluteError) {
+    return new <Number><Number>IsCloseToUnsigned(relativeError, absoluteError);
   \}}><Ops,ops:{Op,op |<types,Types:{type,Type |
 <\n>
   /**

@@ -3263,6 +3263,10 @@ class EqualityTest {
     return new BigInteger(Long.toUnsignedString(value));
   }
 
+  private static BigInteger unsigned(int value) {
+    return new BigInteger(Integer.toUnsignedString(value));
+  }
+
   // unsigned int Close
 
   @Test
@@ -3403,10 +3407,6 @@ class EqualityTest {
         Assertions.assertFalse(IntEquality.areCloseUnsigned(value1, value2, 0, absoluteError - 1));
       }
     }
-  }
-
-  private static BigInteger unsigned(int value) {
-    return new BigInteger(Integer.toUnsignedString(value));
   }
 
   // unsigned short Close

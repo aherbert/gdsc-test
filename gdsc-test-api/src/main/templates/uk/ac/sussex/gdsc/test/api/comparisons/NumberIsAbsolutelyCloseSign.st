@@ -8,10 +8,13 @@ import java.io.Serializable;
 /**
  * Tests {@code <number>} equality using an absolute error tolerance.
  *
- * @see <Number>Predicate#test(<number>)
- * @see <Number>Equality#areWithin(<number>, <number>, <errorType>)
+<if(unsigned)>
+ * \<p>The values are interpreted as unsigned integers.
+ *
+<endif> * @see <Number>Predicate#test(<number>)
+ * @see <Number>Equality#areWithin<Sign>(<number>, <number>, <errorType>)
  */
-public class <Number>Is<Absolutely>Close
+public class <Number>Is<Absolutely>Close<Sign>
     implements <Number>Predicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -26,7 +29,11 @@ public class <Number>Is<Absolutely>Close
    * Create a predicate to test <an> {@code <number>} value is close to a {@code reference} value using
    * an absolute error.
    *
-   * \<p>The test is performed using {@link <Number>Equality#areWithin(<number>, <number>, <errorType>)}
+<if(unsigned)>
+   * \<p>The values are interpreted as unsigned integers.
+   *
+<endif>
+   * \<p>The test is performed using<if(unsigned)><\n>   *<endif> {@link <Number>Equality#areWithin<Sign>(<number>, <number>, <errorType>)}
    * which defines the computation of the difference.
    *
    * @param reference The reference value.
@@ -42,7 +49,7 @@ public class <Number>Is<Absolutely>Close
    * @throws IllegalArgumentException If the absolute error is not positive
 <endif>
    */
-  public <Number>Is<Absolutely>Close(<number> reference, <errorType> absoluteError) {
+  public <Number>Is<Absolutely>Close<Sign>(<number> reference, <errorType> absoluteError) {
     <Number>Equality.validateAbsoluteError(absoluteError);
     this.reference = reference;
     this.absoluteError = absoluteError;
@@ -67,7 +74,7 @@ public class <Number>Is<Absolutely>Close
   @Override
   public boolean test(<number> value) {
     // Errors have been checked so use the package level method
-    return <Number>Equality.testAreWithin(reference, value, absoluteError);
+    return <Number>Equality.testAreWithin<Sign>(reference, value, absoluteError);
   }
 
   /**
@@ -77,7 +84,13 @@ public class <Number>Is<Absolutely>Close
    */
   @Override
   public String get() {
+<if(unsigned)>
+    return Descriptions.getReferenceDescription(Descriptions.toUnsignedString(reference))
+        + Descriptions.getUnsignedDescription(
+            Descriptions.getDescriptionWithin(absoluteError));
+<else>
     return Descriptions.getReferenceDescription(<Class>.toString(reference))
         + Descriptions.getDescriptionWithin(absoluteError);
+<endif>
   }
 }

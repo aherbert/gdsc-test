@@ -8,10 +8,13 @@ import java.io.Serializable;
 /**
  * Tests {@code <number>} equality using an absolute error tolerance.
  *
- * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see <Number>Equality#areWithin(<number>, <number>, <errorType>)
+<if(unsigned)>
+ * \<p>The values are interpreted as unsigned integers.
+ *
+<endif> * @see <Number><Number>BiPredicate#test(<number>, <number>)
+ * @see <Number>Equality#areWithin<Sign>(<number>, <number>, <errorType>)
  */
-public class <Number><Number>Are<Absolutely>Close
+public class <Number><Number>Are<Absolutely>Close<Sign>
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -23,7 +26,11 @@ public class <Number><Number>Are<Absolutely>Close
   /**
    * Create a predicate to test two {@code <number>} values are close using an absolute error.
    *
-   * \<p>The test is performed using {@link <Number>Equality#areWithin(<number>, <number>, <errorType>)}
+<if(unsigned)>
+   * \<p>The values are interpreted as unsigned integers.
+   *
+<endif>
+   * \<p>The test is performed using<if(unsigned)><\n>   *<endif> {@link <Number>Equality#areWithin<Sign>(<number>, <number>, <errorType>)}
    * which defines the computation of the difference.
    *
    * @param absoluteError The maximum absolute error between {@code value1}
@@ -38,7 +45,7 @@ public class <Number><Number>Are<Absolutely>Close
    * @throws IllegalArgumentException If the absolute error is not positive
 <endif>
    */
-  public <Number><Number>Are<Absolutely>Close(<errorType> absoluteError) {
+  public <Number><Number>Are<Absolutely>Close<Sign>(<errorType> absoluteError) {
     <Number>Equality.validateAbsoluteError(absoluteError);
     this.absoluteError = absoluteError;
   }
@@ -53,7 +60,7 @@ public class <Number><Number>Are<Absolutely>Close
   @Override
   public boolean test(<number> value1, <number> value2) {
     // Errors have been checked so use the package level method
-    return <Number>Equality.testAreWithin(value1, value2, absoluteError);
+    return <Number>Equality.testAreWithin<Sign>(value1, value2, absoluteError);
   }
 
   /**
@@ -63,6 +70,11 @@ public class <Number><Number>Are<Absolutely>Close
    */
   @Override
   public String get() {
+<if(unsigned)>
+    return Descriptions.getUnsignedDescription(
+        Descriptions.getDescriptionWithin(absoluteError));
+<else>
     return Descriptions.getDescriptionWithin(absoluteError);
+<endif>
   }
 }

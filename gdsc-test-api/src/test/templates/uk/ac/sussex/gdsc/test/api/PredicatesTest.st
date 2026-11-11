@@ -178,6 +178,25 @@ public class PredicatesTest {<types,Types:{type,Type |
             "Predicate does not compute within");
       \}
     \}
+  \}}><unsignedNumbers,UnsignedNumbers,UnsignedAbsTypes,unsignedAbsTypes:{number,Number,NumberAbsType,numberAbsType |
+<\n>
+  /**
+   * Test creates a predicate to compare {@code <number>\} values are within a <numberAbsType>
+   * absolute error.
+   * The values are interpreted as unsigned integers.
+   */
+  @Test
+  public void testIsAbsolutelyClose<Number>Using<NumberAbsType>Unsigned() {
+    final <numberAbsType> absoluteError = 1;
+    final <number>[] values = ApiTests.getUnsigned<Number>Values();
+    for (final <number> value1 : values) {
+      final <Number>Predicate test = Predicates.<number>IsAbsolutelyCloseUnsigned(value1, absoluteError);
+      for (final <number> value2 : values) {
+        Assertions.assertEquals(<Number>Equality.areWithinUnsigned(value1, value2, absoluteError),
+            test.test(value2),
+            "Predicate does not compute within");
+      \}
+    \}
   \}}><numbers,Numbers,NumberAbsTypes,numberAbsTypes:{number,Number,NumberAbsType,numberAbsType |
 <\n>
   /**
@@ -192,6 +211,25 @@ public class PredicatesTest {<types,Types:{type,Type |
     for (final <number> value1 : values) {
       for (final <number> value2 : values) {
         Assertions.assertEquals(<Number>Equality.areWithin(value1, value2, absoluteError),
+            test.test(value1, value2),
+            "Predicate does not compute within");
+      \}
+    \}
+  \}}><unsignedNumbers,UnsignedNumbers,UnsignedAbsTypes,unsignedAbsTypes:{number,Number,NumberAbsType,numberAbsType |
+<\n>
+  /**
+   * Test creates a predicate to compare {@code <number>\} values are within a <numberAbsType>
+   * absolute error.
+   * The values are interpreted as unsigned integers.
+   */
+  @Test
+  public void testAreAbsolutelyClose<Number>sUsing<NumberAbsType>Unsigned() {
+    final <numberAbsType> absoluteError = 1;
+    final <Number><Number>BiPredicate test = Predicates.<number>sAreAbsolutelyCloseUnsigned(absoluteError);
+    final <number>[] values = ApiTests.getUnsigned<Number>Values();
+    for (final <number> value1 : values) {
+      for (final <number> value2 : values) {
+        Assertions.assertEquals(<Number>Equality.areWithinUnsigned(value1, value2, absoluteError),
             test.test(value1, value2),
             "Predicate does not compute within");
       \}
@@ -220,6 +258,31 @@ public class PredicatesTest {<types,Types:{type,Type |
             "Predicate does not compute Close with relative error");
       \}
     \}
+  \}}><unsignedNumbers,UnsignedNumbers,UnsignedAbsTypes,unsignedAbsTypes:{number,Number,NumberAbsType,numberAbsType |
+<\n>
+  /**
+   * Test creates a predicate to compare {@code <number>\} values are close.
+   * The values are interpreted as unsigned integers.
+   */
+  @Test
+  public void testIsRelativelyClose<Number>Unsigned() {
+    final double relativeError = 0.5;
+    final <numberAbsType> absoluteError = 1;
+    final <number>[] values = ApiTests.getUnsigned<Number>Values();
+    for (final <number> value1 : values) {
+      final <Number>Predicate test1 = Predicates.<number>IsCloseUnsigned(value1, relativeError,
+          absoluteError);
+      final <Number>Predicate test2 = Predicates.<number>IsRelativelyCloseUnsigned(value1,
+          relativeError);
+      for (final <number> value2 : values) {
+        Assertions.assertEquals(<Number>Equality.areCloseUnsigned(value1, value2,
+            relativeError, absoluteError), test1.test(value2),
+            "Predicate does not compute Close with relative and absolute error");
+        Assertions.assertEquals(<Number>Equality.areCloseUnsigned(value1, value2,
+            relativeError, 0), test2.test(value2),
+            "Predicate does not compute Close with relative error");
+      \}
+    \}
   \}}><numbers,Numbers,NumberAbsTypes,numberAbsTypes:{number,Number,NumberAbsType,numberAbsType |
 <\n>
   /**
@@ -239,6 +302,30 @@ public class PredicatesTest {<types,Types:{type,Type |
             relativeError, absoluteError), test1.test(value1, value2),
             "Predicate does not compute Close with relative and absolute error");
         Assertions.assertEquals(<Number>Equality.areClose(value1, value2,
+            relativeError, 0), test2.test(value1, value2),
+            "Predicate does not compute Close with relative error");
+      \}
+    \}
+  \}}><unsignedNumbers,UnsignedNumbers,UnsignedAbsTypes,unsignedAbsTypes:{number,Number,NumberAbsType,numberAbsType |
+<\n>
+  /**
+   * Test creates a predicate to compare {@code <number>\} values are close.
+   * The values are interpreted as unsigned integers.
+   */
+  @Test
+  public void testAreRelativelyClose<Number>sUnsigned() {
+    final double relativeError = 0.5;
+    final <numberAbsType> absoluteError = 1;
+    final <Number><Number>BiPredicate test1 = Predicates.<number>sAreCloseUnsigned(relativeError,
+        absoluteError);
+    final <Number><Number>BiPredicate test2 = Predicates.<number>sAreRelativelyCloseUnsigned(relativeError);
+    final <number>[] values = ApiTests.getUnsigned<Number>Values();
+    for (final <number> value1 : values) {
+      for (final <number> value2 : values) {
+        Assertions.assertEquals(<Number>Equality.areCloseUnsigned(value1, value2,
+            relativeError, absoluteError), test1.test(value1, value2),
+            "Predicate does not compute Close with relative and absolute error");
+        Assertions.assertEquals(<Number>Equality.areCloseUnsigned(value1, value2,
             relativeError, 0), test2.test(value1, value2),
             "Predicate does not compute Close with relative error");
       \}
@@ -267,6 +354,31 @@ public class PredicatesTest {<types,Types:{type,Type |
             "Predicate does not compute IsCloseTo with relative error");
       \}
     \}
+  \}}><unsignedNumbers,UnsignedNumbers,UnsignedAbsTypes,unsignedAbsTypes:{number,Number,NumberAbsType,numberAbsType |
+<\n>
+  /**
+   * Test creates a predicate to compare a {@code <number>\} value is close to an expected value.
+   * The values are interpreted as unsigned integers.
+   */
+  @Test
+  public void testIsRelativelyCloseTo<Number>Unsigned() {
+    final double relativeError = 0.5;
+    final <numberAbsType> absoluteError = 1;
+    final <number>[] values = ApiTests.getUnsigned<Number>Values();
+    for (final <number> value1 : values) {
+      final <Number>Predicate test1 = Predicates.<number>IsCloseToUnsigned(value1, relativeError,
+          absoluteError);
+      final <Number>Predicate test2 = Predicates.<number>IsRelativelyCloseToUnsigned(value1,
+          relativeError);
+      for (final <number> value2 : values) {
+        Assertions.assertEquals(<Number>Equality.isCloseToUnsigned(value1, value2,
+            relativeError, absoluteError), test1.test(value2),
+            "Predicate does not compute IsCloseTo with relative and absolute error");
+        Assertions.assertEquals(<Number>Equality.isCloseToUnsigned(value1, value2,
+            relativeError, 0), test2.test(value2),
+            "Predicate does not compute IsCloseTo with relative error");
+      \}
+    \}
   \}}><numbers,Numbers,NumberAbsTypes,numberAbsTypes:{number,Number,NumberAbsType,numberAbsType |
 <\n>
   /**
@@ -287,6 +399,31 @@ public class PredicatesTest {<types,Types:{type,Type |
             relativeError, absoluteError), test1.test(value1, value2),
             "Predicate does not compute IsCloseTo with relative and absolute error");
         Assertions.assertEquals(<Number>Equality.isCloseTo(value1, value2,
+            relativeError, 0), test2.test(value1, value2),
+            "Predicate does not compute IsCloseTo with relative error");
+      \}
+    \}
+  \}}><unsignedNumbers,UnsignedNumbers,UnsignedAbsTypes,unsignedAbsTypes:{number,Number,NumberAbsType,numberAbsType |
+<\n>
+  /**
+   * Test creates a predicate to compare a {@code <number>\} value is close to an expected value.
+   * The values are interpreted as unsigned integers.
+   */
+  @Test
+  public void testIsRelativelyCloseTo<Number>sUnsigned() {
+    final double relativeError = 0.5;
+    final <numberAbsType> absoluteError = 1;
+    final <Number><Number>BiPredicate test1 = Predicates.<number>sIsCloseToUnsigned(relativeError,
+        absoluteError);
+    final <Number><Number>BiPredicate test2 = Predicates.<number>sIsRelativelyCloseToUnsigned(
+        relativeError);
+    final <number>[] values = ApiTests.getUnsigned<Number>Values();
+    for (final <number> value1 : values) {
+      for (final <number> value2 : values) {
+        Assertions.assertEquals(<Number>Equality.isCloseToUnsigned(value1, value2,
+            relativeError, absoluteError), test1.test(value1, value2),
+            "Predicate does not compute IsCloseTo with relative and absolute error");
+        Assertions.assertEquals(<Number>Equality.isCloseToUnsigned(value1, value2,
             relativeError, 0), test2.test(value1, value2),
             "Predicate does not compute IsCloseTo with relative error");
       \}

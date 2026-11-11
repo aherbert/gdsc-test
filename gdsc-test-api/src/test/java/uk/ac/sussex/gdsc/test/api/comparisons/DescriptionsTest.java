@@ -569,4 +569,257 @@ class DescriptionsTest {
     assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
         absoluteError);
   }
+
+  @Test
+  void testGetUnsignedDescription() {
+    Assertions.assertEquals("unsigned ", Descriptions.getUnsignedDescription(""));
+    Assertions.assertEquals("unsigned |v1-v2| <= 1",
+        Descriptions.getUnsignedDescription("|v1-v2| <= 1"));
+  }
+
+  @Test
+  void testToUnsignedString() {
+    Assertions.assertEquals("0", Descriptions.toUnsignedString((byte) 0));
+    Assertions.assertEquals("127", Descriptions.toUnsignedString(Byte.MAX_VALUE));
+    Assertions.assertEquals("128", Descriptions.toUnsignedString(Byte.MIN_VALUE));
+    Assertions.assertEquals("255", Descriptions.toUnsignedString((byte) -1));
+    Assertions.assertEquals("0", Descriptions.toUnsignedString((short) 0));
+    Assertions.assertEquals("32767", Descriptions.toUnsignedString(Short.MAX_VALUE));
+    Assertions.assertEquals("32768", Descriptions.toUnsignedString(Short.MIN_VALUE));
+    Assertions.assertEquals("65535", Descriptions.toUnsignedString((short) -1));
+    Assertions.assertEquals("0", Descriptions.toUnsignedString(0));
+    Assertions.assertEquals("2147483647", Descriptions.toUnsignedString(Integer.MAX_VALUE));
+    Assertions.assertEquals("2147483648", Descriptions.toUnsignedString(Integer.MIN_VALUE));
+    Assertions.assertEquals("4294967295", Descriptions.toUnsignedString(-1));
+    Assertions.assertEquals("0", Descriptions.toUnsignedString(0L));
+    Assertions.assertEquals("9223372036854775807", Descriptions.toUnsignedString(Long.MAX_VALUE));
+    Assertions.assertEquals("9223372036854775808", Descriptions.toUnsignedString(Long.MIN_VALUE));
+    Assertions.assertEquals("18446744073709551615", Descriptions.toUnsignedString(-1L));
+  }
+
+  @Test
+  void testLongsGetDescriptionCloseUnsigned() {
+    // These must be distinguishable as strings
+    final Double[] values1 = {0.0, 1.1};
+    final Long[] values2 = {0L, 2L};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testLongsGetDescriptionCloseUnsigned(v1, v2);
+      }
+    }
+  }
+
+  private static void testLongsGetDescriptionCloseUnsigned(Number relativeError,
+      Number absoluteError) {
+
+    final double inputRelError = relativeError.doubleValue();
+    final long inputAbsError = absoluteError.longValue();
+
+    // The raw input
+    final String result = Descriptions.getDescriptionCloseUnsigned(inputRelError, inputAbsError);
+
+    // Handle special case
+    if (inputRelError == 0) {
+      relativeError = -1;
+      if (inputAbsError < 0) {
+        absoluteError = 0;
+      }
+    }
+    if (absoluteError.longValue() == 0 && relativeError.doubleValue() > 0) {
+      absoluteError = -1;
+    }
+
+    // Get the expected values in the message
+    final double relError = relativeError.doubleValue();
+    final long absError = absoluteError.longValue();
+
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
+
+    final String relString = String.valueOf(relError);
+    final String absString = String.valueOf(absError);
+
+    assertMessageContains(hasRel, result, "|v1-v2|/max(v1,v2) ", "Predicate description",
+        relativeError, absoluteError);
+    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
+        absoluteError);
+    assertMessageContains(false, result, "|v1|", "Unsigned predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
+        absoluteError);
+  }
+
+  @Test
+  void testLongsGetDescriptionIsCloseToUnsigned() {
+    // These must be distinguishable as strings
+    final Double[] values1 = {0.0, 1.1};
+    final Long[] values2 = {0L, 2L};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testLongsGetDescriptionIsCloseToUnsigned(v1, v2);
+      }
+    }
+  }
+
+  private static void testLongsGetDescriptionIsCloseToUnsigned(Number relativeError,
+      Number absoluteError) {
+
+    final double inputRelError = relativeError.doubleValue();
+    final long inputAbsError = absoluteError.longValue();
+
+    // The raw input
+    final String result =
+        Descriptions.getDescriptionIsCloseToUnsigned(inputRelError, inputAbsError);
+
+    // Handle special case
+    if (inputRelError == 0) {
+      relativeError = -1;
+      if (inputAbsError < 0) {
+        absoluteError = 0;
+      }
+    }
+    if (absoluteError.longValue() == 0 && relativeError.doubleValue() > 0) {
+      absoluteError = -1;
+    }
+
+    // Get the expected values in the message
+    final double relError = relativeError.doubleValue();
+    final long absError = absoluteError.longValue();
+
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
+
+    final String relString = String.valueOf(relError);
+    final String absString = String.valueOf(absError);
+
+    assertMessageContains(hasRel, result, "|v1-v2|/v1 ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
+        absoluteError);
+    assertMessageContains(false, result, "|v1|", "Unsigned predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
+        absoluteError);
+  }
+
+  @Test
+  void testIntsGetDescriptionCloseUnsigned() {
+    // These must be distinguishable as strings
+    final Double[] values1 = {0.0, 1.1};
+    final Integer[] values2 = {0, 2};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testIntsGetDescriptionCloseUnsigned(v1, v2);
+      }
+    }
+  }
+
+  private static void testIntsGetDescriptionCloseUnsigned(Number relativeError,
+      Number absoluteError) {
+
+    final double inputRelError = relativeError.doubleValue();
+    final int inputAbsError = absoluteError.intValue();
+
+    // The raw input
+    final String result = Descriptions.getDescriptionCloseUnsigned(inputRelError, inputAbsError);
+
+    // Handle special case
+    if (inputRelError == 0) {
+      relativeError = -1;
+      if (inputAbsError < 0) {
+        absoluteError = 0;
+      }
+    }
+    if (absoluteError.intValue() == 0 && relativeError.doubleValue() > 0) {
+      absoluteError = -1;
+    }
+
+    // Get the expected values in the message
+    final double relError = relativeError.doubleValue();
+    final int absError = absoluteError.intValue();
+
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
+
+    final String relString = String.valueOf(relError);
+    final String absString = String.valueOf(absError);
+
+    assertMessageContains(hasRel, result, "|v1-v2|/max(v1,v2) ", "Predicate description",
+        relativeError, absoluteError);
+    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
+        absoluteError);
+    assertMessageContains(false, result, "|v1|", "Unsigned predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
+        absoluteError);
+  }
+
+  @Test
+  void testIntsGetDescriptionIsCloseToUnsigned() {
+    // These must be distinguishable as strings
+    final Double[] values1 = {0.0, 1.1};
+    final Integer[] values2 = {0, 2};
+    for (final Number v1 : values1) {
+      for (final Number v2 : values2) {
+        testIntsGetDescriptionIsCloseToUnsigned(v1, v2);
+      }
+    }
+  }
+
+  private static void testIntsGetDescriptionIsCloseToUnsigned(Number relativeError,
+      Number absoluteError) {
+
+    final double inputRelError = relativeError.doubleValue();
+    final int inputAbsError = absoluteError.intValue();
+
+    // The raw input
+    final String result =
+        Descriptions.getDescriptionIsCloseToUnsigned(inputRelError, inputAbsError);
+
+    // Handle special case
+    if (inputRelError == 0) {
+      relativeError = -1;
+      if (inputAbsError < 0) {
+        absoluteError = 0;
+      }
+    }
+    if (absoluteError.intValue() == 0 && relativeError.doubleValue() > 0) {
+      absoluteError = -1;
+    }
+
+    // Get the expected values in the message
+    final double relError = relativeError.doubleValue();
+    final int absError = absoluteError.intValue();
+
+    final boolean hasAbs = absError >= 0;
+    final boolean hasRel = relError > 0;
+
+    final String relString = String.valueOf(relError);
+    final String absString = String.valueOf(absError);
+
+    assertMessageContains(hasRel, result, "|v1-v2|/v1 ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel, result, relString, "Relative error", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, "|v1-v2| ", "Predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasAbs, result, absString, "Absolute error", relativeError,
+        absoluteError);
+    assertMessageContains(false, result, "|v1|", "Unsigned predicate description", relativeError,
+        absoluteError);
+    assertMessageContains(hasRel && hasAbs, result, "||", "Combination string", relativeError,
+        absoluteError);
+  }
 }

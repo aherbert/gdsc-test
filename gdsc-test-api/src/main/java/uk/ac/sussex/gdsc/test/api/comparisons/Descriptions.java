@@ -50,6 +50,14 @@ final class Descriptions {
    */
   private static final String DESCRIPTION_ASYM_REL_ERROR_LTE = "|v1-v2|/|v1| <= ";
   /**
+   * The description of symmetric relative error {@code <=} for unsigned values.
+   */
+  private static final String DESCRIPTION_UNSIGNED_REL_ERROR_LTE = "|v1-v2|/max(v1,v2) <= ";
+  /**
+   * The description of asymmetric relative error {@code <=} for unsigned values.
+   */
+  private static final String DESCRIPTION_UNSIGNED_ASYM_REL_ERROR_LTE = "|v1-v2|/v1 <= ";
+  /**
    * The description of absolute error {@code <=}.
    */
   private static final String DESCRIPTION_ABS_ERROR_LTE = "|v1-v2| <= ";
@@ -65,6 +73,11 @@ final class Descriptions {
    * The description of ulp error {@code == 0}.
    */
   private static final String DESCRIPTION_ULP_ERROR_0 = "ulp == 0";
+
+  /**
+   * The prefix for the description of a comparison of unsigned values.
+   */
+  private static final String DESCRIPTION_UNSIGNED = "unsigned ";
 
   /**
    * Do not allow public construction.
@@ -86,6 +99,65 @@ final class Descriptions {
    */
   static String getReferenceDescription(String value) {
     return "v1=" + value + ". ";
+  }
+
+  /**
+   * Gets the description for a comparison of unsigned values. This adds a prefix to the
+   * description of the comparison.
+   *
+   * <pre>
+   * "unsigned " + description
+   * </pre>
+   *
+   * @param description the description of the comparison
+   * @return the description
+   */
+  static String getUnsignedDescription(String description) {
+    return DESCRIPTION_UNSIGNED + description;
+  }
+
+  /**
+   * Gets the string representation of the value as an unsigned 8-bit integer.
+   *
+   * @param value the value
+   * @return the string
+   * @see Byte#toUnsignedInt(byte)
+   */
+  static String toUnsignedString(byte value) {
+    return Integer.toString(Byte.toUnsignedInt(value));
+  }
+
+  /**
+   * Gets the string representation of the value as an unsigned 16-bit integer.
+   *
+   * @param value the value
+   * @return the string
+   * @see Short#toUnsignedInt(short)
+   */
+  static String toUnsignedString(short value) {
+    return Integer.toString(Short.toUnsignedInt(value));
+  }
+
+  /**
+   * Gets the string representation of the value as an unsigned 32-bit integer.
+   *
+   * @param value the value
+   * @return the string
+   * @see Integer#toUnsignedString(int)
+   */
+  static String toUnsignedString(int value) {
+    return Integer.toUnsignedString(value);
+  }
+
+  /**
+   * Gets the string representation of the value as an unsigned 64-bit integer.
+   *
+   * @param value the value
+   * @return the string
+   * @see Long#toUnsignedString(long)
+   */
+  static String toUnsignedString(long value) {
+    return Long.toUnsignedString(value);
   }
 
   /**
@@ -281,6 +353,62 @@ final class Descriptions {
 
   //@formatter:off
   /**
+   * Get the description of the test that two values are close using a relative and/or
+   * absolute error. The relative error is symmetric for {@code value1} and {@code value2}.
+   * The values are interpreted as unsigned integers.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
+   *
+   * <p>Note the special cases:
+   *
+   * <ul>
+   * <li>When the relative error is zero this is equivalent to an absolute error of zero.
+   * The resulting description just contains the absolute error.
+   * <li>When the absolute error is zero and the relative error is above zero the resulting
+   * description just contains the relative error.
+   * </ul>
+   *
+   * @param relativeError the maximum relative error between {@code value1} and
+   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and
+   *        {@code value2} for which both numbers are still considered equal.
+   * @return the description
+   */
+  //@formatter:on
+  static String getDescriptionCloseUnsigned(double relativeError, long absoluteError) {
+    return getDescriptionAreClose(DESCRIPTION_UNSIGNED_REL_ERROR_LTE, relativeError, absoluteError);
+  }
+
+  //@formatter:off
+  /**
+   * Get the description of the test that two values are close using a relative and/or
+   * absolute error. The relative error is symmetric for {@code value1} and {@code value2}.
+   * The values are interpreted as unsigned integers.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
+   *
+   * <p>Note the special cases:
+   *
+   * <ul>
+   * <li>When the relative error is zero this is equivalent to an absolute error of zero.
+   * The resulting description just contains the absolute error.
+   * <li>When the absolute error is zero and the relative error is above zero the resulting
+   * description just contains the relative error.
+   * </ul>
+   *
+   * @param relativeError the maximum relative error between {@code value1} and
+   *        {@code value2} for which both numbers are still considered equal.
+   * @param absoluteError the maximum absolute error between {@code value1} and
+   *        {@code value2} for which both numbers are still considered equal.
+   * @return the description
+   */
+  //@formatter:on
+  static String getDescriptionCloseUnsigned(double relativeError, int absoluteError) {
+    return getDescriptionAreClose(DESCRIPTION_UNSIGNED_REL_ERROR_LTE, relativeError, absoluteError);
+  }
+
+  //@formatter:off
+  /**
    * Get the description of the test that a value is close to an expected value using a relative
    * and absolute error. The relative error is asymmetric for {@code value1} and {@code value2}.
    *
@@ -389,6 +517,66 @@ final class Descriptions {
   //@formatter:on
   static String getDescriptionIsCloseTo(double relativeError, int absoluteError) {
     return getDescriptionAreClose(DESCRIPTION_ASYM_REL_ERROR_LTE, relativeError, absoluteError);
+  }
+
+  //@formatter:off
+  /**
+   * Get the description of the test that a value is close to an expected value using a relative
+   * and absolute error. The relative error is asymmetric for {@code value1} and {@code value2}.
+   * The values are interpreted as unsigned integers.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
+   *
+   * <p>Note the special cases:
+   *
+   * <ul>
+   * <li>When the relative error is zero this is equivalent to an absolute error of zero.
+   * The resulting description just contains the absolute error.
+   * <li>When the absolute error is zero and the relative error is above zero the resulting
+   * description just contains the relative error.
+   * </ul>
+   *
+   * @param relativeError the maximum error, relative to {@code expected}, between
+   *        {@code expected} and {@code actual} for which both numbers are still
+   *        considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and
+   *        {@code actual} for which both numbers are still considered equal.
+   * @return the description
+   */
+  //@formatter:on
+  static String getDescriptionIsCloseToUnsigned(double relativeError, long absoluteError) {
+    return getDescriptionAreClose(DESCRIPTION_UNSIGNED_ASYM_REL_ERROR_LTE, relativeError,
+        absoluteError);
+  }
+
+  //@formatter:off
+  /**
+   * Get the description of the test that a value is close to an expected value using a relative
+   * and absolute error. The relative error is asymmetric for {@code value1} and {@code value2}.
+   * The values are interpreted as unsigned integers.
+   *
+   * <p>It is assumed the errors have been validated (are positive and finite).
+   *
+   * <p>Note the special cases:
+   *
+   * <ul>
+   * <li>When the relative error is zero this is equivalent to an absolute error of zero.
+   * The resulting description just contains the absolute error.
+   * <li>When the absolute error is zero and the relative error is above zero the resulting
+   * description just contains the relative error.
+   * </ul>
+   *
+   * @param relativeError the maximum error, relative to {@code expected}, between
+   *        {@code expected} and {@code actual} for which both numbers are still
+   *        considered equal.
+   * @param absoluteError the maximum absolute error between {@code expected} and
+   *        {@code actual} for which both numbers are still considered equal.
+   * @return the description
+   */
+  //@formatter:on
+  static String getDescriptionIsCloseToUnsigned(double relativeError, int absoluteError) {
+    return getDescriptionAreClose(DESCRIPTION_UNSIGNED_ASYM_REL_ERROR_LTE, relativeError,
+        absoluteError);
   }
 
   /**

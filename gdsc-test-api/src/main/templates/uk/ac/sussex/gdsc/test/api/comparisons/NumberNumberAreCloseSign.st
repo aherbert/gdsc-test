@@ -11,10 +11,13 @@ import java.util.function.Supplier;
  * \<p>The computed relative error is symmetric and the test is equivalent to testing convergence of
  * two values.
  *
- * @see <Number><Number>BiPredicate#test(<number>, <number>)
- * @see <Number>Equality#areClose(<number>, <number>, double, <errorType>)
+<if(unsigned)>
+ * \<p>The values are interpreted as unsigned integers.
+ *
+<endif> * @see <Number><Number>BiPredicate#test(<number>, <number>)
+ * @see <Number>Equality#areClose<Sign>(<number>, <number>, double, <errorType>)
  */
-public class <Number><Number>AreClose
+public class <Number><Number>AreClose<Sign>
     implements <Number><Number>BiPredicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -32,13 +35,17 @@ public class <Number><Number>AreClose
    *
    * \<pre>
    * {@code
-   * |value1 - value2| \<= max(|value1|, |value2|) * relativeError
+   * |value1 - value2| \<= <if(unsigned)>max(value1, value2)<else>max(|value1|, |value2|)<endif> * relativeError
    * \}\</pre>
    *
    * \<p>The relative error is symmetric for {@code value1} and {@code value2}. The test is
    * equivalent to testing convergence of two values.
    *
-   * \<p>The test is performed using {@link <Number>Equality#areClose(<number>, <number>, double, <errorType>)}
+<if(unsigned)>
+   * \<p>The values are interpreted as unsigned integers.
+   *
+<endif>
+   * \<p>The test is performed using<if(unsigned)><\n>   *<endif> {@link <Number>Equality#areClose<Sign>(<number>, <number>, double, <errorType>)}
    * which defines the computation of the difference and the relative limit.
    *
    * @param relativeError The maximum relative error between {@code value1} and
@@ -55,7 +62,7 @@ public class <Number><Number>AreClose
    * @throws IllegalArgumentException If the absolute error is not positive
 <endif>
    */
-  public <Number><Number>AreClose(double relativeError, <errorType> absoluteError) {
+  public <Number><Number>AreClose<Sign>(double relativeError, <errorType> absoluteError) {
     <Number>Equality.validateAreClose(relativeError, absoluteError);
     this.relativeError = relativeError;
     this.absoluteError = absoluteError;
@@ -72,7 +79,7 @@ public class <Number><Number>AreClose
   @Override
   public boolean test(<number> value1, <number> value2) {
     // Errors have been checked so use the package level method
-    return <Number>Equality.testAreClose(value1, value2, relativeError, absoluteError);
+    return <Number>Equality.testAreClose<Sign>(value1, value2, relativeError, absoluteError);
   }
 
   /**
@@ -82,6 +89,11 @@ public class <Number><Number>AreClose
    */
   @Override
   public String get() {
+<if(unsigned)>
+    return Descriptions.getUnsignedDescription(
+        Descriptions.getDescriptionCloseUnsigned(relativeError, absoluteError));
+<else>
     return Descriptions.getDescriptionClose(relativeError, absoluteError);
+<endif>
   }
 }

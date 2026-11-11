@@ -11,10 +11,13 @@ import java.util.function.Supplier;
  * \<p>The computed relative error is symmetric and the test is equivalent to testing convergence of
  * two values.
  *
- * @see <Number>Predicate#test(<number>)
- * @see <Number>Equality#areClose(<number>, <number>, double, <errorType>)
+<if(unsigned)>
+ * \<p>The values are interpreted as unsigned integers.
+ *
+<endif> * @see <Number>Predicate#test(<number>)
+ * @see <Number>Equality#areClose<Sign>(<number>, <number>, double, <errorType>)
  */
-public class <Number>IsClose
+public class <Number>IsClose<Sign>
     implements <Number>Predicate, Supplier\<String>, Serializable {
 
   /** The serial version ID. */
@@ -34,13 +37,17 @@ public class <Number>IsClose
    *
    * \<pre>
    * {@code
-   * |reference - value| \<= max(|reference|, |value|) * relativeError
+   * |reference - value| \<= <if(unsigned)>max(reference, value)<else>max(|reference|, |value|)<endif> * relativeError
    * \}\</pre>
    *
    * \<p>The relative error is symmetric for {@code reference} and {@code value}. The test is
    * equivalent to testing convergence on the reference value.
    *
-   * \<p>The test is performed using {@link <Number>Equality#areClose(<number>, <number>, double, <errorType>)}
+<if(unsigned)>
+   * \<p>The values are interpreted as unsigned integers.
+   *
+<endif>
+   * \<p>The test is performed using<if(unsigned)><\n>   *<endif> {@link <Number>Equality#areClose<Sign>(<number>, <number>, double, <errorType>)}
    * which defines the computation of the difference and the relative limit.
    *
    * @param reference The reference value.
@@ -58,7 +65,7 @@ public class <Number>IsClose
    * @throws IllegalArgumentException If the absolute error is not positive
 <endif>
    */
-  public <Number>IsClose(<number> reference,
+  public <Number>IsClose<Sign>(<number> reference,
       double relativeError, <errorType> absoluteError) {
     <Number>Equality.validateAreClose(relativeError, absoluteError);
     this.reference = reference;
@@ -86,7 +93,7 @@ public class <Number>IsClose
   @Override
   public boolean test(<number> value) {
     // Errors have been checked so use the package level method
-    return <Number>Equality.testAreClose(reference, value, relativeError, absoluteError);
+    return <Number>Equality.testAreClose<Sign>(reference, value, relativeError, absoluteError);
   }
 
   /**
@@ -96,7 +103,13 @@ public class <Number>IsClose
    */
   @Override
   public String get() {
+<if(unsigned)>
+    return Descriptions.getReferenceDescription(Descriptions.toUnsignedString(reference))
+        + Descriptions.getUnsignedDescription(
+            Descriptions.getDescriptionCloseUnsigned(relativeError, absoluteError));
+<else>
     return Descriptions.getReferenceDescription(<Class>.toString(reference))
         + Descriptions.getDescriptionClose(relativeError, absoluteError);
+<endif>
   }
 }

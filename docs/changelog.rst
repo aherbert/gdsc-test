@@ -22,6 +22,13 @@ Minor release of GDSC Test.
        integers.
 
    * - Update
+     - Add ``Predicates`` factory methods with the suffix ``Unsigned`` to create ``byte``,
+       ``short``, ``int`` and ``long`` predicates that test values are close using an absolute
+       and/or relative error when interpreted as unsigned integers, e.g.
+       ``intsAreCloseUnsigned`` and ``longIsCloseToUnsigned``. Assertion failure messages for
+       unsigned predicates include the unsigned value of negative values.
+
+   * - Update
      - Add documented default constructors to public classes without an explicit constructor.
 
    * - Update

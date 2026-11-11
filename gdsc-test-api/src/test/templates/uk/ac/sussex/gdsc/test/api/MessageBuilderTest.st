@@ -34,4 +34,48 @@ public class MessageBuilderTest {
 
     Assertions.assertNull(MessageBuilder.objectToString(supp2));
   }
+
+  @Test
+  void testIsUnsigned() {
+    Assertions.assertFalse(MessageBuilder.isUnsigned(null));
+    Assertions.assertFalse(MessageBuilder.isUnsigned(""));
+    Assertions.assertFalse(MessageBuilder.isUnsigned("|v1-v2| \<= 1"));
+    Assertions.assertTrue(MessageBuilder.isUnsigned("unsigned |v1-v2| \<= 1"));
+  }<unsignedTypes,UnsignedTypes,minusOne,zero,unsignedMinusOne:{type,Type,minusOne,zero,unsignedMinusOne |
+<\n>
+  @Test
+  void testAppendUnsigned<Type>() {
+    final <type> negative = <minusOne>;
+    final <type> zero = <zero>;
+    // Uses the unsigned predicates to check the description identifies unsigned values
+    Assertions.assertEquals(
+        "expected: \<-1 (unsigned <unsignedMinusOne>)>, actual: \<0>. unsigned |v1-v2| \<= 1",
+        MessageBuilder.create()
+            .append(negative, zero, Predicates.<type>sAreAbsolutelyCloseUnsigned(1)).toString());
+    Assertions.assertEquals(
+        "expected: \<0>, actual: \<-1 (unsigned <unsignedMinusOne>)>. unsigned |v1-v2| \<= 1",
+        MessageBuilder.create()
+            .append(zero, negative, Predicates.<type>sAreAbsolutelyCloseUnsigned(1)).toString());
+    Assertions.assertEquals(
+        "value: \<-1 (unsigned <unsignedMinusOne>)>. v1=0. unsigned |v1-v2| \<= 1",
+        MessageBuilder.create()
+            .append(negative, Predicates.<type>IsAbsolutelyCloseUnsigned(zero, 1)).toString());
+    Assertions.assertEquals("value: \<0>. v1=<unsignedMinusOne>. unsigned |v1-v2| \<= 1",
+        MessageBuilder.create()
+            .append(zero, Predicates.<type>IsAbsolutelyCloseUnsigned(negative, 1)).toString());
+    // Combined predicates
+    Assertions.assertTrue(MessageBuilder.create()
+        .append(negative, zero, Predicates.<type>sAreAbsolutelyCloseUnsigned(1).negate())
+        .toString().contains("(unsigned <unsignedMinusOne>)"));
+    Assertions.assertTrue(MessageBuilder.create()
+        .append(negative, Predicates.<type>IsAbsolutelyCloseUnsigned(zero, 1).negate())
+        .toString().contains("(unsigned <unsignedMinusOne>)"));
+    // Signed predicates
+    Assertions.assertEquals("expected: \<-1>, actual: \<0>. |v1-v2| \<= 1",
+        MessageBuilder.create()
+            .append(negative, zero, Predicates.<type>sAreAbsolutelyClose(1)).toString());
+    Assertions.assertEquals("value: \<-1>. v1=0. |v1-v2| \<= 1",
+        MessageBuilder.create()
+            .append(negative, Predicates.<type>IsAbsolutelyClose(zero, 1)).toString());
+  \}}>
 }

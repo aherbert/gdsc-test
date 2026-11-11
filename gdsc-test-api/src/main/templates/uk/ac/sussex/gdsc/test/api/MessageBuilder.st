@@ -51,6 +51,19 @@ final class MessageBuilder {
   private static final String AT_INDEX = " at index ";
   /** The space ' ' character. */
   private static final char SPACE_CHAR = ' ';
+  /**
+   * The text in a predicate description that identifies a comparison of unsigned values.
+   *
+   * \<p>This must match the prefix added to the description of the unsigned comparison
+   * predicates.
+   */
+  private static final String UNSIGNED = "unsigned ";
+  /**
+   * The prefix for the formatted unsigned value.
+   *
+   * \<p>This should be followed by the unsigned value then ')'.
+   */
+  private static final String UNSIGNED_FORMAT = " (unsigned ";
 
   /** The message.*/
   private final StringBuilder sb = new StringBuilder(256);
@@ -188,12 +201,17 @@ final class MessageBuilder {
     }
     sb.append('[').append(index).append(']');
     return this;
-  }<types,Types,Classes:{type,Type,Class |
+  }<types,Types,Classes,unsigned:{type,Type,Class,unsigned |
 <\n>
   /**
    * Append the expected and actual values to the message. Append a description of the
    * predicate if it implements {@link java.util.function.Supplier Supplier\} to return
    * an object that can be converted to a {@link Object#toString String\}.
+<if(unsigned)>
+   *
+   * \<p>If the description identifies a comparison of unsigned values then negative values
+   * are also formatted as unsigned integers.
+<endif>
    *
    * @param expected the expected value
    * @param actual the actual value
@@ -201,23 +219,69 @@ final class MessageBuilder {
    * @return the message builder
    */
   MessageBuilder append(<type> expected, <type> actual, <Type><Type>BiPredicate test) {
+<if(unsigned)>
+    final String description = objectToString(test);
+    final boolean unsigned = isUnsigned(description);
+    sb.append(EXPECTED_FORMAT).append(expected);
+    if (unsigned) {
+      appendUnsigned(expected);
+    \}
+    sb.append(ACTUAL_FORMAT).append(actual);
+    if (unsigned) {
+      appendUnsigned(actual);
+    \}
+    sb.append(END_FORMAT);
+    return appendDescription(description);
+<else>
     sb.append(EXPECTED_FORMAT).append(expected)
       .append(ACTUAL_FORMAT).append(actual).append(END_FORMAT);
     return appendPredicate(test);
+<endif>
   \}
 
   /**
    * Append the value to the message. Append a description of the
    * predicate if it implements {@link java.util.function.Supplier Supplier\} to return
    * an object that can be converted to a {@link Object#toString String\}.
+<if(unsigned)>
+   *
+   * \<p>If the description identifies a comparison of unsigned values then negative values
+   * are also formatted as unsigned integers.
+<endif>
    *
    * @param value the value to test
    * @param test the test predicate
    * @return the message builder
    */
   MessageBuilder append(<type> value, <Type>Predicate test) {
+<if(unsigned)>
+    final String description = objectToString(test);
+    sb.append(VALUE_FORMAT).append(value);
+    if (isUnsigned(description)) {
+      appendUnsigned(value);
+    \}
+    sb.append(END_FORMAT);
+    return appendDescription(description);
+<else>
     sb.append(VALUE_FORMAT).append(value).append(END_FORMAT);
     return appendPredicate(test);
+<endif>
+  \}}><unsignedTypes,unsignedConversions:{type,conversion |
+<\n>
+  /**
+   * Append the value formatted as an unsigned integer to the message if the value is negative.
+   * \<pre>
+   * " (unsigned " + value + ")"
+   * \</pre>
+   *
+   * \<p>Non-negative values are ignored as the unsigned value is the same as the signed value.
+   *
+   * @param value the value
+   */
+  private void appendUnsigned(<type> value) {
+    if (value \< 0) {
+      sb.append(UNSIGNED_FORMAT).append(<conversion>).append(')');
+    \}
   \}}>
 
   /**
@@ -230,7 +294,17 @@ final class MessageBuilder {
    * @return the message builder
    */
   private MessageBuilder appendPredicate(Object predicate) {
-    final String description = objectToString(predicate);
+    return appendDescription(objectToString(predicate));
+  }
+
+  /**
+   * Append the predicate description. If the description is null or empty then nothing is
+   * appended.
+   *
+   * @param description the description
+   * @return the message builder
+   */
+  private MessageBuilder appendDescription(String description) {
     if (isNotEmpty(description)) {
       sb.append(". ").append(description);
     }
@@ -262,6 +336,16 @@ final class MessageBuilder {
       }
     }
     return null;
+  }
+
+  /**
+   * Checks if the predicate description identifies a comparison of unsigned values.
+   *
+   * @param description the description (can be null)
+   * @return true if unsigned
+   */
+  static boolean isUnsigned(String description) {
+    return description != null && description.contains(UNSIGNED);
   }
 
   /**
