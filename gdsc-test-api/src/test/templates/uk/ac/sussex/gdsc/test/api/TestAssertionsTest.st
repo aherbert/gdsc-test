@@ -364,7 +364,6 @@ public class TestAssertionsTest {
    */
   @Test
   public void testAssertArrayTest<Type><Type>BiPredicate() {
-    String message;
     // Arrays must be different
     <type>[] value1 = new <type>[]{ <dummyValue1> \};
     <type>[] value2 = new <type>[]{ <dummyValue2> \};
@@ -378,6 +377,7 @@ public class TestAssertionsTest {
       TestAssertions.assertArrayTest(value1, value1, new Dummy<Type><Type>BiPredicate(0));
     \}, "Does not throw with same array for expected and actual and failed test");
 
+    String message;
     // No message
     Assertions.assertDoesNotThrow(() -> {
       TestAssertions.assertArrayTest(value1, value2, new Dummy<Type><Type>BiPredicate(1));
