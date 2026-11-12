@@ -62,7 +62,8 @@ The predicate functional interfaces provide:
 Standard predicates are provided to test equality and closeness within an absolute or relative
 error (see :ref:`relativeequality`). Floating-point numbers can be compared
 with a units in the last place (`ULP <https://en.wikipedia.org/wiki/Unit_in_the_last_place>`_)
-tolerance.
+tolerance. Integer values can be compared for closeness as unsigned values using the predicates
+with the suffix ``Unsigned``, e.g. ``Predicates.intsAreCloseUnsigned``.
 
 Combined predicates exist to combine two single-valued predicates into a bi-valued predicate that
 tests each input value with a distinct predicate.
